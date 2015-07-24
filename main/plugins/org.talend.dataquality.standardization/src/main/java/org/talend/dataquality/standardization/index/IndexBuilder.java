@@ -24,6 +24,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.TermVector;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.MMapDirectory;
@@ -67,11 +68,12 @@ public class IndexBuilder {
         }
         index = new MMapDirectory(new File(directoryPath));
         // The same analyzer should be used for indexing and searching
-        Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_30);
+        Analyzer analyzer = new StandardAnalyzer();
         // Analyzer analyzer = new StandardAnalyzer();
         // the boolean arg in the IndexWriter ctor means to
         // create a new index, overwriting any existing index
-        IndexWriter w = new IndexWriter(index, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
+        IndexWriterConfig config = new IndexWriterConfig(Version.LATEST, analyzer);
+        IndexWriter w = new IndexWriter(index, config);
         // read the data (this will be the input data of a component called
         // tFirstNameStandardize)
         CSVReader csvReader = createCSVReader(csvFileToIndex, ',');
@@ -84,7 +86,7 @@ public class IndexBuilder {
             addDoc(w, name, country, gender, count);
         }
         csvReader.close();
-        w.optimize();
+        w.commit();
         w.close();
 
         return true;
@@ -115,7 +117,8 @@ public class IndexBuilder {
         // Analyzer analyzer = new StandardAnalyzer();
         // the boolean arg in the IndexWriter ctor means to
         // create a new index, overwriting any existing index
-        IndexWriter w = new IndexWriter(index, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
+        IndexWriterConfig config = new IndexWriterConfig(Version.LATEST, analyzer);
+        IndexWriter w = new IndexWriter(index, config);
         // read the data (this will be the input data of a component called
         // tFirstNameStandardize)
         CSVReader csvReader = createCSVReader(csvFileToIndex, ';');
@@ -140,7 +143,7 @@ public class IndexBuilder {
             w.addDocument(doc);
         }
         csvReader.close();
-        w.optimize();
+        w.commit();
         w.close();
 
         return true;

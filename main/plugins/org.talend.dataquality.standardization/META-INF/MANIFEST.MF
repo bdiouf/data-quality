@@ -4,7 +4,8 @@ Bundle-Name: Standardization
 Bundle-SymbolicName: org.talend.dataquality.standardization
 Bundle-Version: 6.1.1.qualifier
 Bundle-Vendor: .Talend SA.
-Require-Bundle: org.talend.libraries.apache.lucene,
+Require-Bundle: org.apache.log4j,
+ org.talend.libraries.apache.lucene4,
  org.talend.libraries.csv,
  org.apache.commons.lang
 Bundle-ClassPath: .

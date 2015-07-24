@@ -20,10 +20,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.lucene.queryParser.ParseException;
+import org.apache.log4j.Logger;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
-import org.talend.dataquality.standardization.i18n.Messages;
 import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
 
 /**
@@ -32,6 +31,8 @@ import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
  * This class searches in a list of indexes.
  */
 public class SynonymRecordSearcher {
+
+    private static Logger log = Logger.getLogger(SynonymRecordSearcher.class);
 
     private SynonymIndexSearcher[] searchers;
 
@@ -180,10 +181,9 @@ public class SynonymRecordSearcher {
      * 
      * @param maxNbOutputResults the number of results to return
      * @param record a list of fields that will be search in the indexes (all fields of the record will be searched)
-     * @throws IOException
-     * @throws ParseException if the searched field cannot be parsed as a query
+     * @throws java.io.IOException
      */
-    public List<OutputRecord> search(int maxNbOutputResults, String[] record) throws ParseException, IOException {
+    public List<OutputRecord> search(int maxNbOutputResults, String[] record) throws IOException {
         assert record != null;
 
         // List<RecordResult> recResults = new ArrayList<SynonymRecordSearcher.RecordResult>();
@@ -243,7 +243,7 @@ public class SynonymRecordSearcher {
     public void addSearcher(SynonymIndexSearcher searcher, int columnIndex) {
         assert columnIndex < this.recordSize;
         if (searcher == null) {
-            throw new NullPointerException(Messages.getString("SynonymRecordSearcher.tried", columnIndex));//$NON-NLS-1$
+            log.error("SynonymRecordSearcher.tried" + columnIndex);
         }
         searchers[columnIndex] = searcher;
     }

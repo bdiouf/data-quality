@@ -19,8 +19,10 @@ import java.util.Set;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -32,6 +34,7 @@ import org.apache.lucene.search.TopDocsCollector;
 import org.apache.lucene.search.TopFieldCollector;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.util.Version;
+import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.talend.dataquality.standardization.constant.PluginConstant;
 
 /**
@@ -47,7 +50,10 @@ public class FirstNameStandardize {
      * For the first names with minus sign inside, ex: Jean-Baptiste, the matching is done for Jean and Baptiste
      * separately, and the number of tokens is also considered by Lucene.
      */
+    @Deprecated
     private static final float MATCHING_SIMILARITY = 0.74f;
+
+    private int maxEdits = LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE;
 
     private Analyzer analyzer;
 
@@ -87,15 +93,17 @@ public class FirstNameStandardize {
     public void getFuzzySearch(String input, TopDocsCollector<?> collector) throws Exception {
         Query q = new FuzzyQuery(new Term(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, input));
         Query qalias = new FuzzyQuery(new Term(PluginConstant.FIRST_NAME_STANDARDIZE_ALIAS, input));
-        q = q.combine(new Query[] { q, qalias });
-        searcher.search(q, collector);
+        BooleanQuery combinedQuery = new BooleanQuery();
+        combinedQuery.add(q, BooleanClause.Occur.SHOULD);
+        combinedQuery.add(qalias, BooleanClause.Occur.SHOULD);
+        searcher.search(combinedQuery, collector);
     }
 
     public TopDocs getFuzzySearch(String input) throws Exception {
         // MOD sizhaoliu 2012-7-4 TDQ-1576 tFirstnameMatch returns no firstname when several matches exist
         // The 2 letter prefix requires exact match while the word to search may not be lowercased as in the index.
         // Extracted and documented MATCHING_SIMILARITY constant.
-        Query q = new FuzzyQuery(new Term("name", input.toLowerCase()), MATCHING_SIMILARITY, 2);//$NON-NLS-1$
+        Query q = new FuzzyQuery(new Term("name", input.toLowerCase()), maxEdits);//$NON-NLS-1$
         TopDocs matches = searcher.search(q, 10);
         return matches;
     }
@@ -123,37 +131,41 @@ public class FirstNameStandardize {
         Term termCountry = new Term(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, countryText);
         Term ternGender = new Term(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, genderText);
         // many field to query for reposity
+        BooleanQuery combinedQuery = new BooleanQuery();
         Query nameQuery = new QueryParser(Version.LUCENE_30, PluginConstant.FIRST_NAME_STANDARDIZE_NAME, analyzer)
                 .parse(inputName);
+        combinedQuery.add(nameQuery, BooleanClause.Occur.SHOULD);
         Query countryQuery = null;
         Query genderQuery = null;
         if (countryText != null && !countryText.equals("")) {//$NON-NLS-1$
             countryQuery = new QueryParser(Version.LUCENE_30, PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, analyzer)
                     .parse(countryText);
-            nameQuery = nameQuery.combine(new Query[] { nameQuery, countryQuery });
+            combinedQuery.add(countryQuery, BooleanClause.Occur.SHOULD);
             if (genderText != null && !genderText.equals("")) {//$NON-NLS-1$
                 genderQuery = new QueryParser(Version.LUCENE_30, PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, analyzer)
                         .parse(genderText);
-                nameQuery = nameQuery.combine(new Query[] { nameQuery, countryQuery, genderQuery });
+                combinedQuery.add(genderQuery, BooleanClause.Occur.SHOULD);
             }
         }
 
-        TopDocs matches = searcher.search(nameQuery, 10);
+        TopDocs matches = searcher.search(combinedQuery, 10);
 
         if (fuzzySearch) {
+            BooleanQuery combinedFuzzyQuery = new BooleanQuery();
             Query name = new FuzzyQuery(termName);
+            combinedQuery.add(name, BooleanClause.Occur.SHOULD);
             Query country = null;
             Query gender = null;
             if (countryText != null && !countryText.equals("")) {//$NON-NLS-1$
                 country = new FuzzyQuery(termCountry);
-                name = name.combine(new Query[] { name, country });
+                combinedQuery.add(country, BooleanClause.Occur.SHOULD);
                 if (genderText != null && !genderText.equals("")) {//$NON-NLS-1$
                     gender = new FuzzyQuery(ternGender);
-                    name = name.combine(new Query[] { name, country, gender });
+                    combinedQuery.add(gender, BooleanClause.Occur.SHOULD);
                 }
             }
 
-            matches = searcher.search(name, 10);
+            matches = searcher.search(combinedFuzzyQuery, 10);
         }
         return matches.scoreDocs;
     }
@@ -162,7 +174,7 @@ public class FirstNameStandardize {
     private TopDocsCollector<?> createTopDocsCollector() throws IOException {
         // TODO the goal is to sort the result in descending order according to the "count" field
         if (SORT_WITH_COUNT) { // TODO enable this when it works correctly
-            SortField sortfield = new SortField(PluginConstant.FIRST_NAME_STANDARDIZE_COUNT, SortField.INT);
+            SortField sortfield = new SortField(PluginConstant.FIRST_NAME_STANDARDIZE_COUNT, SortField.Type.INT);
             Sort sort = new Sort(sortfield);
             // results are sorted according to a score and then to the count value
             return TopFieldCollector.create(sort, hitsPerPage, false, false, false, false);
@@ -179,7 +191,7 @@ public class FirstNameStandardize {
      * @throws ParseException
      * @throws IOException
      */
-    public String replaceName(String inputName, boolean fuzzyQuery) throws ParseException, IOException {
+    public String replaceName(String inputName, boolean fuzzyQuery) throws IOException {
 
         ScoreDoc[] results = null;
         try {
@@ -215,4 +227,9 @@ public class FirstNameStandardize {
 
         return results.length == 0 ? "" : searcher.doc(results[0].doc).get("name");//$NON-NLS-1$ //$NON-NLS-2$
     }
+
+    public void setMaxEdits(int maxEdits) {
+        this.maxEdits = maxEdits;
+    }
+
 }

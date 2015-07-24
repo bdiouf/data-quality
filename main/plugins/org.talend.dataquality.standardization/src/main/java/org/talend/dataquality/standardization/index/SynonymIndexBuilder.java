@@ -18,16 +18,21 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.Field.TermVector;
+import org.apache.lucene.document.FieldType;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.CheckIndex;
 import org.apache.lucene.index.CheckIndex.Status;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TopDocs;
@@ -40,6 +45,8 @@ import org.talend.dataquality.standardization.i18n.Messages;
  * @author scorreia, sizhaoliu A class to create an index with synonyms.
  */
 public class SynonymIndexBuilder {
+
+    private static final Logger log = Logger.getLogger(SynonymIndexBuilder.class);
 
     private Directory indexDir;
 
@@ -77,6 +84,11 @@ public class SynonymIndexBuilder {
     public void setSynonymSeparator(char synonymSeparator) {
         this.separator = synonymSeparator;
     }
+
+    // FIXME not used yet. Need to be implemented
+    // public void initIndexInRAM() {
+    // indexDir = new RAMDirectory();
+    // }
 
     /**
      * Method "initIndexInFS" initializes the lucene index folder.
@@ -134,10 +146,10 @@ public class SynonymIndexBuilder {
 
     /**
      * Update an entire synonym document if and only if it exists and it's unique.
-     * 
+     * <p/>
      * WARNING If some changes in the index are not committed, this may cause trouble to find the document to update.
      * Make sure that a commit has been done before calling this method except if you know exactly what you are doing.
-     * 
+     * <p/>
      * WARNING! Beware that if several documents match the word, nothing will be done.
      * 
      * @param word the reference word
@@ -200,7 +212,7 @@ public class SynonymIndexBuilder {
     /**
      * Add a synonym to an existing document. If several documents are found given the input word, nothing is done. If
      * the synonym is null, nothing is done.
-     * 
+     *
      * @param word a word (must not be null)
      * @param newSynonym the new synonym to add to the list of synonyms
      * @return 1 if added or 0 if no change has been done
@@ -258,7 +270,7 @@ public class SynonymIndexBuilder {
 
     /**
      * remove a synonym from the document to which it belongs.
-     * 
+     *
      * @param synonymToDelete
      * @return the number of deleted synonyms
      * @throws IOException
@@ -317,7 +329,7 @@ public class SynonymIndexBuilder {
 
     /**
      * Method "deleteIndexFromFS".
-     * 
+     *
      * @param path the path of the index
      * @return true if the path is deleted (and if the path did not exist)
      */
@@ -378,17 +390,16 @@ public class SynonymIndexBuilder {
     /**
      * ADDED BY ytao 2011/02/11 If only need to initialize the index, do nothing after fold open, but just invoke this
      * method at the end, index will be reset.
-     * 
+     * <p/>
      * (Ensure that usingCreateMode is true) // where is it ensured? who wrote this sentence?
-     * 
+     * <p/>
      * Not sure that the index is deleted and recreated, may be just delete all documents of index since the index files
      * are "_1a.cfs" and "segments.gen" and "segments_1e" currently, if these files are not exists, API will not work.
-     * 
+     * <p/>
      * ADDED by sizhaoliu : usingCreateMode is not used any more. we now have a separated SynonymIndexSearcher.
      */
     public void closeIndex() {
         try {
-            this.getWriter().optimize();
             this.getWriter().close();
         } catch (CorruptIndexException e) {
             e.printStackTrace();
@@ -414,17 +425,17 @@ public class SynonymIndexBuilder {
 
     /**
      * Getter for analyzer.
-     * 
+     *
      * @return the analyzer
      * @throws IOException
      */
     public Analyzer getAnalyzer() throws IOException {
         if (analyzer == null) {
             // the entry and the synonyms are indexed as provided
-            analyzer = new KeywordAnalyzer();
+            // analyzer = new KeywordAnalyzer();
 
             // most used analyzer in lucene
-            analyzer = new StandardAnalyzer(Version.LUCENE_30, new HashSet<Object>());
+            analyzer = new StandardAnalyzer(CharArraySet.EMPTY_SET);
 
             // analyzer = new SynonymAnalyzer();
         }
@@ -433,21 +444,22 @@ public class SynonymIndexBuilder {
 
     /**
      * Getter for writer.
-     * 
+     *
      * @return the writer
      * @throws IOException
      * @throws
      */
     IndexWriter getWriter() throws IOException {
         if (writer == null) {
-            writer = new IndexWriter(indexDir, this.getAnalyzer(), IndexWriter.MaxFieldLength.UNLIMITED);
+            IndexWriterConfig config = new IndexWriterConfig(Version.LATEST, this.getAnalyzer());
+            writer = new IndexWriter(indexDir, config);
         }
         return this.writer;
     }
 
     /**
      * Method "getNumDocs".
-     * 
+     *
      * @return the number of documents or -1 if an error happened
      */
     public int getNumDocs() {
@@ -461,9 +473,9 @@ public class SynonymIndexBuilder {
 
     /**
      * Get a new read-only searcher at each call.
-     * 
+     *
      * @return
-     * @throws CorruptIndexException
+     * @throws org.apache.lucene.index.CorruptIndexException
      * @throws IOException
      */
     private IndexSearcher getNewIndexSearcher() throws IOException {
@@ -475,7 +487,8 @@ public class SynonymIndexBuilder {
         if (status.missingSegments) {
             System.err.println(Messages.getString("SynonymIndexBuilder.print"));//$NON-NLS-1$
         }
-        return new IndexSearcher(indexDir);
+        IndexReader reader = DirectoryReader.open(indexDir);
+        return new IndexSearcher(reader);
     }
 
     private SynonymIndexSearcher getNewSynIdxSearcher() throws IOException {
@@ -483,7 +496,6 @@ public class SynonymIndexBuilder {
     }
 
     private Document generateDocument(String word, String synonyms) {
-        // System.out.println("\t Generating doc for " + word + " and " + synonyms);
         Set<String> set = new HashSet<String>();
         if (synonyms != null) {
             StringTokenizer tokenizer = new StringTokenizer(synonyms, String.valueOf(separator));
@@ -496,7 +508,7 @@ public class SynonymIndexBuilder {
 
     /**
      * generate a document.
-     * 
+     *
      * @param word
      * @param synonyms
      * @return
@@ -504,20 +516,22 @@ public class SynonymIndexBuilder {
     private Document generateDocument(String word, Set<String> synonyms) {
         String tempWord = word.trim();
         Document doc = new Document();
-        Field wordField = new Field(SynonymIndexSearcher.F_WORD, tempWord, Field.Store.YES, Field.Index.ANALYZED_NO_NORMS,
-                TermVector.NO);
+        FieldType ft = new FieldType();
+        ft.setStored(true);
+        ft.setIndexed(true);
+        ft.setOmitNorms(true);
+        ft.freeze();
+
+        Field wordField = new Field(SynonymIndexSearcher.F_WORD, tempWord, ft);
         doc.add(wordField);
-        Field wordTermField = new Field(SynonymIndexSearcher.F_WORDTERM, tempWord.toLowerCase(), Field.Store.NO,
-                Field.Index.NOT_ANALYZED, TermVector.NO);
+        Field wordTermField = new StringField(SynonymIndexSearcher.F_WORDTERM, tempWord.toLowerCase(), Field.Store.NO);
         doc.add(wordTermField);
         for (String syn : synonyms) {
             if (syn != null) {
                 syn = syn.trim();
                 if (syn.length() > 0 && !syn.equals(tempWord)) {
-                    doc.add(new Field(SynonymIndexSearcher.F_SYN, syn, Field.Store.YES, Field.Index.ANALYZED_NO_NORMS,
-                            TermVector.NO));
-                    doc.add(new Field(SynonymIndexSearcher.F_SYNTERM, syn.toLowerCase(), Field.Store.NO,
-                            Field.Index.NOT_ANALYZED, TermVector.NO));
+                    doc.add(new Field(SynonymIndexSearcher.F_SYN, syn, ft));
+                    doc.add(new StringField(SynonymIndexSearcher.F_SYNTERM, syn.toLowerCase(), Field.Store.NO));
                 }
             }
         }

@@ -15,22 +15,25 @@ package org.talend.dataquality.standardization.index;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.LowerCaseFilter;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
-import org.apache.lucene.analysis.tokenattributes.TermAttribute;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CheckIndex;
 import org.apache.lucene.index.CheckIndex.Status;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
@@ -39,14 +42,17 @@ import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
+import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.talend.dataquality.standardization.i18n.Messages;
 
 /**
  * @author scorreia A class to create an index with synonyms.
  */
 public class SynonymIndexSearcher {
+
+    private static final Logger LOGGER = Logger.getLogger(SynonymIndexSearcher.class);
 
     public enum SynonymSearchMode {
 
@@ -98,6 +104,8 @@ public class SynonymIndexSearcher {
 
     private float minimumSimilarity = 0.8f;
 
+    private int maxEdits = LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE;
+
     private static final float WORD_TERM_BOOST = 2F;
 
     private static final float WORD_BOOST = 1.5F;
@@ -109,7 +117,8 @@ public class SynonymIndexSearcher {
     private float matchingThreshold = 0f;
 
     /**
-     * The slop is only used for {@link SynonymSearchMode#MATCH_PARTIAL}.
+     * The slop is only used for
+     * {@link org.talend.dataquality.standardization.index.SynonymIndexSearcher.SynonymSearchMode#MATCH_PARTIAL}.
      * <p>
      * By default, the slop factor is one, meaning only one gap between the searched tokens is allowed.
      * <p>
@@ -119,22 +128,35 @@ public class SynonymIndexSearcher {
     private int slop = 1;
 
     /**
-     * instantiate an index searcher. A call to the index initialization method such as {@link #openIndexInFS(String)}
-     * is required before using any other method.
+     * instantiate an index searcher. A call to the index initialization method such as {@link #openIndexInFS(URI)} is
+     * required before using any other method.
      */
     public SynonymIndexSearcher() {
     }
 
     /**
      * SynonymIndexSearcher constructor creates this searcher and initializes the index.
-     * 
+     *
      * @param indexPath the path to the index.
      */
     public SynonymIndexSearcher(String indexPath) {
         try {
             openIndexInFS(indexPath);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Unable to open synonym index.", e);
+        }
+    }
+
+    /**
+     * SynonymIndexSearcher constructor creates this searcher and initializes the index.
+     *
+     * @param indexPath the path to the index.
+     */
+    public SynonymIndexSearcher(URI indexPath) {
+        try {
+            openIndexInFS(indexPath);
+        } catch (IOException e) {
+            LOGGER.error("Unable to open synonym index.", e);
         }
     }
 
@@ -142,20 +164,32 @@ public class SynonymIndexSearcher {
         this.searcher = indexSearcher;
     }
 
-    /**
-     * Method "openIndexInFS" opens a FS folder index.
-     * 
-     * @param path the path of the index folder
-     * @throws IOException if file does not exist, or any other problem
-     */
     public void openIndexInFS(String path) throws IOException {
         FSDirectory indexDir = FSDirectory.open(new File(path));
         CheckIndex check = new CheckIndex(indexDir);
         Status status = check.checkIndex();
         if (status.missingSegments) {
-            System.err.println(Messages.getString("SynonymIndexBuilder.print"));//$NON-NLS-1$
+            LOGGER.error("Failed to load index. Please make sure it's not empty."); //$NON-NLS-1$
         }
-        this.searcher = new IndexSearcher(indexDir);
+        IndexReader reader = DirectoryReader.open(indexDir);
+        this.searcher = new IndexSearcher(reader);
+    }
+
+    /**
+     * Method "openIndexInFS" opens a FS folder index.
+     * 
+     * @param path the path of the index folder
+     * @throws java.io.IOException if file does not exist, or any other problem
+     */
+    public void openIndexInFS(URI path) throws IOException {
+        Directory indexDir = ClassPathDirectory.open(path);
+        CheckIndex check = new CheckIndex(indexDir);
+        Status status = check.checkIndex();
+        if (status.missingSegments) {
+            LOGGER.error(Messages.getString("SynonymIndexBuilder.print"));//$NON-NLS-1$
+        }
+        IndexReader reader = DirectoryReader.open(indexDir);
+        this.searcher = new IndexSearcher(reader);
     }
 
     /**
@@ -163,7 +197,7 @@ public class SynonymIndexSearcher {
      * 
      * @param word
      * @return
-     * @throws IOException
+     * @throws java.io.IOException
      */
     public TopDocs searchDocumentByWord(String word) {
         if (word == null) {
@@ -179,8 +213,6 @@ public class SynonymIndexSearcher {
             docs = this.searcher.search(query, topDocLimit);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
         return docs;
     }
@@ -188,12 +220,11 @@ public class SynonymIndexSearcher {
     /**
      * search for documents by one of the synonym (which may be the word).
      * 
-     * @param synonym
+     * @param stringToSearch
      * @return
-     * @throws ParseException if the given synonym cannot be parsed as a lucene query.
-     * @throws IOException
+     * @throws java.io.IOException
      */
-    public TopDocs searchDocumentBySynonym(String stringToSearch) throws ParseException, IOException {
+    public TopDocs searchDocumentBySynonym(String stringToSearch) throws IOException {
         TopDocs topDocs = null;
         Query query;
         switch (searchMode) {
@@ -240,8 +271,6 @@ public class SynonymIndexSearcher {
                 return synonyms.length;
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         }
         return -1;
@@ -345,19 +374,19 @@ public class SynonymIndexSearcher {
      */
     public Analyzer getAnalyzer() {
         if (analyzer == null) {
-            analyzer = new StandardAnalyzer(Version.LUCENE_30, new HashSet<Object>());
+            analyzer = new StandardAnalyzer(CharArraySet.EMPTY_SET);
         }
         return this.analyzer;
     }
 
-    private Query createWordQueryFor(String stringToSearch) throws ParseException {
+    private Query createWordQueryFor(String stringToSearch) {
         TermQuery query = new TermQuery(new Term(F_WORDTERM, stringToSearch.toLowerCase()));
         return query;
     }
 
     private Query getTermQuery(String field, String text, boolean fuzzy) {
         Term term = new Term(field, text);
-        return fuzzy ? new FuzzyQuery(term, minimumSimilarity) : new TermQuery(term);
+        return fuzzy ? new FuzzyQuery(term, maxEdits) : new TermQuery(term);
     }
 
     /**
@@ -368,10 +397,10 @@ public class SynonymIndexSearcher {
      * @param fuzzy this options decides whether output the fuzzy matches
      * @param allMatch this options means the result should be returned only if all tokens are found in the index
      * @return
-     * @throws IOException
-     * @throws ParseException
+     * @throws java.io.IOException
      */
-    private Query createCombinedQueryFor(String input, boolean fuzzy, boolean allMatch) throws IOException, ParseException {
+    private Query createCombinedQueryFor(String input, boolean fuzzy, boolean allMatch) throws IOException {
+        BooleanQuery combinedQuery = new BooleanQuery();
         Query wordTermQuery, synTermQuery, wordQuery, synQuery;
         wordTermQuery = getTermQuery(F_WORDTERM, input.toLowerCase(), fuzzy);
         synTermQuery = getTermQuery(F_SYNTERM, input.toLowerCase(), fuzzy);
@@ -389,7 +418,12 @@ public class SynonymIndexSearcher {
         // increase importance of the reference word
         wordTermQuery.setBoost(WORD_TERM_BOOST);
         wordQuery.setBoost(WORD_BOOST);
-        return wordTermQuery.combine(new Query[] { wordTermQuery, synTermQuery, wordQuery, synQuery });
+
+        combinedQuery.add(wordTermQuery, BooleanClause.Occur.SHOULD);
+        combinedQuery.add(synTermQuery, BooleanClause.Occur.SHOULD);
+        combinedQuery.add(wordQuery, BooleanClause.Occur.SHOULD);
+        combinedQuery.add(synQuery, BooleanClause.Occur.SHOULD);
+        return combinedQuery;
     }
 
     /**
@@ -398,10 +432,10 @@ public class SynonymIndexSearcher {
      * 
      * @param input
      * @return
-     * @throws IOException
-     * @throws ParseException
+     * @throws java.io.IOException
      */
-    private Query createCombinedQueryForPartialMatch(String input) throws IOException, ParseException {
+    private Query createCombinedQueryForPartialMatch(String input) throws IOException {
+        BooleanQuery combinedQuery = new BooleanQuery();
         Query wordTermQuery, synTermQuery, wordQuery, synQuery;
         wordTermQuery = getTermQuery(F_WORDTERM, input.toLowerCase(), false);
         synTermQuery = getTermQuery(F_SYNTERM, input.toLowerCase(), false);
@@ -419,8 +453,12 @@ public class SynonymIndexSearcher {
         // increase importance of the reference word
         wordTermQuery.setBoost(WORD_TERM_BOOST);
         wordQuery.setBoost(WORD_BOOST);
-        return wordTermQuery.combine(new Query[] { wordTermQuery, synTermQuery, wordQuery, synQuery });
 
+        combinedQuery.add(wordTermQuery, BooleanClause.Occur.SHOULD);
+        combinedQuery.add(synTermQuery, BooleanClause.Occur.SHOULD);
+        combinedQuery.add(wordQuery, BooleanClause.Occur.SHOULD);
+        combinedQuery.add(synQuery, BooleanClause.Occur.SHOULD);
+        return combinedQuery;
     }
 
     /**
@@ -429,21 +467,24 @@ public class SynonymIndexSearcher {
      * 
      * @param input
      * @return
-     * @throws IOException
-     * @throws ParseException
+     * @throws java.io.IOException
      */
-    private Query createCombinedQueryForExactMatch(String input) throws IOException, ParseException {
+    private Query createCombinedQueryForExactMatch(String input) throws IOException {
+        BooleanQuery combinedQuery = new BooleanQuery();
         Query wordTermQuery, synTermQuery;
         wordTermQuery = getTermQuery(F_WORDTERM, input.toLowerCase(), false);
         synTermQuery = getTermQuery(F_SYNTERM, input.toLowerCase(), false);
         // increase importance of the reference word
         wordTermQuery.setBoost(WORD_TERM_BOOST);
-        return wordTermQuery.combine(new Query[] { wordTermQuery, synTermQuery });
+
+        combinedQuery.add(wordTermQuery, BooleanClause.Occur.SHOULD);
+        combinedQuery.add(synTermQuery, BooleanClause.Occur.SHOULD);
+        return combinedQuery;
     }
 
     public void close() {
         try {
-            searcher.close();
+            searcher.getIndexReader().close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -474,6 +515,10 @@ public class SynonymIndexSearcher {
         this.minimumSimilarity = (float) minimumSimilarity;
     }
 
+    public void setMaxEdits(int maxEdits) {
+        this.maxEdits = maxEdits;
+    }
+
     public float getMatchingThreshold() {
         return matchingThreshold;
     }
@@ -487,16 +532,18 @@ public class SynonymIndexSearcher {
     }
 
     private List<String> getTokensFromAnalyzer(String input) throws IOException {
-        StandardTokenizer tokenStream = new StandardTokenizer(Version.LUCENE_30, new StringReader(input));
+        StandardTokenizer tokenStream = new StandardTokenizer(new StringReader(input));
         TokenStream result = new StandardFilter(tokenStream);
         result = new LowerCaseFilter(result);
-        TermAttribute termAttribute = result.addAttribute(TermAttribute.class);
+        CharTermAttribute charTermAttribute = result.addAttribute(CharTermAttribute.class);
 
+        tokenStream.reset();
         List<String> termList = new ArrayList<String>();
         while (result.incrementToken()) {
-            String term = termAttribute.term();
+            String term = charTermAttribute.toString();
             termList.add(term);
         }
+        result.close();
         return termList;
     }
 }

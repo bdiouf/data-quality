@@ -21,7 +21,6 @@ import java.util.Random;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.TopDocs;
 import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
 
@@ -67,8 +66,6 @@ public class SynonymReplaceAction implements ITalendStrConversionAction {
                         return replaceList.get(random.nextInt(replaceList.size()));
                     }
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

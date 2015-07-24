@@ -16,14 +16,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lucene.index.AtomicReaderContext;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.Scorer;
 
-
 /**
- * DOC scorreia  class global comment. Detailled comment
+ * DOC scorreia class global comment. Detailled comment
  */
 public class AllDocCollector extends Collector {
 
@@ -45,7 +45,9 @@ public class AllDocCollector extends Collector {
         this.docBase = docBase;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.lucene.search.Collector#collect(int)
      */
     @Override
@@ -62,6 +64,9 @@ public class AllDocCollector extends Collector {
         return docs;
     }
 
-
+    @Override
+    public void setNextReader(AtomicReaderContext context) throws IOException {
+        this.docBase = context.docBase;
+    }
 
 }

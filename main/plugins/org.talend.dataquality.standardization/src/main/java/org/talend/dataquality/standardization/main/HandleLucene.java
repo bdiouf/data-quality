@@ -15,8 +15,6 @@ package org.talend.dataquality.standardization.main;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.lucene.queryParser.ParseException;
-
 /**
  * DOC klliu class global comment.
  */
@@ -33,7 +31,7 @@ public interface HandleLucene {
      * @throws ParseException
      */
     public Map<String, String[]> getSearchResult(String folderName, String inputName, Map<String, String> information2value,
-            boolean fuzzyQuery) throws IOException, ParseException;
+            boolean fuzzyQuery) throws IOException;
 
     /**
      * 
@@ -48,7 +46,7 @@ public interface HandleLucene {
      * @throws ParseException
      */
     public String getReplaceSearchResult(String folderName, String inputName, Map<String, String> information2value,
-            boolean fuzzyQuery) throws IOException, ParseException;
+            boolean fuzzyQuery) throws IOException;
 
     /**
      * 
@@ -60,7 +58,7 @@ public interface HandleLucene {
      * @throws ParseException
      * @throws IOException
      */
-    public String replaceName(String folderName, String inputName, boolean fuzzyQuery) throws ParseException, IOException;
+    public String replaceName(String folderName, String inputName, boolean fuzzyQuery) throws IOException;
 
     /**
      * 

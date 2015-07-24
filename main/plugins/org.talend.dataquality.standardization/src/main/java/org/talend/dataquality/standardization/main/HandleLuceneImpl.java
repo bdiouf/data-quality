@@ -23,7 +23,8 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.store.Directory;
@@ -39,7 +40,6 @@ import org.talend.dataquality.standardization.query.FirstNameStandardize;
 public class HandleLuceneImpl implements HandleLucene {
 
     private static final int HITS_PER_PAGE = 10;
-
 
     private Map<String, String[]> hits = new HashMap<String, String[]>();
 
@@ -67,7 +67,7 @@ public class HandleLuceneImpl implements HandleLucene {
     }
 
     public String getReplaceSearchResult(String folderName, String inputName, Map<String, String> information2value,
-            boolean fuzzyQuery) throws IOException, ParseException {
+            boolean fuzzyQuery) throws IOException {
         String result = null;
         if (inputName != null && folderName != null) {
             IndexSearcher searcher = getIndexSearcher(folderName);
@@ -113,8 +113,9 @@ public class HandleLuceneImpl implements HandleLucene {
         return result;
 
     }
+
     public Map<String, String[]> getSearchResult(String folderName, String inputName, Map<String, String> information2value,
-            boolean fuzzyQuery) throws IOException, ParseException {
+            boolean fuzzyQuery) throws IOException {
         IndexSearcher searcher = getIndexSearcher(folderName);
 
         Analyzer searchAnalyzer = getAnalyzer();
@@ -129,7 +130,7 @@ public class HandleLuceneImpl implements HandleLucene {
             e.printStackTrace();
         }
 
-        searcher.close();
+        searcher.getIndexReader().close();
 
         return getHits();
     }
@@ -155,8 +156,6 @@ public class HandleLuceneImpl implements HandleLucene {
 
     }
 
-
-
     private Map<String, String[]> getHits() {
         return hits;
     }
@@ -174,7 +173,8 @@ public class HandleLuceneImpl implements HandleLucene {
         IndexSearcher is = null;
         try {
             dir = FSDirectory.open(new File(folderName));
-            is = new IndexSearcher(dir);
+            IndexReader reader = DirectoryReader.open(dir);
+            is = new IndexSearcher(reader);
         } catch (CorruptIndexException e) {
 
             e.printStackTrace();
@@ -191,7 +191,7 @@ public class HandleLuceneImpl implements HandleLucene {
      * @see org.talend.dataquality.standardization.main.HandleLucene#replaceName(java.lang.String, java.lang.String,
      * boolean)
      */
-    public String replaceName(String folderName, String inputName, boolean fuzzyQuery) throws ParseException, IOException {
+    public String replaceName(String folderName, String inputName, boolean fuzzyQuery) throws IOException {
         String result = null;
         IndexSearcher searcher = getIndexSearcher(folderName);
         Analyzer searchAnalyzer = getAnalyzer();
