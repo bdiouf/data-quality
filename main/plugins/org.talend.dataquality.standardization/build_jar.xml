@@ -14,7 +14,7 @@
 	<property name="src.dir" value="src/main/java" />
 	<property name="bin.dir" value="class" />
 	<property name="build.dir" value="build" />
-	<property name="dist.dir" value="../../tdq/org.talend.designer.components.tdqprovider/components/tFirstnameMatch" />
+	<property name="dist.dir" value="../../../../tdq-studio-ee/main/plugins/org.talend.designer.components.tdqprovider/components/tFirstnameMatch" />
 	<property name="app.jar" value="org.talend.dataquality.standardization.jar" />
 
 	<target name="copy_version_info" >
