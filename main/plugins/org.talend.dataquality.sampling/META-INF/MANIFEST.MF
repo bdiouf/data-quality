@@ -5,9 +5,10 @@ Bundle-SymbolicName: org.talend.dataquality.sampling
 Bundle-Version: 6.1.0.qualifier
 Bundle-Vendor: .Talend SA.
 Require-Bundle: org.apache.log4j,
- org.apache.commons.lang,
- org.talend.libraries.apache.common
+ org.apache.commons.lang
 Export-Package: org.talend.dataquality.duplicating,
  org.talend.dataquality.sampling
 Bundle-ClassPath: .,
  dist/org.talend.dataquality.sampling.jar
+Import-Package: org.apache.commons.codec.language,
+ org.apache.commons.math3.distribution
