@@ -13,11 +13,10 @@
 package org.talend.dataquality.datamasking.Functions;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 
 import org.talend.dataquality.datamasking.Function;
+import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 21 juil. 2015 Detailled comment
@@ -31,7 +30,19 @@ public class GenerateSsnUk extends Function<String> implements Serializable {
 
     private static String second = "AZERTYPSGHJKLMWXCBN"; //$NON-NLS-1$
 
-    private static List<String> forbid = new ArrayList<>(Arrays.asList("BG", "GB", "NK", "KN", "TN", "NT", "ZZ")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
+    private static HashSet<String> forbid = new HashSet<>();
+
+    @Override
+    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        forbid.add("BG"); //$NON-NLS-1$
+        forbid.add("GB"); //$NON-NLS-1$
+        forbid.add("NK"); //$NON-NLS-1$
+        forbid.add("KN"); //$NON-NLS-1$
+        forbid.add("NT"); //$NON-NLS-1$
+        forbid.add("TN"); //$NON-NLS-1$
+        forbid.add("ZZ"); //$NON-NLS-1$
+    }
 
     @Override
     public String generateMaskedRow(String str) {
@@ -47,11 +58,11 @@ public class GenerateSsnUk extends Function<String> implements Serializable {
                 prefix.append(tmp);
                 tmp = second.charAt(rnd.nextInt(19));
                 prefix.append(tmp);
-            } while (forbid.contains(prefix));
+            } while (getForbid().contains(prefix.toString()));
             result.append(prefix);
             result.append(" "); //$NON-NLS-1$
             for (int i = 0; i < 3; ++i) {
-                for (int j = 0; j < 3; ++j) {
+                for (int j = 0; j < 2; ++j) {
                     result.append(rnd.nextInt(9));
                 }
                 result.append(" "); //$NON-NLS-1$
@@ -59,5 +70,9 @@ public class GenerateSsnUk extends Function<String> implements Serializable {
             result.append(UPPER.charAt(rnd.nextInt(4)));
             return result.toString();
         }
+    }
+
+    public static HashSet<String> getForbid() {
+        return forbid;
     }
 }

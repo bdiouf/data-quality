@@ -35,7 +35,7 @@ public class GeneratePhoneNumberUS extends Function<String> implements Serializa
             int tmp = 0;
             do {
                 tmp = rnd.nextInt(9);
-            } while (tmp == result.charAt(1));
+            } while (tmp == result.charAt(1) - 48);
             result.append(tmp);
             result.append("-"); //$NON-NLS-1$
             result.append(rnd.nextInt(8) + 2);

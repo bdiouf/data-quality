@@ -38,7 +38,7 @@ public abstract class GenerateCreditCard<T2> extends Function<T2> {
      * @param number represents the credit card number to be testes.
      * @return a boolean : true if the number is valid, false if not
      */
-    private static boolean luhnTest(StringBuilder number) {
+    public static boolean luhnTest(StringBuilder number) {
         int s1 = 0, s2 = 0;
         String reverse = new StringBuffer(number).reverse().toString();
         for (int i = 0; i < reverse.length(); i++) {
