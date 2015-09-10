@@ -1,6 +1,9 @@
-Talend record linkage library version: 2.0.2
+Talend record linkage library
 
-Changes:
+V3.0.0 sizhaoliu 2015-09-10 (TDQ-10888)
+    - Code refactoring
+    - New system for artifact build
+
 - 2.0.2: when compute the weight and it throw an Exception,catch the Excetpion and return 0.(TDQ-10366)
 - 2.0.1: Allow to specify classloader to be used for loading custom matcher class on the match analysis side.(TDQ-8027)
 - 2.0.0: Windows key algorithms integrated into record linkage library
