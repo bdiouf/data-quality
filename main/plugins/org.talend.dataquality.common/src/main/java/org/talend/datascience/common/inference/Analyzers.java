@@ -16,61 +16,60 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.NotImplementedException;
+
 /**
- * Provides a way to combine several {@link Analyzer} together and a
+ * Provides a way to combine several {@link Analyzer<?>} together and a
  * {@link org.talend.datascience.common.inference.Analyzers.Result result} that stores all underlying results.
  *
- * @see #with(Analyzer[])
+ * @see #with(Analyzer<?>[])
  */
 public class Analyzers implements Analyzer<Analyzers.Result> {
 
-    private final Analyzer[] analyzers;
+    private static final long serialVersionUID = 3718737129904789140L;
+
+    private final Analyzer<?>[] analyzers;
 
     private final ResizableList<Result> results = new ResizableList<Result>(Result.class);
 
-    private Analyzers(Analyzer... analyzers) {
+    private Analyzers(Analyzer<?>... analyzers) {
         this.analyzers = analyzers;
     }
 
     /**
-     * Creates a single analyzer with provided {@link Analyzer analyzers}.
+     * Creates a single analyzer with provided {@link Analyzer<?> analyzers}.
      * 
      * @param analyzers The analyzers to be combined together.
      * @return A single analyzer that ensure all underlying analyzers get called.
      */
-    public static Analyzer<Analyzers.Result> with(Analyzer... analyzers) {
+    public static Analyzer<Analyzers.Result> with(Analyzer<?>... analyzers) {
         return new Analyzers(analyzers);
     }
 
     public void init() {
-        for (Analyzer analyzer : analyzers) {
+        for (Analyzer<?> analyzer : analyzers) {
             analyzer.init();
         }
-    }
-
-    @Override
-    public boolean analyzeArray(String[] record) {
-        return analyze(record);
     }
 
     public boolean analyze(String... record) {
         boolean result = true;
         results.resize(record.length);
-        for (Analyzer analyzer : analyzers) {
+        for (Analyzer<?> analyzer : analyzers) {
             result &= analyzer.analyze(record);
         }
         return result;
     }
 
     public void end() {
-        for (Analyzer executor : analyzers) {
+        for (Analyzer<?> executor : analyzers) {
             executor.end();
         }
     }
 
     public List<Result> getResult() {
-        for (Analyzer analyzer : analyzers) {
-            final List analysis = analyzer.getResult();
+        for (Analyzer<?> analyzer : analyzers) {
+            final List<?> analysis = analyzer.getResult();
             for (int i = 0; i < analysis.size(); i++) {
                 for (int j = 0; j < analysis.size(); j++) {
                     results.get(j).add(analysis.get(j));
@@ -81,7 +80,7 @@ public class Analyzers implements Analyzer<Analyzers.Result> {
     }
 
     /**
-     * created by talend on 2015-07-28 Detailled comment.
+     * Composite result aggregates several analyzer's result together.
      *
      */
     public static class Result {
@@ -102,6 +101,6 @@ public class Analyzers implements Analyzer<Analyzers.Result> {
     
     @Override
     public Analyzer<Result> merge(Analyzer<Result> another) {
-        return null;
+        throw new NotImplementedException();
     }
 }

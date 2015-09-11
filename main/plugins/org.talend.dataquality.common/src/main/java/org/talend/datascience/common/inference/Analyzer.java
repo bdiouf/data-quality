@@ -41,13 +41,6 @@ public interface Analyzer<T> extends Serializable {
      */
     boolean analyze(String... record);
 
-    /**
-     * Analyze a single record. this method is tend to be used by clients which DONT support array parameters of variant length.<br>
-     * The implementation is finally use {@link Analyzer#analyze(String...)} .
-     * @param record
-     * @return
-     */
-    boolean analyzeArray(String[] record);
 
     /**
      * Ends the analysis (implementations may perform result optimizations after the repeated call to

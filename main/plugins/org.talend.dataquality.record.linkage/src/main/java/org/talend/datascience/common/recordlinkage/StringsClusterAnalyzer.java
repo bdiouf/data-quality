@@ -44,6 +44,8 @@ import org.talend.datascience.common.inference.Analyzer;
  */
 public class StringsClusterAnalyzer implements Analyzer<StringClusters> {
 
+    private static final long serialVersionUID = -3359232597093558703L;
+
     private static final BlockingKeyAlgorithmEnum blockKeyAlgorithm = BlockingKeyAlgorithmEnum.FINGERPRINTKEY;
 
     private final StringClusters stringClusters = new StringClusters();
@@ -114,10 +116,6 @@ public class StringsClusterAnalyzer implements Analyzer<StringClusters> {
         currentBlockIndex = 0;
     }
 
-    @Override
-    public boolean analyzeArray(String[] record) {
-        return analyze(record);
-    }
 
     public boolean analyze(String... record) {
         if (record == null || record.length != 1) {
