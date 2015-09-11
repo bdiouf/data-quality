@@ -19,6 +19,5 @@ Export-Package: org.talend.dataquality.matchmerge,
  org.talend.dataquality.record.linkage.record,
  org.talend.dataquality.record.linkage.utils,
  org.talend.utils.classloader
-Bundle-ClassPath: .,
- dist/org.talend.dataquality.record.linkage.jar
+Bundle-ClassPath: .
 Import-Package: org.apache.commons.lang

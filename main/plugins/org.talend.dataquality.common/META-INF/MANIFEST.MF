@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Matching Plug-in
+Bundle-Name: Data Quality Common Plug-in
 Bundle-SymbolicName: org.talend.dataquality.common
 Bundle-Version: 1.2.0
 Bundle-Vendor: .Talend SA.

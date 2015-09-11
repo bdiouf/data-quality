@@ -8,7 +8,6 @@ Require-Bundle: org.apache.log4j,
  org.apache.commons.lang
 Export-Package: org.talend.dataquality.duplicating,
  org.talend.dataquality.sampling
-Bundle-ClassPath: .,
- dist/org.talend.dataquality.sampling.jar
+Bundle-ClassPath: .
 Import-Package: org.apache.commons.codec.language,
  org.apache.commons.math3.distribution
