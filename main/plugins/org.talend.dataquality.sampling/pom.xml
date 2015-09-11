@@ -12,6 +12,18 @@
     <packaging>bundle</packaging>
     <version>1.2-SNAPSHOT</version>
     <name>org.talend.dataquality.sampling</name>
+    <description>Dataquality Sampling library description</description>
+
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+
+        <!--
+           This is used to generate README.md file
+        -->
+        <commons.componentid>org.talend.dataquality.sampling</commons.componentid>
+        <commons.release.version>1.2.0</commons.release.version>
+    </properties>
 
     <dependencies>
         <dependency>
