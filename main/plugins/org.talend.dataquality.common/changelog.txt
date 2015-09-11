@@ -1,0 +1,2 @@
+===2015-9-11===
+1. Add exist method in Analyzers.Result class. -mzhao
