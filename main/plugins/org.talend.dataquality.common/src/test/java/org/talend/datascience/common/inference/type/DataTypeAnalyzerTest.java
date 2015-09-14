@@ -28,21 +28,24 @@ import org.talend.datascience.common.inference.AnalyzerTest;
  */
 public class DataTypeAnalyzerTest extends AnalyzerTest {
 
-    private DataTypeAnalyzer analyzer;
+    public DataTypeAnalyzer createDataTypeanalyzer() {
+        DataTypeAnalyzer analyzer = new DataTypeAnalyzer();
+        analyzer.init();
+        return analyzer;
+    }
 
     @Before
     public void setUp() {
-        analyzer = new DataTypeAnalyzer();
-        analyzer.init();
+
     }
 
     @After
     public void tearDown() {
-        analyzer.end();
     }
 
     @Test
     public void testEmptyRecords() throws Exception {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         analyzer.analyze();
         assertEquals(0, analyzer.getResult().size());
         analyzer.analyze(null);
@@ -54,6 +57,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
 
     @Test
     public void testAnalysisResize() throws Exception {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         analyzer.analyze("aaaa");
         assertEquals(1, analyzer.getResult().size());
         analyzer.analyze("aaaa", "bbbb");
@@ -62,6 +66,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
 
     @Test
     public void testString() throws Exception {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         // One string
         analyzer.analyze("aaaa");
         assertEquals(1, analyzer.getResult().size());
@@ -78,6 +83,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
 
     @Test
     public void testInteger() throws Exception {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         // One integer
         analyzer.analyze("0");
         assertEquals(1, analyzer.getResult().size());
@@ -95,6 +101,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
     @Test
     @Ignore
     public void testIncorrectCharDetection() throws Exception {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         // One character
         analyzer.analyze("M");
         assertEquals(1, analyzer.getResult().size());
@@ -114,6 +121,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
 
     @Test
     public void testBoolean() throws Exception {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         // One boolean
         analyzer.analyze("true");
         assertEquals(1, analyzer.getResult().size());
@@ -130,6 +138,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
 
     @Test
     public void testMixedDoubleInteger() throws Exception {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         String[] toTestMoreDouble = { "1.2", "3.4E-10", "1" };
         for (String string : toTestMoreDouble) {
             analyzer.analyze(string);
@@ -146,6 +155,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
 
     @Test
     public void testMultipleColumns() throws Exception {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         analyzer.analyze("true", "aaaa");
         analyzer.analyze("true", "bbbb");
         assertEquals(2, analyzer.getResult().size());
@@ -155,6 +165,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
 
     @Test
     public void testInferDataTypes() {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         final List<String[]> records = getRecords(AnalyzerTest.class.getResourceAsStream("employee_100.csv"));
         for (String[] record : records) {
             analyzer.analyze(record);
@@ -183,6 +194,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
 
     @Test
     public void testDateColumn() throws Exception {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         analyzer.analyze("10-Oct-2015");
         analyzer.analyze("11-Oct-2015");
         assertEquals(1, analyzer.getResult().size());
@@ -195,6 +207,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
      */
     @Test
     public void testInferTypesColumnIndexOrder() {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         final List<String[]> records = getRecords(AnalyzerTest.class.getResourceAsStream("customers_100_bug_TDQ10380.csv"));
         for (String[] record : records) {
             analyzer.analyze(record);
@@ -209,6 +222,44 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         assertEquals(DataType.Type.DATE, result.get(6).getSuggestedType());
         assertEquals(DataType.Type.INTEGER, result.get(7).getSuggestedType());
         assertEquals(DataType.Type.DOUBLE, result.get(8).getSuggestedType());
+    }
+
+    @Test
+    public void testGetDataTypeWithRatio() {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
+        String[] records = new String[] { "1", "2", "3", "4", "1.0", "2.0", "3.0" };
+        for (String record : records) {
+            analyzer.analyze(record);
+        }
+        analyzer.end();
+        final List<DataType> result = analyzer.getResult();
+        assertEquals(DataType.Type.INTEGER, result.get(0).getSuggestedType());
+        assertEquals(DataType.Type.INTEGER, result.get(0).getSuggestedType(0.6));
+        assertEquals(DataType.Type.DOUBLE, result.get(0).getSuggestedType(0.3));
+    }
+    @Test
+    public void testGetDataTypeWithRatioEmpty() {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
+        String[] records = new String[] { "", "", "", "", "1.0", "2.0", "3.0" };
+        for (String record : records) {
+            analyzer.analyze(record);
+        }
+        analyzer.end();
+        final List<DataType> result = analyzer.getResult();
+        assertEquals(DataType.Type.DOUBLE, result.get(0).getSuggestedType());
+        assertEquals(DataType.Type.DOUBLE, result.get(0).getSuggestedType(0.9));
+    }
+    @Test
+    public void testGetDataTypeWithRatioEmpty2() {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
+        String[] records = new String[] { "1", "2", "", "", "1.0", "2.0" };
+        for (String record : records) {
+            analyzer.analyze(record);
+        }
+        analyzer.end();
+        final List<DataType> result = analyzer.getResult();
+        assertEquals(DataType.Type.INTEGER, result.get(0).getSuggestedType(0.9));
+        assertEquals(DataType.Type.DOUBLE, result.get(0).getSuggestedType(0.1));
     }
 
 }
