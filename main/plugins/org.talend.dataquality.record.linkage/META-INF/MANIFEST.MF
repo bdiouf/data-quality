@@ -10,14 +10,19 @@ Require-Bundle: org.apache.log4j,
  org.talend.dataquality.common
 Bundle-Vendor: .Talend SA.
 Export-Package: org.talend.dataquality.matchmerge,
+ org.talend.dataquality.matchmerge.mfb,
+ org.talend.dataquality.record.linkage,
  org.talend.dataquality.record.linkage.attribute,
  org.talend.dataquality.record.linkage.constant,
+ org.talend.dataquality.record.linkage.contribs.algorithm,
  org.talend.dataquality.record.linkage.genkey,
  org.talend.dataquality.record.linkage.grouping,
  org.talend.dataquality.record.linkage.grouping.swoosh,
  org.talend.dataquality.record.linkage.iterator,
  org.talend.dataquality.record.linkage.record,
  org.talend.dataquality.record.linkage.utils,
- org.talend.utils.classloader
+ org.talend.datascience.common.recordlinkage,
+ org.talend.utils.classloader,
+ org.talend.windowkey
 Bundle-ClassPath: .
 Import-Package: org.apache.commons.lang

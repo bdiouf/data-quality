@@ -6,7 +6,9 @@ Bundle-Version: 1.2.3
 Bundle-Vendor: .Talend SA.
 Require-Bundle: org.apache.log4j,
  org.apache.commons.lang
-Export-Package: org.talend.dataquality.duplicating,
+Export-Package: org.talend.dataquality.datamasking,
+ org.talend.dataquality.datamasking.Functions,
+ org.talend.dataquality.duplicating,
  org.talend.dataquality.sampling
 Bundle-ClassPath: .
 Import-Package: org.apache.commons.codec.language,
