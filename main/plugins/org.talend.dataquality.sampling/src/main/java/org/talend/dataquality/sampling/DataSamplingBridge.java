@@ -116,7 +116,8 @@ public class DataSamplingBridge {
         return false;
     }
 
-    public void prepareData() throws Exception {
+    public void prepareData(String[] columnHeaders) throws Exception {
+        dataSource.initColumnHeader(columnHeaders);
         prepareData(currentRandomSeed);
     }
 
