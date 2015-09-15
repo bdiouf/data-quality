@@ -12,17 +12,19 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.Functions;
 
-import java.io.Serializable;
-
-import org.talend.dataquality.datamasking.Function;
+import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 24 juin 2015. This function will return the super.seq value and increment it.
  *
  */
-public class GenerateSequenceLong extends Function<Long> implements Serializable {
+public class GenerateSequenceLong extends GenerateSequence<Long> {
 
-    private static final long serialVersionUID = -746818978568435751L;
+    @Override
+    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        super.seq = super.setSeq(extraParameter);
+    }
 
     @Override
     public Long generateMaskedRow(Long l) {

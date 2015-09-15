@@ -12,23 +12,27 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.Functions;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
+import org.talend.dataquality.datamasking.Function;
 
 /**
- * created by jgonzalez on 24 juin 2015. This function will return the super.seq value and increment it.
+ * created by jgonzalez on 8 sept. 2015 Detailled comment
  *
  */
-public class GenerateSequenceDouble extends GenerateSequence<Double> {
+public abstract class GenerateSequence<T2> extends Function<T2> {
 
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.seq = super.setSeq(extraParameter);
+    protected int seq = 0;
+
+    public int setSeq(String s) {
+        int i = 0;
+        try {
+            i = Integer.parseInt(s.trim());
+        } catch (NumberFormatException e) {
+            // Do nothing
+        }
+        return i;
     }
 
     @Override
-    public Double generateMaskedRow(Double d) {
-        return (double) seq++;
-    }
+    public abstract T2 generateMaskedRow(T2 t);
 
 }

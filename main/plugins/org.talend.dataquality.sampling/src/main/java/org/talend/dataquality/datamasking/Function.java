@@ -33,28 +33,11 @@ public abstract class Function<T> implements Serializable {
 
     protected RandomWrapper rnd = null;
 
-    protected static int seq = 0;
-
     protected Integer integerParam = 0;
 
     protected String[] parameters = new String[1];
 
     protected boolean keepNull = false;
-
-    /**
-     * DOC jgonzalez Comment method "setSeq". This function is used for the GENERATE_SEQUENCE function.
-     * 
-     * @param i The element that starts the sequence.
-     */
-    public void setSeq(String s) {
-        int i = 0;
-        try {
-            i = Integer.parseInt(s.trim());
-        } catch (NumberFormatException e) {
-            // Do nothing
-        }
-        seq = i;
-    }
 
     /**
      * DOC jgonzalez Comment method "setRandomWrapper". This method is used to set the RandomWrapper used by all
