@@ -54,14 +54,6 @@ public interface SamplingDataSource<DataSource> {
 
     /**
      * 
-     * Get size of Records
-     * 
-     * @return
-     */
-    public long getRecordSize();
-
-    /**
-     * 
      * Init column header
      * 
      * @return

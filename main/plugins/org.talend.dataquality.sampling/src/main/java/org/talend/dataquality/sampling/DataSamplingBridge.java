@@ -187,9 +187,4 @@ public class DataSamplingBridge {
     public long getDataSourceCursor() {
         return dataSourceCursor;
     }
-
-    public long getRecordSize() {
-        return dataSource.getRecordSize();
-    }
-
 }
