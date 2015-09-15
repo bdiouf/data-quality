@@ -52,6 +52,20 @@ public interface SamplingDataSource<DataSource> {
      */
     public boolean finalizeDataSampling() throws Exception;
 
+    /**
+     * 
+     * Get size of Records
+     * 
+     * @return
+     */
     public long getRecordSize();
+
+    /**
+     * 
+     * Init column header
+     * 
+     * @return
+     */
+    public abstract void initColumnHeader(String[] columnHeaders);
 
 }
