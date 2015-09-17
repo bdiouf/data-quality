@@ -230,4 +230,8 @@ public class StringsClusterAnalyzer implements Analyzer<StringClusters> {
             throw new UnsupportedOperationException("remove");
         }
     }
+    @Override
+    public void close() throws Exception {
+        
+    }
 }

@@ -25,7 +25,7 @@ import java.util.List;
  * 
  * @param <T> The type of results built by the implementation.
  */
-public interface Analyzer<T> extends Serializable {
+public interface Analyzer<T> extends Serializable, AutoCloseable {
 
     /**
      * Prepare implementation for analysis. Implementations may perform various tasks like internal initialization or

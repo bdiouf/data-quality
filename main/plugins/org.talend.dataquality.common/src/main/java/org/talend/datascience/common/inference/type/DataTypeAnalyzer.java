@@ -134,4 +134,10 @@ public class DataTypeAnalyzer implements Analyzer<DataType> {
         return mergedAnalyzer;
 
     }
+
+    @Override
+    public void close() throws Exception {
+        
+    }
+    
 }
