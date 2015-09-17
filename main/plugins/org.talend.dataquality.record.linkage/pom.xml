@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -18,9 +18,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
 
-        <!--
-           This is used to generate README.md file
-        -->
+        <!-- This is used to generate README.md file -->
         <commons.componentid>org.talend.dataquality.record.linkage</commons.componentid>
         <commons.release.version>1.2.0</commons.release.version>
     </properties>
@@ -35,6 +33,19 @@
                 </includes>
             </resource>
         </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Include-Resource>src/main/java/messages.properties</Include-Resource>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencies>
