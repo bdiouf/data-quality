@@ -13,11 +13,11 @@
 package org.talend.datascience.common.inference;
 
 import java.io.Serializable;
-import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * A {@link List} that can resize to a given maximum size and ensure that all index in list have an instance of
@@ -26,7 +26,7 @@ import java.util.stream.Stream;
  * @param <T> A class with a zero-arg constructor.
  * @see #resize(int)
  */
-public class ResizableList<T> implements List<T>,Serializable {
+public class ResizableList<T> implements List<T>, Serializable {
 
     private static final long serialVersionUID = -4643753633617225999L;
 
@@ -49,15 +49,16 @@ public class ResizableList<T> implements List<T>,Serializable {
         this.itemClass = itemClass;
         this.innerList = new ArrayList<T>();
     }
+
     /**
      * Creates a list with a copy of list.
      * 
      * @param copyOfList list to be initialized.
      */
-    public  ResizableList(List<T> copyOfList) {
+    public ResizableList(List<T> copyOfList) {
         this.innerList = copyOfList;
     }
-    
+
     /**
      * Resize the list so it contains <code>size</code> instances of <i>T</i>. Method only scales up, never down.
      * 
@@ -133,13 +134,13 @@ public class ResizableList<T> implements List<T>,Serializable {
         return innerList.retainAll(collection);
     }
 
-    public void replaceAll(UnaryOperator<T> operator) {
-        innerList.replaceAll(operator);
-    }
-
-    public void sort(Comparator<? super T> c) {
-        innerList.sort(c);
-    }
+    // public void replaceAll(UnaryOperator<T> operator) {
+    // innerList.replaceAll(operator);
+    // }
+    //
+    // public void sort(Comparator<? super T> c) {
+    // innerList.sort(c);
+    // }
 
     public void clear() {
         innerList.clear();
@@ -191,23 +192,23 @@ public class ResizableList<T> implements List<T>,Serializable {
         return innerList.subList(i, i1);
     }
 
-    public Spliterator<T> spliterator() {
-        return innerList.spliterator();
-    }
-
-    public boolean removeIf(Predicate<? super T> filter) {
-        return innerList.removeIf(filter);
-    }
-
-    public Stream<T> stream() {
-        return innerList.stream();
-    }
-
-    public Stream<T> parallelStream() {
-        return innerList.parallelStream();
-    }
-
-    public void forEach(Consumer<? super T> action) {
-        innerList.forEach(action);
-    }
+    // public Spliterator<T> spliterator() {
+    // return innerList.spliterator();
+    // }
+    //
+    // public boolean removeIf(Predicate<? super T> filter) {
+    // return innerList.removeIf(filter);
+    // }
+    //
+    // public Stream<T> stream() {
+    // return innerList.stream();
+    // }
+    //
+    // public Stream<T> parallelStream() {
+    // return innerList.parallelStream();
+    // }
+    //
+    // public void forEach(Consumer<? super T> action) {
+    // innerList.forEach(action);
+    // }
 }
