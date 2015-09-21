@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.talend.dataquality.sampling
 Bundle-Version: 2.1.0
 Bundle-Vendor: .Talend SA.
 Require-Bundle: org.apache.log4j,
- org.apache.commons.lang
+ org.apache.commons.lang,
+ org.junit
 Export-Package: org.talend.dataquality.datamasking,
  org.talend.dataquality.datamasking.Functions,
  org.talend.dataquality.duplicating,

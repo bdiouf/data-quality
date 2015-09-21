@@ -2,6 +2,8 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="output" path="class"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src/test/java"/>
+	<classpathentry excluding="**/*.java" kind="src" output="target/classes" path="src/test/resources"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
