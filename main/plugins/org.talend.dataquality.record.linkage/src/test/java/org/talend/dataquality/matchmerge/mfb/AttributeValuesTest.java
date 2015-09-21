@@ -25,7 +25,7 @@ public class AttributeValuesTest extends TestCase {
         values.get("AC").increment();
         assertEquals("AC", values.mostCommon());
     }
-    
+
     public void testMostCommon2() throws Exception {
         AttributeValues<Integer> values = new AttributeValues<Integer>();
         values.get(0).increment();
@@ -97,10 +97,10 @@ public class AttributeValuesTest extends TestCase {
         values4.get("test2").increment();
         values1.merge(values3);
         values1.merge(values4);
-        
+
         assertEquals("test2", values1.mostCommon());
     }
-    
+
     public void testMergeInNew() throws Exception {
         AttributeValues<String> values1 = new AttributeValues<String>();
         values1.get("test1").increment();
@@ -114,5 +114,29 @@ public class AttributeValuesTest extends TestCase {
         values3.merge(values2);
         assertEquals(3, values3.get("test1").getOccurrence());
         assertEquals(2, values3.get("test2").getOccurrence());
+    }
+
+    public void testDuplicatedValues() throws Exception {
+        AttributeValues<String> values1 = new AttributeValues<String>();
+        values1.get("test1").increment();
+        values1.get("test2").increment();
+        values1.get("test1").increment();
+        values1.get("test1").increment();
+        values1.get("test1").increment();
+        values1.get("test2").increment();
+        AttributeValues<String> values2 = new AttributeValues<String>();
+        values2.get("test1").increment();
+        values2.get("test2").increment();
+        values2.get("test2").increment();
+        values2.get("test2").increment();
+        values2.get("test1").increment();
+        values2.get("test1").increment();
+        values1.merge(values2);
+        int iteratorSize = 0;
+        for (String value : values1) {
+            assertTrue("test1".equals(value) || "test2".equals(value));
+            iteratorSize++;
+        }
+        assertEquals(2, iteratorSize);
     }
 }

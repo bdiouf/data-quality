@@ -37,7 +37,7 @@ import org.talend.dataquality.record.linkage.utils.SurvivorShipAlgorithmEnum;
 import org.talend.datascience.common.inference.Analyzer;
 
 /**
- * Sting clustering analyzer.
+ * String clustering analyzer.
  * 
  * @author zhao
  *

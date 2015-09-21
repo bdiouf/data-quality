@@ -19,7 +19,7 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang.ObjectUtils;
 
-public class AttributeValues<T> implements Iterable<T> {
+public class AttributeValues<T extends Comparable<T>> implements Iterable<T> {
 
     private final TreeSet<Entry<T>> values = new TreeSet<Entry<T>>();
 
@@ -53,8 +53,13 @@ public class AttributeValues<T> implements Iterable<T> {
         if (values.isEmpty()) {
             return null;
         }
-        merge(this); // Merge on itself forces re-order of elements in set.
-        return values.last().value;
+        Entry<T> mostCommon =  values.first();
+        for(Entry<T> entry:values){
+            if(entry.getOccurrence()>mostCommon.getOccurrence()){
+                mostCommon = entry;
+            }
+        }
+        return mostCommon.value;
     }
 
     @Override
@@ -129,7 +134,7 @@ public class AttributeValues<T> implements Iterable<T> {
         return size;
     }
 
-    public class Entry<E> implements Comparable<Entry<E>> {
+    public class Entry<E extends Comparable<T>> implements Comparable<Entry<E>> {
 
         private final E value;
 
@@ -154,10 +159,7 @@ public class AttributeValues<T> implements Iterable<T> {
 
         @Override
         public int compareTo(Entry<E> tEntry) {
-            if (ObjectUtils.equals(value, tEntry.value)) {
-                return 0;
-            }
-            return occurrence - tEntry.occurrence;
+            return ObjectUtils.compare(value, tEntry.value);
         }
 
         public int getOccurrence() {
