@@ -13,20 +13,24 @@
 package org.talend.datascience.common.inference;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import org.apache.commons.pool.KeyedObjectPool;
 import org.apache.commons.pool.KeyedPoolableObjectFactory;
 import org.apache.commons.pool.impl.GenericKeyedObjectPool;
 import org.talend.datascience.common.inference.Analyzer;
-
+/**
+ * 
+ * @author zhao
+ *
+ * @param <T>
+ */
 public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
     private static final long serialVersionUID = 6896234073310039985L;
 
     private final KeyedObjectPool<Thread, Analyzer<T>> pool;
 
-    private ConcurrentAnalyzer(int maxSize, Supplier<Analyzer<T>> supplier) {
+    private ConcurrentAnalyzer(int maxSize, AnalyzerSupplier<Analyzer<T>> supplier) {
         GenericKeyedObjectPool.Config config = new GenericKeyedObjectPool.Config();
         config.maxTotal = maxSize;
         config.maxActive = maxSize;
@@ -35,7 +39,7 @@ public class ConcurrentAnalyzer<T> implements Analyzer<T> {
         this.pool = new GenericKeyedObjectPool<>(new Factory<>(supplier), config);
     }
 
-    public static <T> Analyzer<T> make(Supplier<Analyzer<T>> supplier, int maxSize) {
+    public static <T> Analyzer<T> make(AnalyzerSupplier<Analyzer<T>> supplier, int maxSize) {
         return new ConcurrentAnalyzer<>(maxSize, supplier);
     }
 
@@ -95,9 +99,9 @@ public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
     private static class Factory<T> implements KeyedPoolableObjectFactory<Thread, Analyzer<T>> {
 
-        private final Supplier<Analyzer<T>> supplier;
+        private final AnalyzerSupplier<Analyzer<T>> supplier;
 
-        public Factory(Supplier<Analyzer<T>> supplier) {
+        public Factory(AnalyzerSupplier<Analyzer<T>> supplier) {
             this.supplier = supplier;
         }
 
@@ -108,7 +112,6 @@ public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
         @Override
         public void destroyObject(Thread key, Analyzer<T> obj) throws Exception {
-            obj.end();
         }
 
         @Override
@@ -122,7 +125,6 @@ public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
         @Override
         public void passivateObject(Thread key, Analyzer<T> obj) throws Exception {
-            obj.end();
         }
     }
 
