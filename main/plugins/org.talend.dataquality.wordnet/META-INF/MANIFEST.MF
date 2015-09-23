@@ -13,8 +13,7 @@ Export-Package: edu.mit.jwi,
  org.talend.dataquality.wordnet
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.apache.log4j,
- org.junit,
- org.eclipse.core.runtime
+ org.junit
 Bundle-ClassPath: .,
  lib/jwi-2.2.3.jar
 Eclipse-BundleShape: dir

@@ -32,7 +32,7 @@ public class WordNetDictionary {
 
     private static WordNetDictionary instance = null;
 
-    public WordNetDictionary() {
+    private WordNetDictionary() {
         initDictinary();
     }
 
@@ -40,7 +40,7 @@ public class WordNetDictionary {
         if (instance == null) {
             instance = new WordNetDictionary();
         }
-        if (dict == null || !dict.isOpen()) {
+        if (dict != null && !dict.isOpen()) {
             try {
                 dict.open();
             } catch (IOException e) {
