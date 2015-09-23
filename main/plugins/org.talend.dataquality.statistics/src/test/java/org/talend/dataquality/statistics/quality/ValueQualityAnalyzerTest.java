@@ -26,6 +26,7 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.type.DataType;
 import org.talend.datascience.common.inference.type.DataType.Type;
 
@@ -49,6 +50,16 @@ public class ValueQualityAnalyzerTest {
         qualityAnalyzer.analyze("1.0");
         qualityAnalyzer.analyze("0.02");
         qualityAnalyzer.analyze("2.88888888888888888888888");
+        qualityAnalyzer.analyze("3");
+        qualityAnalyzer.analyze("5538297118");
+        qualityAnalyzer.analyze("str");
+    }
+    private static void populateAnalyzerHalfA(ValueQualityAnalyzer qualityAnalyzer) {
+        qualityAnalyzer.analyze("1.0");
+        qualityAnalyzer.analyze("0.02");
+        qualityAnalyzer.analyze("2.88888888888888888888888");
+    }
+    private static void populateAnalyzerHalfB(ValueQualityAnalyzer qualityAnalyzer) {
         qualityAnalyzer.analyze("3");
         qualityAnalyzer.analyze("5538297118");
         qualityAnalyzer.analyze("str");
@@ -356,6 +367,28 @@ public class ValueQualityAnalyzerTest {
             }
         }
 
+    }
+
+    @Test
+    public void testMerge() {
+        ValueQualityAnalyzer qualityAnalyzer = new ValueQualityAnalyzer(DataType.Type.DOUBLE);
+        ValueQualityAnalyzer qualityAnalyzer2 = new ValueQualityAnalyzer(DataType.Type.DOUBLE);
+
+        
+        populateAnalyzerHalfA(qualityAnalyzer);
+        populateAnalyzerHalfB(qualityAnalyzer2);
+       
+        Analyzer<ValueQualityStatistics> mergedAnalyzer =   qualityAnalyzer.merge(qualityAnalyzer2);
+        ValueQualityStatistics valueQuality = mergedAnalyzer.getResult().get(0);
+        // Valid and invalid
+        assertEquals(1, valueQuality.getInvalidCount());
+        assertEquals(5, valueQuality.getValidCount());
+        // Invalid values
+        Set<String> invalidValues = valueQuality.getInvalidValues();
+        assertEquals(1, invalidValues.size());
+        assertTrue(invalidValues.contains("str"));
+        
+        
     }
 
     public static List<String[]> getRecords(InputStream inputStream) {

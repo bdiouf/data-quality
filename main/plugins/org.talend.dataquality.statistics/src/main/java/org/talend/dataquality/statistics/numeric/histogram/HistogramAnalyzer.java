@@ -14,6 +14,7 @@ package org.talend.dataquality.statistics.numeric.histogram;
 
 import java.util.List;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
@@ -103,7 +104,7 @@ public class HistogramAnalyzer extends NumericalStatisticsAnalyzer<HistogramStat
 
     @Override
     public Analyzer<HistogramStatistics> merge(Analyzer<HistogramStatistics> another) {
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
