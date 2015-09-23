@@ -4,12 +4,12 @@ Bundle-Name: Semantic Library
 Bundle-SymbolicName: org.talend.dataquality.wordnet;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Vendor: .Talend SA.
-Export-Package: edu.mit.jwi,
- edu.mit.jwi.data,
- edu.mit.jwi.data.compare,
- edu.mit.jwi.data.parse,
- edu.mit.jwi.item,
- edu.mit.jwi.morph,
+Export-Package: edu.mit.jwi;version="2.2.3",
+ edu.mit.jwi.data;version="2.2.3",
+ edu.mit.jwi.data.compare;version="2.2.3",
+ edu.mit.jwi.data.parse;version="2.2.3",
+ edu.mit.jwi.item;version="2.2.3",
+ edu.mit.jwi.morph;version="2.2.3",
  org.talend.dataquality.wordnet
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.apache.log4j,
