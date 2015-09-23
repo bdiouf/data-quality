@@ -36,9 +36,27 @@ public class WordNetDictionaryTest {
     }
 
     @Test
-    public void testContainsWord() {
-        assertTrue(wordnet.containsWord("talent"));
-        assertFalse(wordnet.containsWord("foobar"));
+    public void testIsValidWord() {
+        assertTrue(wordnet.isValidWord("talent"));
+        assertTrue(wordnet.isValidWord("postal_code"));
+
+        assertFalse(wordnet.isValidWord("foobar"));
+        assertFalse(wordnet.isValidWord("PostalCode"));
+
+    }
+
+    @Test
+    public void testIsValidTerm() {
+
+        assertTrue(wordnet.isValidTerm("talent"));
+        assertTrue(wordnet.isValidTerm("PostalCode"));
+        assertTrue(wordnet.isValidTerm("CodePostal"));
+        assertTrue(wordnet.isValidTerm("Postal Code"));
+
+        assertFalse(wordnet.isValidTerm("foobar"));
+        assertFalse(wordnet.isValidTerm("country_code"));
+        assertFalse(wordnet.isValidTerm("Code_Postal"));
+        assertFalse(wordnet.isValidTerm("CodePays"));
     }
 
     @AfterClass

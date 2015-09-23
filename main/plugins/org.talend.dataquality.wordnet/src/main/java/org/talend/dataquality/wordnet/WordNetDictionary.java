@@ -87,14 +87,25 @@ public class WordNetDictionary {
         return filePath;
     }
 
-    public boolean containsWord(String input) {
+    boolean isValidWord(String input) {
+        IIndexWord idxWord = null;
         for (POS pos : POS.values()) {
-            IIndexWord idxWord = dict.getIndexWord(input, pos);
+            idxWord = dict.getIndexWord(input, pos);
             if (idxWord != null) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean isValidTerm(String input) {
+        final String[] tokens = TextUtils.cutTextAndSplit(input);
+        for (String token : tokens) {
+            if (!isValidWord(token)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void close() {
