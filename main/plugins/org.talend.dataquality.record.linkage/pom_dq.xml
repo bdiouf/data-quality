@@ -47,6 +47,9 @@
                         <excludes>
                             <exclude>org/talend/datascience/common/**/*.java</exclude>
                         </excludes>
+                        <testExcludes>
+                            <exclude>org/talend/datascience/common/**/*.java</exclude>
+                        </testExcludes>
                     </configuration>
                 </plugin>
                 
