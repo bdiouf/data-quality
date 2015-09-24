@@ -12,16 +12,14 @@
 // ============================================================================
 package org.talend.dataquality.semantic.statistics;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
@@ -31,27 +29,66 @@ import org.talend.datascience.common.inference.ConcurrentAnalyzer;
 
 public class ConcurrentAnalyzerTest extends AnalyzerTest {
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
     @Test
-    public void testThreadSafeConcurrentAccess() throws Exception {
-        final URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
-        final URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
-        try (Analyzer<SemanticType> analyzer = createSemanticAnalyzer(ddPath, kwPath)) {
+    public void testThreadSafeConcurrentAccess() {
+        URI ddPath = null;
+        URI kwPath = null;
+        try {
+            ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
+            kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
+            assertNotNull("Keyword dictionary not loaded", kwPath);
+            assertNotNull("data dictionary not loaded", ddPath);
+            Analyzer<SemanticType> analyzer = createSemanticAnalyzer(ddPath, kwPath);
+            final AtomicBoolean failed = new AtomicBoolean(false);
             Runnable r = new Runnable() {
 
                 @Override
                 public void run() {
-                    final AtomicBoolean failed = doConcurrentAccess(analyzer);
-                    assertEquals(failed.get(), false);
+                    AtomicBoolean f = doConcurrentAccess(analyzer);
+                    if (f.get()) {
+                        failed.set(f.get());
+                    }
+                    // assertEquals(failed.get(), false); // FIXME this assertion does not make the test fail.
+                    // assertEquals(failed.get(), true); // FIXME this assertion does not make the test fail.
                 };
+            };
+            List<Thread> workers = new ArrayList<>();
+            for (int i = 0; i < 100; i++) {
+                workers.add(new Thread(r));
+            }
+            for (Thread worker : workers) {
+                worker.start();
+            }
+            for (Thread worker : workers) {
+                worker.join();
+            }
+
+            assertEquals("ConcurrentAccess failed", false, failed.get());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            fail("Problem while loading dictionaries");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            fail("Thread has been interrupted");
+        }
+    }
+
+    @Test
+    public void testThreadUnsafeConcurrentAccess() throws Exception {
+        final URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
+        final URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
+        final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
+                .ddPath(ddPath) //
+                .kwPath(kwPath) //
+                .setMode(CategoryRecognizerBuilder.Mode.LUCENE);
+        try (Analyzer<SemanticType> analyzer = new SemanticAnalyzer(builder)) {
+            Runnable r = new Runnable() {
+
+                @Override
+                public void run() {
+                    doConcurrentAccess(analyzer);
+                }
+
             };
             List<Thread> workers = new ArrayList<>();
             for (int i = 0; i < 20; i++) {
@@ -80,7 +117,7 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
             }
 
         };
-        return ConcurrentAnalyzer.make(analyzer, 20);
+        return ConcurrentAnalyzer.make(analyzer, 100);
     }
 
     private AtomicBoolean doConcurrentAccess(Analyzer<SemanticType> semanticAnalyzer) {
@@ -91,29 +128,48 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
             for (String[] data : records) {
                 semanticAnalyzer.analyze(data);
             }
+            semanticAnalyzer.end();
+            List<SemanticType> result = semanticAnalyzer.getResult();
+            int columnIndex = 0;
+            final String[] expectedCategories = new String[] { //
+            "", //
+                    SemanticCategoryEnum.FIRST_NAME.getId(), //
+                    SemanticCategoryEnum.CITY.getId(), //
+                    SemanticCategoryEnum.US_STATE_CODE.getId(), //
+                    "", //
+                    SemanticCategoryEnum.CITY.getId(), //
+                    "", //
+                    "", //
+                    "" //
+            };
+            // assertFalse(result.isEmpty());
+            if (result.isEmpty()) {
+                failed.set(true);
+            }
+            for (SemanticType columnSemanticType : result) {
+                if (!expectedCategories[columnIndex++].equals(columnSemanticType.getSuggestedCategory())) {
+                    System.out.println("fails");
+                    failed.set(true);
+                }
+                // assertEquals(expectedCategories[columnIndex++], columnSemanticType.getSuggestedCategory());
+                // assertEquals("blabla", columnSemanticType.getSuggestedCategory());
+                // if
+                // ("this category does not exist and should not match".equals(columnSemanticType.getSuggestedCategory()))
+                // {
+                // failed.set(true);
+                // }
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
             failed.set(true);
         }
-        semanticAnalyzer.end();
-        List<SemanticType> result = semanticAnalyzer.getResult();
-        int columnIndex = 0;
-        String[] expectedCategories = new String[] { //
-        "", //
-                SemanticCategoryEnum.FIRST_NAME.getId(), //
-                SemanticCategoryEnum.CITY.getId(), //
-                SemanticCategoryEnum.US_STATE_CODE.getId(), //
-                "", //
-                SemanticCategoryEnum.CITY.getId(), //
-                "", //
-                "", //
-                "" //
-        };
-        assertFalse(result.isEmpty());
-        for (SemanticType columnSemanticType : result) {
-            assertEquals(expectedCategories[columnIndex++], columnSemanticType.getSuggestedCategory());
-        }
         return failed;
     }
+    //
+    // @Test
+    // public void testTooManyThreads() {
+    //
+    // }
 
 }
