@@ -10,6 +10,7 @@ Require-Bundle: org.apache.log4j,
  org.slf4j.api,
  org.apache.commons.io,
  org.apache.commons.lang,
+ org.apache.commons.pool,
  org.junit
 Export-Package: org.talend.datascience.common.inference,
  org.talend.datascience.common.inference.type
