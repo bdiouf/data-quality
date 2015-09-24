@@ -1,2 +1,5 @@
 ===2015-9-11===
 1. Add exist method in Analyzers.Result class. -mzhao
+===2015-9-22===
+1. Add concurrent analyzer -mzhao
+2. Fix return twice the same value issue on AttributeValues class.
