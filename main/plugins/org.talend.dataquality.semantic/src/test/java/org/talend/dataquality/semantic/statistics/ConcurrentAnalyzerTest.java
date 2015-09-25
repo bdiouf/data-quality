@@ -46,10 +46,11 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
                 public void run() {
                     AtomicBoolean f = doConcurrentAccess(analyzer);
                     if (f.get()) {
-                        failed.set(f.get());
+                        failed.set(true);
+                        System.out.println(failed);
                     }
-                    // assertEquals(failed.get(), false); // FIXME this assertion does not make the test fail.
-                    // assertEquals(failed.get(), true); // FIXME this assertion does not make the test fail.
+                    // assertEquals(f.get(), false); // FIXME this assertion does not make the test fail.
+                    // assertEquals(f.get(), true); // FIXME this assertion does not make the test fail.
                 };
             };
             List<Thread> workers = new ArrayList<>();
@@ -63,7 +64,9 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
                 worker.join();
             }
 
+            System.out.println(failed);
             assertEquals("ConcurrentAccess failed", false, failed.get());
+            fail("ERRROR");
         } catch (URISyntaxException e) {
             e.printStackTrace();
             fail("Problem while loading dictionaries");
@@ -126,7 +129,11 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
         final List<String[]> records = getRecords(AnalyzerTest.class.getResourceAsStream("customers_100_bug_TDQ10380.csv"));
         try {
             for (String[] data : records) {
-                semanticAnalyzer.analyze(data);
+                try {
+                    semanticAnalyzer.analyze(data);
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
             semanticAnalyzer.end();
             List<SemanticType> result = semanticAnalyzer.getResult();

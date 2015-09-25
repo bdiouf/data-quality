@@ -13,6 +13,7 @@
 package org.talend.dataquality.semantic.statistics;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -26,8 +27,8 @@ import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
 
 /**
- * Semantic type infer executor.
- * <br>
+ * Semantic type infer executor. <br>
+ * 
  * @see Analyzer
  * 
  */
@@ -62,6 +63,7 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
         this.limit = limit;
     }
 
+    @Override
     public void init() {
         currentCount = 1;
         columnIdxToCategoryRecognizer.clear();
@@ -71,18 +73,25 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
     /**
      * Analyze the record by guessing the data semantic type.
      */
+    @Override
     public boolean analyze(String... record) {
         results.resize(record.length);
         resizeCategoryRecognizer(record);
         if (currentCount <= limit) {
             for (int i = 0; i < record.length; i++) {
-                columnIdxToCategoryRecognizer.get(i).processCategories(record[i]);
+                CategoryRecognizer categoryRecognizer = columnIdxToCategoryRecognizer.get(i);
+                if (categoryRecognizer == null) {
+                    System.err.println("CategoryRecognizer is null for record and i=" + i + " " + Arrays.asList(record));
+                    throw new RuntimeException("CategoryRecognizer is null for record and i=" + i + " " + Arrays.asList(record));
+                } else {
+                    categoryRecognizer.processCategories(record[i]);
+                }
             }
             currentCount++;
         }
         return true;
     }
-    
+
     private void resizeCategoryRecognizer(String[] record) {
         if (columnIdxToCategoryRecognizer.size() > 0) {
             // already resized
@@ -98,12 +107,14 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
         }
     }
 
+    @Override
     public void end() {
     }
 
     /**
-     * Get a list of guessed semantic type with type {{@link SemanticType}}
+     * Get a list of guessed semantic type with type {{@link SemanticType}
      */
+    @Override
     public List<SemanticType> getResult() {
         for (Integer colIdx : columnIdxToCategoryRecognizer.keySet()) {
             Collection<CategoryFrequency> result = columnIdxToCategoryRecognizer.get(colIdx).getResult();
@@ -113,14 +124,15 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
         }
         return results;
     }
-    
+
     @Override
     public Analyzer<SemanticType> merge(Analyzer<SemanticType> another) {
         throw new NotImplementedException();
     }
+
     @Override
     public void close() throws Exception {
-        
+
     }
 
 }
