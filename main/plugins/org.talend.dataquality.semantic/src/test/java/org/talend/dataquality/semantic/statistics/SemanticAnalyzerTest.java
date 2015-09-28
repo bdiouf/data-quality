@@ -1,6 +1,18 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
 package org.talend.dataquality.semantic.statistics;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,8 +27,6 @@ import org.junit.Test;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder.Mode;
-import org.talend.dataquality.semantic.statistics.SemanticAnalyzer;
-import org.talend.dataquality.semantic.statistics.SemanticType;
 
 /**
  * This test is ignored for the time being because the dictionary path and key word path is hard coded, they should be
@@ -27,26 +37,26 @@ import org.talend.dataquality.semantic.statistics.SemanticType;
  */
 public class SemanticAnalyzerTest extends AnalyzerTest {
 
-    
-    private SemanticAnalyzer createAnalyzer() throws URISyntaxException{
+    private SemanticAnalyzer createAnalyzer() throws URISyntaxException {
         final URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
         final URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
         final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
                 .ddPath(ddPath) //
                 .kwPath(kwPath) //
                 .setMode(Mode.LUCENE);
-        SemanticAnalyzer semanticAnalyzer= new SemanticAnalyzer(builder);
+        SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer(builder);
         return semanticAnalyzer;
     }
 
     @Before
     public void setUp() throws Exception {
-        
+
     }
 
     @After
     public void tearDown() throws Exception {
     }
+
     @Test
     public void testHandleCustomer100() throws URISyntaxException {
         SemanticAnalyzer semanticAnalyzer = createAnalyzer();
@@ -59,7 +69,7 @@ public class SemanticAnalyzerTest extends AnalyzerTest {
         List<SemanticType> result = semanticAnalyzer.getResult();
         int columnIndex = 0;
         String[] expectedCategories = new String[] { //
-                "", //
+        "", //
                 SemanticCategoryEnum.FIRST_NAME.getId(), //
                 SemanticCategoryEnum.CITY.getId(), //
                 SemanticCategoryEnum.US_STATE_CODE.getId(), //
@@ -144,7 +154,7 @@ public class SemanticAnalyzerTest extends AnalyzerTest {
             assertEquals(expectedCategories[columnIndex++], columnSemanticType.getSuggestedCategory());
         }
     }
-    
+
     @Test
     public void testURLDetection() throws URISyntaxException {
         SemanticAnalyzer semanticAnalyzer = createAnalyzer();
@@ -161,16 +171,19 @@ public class SemanticAnalyzerTest extends AnalyzerTest {
             assertEquals(expectedCategories[columnIndex++], columnSemanticType.getSuggestedCategory());
         }
     }
+
     @Test
     public void testConcurrentAccess() throws Exception {
         final AtomicBoolean failed = new AtomicBoolean();
         Runnable r = new Runnable() {
+
             @Override
             public void run() {
-                final List<String[]> records = getRecords(AnalyzerTest.class.getResourceAsStream("customers_100_bug_TDQ10380.csv"));
-                SemanticAnalyzer semanticAnalyzer  = null;
+                final List<String[]> records = getRecords(AnalyzerTest.class
+                        .getResourceAsStream("customers_100_bug_TDQ10380.csv"));
+                SemanticAnalyzer semanticAnalyzer = null;
                 try {
-                     semanticAnalyzer = createAnalyzer();
+                    semanticAnalyzer = createAnalyzer();
                     for (String[] record : records) {
                         semanticAnalyzer.analyze(record);
                     }
@@ -182,7 +195,7 @@ public class SemanticAnalyzerTest extends AnalyzerTest {
                 List<SemanticType> result = semanticAnalyzer.getResult();
                 int columnIndex = 0;
                 String[] expectedCategories = new String[] { //
-                        "", //
+                "", //
                         SemanticCategoryEnum.FIRST_NAME.getId(), //
                         SemanticCategoryEnum.CITY.getId(), //
                         SemanticCategoryEnum.US_STATE_CODE.getId(), //
