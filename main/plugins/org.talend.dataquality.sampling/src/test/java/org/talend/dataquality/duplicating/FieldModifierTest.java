@@ -12,9 +12,12 @@
 // ============================================================================
 package org.talend.dataquality.duplicating;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import java.util.Date;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -110,6 +113,35 @@ public class FieldModifierTest {
         String EXPECTED_WORD = "Suresnec"; //$NON-NLS-1$
         Object dup = dataModifier.generateDuplicate(STRING_TO_TEST, Function.SOUNDEX_REPLACE, DEFAULT_MODIF_COUNT, EMPTY_STRING);
         assertEquals(EXPECTED_WORD, dup);
+    }
+
+    /**
+     * Test method for
+     * {@link org.talend.dataquality.duplicating.FieldModifier#generateDuplicate(java.util.Date, org.talend.dataquality.duplicating.FieldModifier.Function, int, java.lang.String)}
+     * .
+     * 
+     * case1 date is null case
+     */
+    @Test
+    public void testGenerateDuplicateDateFunctionIntStringCase1() {
+        FieldModifier fieldModifier = new FieldModifier();
+        Date generateDuplicate = fieldModifier.generateDuplicate(null, null, DEFAULT_MODIF_COUNT, EMPTY_STRING);
+        Assert.assertNull(generateDuplicate);
+    }
+
+    /**
+     * Test method for
+     * {@link org.talend.dataquality.duplicating.FieldModifier#generateDuplicate(java.util.Date, org.talend.dataquality.duplicating.FieldModifier.Function, int, java.lang.String)}
+     * .
+     * 
+     * case2 function is null case
+     */
+    @Test
+    public void testGenerateDuplicateDateFunctionIntStringCase2() {
+        FieldModifier fieldModifier = new FieldModifier();
+        Date date = new Date();
+        Date generateDuplicate = fieldModifier.generateDuplicate(date, null, DEFAULT_MODIF_COUNT, EMPTY_STRING);
+        Assert.assertEquals(generateDuplicate, date);
     }
 
     @AfterClass
