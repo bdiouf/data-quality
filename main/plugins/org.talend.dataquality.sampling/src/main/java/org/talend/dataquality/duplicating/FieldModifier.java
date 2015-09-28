@@ -80,7 +80,10 @@ public class FieldModifier {
     }
 
     public Date generateDuplicate(Date date, Function function, int modifCount, String extraParameter) {
-        Date newDate = (date == null) ? null : new Date(date.getTime());
+        if (date == null || function == null) {
+            return date;
+        }
+        Date newDate = new Date(date.getTime());
         switch (function) {
         case SET_TO_NULL:
             return null;
