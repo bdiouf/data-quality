@@ -39,6 +39,7 @@ public class WordNetDictionaryTest {
     public void testIsValidWord() {
         assertTrue(wordnet.isValidWord("talent"));
         assertTrue(wordnet.isValidWord("postal_code"));
+        assertTrue(wordnet.isValidWord("Of"));
 
         assertFalse(wordnet.isValidWord("foobar"));
         assertFalse(wordnet.isValidWord("PostalCode"));
@@ -52,11 +53,13 @@ public class WordNetDictionaryTest {
         assertTrue(wordnet.isValidTerm("PostalCode"));
         assertTrue(wordnet.isValidTerm("CodePostal"));
         assertTrue(wordnet.isValidTerm("Postal Code"));
+        assertTrue(wordnet.isValidTerm("CareOfName"));
 
         assertFalse(wordnet.isValidTerm("foobar"));
         assertFalse(wordnet.isValidTerm("country_code"));
         assertFalse(wordnet.isValidTerm("Code_Postal"));
         assertFalse(wordnet.isValidTerm("CodePays"));
+        assertFalse(wordnet.isValidTerm(null));
     }
 
     @AfterClass

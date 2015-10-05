@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -31,6 +33,10 @@ public class WordNetDictionary {
     private static IDictionary dict;
 
     private static WordNetDictionary instance = null;
+
+    private static final List<String> ENGLISH_STOP_WORDS_SET = Arrays.asList("a", "an", "and", "are", "as", "at", "be", "but",
+            "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the", "their", "then",
+            "there", "these", "they", "this", "to", "was", "will", "with");
 
     private WordNetDictionary() {
         initDictinary();
@@ -88,6 +94,9 @@ public class WordNetDictionary {
     }
 
     boolean isValidWord(String input) {
+        if (ENGLISH_STOP_WORDS_SET.contains(input.toLowerCase())) {
+            return true;
+        }
         IIndexWord idxWord = null;
         for (POS pos : POS.values()) {
             idxWord = dict.getIndexWord(input, pos);
@@ -99,6 +108,9 @@ public class WordNetDictionary {
     }
 
     public boolean isValidTerm(String input) {
+        if (input == null) {
+            return false;
+        }
         final String[] tokens = TextUtils.cutTextAndSplit(input);
         for (String token : tokens) {
             if (!isValidWord(token)) {
