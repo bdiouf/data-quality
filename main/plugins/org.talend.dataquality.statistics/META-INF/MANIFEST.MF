@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Semantic Library
+Bundle-SymbolicName: org.talend.dataquality.statistics;singleton:=true
+Bundle-Version: 1.3.0
+Bundle-Vendor: .Talend SA.
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.apache.log4j,
+ org.junit,
+ org.talend.dataquality.semantic
+Bundle-ClassPath: .
+Eclipse-BundleShape: dir
