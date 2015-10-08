@@ -13,11 +13,14 @@
 package org.talend.dataquality.statistics.quality;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -117,6 +120,28 @@ public class ValueQualityAnalyzerTest {
                 add(new String[] { "5", "IL" });
                 add(new String[] { "6", "ORZ" });
                 add(new String[] { "7", " " });
+                add(new String[] { "8", "LOL" });
+            }
+        };
+
+        final int[] EXPECTED_VALID_COUNT = { 8, 4 };
+        final int[] EXPECTED_EMPTY_COUNT = { 0, 2 };
+        final int[] EXPECTED_INVALID_COUNT = { 0, 2 };
+        final List<Set<String>> EXPECTED_INVALID_VALUES = new ArrayList<Set<String>>() {
+
+            private static final long serialVersionUID = 1L;
+
+            {
+                add(new HashSet<String>());
+                add(new HashSet<String>() {
+
+                    private static final long serialVersionUID = 1L;
+
+                    {
+                        add("LOL");
+                        add("ORZ");
+                    }
+                });
             }
         };
 
@@ -125,21 +150,26 @@ public class ValueQualityAnalyzerTest {
         SemanticQualityAnalyzer semanticQualityAnalyzer = new SemanticQualityAnalyzer(new String[] {
                 SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.US_STATE_CODE.name() });
 
-        ValueQualityAnalyzer qualityAnalyzer = new ValueQualityAnalyzer(dataTypeQualityAnalyzer, semanticQualityAnalyzer);
-        qualityAnalyzer.init();
+        ValueQualityAnalyzer valueQualityAnalyzer = new ValueQualityAnalyzer(dataTypeQualityAnalyzer, semanticQualityAnalyzer);
+        valueQualityAnalyzer.init();
 
         for (String[] record : records) {
-            qualityAnalyzer.analyze(record);
+            valueQualityAnalyzer.analyze(record);
         }
 
-        ValueQualityStatistics aggregatedResult = qualityAnalyzer.getResult().get(1);
+        for (int i = 0; i < EXPECTED_INVALID_VALUES.size(); i++) {
+            ValueQualityStatistics aggregatedResult = valueQualityAnalyzer.getResult().get(i);
+            assertEquals("unexpected ValidCount on Column " + i, EXPECTED_VALID_COUNT[i], aggregatedResult.getValidCount());
+            assertEquals("unexpected EmptyCount on Column " + i, EXPECTED_EMPTY_COUNT[i], aggregatedResult.getEmptyCount());
+            assertEquals("unexpected InvalidCount on Column " + i, EXPECTED_INVALID_COUNT[i], aggregatedResult.getInvalidCount());
+            assertEquals("unexpected InvalidValues on Column " + i, EXPECTED_INVALID_VALUES.get(i),
+                    aggregatedResult.getInvalidValues());
+        }
 
-        System.out.println(aggregatedResult);
         try {
-            qualityAnalyzer.close();
+            valueQualityAnalyzer.close();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            fail(e.getMessage());
         }
     }
 }
