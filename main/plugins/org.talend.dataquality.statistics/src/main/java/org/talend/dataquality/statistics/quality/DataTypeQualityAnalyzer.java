@@ -15,6 +15,7 @@ package org.talend.dataquality.statistics.quality;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.QualityAnalyzer;
 import org.talend.datascience.common.inference.ResizableList;
@@ -33,6 +34,8 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
     private final ResizableList<ValueQualityStatistics> results = new ResizableList<>(ValueQualityStatistics.class);
 
     private boolean isStoreInvalidValues = true;
+    
+    private static Logger log = Logger.getLogger(DataTypeQualityAnalyzer.class);
 
     public DataTypeQualityAnalyzer(DataType.Type[] types, boolean isStoreInvalidValues) {
         this.isStoreInvalidValues = isStoreInvalidValues;
@@ -96,13 +99,19 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
         return results;
     }
 
-    public Analyzer<ValueQualityStatistics> merge(Analyzer<ValueQualityStatistics> analyzer) {
+    public Analyzer<ValueQualityStatistics> merge(Analyzer<ValueQualityStatistics> another) {
+
+        if (another == null) {
+            log.warn("Another analyzer is null, have nothing to merge!");
+            return this;
+        }
+
         int idx = 0;
         DataTypeQualityAnalyzer mergedValueQualityAnalyze = new DataTypeQualityAnalyzer();
         ((ResizableList<ValueQualityStatistics>) mergedValueQualityAnalyze.getResult()).resize(results.size());
         for (ValueQualityStatistics qs : results) {
             ValueQualityStatistics mergedStats = mergedValueQualityAnalyze.getResult().get(idx);
-            ValueQualityStatistics anotherStats = analyzer.getResult().get(idx);
+            ValueQualityStatistics anotherStats = another.getResult().get(idx);
             mergedStats.setValidCount(qs.getValidCount() + anotherStats.getValidCount());
             mergedStats.setInvalidCount(qs.getInvalidCount() + anotherStats.getInvalidCount());
             mergedStats.setEmptyCount(qs.getEmptyCount() + anotherStats.getEmptyCount());
