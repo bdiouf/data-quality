@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
@@ -29,8 +30,11 @@ import org.talend.datascience.common.inference.ConcurrentAnalyzer;
 
 public class ConcurrentAnalyzerTest extends AnalyzerTest {
 
+    private AtomicBoolean errorOccurred = new AtomicBoolean();
+
     @Test
     public void testThreadSafeConcurrentAccess() {
+        errorOccurred.set(false);
         URI ddPath = null;
         URI kwPath = null;
         try {
@@ -38,23 +42,18 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
             kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
             assertNotNull("Keyword dictionary not loaded", kwPath);
             assertNotNull("data dictionary not loaded", ddPath);
-            Analyzer<SemanticType> analyzer = createSemanticAnalyzer(ddPath, kwPath);
-            final AtomicBoolean failed = new AtomicBoolean(false);
+            final Analyzer<SemanticType> analyzer = createSemanticAnalyzer(ddPath, kwPath);
             Runnable r = new Runnable() {
 
                 @Override
                 public void run() {
-                    AtomicBoolean f = doConcurrentAccess(analyzer);
-                    if (f.get()) {
-                        failed.set(true);
-                        System.out.println(failed);
-                    }
+                   doConcurrentAccess(analyzer);
                     // assertEquals(f.get(), false); // FIXME this assertion does not make the test fail.
                     // assertEquals(f.get(), true); // FIXME this assertion does not make the test fail.
                 };
             };
             List<Thread> workers = new ArrayList<>();
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 20; i++) {
                 workers.add(new Thread(r));
             }
             for (Thread worker : workers) {
@@ -64,9 +63,8 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
                 worker.join();
             }
 
-            System.out.println(failed);
-            assertEquals("ConcurrentAccess failed", false, failed.get());
-            fail("ERRROR");
+            assertEquals("ConcurrentAccess not failed", false, errorOccurred.get());
+            // fail("ERRROR");
         } catch (URISyntaxException e) {
             e.printStackTrace();
             fail("Problem while loading dictionaries");
@@ -77,7 +75,8 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
     }
 
     @Test
-    public void testThreadUnsafeConcurrentAccess() throws Exception {
+    public synchronized void testThreadUnsafeConcurrentAccess() throws Exception {
+        errorOccurred.set(false);
         final URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
         final URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
         final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
@@ -103,6 +102,8 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
             for (Thread worker : workers) {
                 worker.join();
             }
+            assertEquals("ConcurrentAccess failed", true, errorOccurred.get());
+
         }
     }
 
@@ -120,19 +121,19 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
             }
 
         };
-        return ConcurrentAnalyzer.make(analyzer, 100);
+        return ConcurrentAnalyzer.make(analyzer, 20);
     }
 
-    private AtomicBoolean doConcurrentAccess(Analyzer<SemanticType> semanticAnalyzer) {
-        final AtomicBoolean failed = new AtomicBoolean();
+    private void doConcurrentAccess(Analyzer<SemanticType> semanticAnalyzer) {
         semanticAnalyzer.init();
         final List<String[]> records = getRecords(AnalyzerTest.class.getResourceAsStream("customers_100_bug_TDQ10380.csv"));
         try {
+
             for (String[] data : records) {
                 try {
                     semanticAnalyzer.analyze(data);
                 } catch (Throwable e) {
-                    e.printStackTrace();
+                    errorOccurred.set(true);
                 }
             }
             semanticAnalyzer.end();
@@ -151,27 +152,16 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
             };
             // assertFalse(result.isEmpty());
             if (result.isEmpty()) {
-                failed.set(true);
+                errorOccurred.set(true);
             }
             for (SemanticType columnSemanticType : result) {
-                if (!expectedCategories[columnIndex++].equals(columnSemanticType.getSuggestedCategory())) {
-                    System.out.println("fails");
-                    failed.set(true);
+                if(!expectedCategories[columnIndex++].equals( columnSemanticType.getSuggestedCategory())){
+                    errorOccurred.set(true);
                 }
-                // assertEquals(expectedCategories[columnIndex++], columnSemanticType.getSuggestedCategory());
-                // assertEquals("blabla", columnSemanticType.getSuggestedCategory());
-                // if
-                // ("this category does not exist and should not match".equals(columnSemanticType.getSuggestedCategory()))
-                // {
-                // failed.set(true);
-                // }
-
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            failed.set(true);
+            errorOccurred.set(true);
         }
-        return failed;
     }
     //
     // @Test
