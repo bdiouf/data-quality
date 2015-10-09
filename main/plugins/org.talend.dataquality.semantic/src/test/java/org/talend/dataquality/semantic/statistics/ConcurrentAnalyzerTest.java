@@ -48,8 +48,6 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
                 @Override
                 public void run() {
                    doConcurrentAccess(analyzer);
-                    // assertEquals(f.get(), false); // FIXME this assertion does not make the test fail.
-                    // assertEquals(f.get(), true); // FIXME this assertion does not make the test fail.
                 };
             };
             List<Thread> workers = new ArrayList<>();
@@ -150,7 +148,6 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
                     "", //
                     "" //
             };
-            // assertFalse(result.isEmpty());
             if (result.isEmpty()) {
                 errorOccurred.set(true);
             }
@@ -163,10 +160,4 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
             errorOccurred.set(true);
         }
     }
-    //
-    // @Test
-    // public void testTooManyThreads() {
-    //
-    // }
-
 }
