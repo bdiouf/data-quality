@@ -6,7 +6,9 @@ Bundle-Version: 1.3.0
 Bundle-Vendor: .Talend SA.
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.apache.log4j,
- org.junit,
- org.talend.dataquality.semantic
+ org.apache.commons.lang,
+ org.talend.dataquality.common,
+ org.talend.dataquality.semantic,
+ org.junit
 Bundle-ClassPath: .
 Eclipse-BundleShape: dir

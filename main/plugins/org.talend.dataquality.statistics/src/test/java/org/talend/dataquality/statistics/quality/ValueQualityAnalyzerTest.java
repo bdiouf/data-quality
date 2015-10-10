@@ -17,6 +17,8 @@ import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +28,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
+import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
+import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder.Mode;
 import org.talend.dataquality.semantic.statistics.SemanticQualityAnalyzer;
 import org.talend.datascience.common.inference.ValueQualityStatistics;
 import org.talend.datascience.common.inference.type.DataType;
@@ -66,8 +70,18 @@ public class ValueQualityAnalyzerTest {
         return getRecords(inputStream, ";");
     }
 
+    private CategoryRecognizerBuilder createCategoryRecognizerBuilder() throws URISyntaxException {
+        final URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
+        final URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
+        final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
+                .ddPath(ddPath) //
+                .kwPath(kwPath) //
+                .setMode(Mode.LUCENE);
+        return builder;
+    }
+
     @Test
-    public void testValueQualityAnalyzerWithoutSemanticQuality() {
+    public void testValueQualityAnalyzerWithoutSemanticQuality() throws URISyntaxException {
 
         DataTypeQualityAnalyzer dataTypeQualityAnalyzer = new DataTypeQualityAnalyzer(new Type[] { DataType.Type.INTEGER,
                 Type.STRING, Type.STRING, Type.STRING, Type.DATE, Type.STRING, Type.DATE, Type.INTEGER, Type.DOUBLE });
@@ -75,7 +89,8 @@ public class ValueQualityAnalyzerTest {
                 SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.UNKNOWN.name(),
                 SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.UNKNOWN.name(),
                 SemanticCategoryEnum.UNKNOWN.name() };
-        SemanticQualityAnalyzer semanticQualityAnalyzer = new SemanticQualityAnalyzer(semanticTypes);
+        SemanticQualityAnalyzer semanticQualityAnalyzer = new SemanticQualityAnalyzer(createCategoryRecognizerBuilder(),
+                semanticTypes);
 
         ValueQualityAnalyzer valueQualityAnalyzer = new ValueQualityAnalyzer(dataTypeQualityAnalyzer, semanticQualityAnalyzer);
         valueQualityAnalyzer.init();
@@ -106,27 +121,27 @@ public class ValueQualityAnalyzerTest {
     }
 
     @Test
-    public void testValueQualityAnalyzerWithSemanticQuality() {
+    public void testValueQualityAnalyzerWithSemanticQuality() throws URISyntaxException {
 
         final List<String[]> records = new ArrayList<String[]>() {
 
             private static final long serialVersionUID = 1L;
 
             {
-                add(new String[] { "1", "UT" });
-                add(new String[] { "2", "MN" });
-                add(new String[] { "3", "MO" });
-                add(new String[] { "4", "" });
-                add(new String[] { "5", "IL" });
-                add(new String[] { "6", "ORZ" });
-                add(new String[] { "7", " " });
-                add(new String[] { "8", "LOL" });
+                add(new String[] { "1", "UT", "Bonn" });
+                add(new String[] { "2", "MN", "Suresnes" });
+                add(new String[] { "3", "MO", "Beijing" });
+                add(new String[] { "4", "", "Washington" });
+                add(new String[] { "5", "IL", "Tokyo" });
+                add(new String[] { "6", "ORZ", "" });
+                add(new String[] { "7", " ", "CityA" });
+                add(new String[] { "8", "LOL", "CityB" });
             }
         };
 
-        final int[] EXPECTED_VALID_COUNT = { 8, 4 };
-        final int[] EXPECTED_EMPTY_COUNT = { 0, 2 };
-        final int[] EXPECTED_INVALID_COUNT = { 0, 2 };
+        final int[] EXPECTED_VALID_COUNT = { 8, 4, 5 };
+        final int[] EXPECTED_EMPTY_COUNT = { 0, 2, 1 };
+        final int[] EXPECTED_INVALID_COUNT = { 0, 2, 2 };
         final List<Set<String>> EXPECTED_INVALID_VALUES = new ArrayList<Set<String>>() {
 
             private static final long serialVersionUID = 1L;
@@ -142,13 +157,23 @@ public class ValueQualityAnalyzerTest {
                         add("ORZ");
                     }
                 });
+                add(new HashSet<String>() {
+
+                    private static final long serialVersionUID = 1L;
+
+                    {
+                        add("CityA");
+                        add("CityB");
+                    }
+                });
             }
         };
 
         DataTypeQualityAnalyzer dataTypeQualityAnalyzer = new DataTypeQualityAnalyzer(new Type[] { DataType.Type.INTEGER,
-                Type.STRING });
-        SemanticQualityAnalyzer semanticQualityAnalyzer = new SemanticQualityAnalyzer(new String[] {
-                SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.US_STATE_CODE.name() });
+                Type.STRING, Type.STRING });
+        SemanticQualityAnalyzer semanticQualityAnalyzer = new SemanticQualityAnalyzer(createCategoryRecognizerBuilder(),
+                new String[] { SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.US_STATE_CODE.name(),
+                        SemanticCategoryEnum.CITY.name() });
 
         ValueQualityAnalyzer valueQualityAnalyzer = new ValueQualityAnalyzer(dataTypeQualityAnalyzer, semanticQualityAnalyzer);
         valueQualityAnalyzer.init();
