@@ -17,6 +17,7 @@ import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.filter.ISemanticFilter;
 import org.talend.dataquality.semantic.filter.impl.CharSequenceFilter;
 import org.talend.dataquality.semantic.recognizer.MainCategory;
+import org.talend.dataquality.semantic.validator.impl.SedolValidator;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -124,6 +125,13 @@ public class UserDefinedCategory implements ISubCategory {
 
     public void setValidator(UserDefinedRegexValidator validator) {
         this.validator = validator;
+    }
+    
+    
+
+    
+    public void setSedolValidator(SedolValidator sedolValidator) {
+        this.validator = sedolValidator;
     }
 
     /**

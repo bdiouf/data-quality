@@ -161,7 +161,7 @@
         "id" : "SEDOL",
         "mainCategory" : "AlphaNumeric",
         "name" : "SEDOL",
-        "validator" : { "patternString" : "^(?<Sedol>[B-Db-dF-Hf-hJ-Nj-nP-Tp-tV-Xv-xYyZz\\d]{6}\\d)$" }
+        "sedolValidator" : { "patternString" : "^(?<Sedol>[B-Db-dF-Hf-hJ-Nj-nP-Tp-tV-Xv-xYyZz\\d]{6}\\d)$" }
       },
       { "description" : "French Phone Number",
         "id" : "FR_PHONE",
