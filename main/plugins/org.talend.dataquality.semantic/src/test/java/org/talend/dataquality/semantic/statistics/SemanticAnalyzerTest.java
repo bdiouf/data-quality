@@ -88,8 +88,8 @@ public class SemanticAnalyzerTest extends AnalyzerTest {
     public void testSEDOL() throws URISyntaxException {
         SemanticAnalyzer semanticAnalyzer = createAnalyzer();
         semanticAnalyzer.init();
-        String[] sedols = new String[] { "7108899", "B0YBKJ7", "4065663", "B0YBLH2", "2282765", "B0YBKL9", "5579107", "B0YBKR5",
-                "5852842", "B0YBKT7", "B000300" };
+        String[] sedols = new String[] { "44", "B000301", "7108899", "B0YBKJ7", "4065663", "B0YBLH2", "2282765", "B0YBKL9",
+                "5579107", "B0YBKR5", "5852842", "B0YBKT7", "B000300" };
         for (String field : sedols) {
             semanticAnalyzer.analyze(field);
         }
@@ -101,6 +101,7 @@ public class SemanticAnalyzerTest extends AnalyzerTest {
         for (SemanticType columnSemanticType : result) {
             assertEquals(expectedCategories[columnIndex++], columnSemanticType.getSuggestedCategory());
         }
+
     }
 
     @Test

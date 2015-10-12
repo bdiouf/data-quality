@@ -13,7 +13,7 @@
 package org.talend.dataquality.semantic.validator.impl;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.dataquality.semantic.classifier.custom.UserDefinedRegexValidator;
+import org.talend.dataquality.semantic.validator.ISemanticValidator;
 
 /**
  * SEDOL validator using checksum algorithm from http://rosettacode.org/wiki/SEDOLs#Java
@@ -22,14 +22,10 @@ import org.talend.dataquality.semantic.classifier.custom.UserDefinedRegexValidat
  * @author mzhao
  *
  */
-public class SedolValidator extends UserDefinedRegexValidator {
+public class SedolValidator implements ISemanticValidator {
 
     @Override
     public boolean isValid(String str) {
-        boolean isValidRegex = super.isValid(str);
-        if(!isValidRegex){
-            return false;
-        }
         String sedolStr = StringUtils.left(str, 6);
         // Extract the checksum digit.
         int checksum = -1;
@@ -37,7 +33,7 @@ public class SedolValidator extends UserDefinedRegexValidator {
             String csStr = StringUtils.right(str, 1);
             checksum = Integer.valueOf(csStr);
         } catch (NumberFormatException e) {
-            throw new RuntimeException("Invalid checksum digit. ",e);
+            throw new RuntimeException("Invalid checksum digit. ", e);
         }
         int checksumFromSedol = getSedolCheckDigit(sedolStr);
         return checksum == checksumFromSedol;

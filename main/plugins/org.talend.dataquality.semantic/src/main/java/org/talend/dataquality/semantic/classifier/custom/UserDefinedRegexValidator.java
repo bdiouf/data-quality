@@ -53,6 +53,7 @@ public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
      */
     public void setSubValidatorClassName(String subValidatorClassName) {
         this.subValidatorClassName = subValidatorClassName;
+        this.subValidator = createSubValidator(subValidatorClassName);
     }
 
     /**
