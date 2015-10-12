@@ -86,7 +86,7 @@ public class HistogramAnalyzerTest {
 
     @Test
     public void testAnalyzeExtended() {
-        String[] data = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+        String[] data = { "1", "2", "3", "4", "5", "6", "7", "8", "9" ,"10"};
         HistogramParameter histogramParameter = new HistogramParameter();
         histogramParameter.setDefaultParameters(2, 8, 3);
         HistogramAnalyzer analyzer = createAnalyzer(new DataType.Type[] { Type.INTEGER }, histogramParameter);
@@ -94,7 +94,8 @@ public class HistogramAnalyzerTest {
             analyzer.analyze(d);
         }
 
-        Map<Range, Long> histogram = analyzer.getResult().get(0).getHistogram();
+        HistogramStatistics histogramStatistics = analyzer.getResult().get(0);
+        Map<Range, Long> histogram = histogramStatistics.getHistogram();
 
         Iterator<Entry<Range, Long>> entrySet = histogram.entrySet().iterator();
         int idx = 0;
@@ -122,6 +123,10 @@ public class HistogramAnalyzerTest {
 
             idx++;
         }
+        //Assert the value out of range
+        Assert.assertFalse(histogramStatistics.isComplete());
+        Assert.assertEquals(1,histogramStatistics.getCountBelowMin(),0);
+        Assert.assertEquals(2,histogramStatistics.getCountAboveMax(),0);
     }
 
     @Test
