@@ -26,63 +26,88 @@ public class ValueQualityStatistics implements Serializable {
 
     private final Set<String> invalidValues = new HashSet<>();
 
+    private final Set<String> unknownValues = new HashSet<>();
+
     private long validCount;
 
     private long emptyCount;
 
     private long invalidCount;
 
+    private long unknownCount;
+
     public Set<String> getInvalidValues() {
         return invalidValues;
+    }
+
+    public Set<String> getUnknownValues() {
+        return unknownValues;
     }
 
     public long getValidCount() {
         return validCount;
     }
 
-    public long getInvalidCount() {
-        return invalidCount;
-    }
-
-    public long getCount() {
-        return validCount + invalidCount + emptyCount;
-    }
-
     public long getEmptyCount() {
         return emptyCount;
     }
 
-    public void incrementEmpty() {
-        emptyCount++;
+    public long getInvalidCount() {
+        return invalidCount;
+    }
+
+    public long getUnknownCount() {
+        return unknownCount;
+    }
+
+    public long getCount() {
+        return validCount + emptyCount + invalidCount + unknownCount;
     }
 
     public void incrementValid() {
         validCount++;
     }
 
+    public void incrementEmpty() {
+        emptyCount++;
+    }
+
     public void incrementInvalid() {
         invalidCount++;
+    }
+
+    public void incrementUnknown() {
+        unknownCount++;
     }
 
     public void appendInvalidValue(String value) {
         invalidValues.add(value);
     }
 
-    public void setValidCount(long newCount) {
-        validCount = newCount;
+    public void appendUnknownValue(String value) {
+        unknownValues.add(value);
     }
 
-    public void setInvalidCount(long newCount) {
-        invalidCount = newCount;
+    public void setValidCount(long newCount) {
+        validCount = newCount;
     }
 
     public void setEmptyCount(long newCount) {
         emptyCount = newCount;
     }
 
+    public void setInvalidCount(long newCount) {
+        invalidCount = newCount;
+    }
+
+    public void setUnknownCount(long newCount) {
+        unknownCount = newCount;
+    }
+
     @Override
     public String toString() {
         return "ValueQuality{" + "valid=" + validCount + ", empty=" + emptyCount + ", invalid=" + invalidCount + '}'
-                + "InvalidValues{" + invalidValues + "}";
+                + ", unknown=" + unknownCount + '}' + "InvalidValues{" + invalidValues + "}" + " UnknownValues{" + unknownValues
+                + "}";
     }
 }
