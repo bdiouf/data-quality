@@ -161,7 +161,10 @@
         "id" : "SEDOL",
         "mainCategory" : "AlphaNumeric",
         "name" : "SEDOL",
-        "sedolValidator" : { "patternString" : "^(?<Sedol>[B-Db-dF-Hf-hJ-Nj-nP-Tp-tV-Xv-xYyZz\\d]{6}\\d)$" }
+        "validator" : { 
+            "patternString" : "^(?<Sedol>[B-Db-dF-Hf-hJ-Nj-nP-Tp-tV-Xv-xYyZz\\d]{6}\\d)$",
+            "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.SedolValidator" 
+            }
       },
       { "description" : "French Phone Number",
         "id" : "FR_PHONE",

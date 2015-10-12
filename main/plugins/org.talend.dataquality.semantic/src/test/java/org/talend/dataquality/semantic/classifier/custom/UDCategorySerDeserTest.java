@@ -12,9 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.semantic.classifier.custom;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -67,7 +65,7 @@ public class UDCategorySerDeserTest {
      * @throws JsonMappingException
      * @throws JsonParseException
      */
-    // @Test
+    @Test
     public void testWriteToJsonFile() throws JsonParseException, JsonMappingException, IOException {
 
         UDCategorySerDeser helper = new UDCategorySerDeser();

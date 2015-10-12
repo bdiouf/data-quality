@@ -1,4 +1,4 @@
 V1.3.0 sizhaoliu 2015-10-05
     - add changelog file for semantic library
 V1.3.0 mzhao 2015-10-09    
-	- Add SEDOL validator
+	- Add SEDOL as secondary validator
