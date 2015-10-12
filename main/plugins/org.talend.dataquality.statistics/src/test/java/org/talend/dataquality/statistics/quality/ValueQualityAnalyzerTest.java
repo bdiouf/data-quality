@@ -141,7 +141,8 @@ public class ValueQualityAnalyzerTest {
 
         final int[] EXPECTED_VALID_COUNT = { 8, 4, 5 };
         final int[] EXPECTED_EMPTY_COUNT = { 0, 2, 1 };
-        final int[] EXPECTED_INVALID_COUNT = { 0, 2, 2 };
+        final int[] EXPECTED_INVALID_COUNT = { 0, 2, 0 };
+        final int[] EXPECTED_UNKNOWN_COUNT = { 0, 0, 2 };
         final List<Set<String>> EXPECTED_INVALID_VALUES = new ArrayList<Set<String>>() {
 
             private static final long serialVersionUID = 1L;
@@ -157,6 +158,16 @@ public class ValueQualityAnalyzerTest {
                         add("ORZ");
                     }
                 });
+                add(new HashSet<String>());
+            }
+        };
+        final List<Set<String>> EXPECTED_UNKNOWN_VALUES = new ArrayList<Set<String>>() {
+
+            private static final long serialVersionUID = 1L;
+
+            {
+                add(new HashSet<String>());
+                add(new HashSet<String>());
                 add(new HashSet<String>() {
 
                     private static final long serialVersionUID = 1L;
@@ -189,6 +200,9 @@ public class ValueQualityAnalyzerTest {
             assertEquals("unexpected InvalidCount on Column " + i, EXPECTED_INVALID_COUNT[i], aggregatedResult.getInvalidCount());
             assertEquals("unexpected InvalidValues on Column " + i, EXPECTED_INVALID_VALUES.get(i),
                     aggregatedResult.getInvalidValues());
+            assertEquals("unexpected UnknownCount on Column " + i, EXPECTED_UNKNOWN_COUNT[i], aggregatedResult.getUnknownCount());
+            assertEquals("unexpected UnknownValues on Column " + i, EXPECTED_UNKNOWN_VALUES.get(i),
+                    aggregatedResult.getUnknownValues());
         }
 
         try {
