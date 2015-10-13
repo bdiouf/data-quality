@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
@@ -32,23 +32,37 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
 
     private AtomicBoolean errorOccurred = new AtomicBoolean();
 
+    @Before
+    public void setUp() throws Exception {
+        errorOccurred.set(false);
+    }
+
     @Test
     public void testThreadSafeConcurrentAccess() {
-        errorOccurred.set(false);
-        URI ddPath = null;
-        URI kwPath = null;
         try {
-            ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
-            kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
+            URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
+            URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
             assertNotNull("Keyword dictionary not loaded", kwPath);
             assertNotNull("data dictionary not loaded", ddPath);
-            final Analyzer<SemanticType> analyzer = createSemanticAnalyzer(ddPath, kwPath);
+            final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
+                    .ddPath(ddPath) //
+                    .kwPath(kwPath) //
+                    .setMode(CategoryRecognizerBuilder.Mode.LUCENE);
+            AnalyzerSupplier<Analyzer<SemanticType>> analyzer1 = new AnalyzerSupplier<Analyzer<SemanticType>>() {
+
+                @Override
+                public Analyzer<SemanticType> get() {
+                    return new SemanticAnalyzer(builder);
+                }
+
+            };
+            final Analyzer<SemanticType> analyzer = ConcurrentAnalyzer.make(analyzer1, 2);
             Runnable r = new Runnable() {
 
                 @Override
                 public void run() {
-                   doConcurrentAccess(analyzer);
-                };
+                    doConcurrentAccess(analyzer);
+                }
             };
             List<Thread> workers = new ArrayList<>();
             for (int i = 0; i < 20; i++) {
@@ -60,9 +74,7 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
             for (Thread worker : workers) {
                 worker.join();
             }
-
             assertEquals("ConcurrentAccess not failed", false, errorOccurred.get());
-            // fail("ERRROR");
         } catch (URISyntaxException e) {
             e.printStackTrace();
             fail("Problem while loading dictionaries");
@@ -74,7 +86,6 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
 
     @Test
     public synchronized void testThreadUnsafeConcurrentAccess() throws Exception {
-        errorOccurred.set(false);
         final URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
         final URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
         final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
@@ -101,32 +112,13 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
                 worker.join();
             }
             assertEquals("ConcurrentAccess failed", true, errorOccurred.get());
-
         }
     }
 
-    private Analyzer<SemanticType> createSemanticAnalyzer(final URI ddPath, final URI kwPath) {
-        AnalyzerSupplier<Analyzer<SemanticType>> analyzer = new AnalyzerSupplier<Analyzer<SemanticType>>() {
-
-            @Override
-            public Analyzer<SemanticType> get() {
-                final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
-                        .ddPath(ddPath) //
-                        .kwPath(kwPath) //
-                        .setMode(CategoryRecognizerBuilder.Mode.LUCENE);
-                SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer(builder);
-                return semanticAnalyzer;
-            }
-
-        };
-        return ConcurrentAnalyzer.make(analyzer, 20);
-    }
-
     private void doConcurrentAccess(Analyzer<SemanticType> semanticAnalyzer) {
-        semanticAnalyzer.init();
-        final List<String[]> records = getRecords(AnalyzerTest.class.getResourceAsStream("customers_100_bug_TDQ10380.csv"));
         try {
-
+            semanticAnalyzer.init();
+            final List<String[]> records = getRecords(AnalyzerTest.class.getResourceAsStream("customers_100_bug_TDQ10380.csv"));
             for (String[] data : records) {
                 try {
                     semanticAnalyzer.analyze(data);
@@ -138,7 +130,7 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
             List<SemanticType> result = semanticAnalyzer.getResult();
             int columnIndex = 0;
             final String[] expectedCategories = new String[] { //
-            "", //
+                    "", //
                     SemanticCategoryEnum.FIRST_NAME.getId(), //
                     SemanticCategoryEnum.CITY.getId(), //
                     SemanticCategoryEnum.US_STATE_CODE.getId(), //
@@ -152,12 +144,18 @@ public class ConcurrentAnalyzerTest extends AnalyzerTest {
                 errorOccurred.set(true);
             }
             for (SemanticType columnSemanticType : result) {
-                if(!expectedCategories[columnIndex++].equals( columnSemanticType.getSuggestedCategory())){
+                if (!expectedCategories[columnIndex++].equals(columnSemanticType.getSuggestedCategory())) {
                     errorOccurred.set(true);
                 }
             }
         } catch (Exception e) {
             errorOccurred.set(true);
+        } finally {
+            try {
+                semanticAnalyzer.close();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
