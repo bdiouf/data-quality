@@ -17,27 +17,30 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.apache.log4j.Logger;
 
 /**
- * Provides a way to combine several {@link Analyzer<?>} together and a
+ * Provides a way to combine several {@link Analyzer} together and a
  * {@link org.talend.datascience.common.inference.Analyzers.Result result} that stores all underlying results.
  *
- * @see #with(Analyzer<?>[])
+ * @see #with(Analyzer[])
  */
 public class Analyzers implements Analyzer<Analyzers.Result> {
 
     private static final long serialVersionUID = 3718737129904789140L;
 
+    private static final Logger LOGGER = Logger.getLogger(Analyzers.class);
+
     private final Analyzer<?>[] analyzers;
 
-    private final ResizableList<Result> results = new ResizableList<Result>(Result.class);
+    private final ResizableList<Result> results = new ResizableList<>(Result.class);
 
     private Analyzers(Analyzer<?>... analyzers) {
         this.analyzers = analyzers;
     }
 
     /**
-     * Creates a single analyzer with provided {@link Analyzer<?> analyzers}.
+     * Creates a single analyzer with provided {@link Analyzer analyzers}.
      * 
      * @param analyzers The analyzers to be combined together.
      * @return A single analyzer that ensure all underlying analyzers get called.
@@ -85,7 +88,7 @@ public class Analyzers implements Analyzer<Analyzers.Result> {
      */
     public static class Result {
 
-        private final Map<Class<?>, Object> results = new HashMap<Class<?>, Object>();
+        private final Map<Class<?>, Object> results = new HashMap<>();
 
         public <T> T get(Class<T> clazz) {
             if (results.containsKey(clazz)) {
@@ -106,6 +109,13 @@ public class Analyzers implements Analyzer<Analyzers.Result> {
 
     @Override
     public void close() throws Exception {
+        for (Analyzer<?> analyzer : analyzers) {
+            try {
+                analyzer.close();
+            } catch (Exception e) {
+                LOGGER.error("Unable to close " + analyzer, e);
+            }
+        }
     }
     
 }

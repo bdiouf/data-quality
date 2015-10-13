@@ -17,84 +17,91 @@ import java.util.List;
 import org.apache.commons.pool.KeyedObjectPool;
 import org.apache.commons.pool.KeyedPoolableObjectFactory;
 import org.apache.commons.pool.impl.GenericKeyedObjectPool;
-import org.talend.datascience.common.inference.Analyzer;
+
 /**
- * 
- * @author zhao
- *
- * @param <T>
+ * A {@link Analyzer} implementation that allows use of an Analyzer pool by several threads. Please note analyzer
+ * instance is <b>only</b> returned to the pool on {@link #close()} call.
  */
 public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
     private static final long serialVersionUID = 6896234073310039985L;
 
-    private final KeyedObjectPool<Thread, Analyzer<T>> pool;
+    private final ThreadLocal<Analyzer<T>> pool;
 
     private ConcurrentAnalyzer(int maxSize, AnalyzerSupplier<Analyzer<T>> supplier) {
         GenericKeyedObjectPool.Config config = new GenericKeyedObjectPool.Config();
         config.maxTotal = maxSize;
         config.maxActive = maxSize;
-        config.maxIdle = maxSize;
-        config.maxWait = 3000;
-        this.pool = new GenericKeyedObjectPool<>(new Factory<>(supplier), config);
+        config.maxIdle = maxSize / 2;
+        config.minIdle = maxSize / 2;
+        config.maxWait = -1;
+        // #1: Initialize a ThreadLocal backed with a generic object pool -> allows getting previously borrowed instance
+        // and return to pool on remove() call.
+        // #2: Pool is expected to be thread safe.
+        final KeyedObjectPool<Thread, Analyzer<T>> pool = new GenericKeyedObjectPool<>(new Factory<>(supplier), config);
+        this.pool = new ThreadLocal<Analyzer<T>>() {
+            @Override
+            protected Analyzer<T> initialValue() {
+                try {
+                    return pool.borrowObject(Thread.currentThread());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void remove() {
+                try {
+                    // Order matters here as remove() causes get() to return null.
+                    pool.returnObject(Thread.currentThread(), get());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    // Thread local keeps a lot of references, make sure everything gets cleaned up on error.
+                    super.remove();
+                }
+            }
+        };
     }
 
     public static <T> Analyzer<T> make(AnalyzerSupplier<Analyzer<T>> supplier, int maxSize) {
         return new ConcurrentAnalyzer<>(maxSize, supplier);
     }
 
-    private synchronized Analyzer<T> get() {
-        try {
-            return pool.borrowObject(Thread.currentThread());
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to get analyzer for current thread.", e);
-        }
-    }
-
     @Override
     public void init() {
-        Analyzer<T> analyzer = get();
+        Analyzer<T> analyzer = pool.get();
         analyzer.init();
-        returnObject(analyzer);
     }
 
     @Override
-    public  boolean analyze(String... record) {
-        Analyzer<T> analyzer = get();
-        boolean result = analyzer.analyze(record);
-        returnObject(analyzer);
-        return result;
-    }
-
-    private synchronized void returnObject(Analyzer<T> analyzer) throws RuntimeException {
-        try {
-            pool.returnObject(Thread.currentThread(), analyzer);
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to return analyzer for current thread.", e);
-        }
+    public boolean analyze(String... record) {
+        Analyzer<T> analyzer = pool.get();
+        return analyzer.analyze(record);
     }
 
     @Override
     public void end() {
-        Analyzer<T> analyzer = get();
+        Analyzer<T> analyzer = pool.get();
         analyzer.end();
-        returnObject(analyzer);
     }
 
     @Override
     public List<T> getResult() {
-        Analyzer<T> analyzer = get();
-        List<T> result =  analyzer.getResult();
-        returnObject(analyzer);
-        return result;
+        Analyzer<T> analyzer = pool.get();
+        return analyzer.getResult();
     }
 
     @Override
     public Analyzer<T> merge(Analyzer<T> another) {
-        Analyzer<T> analyzer = get();
-        Analyzer<T> result =  analyzer.merge(another);
-        returnObject(analyzer);
-        return result;
+        Analyzer<T> analyzer = pool.get();
+        return analyzer.merge(another);
+    }
+
+    @Override
+    public void close() throws Exception {
+        // Return previously borrowed instance to pool
+        pool.remove();
     }
 
     private static class Factory<T> implements KeyedPoolableObjectFactory<Thread, Analyzer<T>> {
@@ -125,15 +132,6 @@ public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
         @Override
         public void passivateObject(Thread key, Analyzer<T> obj) throws Exception {
-        }
-    }
-
-    @Override
-    public void close() throws Exception {
-        try {
-            pool.clear(Thread.currentThread());
-        } catch (Exception e) {
-            throw new RuntimeException("Unable to close analyzer for current thread.", e);
         }
     }
 
