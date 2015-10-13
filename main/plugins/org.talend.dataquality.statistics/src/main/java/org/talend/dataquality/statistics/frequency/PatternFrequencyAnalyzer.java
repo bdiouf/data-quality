@@ -33,13 +33,14 @@ public class PatternFrequencyAnalyzer extends FrequencyAnalyzer<PatternFrequency
     protected String getValuePattern(String originalValue) {
         if (TypeInferenceUtils.isDate(originalValue)) {
             return DatetimePatternUtils.getInstance().datePatternReplace(originalValue);
-        } else if(TypeInferenceUtils.isTime(originalValue)){
+        } else if (TypeInferenceUtils.isTime(originalValue)) {
             return DatetimePatternUtils.getInstance().timePatternReplace(originalValue);
-        }else{
+        } else {
             return DatetimePatternUtils.getInstance().patternReplace(originalValue);
         }
     }
 
+    @Override
     protected void initFreqTableList(int size) {
         List<PatternFrequencyStatistics> freqTableList = new ArrayList<>();
         for (int i = 0; i < size; i++) {

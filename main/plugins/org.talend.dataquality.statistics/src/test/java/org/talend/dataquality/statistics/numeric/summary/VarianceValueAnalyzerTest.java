@@ -10,7 +10,6 @@ import org.talend.datascience.common.inference.type.DataType.Type;
 
 public class VarianceValueAnalyzerTest {
 
-
     @Before
     public void setUp() throws Exception {
     }
@@ -21,7 +20,7 @@ public class VarianceValueAnalyzerTest {
 
     @Test
     public void testAnalyzeStringArray() {
-        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataType.Type[]{Type.DOUBLE});
+        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataType.Type[] { Type.DOUBLE });
         // 1. assert case of all double values.
         String[] pureDouble = new String[] { "20", "0.3", "3", "4.5", "8" };
         analyzer.init();

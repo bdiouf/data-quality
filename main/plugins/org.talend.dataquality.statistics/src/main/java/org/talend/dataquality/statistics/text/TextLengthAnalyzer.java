@@ -112,9 +112,10 @@ public class TextLengthAnalyzer implements Analyzer<TextLengthStatistics> {
             }
         }
     }
+
     @Override
     public void close() throws Exception {
-        
+
     }
 
 }

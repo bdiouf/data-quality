@@ -32,13 +32,11 @@ import com.clearspring.analytics.stream.StreamSummary;
  */
 public class SSFrequencyEvaluator extends AbstractFrequencyEvaluator {
 
-
     private StreamSummary<String> streamSummary;
 
     public SSFrequencyEvaluator() {
         streamSummary = new StreamSummary<String>(2000);
     }
-
 
     public StreamSummary<String> getStreamSummary() {
         return streamSummary;
@@ -65,6 +63,7 @@ public class SSFrequencyEvaluator extends AbstractFrequencyEvaluator {
             }
         }
     }
+
     /**
      * Not available getting a specific item's frequency.
      */
@@ -76,7 +75,7 @@ public class SSFrequencyEvaluator extends AbstractFrequencyEvaluator {
     @Override
     public void add(String value) {
         streamSummary.offer(value);
-        
+
     }
 
     public static final String CAPACITY = "capacity";

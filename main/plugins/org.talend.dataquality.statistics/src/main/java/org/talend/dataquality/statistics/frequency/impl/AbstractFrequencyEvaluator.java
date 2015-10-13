@@ -18,9 +18,9 @@ public abstract class AbstractFrequencyEvaluator {
     public abstract void add(String value);
 
     /**
-     * Get top k frequency table given evaluator's implementation.
-     * <br>
+     * Get top k frequency table given evaluator's implementation. <br>
      * Note that {@link CMSFrequencyEvaluator} has no frequency table and will return a empty map.
+     * 
      * @param topk
      * @return the top k frequency table.
      */
@@ -35,9 +35,9 @@ public abstract class AbstractFrequencyEvaluator {
     public abstract void setParameters(Map<String, String> params) throws IllegalArgumentException;
 
     /**
-     * Get frequencies of given item.
-     * <br>
+     * Get frequencies of given item. <br>
      * Note that it's not available for {@link SSFrequencyEvaluator} .
+     * 
      * @param item
      * @return frequencies.
      */

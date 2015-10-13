@@ -27,8 +27,6 @@ public class HistogramStatistics {
 
     private int numBins;
 
-    private long countBelowMin, countAboveMax;
-
     private long[] result = new long[numBins];
 
     private double binSize = (max - min) / numBins;
@@ -45,9 +43,9 @@ public class HistogramStatistics {
     public void add(double d) {
         double bin = ((d - min) / binSize);
         if (bin < 0) { /* this data is smaller than min */
-            countBelowMin ++;
+            // Omit
         } else if (bin > numBins) { /* this data point is bigger than max */
-            countAboveMax ++;
+            // omit
         } else {
             if (bin == numBins) {
                 result[(int) bin - 1] += 1; // Include count of the upper boundary.
@@ -78,23 +76,5 @@ public class HistogramStatistics {
         }
         return histogramMap;
     }
-
-    /**
-     * @return returns when all values in the histogram (no value is outside the given range)
-     */
-    public boolean isComplete() {
-        return countBelowMin == 0 && countAboveMax == 0;
-    }
-
-    
-    public long getCountBelowMin() {
-        return countBelowMin;
-    }
-
-    
-    public long getCountAboveMax() {
-        return countAboveMax;
-    }
-    
 
 }

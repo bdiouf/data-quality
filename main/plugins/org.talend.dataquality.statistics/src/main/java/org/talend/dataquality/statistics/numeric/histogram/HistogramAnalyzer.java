@@ -45,7 +45,7 @@ public class HistogramAnalyzer extends NumericalStatisticsAnalyzer<HistogramStat
      */
     public HistogramAnalyzer(Type[] types, HistogramParameter histogramParameter) {
         super(types);
-        if(histogramParameter==null){
+        if (histogramParameter == null) {
             throw new IllegalArgumentException("Histogram analyzer's parameter should is null.");
         }
         setParameters(histogramParameter);
@@ -74,7 +74,7 @@ public class HistogramAnalyzer extends NumericalStatisticsAnalyzer<HistogramStat
             int colIdx = 0;
             for (HistogramStatistics stat : stats) {
                 HistogramColumnParameter columnParameter = histogramParameter.getColumnParameter(colIdx);
-                //Set column parameters to histogram statistics.
+                // Set column parameters to histogram statistics.
                 double max = histogramParameter.getDefaultMax();
                 double min = histogramParameter.getDefaultMin();
                 int numBins = histogramParameter.getDefaultNumBins();

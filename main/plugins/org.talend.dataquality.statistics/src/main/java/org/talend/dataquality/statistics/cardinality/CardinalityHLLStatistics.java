@@ -16,6 +16,7 @@ import com.clearspring.analytics.stream.cardinality.HyperLogLog;
 
 /**
  * Cardianlity statistics bean of hypper log log .
+ * 
  * @author zhao
  *
  */

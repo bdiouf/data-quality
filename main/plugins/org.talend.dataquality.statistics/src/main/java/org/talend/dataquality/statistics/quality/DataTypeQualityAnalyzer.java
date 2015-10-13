@@ -34,7 +34,7 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
     private final ResizableList<ValueQualityStatistics> results = new ResizableList<>(ValueQualityStatistics.class);
 
     private boolean isStoreInvalidValues = true;
-    
+
     private static Logger log = Logger.getLogger(DataTypeQualityAnalyzer.class);
 
     public DataTypeQualityAnalyzer(DataType.Type[] types, boolean isStoreInvalidValues) {
@@ -46,25 +46,17 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
         this.types = types;
     }
 
+    @Override
     public void init() {
         // Nothing to do.
     }
 
+    @Override
     public void setStoreInvalidValues(boolean isStoreInvalidValues) {
         this.isStoreInvalidValues = isStoreInvalidValues;
     }
 
-    /**
-     * Analyze record of Array of string type, this method is used in scala library which not support parameterized
-     * array type.
-     * 
-     * @param record
-     * @return
-     */
-    public boolean analyzeArray(String[] record) {
-        return analyze(record);
-    }
-
+    @Override
     public boolean analyze(String... record) {
         if (record == null) {
             record = new String[] { StringUtils.EMPTY };
@@ -91,14 +83,17 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
         }
     }
 
+    @Override
     public void end() {
         // Nothing to do.
     }
 
+    @Override
     public List<ValueQualityStatistics> getResult() {
         return results;
     }
 
+    @Override
     public Analyzer<ValueQualityStatistics> merge(Analyzer<ValueQualityStatistics> another) {
 
         if (another == null) {

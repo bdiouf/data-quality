@@ -54,7 +54,7 @@ public class CMSFrequencyStatisticsTest {
         double epsOfTotalCount = 0.0001;
         double confidence = 0.99;
         for (int i = 0; i < actualFreq.length; ++i) {
-            double ratio = ((double) (fta.getResult().get(0).getFrequency(i+"") - actualFreq[i])) / numItems;
+            double ratio = ((double) (fta.getResult().get(0).getFrequency(i + "") - actualFreq[i])) / numItems;
             if (ratio > epsOfTotalCount) {
                 numErrors++;
             }

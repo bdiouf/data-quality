@@ -86,15 +86,15 @@ public class PatternFrequencyAnalyzerTest {
             idx++;
         }
         Assert.assertTrue(isAtLeastOneAsssert);
-        
-        isAtLeastOneAsssert=false;        
+
+        isAtLeastOneAsssert = false;
         while (entrySet2.hasNext()) {
             Entry<String, Long> e = entrySet2.next();
             if (idx == 0) {
                 Assert.assertEquals("yyyy-M-d", e.getKey());
                 Assert.assertEquals(2, e.getValue(), 0);
                 isAtLeastOneAsssert = true;
-            } 
+            }
             if (e.getKey().equals("9999999")) {
                 Assert.assertEquals(1, e.getValue(), 0);
                 isAtLeastOneAsssert = true;

@@ -112,8 +112,9 @@ public abstract class FrequencyAnalyzer<T extends FrequencyStatistics> implement
     public List<T> getResult() {
         return freqTableStatistics;
     }
+
     @Override
     public void close() throws Exception {
-        
+
     }
 }

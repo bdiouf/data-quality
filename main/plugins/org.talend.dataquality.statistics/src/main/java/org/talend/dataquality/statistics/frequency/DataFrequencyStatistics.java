@@ -14,7 +14,11 @@ package org.talend.dataquality.statistics.frequency;
 
 import java.util.Map;
 
-import org.talend.dataquality.statistics.frequency.impl.*;
+import org.talend.dataquality.statistics.frequency.impl.AbstractFrequencyEvaluator;
+import org.talend.dataquality.statistics.frequency.impl.CMSFrequencyEvaluator;
+import org.talend.dataquality.statistics.frequency.impl.EFrequencyAlgorithm;
+import org.talend.dataquality.statistics.frequency.impl.NaiveFrequencyEvaluator;
+import org.talend.dataquality.statistics.frequency.impl.SSFrequencyEvaluator;
 
 /**
  * Frequency statistics bean which delegate the computation to evaluator.
@@ -31,6 +35,7 @@ public class DataFrequencyStatistics extends FrequencyStatistics {
      * 
      * @param algorithm
      */
+    @Override
     public void setAlgorithm(EFrequencyAlgorithm algorithm) {
         switch (algorithm) {
         case NAIVE:
@@ -47,27 +52,32 @@ public class DataFrequencyStatistics extends FrequencyStatistics {
 
     /**
      * Get top k frequency table.
+     * 
      * @param topk
      * @return
      */
+    @Override
     public Map<String, Long> getTopK(int topk) {
         return evaluator.getTopK(topk);
     }
-    
-    
+
     /**
      * Get frequencies of given item
+     * 
      * @param item
      * @return frequencies.
      */
-    public long getFrequency(String item){
+    @Override
+    public long getFrequency(String item) {
         return evaluator.getFrequency(item);
     }
-    
-    public void setParameter(Map<String,String> params){
+
+    @Override
+    public void setParameter(Map<String, String> params) {
         evaluator.setParameters(params);
     }
 
+    @Override
     public void add(String value) {
         evaluator.add(value);
     }

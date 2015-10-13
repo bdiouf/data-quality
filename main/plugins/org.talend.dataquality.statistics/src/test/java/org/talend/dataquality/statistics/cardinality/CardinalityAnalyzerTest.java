@@ -42,8 +42,8 @@ public class CardinalityAnalyzerTest {
         Assert.assertTrue(analyzer.getResult().size() == 0);
         // 3. test with 2 columns
         String[][] twoColumnsData = new String[][] { { "0", "1" }, { "1", "2" }, { "2", "3" }, { "3", "4" }, { "16", "17" },
-                { "17", "17" }, { "18", "18" }, { "19", "19" }, { "19", "19" },{"20","19"} };
-        for(String[] record:twoColumnsData){
+                { "17", "17" }, { "18", "18" }, { "19", "19" }, { "19", "19" }, { "20", "19" } };
+        for (String[] record : twoColumnsData) {
             analyzer.analyze(record);
         }
         Assert.assertEquals(9, analyzer.getResult().get(0).getDistinctCount(), 0);

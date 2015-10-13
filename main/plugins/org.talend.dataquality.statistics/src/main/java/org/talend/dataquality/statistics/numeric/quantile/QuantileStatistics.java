@@ -19,6 +19,7 @@ import org.apache.commons.math3.stat.descriptive.rank.Median;
 
 /**
  * Quantile statistics bean with implementation of apache commons.
+ * 
  * @author zhao
  *
  */
@@ -32,10 +33,10 @@ public class QuantileStatistics {
         data.add(value);
     }
 
-    public void endAddValue(){
+    public void endAddValue() {
         median.setData(data.stream().mapToDouble(x -> Double.valueOf(x)).toArray());
     }
-    
+
     public double getMedian() {
         return median.evaluate(50);
     }
@@ -43,19 +44,19 @@ public class QuantileStatistics {
     public double getLowerQuantile() {
         return median.evaluate(25);
     }
-    
-    
+
     public double getUpperQuantile() {
         return median.evaluate(75);
     }
-    
+
     /**
      * Get quantile value given percentage.
+     * 
      * @param percentage the percentage of the quantile
      * @return quantile value given of specified percentage.
      */
-    public double getQuantile(double percentage){
-        return median.evaluate(percentage*100);
+    public double getQuantile(double percentage) {
+        return median.evaluate(percentage * 100);
     }
 
 }

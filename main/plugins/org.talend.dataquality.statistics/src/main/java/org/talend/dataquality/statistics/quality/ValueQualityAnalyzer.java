@@ -59,6 +59,7 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
      * @param types
      * @param isStoreInvalidValues
      */
+    @Deprecated
     public ValueQualityAnalyzer(DataType.Type[] types, boolean isStoreInvalidValues) {
         this(new DataTypeQualityAnalyzer(types, isStoreInvalidValues), null, isStoreInvalidValues);
     }
@@ -68,10 +69,12 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
      * {@link DataTypeQualityAnalyzer#DataTypeQualityAnalyzer(org.talend.datascience.common.inference.type.DataType.Type...)}
      * @param types
      */
+    @Deprecated
     public ValueQualityAnalyzer(DataType.Type... types) {
         this(new DataTypeQualityAnalyzer(types), null);
     }
 
+    @Override
     public void init() {
         dataTypeQualityAnalyzer.init();
         if (semanticQualityAnalyzer != null)
@@ -86,17 +89,7 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
 
     }
 
-    /**
-     * Analyze record of Array of string type, this method is used in scala library which not support parameterized
-     * array type.
-     * 
-     * @param record
-     * @return
-     */
-    public boolean analyzeArray(String[] record) {
-        return analyze(record);
-    }
-
+    @Override
     public boolean analyze(String... record) {
         boolean status = this.dataTypeQualityAnalyzer.analyze(record);
         if (status && this.semanticQualityAnalyzer != null) {
@@ -105,10 +98,12 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
         return status;
     }
 
+    @Override
     public void end() {
         // Nothing to do.
     }
 
+    @Override
     public List<ValueQualityStatistics> getResult() {
         if (semanticQualityAnalyzer == null) {
             return dataTypeQualityAnalyzer.getResult();
@@ -129,9 +124,10 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
     }
 
     /**
-     * @param another value quality analyzer
-     * Note: 1. if another is null, return this; 2. the type of another should be ValueQualityAnalyzer.
+     * @param another value quality analyzer Note: 1. if another is null, return this; 2. the type of another should be
+     * ValueQualityAnalyzer.
      */
+    @Override
     public Analyzer<ValueQualityStatistics> merge(Analyzer<ValueQualityStatistics> another) {
 
         if (another == null) {

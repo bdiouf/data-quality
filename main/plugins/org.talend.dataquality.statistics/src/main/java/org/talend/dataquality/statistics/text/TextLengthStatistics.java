@@ -37,7 +37,7 @@ public class TextLengthStatistics implements Serializable {
     private Integer countIgnoreBlank = 0;
 
     public void add(String value) {
-        if(value == null) {
+        if (value == null) {
             return;
         }
 
@@ -154,6 +154,7 @@ public class TextLengthStatistics implements Serializable {
     public Integer getSumTextLength() {
         return sumTextLength;
     }
+
     public Integer getSumTextLengthIgnoreBlank() {
         return sumTextLengthIgnoreBlank;
     }

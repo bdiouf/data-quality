@@ -8,8 +8,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.AnalyzerSupplier;
-import org.talend.datascience.common.inference.ConcurrentAnalyzer;
 
 public class TextLengthAnalyzerTest {
 
@@ -62,7 +60,6 @@ public class TextLengthAnalyzerTest {
         Assert.assertEquals(4.5, stats.getAvgTextLengthIgnoreBlank(), 0);
 
     }
-
 
     @Test
     public void testMerge() {

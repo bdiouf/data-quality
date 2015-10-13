@@ -14,7 +14,11 @@ package org.talend.dataquality.statistics.frequency;
 
 import java.util.Map;
 
-import org.talend.dataquality.statistics.frequency.impl.*;
+import org.talend.dataquality.statistics.frequency.impl.AbstractFrequencyEvaluator;
+import org.talend.dataquality.statistics.frequency.impl.CMSFrequencyEvaluator;
+import org.talend.dataquality.statistics.frequency.impl.EFrequencyAlgorithm;
+import org.talend.dataquality.statistics.frequency.impl.NaiveFrequencyEvaluator;
+import org.talend.dataquality.statistics.frequency.impl.SSFrequencyEvaluator;
 
 /**
  * Frequency statistics bean which delegate the computation to evaluator.

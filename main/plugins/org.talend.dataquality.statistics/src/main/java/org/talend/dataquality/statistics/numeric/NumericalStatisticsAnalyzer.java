@@ -30,7 +30,8 @@ import org.talend.datascience.common.inference.type.DataType.Type;
 public abstract class NumericalStatisticsAnalyzer<T> implements Analyzer<T> {
 
     private static final long serialVersionUID = 5444082810385180383L;
-	private Integer[] statColIdx; // index arrays indicator which column are numerical that need to be analyzed.
+
+    private Integer[] statColIdx; // index arrays indicator which column are numerical that need to be analyzed.
 
     private DataType.Type[] types; // types of columns
 
@@ -87,9 +88,10 @@ public abstract class NumericalStatisticsAnalyzer<T> implements Analyzer<T> {
         }
         this.statColIdx = statIdxList.toArray(new Integer[statIdxList.size()]);
     }
+
     @Override
     public void close() throws Exception {
-        
+
     }
 
 }

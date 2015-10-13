@@ -53,7 +53,6 @@ public class CardinalityHLLAnalyzer implements Analyzer<CardinalityHLLStatistics
         this.rsd = rsd;
     }
 
-
     @Override
     public boolean analyze(String... record) {
         if (record == null) {

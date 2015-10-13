@@ -12,7 +12,11 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.impl;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -55,13 +59,14 @@ public class NaiveFrequencyEvaluator extends AbstractFrequencyEvaluator {
         }
         return ftMap;
     }
+
     @Override
     public long getFrequency(String item) {
         return value2freq.get(item);
     }
-    
+
     @Override
     public void setParameters(Map<String, String> params) {
-        //No parameter needed.
+        // No parameter needed.
     }
 }

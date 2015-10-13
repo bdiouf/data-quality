@@ -87,13 +87,14 @@ public class CMSFrequencyEvaluator extends AbstractFrequencyEvaluator {
 
     @Override
     public Map<String, Long> getTopK(int topk) {
-        return new HashMap<String,Long>();
+        return new HashMap<String, Long>();
     }
 
     @Override
     public long getFrequency(String item) {
         return sketch.estimateCount(item);
     }
+
     /**
      * EPS Specifies the accuracy (number of values counted * accuracy >= number of errors) of type
      */

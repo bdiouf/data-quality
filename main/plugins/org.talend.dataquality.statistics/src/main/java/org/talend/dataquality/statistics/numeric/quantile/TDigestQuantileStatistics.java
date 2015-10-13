@@ -41,7 +41,7 @@ public class TDigestQuantileStatistics {
 
     public double getMedian() {
         if (dist.centroidCount() == 1) {
-           return dist.centroids().iterator().next().mean();
+            return dist.centroids().iterator().next().mean();
         }
         return dist.quantile(0.5);
     }
