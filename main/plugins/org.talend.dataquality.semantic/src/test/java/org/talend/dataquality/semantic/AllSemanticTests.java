@@ -18,6 +18,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.talend.dataquality.semantic.classifier.custom.UDCategorySerDeserTest;
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedClassifierTest;
 import org.talend.dataquality.semantic.validator.DateSemanticValidatorTest;
+import org.talend.dataquality.semantic.validator.impl.SedolValidatorTest;
 import org.talend.dataquality.standardization.index.SynonymIndexBuilderTest;
 import org.talend.dataquality.standardization.index.SynonymIndexSearcherTest;
 import org.talend.dataquality.standardization.record.SynonymRecordSearcherTest;
@@ -28,7 +29,7 @@ import org.talend.dataquality.standardization.record.SynonymRecordSearcherTest;
 @RunWith(Suite.class)
 @SuiteClasses({ CategoryRecognizerTest.class, UserDefinedClassifierTest.class, UDCategorySerDeserTest.class,
         DateSemanticValidatorTest.class, SynonymIndexBuilderTest.class, SynonymIndexSearcherTest.class,
-        SynonymRecordSearcherTest.class })
+        SynonymRecordSearcherTest.class,SedolValidatorTest.class })
 public class AllSemanticTests {
 
 }

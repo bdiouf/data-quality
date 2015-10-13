@@ -26,6 +26,9 @@ public class SedolValidator implements ISemanticValidator {
 
     @Override
     public boolean isValid(String str) {
+        if (str == null || str.length() != 7) {
+            return false;
+        }
         String sedolStr = StringUtils.left(str, 6);
         // Extract the checksum digit.
         int checksum = -1;
