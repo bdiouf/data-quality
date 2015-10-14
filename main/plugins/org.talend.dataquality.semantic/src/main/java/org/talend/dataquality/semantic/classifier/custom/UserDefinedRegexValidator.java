@@ -14,6 +14,7 @@ package org.talend.dataquality.semantic.classifier.custom;
 
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.talend.dataquality.semantic.validator.AbstractRegexSemanticValidator;
 import org.talend.dataquality.semantic.validator.ISemanticValidator;
@@ -79,6 +80,9 @@ public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
     }
 
     public void setPatternString(String patternString) {
+        if(StringUtils.isEmpty(patternString)){
+            throw new  RuntimeException("null argument of patternString is not allowed.");
+        }
         this.patternString = patternString;
         pattern = caseInsensitive ? Pattern.compile(patternString, Pattern.CASE_INSENSITIVE) : Pattern.compile(patternString);
     }

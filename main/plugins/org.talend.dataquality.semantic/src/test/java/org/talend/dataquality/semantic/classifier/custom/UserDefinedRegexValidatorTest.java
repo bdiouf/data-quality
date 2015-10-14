@@ -53,6 +53,22 @@ public class UserDefinedRegexValidatorTest {
         //Without checkout, these two digits are correct
         Assert.assertTrue(validator.isValid("5852844"));
         Assert.assertTrue(validator.isValid("5752842"));
+        
+        //Given null sedol validator, do same validator as to not set.
+        validator.setSubValidatorClassName(null);
+        assertTrueDigits(validator);
+        assertFalseDigits(validator);
+        //Without checkout, these two digits are correct
+        Assert.assertTrue(validator.isValid("5852844"));
+        Assert.assertTrue(validator.isValid("5752842"));
+        
+        //Given empty sedol validator, do same validator as to not set.
+        validator.setSubValidatorClassName("");
+        assertTrueDigits(validator);
+        assertFalseDigits(validator);
+        //Without checkout, these two digits are correct
+        Assert.assertTrue(validator.isValid("5852844"));
+        Assert.assertTrue(validator.isValid("5752842"));
     }
 
     private void assertTrueDigits(UserDefinedRegexValidator validator) {
@@ -68,6 +84,40 @@ public class UserDefinedRegexValidatorTest {
         Assert.assertFalse(validator.isValid(""));
         Assert.assertFalse(validator.isValid(" "));
         Assert.assertFalse(validator.isValid(null));
+    }
+    
+    @Test
+    public void testCasesenInsitive(){
+        UserDefinedRegexValidator validator = new UserDefinedRegexValidator();
+        validator.setPatternString("^(?<Sedol>[B-Db-dF-Hf-hJ-Nj-nP-Tp-tV-Xv-xYyZz\\d]{6}\\d)$");
+        Assert.assertTrue(validator.isValid("B0YBKL9"));
+        Assert.assertTrue(validator.isValid("b0yBKL9"));
+        validator.setCaseInsensitive(false); 
+        validator.setPatternString("^(?<Sedol>[B-Db-dF-Hf-hJ-Nj-nP-Tp-tV-Xv-xYyZz\\d]{6}\\d)$");
+        //Since the regex itself is case sensitive considered, not match what value this parameter set, the result will always be true.
+        Assert.assertTrue(validator.isValid("b0yBKL9"));
+        
+        //If the pattern is not designed case-sensitive
+        validator.setPatternString("^(?<Sedol>[B-DF-HJ-NP-TV-XYZ\\d]{6}\\d)$");
+        Assert.assertFalse(validator.isValid("b0yBKL9"));
+        
+    }
+    
+    @Test
+    public void testInvalidRegexString(){
+        UserDefinedRegexValidator validator = new UserDefinedRegexValidator();
+        try {
+            validator.setPatternString(null);
+        } catch (RuntimeException e) {
+            Assert.assertEquals(e.getMessage(),"null argument of patternString is not allowed.");
+        }
+        try {
+            validator.setPatternString("");
+        } catch (RuntimeException e) {
+            Assert.assertEquals(e.getMessage(),"null argument of patternString is not allowed.");
+        }
+        validator.setPatternString("1");
+        Assert.assertFalse(validator.isValid("B0YBKL9"));
     }
 
 }
