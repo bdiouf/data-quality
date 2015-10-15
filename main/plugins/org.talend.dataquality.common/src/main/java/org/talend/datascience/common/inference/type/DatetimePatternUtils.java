@@ -36,11 +36,11 @@ public class DatetimePatternUtils {
 
     private Pattern lowerAlph = Pattern.compile("[a-z]");
 
-    private Pattern lowerAlphSpec = Pattern.compile("çâêîôûéèùïöü");
+    private Pattern lowerAlphSpec = Pattern.compile("àáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ");
 
     private Pattern upperAlph = Pattern.compile("[A-Z]");
 
-    private Pattern upperAlphSpec = Pattern.compile("ÇÂÊÎÔÛÉÈÙÏÖÜ");
+    private Pattern upperAlphSpec = Pattern.compile("ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞß");
 
     private Map<Pattern, String> dateParsers = new LinkedHashMap<Pattern, String>();
 
