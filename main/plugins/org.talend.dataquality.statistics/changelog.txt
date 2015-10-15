@@ -4,7 +4,6 @@
 3. Make "type[]" and "parameter" arguments as mandatory parameters in NumericalStatisticsAnalyzer constructor. -mzhao
 4. All the mandatory parameters requires by analyzer must be set in constructor. -mzhao
 5. Remove all the warnings in java classes.
-=== 2015-10-12 ===
-1. Add count below min , count above max and isComplete method for histogram analyzer
-=== 2015-10-13 ===
-1. Add junit test for histogram with randomly generated value.
+=== 2015-10-14 ===
+1. Separate the pattern frequency class. -mzhao
+2. Create pattern replacement for latin-1 suppliment characters. -mzhao

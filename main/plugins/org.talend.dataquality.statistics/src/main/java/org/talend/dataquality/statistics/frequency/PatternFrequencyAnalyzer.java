@@ -31,13 +31,7 @@ public class PatternFrequencyAnalyzer extends FrequencyAnalyzer<PatternFrequency
 
     @Override
     protected String getValuePattern(String originalValue) {
-        if (TypeInferenceUtils.isDate(originalValue)) {
-            return DatetimePatternUtils.getInstance().datePatternReplace(originalValue);
-        } else if (TypeInferenceUtils.isTime(originalValue)) {
-            return DatetimePatternUtils.getInstance().timePatternReplace(originalValue);
-        } else {
-            return DatetimePatternUtils.getInstance().patternReplace(originalValue);
-        }
+        return DatetimePatternUtils.getInstance().patternReplace(originalValue);
     }
 
     @Override
