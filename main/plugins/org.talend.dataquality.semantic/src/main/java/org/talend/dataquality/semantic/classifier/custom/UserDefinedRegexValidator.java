@@ -20,8 +20,14 @@ import org.talend.dataquality.semantic.validator.AbstractRegexSemanticValidator;
 import org.talend.dataquality.semantic.validator.ISemanticValidator;
 
 /**
- * created by talend on 2015-07-28 Detailled comment.
- *
+ * The regex validator can have a sub-validator defined in json file. Like : <br/>
+ * <code>
+ *         "validator" : { 
+ *         "patternString" : "^(?<Sedol>[B-Db-dF-Hf-hJ-Nj-nP-Tp-tV-Xv-xYyZz\\d]{6}\\d)$",
+ *         "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.SedolValidator" 
+ *         }</code> <br>
+ * Or set with setter {{@link #setSubValidatorClassName(String)}<br>
+ * When the regex matches, then do another check with sub-validator if provided.
  */
 public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
 
@@ -49,7 +55,9 @@ public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
 
     /**
      * Sets the subValidatorClassName.
-     * 
+     * <br>
+     * The subValidatorClassName should be a full qualified class name like <code>org.talend.dataquality.semantic.validator.impl.SedolValidator</code> <br>
+     * A runtime exception will be thrown if given class name is incorrect or not loaded properly.
      * @param subValidatorClassName the subValidatorClassName to set
      */
     public void setSubValidatorClassName(String subValidatorClassName) {
