@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.statistics.numeric.histogram;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -31,28 +33,43 @@ public class HistogramStatistics {
 
     private long[] result = new long[numBins];
 
-    private double binSize = (max - min) / numBins;
+    private BigDecimal binSize;
 
+    int scale = 1000;
+    /**
+     * Set the parameters of the statistics <br>
+     * Note that max must be greater than min
+     * 
+     * @param max
+     * @param min
+     * @param numBins number of bins , It should be a none zero integer.
+     */
     public void setParameters(double max, double min, int numBins) {
+        if (max <= min) {
+            throw new RuntimeException("max must be greater than min");
+        }
+        if (numBins <= 0) {
+            throw new RuntimeException("invalid numBins value :" + numBins + " , numBins must be a none zero integer");
+        }
         this.max = max;
         this.min = min;
         this.numBins = numBins;
-        binSize = (max - min) / numBins;
+        binSize = BigDecimal.valueOf(max - min).divide(BigDecimal.valueOf(numBins), 10, RoundingMode.UP);
         result = new long[numBins];
 
     }
 
     public void add(double d) {
-        int bin = (int) ((d - min) / binSize);
+        double bin = BigDecimal.valueOf(d - min).divide(binSize, 10, RoundingMode.UP).doubleValue();
         if (bin < 0) { /* this data is smaller than min */
-            countBelowMin ++;
+            countBelowMin++;
         } else if (bin > numBins) { /* this data point is bigger than max */
-            countAboveMax ++;
+            countAboveMax++;
         } else {
             if (bin == numBins) {
-                result[bin - 1] += 1; // Include count of the upper boundary.
+                result[(int) bin - 1] += 1; // Include count of the upper boundary.
             } else {
-                result[bin] += 1;
+                result[(int) bin] += 1;
             }
         }
     }
@@ -68,13 +85,13 @@ public class HistogramStatistics {
         Map<Range, Long> histogramMap = new LinkedHashMap<Range, Long>();
         double currentMin = min;
         for (int i = 0; i < numBins; i++) {
-            double currentMax = currentMin + binSize;
+            double currentMax = currentMin + binSize.doubleValue();
             if ((i + 1) == numBins) {
                 currentMax = max;
             }
             Range r = new Range(currentMin, currentMax);
             histogramMap.put(r, result[i]);
-            currentMin = currentMin + binSize;
+            currentMin = currentMin + binSize.doubleValue();
         }
         return histogramMap;
     }
@@ -86,15 +103,12 @@ public class HistogramStatistics {
         return countBelowMin == 0 && countAboveMax == 0;
     }
 
-    
     public long getCountBelowMin() {
         return countBelowMin;
     }
 
-    
     public long getCountAboveMax() {
         return countAboveMax;
     }
-    
 
 }
