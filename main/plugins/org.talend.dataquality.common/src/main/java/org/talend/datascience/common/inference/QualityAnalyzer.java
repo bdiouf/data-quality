@@ -16,7 +16,7 @@ public abstract class QualityAnalyzer<T, QT> implements Analyzer<T> {
 
     private static final long serialVersionUID = 6214486020243062215L;
 
-    private boolean isStoreInvalidValues = true;
+    protected boolean isStoreInvalidValues = true;
 
     protected QT types;
 

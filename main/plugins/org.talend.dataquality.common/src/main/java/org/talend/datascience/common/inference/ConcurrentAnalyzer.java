@@ -26,7 +26,7 @@ public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
     private static final long serialVersionUID = 6896234073310039985L;
 
-    private final ThreadLocal<Analyzer<T>> pool;
+    private final ThreadLocal<Analyzer<T>> threadLocal;
 
     private ConcurrentAnalyzer(int maxSize, AnalyzerSupplier<Analyzer<T>> supplier) {
         GenericKeyedObjectPool.Config config = new GenericKeyedObjectPool.Config();
@@ -39,7 +39,7 @@ public class ConcurrentAnalyzer<T> implements Analyzer<T> {
         // and return to pool on remove() call.
         // #2: Pool is expected to be thread safe.
         final KeyedObjectPool<Thread, Analyzer<T>> pool = new GenericKeyedObjectPool<>(new Factory<>(supplier), config);
-        this.pool = new ThreadLocal<Analyzer<T>>() {
+        this.threadLocal = new ThreadLocal<Analyzer<T>>() {
             @Override
             protected Analyzer<T> initialValue() {
                 try {
@@ -70,38 +70,38 @@ public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
     @Override
     public void init() {
-        Analyzer<T> analyzer = pool.get();
+        Analyzer<T> analyzer = threadLocal.get();
         analyzer.init();
     }
 
     @Override
     public boolean analyze(String... record) {
-        Analyzer<T> analyzer = pool.get();
+        Analyzer<T> analyzer = threadLocal.get();
         return analyzer.analyze(record);
     }
 
     @Override
     public void end() {
-        Analyzer<T> analyzer = pool.get();
+        Analyzer<T> analyzer = threadLocal.get();
         analyzer.end();
     }
 
     @Override
     public List<T> getResult() {
-        Analyzer<T> analyzer = pool.get();
+        Analyzer<T> analyzer = threadLocal.get();
         return analyzer.getResult();
     }
 
     @Override
     public Analyzer<T> merge(Analyzer<T> another) {
-        Analyzer<T> analyzer = pool.get();
+        Analyzer<T> analyzer = threadLocal.get();
         return analyzer.merge(another);
     }
 
     @Override
     public void close() throws Exception {
         // Return previously borrowed instance to pool
-        pool.remove();
+        threadLocal.remove();
     }
 
     private static class Factory<T> implements KeyedPoolableObjectFactory<Thread, Analyzer<T>> {
