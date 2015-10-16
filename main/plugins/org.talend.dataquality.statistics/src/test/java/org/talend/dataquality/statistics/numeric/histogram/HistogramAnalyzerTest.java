@@ -285,9 +285,13 @@ public class HistogramAnalyzerTest {
         for (int i = 1; i <= numBins; i++) {
             // generate values for each bin ( range of 5 to 10)
             long countInBin = ThreadLocalRandom.current().nextLong(50, 1000);
-            Range currentRange = new Range(current, current + step);
+            double next = current + step;
+            if (i == numBins) {
+                next = max;
+            }
+            Range currentRange = new Range(current, next);
             for (int j = 0; j < countInBin; j++) {
-                double rValue = ThreadLocalRandom.current().nextDouble(current, (current + step));
+                double rValue = ThreadLocalRandom.current().nextDouble(current, next);
                 values.add(rValue);
             }
             if (1 == i || numBins == i) {
@@ -296,13 +300,13 @@ public class HistogramAnalyzerTest {
             }
             histograms.put(currentRange, countInBin);
             // Go to next bin
-            current = current + step;
+            current = next;
         }
 
         // Add min and max into value list
         values.add(min);
         values.add(max);
-
+        System.out.println("numBins: " + numBins + ", min: " + min + ", max:" + max);
         // analyze histogram
         HistogramParameter histogramParameter = new HistogramParameter();
         HistogramColumnParameter columnParam = new HistogramColumnParameter();
