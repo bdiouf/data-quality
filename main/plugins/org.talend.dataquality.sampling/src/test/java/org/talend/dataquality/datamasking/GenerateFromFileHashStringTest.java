@@ -27,7 +27,7 @@ public class GenerateFromFileHashStringTest {
 
     private String output;
 
-    private String path = "/home/jgonzalez/Bureau/data/name.txt"; //$NON-NLS-1$
+    private String path = GenerateFromFileStringTest.path;
 
     private GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
 
@@ -39,13 +39,13 @@ public class GenerateFromFileHashStringTest {
     @Test
     public void testGood() {
         output = gffhs.generateMaskedRow(null);
-        assertEquals(output, "Brad"); //$NON-NLS-1$
+        assertEquals("Brad", output); //$NON-NLS-1$
     }
 
     @Test
     public void testNull() {
         gffhs.keepNull = true;
         output = gffhs.generateMaskedRow(null);
-        assertEquals(output, null);
+        assertEquals(null, output);
     }
 }

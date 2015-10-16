@@ -24,23 +24,21 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  */
 public class GenerateFromFileIntegerTest {
 
-    private String output;
-
-    private String path = "/home/jgonzalez/Bureau/data/numbers.txt"; //$NON-NLS-1$
+    private String path = GenerateFromFileHashIntegerTest.path;
 
     private GenerateFromFileInteger gffi = new GenerateFromFileInteger();
 
     @Test
     public void testGood() {
         gffi.parse(path, false, new RandomWrapper(42));
-        output = gffi.generateMaskedRow(0).toString();
-        assertEquals(output, "10"); //$NON-NLS-1$
+        assertEquals(9, gffi.generateMaskedRow(0).intValue());
     }
 
     @Test
     public void testNull() {
         gffi.parse(gffi.EMPTY_STRING, false, new RandomWrapper(42));
-        output = gffi.generateMaskedRow(0).toString();
-        assertEquals(output, "0"); //$NON-NLS-1$
+        gffi.setKeepNull(true);
+        assertEquals(0, gffi.generateMaskedRow(0).intValue());
+        assertEquals(null, gffi.generateMaskedRow(null));
     }
 }

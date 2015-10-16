@@ -27,7 +27,7 @@ public class GenerateFromFileStringTest {
 
     private String output;
 
-    private String path = "/home/jgonzalez/Bureau/data/name.txt"; //$NON-NLS-1$
+    static final String path = GenerateFromFileStringTest.class.getResource("/data/name.txt").getFile(); //$NON-NLS-1$
 
     private GenerateFromFileString gffs = new GenerateFromFileString();
 
@@ -39,14 +39,14 @@ public class GenerateFromFileStringTest {
     @Test
     public void testGood() {
         output = gffs.generateMaskedRow(null);
-        assertEquals(output, "Brad"); //$NON-NLS-1$
+        assertEquals("Brad", output); //$NON-NLS-1$
     }
 
     @Test
     public void testNull() {
         gffs.keepNull = true;
         output = gffs.generateMaskedRow(null);
-        assertEquals(output, null);
+        assertEquals(null, output);
     }
 
 }

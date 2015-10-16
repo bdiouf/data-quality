@@ -25,9 +25,7 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  */
 public class GenerateFromFileHashLongTest {
 
-    private String output;
-
-    private String path = "/home/jgonzalez/Bureau/data/numbers.txt"; //$NON-NLS-1$
+    private String path = GenerateFromFileHashIntegerTest.path;
 
     private GenerateFromFileHashLong gffhl = new GenerateFromFileHashLong();
 
@@ -38,14 +36,13 @@ public class GenerateFromFileHashLongTest {
 
     @Test
     public void testGood() {
-        output = gffhl.generateMaskedRow(null).toString();
-        assertEquals(output, "10"); //$NON-NLS-1$
+        assertEquals(18, gffhl.generateMaskedRow(101L).longValue());
+        assertEquals(9, gffhl.generateMaskedRow(null).longValue());
     }
 
     @Test
     public void testBad() {
         gffhl.keepNull = true;
-        output = gffhl.generateMaskedRow(0L).toString();
-        assertEquals(output, "10"); //$NON-NLS-1$
+        assertEquals(null, gffhl.generateMaskedRow(null));
     }
 }
