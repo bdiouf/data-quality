@@ -264,18 +264,19 @@ public class HistogramAnalyzerTest {
 
     @Test
     public void testMultipleRandomHistograms() {
-        final int nbLoop = 1000;
+        final int nbLoop = 10;
         for (int i = 0; i < nbLoop; i++) {
-            testHistogramWithRandom();
+            testHistogramWithRandom(3, 60, -1300 + 10 * i, 196 + 11 * i, 3435 + 10 * i, i * 37, 3 + i * 73);
         }
     }
 
-    private void testHistogramWithRandom() {
+    private void testHistogramWithRandom(int minNbBins, int maxNbBins, int minValue, int maxMinValue, int maxValue,
+            int minNbValue, int maxNbValue) {
         // number of bins
-        int numBins = ThreadLocalRandom.current().nextInt(5, 20);
+        int numBins = ThreadLocalRandom.current().nextInt(minNbBins, maxNbBins);
         // min value,max value
-        double min = ThreadLocalRandom.current().nextDouble(-100, 100);
-        double max = ThreadLocalRandom.current().nextDouble(101, 1000);
+        double min = ThreadLocalRandom.current().nextDouble(minValue, maxMinValue);
+        double max = ThreadLocalRandom.current().nextDouble(maxMinValue + 1, maxValue);
         double step = (max - min) / numBins;
         // value list
         List<Double> values = new ArrayList<Double>();
@@ -284,7 +285,7 @@ public class HistogramAnalyzerTest {
         double current = min;
         for (int i = 1; i <= numBins; i++) {
             // generate values for each bin ( range of 5 to 10)
-            long countInBin = ThreadLocalRandom.current().nextLong(50, 1000);
+            long countInBin = ThreadLocalRandom.current().nextLong(minNbValue, maxNbValue);
             double next = current + step;
             if (i == numBins) {
                 next = max;
@@ -324,11 +325,11 @@ public class HistogramAnalyzerTest {
             @SuppressWarnings("unchecked")
             Entry<Range, Long> histEntryOfAnalyzer = (Entry<Range, Long>) histogramFromAnalyzer.entrySet().toArray()[binIdx];
             Assert.assertEquals(histEntry.getKey().getLower(), histEntryOfAnalyzer.getKey().getLower(), 0.001);
-            System.out.print("Lower: " + histEntry.getKey().getLower());
+            // System.out.print("Lower: " + histEntry.getKey().getLower());
             Assert.assertEquals(histEntry.getKey().getUpper(), histEntryOfAnalyzer.getKey().getUpper(), 0.001);
-            System.out.print(" Upper: " + histEntry.getKey().getUpper());
-            Assert.assertEquals(histEntry.getValue(), histEntryOfAnalyzer.getValue(), 0.001);
-            System.out.println(" Count: " + histEntry.getValue());
+            // System.out.print(" Upper: " + histEntry.getKey().getUpper());
+            Assert.assertEquals(histEntry.getValue(), histEntryOfAnalyzer.getValue());
+            // System.out.println(" Count: " + histEntry.getValue());
             binIdx++;
         }
 
