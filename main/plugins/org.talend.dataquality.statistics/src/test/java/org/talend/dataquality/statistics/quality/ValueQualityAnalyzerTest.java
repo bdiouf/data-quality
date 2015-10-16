@@ -29,7 +29,6 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
-import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder.Mode;
 import org.talend.dataquality.semantic.statistics.SemanticQualityAnalyzer;
 import org.talend.datascience.common.inference.ValueQualityStatistics;
 import org.talend.datascience.common.inference.type.DataType;
@@ -76,7 +75,7 @@ public class ValueQualityAnalyzerTest {
         final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
                 .ddPath(ddPath) //
                 .kwPath(kwPath) //
-                .setMode(Mode.LUCENE);
+                .lucene();
         return builder;
     }
 

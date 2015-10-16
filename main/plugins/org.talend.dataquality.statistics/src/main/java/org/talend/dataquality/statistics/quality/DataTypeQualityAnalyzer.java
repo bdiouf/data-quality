@@ -33,8 +33,6 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     private final ResizableList<ValueQualityStatistics> results = new ResizableList<>(ValueQualityStatistics.class);
 
-    private boolean isStoreInvalidValues = true;
-
     private static Logger log = Logger.getLogger(DataTypeQualityAnalyzer.class);
 
     public DataTypeQualityAnalyzer(DataType.Type[] types, boolean isStoreInvalidValues) {
