@@ -13,6 +13,7 @@
 package org.talend.dataquality.duplicating;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,18 +39,27 @@ public class DateChangerTest {
     public void testModifyDateValue() {
         String result = sdf.format(dateChanger.modifyDateValue(dateToModify));
         assertEquals("23-08-1982", result); //$NON-NLS-1$
+
+        Date result2 = dateChanger.modifyDateValue(null);
+        assertTrue(result2 == null);
     }
 
     @Test
     public void testSwitchDayMonthValue() {
         String result = sdf.format(dateChanger.switchDayMonthValue(dateToModify));
         assertEquals("08-05-1982", result); //$NON-NLS-1$
+
+        Date result2 = dateChanger.switchDayMonthValue(null);
+        assertTrue(result2 == null);
     }
 
     @Test
     public void testReplaceWithRandomDate() {
         String result = sdf.format(dateChanger.replaceWithRandomDate(dateToModify));
         assertEquals("14-03-1963", result); //$NON-NLS-1$
+
+        String result2 = sdf.format(dateChanger.replaceWithRandomDate(null));
+        assertEquals("17-10-1971", result2); //$NON-NLS-1$
     }
 
 }

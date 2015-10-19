@@ -39,6 +39,9 @@ public class DateChanger {
 
     @SuppressWarnings("deprecation")
     Date modifyDateValue(Date date) {
+        if (date == null) {
+            return null;
+        }
 
         int choice = random.nextInt(3);
         switch (choice) {
@@ -59,6 +62,9 @@ public class DateChanger {
 
     @SuppressWarnings("deprecation")
     Date switchDayMonthValue(Date date) {
+        if (date == null) {
+            return null;
+        }
         int tempMonth = date.getMonth();
         date.setMonth((date.getDate() - 1) % 12);
         date.setDate(tempMonth + 1);
@@ -67,6 +73,9 @@ public class DateChanger {
 
     @SuppressWarnings("deprecation")
     Date replaceWithRandomDate(Date date) {
+        if (date == null) {
+            date = new Date();
+        }
         date.setYear(random.nextInt(100));
         date.setMonth(random.nextInt(12));
         date.setDate(random.nextInt(31));
