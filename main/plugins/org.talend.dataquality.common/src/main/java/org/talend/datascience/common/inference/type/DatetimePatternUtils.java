@@ -32,15 +32,6 @@ public class DatetimePatternUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatetimePatternUtils.class);
 
-    private Pattern digits = Pattern.compile("[0-9]");
-
-    private Pattern lowerAlph = Pattern.compile("[a-z]");
-
-    private Pattern lowerAlphSpec = Pattern.compile("àáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ");
-
-    private Pattern upperAlph = Pattern.compile("[A-Z]");
-
-    private Pattern upperAlphSpec = Pattern.compile("ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞß");
 
     private Map<Pattern, String> dateParsers = new LinkedHashMap<Pattern, String>();
 
@@ -172,7 +163,6 @@ public class DatetimePatternUtils {
             return StringUtils.EMPTY;
         }
         // Parse the value given list of date regex in pattern file.
-        String patternToFind = "";
         for (Pattern parser : parsers.keySet()) {
             try {
                 if (parser.matcher(value).find()) {
@@ -182,46 +172,9 @@ public class DatetimePatternUtils {
                 // Ignore
             }
         }
-        if (patternToFind.equals("")) {
-            patternToFind = patternReplace(value);
-        }
-        return patternToFind;
+        return value;
 
     }
 
-    /**
-     * Replace the character in value with the predefined pattern character.
-     * 
-     * @param value
-     * @return pattern string.
-     */
-    public String patternReplace(String value) {
-        String replacedValue = digits.matcher(value).replaceAll("9");
-        replacedValue = lowerAlph.matcher(replacedValue).replaceAll("a");
-        replacedValue = upperAlph.matcher(replacedValue).replaceAll("A");
-        replacedValue = lowerAlphSpec.matcher(replacedValue).replaceAll("a");
-        replacedValue = upperAlphSpec.matcher(replacedValue).replaceAll("A");
-        return replacedValue;
-    }
-
-    /**
-     * Whether the patternString contains the predefined alpha character.
-     * 
-     * @param patternString
-     * @return
-     */
-    public boolean containsAlphabetic(String patternString) {
-        boolean containsLowerAhpa = lowerAlph.matcher(patternString).find();
-        if (!containsLowerAhpa) {
-            containsLowerAhpa = upperAlph.matcher(patternString).find();
-            if (!containsLowerAhpa) {
-                containsLowerAhpa = lowerAlphSpec.matcher(patternString).find();
-                if (!containsLowerAhpa) {
-                    containsLowerAhpa = upperAlphSpec.matcher(patternString).find();
-                }
-            }
-        }
-        return containsLowerAhpa;
-    }
 
 }
