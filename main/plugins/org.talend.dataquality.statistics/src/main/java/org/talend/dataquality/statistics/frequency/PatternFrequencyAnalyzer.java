@@ -13,14 +13,23 @@
 package org.talend.dataquality.statistics.frequency;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
+import org.talend.dataquality.statistics.frequency.recognition.AsciiCharPatternRecognition;
+import org.talend.dataquality.statistics.frequency.recognition.DatePatternRecognition;
+import org.talend.dataquality.statistics.frequency.recognition.EastAsiaCharPatternRecognition;
+import org.talend.dataquality.statistics.frequency.recognition.EmptyPatternRecognition;
+import org.talend.dataquality.statistics.frequency.recognition.PatternRecognition;
+import org.talend.dataquality.statistics.frequency.recognition.RecognitionResult;
+import org.talend.dataquality.statistics.frequency.recognition.TimePatternRecognition;
 import org.talend.datascience.common.inference.ResizableList;
-import org.talend.datascience.common.inference.type.DatetimePatternUtils;
-import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 
 /**
  * Compute the pattern frequency tables.<br>
+ * This class is a composite analyzer that it will automatically attribute a character to the correct pattern group.
  * 
  * @author mzhao
  *
@@ -29,9 +38,99 @@ public class PatternFrequencyAnalyzer extends FrequencyAnalyzer<PatternFrequency
 
     private static final long serialVersionUID = -4658709249927616622L;
 
+    private Set<PatternRecognition> patternRecognitions = new TreeSet<PatternRecognition>();
+
+    public PatternFrequencyAnalyzer() {
+        // Initialize the built-in string pattern recognitions.
+        // Date
+        patternRecognitions.add(new DatePatternRecognition());
+        patternRecognitions.add(new EmptyPatternRecognition());
+        patternRecognitions.add(new TimePatternRecognition());
+        patternRecognitions.add(new AsciiCharPatternRecognition());
+        patternRecognitions.add(new EastAsiaCharPatternRecognition());
+
+    }
+
+    /**
+     * Inject the recognizer of types below:<br>
+     * <ul>
+     * <li>{@link DatePatternRecognition}</>
+     * <li>{@link TimePatternRecognition}</>
+     * <li>{@link AsciiCharPatternRecognition}</>
+     * <li>{@link EastAsiaCharPatternRecognition}</>
+     * </ul>
+     * 
+     * @param recognizerToInject the recognition to be registered.
+     */
+    public void injectRecognizer(PatternRecognition recognizerToInject) {
+        if (recognizerToInject == null) {
+            new RuntimeException("null recognition is not allowed");
+        }
+        // No need to inject if already existed.
+        Iterator<PatternRecognition> recIterator = patternRecognitions.iterator();
+        while (recIterator.hasNext()) {
+            if (recIterator.next().getLevel() == recognizerToInject.getLevel()) {
+                // Already exist.
+                return;
+            }
+        }
+        // Inject
+        patternRecognitions.add(recognizerToInject);
+    }
+
+    /**
+     * Remove the recognizer instance Note that nothing to do with this method if the recognizer to be removed does not
+     * exist in the pool.
+     * 
+     * @param recognizerToRemove the recognizer instance added.
+     */
+    public void removeRecognizer(PatternRecognition recognizerToRemove) {
+        if (recognizerToRemove == null) {
+            new RuntimeException("null recognition is not allowed");
+        }
+        patternRecognitions.remove(recognizerToRemove);
+    }
+
+    /**
+     * Remove the recognizer given its level. <br>
+     * Note that nothing to do with this method if the recognizer to be removed does not exist in the pool.
+     * 
+     * @param level the recognizer's level
+     */
+    public void removeRecognizer(int level) {
+        // No need to inject if already existed.
+        Iterator<PatternRecognition> recIterator = patternRecognitions.iterator();
+        PatternRecognition toRemove = null;
+        while (recIterator.hasNext()) {
+            PatternRecognition next = recIterator.next();
+            if (next.getLevel() == level) {
+                // Already exist.
+                toRemove = next;
+                break;
+            }
+        }
+        if (toRemove != null) {
+            patternRecognitions.remove(toRemove);
+        }
+    }
+
     @Override
     protected String getValuePattern(String originalValue) {
-        return DatetimePatternUtils.getInstance().patternReplace(originalValue);
+        Iterator<PatternRecognition> recognizerIterator = patternRecognitions.iterator();
+        String patternValue = originalValue;
+        while (recognizerIterator.hasNext()) {
+            PatternRecognition next = recognizerIterator.next();
+            RecognitionResult result = next.recognize(patternValue);
+            if (result.isComplete()) {
+                return result.getPatternString();
+            } else {
+                // Go to next recognizer.
+                patternValue = result.getPatternString();
+            }
+        }
+
+        // value is not recognized completely.
+        return patternValue;
     }
 
     @Override

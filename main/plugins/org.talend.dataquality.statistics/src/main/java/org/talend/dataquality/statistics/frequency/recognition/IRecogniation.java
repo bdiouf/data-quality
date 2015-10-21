@@ -10,24 +10,16 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency;
+package org.talend.dataquality.statistics.frequency.recognition;
 
-import org.talend.datascience.common.inference.type.DatetimePatternUtils;
 
 /**
- * Time Pattern frequency analyzer for date values.
+ * A recognition interface for pattern matching and knowledge discovery .
  * 
  * @since 1.3.0
- * @author mzhao
+ * @author zhao
+ *
  */
-public class TimePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer {
-
-
-    private static final long serialVersionUID = -951583690995010351L;
-
-    @Override
-    protected String getValuePattern(String originalValue) {
-        return DatetimePatternUtils.getInstance().timePatternReplace(originalValue);
-    }
+public interface IRecogniation {
 
 }
