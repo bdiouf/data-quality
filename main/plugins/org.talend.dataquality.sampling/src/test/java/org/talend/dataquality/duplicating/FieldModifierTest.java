@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.duplicating;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
@@ -110,7 +110,7 @@ public class FieldModifierTest {
 
     @Test
     public void testSoundexReplace() {
-        String EXPECTED_WORD = "Suresnec"; //$NON-NLS-1$
+        String EXPECTED_WORD = "Suresmek"; //$NON-NLS-1$
         Object dup = dataModifier.generateDuplicate(STRING_TO_TEST, Function.SOUNDEX_REPLACE, DEFAULT_MODIF_COUNT, EMPTY_STRING);
         assertEquals(EXPECTED_WORD, dup);
     }

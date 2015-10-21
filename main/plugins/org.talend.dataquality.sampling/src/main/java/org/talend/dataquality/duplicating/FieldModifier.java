@@ -12,12 +12,12 @@
 // ============================================================================
 package org.talend.dataquality.duplicating;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import org.apache.commons.codec.language.RefinedSoundex;
 
@@ -53,7 +53,7 @@ public class FieldModifier {
 
     private static char[] soundexMap = US_ENGLISH_MAPPING_STRING.toCharArray();
 
-    private Map<Character, Set<Character>> inverseSoundexMap;
+    private Map<Character, List<Character>> inverseSoundexMap;
 
     // private Map<String, SynonymIndexSearcher> synonymSearcherMap;
 
@@ -64,13 +64,13 @@ public class FieldModifier {
         dateChanger.setSeed(seed);
     }
 
-    private Map<Character, Set<Character>> getInverseSoundexMap() {
+    private Map<Character, List<Character>> getInverseSoundexMap() {
         if (inverseSoundexMap == null) {
-            inverseSoundexMap = new HashMap<Character, Set<Character>>();
+            inverseSoundexMap = new HashMap<Character, List<Character>>();
             for (int i = 0; i < soundexMap.length; i++) {
-                Set<Character> charSet = inverseSoundexMap.get(soundexMap[i]);
+                List<Character> charSet = inverseSoundexMap.get(soundexMap[i]);
                 if (charSet == null) {
-                    charSet = new HashSet<Character>();
+                    charSet = new ArrayList<Character>();
                     inverseSoundexMap.put(soundexMap[i], charSet);
                 }
                 charSet.add((char) ('A' + i));
@@ -178,23 +178,26 @@ public class FieldModifier {
             break;
         case SOUNDEX_REPLACE:
             if (sb.length() > 0) {
-                Set<Character> charSet = new HashSet<Character>();
+                List<Character> charSet = new ArrayList<Character>();
                 for (int i = 0; i < modifCount; i++) {
                     int pos = random.nextInt(sb.length());
                     char charToReplace = sb.charAt(pos);
+                    System.out.println("charToReplace: " + charToReplace);
                     int idx = Character.toUpperCase(charToReplace) - 'A';
                     if (idx >= 0 && idx < 26) {
-                        Set<Character> soundexSet = getInverseSoundexMap().get(soundexMap[idx]);
+                        List<Character> soundexSet = getInverseSoundexMap().get(soundexMap[idx]);
+                        System.out.println("soundexSet: " + soundexSet);
                         if (soundexSet != null) {
                             charSet.clear();
                             charSet.addAll(soundexSet);
-                            charSet.remove(charToReplace);
+                            charSet.remove(charSet.indexOf(Character.toUpperCase(charToReplace)));
                             if (charSet.size() > 0) {
                                 Character[] charArray = charSet.toArray(new Character[charSet.size()]);
                                 Character newChar = charArray[random.nextInt(charArray.length)];
                                 if (Character.isLowerCase(charToReplace)) {
                                     newChar = Character.toLowerCase(newChar);
                                 }
+                                System.out.println("newChar: " + newChar);
                                 sb.setCharAt(pos, newChar);
                             }
                         }
