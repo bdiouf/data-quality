@@ -35,7 +35,8 @@ public class GenerateBetweenString extends GenerateBetween<String> implements Se
         if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
             return str;
         } else {
-            return String.valueOf(rnd.nextInt((max - min) + 1) + min);
+            int result = rnd.nextInt((max - min) + 1) + min;
+            return result == 0 ? EMPTY_STRING : String.valueOf(result);
         }
     }
 }
