@@ -30,7 +30,13 @@ public class KeepFirstAndGenerateString extends KeepFirstAndGenerate<String> imp
             StringBuilder sb = new StringBuilder(EMPTY_STRING);
             if (str != null && !EMPTY_STRING.equals(str) && integerParam > 0) {
                 String s = str.trim();
-                if (integerParam > s.length()) {
+                int totalDigit = 0;
+                for (int i = 0; i < s.length(); ++i) {
+                    if (Character.isDigit(s.charAt(i))) {
+                        totalDigit++;
+                    }
+                }
+                if (integerParam > totalDigit) {
                     return str;
                 }
                 for (int i = 0; i < integerParam; ++i) {
