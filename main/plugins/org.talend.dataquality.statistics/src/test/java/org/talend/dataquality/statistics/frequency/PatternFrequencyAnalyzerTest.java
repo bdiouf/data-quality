@@ -42,7 +42,7 @@ public class PatternFrequencyAnalyzerTest {
         PatternFrequencyAnalyzer analzyer = new PatternFrequencyAnalyzer();
 
         String patternString1 = analzyer.getValuePattern("abcd1234ィゥェ中国");
-        Assert.assertEquals("aaaa9999kkkCC", patternString1);
+        Assert.assertEquals("aaaa9999ィゥェ中国", patternString1);
 
         String patternString2 = analzyer.getValuePattern("");
         Assert.assertEquals("", patternString2);
@@ -54,7 +54,7 @@ public class PatternFrequencyAnalyzerTest {
         Assert.assertEquals("yyyy-M-d", patternString4);
 
         String patternString5 = analzyer.getValuePattern("2008-1月-01");
-        Assert.assertEquals("9999-9C-99", patternString5);
+        Assert.assertEquals("9999-9月-99", patternString5);
 
     }
 
@@ -89,6 +89,7 @@ public class PatternFrequencyAnalyzerTest {
     @Test
     public void testAnalyzeFreqWithEastAsiaChar() {
         PatternFrequencyAnalyzer analyzerWithAsiaChars = new PatternFrequencyAnalyzer();
+        analyzerWithAsiaChars.injectRecognizer(new EastAsiaCharPatternRecognition());
         String[] data = new String[] { "John", "", "2015-08-20", "2012-02-12", "2003年", "2004年", "2001年" };
         analyzerWithAsiaChars.init();
         for (String value : data) {

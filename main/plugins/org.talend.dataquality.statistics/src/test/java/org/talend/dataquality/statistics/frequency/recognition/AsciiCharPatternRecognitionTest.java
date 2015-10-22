@@ -79,9 +79,11 @@ public class AsciiCharPatternRecognitionTest {
         Map<String, String> str2Pattern = new HashMap<>();
         str2Pattern.put("*-!", "*-!");
         str2Pattern.put("1-3", "9-9");
-        str2Pattern.put("2001-9-10 - 2009-09-08", "9999-9-99 - 9999-99-98");
-        str2Pattern.put("2001-20-8", "yyyy-d-M");
+        str2Pattern.put("2001-9-10 - 2009-09-08", "9999-9-99 - 9999-99-99");
         testRecognition(str2Pattern);
+        str2Pattern.clear();
+        str2Pattern.put("2001-20-8", "yyyy-d-M");
+        testDateRecognition(str2Pattern);
     }
 
     private void testRecognition(Map<String,String> str2Pattern) {
@@ -90,7 +92,19 @@ public class AsciiCharPatternRecognitionTest {
         while (strIterator.hasNext()) {
             String str = strIterator.next();
             String pattern = recognizer.recognize(str).getPatternString();
-            Assert.assertTrue(str2Pattern.get(str) == pattern);
+            Assert.assertEquals(str2Pattern.get(str), pattern);
+
+        }
+
+    }
+
+    private void testDateRecognition(Map<String, String> str2Pattern) {
+        DatePatternRecognition recognizer = new DatePatternRecognition();
+        Iterator<String> strIterator = str2Pattern.keySet().iterator();
+        while (strIterator.hasNext()) {
+            String str = strIterator.next();
+            String pattern = recognizer.recognize(str).getPatternString();
+            Assert.assertEquals(str2Pattern.get(str), pattern);
 
         }
 
