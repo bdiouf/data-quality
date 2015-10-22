@@ -43,17 +43,17 @@ public class PatternFrequencyAnalyzer extends FrequencyAnalyzer<PatternFrequency
     public PatternFrequencyAnalyzer() {
         // Initialize the built-in string pattern recognitions.
         // Date
-        patternRecognitions.add(new DatePatternRecognition());
         patternRecognitions.add(new EmptyPatternRecognition());
+        patternRecognitions.add(new DatePatternRecognition());
         patternRecognitions.add(new TimePatternRecognition());
         patternRecognitions.add(new AsciiCharPatternRecognition());
-        patternRecognitions.add(new EastAsiaCharPatternRecognition());
 
     }
 
     /**
      * Inject the recognizer of types below:<br>
      * <ul>
+     * <li>{@link EmptyPatternRecognition}</>
      * <li>{@link DatePatternRecognition}</>
      * <li>{@link TimePatternRecognition}</>
      * <li>{@link AsciiCharPatternRecognition}</>

@@ -61,14 +61,14 @@ public class PatternFrequencyAnalyzerTest {
     @Test
     public void testRecognitionInjectAndRemoval() {
         PatternFrequencyAnalyzer analzyer = new PatternFrequencyAnalyzer();
-        // No East Asia recognition.
-        analzyer.removeRecognizer(EastAsiaCharPatternRecognition.LEVEL);
-        String patternString1 = analzyer.getValuePattern("abcd1234ゟ");
-        Assert.assertEquals("aaaa9999ゟ", patternString1);
         // Add the Easten Asia recognition
         analzyer.injectRecognizer(new EastAsiaCharPatternRecognition());
         String patternString2 = analzyer.getValuePattern("abcd1234ゟ");
         Assert.assertEquals("aaaa9999H", patternString2);
+        // No East Asia recognition.
+        analzyer.removeRecognizer(EastAsiaCharPatternRecognition.LEVEL);
+        String patternString1 = analzyer.getValuePattern("abcd1234ゟ");
+        Assert.assertEquals("aaaa9999ゟ", patternString1);
 
         // No date and time recognition
         analzyer.removeRecognizer(DatePatternRecognition.LEVEL);
@@ -84,11 +84,6 @@ public class PatternFrequencyAnalyzerTest {
         analzyer.injectRecognizer(new TimePatternRecognition());
         String timePattern1 = analzyer.getValuePattern("12:00:00");
         Assert.assertEquals("H:m:s", timePattern1);
-    }
-
-    @Test
-    public void testRecogniationOrder() {
-
     }
 
     @Test
