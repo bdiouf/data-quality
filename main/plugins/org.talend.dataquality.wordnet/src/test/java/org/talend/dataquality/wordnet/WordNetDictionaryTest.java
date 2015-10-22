@@ -73,7 +73,7 @@ public class WordNetDictionaryTest {
     }
 
     @Test
-    public void testIsValidTerm_multi_thread() throws InterruptedException {
+    public void testIsValidTermMultiThread() throws InterruptedException {
         final AtomicBoolean atomBoolean = new AtomicBoolean(true);
 
         final String[] validTerms = new String[] { "talent", "PostalCode", "CodePostal", "CareOfName" };
@@ -84,14 +84,12 @@ public class WordNetDictionaryTest {
                 try {
                     for (String term : validTerms) {
                         boolean flag = wordnet.isValidTerm(term);
-                        if (flag == false) {// the flag here should be true
-                            atomBoolean.set(false);
-                            LOGGER.error("assertion failed on term: " + term);
-                        }
+                        assertTrue("the term <" + term + "> is expected to be valid", flag);
                     }
                 } catch (Exception exc) {
                     atomBoolean.set(false);
                 } catch (AssertionError error) {
+                    LOGGER.error("Assertion Error: " + error.getMessage());
                     atomBoolean.set(false);
                 }
 
@@ -106,14 +104,12 @@ public class WordNetDictionaryTest {
                 try {
                     for (String term : invalidTerms) {
                         boolean flag = wordnet.isValidTerm(term);
-                        if (flag == true) {// the flag here should be false
-                            atomBoolean.set(false);
-                            LOGGER.error("assertion failed on term: " + term);
-                        }
+                        assertFalse("the term <" + term + "> is expected to be invalid", flag);
                     }
                 } catch (Exception exc) {
                     atomBoolean.set(false);
                 } catch (AssertionError error) {
+                    LOGGER.error("Assertion Error: " + error.getMessage());
                     atomBoolean.set(false);
                 }
 
