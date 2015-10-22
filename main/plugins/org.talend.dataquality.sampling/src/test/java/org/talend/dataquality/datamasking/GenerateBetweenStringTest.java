@@ -14,6 +14,7 @@ package org.talend.dataquality.datamasking;
 
 import static org.junit.Assert.*;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.datamasking.Functions.GenerateBetweenString;
@@ -43,21 +44,21 @@ public class GenerateBetweenStringTest {
 
     @Test
     public void testCheck() {
-        gbs.setRandomWrapper(new RandomWrapper());
-        gbs.parameters = "0,100".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        gbs.parse("0,100", false, new RandomWrapper()); //$NON-NLS-1$
         boolean res = true;
         for (int i = 0; i < 10; ++i) {
             String tmp = gbs.generateMaskedRow(null);
-            res = (Integer.parseInt(tmp) <= 100 && Integer.parseInt(tmp) >= 0);
-            assertEquals("Wrong number : " + tmp, res, true); //$NON-NLS-1$
+            Integer value = StringUtils.isBlank(tmp) ? 0 : Integer.parseInt(tmp);
+            res = (value <= 100 && value >= 0);
+            assertEquals("Wrong number : " + value, res, true); //$NON-NLS-1$
         }
     }
 
     @Test
     public void testBad() {
-        gbs.parameters = "jk,df".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        gbs.parse("jk,df", false, new RandomWrapper()); //$NON-NLS-1$
         output = gbs.generateMaskedRow(gbs.EMPTY_STRING);
-        assertEquals(output, "0"); //$NON-NLS-1$
+        assertEquals(output, ""); //$NON-NLS-1$
     }
 
 }
