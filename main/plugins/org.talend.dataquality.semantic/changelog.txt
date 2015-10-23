@@ -1,3 +1,8 @@
+V1.3.1 2015-10-22 (for Studio 6.1.0)
+    - TDQ-10413 compute list of invalid values according to semantic type
+    - TDQ-10981 concurrent analyzer New system for artifact build
+    - TDQ-10988 latin1 supplement support in pattern statistics
+
 V1.3.0 sizhaoliu 2015-10-05
     - add changelog file for semantic library
 V1.3.0 mzhao 2015-10-09    
