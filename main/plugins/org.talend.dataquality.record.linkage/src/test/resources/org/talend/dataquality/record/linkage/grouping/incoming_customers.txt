@@ -1,0 +1,101 @@
+10389564000|Amburgey|Gregory|J.|3800 Breck Court|Victoria|BC|48549|A4
+10512167811|Amper|Gilbert|V.|5300 Turrin Dr.|Redwood City|CA|91124|A9
+11425427800|Abravaya|William|J.|6406 Pepperidge Way|Oregon City|OR|88933|A8
+11978338360|Alarid|Kyle||8002 Morgan Territory Road|Bremerton|WA|17977|A1
+12083684802|Alcon|Thomas|J.|4151 Olivera|San Diego|CA|92596|A9
+12716900700|Amic|Sheila||258 Bluejay Dr.|Newton|BC|59706|A5
+12912208437|Ames|Ralph||9662 Red Leaf|Westminster|BC|71583|A7
+13700177100|Adams|Paul|R.|4106 Gainsborough Drive||CA||A
+13758354187|Amador|Marjorie|J.|1889 Carmel Dr|Grossmont|CA|12804|A1
+13814911200|Afana|Bonnie||9089 San Jose Ave|Newport Beach|CA|65676|A6
+13851807700|Aguilar|John||4817 Julpum Loop|Acapulco|Guerrero|95449|A9
+14044819500|Adkins|Young Cha||3805 Halfmoon Court|Novato|CA|68631|A6
+14153507947|Allison|Danette|L.|2038 Encino Drive|Bremerton|WA|77813|A7
+14398822784|Abdulla|Larry||6968 Wren Ave.|Lemon Grove|CA|96003|A9
+14496465921|Aichinger|Garrison|S.|3670 Altura Drive|Ballard|WA|13629|A1
+14914799332|Amidon|Greg|R.|8033 Chaucer Drive|Sooke|BC|80339|A8
+15072169900|Aleksic|Else||989 Caravelle Ct|Downey|CA|33597|A3
+15114446900|Alexander|Marie||1162 Park Glenn|Walla Walla|WA|65721|A6
+15127675533|Abrams|Oral||2444 North Ranchford|Vancouver|BC|55547|A5
+15610569700|Allen|Lea||8585 Morengo Ct.|Lynnwood|WA|56621|A5
+15730984807|Alm|Lejeana|L.|3886 Valencia Place|Ballard|WA|68171|A6
+15973048806|Alexander|Linda|E|4277 La Cruz|Port Hammond|BC|29567|A2
+16004656000|Alcon|Ken|S.|5 Curletto Dr.|Mill Valley|CA|40542|A4
+16227247100|Acevedo|Stephen||6510 Hacienda Drive|Imperial Beach|CA|17174|A1
+16647104024|Abbruzzese|Muffy||2873 Tice|Hidalgo|Zacatecas|49259|A4
+17174211740|Agee|Betsy||4576 Almond Street|Seattle|WA|97078|A9
+17693653700|Aiello|Juanita||8130 Potomac Drive|Santa Anita|DF|94723|A9
+18027535100|Ahlin|Patricia||4462 Greendell Pl|Burnaby|BC|42102|A4
+18607616400|Alvarado|Mary|A.|1349 Stephine Way|San Carlos|CA|95935|A9
+18840442895|Adams|Kenneth||8386 Candelero Place||WA||A
+21023685900|Alexander|Jeremy||4628 Mountain View Place|Newport Beach|CA|92928|A9
+21071193200|Ahlberg|Catherine||824 El Campo Ct|Beverly Hills|CA|48438|A4
+21184731100|Alexander|Bob||3212 Yellowood Lane|Spokane|WA|88995|A8
+21248921751|Anderson|Kasandra|L.|7444 Cherokee Drive|Daly City|CA|93327|A9
+21478878300|Adams|Barbara||9637 Kenneth Ct||OR||A
+21892383694|Albo|Helen|L.|6431 Stanford St|Orizaba|Veracruz|98498|A9
+21907624000|Anderson|Rosalie||4041 Jennifer Way|Lincoln Acres|CA|51971|A5
+21993862390|Adams|Alma|J.|6541 Bonita Ave||BC||A
+22073475718|Abahamdeh|Catherine||9532 Clayton Rd|Lincoln Acres|CA|23373|A2
+22085947990|Alumbaugh|Brian|S.|561 Lewis Way|Sooke|BC|73329|A7
+22165400385|Anaya|Tom|L.|2540 Waterview Place|Chula Vista|CA|62842|A6
+22504469156|Alexander|Maxine|M.|6286 Ronda Ct|Torrance|CA|37136|A3
+22639480800|Albrecht|Nicole||4634 Hilltop Rd|Torrance|CA|10732|A1
+24099015600|Allen|John||1710 View Dr|Mexico City|Mexico|83728|A8
+24192533500|Aguilar|Roland||856 Summit View Dr|Burbank|CA|92084|A9
+25087656378|Addington|Chaz|C.|7710 Medina Drive|La Cruz|Sinaloa|23932|A2
+25419316900|Ahlin|Adriane|B.|1931 Eagle Way|Imperial Beach|CA|94519|A9
+25801901800|Agee|Sharilynn||9152 St. Patricia|Chula Vista|CA|92556|A9
+26233962774|Almond|Larisa|J.|629 Redrock Drive|Altadena|CA|90694|A9
+26773456931|Adler|Karen||3271 Black Walnut|Newton|BC|62874|A6
+26850017900|Allacher|Janice|M.|8957 Royal Ann Lane|Ballard|WA|35380|A3
+26997914900|Allen|Mary|A.|5637 Teak Court|Lakewood|CA|16333|A1
+27192117600|Amaro|Kathy||551 Thors Bay Road|Mill Valley|CA|39411|A3
+27306401100|Alcaraz|Barbara||9765 Marie Drive|Renton|WA|61833|A6
+27397826900|Ahmadzai|Jauire||9551 Jones Rd|Portland|OR|66463|A6
+27488319277|Allen|Margaret|B.|1301 Burwood Way|San Francisco|CA|93943|A9
+27524808000|Alcon|Samantha|A.|4603 Brock Lane|Beverly Hills|CA|68565|A6
+27564644217|Abramson|Cynthia|G.|1104 O St.|Coronado|CA|64335|A6
+27620418100|Adkinson|Peter||7512 Sanford Street|Issaquah|WA|64145|A6
+27634762525|Adams|Shawn|R.|5630 Indianhead Circle||CA||A
+28415768146|Ammann|Marianne|J.|5375 Blue Ridge|W. Linn|OR|72032|A7
+28528555000|Aigaki|Mary||2562 Meadowbrook Drive|Milwaukie|OR|54322|A5
+28802387100|Adalat|Robert||33 Rotherham Dr|Kirkland|WA|42283|A4
+87462024688||Sheri|A.|2433 Bailey Road|Tlaxiaco|Oaxaca|15057|1
+87539744377||Kim|H.|6064 Brodia Court|San Andres|DF|12942|1
+87544797658||Brenda|C.|7560 Trees Drive||BC|$$|$
+88507222533|Allen|Libby||5458 Encino Drive|N. Vancouver|BC|92652|A9
+89288474917|Aldred|Kristine|G.|636 Vine Hill Way|Coronado|CA|85666|A8
+89532577395|Amole|Sarah|E.|1143 Julpum Loop|Oak Bay|BC|92511|A9
+89972035884|Ace|Dorothy|S.|8624 Pepperidge Way|Torrance|CA|90961|A9
+90168706178|Adair|Sam|W.|7469 Paraiso Ct.|Oregon City|OR|34247|A3
+90451266169|Allenbach|Michelle|K.|3451 Meier Road|Haney|BC|43122|A4
+90720983743|Abbott|Eric|C.|1961 Marfargoa Drive|Edmonds|WA|10561|A1
+90917686200|Adams|Michelle|M.|9558 Orchard View Ave.||CA||A
+91044484972|Albright|Anna|L.|5927 Mt. Hood Circle|Fremont|CA|66160|A6
+91321036800|Allen|Phyllis||7254 Buchanan Road|San Gabriel|CA|79447|A7
+91623246669|Adams|Frances|L.|4217 Almond Avenue||CA||A
+91839717000|Alpuerto|Oscar||3968 Bonifacio|Spokane|WA|95091|A9
+91900667500|Alexander|J. Phillip||3368 Rainier Dr.|Richmond|BC|69713|A6
+92005987200|Alcorn|Paul||4822 Center Street|Fremont|CA|18956|A1
+92180470228|Adina|Ronald|H.|3795 Tabora Drive|Woodland Hills|CA|51001|A5
+92441642284|Adams|Margaret|A.|8452 Dewing Avenue||CA||A
+92646418200|Alameda|Lili|P.|6668 Mazatlan|Mexico City|Mexico|49504|A4
+92973899841|Altamirano|Sandra|L.|8757 Keith Court|Seattle|WA|62136|A6
+93147143721|Adams|Carla|A.|6835 Lynwood Drive||CA||A
+93784973025|Allison|Cecil|C.|4519 Sequoia Drive|Shawnee|BC|47196|A4
+93968881368|Amland|Maxwell|A.|9819 Sunsine Drive|Chula Vista|CA|10717|A1
+93980382680|Albury|Z . T.  Milton||1315 Union St|Shawnee|BC|24720|A2
+95006021900|Alvarado|Selena||6441 Via Santa Fe|Puyallup|WA|71022|A7
+95311235785|Abel|Catherine||3588 Vancouver Way|San Francisco|CA|64952|A6
+95599685907|Alvaro|Emilio|C.|9061 Isabel|Spokane|WA|93349|A9
+96027305126|Ahlering|Robert|O.|1451 Victory Lane|Salem|OR|92232|A9
+96814935803|Allen|Marvin|L.|7350 Pinon|Santa Cruz|CA|40236|A4
+96894774436|Agcaoili|Samuel|D.|6963 Grand View Avenue|Bremerton|WA|74743|A7
+97347338199|Aguilar|James|E.|5461 Sunview Terrace|Lebanon|OR|67990|A6
+98007789254|Abo|Parker|S.|893 Thornwood Drive|Long Beach|CA|26971|A2
+98221175074|Allen|Jim|E.|6488 Dublin Blvd.|Palo Alto|CA|78129|A7
+99243944287|Amyotte|Carol|J.|6467 Buena Vista|San Jose|CA|62472|A6
+99440378546|Abston|Donald|R.|8950 Glenwood Dr.|Concord|CA|86348|A8
+99740051031|Alumbaugh|Carolyn||4469 Dellwood Court|Lemon Grove|CA|56203|A5
+95599685907|Alvaradu|Emilio|C.|9061 Isabel|Spokane|WA|93349|A9

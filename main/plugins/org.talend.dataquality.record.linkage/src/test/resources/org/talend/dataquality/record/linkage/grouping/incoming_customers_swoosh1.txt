@@ -1,0 +1,12 @@
+1|Amburgey|Gregory|J.|3800 Breck Court|Victoria|BC|48549|A4
+2|Amper|Gilbert|V.|5300 Turrin Dr.|Redwood City|CA|91124|A9
+5|Abravaya|William|J.|6406 Pepperidge Way|Oregon City|OR|88933|A8
+2|Alarid|Kyle||8002 Morgan Territory Road|Bremerton|WA|17977|A1
+1|Alcon|Thomas|J.|4151 Olivera|San Diego|CA|92596|A9
+7|Amic|Sheila||258 Bluejay Dr.|Newton|BC|59706|A5
+10|Ames|Ralph||9662 Red Leaf|Westminster|BC|71583|A7
+1|Adams|Paul|R.|4106 Gainsborough Drive||CA||A
+7|Amador|Marjorie|J.|1889 Carmel Dr|Grossmont|CA|12804|A1
+20|Afana|Bonnie||9089 San Jose Ave|Newport Beach|CA|65676|A6
+8|Aguilar|John||4817 Julpum Loop|Acapulco|Guerrero|95449|A9
+9|Adkins|Young Cha||3805 Halfmoon Court|Novato|CA|68631|A6
