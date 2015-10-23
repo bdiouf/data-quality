@@ -10,7 +10,7 @@
     </parent>
     <artifactId>org.talend.dataquality.record.linkage</artifactId>
     <packaging>bundle</packaging>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <name>org.talend.dataquality.record.linkage</name>
     <description>Dataquality Record Linkage library description</description>
 
@@ -64,7 +64,7 @@
         <dependency>
             <groupId>org.talend.dataquality</groupId>
             <artifactId>org.talend.dataquality.common</artifactId>
-            <version>1.3.0</version>
+            <version>1.3.1</version>
         </dependency>
 
         <dependency>

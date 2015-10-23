@@ -1,5 +1,8 @@
 Talend record linkage library
 
+V3.0.1 2015-10-22 (for Studio 6.1.0)
+    - Update dependency version of org.talend.utils
+
 V3.0.0 sizhaoliu 2015-09-10 (TDQ-10888)
     - Code refactoring
     - New system for artifact build
