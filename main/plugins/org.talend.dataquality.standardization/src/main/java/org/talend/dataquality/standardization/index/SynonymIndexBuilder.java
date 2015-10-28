@@ -69,7 +69,7 @@ public class SynonymIndexBuilder {
 
     /**
      * Method "getError".
-     * 
+     *
      * @return the last error
      */
     public Error getError() {
@@ -78,7 +78,7 @@ public class SynonymIndexBuilder {
 
     /**
      * set a separator for a string which contains synonyms.
-     * 
+     *
      * @param synonymSeparator
      */
     public void setSynonymSeparator(char synonymSeparator) {
@@ -92,7 +92,7 @@ public class SynonymIndexBuilder {
 
     /**
      * Method "initIndexInFS" initializes the lucene index folder.
-     * 
+     *
      * @param path the path of the index (will be created if it does not exist)
      */
     public void initIndexInFS(String path) {
@@ -112,7 +112,7 @@ public class SynonymIndexBuilder {
 
     /**
      * insert an entire document into index.
-     * 
+     *
      * @param word the reference word: must not be null
      * @param synonyms the list of synonyms separated by the separator (can be null)
      * @throws IOException
@@ -129,7 +129,7 @@ public class SynonymIndexBuilder {
 
     /**
      * insert an entire document into index if it does not already exists.
-     * 
+     *
      * @param word the reference string
      * @param synonyms the synonyms (can be null)
      * @return true if inserted, false otherwise
@@ -151,7 +151,7 @@ public class SynonymIndexBuilder {
      * Make sure that a commit has been done before calling this method except if you know exactly what you are doing.
      * <p/>
      * WARNING! Beware that if several documents match the word, nothing will be done.
-     * 
+     *
      * @param word the reference word
      * @param synonyms the list of synonyms (can be null)
      * @throws IOException
@@ -178,7 +178,7 @@ public class SynonymIndexBuilder {
 
     /**
      * delete an entire document by word.
-     * 
+     *
      * @param word
      * @throws IOException
      */
@@ -201,7 +201,7 @@ public class SynonymIndexBuilder {
 
     /**
      * delete all synonym documents.
-     * 
+     *
      * @throws IOException
      */
     public void deleteAllDocuments() throws IOException {
@@ -540,7 +540,7 @@ public class SynonymIndexBuilder {
 
     /**
      * search a document by the word. use only inside the builder.
-     * 
+     *
      * @param word
      * @return
      * @throws IOException

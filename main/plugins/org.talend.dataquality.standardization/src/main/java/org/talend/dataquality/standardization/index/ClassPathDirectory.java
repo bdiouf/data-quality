@@ -1,3 +1,15 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
 package org.talend.dataquality.standardization.index;
 
 import java.io.EOFException;
@@ -17,13 +29,15 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.lang.StringUtils;
@@ -38,15 +52,26 @@ import org.apache.lucene.store.LockFactory;
 import org.apache.lucene.store.SimpleFSDirectory;
 
 /**
- * A read-only directory that reads index from a JAR file.
+ * A read-only directory that reads index from a JAR file. It supports several URI scheme:
+ * <ul>
+ * <li>jar</li>
+ * <li>file</li>
+ * <li>bundleresource</li>
+ * </ul>
  */
 public class ClassPathDirectory extends Directory {
 
-    private static final Map<String, JARDescriptor> openedJars = new HashMap<>();
-
     private static final Logger LOGGER = Logger.getLogger(ClassPathDirectory.class);
 
-    private static final String uuid = UUID.randomUUID().toString();
+    /**
+     * Holds all opened class path directory instances for clean up TODO This is temporary until a more global resource
+     * management system is found/proposed
+     *
+     * @see #destroy()
+     */
+    private static final Set<ClassPathDirectory> classPathDirectories = new HashSet<>();
+
+    private final String uuid;
 
     private final JARDescriptor descriptor;
 
@@ -54,57 +79,76 @@ public class ClassPathDirectory extends Directory {
 
     private LockFactory lockFactory;
 
-    public ClassPathDirectory(JARDescriptor descriptor, String directory) {
+    /**
+     * <p>
+     * Creates a new {@link Directory directory} that looks up for Lucene indexes inside a JAR file.
+     * </p>
+     * <p>
+     * <b>Important #1</b>: Intentionally left private. Use {@link #open(URI)} to create an instance of this.
+     * </p>
+     * <p>
+     * <b>Important #2</b>: URI's scheme "jar" stores content in a temporary directory, and is only cleaned upon
+     * {@link #close()} call.
+     * </p>
+     *
+     * @param uuid A unique identifier to identify this Lucene directory (used in case of concurrent opens of the same
+     * JAR file).
+     * @param descriptor A {@link JARDescriptor descriptor} to the JAR file to open.
+     * @param directory A path inside the opened JAR file.
+     * @see #open(URI)
+     */
+    private ClassPathDirectory(String uuid, JARDescriptor descriptor, String directory) {
+        this.uuid = uuid;
         this.descriptor = descriptor;
         this.directory = directory;
+        classPathDirectories.add(this);
     }
 
+    private static final Map<URI, FileSystem> openedJars = new HashMap<>();
+
+    /**
+     * <p>
+     * Creates a new {@link Directory directory} that picks up the right implementation depending on URI's scheme.
+     * </p>
+     *
+     * @param uri A valid URI to a Lucene index
+     * @return A {@link Directory} to the Lucene content in <code>uri</code>.
+     */
     public static Directory open(URI uri) {
-        LOGGER.debug("Opening '" + uri + "' ...");
+        LOGGER.info("Opening '" + uri + "' ...");
         if ("jar".equals(uri.getScheme())) {
             try {
-                synchronized (openedJars) {
-                    String jarFile = StringUtils.substringBefore(uri.toString(), "!"); //$NON-NLS-1$
-                    JARDescriptor openedJar;
-                    openedJar = openedJars.get(jarFile);
-                    if (openedJar == null) {
-                        openedJar = new JARDescriptor();
-                        // Extract all nested JARs
-                        StringTokenizer tokenizer = new StringTokenizer(uri.toString(), "!");
-                        FileSystem fs = null;
-                        while (tokenizer.hasMoreTokens()) {
-                            final String current = tokenizer.nextToken();
-                            if (!tokenizer.hasMoreTokens()) {
-                                break;
-                            } else if (fs == null) {
-                                fs = FileSystems.newFileSystem(URI.create(current), Collections.<String, String> emptyMap());
-                            } else { // fs != null
-                                try (FileSystem ignored = fs) {
-                                    final Path path = fs.getPath(current);
-                                    final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
-                                    final String unzipFile = tempDirectory + '/' + uuid + '/' + path.getFileName();
-                                    final Path destFile = Paths.get(unzipFile);
-                                    final File destinationFile = destFile.toFile();
-                                    if (!destinationFile.exists()) {
-                                        destinationFile.mkdirs();
-                                        Files.copy(path, destFile, StandardCopyOption.REPLACE_EXISTING);
-                                    }
-                                    fs = FileSystems.newFileSystem(destFile, Thread.currentThread().getContextClassLoader());
-                                }
-                            }
+                String jarFile = StringUtils.substringBefore(uri.toString(), "!"); //$NON-NLS-1$
+                final String uuid = UUID.randomUUID().toString();
+                JARDescriptor openedJar = new JARDescriptor();
+                // Extract all nested JARs
+                StringTokenizer tokenizer = new StringTokenizer(uri.toString(), "!");
+                FileSystem fs = null;
+                while (tokenizer.hasMoreTokens()) {
+                    final String current = tokenizer.nextToken();
+                    if (!tokenizer.hasMoreTokens()) {
+                        break;
+                    } else if (fs == null) {
+                        fs = openOrGet(current);
+                    } else { // fs != null
+                        final Path path = fs.getPath(current);
+                        final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
+                        final String unzipFile = tempDirectory + '/' + uuid + '/' + path.getFileName();
+                        final Path destFile = Paths.get(unzipFile);
+                        final File destinationFile = destFile.toFile();
+                        if (!destinationFile.exists()) {
+                            destinationFile.mkdirs();
+                            Files.copy(path, destFile, StandardCopyOption.REPLACE_EXISTING);
                         }
-                        openedJar.fileSystem = fs;
-                        openedJar.jarFileName = jarFile;
-                        openedJars.put(jarFile, openedJar);
-                    } else {
-                        LOGGER.debug("Reusing previously opened '" + jarFile + "'...");
+                        // UUID ensures the path is unique, no need for openOrGet(...)
+                        fs = FileSystems.newFileSystem(destFile, Thread.currentThread().getContextClassLoader());
                     }
-                    String directory = StringUtils.substringAfterLast(uri.toString(), "!"); //$NON-NLS-1$
-                    LOGGER.debug("Opening '" + jarFile + "' at directory '" + directory + "' ...");
-                    // Increment open count (in case of multiple JAR open and proper resource management).
-                    openedJar.openCount.incrementAndGet();
-                    return new ClassPathDirectory(openedJar, directory);
                 }
+                openedJar.fileSystem = fs;
+                openedJar.jarFileName = jarFile;
+                String directory = StringUtils.substringAfterLast(uri.toString(), "!"); //$NON-NLS-1$
+                LOGGER.debug("Opening '" + jarFile + "' at directory '" + directory + "' ...");
+                return new ClassPathDirectory(uuid, openedJar, directory);
             } catch (Exception e) {
                 throw new IllegalArgumentException("Unable to open JAR '" + uri + "'.", e);
             }
@@ -123,6 +167,44 @@ public class ClassPathDirectory extends Directory {
             }
         } else {
             throw new UnsupportedOperationException("Unsupported scheme '" + uri.getScheme() + "'.");
+        }
+    }
+
+    private static FileSystem openOrGet(String uri) throws IOException {
+        FileSystem fs;
+        final URI jarURI = URI.create(uri);
+        synchronized (openedJars) {
+            fs = openedJars.get(jarURI);
+            if (fs == null) {
+                fs = FileSystems.newFileSystem(jarURI, Collections.<String, String> emptyMap());
+                openedJars.put(jarURI, fs);
+            }
+        }
+        return fs;
+    }
+
+    /**
+     * Destroy all resources that instances may have created on disk.
+     */
+    public static void destroy() {
+        final Iterator<ClassPathDirectory> iterator = classPathDirectories.iterator();
+        while (iterator.hasNext()) {
+            final ClassPathDirectory classPathDirectory = iterator.next();
+            try {
+                classPathDirectory.close();
+            } catch (Exception e) {
+                LOGGER.error("Unable to close directory at " + classPathDirectory.directory + " (uuid : "
+                        + classPathDirectory.uuid + ").");
+            } finally {
+                iterator.remove();
+            }
+        }
+        for (Map.Entry<URI, FileSystem> entry : openedJars.entrySet()) {
+            try {
+                entry.getValue().close();
+            } catch (IOException e) {
+                LOGGER.error("Unable to close " + entry.getValue() + ".", e);
+            }
         }
     }
 
@@ -240,50 +322,38 @@ public class ClassPathDirectory extends Directory {
     @Override
     public void close() throws IOException {
         // Release FS resources
-        synchronized (openedJars) {
-            final int openCount = descriptor.openCount.decrementAndGet();
-            if (openCount <= 0) {
-                LOGGER.debug("Releasing file system (jar '" + descriptor.jarFileName + "' is no longer used.");
-                descriptor.fileSystem.close();
-                openedJars.remove(descriptor.jarFileName);
-            } else {
-                LOGGER.debug("*Not* releasing file system (jar '" + descriptor.jarFileName + "' is still being used.");
-            }
+        LOGGER.debug("Releasing JAR file (" + descriptor.jarFileName + ").");
+        descriptor.fileSystem.close();
+        // Delete temporary resources
+        final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
+        final String unzipLocation = tempDirectory + '/' + uuid;
+        Path path = FileSystems.getDefault().getPath(unzipLocation);
+        if (!path.toFile().exists()) {
+            return;
         }
-        if (openedJars.isEmpty()) {
-            // Delete temporary resources
-            final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
-            final String unzipLocation = tempDirectory + '/' + uuid;
-            try {
-                Path path = FileSystems.getDefault().getPath(unzipLocation);
-                if (!path.toFile().exists()) {
-                    return;
+        Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
+                // Skip NFS file content
+                if (!file.getFileName().toFile().getName().startsWith(".nfs")) { //$NON-NLS-1$
+                    Files.delete(file);
                 }
-                Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
-
-                    @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
-                        // Skip NFS file content
-                        if (!file.getFileName().toFile().getName().startsWith(".nfs")) { //$NON-NLS-1$
-                            Files.delete(file);
-                        }
-                        return FileVisitResult.CONTINUE;
-                    }
-
-                    @Override
-                    public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
-                        if (e == null) {
-                            return FileVisitResult.CONTINUE;
-                        } else {
-                            // directory iteration failed
-                            throw e;
-                        }
-                    }
-                });
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                return FileVisitResult.CONTINUE;
             }
 
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
+                if (e == null) {
+                    return FileVisitResult.CONTINUE;
+                } else {
+                    // directory iteration failed
+                    throw e;
+                }
+            }
+        });
+        if (!path.toFile().delete()) {
+            LOGGER.warn("Unable to clean directory '" + unzipLocation + "'.");
         }
     }
 
@@ -297,9 +367,10 @@ public class ClassPathDirectory extends Directory {
         this.lockFactory = lockFactory;
     }
 
+    /**
+     * Describes a opened JAR file.
+     */
     private static class JARDescriptor {
-
-        AtomicInteger openCount = new AtomicInteger(0);
 
         FileSystem fileSystem;
 

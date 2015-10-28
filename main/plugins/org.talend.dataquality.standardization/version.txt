@@ -1,5 +1,11 @@
+3.0.2 # sizhaoliu 2015/11/02
+- build standardazation library with new mechanism
+
 3.0.1 # sizhaoliu 2015/11/02
-- update lucene library to 4.10
+- set default maxEdits parameter to 1 instead of 2
+
+3.0.0 # sizhaoliu 2015/10/28
+- upgrade lucene library to 4.10.4
 
 2.5.0 # sizhaoliu 2013/09/05 (for V5.4)
 - add 6 search modes for synonym library.

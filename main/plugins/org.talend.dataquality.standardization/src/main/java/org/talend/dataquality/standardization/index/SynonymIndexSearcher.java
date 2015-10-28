@@ -75,7 +75,7 @@ public class SynonymIndexSearcher {
 
         /**
          * Method "get".
-         * 
+         *
          * @param label the label of the match mode
          * @return the match mode type given the label or null
          */
@@ -176,7 +176,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Method "openIndexInFS" opens a FS folder index.
-     * 
+     *
      * @param path the path of the index folder
      * @throws java.io.IOException if file does not exist, or any other problem
      */
@@ -193,7 +193,7 @@ public class SynonymIndexSearcher {
 
     /**
      * search a document by the word.
-     * 
+     *
      * @param word
      * @return
      * @throws java.io.IOException
@@ -218,7 +218,7 @@ public class SynonymIndexSearcher {
 
     /**
      * search for documents by one of the synonym (which may be the word).
-     * 
+     *
      * @param stringToSearch
      * @return
      * @throws java.io.IOException
@@ -255,7 +255,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Count the synonyms of the first document found by a query on word.
-     * 
+     *
      * @param word
      * @return the number of synonyms
      */
@@ -277,7 +277,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Get a document from search result by its document number.
-     * 
+     *
      * @param docNum the doc number
      * @return the document (can be null if any problem)
      */
@@ -293,7 +293,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Method "getWordByDocNumber".
-     * 
+     *
      * @param docNo the document number
      * @return the document or null
      */
@@ -304,7 +304,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Method "getSynonymsByDocNumber".
-     * 
+     *
      * @param docNo the doc number
      * @return the synonyms or null if no document is found
      */
@@ -315,7 +315,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Method "getNumDocs".
-     * 
+     *
      * @return the number of documents in the index
      */
     public int getNumDocs() {
@@ -324,7 +324,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Getter for topDocLimit.
-     * 
+     *
      * @return the topDocLimit
      */
     public int getTopDocLimit() {
@@ -333,7 +333,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Method "setTopDocLimit" set the maximum number of documents to return after a search.
-     * 
+     *
      * @param topDocLimit the limit
      */
     public void setTopDocLimit(int topDocLimit) {
@@ -342,7 +342,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Getter for slop. The slop is the maximum number of moves allowed to put the terms in order.
-     * 
+     *
      * @return the slop
      */
     public int getSlop() {
@@ -351,7 +351,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Sets the slop.
-     * 
+     *
      * @param slop the slop to set
      */
     public void setSlop(int slop) {
@@ -360,7 +360,7 @@ public class SynonymIndexSearcher {
 
     /**
      * Method "setAnalyzer".
-     * 
+     *
      * @param analyzer the analyzer to use in searches.
      */
     public void setAnalyzer(Analyzer analyzer) {
@@ -368,7 +368,7 @@ public class SynonymIndexSearcher {
     }
 
     /**
-     * 
+     *
      * @return the analyzer used in searches (StandardAnalyzer by default)
      */
     public Analyzer getAnalyzer() {
@@ -391,7 +391,7 @@ public class SynonymIndexSearcher {
     /**
      * create a combined query who searches for the input tokens separately (with QueryParser) and also the entire input
      * string (with TermQuery or FuzzyQuery).
-     * 
+     *
      * @param input
      * @param fuzzy this options decides whether output the fuzzy matches
      * @param allMatch this options means the result should be returned only if all tokens are found in the index
@@ -428,7 +428,7 @@ public class SynonymIndexSearcher {
     /**
      * create a combined query who searches for the input tokens in order (with double quotes around the input) and also
      * the entire input string (with TermQuery).
-     * 
+     *
      * @param input
      * @return
      * @throws java.io.IOException
@@ -463,7 +463,7 @@ public class SynonymIndexSearcher {
     /**
      * create a combined query who searches for the input tokens in order (with double quotes around the input) and also
      * the entire input string (with TermQuery).
-     * 
+     *
      * @param input
      * @return
      * @throws java.io.IOException
@@ -491,7 +491,7 @@ public class SynonymIndexSearcher {
 
     /**
      * DOC root Comment method "getIndexSearcher".
-     * 
+     *
      * @return
      */
     public IndexSearcher getIndexSearcher() {
@@ -506,10 +506,20 @@ public class SynonymIndexSearcher {
         this.searchMode = searchMode;
     }
 
+    /**
+     * @deprecated with new Lucene API, we should use maxEdits instead of minimumSimilarity for fuzzy matching
+     * @param minimumSimilarity
+     */
+    @Deprecated
     public void setMinimumSimilarity(float minimumSimilarity) {
         this.minimumSimilarity = minimumSimilarity;
     }
 
+    /**
+     * @deprecated with new Lucene API, we should use maxEdits instead of minimumSimilarity for fuzzy matching
+     * @param minimumSimilarity
+     */
+    @Deprecated
     public void setMinimumSimilarity(double minimumSimilarity) {
         this.minimumSimilarity = (float) minimumSimilarity;
     }
