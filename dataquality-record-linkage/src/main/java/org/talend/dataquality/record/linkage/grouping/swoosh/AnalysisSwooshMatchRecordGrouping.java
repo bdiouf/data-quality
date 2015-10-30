@@ -41,6 +41,10 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
         super(matchResultConsumer);
     }
 
+    public AnalysisSwooshMatchRecordGrouping() {
+
+    }
+
     @Override
     public void setSurvivorShipAlgorithmParams(SurvivorShipAlgorithmParams survivorShipAlgorithmParams) {
         super.setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams);

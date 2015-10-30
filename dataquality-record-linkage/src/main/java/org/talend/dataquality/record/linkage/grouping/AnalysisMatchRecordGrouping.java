@@ -54,6 +54,10 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<String> 
         setSeperateOutput(Boolean.TRUE);
     }
 
+    public AnalysisMatchRecordGrouping() {
+
+    }
+
     public void addRuleMatcher(List<Map<String, String>> ruleMatcherConvertResult) {
         addMatchRule(ruleMatcherConvertResult);
 
