@@ -1,3 +1,6 @@
+3.0.1 # sizhaoliu 2015/11/02
+- update lucene library to 4.10
+
 2.5.0 # sizhaoliu 2013/09/05 (for V5.4)
 - add 6 search modes for synonym library.
   MATCH_ANY MATCH_PARTIAL MATCH_ALL MATCH_EXACT MATCH_ANY_FUZZY MATCH_ALL_FUZZY

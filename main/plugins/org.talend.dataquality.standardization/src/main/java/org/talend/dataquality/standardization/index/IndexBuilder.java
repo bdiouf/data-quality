@@ -113,7 +113,7 @@ public class IndexBuilder {
         index = FSDirectory.open(new File(directoryPath));
 
         // The same analyzer should be used for indexing and searching
-        Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_30);
+        Analyzer analyzer = new StandardAnalyzer();
         // Analyzer analyzer = new StandardAnalyzer();
         // the boolean arg in the IndexWriter ctor means to
         // create a new index, overwriting any existing index

@@ -44,7 +44,6 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.talend.dataquality.standardization.i18n.Messages;
 
 /**
@@ -104,7 +103,7 @@ public class SynonymIndexSearcher {
 
     private float minimumSimilarity = 0.8f;
 
-    private int maxEdits = LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE;
+    private int maxEdits = 1; // Default value
 
     private static final float WORD_TERM_BOOST = 2F;
 

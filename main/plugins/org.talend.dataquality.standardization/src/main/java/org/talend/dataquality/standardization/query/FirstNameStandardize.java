@@ -33,8 +33,6 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopDocsCollector;
 import org.apache.lucene.search.TopFieldCollector;
 import org.apache.lucene.search.TopScoreDocCollector;
-import org.apache.lucene.util.Version;
-import org.apache.lucene.util.automaton.LevenshteinAutomata;
 import org.talend.dataquality.standardization.constant.PluginConstant;
 
 /**
@@ -53,7 +51,7 @@ public class FirstNameStandardize {
     @Deprecated
     private static final float MATCHING_SIMILARITY = 0.74f;
 
-    private int maxEdits = LevenshteinAutomata.MAXIMUM_SUPPORTED_DISTANCE;
+    private int maxEdits = 1;
 
     private Analyzer analyzer;
 
@@ -84,7 +82,7 @@ public class FirstNameStandardize {
                 e.printStackTrace();
             }
         } else {
-            Query q = new QueryParser(Version.LUCENE_30, PluginConstant.FIRST_NAME_STANDARDIZE_NAME, analyzer).parse(input);
+            Query q = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, analyzer).parse(input);
             matches = searcher.search(q, 10).scoreDocs;
         }
         return matches;
@@ -132,17 +130,17 @@ public class FirstNameStandardize {
         Term ternGender = new Term(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, genderText);
         // many field to query for reposity
         BooleanQuery combinedQuery = new BooleanQuery();
-        Query nameQuery = new QueryParser(Version.LUCENE_30, PluginConstant.FIRST_NAME_STANDARDIZE_NAME, analyzer)
+        Query nameQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, analyzer)
                 .parse(inputName);
         combinedQuery.add(nameQuery, BooleanClause.Occur.SHOULD);
         Query countryQuery = null;
         Query genderQuery = null;
         if (countryText != null && !countryText.equals("")) {//$NON-NLS-1$
-            countryQuery = new QueryParser(Version.LUCENE_30, PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, analyzer)
+            countryQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, analyzer)
                     .parse(countryText);
             combinedQuery.add(countryQuery, BooleanClause.Occur.SHOULD);
             if (genderText != null && !genderText.equals("")) {//$NON-NLS-1$
-                genderQuery = new QueryParser(Version.LUCENE_30, PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, analyzer)
+                genderQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, analyzer)
                         .parse(genderText);
                 combinedQuery.add(genderQuery, BooleanClause.Occur.SHOULD);
             }

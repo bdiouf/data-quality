@@ -29,7 +29,6 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 import org.talend.dataquality.standardization.constant.PluginConstant;
 import org.talend.dataquality.standardization.index.IndexBuilder;
 import org.talend.dataquality.standardization.query.FirstNameStandardize;
@@ -52,6 +51,7 @@ public class HandleLuceneImpl implements HandleLucene {
      * @param indexfolder
      * @return
      */
+    @Override
     public boolean createIndex(String filename, String indexfolder) {
         IndexBuilder idxBuilder = getIndexBuilder(indexfolder);
         int[] columnsToBeIndexed = new int[] { 0, 1, 2, 3 };
@@ -66,6 +66,7 @@ public class HandleLuceneImpl implements HandleLucene {
         return true;
     }
 
+    @Override
     public String getReplaceSearchResult(String folderName, String inputName, Map<String, String> information2value,
             boolean fuzzyQuery) throws IOException {
         String result = null;
@@ -114,6 +115,7 @@ public class HandleLuceneImpl implements HandleLucene {
 
     }
 
+    @Override
     public Map<String, String[]> getSearchResult(String folderName, String inputName, Map<String, String> information2value,
             boolean fuzzyQuery) throws IOException {
         IndexSearcher searcher = getIndexSearcher(folderName);
@@ -161,7 +163,7 @@ public class HandleLuceneImpl implements HandleLucene {
     }
 
     private Analyzer getAnalyzer() {
-        return new StandardAnalyzer(Version.LUCENE_30);
+        return new StandardAnalyzer();
     }
 
     private IndexBuilder getIndexBuilder(String folderName) {
@@ -191,6 +193,7 @@ public class HandleLuceneImpl implements HandleLucene {
      * @see org.talend.dataquality.standardization.main.HandleLucene#replaceName(java.lang.String, java.lang.String,
      * boolean)
      */
+    @Override
     public String replaceName(String folderName, String inputName, boolean fuzzyQuery) throws IOException {
         String result = null;
         IndexSearcher searcher = getIndexSearcher(folderName);
@@ -206,6 +209,7 @@ public class HandleLuceneImpl implements HandleLucene {
      * @see org.talend.dataquality.standardization.main.HandleLucene#replaceNameWithCountryGenderInfo(java.lang.String,
      * java.lang.String, java.lang.String, java.lang.String, boolean)
      */
+    @Override
     public String replaceNameWithCountryGenderInfo(String folderName, String inputName, String inputCountry, String inputGender,
             boolean fuzzyQuery) throws Exception {
         String result = null;
@@ -222,6 +226,7 @@ public class HandleLuceneImpl implements HandleLucene {
      * @see org.talend.dataquality.standardization.main.HandleLucene#replaceNameWithCountryInfo(java.lang.String,
      * java.lang.String, java.lang.String, boolean)
      */
+    @Override
     public String replaceNameWithCountryInfo(String folderName, String inputName, String inputCountry, boolean fuzzyQuery)
             throws Exception {
         String result = null;
@@ -238,6 +243,7 @@ public class HandleLuceneImpl implements HandleLucene {
      * @see org.talend.dataquality.standardization.main.HandleLucene#replaceNameWithGenderInfo(java.lang.String,
      * java.lang.String, java.lang.String, boolean)
      */
+    @Override
     public String replaceNameWithGenderInfo(String folderName, String inputName, String inputGender, boolean fuzzyQuery)
             throws Exception {
         String result = null;
