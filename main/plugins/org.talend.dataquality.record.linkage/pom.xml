@@ -20,7 +20,7 @@
 
         <!-- This is used to generate README.md file -->
         <commons.componentid>org.talend.dataquality.record.linkage</commons.componentid>
-        <commons.release.version>3.0.0</commons.release.version>
+        <commons.release.version>3.0.1</commons.release.version>
     </properties>
 
 
@@ -64,7 +64,7 @@
         <dependency>
             <groupId>org.talend.dataquality</groupId>
             <artifactId>org.talend.dataquality.common</artifactId>
-            <version>1.3.1</version>
+            <version>1.3.2</version>
         </dependency>
 
         <dependency>
