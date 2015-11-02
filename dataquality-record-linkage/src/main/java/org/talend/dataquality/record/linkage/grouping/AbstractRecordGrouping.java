@@ -51,7 +51,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
     // Output distance details or not.
     private boolean isOutputDistDetails = Boolean.FALSE;
 
-    private CombinedRecordMatcher combinedRecordMatcher = RecordMatcherFactory.createCombinedRecordMatcher();
+    protected CombinedRecordMatcher combinedRecordMatcher = RecordMatcherFactory.createCombinedRecordMatcher();
 
     /**
      * @deprecated use {{@link #multiMatchRules}
@@ -61,7 +61,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
 
     private List<List<Map<String, String>>> multiMatchRules = new ArrayList<List<Map<String, String>>>();
 
-    private SurvivorShipAlgorithmParams survivorShipAlgorithmParams = null;
+    protected SurvivorShipAlgorithmParams survivorShipAlgorithmParams = null;
 
     protected String columnDelimiter = null;
 

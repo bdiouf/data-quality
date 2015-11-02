@@ -32,6 +32,17 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
 
     private Map<Integer, Attribute> attributesAsMatchKey;
 
+    private boolean isComponentMode = false;
+
+    /**
+     * Sets the isCompositeMode.
+     * 
+     * @param isCompositeMode the isCompositeMode to set
+     */
+    public void setComponentMode(boolean isCompositeMode) {
+        this.isComponentMode = isCompositeMode;
+    }
+
     /**
      * DOC yyin AnalysisSwooshMatchRecordGrouping constructor comment.
      * 
@@ -103,6 +114,9 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
 
     @Override
     public void end() {
+        if (isComponentMode) {
+            swooshGrouping.swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams);
+        }
         swooshGrouping.afterAllRecordFinished();
     }
 }

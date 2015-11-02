@@ -27,7 +27,7 @@ import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorit
  * created by zshen on Aug 7, 2013 Detailled comment
  * 
  */
-public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<String> {
+public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> {
 
     /**
      * 
@@ -142,7 +142,7 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<String> 
      * @see org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping#outputRow(COLUMN[])
      */
     @Override
-    protected void outputRow(String[] row) {
+    protected void outputRow(Object[] row) {
         matchResultConsumer.handle(row);
 
     }
@@ -203,7 +203,7 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<String> 
      * @see org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping#isMaster(java.lang.Object)
      */
     @Override
-    protected boolean isMaster(String col) {
+    protected boolean isMaster(Object col) {
         return ISMASTER.equals(col);
     }
 
@@ -213,7 +213,7 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<String> 
      * @see org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping#modifyGroupSize(java.lang.Object)
      */
     @Override
-    protected String incrementGroupSize(String oldGroupSize) {
+    protected String incrementGroupSize(Object oldGroupSize) {
         return String.valueOf(Integer.parseInt(String.valueOf(oldGroupSize)) + 1);
     }
 
