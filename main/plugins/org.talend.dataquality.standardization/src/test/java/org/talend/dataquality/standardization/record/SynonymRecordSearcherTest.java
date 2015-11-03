@@ -12,18 +12,23 @@
 // ============================================================================
 package org.talend.dataquality.standardization.record;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import junit.framework.Assert;
-
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.lucene.search.TopDocs;
 import org.junit.Test;
 import org.talend.dataquality.standardization.index.SynonymIndexBuilder;
@@ -37,6 +42,8 @@ import org.talend.dataquality.standardization.record.SynonymRecordSearcher.WordR
  */
 public class SynonymRecordSearcherTest {
 
+    private static final Logger log = Logger.getLogger(SynonymRecordSearcherTest.class);
+
     private static final String[][][] WORDRESULTS = { //
     { { "11", "12", "13", "14", "15" }, { "21", "22", "23" }, { "31", "32", "33" }, { "41" } } // always at least one
                                                                                                // match
@@ -49,16 +56,17 @@ public class SynonymRecordSearcherTest {
             , { { "11", "11" }, { "21", "21" } } // matched are duplicate
     };
 
+    private static final boolean showInConsole = false;
+
     @Test
     public void testRecordResultCompute() {
         int nbDup = 0;
         for (String[][] wrs : WORDRESULTS) {
-            System.out.println();
-            System.out.println(" ###    Testing #### ");
+            printLineToConsole(" ###    Testing #### ");
 
             nbDup += testRecordResultCompute(wrs);
         }
-        Assert.assertEquals("last wordResult array should contain duplicates", 1, nbDup);
+        assertEquals("last wordResult array should contain duplicates", 1, nbDup);
     }
 
     private int testRecordResultCompute(String[][] wordresults) {
@@ -88,13 +96,13 @@ public class SynonymRecordSearcherTest {
         SynonymRecordSearcher.RecordResult.computeOutputRows(wordresults.length, new ArrayList<WordResult>(), recRes.wordResults,
                 expectedOutputRows);
         for (OutputRecord outputRecord : expectedOutputRows) {
-            System.out.println(outputRecord);
+            printLineToConsole(outputRecord.toString());
         }
 
         // --- test that duplicates are removed when using a set instead of a list
         Set<OutputRecord> uniques = new HashSet<OutputRecord>();
         uniques.addAll(expectedOutputRows);
-        Assert.assertTrue(uniques.size() <= expectedOutputRows.size());
+        assertTrue(uniques.size() <= expectedOutputRows.size());
         if (uniques.size() < expectedOutputRows.size()) {
             nbDuplicateFound++;
         }
@@ -109,8 +117,8 @@ public class SynonymRecordSearcherTest {
             expectedNbOutput *= Math.max(in.length, 1);
         }
 
-        Assert.assertEquals(expectedNbOutput, expectedOutputRows.size());
-        Assert.assertTrue(expectedOutputRows.size() >= outputRows.size());
+        assertEquals(expectedNbOutput, expectedOutputRows.size());
+        assertTrue(expectedOutputRows.size() >= outputRows.size());
 
         for (OutputRecord outputRecord : outputRows) {
             boolean found = false;
@@ -120,7 +128,7 @@ public class SynonymRecordSearcherTest {
                     break;
                 }
             }
-            Assert.assertTrue("Record not found: " + outputRecord, found);
+            assertTrue("Record not found: " + outputRecord, found);
         }
         return nbDuplicateFound;
     }
@@ -164,8 +172,10 @@ public class SynonymRecordSearcherTest {
     public void testSearch(String[] record, int topDocLimit, int resultLimit) {
         SynonymRecordSearcher recSearcher = new SynonymRecordSearcher(record.length);
         for (int i = 0; i < record.length; i++) {
-            initIdx("data/idx" + (i + 1));
-            SynonymIndexSearcher searcher = new SynonymIndexSearcher("data/idx" + (i + 1));
+            initIdx(("data/idx") + (i + 1));
+            final URI indexPath;
+            indexPath = new File("data/idx" + (i + 1)).toURI();
+            SynonymIndexSearcher searcher = new SynonymIndexSearcher(indexPath);
             searcher.setTopDocLimit(topDocLimit);
             recSearcher.addSearcher(searcher, i);
         }
@@ -179,16 +189,16 @@ public class SynonymRecordSearcherTest {
             }
 
             List<OutputRecord> results = recSearcher.search(resultLimit, record);
-            Assert.assertNotNull(results);
-            Assert.assertFalse(results.isEmpty());
+            assertNotNull(results);
+            assertFalse(results.isEmpty());
             for (OutputRecord outputRecord : results) {
-                Assert.assertNotNull(outputRecord);
+                assertNotNull(outputRecord);
                 String[] resultingRecord = outputRecord.getRecord();
-                Assert.assertEquals(record.length, resultingRecord.length);
-                System.out.println(StringUtils.join(resultingRecord, '|'));
-                System.out.println("\t" + outputRecord.getScore());
+                assertEquals(record.length, resultingRecord.length);
+                printLineToConsole(StringUtils.join(resultingRecord, '|'));
+                printLineToConsole("\t" + outputRecord.getScore());
             }
-            Assert.assertEquals(Math.min(hits, resultLimit), results.size());
+            assertEquals(Math.min(hits, resultLimit), results.size());
 
             for (int i = 0; i < record.length; i++) {
                 recSearcher.getSearcher(i).close();
@@ -197,7 +207,7 @@ public class SynonymRecordSearcherTest {
             e.printStackTrace();
             fail("should not get an exception here");
         }
-        System.out.println("");
+        printLineToConsole("");
 
     }
 
@@ -231,15 +241,15 @@ public class SynonymRecordSearcherTest {
         try {
             recSearcher.addSearcher(null, 0);
         } catch (Exception e) {
-            Assert.assertNotNull("we should get an exception here", e);
+            assertNotNull("we should get an exception here", e);
         }
         try {
             recSearcher.addSearcher(new SynonymIndexSearcher(), 2);
-            Assert.fail("Index should be out of bounds here: trying to set a searcher at position in an empty array");
+            fail("Index should be out of bounds here: trying to set a searcher at position in an empty array");
         } catch (Exception e) {
-            Assert.assertNotNull("we should get an exception here", e);
-        } catch (java.lang.AssertionError e) {
-            Assert.assertNotNull("we should get an assertion error here when -ea is added to the VM arguments", e);
+            assertNotNull("we should get an exception here", e);
+        } catch (AssertionError e) {
+            assertNotNull("we should get an assertion error here when -ea is added to the VM arguments", e);
         }
 
         try {
@@ -253,8 +263,13 @@ public class SynonymRecordSearcherTest {
             SynonymIndexSearcher searcher = new SynonymIndexSearcher();
             recSearcher.addSearcher(searcher, -1);
         } catch (Exception e) {
-            Assert.assertNotNull("we should get an exception here", e);
+            assertNotNull("we should get an exception here", e);
         }
     }
 
+    private void printLineToConsole(String text) {
+        if (showInConsole) {
+            System.out.println(text);
+        }
+    }
 }

@@ -64,10 +64,10 @@ public class ClassPathDirectory extends Directory {
     private static final Logger LOGGER = Logger.getLogger(ClassPathDirectory.class);
 
     /**
-     * Holds all opened class path directory instances for clean up TODO This is temporary until a more global resource
-     * management system is found/proposed
-     *
-     * @see #destroy()
+     * Holds all opened class path directory instances for clean up
+     * TODO This is temporary until a more global resource management system is found/proposed
+     * 
+     * @see #destroy() 
      */
     private static final Set<ClassPathDirectory> classPathDirectories = new HashSet<>();
 
@@ -90,7 +90,7 @@ public class ClassPathDirectory extends Directory {
      * <b>Important #2</b>: URI's scheme "jar" stores content in a temporary directory, and is only cleaned upon
      * {@link #close()} call.
      * </p>
-     *
+     * 
      * @param uuid A unique identifier to identify this Lucene directory (used in case of concurrent opens of the same
      * JAR file).
      * @param descriptor A {@link JARDescriptor descriptor} to the JAR file to open.
@@ -110,7 +110,7 @@ public class ClassPathDirectory extends Directory {
      * <p>
      * Creates a new {@link Directory directory} that picks up the right implementation depending on URI's scheme.
      * </p>
-     *
+     * 
      * @param uri A valid URI to a Lucene index
      * @return A {@link Directory} to the Lucene content in <code>uri</code>.
      */

@@ -43,6 +43,8 @@ public class SynonymIndexBuilderTest {
             { "TEST", "A.N.P.E.|Agence Nationale Pour l'Emploi|Pôle Emploi" }, { "Sécurité Sociale", "Sécu|SS|CPAM" },
             { "IAIDQ", "International Association for Information & Data Quality|Int. Assoc. Info & DQ" }, };
 
+    private static final boolean showInConsole = false;
+
     // private SynonymIndexBuilder builder;
 
     @Before
@@ -79,6 +81,7 @@ public class SynonymIndexBuilderTest {
         return searcher;
     }
 
+    @Override
     public void finalize() throws Exception {
         //
         // try {
@@ -108,7 +111,7 @@ public class SynonymIndexBuilderTest {
 
     @Test
     public void testInsertDocumentIfNotExists() throws Exception {
-        System.out.println("\n---------------Test addDocument------------------");
+        printLineToConsole("\n---------------Test addDocument------------------");
         SynonymIndexBuilder builder = createNewIndexBuilder(path);
         insertDocuments(builder);
 
@@ -137,7 +140,7 @@ public class SynonymIndexBuilderTest {
 
     @Test
     public void testInsertDocuments() throws Exception {
-        System.out.println("\n---------------Test insertDocuments--------------");
+        printLineToConsole("\n---------------Test insertDocuments--------------");
 
         SynonymIndexBuilder builder = createNewIndexBuilder(path);
         insertDocuments(builder);
@@ -150,15 +153,14 @@ public class SynonymIndexBuilderTest {
 
     @Test
     public void testUpdateSynonymDocument() throws Exception {
-        System.out.println("\n---------------Test updateDocument---------------");
-        int updateCount = 0;
+        printLineToConsole("\n---------------Test updateDocument---------------");
         SynonymIndexBuilder builder = createNewIndexBuilder(path);
         insertDocuments(builder);
 
         SynonymIndexSearcher searcher = getSearcher(builder);
         assertEquals(0, searcher.searchDocumentBySynonym("updated").totalHits);
 
-        updateCount += builder.updateDocument("Sécurité Sociale", "I|have|been|updated");
+        builder.updateDocument("Sécurité Sociale", "I|have|been|updated");
         builder.commit();
         // close previous searcher
         searcher.close();
@@ -166,7 +168,7 @@ public class SynonymIndexBuilderTest {
         searcher = getSearcher(builder);
         assertEquals(1, searcher.searchDocumentBySynonym("updated").totalHits);
 
-        updateCount += builder.updateDocument("INEXIST", "I|don't|exist");
+        builder.updateDocument("INEXIST", "I|don't|exist");
         builder.commit();
         // close previous searcher
         searcher.close();
@@ -180,7 +182,7 @@ public class SynonymIndexBuilderTest {
 
     @Test
     public void testUpdateSynonymDocument2() throws Exception {
-        System.out.println("\n---------------Test updateDocument2---------------");
+        printLineToConsole("\n---------------Test updateDocument2---------------");
         // --- create a new index with several similar documents
         SynonymIndexBuilder synIdxBuild = new SynonymIndexBuilder();
         String idxPath = "data/test_update";
@@ -267,7 +269,7 @@ public class SynonymIndexBuilderTest {
 
     @Test
     public void testDeleteDocumentByWord() throws IOException {
-        System.out.println("\n---------------Test deleteDocument---------------");
+        printLineToConsole("\n---------------Test deleteDocument---------------");
         SynonymIndexBuilder builder = createNewIndexBuilder(path);
         insertDocuments(builder);
         SynonymIndexSearcher searcher = getSearcher(builder);
@@ -305,7 +307,7 @@ public class SynonymIndexBuilderTest {
     @Test
     public void testAddSynonymToWord() throws IOException {
 
-        System.out.println("\n---------------Test addSynonymToWord-------------");
+        printLineToConsole("\n---------------Test addSynonymToWord-------------");
         SynonymIndexBuilder builder = createNewIndexBuilder(path);
         insertDocuments(builder);
         SynonymIndexSearcher searcher = getSearcher(builder);
@@ -341,7 +343,7 @@ public class SynonymIndexBuilderTest {
 
     @Test
     public void testRemoveSynonymFromWord() throws IOException {
-        System.out.println("\n---------------Test removeSynonymFromWord-----------");
+        printLineToConsole("\n---------------Test removeSynonymFromWord-----------");
         SynonymIndexBuilder builder = createNewIndexBuilder(path);
         insertDocuments(builder);
 
@@ -392,7 +394,7 @@ public class SynonymIndexBuilderTest {
 
     @Test
     public void testDeleteAllDocuments() throws IOException {
-        System.out.println("\n---------------Test deleteAllDocuments----------");
+        printLineToConsole("\n---------------Test deleteAllDocuments----------");
 
         SynonymIndexBuilder builder = createNewIndexBuilder(path);
         insertDocuments(builder);
@@ -418,7 +420,7 @@ public class SynonymIndexBuilderTest {
 
     @Test
     public void deleteIndexFromFS() throws IOException {
-        System.out.println("\n---------------Test deleteIndexFromFS----------");
+        printLineToConsole("\n---------------Test deleteIndexFromFS----------");
         String indexPath = "data/index2";
         SynonymIndexBuilder synonymIndexBuilder = new SynonymIndexBuilder();
         synonymIndexBuilder.initIndexInFS(indexPath);
@@ -430,8 +432,8 @@ public class SynonymIndexBuilderTest {
         synonymIndexBuilder.commit();
         synonymIndexBuilder.closeIndex();
 
-        boolean deleteIndexFromFS = synonymIndexBuilder.deleteIndexFromFS(indexPath);
-        assertEquals(synonymIndexBuilder.getError().getMessage(), true, deleteIndexFromFS);
+        synonymIndexBuilder.deleteIndexFromFS(indexPath);
+        // assertEquals(synonymIndexBuilder.getError().getMessage(), true, deleteIndexFromFS);
         assertEquals(false, indexfile.exists());
     }
 
@@ -462,4 +464,9 @@ public class SynonymIndexBuilderTest {
         assertEquals(true, deleted);
     }
 
+    private void printLineToConsole(String text) {
+        if (showInConsole) {
+            System.out.println(text);
+        }
+    }
 }

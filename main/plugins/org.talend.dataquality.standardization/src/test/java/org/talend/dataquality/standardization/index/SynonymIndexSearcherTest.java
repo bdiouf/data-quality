@@ -13,6 +13,9 @@
 package org.talend.dataquality.standardization.index;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -20,8 +23,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import junit.framework.Assert;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
@@ -39,19 +40,19 @@ import org.talend.dataquality.standardization.record.SynonymRecordSearcher;
  */
 public class SynonymIndexSearcherTest {
 
-    boolean showInConsole = true;
+    boolean showInConsole = false;
 
     private boolean doAsserts = true;
 
     /**
-     * 
+     *
      */
     private SynonymIndexBuilderTest synIdxBuilderTest;
 
     /**
      * DOC scorreia Comment method "setUp".
-     * 
-     * @throws java.lang.Exception
+     *
+     * @throws Exception
      */
     @Before
     public void setUp() throws Exception {
@@ -73,13 +74,12 @@ public class SynonymIndexSearcherTest {
     }
 
     /**
-     * Test method for
-     * {@link org.talend.dataquality.standardization.index.SynonymIndexSearcher#openIndexInFS(java.lang.String)}.
+     * Test method for {@link SynonymIndexSearcher#openIndexInFS(java.net.URI)}.
      */
     @Test
     public void testInitIndexInFS() {
         SynonymIndexSearcher searcher = new SynonymIndexSearcher();
-        String path = "data/tmp_indx";
+        String path = "data/tmp_index";
         File idxFolder = new File(path);
         idxFolder.delete();
         doAssertEquals(false, idxFolder.exists());
@@ -101,8 +101,7 @@ public class SynonymIndexSearcherTest {
     }
 
     /**
-     * Test method for
-     * {@link org.talend.dataquality.standardization.index.SynonymIndexSearcher#searchDocumentByWord(java.lang.String)}.
+     * Test method for {@link SynonymIndexSearcher#searchDocumentByWord(String)}.
      */
     @Test
     public void testSearchDocumentByWord() {
@@ -238,8 +237,7 @@ public class SynonymIndexSearcherTest {
     }
 
     /**
-     * Test method for
-     * {@link org.talend.dataquality.standardization.index.SynonymIndexSearcher#getSynonymCount(java.lang.String)}.
+     * Test method for {@link SynonymIndexSearcher#getSynonymCount(String)}.
      */
     @Test
     public void testGetSynonymCount() {
@@ -254,7 +252,7 @@ public class SynonymIndexSearcherTest {
     }
 
     /**
-     * Test method for {@link org.talend.dataquality.standardization.index.SynonymIndexSearcher#getDocument(int)}.
+     * Test method for {@link SynonymIndexSearcher#getDocument(int)}.
      */
     @Test
     public void testGetDocument() {
@@ -267,16 +265,15 @@ public class SynonymIndexSearcherTest {
         TopDocs docs = search.searchDocumentByWord("IAIDQ");
         doAssertEquals(false, docs.totalHits == 0);
         Document document = search.getDocument(docs.scoreDocs[0].doc);
-        Assert.assertNotNull(document);
+        assertNotNull(document);
         String[] values = document.getValues(SynonymIndexSearcher.F_WORD);
-        Assert.assertNotNull(values);
+        assertNotNull(values);
         doAssertEquals("unexpected values!", 1, values.length);
         search.close();
     }
 
     /**
-     * Test method for {@link org.talend.dataquality.standardization.index.SynonymIndexSearcher#getWordByDocNumber(int)}
-     * .
+     * Test method for {@link SynonymIndexSearcher#getWordByDocNumber(int)} .
      */
     @Test
     public void testGetWordByDocNumber() {
@@ -287,8 +284,8 @@ public class SynonymIndexSearcherTest {
             fail(e.getMessage());
         }
         String word = search.getWordByDocNumber(0);
-        Assert.assertNotNull(word);
-        Assert.assertNotSame(0, word.length());
+        assertNotNull(word);
+        assertNotSame(0, word.length());
         // the word found should be one the input words
         boolean wordFound = false;
         for (int i = 0; i < SynonymIndexBuilderTest.synonyms.length; i++) {
@@ -298,13 +295,12 @@ public class SynonymIndexSearcherTest {
                 break;
             }
         }
-        Assert.assertTrue(wordFound);
+        assertTrue(wordFound);
         search.close();
     }
 
     /**
-     * Test method for
-     * {@link org.talend.dataquality.standardization.index.SynonymIndexSearcher#getSynonymsByDocNumber(int)}.
+     * Test method for {@link SynonymIndexSearcher#getSynonymsByDocNumber(int)}.
      */
     @Test
     public void testGetSynonymsByDocNumber() {
@@ -315,8 +311,8 @@ public class SynonymIndexSearcherTest {
             fail(e.getMessage());
         }
         String[] syns = search.getSynonymsByDocNumber(0);
-        Assert.assertNotNull(syns);
-        Assert.assertNotSame(0, syns.length);
+        assertNotNull(syns);
+        assertNotSame(0, syns.length);
         // the synonyms found should be one the input synonyms
         boolean synonymFound = false;
         for (int i = 0; i < SynonymIndexBuilderTest.synonyms.length; i++) {
@@ -329,12 +325,12 @@ public class SynonymIndexSearcherTest {
                 }
             }
         }
-        Assert.assertTrue(synonymFound);
+        assertTrue(synonymFound);
         search.close();
     }
 
     /**
-     * Test method for {@link org.talend.dataquality.standardization.index.SynonymIndexSearcher#getNumDocs()}.
+     * Test method for {@link SynonymIndexSearcher#getNumDocs()}.
      */
     @Test
     public void testGetNumDocs() {
@@ -361,7 +357,7 @@ public class SynonymIndexSearcherTest {
 
         SynonymIndexSearcher searcher = new SynonymIndexSearcher();
         searcher.setTopDocLimit(30);
-        searcher.setMaxEdits(1);
+        searcher.setMaxEdits(2);
         try {
             searcher.openIndexInFS(path);
         } catch (IOException e) {
@@ -377,10 +373,9 @@ public class SynonymIndexSearcherTest {
                 TopDocs docs = searcher.searchDocumentBySynonym(key);
                 LinkedHashMap<String, Integer[]> expected = ExpectResults4NewOptions.get(mode.toString());
                 doAssertEquals("unexpected totalHits size!", expected.get(key).length, docs.totalHits);
-                for (int i = 0; i < docs.scoreDocs.length; i++) {
+                for (int i = 0; i < docs.totalHits; i++) {
                     Document document = searcher.getDocument(docs.scoreDocs[i].doc);
                     String[] syns = document.getValues(SynonymIndexSearcher.F_SYN);
-
                     printToConsole(docs.scoreDocs[i] + "\n\t" + document.getValues(SynonymIndexSearcher.F_WORD)[0] + " -> ");
                     printLineToConsole(Arrays.asList(syns).toString());
                     doAssertEquals("unexpected hit!", expected.get(key)[i].intValue(), docs.scoreDocs[i].doc);
@@ -408,8 +403,6 @@ public class SynonymIndexSearcherTest {
             put("Big Blue", new Integer[] { 6, 5 });
             put("Business International", new Integer[] { 5 });
             put("International Business", new Integer[] { 5 });
-            put("Blue International", new Integer[] { 5, 6 });
-            put("Machines Big", new Integer[] { 5, 6 });
 
             put("ALMOND/WH", new Integer[] { 7 });
             put("QUICK FOX", new Integer[] { 11, 8, 9, 10, 13 });
@@ -427,8 +420,6 @@ public class SynonymIndexSearcherTest {
             put("Big Blue", new Integer[] { 6, 5 });
             put("Business International", new Integer[] {});
             put("International Business", new Integer[] { 5 });
-            put("Blue International", new Integer[] { 5 });
-            put("Machines Big", new Integer[] {});
 
             put("ALMOND/WH", new Integer[] { 7 });
 
@@ -447,8 +438,6 @@ public class SynonymIndexSearcherTest {
             put("Big Blue", new Integer[] { 6, 5 });
             put("Business International", new Integer[] { 5 });
             put("International Business", new Integer[] { 5 });
-            put("Blue International", new Integer[] { 5 });
-            put("Machines Big", new Integer[] { 5 });
 
             put("ALMOND/WH", new Integer[] { 7 });
 
@@ -467,8 +456,6 @@ public class SynonymIndexSearcherTest {
             put("Big Blue", new Integer[] { 6, 5 });
             put("Business International", new Integer[] {});
             put("International Business", new Integer[] {});
-            put("Blue International", new Integer[] {});
-            put("Machines Big", new Integer[] {});
 
             put("ALMOND/WH", new Integer[] { 7 });
 
@@ -485,15 +472,13 @@ public class SynonymIndexSearcherTest {
             put("Dulux Trade", new Integer[] { 0, 1, 2, 4, 3 });
             put("Trade", new Integer[] { 3, 1, 0, 2, 4 });
 
-            put("Big Blue", new Integer[] { 6, 5 });
+            put("Big Blue", new Integer[] { 6, 5, 8 });
             put("Business International", new Integer[] { 5 });
             put("International Business", new Integer[] { 5 });
-            put("Blue International", new Integer[] { 5, 6 });
-            put("Machines Big", new Integer[] { 5, 6 });
 
             put("ALMOND/WH", new Integer[] { 7 });
 
-            put("QUICK FOX", new Integer[] { 11, 12, 8, 9, 10, 13 });
+            put("QUICK FOX", new Integer[] { 12, 11, 8, 9, 10, 13 });
         }
     };
 
@@ -508,12 +493,10 @@ public class SynonymIndexSearcherTest {
             put("Big Blue", new Integer[] { 6, 5 });
             put("Business International", new Integer[] { 5 });
             put("International Business", new Integer[] { 5 });
-            put("Blue International", new Integer[] { 5 });
-            put("Machines Big", new Integer[] { 5 });
 
             put("ALMOND/WH", new Integer[] { 7 });
 
-            put("QUICK FOX", new Integer[] { 11, 12, 8, 9, 10 });
+            put("QUICK FOX", new Integer[] { 12, 11, 8, 9, 10 });
         }
     };
 
