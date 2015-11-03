@@ -2,10 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Standardization
 Bundle-SymbolicName: org.talend.dataquality.standardization
-Bundle-Version: 6.1.1.qualifier
+Bundle-Version: 3.0.1
 Bundle-Vendor: .Talend SA.
 Require-Bundle: org.apache.log4j,
  org.talend.libraries.apache.lucene4,
  org.apache.commons.lang
 Bundle-ClassPath: .
-Export-Package: org.talend.dataquality.standardization.index
+Export-Package: org.talend.dataquality.standardization.i18n,
+ org.talend.dataquality.standardization.index

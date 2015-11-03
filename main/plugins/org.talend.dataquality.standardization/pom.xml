@@ -1,4 +1,3 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -11,7 +10,7 @@
     </parent>
     <artifactId>org.talend.dataquality.standardization</artifactId>
     <packaging>bundle</packaging>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <name>org.talend.dataquality.standardization</name>
     <description>Dataquality Standardization library description</description>
 
@@ -21,7 +20,7 @@
 
         <!-- This is used to generate README.md file -->
         <commons.componentid>org.talend.dataquality.standardization</commons.componentid>
-        <commons.release.version>3.0.0</commons.release.version>
+        <commons.release.version>3.0.1</commons.release.version>
     </properties>
 
     <dependencies>
@@ -61,4 +60,18 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Include-Resource>{maven-resources},changelog.txt,src/main/java/messages.properties</Include-Resource>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
