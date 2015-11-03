@@ -20,6 +20,8 @@ import org.talend.dataquality.matchmerge.Attribute;
  */
 public class DQAttribute<TYPE> extends Attribute {
 
+    private TYPE originalValue;
+
     /**
      * DOC zhao DQAtrribute constructor comment.
      * 
@@ -40,7 +42,26 @@ public class DQAttribute<TYPE> extends Attribute {
         this(label, colIdx);
         if (value != null) {
             setValue(value.toString());
+            setOriginalValue(value);
         }
+    }
+
+    /**
+     * Getter for originalValue.
+     * 
+     * @return the originalValue
+     */
+    public TYPE getOriginalValue() {
+        return this.originalValue;
+    }
+
+    /**
+     * Sets the originalValue.
+     * 
+     * @param originalValue the originalValue to set
+     */
+    public void setOriginalValue(TYPE originalValue) {
+        this.originalValue = originalValue;
     }
 
 }

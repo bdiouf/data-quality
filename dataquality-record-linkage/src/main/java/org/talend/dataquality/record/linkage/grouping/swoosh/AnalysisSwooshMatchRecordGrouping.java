@@ -119,4 +119,23 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
         }
         swooshGrouping.afterAllRecordFinished();
     }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.talend.dataquality.record.linkage.grouping.AnalysisMatchRecordGrouping#outputRow(org.talend.dataquality.record
+     * .linkage.grouping.swoosh.RichRecord)
+     */
+    @Override
+    protected void outputRow(RichRecord row) {
+        List<DQAttribute<?>> originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
+        Object[] strRow = new Object[originRow.size()];
+        int idx = 0;
+        for (DQAttribute<?> attr : originRow) {
+            strRow[idx] = attr.getOriginalValue();
+            idx++;
+        }
+        outputRow(strRow);
+    }
 }
