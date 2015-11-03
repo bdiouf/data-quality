@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Create given name index" default="index" basedir=".">
+
+	<target name="index" description="Create the given name index">
+		   	<tstamp>
+		    		<format property="TODAY" pattern="yyyy-MM-dd"/>
+	    	</tstamp>
+		<zip basedir="data" destfile="./TalendDataQualityGivenName-${TODAY}.zip">
+			<include name = "TalendGivenNames_index/"/>
+			<exclude name=".svn/" />
+		</zip>
+	</target>
+</project>
