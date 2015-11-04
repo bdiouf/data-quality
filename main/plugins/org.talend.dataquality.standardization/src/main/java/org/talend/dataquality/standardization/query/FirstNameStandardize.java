@@ -126,24 +126,20 @@ public class FirstNameStandardize {
         }
         // create all Term for query
         Term termName = new Term(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, inputName);
-        Term termCountry = new Term(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, countryText);
-        Term ternGender = new Term(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, genderText);
+        Term termCountry = (countryText == null) ? null : new Term(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, countryText);
+        Term ternGender = (genderText == null) ? null : new Term(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, genderText);
         // many field to query for reposity
         BooleanQuery combinedQuery = new BooleanQuery();
-        Query nameQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, analyzer)
-                .parse(inputName);
+        Query nameQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, analyzer).parse(inputName);
         combinedQuery.add(nameQuery, BooleanClause.Occur.SHOULD);
-        Query countryQuery = null;
-        Query genderQuery = null;
+
         if (countryText != null && !countryText.equals("")) {//$NON-NLS-1$
-            countryQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, analyzer)
-                    .parse(countryText);
+            Query countryQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, analyzer).parse(countryText);
             combinedQuery.add(countryQuery, BooleanClause.Occur.SHOULD);
-            if (genderText != null && !genderText.equals("")) {//$NON-NLS-1$
-                genderQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, analyzer)
-                        .parse(genderText);
-                combinedQuery.add(genderQuery, BooleanClause.Occur.SHOULD);
-            }
+        }
+        if (genderText != null && !genderText.equals("")) {//$NON-NLS-1$
+            Query genderQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, analyzer).parse(genderText);
+            combinedQuery.add(genderQuery, BooleanClause.Occur.SHOULD);
         }
 
         TopDocs matches = searcher.search(combinedQuery, 10);
