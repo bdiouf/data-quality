@@ -18,7 +18,7 @@ import org.talend.dataquality.matchmerge.Attribute;
  * created by zhao on Jul 14, 2014 Detailled comment
  * 
  */
-public class DQAttribute<TYPE> extends Attribute {
+public class DQAttribute<TYPE extends Object> extends Attribute {
 
     private TYPE originalValue;
 

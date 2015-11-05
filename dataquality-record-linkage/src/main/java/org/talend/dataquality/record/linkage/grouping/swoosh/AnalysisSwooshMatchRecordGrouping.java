@@ -134,7 +134,8 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
         int idx = 0;
         for (DQAttribute<?> attr : originRow) {
             if (StringUtils.equalsIgnoreCase("Group quality", attr.getLabel())) {
-                strRow[idx] = attr.getOriginalValue() == null ? 0.0 : Double.parseDouble(attr.getValue());
+                strRow[idx] = attr.getOriginalValue() == null || StringUtils.isBlank(attr.getOriginalValue().toString()) ? 0.0
+                        : Double.parseDouble(attr.getValue());
             } else {
                 strRow[idx] = attr.getOriginalValue();
             }

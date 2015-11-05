@@ -43,12 +43,10 @@ public class SurvivorshipUtils {
         List<SurvivorshipFunction> survFunctions = new ArrayList<SurvivorshipFunction>();
         for (List<Map<String, String>> survivorshipKeyDefs : joinKeyRules) {
             for (Map<String, String> survDef : survivorshipKeyDefs) {
-                SurvivorshipFunction func = survivorShipAlgorithmParams.new SurvivorshipFunction();
-                func.setSurvivorShipKey(survDef.get("INPUT_COLUMN"));
-                func.setParameter(survDef.get("PARAMETER"));
-                func.setSurvivorShipAlgoEnum(SurvivorShipAlgorithmEnum.getTypeBySavedValue(survDef.get("SURVIVORSHIP_FUNCTION")));
+                SurvivorshipFunction func = createSurvivorshipFunction(survivorShipAlgorithmParams, survDef);
                 survFunctions.add(func);
             }
+
         }
         survivorShipAlgorithmParams.setSurviorShipAlgos(survFunctions.toArray(new SurvivorshipFunction[survFunctions.size()]));
 
@@ -63,11 +61,11 @@ public class SurvivorshipUtils {
             for (Map<String, String> defSurvDef : defaultSurvivorshipRules) {
                 // the column's data type start with id_, so need to add id_ ahead of the default survivorship's data
                 // type before judging if they are equal
-                if (StringUtils.equals(dataTypeName, "id_" + defSurvDef.get("DATA_TYPE"))) { //$NON-NLS-1$
+                if (StringUtils.equalsIgnoreCase(dataTypeName, "id_" + defSurvDef.get("DATA_TYPE"))) { //$NON-NLS-1$
                     putNewSurvFunc(survivorShipAlgorithmParams, defaultSurvRules, i, defSurvDef.get("PARAMETER"),
                             defSurvDef.get("SURVIVORSHIP_FUNCTION"));
                     break;
-                } else if (ArrayUtils.contains(NUMBERS, defSurvDef.get("DATA_TYPE"))) { //$NON-NLS-1$
+                } else if (StringUtils.equalsIgnoreCase(defSurvDef.get("DATA_TYPE"), "Number") && ArrayUtils.contains(NUMBERS, dataTypeName)) { //$NON-NLS-1$
                     putNewSurvFunc(survivorShipAlgorithmParams, defaultSurvRules, i, defSurvDef.get("PARAMETER"),
                             defSurvDef.get("SURVIVORSHIP_FUNCTION"));
                     break;
@@ -86,8 +84,8 @@ public class SurvivorshipUtils {
         SurvivorshipFunction[] survFuncs = survivorShipAlgorithmParams.getSurviorShipAlgos();
         Map<Integer, SurvivorshipFunction> colIdx2DefaultSurvFunc = survivorShipAlgorithmParams.getDefaultSurviorshipRules();
         int matchRuleIdx = -1;
-        List<List<Map<String, String>>> multiRules = analysisMatchRecordGrouping.getMultiMatchRules();
-        for (List<Map<String, String>> matchrule : multiRules) {
+        // List<List<Map<String, String>>> multiRules = analysisMatchRecordGrouping.getMultiMatchRules();
+        for (List<Map<String, String>> matchrule : joinKeyRules) {
             matchRuleIdx++;
             if (matchrule == null) {
                 continue;
@@ -107,15 +105,7 @@ public class SurvivorshipUtils {
                         surFuncsInMatcher[idx].setParameter(StringUtils.EMPTY);
                     }
                 } else {
-                    // Find the func from existing survivorship rule list.
-                    for (SurvivorshipFunction survFunc : survFuncs) {
-                        String keyName = mkDef.get(IRecordGrouping.MATCH_KEY_NAME);
-                        if (keyName.equals(survFunc.getSurvivorShipKey())) {
-                            surFuncsInMatcher[idx] = survFunc;
-                            break;
-                        }
-                    }
-
+                    surFuncsInMatcher[idx] = createSurvivorshipFunction(survivorShipAlgorithmParams, mkDef);
                 }
                 idx++;
             }
@@ -129,6 +119,26 @@ public class SurvivorshipUtils {
         survivorShipAlgorithmParams.setSurvivorshipAlgosMap(survAlgos);
 
         return survivorShipAlgorithmParams;
+    }
+
+    /**
+     * DOC talend Comment method "createSurvivorshipFunction".
+     * 
+     * @param survivorShipAlgorithmParams
+     * @param survDef
+     * @return
+     */
+    protected static SurvivorshipFunction createSurvivorshipFunction(SurvivorShipAlgorithmParams survivorShipAlgorithmParams,
+            Map<String, String> survDef) {
+        SurvivorshipFunction func = survivorShipAlgorithmParams.new SurvivorshipFunction();
+        func.setSurvivorShipKey(survDef.get("ATTRIBUTE_NAME"));
+        func.setParameter(survDef.get("PARAMETER"));
+        SurvivorShipAlgorithmEnum surAlgo = SurvivorShipAlgorithmEnum.getTypeBySavedValue(survDef.get("SURVIVORSHIP_FUNCTION"));
+        if (surAlgo == null) {
+            surAlgo = SurvivorShipAlgorithmEnum.getTypeByIndex(Integer.parseInt(survDef.get("SURVIVORSHIP_FUNCTION")));
+        }
+        func.setSurvivorShipAlgoEnum(surAlgo);
+        return func;
     }
 
     private static void putNewSurvFunc(SurvivorShipAlgorithmParams survivorShipAlgorithmParams,
