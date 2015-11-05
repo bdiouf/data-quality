@@ -42,7 +42,7 @@ import org.talend.utils.classloader.TalendURLClassLoader;
  */
 public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TYPE> {
 
-    private List<TYPE[]> masterRecords = new ArrayList<TYPE[]>();
+    protected List<TYPE[]> masterRecords = new ArrayList<TYPE[]>();
 
     public static final float DEFAULT_THRESHOLD = 0.95f;
 

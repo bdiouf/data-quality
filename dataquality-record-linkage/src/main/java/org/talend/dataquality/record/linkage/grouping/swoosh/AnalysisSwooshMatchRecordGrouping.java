@@ -64,7 +64,11 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
 
     @Override
     public void initialize() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        super.initialize();
+        if (isComponentMode) {
+            masterRecords.clear();
+        } else {
+            super.initialize();
+        }
         // get the match keys attributes, and put them in the map, no need to do this again for each record
         attributesAsMatchKey = new HashMap<Integer, Attribute>();
         for (List<Map<String, String>> matchRule : getMultiMatchRules()) {
@@ -130,15 +134,10 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
     @Override
     protected void outputRow(RichRecord row) {
         List<DQAttribute<?>> originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
-        Object[] strRow = new Object[originRow.size()];
+        String[] strRow = new String[originRow.size()];
         int idx = 0;
         for (DQAttribute<?> attr : originRow) {
-            if (StringUtils.equalsIgnoreCase("Group quality", attr.getLabel())) {
-                strRow[idx] = attr.getOriginalValue() == null || StringUtils.isBlank(attr.getOriginalValue().toString()) ? 0.0
-                        : Double.parseDouble(attr.getValue());
-            } else {
-                strRow[idx] = attr.getOriginalValue();
-            }
+            strRow[idx] = attr.getValue();
             idx++;
         }
         outputRow(strRow);
