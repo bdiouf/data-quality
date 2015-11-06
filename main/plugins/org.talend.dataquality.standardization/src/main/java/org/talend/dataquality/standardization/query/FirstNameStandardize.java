@@ -158,7 +158,9 @@ public class FirstNameStandardize {
         // always add a non-fuzzy query on each token.
         List<String> tokens = getTokensFromAnalyzer(inputName);
         for (String token : tokens) {
-            nameQueries.add(getTermQuery(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, token, false), BooleanClause.Occur.SHOULD);
+            Query termQuery = getTermQuery(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, token, false);
+            termQuery.setBoost(2);
+            nameQueries.add(termQuery, BooleanClause.Occur.SHOULD);
         }
 
         Query nameTermQuery = getTermQuery(PluginConstant.FIRST_NAME_STANDARDIZE_NAMETERM, inputName.toLowerCase(), fuzzySearch);
@@ -168,10 +170,12 @@ public class FirstNameStandardize {
 
         if (countryText != null && !countryText.equals("")) {//$NON-NLS-1$
             Query countryQuery = getTermQuery(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, countryText, false);
+            countryQuery.setBoost(5);
             combinedQuery.add(countryQuery, BooleanClause.Occur.SHOULD);
         }
         if (genderText != null && !genderText.equals("")) {//$NON-NLS-1$
             Query genderQuery = getTermQuery(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, genderText, false);
+            genderQuery.setBoost(5);
             combinedQuery.add(genderQuery, BooleanClause.Occur.SHOULD);
         }
 
@@ -211,11 +215,6 @@ public class FirstNameStandardize {
         indexFields.put("country", inputCountry);//$NON-NLS-1$
         indexFields.put("gender", inputGender);//$NON-NLS-1$
         ScoreDoc[] results = standardize(inputName, indexFields, fuzzyQuery);
-        // for (ScoreDoc scoreDoc : results) {
-        // System.out.println("docId: " + scoreDoc.doc + " score: " + scoreDoc.score + " word: "
-        // + searcher.doc(scoreDoc.doc).get("name") + " " + searcher.doc(scoreDoc.doc).get("country") + " "
-        // + searcher.doc(scoreDoc.doc).get("gender"));
-        // }
         return results.length == 0 ? "" : searcher.doc(results[0].doc).get("name");//$NON-NLS-1$ //$NON-NLS-2$
     }
 

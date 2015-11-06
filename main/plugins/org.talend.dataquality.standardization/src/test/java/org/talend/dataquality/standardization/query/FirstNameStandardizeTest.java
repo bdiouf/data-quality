@@ -43,16 +43,24 @@ public class FirstNameStandardizeTest {
 
     private static final String inputName = "Michel"; //$NON-NLS-1$
 
-    private static final String[][] expected = { { "Michel", "AUS", "MICHEL", "MICHELE", "MICHEL" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-            { "Michel", "BEL", "MICHEL", "MICHEL", "MICHEL" }, { "Michel", "DEU", "MICHEL", "MICHEL", "MICHEL" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$
-            { "Michel", "ESP", "MICHEL", "MICHEL", "MICHEL" }, { "Michel", "FRA", "MICHEL", "MICHEL", "MICHEL" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$
-            { "Michel", "ITA", "MICHEL", "MICHELA", "MICHEL" }, { "Michel", "RUS", "MICHEL", "MICHEL", "MICHEL" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$
-            { "Michel", "USA", "MICHEL", "MICHEL", "MICHEL" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+    private static final String[][] expected = { { "Michel", "AUS", "MITCHEL", "MICHELE", "MICHEL" }, //
+            { "Michel", "BEL", "MICHEL", "MICHEL", "MICHEL" }, //
+            { "Michel", "DEU", "MICHEL", "MICHEL", "MICHEL" }, //
+            { "Michel", "ESP", "MICHEL", "MICHEL", "MICHEL" }, //
+            { "Michel", "FRA", "MICHEL", "MICHEL", "MICHEL" }, //
+            { "Michel", "ITA", "MICHELA", "MICHELA", "MICHELE" }, //
+            { "Michel", "RUS", "MICHEL", "MICHEL", "MICHEL" }, //
+            { "Michel", "USA", "MICHEL", "MICHEL", "MICHEL" }, //
 
-            { "Adrian", "AUS", "ADRIAN", "ADRIAN", "ADRIAN" }, { "Adrian", "BEL", "ADRIAN", "ADRIAN", "ADRIAN" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$
-            { "Adrian", "DEU", "ADRIAN", "ADRIAN", "ADRIAN" }, { "Adrian", "ESP", "ADRIAN", "ADRIAN", "ADRIAN" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$
-            { "Adrian", "FRA", "ADRIAN", "ADRIAN", "ADRIAN" }, { "Adrian", "ITA", "ADRIAN", "ADRIANA", "ADRIAN" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$
-            { "Adrian", "RUS", "ADRIAN", "ADRIAN", "ADRIAN" }, { "Adrian", "USA", "ADRIAN", "ADRIAN", "ADRIAN" }, }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$
+            { "Adrian", "AUS", "ADRIAN", "ADRIAN", "ADRIAN" }, //
+            { "Adrian", "BEL", "ADRIAN", "ADRIAN", "ADRIAN" }, //
+            { "Adrian", "DEU", "ADRIAN", "ADRIAN", "ADRIAN" }, //
+            { "Adrian", "ESP", "ADRIAN", "ADRIAN", "ADRIAN" }, //
+            { "Adrian", "FRA", "ADRIAN", "ADRIAN", "ADRIAN" }, //
+            { "Adrian", "ITA", "ADRIANO", "ADRIANA", "ADRIANO" }, //
+            { "Adrian", "RUS", "ADRIAN", "ADRIAN", "ADRIAN" }, //
+            { "Adrian", "USA", "ADRIAN", "ADRIAN", "ADRIAN" }, //
+    };
 
     private static final String[][] expected_fuzzy = { { "Alessandra", "ALESSANDRA", "ALESSANDRA" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             { "Antonino", "ANTONINO", "ANTONINO" }, { "amar", "AMAR", "AMAR" }, { "jan", "JAN", "JAN" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
@@ -112,7 +120,7 @@ public class FirstNameStandardizeTest {
         try {
 
             System.out.println("\ntestReplaceNameWithCountryGenderInfo:"); //$NON-NLS-1$
-            System.out.println("Name\tCountry\tNon-gender\tFeale\tMale"); //$NON-NLS-1$
+            System.out.println("Name\tCountry\tNon-gender\tFemale\tMale"); //$NON-NLS-1$
             for (String[] testCase : expected) {
                 String res, resF, resM = ""; //$NON-NLS-1$
                 System.out.print("{\"" + testCase[0] + "\", \"" + testCase[1] + "\", \""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -129,7 +137,7 @@ public class FirstNameStandardizeTest {
 
                 // results for female first name query
                 resM = fnameStandardize.replaceNameWithCountryGenderInfo(testCase[0], testCase[1], "M", true); //$NON-NLS-1$
-                System.out.println(resM + "\"},"); //$NON-NLS-1$
+                System.out.println(resM + "\"}, //"); //$NON-NLS-1$
                 assertEquals(testCase[4], resM);
             }
 
