@@ -27,7 +27,7 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class GenerateFromFile<T2> extends Function<T2> {
 
-    private Scanner in = null;
+    private transient Scanner in = null;
 
     protected List<String> StringTokens = new ArrayList<>();
 
