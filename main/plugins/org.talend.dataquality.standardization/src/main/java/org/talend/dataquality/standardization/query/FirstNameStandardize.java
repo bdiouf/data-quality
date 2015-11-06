@@ -13,11 +13,18 @@
 package org.talend.dataquality.standardization.query;
 
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
+import org.apache.lucene.analysis.standard.StandardFilter;
+import org.apache.lucene.analysis.standard.StandardTokenizer;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -29,6 +36,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopDocsCollector;
 import org.apache.lucene.search.TopFieldCollector;
@@ -67,6 +75,7 @@ public class FirstNameStandardize {
         this.hitsPerPage = hitsPerPage;
     }
 
+    @Deprecated
     private ScoreDoc[] standardize(String input, boolean fuzzyQuery) throws ParseException, IOException {
 
         if (input == null || input.length() == 0) {
@@ -97,7 +106,7 @@ public class FirstNameStandardize {
         searcher.search(combinedQuery, collector);
     }
 
-    public TopDocs getFuzzySearch(String input) throws Exception {
+    private TopDocs getFuzzySearch(String input) throws Exception {
         // MOD sizhaoliu 2012-7-4 TDQ-1576 tFirstnameMatch returns no firstname when several matches exist
         // The 2 letter prefix requires exact match while the word to search may not be lowercased as in the index.
         // Extracted and documented MATCHING_SIMILARITY constant.
@@ -109,58 +118,65 @@ public class FirstNameStandardize {
     // FIXME this variable is only for tests
     public static final boolean SORT_WITH_COUNT = true;
 
-    public ScoreDoc[] standardize(String inputName, Map<String, String> information2value, boolean fuzzySearch) throws Exception {
+    private Query getTermQuery(String field, String text, boolean fuzzy) {
+        Term term = new Term(field, text);
+        return fuzzy ? new FuzzyQuery(term, maxEdits) : new TermQuery(term);
+    }
+
+    private List<String> getTokensFromAnalyzer(String input) throws IOException {
+        StandardTokenizer tokenStream = new StandardTokenizer(new StringReader(input));
+        TokenStream result = new StandardFilter(tokenStream);
+        result = new LowerCaseFilter(result);
+        CharTermAttribute charTermAttribute = result.addAttribute(CharTermAttribute.class);
+
+        tokenStream.reset();
+        List<String> termList = new ArrayList<String>();
+        while (result.incrementToken()) {
+            String term = charTermAttribute.toString();
+            termList.add(term);
+        }
+        result.close();
+        return termList;
+    }
+
+    public ScoreDoc[] standardize(String inputName, Map<String, String> information2value, boolean fuzzySearch)
+            throws IOException {
         if (inputName == null || inputName.length() == 0) {
             return new ScoreDoc[0];
         }
         // // DOC set get county and gender fields value
         String countryText = null;
         String genderText = null;
-        Set<String> indexKinds = information2value.keySet();
-        for (String indexKind : indexKinds) {
-            if (indexKind.equals(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY)) {
-                countryText = information2value.get(indexKind);
-            } else if (indexKind.equals(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER)) {
-                genderText = information2value.get(indexKind);
-            }
+        if (information2value != null) {
+            countryText = information2value.get(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY);
+            genderText = information2value.get(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER);
         }
-        // create all Term for query
-        Term termName = new Term(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, inputName);
-        Term termCountry = (countryText == null) ? null : new Term(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, countryText);
-        Term ternGender = (genderText == null) ? null : new Term(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, genderText);
-        // many field to query for reposity
+
         BooleanQuery combinedQuery = new BooleanQuery();
-        Query nameQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, analyzer).parse(inputName);
-        combinedQuery.add(nameQuery, BooleanClause.Occur.SHOULD);
+
+        BooleanQuery nameQueries = new BooleanQuery();
+        // always add a non-fuzzy query on each token.
+        List<String> tokens = getTokensFromAnalyzer(inputName);
+        for (String token : tokens) {
+            nameQueries.add(getTermQuery(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, token, false), BooleanClause.Occur.SHOULD);
+        }
+
+        Query nameTermQuery = getTermQuery(PluginConstant.FIRST_NAME_STANDARDIZE_NAMETERM, inputName.toLowerCase(), fuzzySearch);
+        nameQueries.add(nameTermQuery, BooleanClause.Occur.SHOULD);
+
+        combinedQuery.add(nameQueries, BooleanClause.Occur.MUST);
 
         if (countryText != null && !countryText.equals("")) {//$NON-NLS-1$
-            Query countryQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, analyzer).parse(countryText);
+            Query countryQuery = getTermQuery(PluginConstant.FIRST_NAME_STANDARDIZE_COUNTRY, countryText, false);
             combinedQuery.add(countryQuery, BooleanClause.Occur.SHOULD);
         }
         if (genderText != null && !genderText.equals("")) {//$NON-NLS-1$
-            Query genderQuery = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, analyzer).parse(genderText);
+            Query genderQuery = getTermQuery(PluginConstant.FIRST_NAME_STANDARDIZE_GENDER, genderText, false);
             combinedQuery.add(genderQuery, BooleanClause.Occur.SHOULD);
         }
 
         TopDocs matches = searcher.search(combinedQuery, 10);
 
-        if (fuzzySearch) {
-            BooleanQuery combinedFuzzyQuery = new BooleanQuery();
-            Query name = new FuzzyQuery(termName);
-            combinedQuery.add(name, BooleanClause.Occur.SHOULD);
-            Query country = null;
-            Query gender = null;
-            if (countryText != null && !countryText.equals("")) {//$NON-NLS-1$
-                country = new FuzzyQuery(termCountry);
-                combinedQuery.add(country, BooleanClause.Occur.SHOULD);
-                if (genderText != null && !genderText.equals("")) {//$NON-NLS-1$
-                    gender = new FuzzyQuery(ternGender);
-                    combinedQuery.add(gender, BooleanClause.Occur.SHOULD);
-                }
-            }
-
-            matches = searcher.search(combinedFuzzyQuery, 10);
-        }
         return matches.scoreDocs;
     }
 
@@ -182,43 +198,38 @@ public class FirstNameStandardize {
      * 
      * @param input a first name
      * @return the standardized first name
-     * @throws ParseException
-     * @throws IOException
+     * @throws Exception
      */
     public String replaceName(String inputName, boolean fuzzyQuery) throws IOException {
-
-        ScoreDoc[] results = null;
-        try {
-            results = standardize(inputName, fuzzyQuery);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return (results == null || results.length == 0) ? "" : searcher.doc(results[0].doc).get("name");//$NON-NLS-1$ //$NON-NLS-2$
+        ScoreDoc[] results = standardize(inputName, null, fuzzyQuery);
+        return results.length == 0 ? "" : searcher.doc(results[0].doc).get("name");//$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public String replaceNameWithCountryGenderInfo(String inputName, String inputCountry, String inputGender, boolean fuzzyQuery)
-            throws Exception {
+            throws IOException {
         Map<String, String> indexFields = new HashMap<String, String>();
         indexFields.put("country", inputCountry);//$NON-NLS-1$
         indexFields.put("gender", inputGender);//$NON-NLS-1$
         ScoreDoc[] results = standardize(inputName, indexFields, fuzzyQuery);
+        // for (ScoreDoc scoreDoc : results) {
+        // System.out.println("docId: " + scoreDoc.doc + " score: " + scoreDoc.score + " word: "
+        // + searcher.doc(scoreDoc.doc).get("name") + " " + searcher.doc(scoreDoc.doc).get("country") + " "
+        // + searcher.doc(scoreDoc.doc).get("gender"));
+        // }
         return results.length == 0 ? "" : searcher.doc(results[0].doc).get("name");//$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public String replaceNameWithCountryInfo(String inputName, String inputCountry, boolean fuzzyQuery) throws Exception {
+    public String replaceNameWithCountryInfo(String inputName, String inputCountry, boolean fuzzyQuery) throws IOException {
         Map<String, String> indexFields = new HashMap<String, String>();
         indexFields.put("country", inputCountry);//$NON-NLS-1$
         ScoreDoc[] results = standardize(inputName, indexFields, fuzzyQuery);
         return results.length == 0 ? "" : searcher.doc(results[0].doc).get("name");//$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public String replaceNameWithGenderInfo(String inputName, String inputGender, boolean fuzzyQuery) throws Exception {
+    public String replaceNameWithGenderInfo(String inputName, String inputGender, boolean fuzzyQuery) throws IOException {
         Map<String, String> indexFields = new HashMap<String, String>();
         indexFields.put("gender", inputGender);//$NON-NLS-1$
-        ScoreDoc[] results;
-
-        results = standardize(inputName, indexFields, fuzzyQuery);
-
+        ScoreDoc[] results = standardize(inputName, indexFields, fuzzyQuery);
         return results.length == 0 ? "" : searcher.doc(results[0].doc).get("name");//$NON-NLS-1$ //$NON-NLS-2$
     }
 
