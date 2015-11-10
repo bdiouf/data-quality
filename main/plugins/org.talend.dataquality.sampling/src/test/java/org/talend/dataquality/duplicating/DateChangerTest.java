@@ -31,7 +31,7 @@ public class DateChangerTest {
 
     @Before
     public void setUp() throws Exception {
-        dateToModify = sdf.parse("05-08-1982"); //$NON-NLS-1$ 
+        dateToModify = sdf.parse("13-08-1982"); //$NON-NLS-1$ 
         dateChanger.setSeed(AllDataqualitySamplingTests.RANDOM_SEED);
     }
 
@@ -47,7 +47,7 @@ public class DateChangerTest {
     @Test
     public void testSwitchDayMonthValue() {
         String result = sdf.format(dateChanger.switchDayMonthValue(dateToModify));
-        assertEquals("08-05-1982", result); //$NON-NLS-1$
+        assertEquals("08-01-1982", result); //$NON-NLS-1$
 
         Date result2 = dateChanger.switchDayMonthValue(null);
         assertTrue(result2 == null);
