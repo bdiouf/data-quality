@@ -540,7 +540,7 @@ public class SynonymIndexSearcher {
         this.matchingThreshold = (float) matchingThreshold;
     }
 
-    private List<String> getTokensFromAnalyzer(String input) throws IOException {
+    public List<String> getTokensFromAnalyzer(String input) throws IOException {
         StandardTokenizer tokenStream = new StandardTokenizer(new StringReader(input));
         TokenStream result = new StandardFilter(tokenStream);
         result = new LowerCaseFilter(result);
