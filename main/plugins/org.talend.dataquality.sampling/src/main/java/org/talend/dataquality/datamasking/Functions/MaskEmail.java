@@ -37,7 +37,7 @@ public class MaskEmail extends Function<String> implements Serializable {
         if (para.length > 0) {
             Scanner in;
             try {
-                in = new Scanner(new FileReader(para[0]));
+                in = new Scanner(new FileReader(para[0])).useDelimiter(tokenDelimiter);
                 while (in.hasNext()) {
                     keys.add(in.next().trim());
                 }

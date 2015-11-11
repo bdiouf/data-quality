@@ -40,6 +40,20 @@ public abstract class Function<T> implements Serializable {
     protected boolean keepNull = false;
 
     /**
+     * String delimiter when using scanner reading tokens from a file.
+     */
+    protected String tokenDelimiter = "\n"; //$NON-NLS-1$
+
+    /**
+     * Set the token delimiter which separating words in file.
+     * 
+     * @param delimiter
+     */
+    public void setTokenDelimiter(String delimiter) {
+        this.tokenDelimiter = delimiter;
+    }
+
+    /**
      * DOC jgonzalez Comment method "setRandomWrapper". This method is used to set the RandomWrapper used by all
      * functions.
      * 

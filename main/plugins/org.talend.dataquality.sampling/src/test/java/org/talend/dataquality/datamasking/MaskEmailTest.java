@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.talend.dataquality.datamasking.Functions.MaskEmail;
@@ -35,6 +35,7 @@ public class MaskEmailTest {
         output = me.generateMaskedRow(mail);
         assertEquals(output, "test@talend.com"); //$NON-NLS-1$
     }
+
 
     @Test
     public void testBad() {

@@ -33,7 +33,7 @@ public abstract class GenerateFromFile<T2> extends Function<T2> {
 
     protected void init() {
         try {
-            in = new Scanner(new FileReader(parameters[0]));
+            in = new Scanner(new FileReader(parameters[0])).useDelimiter(tokenDelimiter);
             while (in.hasNext()) {
                 StringTokens.add(in.next().trim());
             }
