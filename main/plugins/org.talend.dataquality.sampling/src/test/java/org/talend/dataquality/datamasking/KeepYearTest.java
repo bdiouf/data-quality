@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +41,6 @@ public class KeepYearTest {
     @Test
     public void testGood() {
         dateToModify = ky.generateMaskedRow(dateToModify);
-        assertEquals("Fri Jan 01 00:00:00 CET 1982", dateToModify.toString()); //$NON-NLS-1$
+        assertEquals("Fri Jan 01 00:00:00 CST 1982", dateToModify.toString()); //$NON-NLS-1$
     }
 }

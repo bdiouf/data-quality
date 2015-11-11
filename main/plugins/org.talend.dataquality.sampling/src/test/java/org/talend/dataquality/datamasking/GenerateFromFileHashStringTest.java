@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class GenerateFromFileHashStringTest {
     @Test
     public void testGood() {
         output = gffhs.generateMaskedRow(null);
-        assertEquals("Brad", output); //$NON-NLS-1$
+        assertEquals("Brad X", output); //$NON-NLS-1$
     }
 
     @Test
