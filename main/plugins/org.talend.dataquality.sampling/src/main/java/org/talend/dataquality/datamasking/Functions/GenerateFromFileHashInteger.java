@@ -29,12 +29,6 @@ public class GenerateFromFileHashInteger extends GenerateFromFileHash<Integer> i
     private List<Integer> IntegerTokens = new ArrayList<>();
 
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.init();
-    }
-
-    @Override
     public Integer generateMaskedRow(Integer i) {
         if (i == null && keepNull) {
             return null;

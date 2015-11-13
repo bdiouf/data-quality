@@ -14,8 +14,6 @@ package org.talend.dataquality.datamasking.Functions;
 
 import java.io.Serializable;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
-
 /**
  * created by jgonzalez on 24 juin 2015. See GgenerateFromFileHash.
  *
@@ -23,12 +21,6 @@ import org.talend.dataquality.duplicating.RandomWrapper;
 public class GenerateFromFileHashString extends GenerateFromFileHash<String> implements Serializable {
 
     private static final long serialVersionUID = -7769720419054349753L;
-
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.init();
-    }
 
     @Override
     public String generateMaskedRow(String str) {

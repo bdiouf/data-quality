@@ -13,13 +13,10 @@
 package org.talend.dataquality.datamasking.Functions;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 19 juin 2015. This function works like GenerateFromList, the difference is that the parameter
  * is now a String holding the path to a file in the user’s computer.
@@ -27,17 +24,13 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class GenerateFromFile<T2> extends Function<T2> {
 
-    private transient Scanner in = null;
+    private static final long serialVersionUID = 1556057898878709265L;
 
     protected List<String> StringTokens = new ArrayList<>();
 
     protected void init() {
         try {
-            in = new Scanner(new FileReader(parameters[0])).useDelimiter(tokenDelimiter);
-            while (in.hasNext()) {
-                StringTokens.add(in.next().trim());
-            }
-            in.close();
+            StringTokens = KeysLoader.loadKeys(parameters[0], tokenDelimiter);
         } catch (FileNotFoundException | NullPointerException e) {
             // We do nothing here because in is already set.
         }

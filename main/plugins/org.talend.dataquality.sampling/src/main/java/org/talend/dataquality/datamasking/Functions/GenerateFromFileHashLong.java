@@ -16,8 +16,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
-
 /**
  * created by jgonzalez on 24 juin 2015. See GgenerateFromFileHash.
  *
@@ -27,12 +25,6 @@ public class GenerateFromFileHashLong extends GenerateFromFileHash<Long> impleme
     private static final long serialVersionUID = 4065796998430769114L;
 
     private List<Long> LongTokens = new ArrayList<>();
-
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.init();
-    }
 
     @Override
     public Long generateMaskedRow(Long l) {

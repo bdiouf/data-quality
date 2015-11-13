@@ -12,13 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.Functions;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-import org.talend.dataquality.datamasking.Function;
+import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 24 juin 2015. This function works like GenerateFromFile, the only difference is that it will
@@ -26,24 +20,13 @@ import org.talend.dataquality.datamasking.Function;
  * modulo according to the number of elements in the list.
  *
  */
-public abstract class GenerateFromFileHash<T2> extends Function<T2> {
+public abstract class GenerateFromFileHash<T2> extends GenerateFromFile<T2> {
 
-    private transient Scanner in = null;
-
-    protected List<String> StringTokens = new ArrayList<>();
-
-    protected void init() {
-        try {
-            in = new Scanner(new FileReader(parameters[0])).useDelimiter(tokenDelimiter);
-            while (in.hasNext()) {
-                StringTokens.add(in.next().trim());
-            }
-            in.close();
-        } catch (FileNotFoundException | NullPointerException e) {
-            // We do nothing here because in is already set.
-        }
-    }
+    private static final long serialVersionUID = -4616169672287269594L;
 
     @Override
-    public abstract T2 generateMaskedRow(T2 t);
+    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        super.init();
+    }
 }
