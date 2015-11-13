@@ -29,6 +29,7 @@ public class GenerateFromFileStringTest {
 
     static final String path = GenerateFromFileStringTest.class.getResource("/data/name.txt").getFile(); //$NON-NLS-1$
 
+    static final String pathWin = GenerateFromFileStringTest.class.getResource("/data/name_win.txt").getFile(); //$NON-NLS-1$
     private GenerateFromFileString gffs = new GenerateFromFileString();
 
     @Before

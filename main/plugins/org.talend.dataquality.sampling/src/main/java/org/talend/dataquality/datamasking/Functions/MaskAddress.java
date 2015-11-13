@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.talend.dataquality.datamasking.Function;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -26,7 +25,7 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * Moreover, there is a list of key words that won’t be transformed.
  *
  */
-public class MaskAddress extends Function<String> implements Serializable {
+public class MaskAddress extends GenerateFromFile<String> implements Serializable {
 
     private static final long serialVersionUID = -4661073390672757141L;
 

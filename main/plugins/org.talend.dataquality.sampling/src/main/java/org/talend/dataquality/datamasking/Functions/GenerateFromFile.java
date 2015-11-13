@@ -28,6 +28,20 @@ public abstract class GenerateFromFile<T2> extends Function<T2> {
 
     protected List<String> StringTokens = new ArrayList<>();
 
+    /**
+     * String delimiter when using scanner reading tokens from a file.
+     */
+    protected String tokenDelimiter = System.lineSeparator();
+
+    /**
+     * Set the token delimiter which separating words in file.
+     * 
+     * @param delimiter
+     */
+    public void setTokenDelimiter(String delimiter) {
+        this.tokenDelimiter = delimiter;
+    }
+
     protected void init() {
         try {
             StringTokens = KeysLoader.loadKeys(parameters[0], tokenDelimiter);

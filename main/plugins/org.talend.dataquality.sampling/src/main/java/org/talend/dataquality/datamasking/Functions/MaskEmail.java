@@ -17,7 +17,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.talend.dataquality.datamasking.Function;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -25,7 +24,7 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * leave the rest unchanged. If there is no ’@’ in the input, the generated data will be a serie of ’X’.
  *
  */
-public class MaskEmail extends Function<String> implements Serializable {
+public class MaskEmail extends GenerateFromFile<String> implements Serializable {
 
     private static final long serialVersionUID = 3520390903566492525L;
 

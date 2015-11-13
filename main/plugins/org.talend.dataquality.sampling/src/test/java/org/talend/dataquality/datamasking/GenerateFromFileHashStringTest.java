@@ -13,7 +13,9 @@
 package org.talend.dataquality.datamasking;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.datamasking.Functions.GenerateFromFileHashString;
@@ -29,21 +31,37 @@ public class GenerateFromFileHashStringTest {
 
     private String path = GenerateFromFileStringTest.path;
 
-    private GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
+    private String pathWin = GenerateFromFileStringTest.pathWin;
 
     @Before
     public void setUp() throws Exception {
-        gffhs.parse(path, false, new RandomWrapper(42));
     }
 
     @Test
     public void testGood() {
+        GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
+        gffhs.parse(path, false, new RandomWrapper(42));
         output = gffhs.generateMaskedRow(null);
         assertEquals("Brad X", output); //$NON-NLS-1$
     }
 
     @Test
+    public void testSeparatorWin() {
+        GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
+        gffhs.parse(pathWin, false, new RandomWrapper(42));
+        int runTimes = 10000;
+        String[] keysArray = new String[] { "Brad X", "Marouane", "Matthieu", "Xavier", "Aymen" };
+        while (runTimes > 0) {
+            output = gffhs.generateMaskedRow(null);
+            assertTrue(ArrayUtils.contains(keysArray, output)); //$NON-NLS-1$
+            runTimes--;
+        }
+    }
+
+    @Test
     public void testNull() {
+        GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
+        gffhs.parse(path, false, new RandomWrapper(42));
         gffhs.keepNull = true;
         output = gffhs.generateMaskedRow(null);
         assertEquals(null, output);
