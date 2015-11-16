@@ -12,11 +12,11 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
-import static org.junit.Assert.*;
-
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.datamasking.Functions.DateVariance;
@@ -28,36 +28,93 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  */
 public class DateVarianceTest {
 
-    private DateVariance dv = new DateVariance();
+    private DateVariance dv = null;
 
     private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy"); //$NON-NLS-1$
 
-    private Date input;
+    private Date input = null;
+
+    private RandomWrapper rand = new RandomWrapper(42);
 
     @Before
     public void setUp() throws Exception {
         input = sdf.parse("29-02-1992"); //$NON-NLS-1$
-        dv.setRandomWrapper(new RandomWrapper(42));
+        dv = new DateVariance();
     }
 
-    @Test
-    public void testGood() {
+    public void testGoodCase1() throws ParseException {
         dv.parameters = "31".split(","); //$NON-NLS-1$ //$NON-NLS-2$
-        String output = sdf.format(dv.generateMaskedRow(input));
-        assertEquals(output, "04-02-1992"); //$NON-NLS-1$
+        dv.parse("31", false, rand); //$NON-NLS-1$
+        for (int index = 0; index < 20; index++) {
+            String output = sdf.format(dv.generateMaskedRow(input));
+            boolean result = checkResult(output, "29-01-1992", "31-03-1992"); //$NON-NLS-1$ //$NON-NLS-2$
+            Assert.assertTrue("result date should between 29-01-1992 and 31-03-1992 but it is " + output, result); //$NON-NLS-1$
+        }
+    }
+
+    public void testGoodCase2() throws ParseException {
+        dv.parameters = "-31".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        dv.parse("-31", false, rand); //$NON-NLS-1$
+        for (int index = 0; index < 20; index++) {
+            String output = sdf.format(dv.generateMaskedRow(input));
+            boolean result = checkResult(output, "29-01-1992", "31-03-1992"); //$NON-NLS-1$ //$NON-NLS-2$
+            Assert.assertTrue("result date should between 29-01-1992 and 31-03-1992 but it is " + output, result); //$NON-NLS-1$
+        }
+    }
+
+    public void testGoodCase3() throws ParseException {
+        dv.parameters = "1".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        dv.parse("1", false, rand); //$NON-NLS-1$
+        for (int index = 0; index < 20; index++) {
+            String output = sdf.format(dv.generateMaskedRow(input));
+            boolean result = checkResult(output, "28-01-1992", "01-03-1992"); //$NON-NLS-1$ //$NON-NLS-2$
+            Assert.assertTrue("result date should between 28-01-1992 and 01-03-1992 but it is " + output, result); //$NON-NLS-1$
+        }
     }
 
     @Test
-    public void testDummyGood() {
+    public void testGoodCase4() throws ParseException {
+        dv.parameters = "1,3".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        dv.parse("1,3", false, rand); //$NON-NLS-1$
+        for (int index = 0; index < 20; index++) {
+            String output = sdf.format(dv.generateMaskedRow(input));
+            boolean result = checkResult(output, "29-01-1992", "31-03-1992"); //$NON-NLS-1$ //$NON-NLS-2$
+            Assert.assertTrue("result date should between 29-01-1992 and 31-03-1992 but it is " + output, result); //$NON-NLS-1$
+        }
+    }
+
+    public void testDummyGood() throws ParseException {
         dv.parameters = "0".split(","); //$NON-NLS-1$ //$NON-NLS-2$
-        String output = sdf.format(dv.generateMaskedRow(input));
-        assertEquals(output, "04-02-1992"); //$NON-NLS-1$
+        dv.parse("0", false, rand); //$NON-NLS-1$
+        for (int index = 0; index < 20; index++) {
+            String output = sdf.format(dv.generateMaskedRow(input));
+            boolean result = checkResult(output, "29-01-1992", "31-03-1992"); //$NON-NLS-1$ //$NON-NLS-2$
+            Assert.assertTrue("result date should between 29-01-1992 and 31-03-1992 but it is " + output, result); //$NON-NLS-1$
+        }
     }
 
     @Test
-    public void testBad() {
+    public void testBad() throws ParseException {
         dv.parameters = "j".split(","); //$NON-NLS-1$ //$NON-NLS-2$
-        String output = sdf.format(dv.generateMaskedRow(input));
-        assertEquals(output, "04-02-1992"); //$NON-NLS-1$
+        dv.parse("j", false, rand); //$NON-NLS-1$
+        for (int index = 0; index < 20; index++) {
+            String output = sdf.format(dv.generateMaskedRow(input));
+            boolean result = checkResult(output, "29-01-1992", "31-03-1992"); //$NON-NLS-1$ //$NON-NLS-2$
+            Assert.assertTrue("result date should between 29-01-1992 and 31-03-1992 but it is " + output, result); //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * DOC talend Comment method "checkResult".
+     * 
+     * @param output
+     * @return
+     * @throws ParseException
+     */
+    private boolean checkResult(String output, String min, String max) throws ParseException {
+        long currentTime = sdf.parse(output).getTime();
+        long minTime = sdf.parse(min).getTime();
+        long maxTime = sdf.parse(max).getTime();
+        return minTime <= currentTime && currentTime <= maxTime;
     }
 }
