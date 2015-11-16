@@ -41,6 +41,6 @@ public class KeepYearTest {
     @Test
     public void testGood() {
         dateToModify = ky.generateMaskedRow(dateToModify);
-        assertEquals("Fri Jan 01 00:00:00 CST 1982", dateToModify.toString()); //$NON-NLS-1$
+        assertEquals("01-01-1982", sdf.format(dateToModify)); //$NON-NLS-1$
     }
 }

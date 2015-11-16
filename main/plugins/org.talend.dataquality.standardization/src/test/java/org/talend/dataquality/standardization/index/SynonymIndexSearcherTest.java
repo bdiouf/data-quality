@@ -367,7 +367,8 @@ public class SynonymIndexSearcherTest {
         for (String key : ExpectResults4MatchAny.keySet()) {
             printLineToConsole("\n-------------------Searching for <" + key + ">--------------------");
 
-            for (SynonymSearchMode mode : SynonymSearchMode.values()) {
+            for (int m = 0; m < 6; m++) {
+                SynonymSearchMode mode = SynonymSearchMode.values()[m];
                 printLineToConsole(">>>> option: " + mode + "<<<<");
                 searcher.setSearchMode(mode);
                 TopDocs docs = searcher.searchDocumentBySynonym(key);
