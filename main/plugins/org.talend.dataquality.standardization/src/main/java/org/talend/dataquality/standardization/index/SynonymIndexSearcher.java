@@ -19,6 +19,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -60,7 +61,10 @@ public class SynonymIndexSearcher {
         MATCH_ALL("MATCH_ALL"),
         MATCH_EXACT("MATCH_EXACT"),
         MATCH_ANY_FUZZY("MATCH_ANY_FUZZY"),
-        MATCH_ALL_FUZZY("MATCH_ALL_FUZZY");
+        MATCH_ALL_FUZZY("MATCH_ALL_FUZZY"),
+        
+        MATCH_SEMANTIC_DICTIONARY("MATCH_SEMANTIC_DICTIONARY"), // Used only for searching semantic dictionary
+        MATCH_SEMANTIC_KEYWORD("MATCH_SEMANTIC_KEYWORD");// Used only for searching semantic keyword
 
         private String label;
 
@@ -244,6 +248,12 @@ public class SynonymIndexSearcher {
             break;
         case MATCH_ALL_FUZZY:
             query = createCombinedQueryFor(stringToSearch, true, true);
+            break;
+        case MATCH_SEMANTIC_DICTIONARY:
+            query = createQueryForSemanticDictionaryMatch(stringToSearch);
+            break;
+        case MATCH_SEMANTIC_KEYWORD:
+            query = createQueryForSemanticKeywordMatch(stringToSearch);
             break;
         default: // do the same as MATCH_ANY mode
             query = createCombinedQueryFor(stringToSearch, false, false);
@@ -459,6 +469,35 @@ public class SynonymIndexSearcher {
         combinedQuery.add(synQuery, BooleanClause.Occur.SHOULD);
         return combinedQuery;
     }
+
+    /**
+     * @param input
+     * @return
+     * @throws IOException
+     */
+    private Query createQueryForSemanticDictionaryMatch(String input) throws IOException {
+        List<String> tokens = getTokensFromAnalyzer(input);
+        Query synTermQuery = getTermQuery(F_SYNTERM, StringUtils.join(tokens, ' '), false);
+
+        return synTermQuery;
+    }
+
+    /**
+     * 
+     * 
+     * @param input
+     * @return
+     * @throws IOException
+     */
+    private Query createQueryForSemanticKeywordMatch(String input) throws IOException {
+        BooleanQuery booleanQuery = new BooleanQuery();
+        List<String> tokens = getTokensFromAnalyzer(input);
+        for (String token : tokens) {
+            booleanQuery.add(getTermQuery(F_SYN, token, false), BooleanClause.Occur.SHOULD);
+        }
+        return booleanQuery;
+    }
+
 
     /**
      * create a combined query who searches for the input tokens in order (with double quotes around the input) and also
