@@ -20,6 +20,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.talend.dataquality.statistics.frequency.pattern.AsciiCharPatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.DatePatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.RecognitionResult;
 
 public class AsciiCharPatternRecognitionTest {
 

@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency.recognition;
+package org.talend.dataquality.statistics.frequency.pattern;
 
 import org.talend.datascience.common.inference.type.DatetimePatternManager;
 import org.talend.datascience.common.inference.type.TypeInferenceUtils;

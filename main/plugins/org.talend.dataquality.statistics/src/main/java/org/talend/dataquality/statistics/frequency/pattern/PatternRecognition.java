@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency.recognition;
+package org.talend.dataquality.statistics.frequency.pattern;
 
 import java.io.Serializable;
 
@@ -22,7 +22,7 @@ import java.io.Serializable;
  * @author mzhao
  *
  */
-public abstract class PatternRecognition implements IRecogniation, Serializable, Comparable<PatternRecognition> {
+public abstract class PatternRecognition implements Serializable, Comparable<PatternRecognition> {
 
     private static final long serialVersionUID = 5485881256810363647L;
 

@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.talend.dataquality.statistics.frequency.recognition.AsciiCharPatternRecognition;
-import org.talend.dataquality.statistics.frequency.recognition.DatePatternRecognition;
-import org.talend.dataquality.statistics.frequency.recognition.EastAsiaCharPatternRecognition;
-import org.talend.dataquality.statistics.frequency.recognition.EmptyPatternRecognition;
-import org.talend.dataquality.statistics.frequency.recognition.PatternRecognition;
-import org.talend.dataquality.statistics.frequency.recognition.RecognitionResult;
-import org.talend.dataquality.statistics.frequency.recognition.TimePatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.AsciiCharPatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.DatePatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.EastAsiaCharPatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.EmptyPatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.PatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.RecognitionResult;
+import org.talend.dataquality.statistics.frequency.pattern.TimePatternRecognition;
 import org.talend.datascience.common.inference.ResizableList;
 
 /**

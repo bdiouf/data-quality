@@ -20,9 +20,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.statistics.frequency.recognition.DatePatternRecognition;
-import org.talend.dataquality.statistics.frequency.recognition.EastAsiaCharPatternRecognition;
-import org.talend.dataquality.statistics.frequency.recognition.TimePatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.DatePatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.EastAsiaCharPatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.TimePatternRecognition;
 import org.talend.datascience.common.inference.type.DatetimePatternManager;
 
 public class PatternFrequencyAnalyzerTest {
