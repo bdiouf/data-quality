@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This class provides the main date and pattern management entry point for loading predefined patterns from file
  * datePatterns.txt and timePatterns.txt. <br>
- * For the patterns that is not defined , user provide customized patterns with method
+ * For the patterns that are not defined, user provides customized patterns with method
  * {@link #addCustomizedDatePattern(String)} and {@link #addCustomizedTimePattern(String)}
  * <p>
  * For example: <blockquote>
