@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.recognition;
 
-import org.talend.datascience.common.inference.type.DatetimePatternUtils;
+import org.talend.datascience.common.inference.type.DatetimePatternManager;
 import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 
 /**
@@ -36,7 +36,7 @@ public class DatePatternRecognition extends PatternRecognition {
     public RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = RecognitionResult.getEmptyResult();
         if (TypeInferenceUtils.isDate(stringToRecognize)) {
-            result.setResult(DatetimePatternUtils.getInstance().datePatternReplace(stringToRecognize), true);
+            result.setResult(DatetimePatternManager.getInstance().datePatternReplace(stringToRecognize), true);
         }else{
             result.setResult(stringToRecognize, false);
         }

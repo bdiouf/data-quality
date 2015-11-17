@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.talend.dataquality.statistics.frequency.recognition.DatePatternRecognition;
 import org.talend.dataquality.statistics.frequency.recognition.EastAsiaCharPatternRecognition;
 import org.talend.dataquality.statistics.frequency.recognition.TimePatternRecognition;
+import org.talend.datascience.common.inference.type.DatetimePatternManager;
 
 public class PatternFrequencyAnalyzerTest {
 
@@ -205,6 +206,54 @@ public class PatternFrequencyAnalyzerTest {
         }
         Assert.assertTrue(isAtLeastOneAsssert);
 
+    }
+
+    @Test
+    public void testCustomizedDatePattern() {
+        PatternFrequencyAnalyzer patternAnalyzer = new PatternFrequencyAnalyzer();
+        String[] data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2015-08-20", "2012-02-12", "2/8/15 15:57",
+                "4/15/11 4:24", "2001年" };
+        patternAnalyzer.init();
+        for (String value : data) {
+            patternAnalyzer.analyze(value);
+        }
+        patternAnalyzer.end();
+        Map<String, Long> freqTable = patternAnalyzer.getResult().get(0).getTopK(10);
+        Iterator<Entry<String, Long>> entrySet = freqTable.entrySet().iterator();
+        int idx = 0;
+        boolean isAtLeastOneAsssert = false;
+        while (entrySet.hasNext()) {
+            Entry<String, Long> e = entrySet.next();
+            if (idx == 0) {
+                Assert.assertEquals("9/9/99 99:99", e.getKey());
+                Assert.assertEquals(2, e.getValue(), 0);
+                isAtLeastOneAsssert = true;
+            }
+            idx++;
+        }
+
+        // Set customized pattern and analyze again
+        DatetimePatternManager.getInstance().addCustomizedDatePattern("M/d/yy H:m");
+        patternAnalyzer.init();
+        for (String value : data) {
+            patternAnalyzer.analyze(value);
+        }
+        patternAnalyzer.end();
+        freqTable = patternAnalyzer.getResult().get(0).getTopK(10);
+        entrySet = freqTable.entrySet().iterator();
+        idx = 0;
+        isAtLeastOneAsssert = false;
+        while (entrySet.hasNext()) {
+            Entry<String, Long> e = entrySet.next();
+            if (idx == 0) {
+                Assert.assertEquals("M/d/yy H:m", e.getKey());
+                Assert.assertEquals(4, e.getValue(), 0);
+                isAtLeastOneAsssert = true;
+            }
+            idx++;
+        }
+
+        Assert.assertTrue(isAtLeastOneAsssert);
     }
 
 }
