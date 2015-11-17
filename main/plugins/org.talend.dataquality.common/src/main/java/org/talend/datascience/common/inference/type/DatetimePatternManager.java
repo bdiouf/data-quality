@@ -36,7 +36,8 @@ import org.slf4j.LoggerFactory;
  * This class provides the main date and pattern management entry point for loading predefined patterns from file
  * datePatterns.txt and timePatterns.txt. <br>
  * For the patterns that are not defined, user provides customized patterns with method
- * {@link #addCustomizedDatePattern(String)} and {@link #addCustomizedTimePattern(String)}
+ * {@link #addCustomizedDatePattern(String)} and {@link #addCustomizedTimePattern(String)} . The pattern name should
+ * abide by the rule defined in {@link DateTimeFormatter}
  * <p>
  * For example: <blockquote>
  * 
@@ -107,29 +108,36 @@ public final class DatetimePatternManager {
      * Append customized date pattern to in-memory map.
      * 
      * @param pattern
+     * @return true if the pattern is successfully added, false otherwise.
      */
-    public void addCustomizedDatePattern(String pattern) {
-        addCustomizedDateTimePattern(pattern, dateFormatter2pattern, DATE_PATTERN_NAMES);
+    public boolean addCustomizedDatePattern(String pattern) {
+        return addCustomizedDateTimePattern(pattern, dateFormatter2pattern, DATE_PATTERN_NAMES);
     }
 
     /**
      * Append customized time pattern to in-memory map.
      * 
      * @param pattern
+     * @return true if the pattern is successfully added, false otherwise.
      */
-    public void addCustomizedTimePattern(String pattern) {
-        addCustomizedDateTimePattern(pattern, timeFormatter2pattern, TIME_PATTERN_NAMES);
+    public boolean addCustomizedTimePattern(String pattern) {
+        return addCustomizedDateTimePattern(pattern, timeFormatter2pattern, TIME_PATTERN_NAMES);
     }
 
-    private void addCustomizedDateTimePattern(String pattern, Map<DateTimeFormatter, String> datetime2pattern,
+    private boolean addCustomizedDateTimePattern(String pattern, Map<DateTimeFormatter, String> datetime2pattern,
             Set<String> patternNames) {
         if (StringUtils.isEmpty(pattern)) {
-            return;
+            return false;
         }
         if (!datetime2pattern.values().contains(pattern.trim())) {
-            datetime2pattern.put(DateTimeFormatter.ofPattern(pattern, locale), pattern);
+            try {
+                datetime2pattern.put(DateTimeFormatter.ofPattern(pattern, locale), pattern);
+            } catch (IllegalArgumentException e) {
+                return false; // Invalid pattern
+            }
             patternNames.add(pattern);
         }
+        return true;
     }
 
     private Set<String> loadPatterns(String patternFileName, Map<Pattern, String> patternParsers) throws IOException {

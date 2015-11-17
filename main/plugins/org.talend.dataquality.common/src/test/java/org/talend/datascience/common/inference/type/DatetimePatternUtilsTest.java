@@ -30,6 +30,21 @@ public class DatetimePatternUtilsTest {
         Assert.assertEquals("M/d/yy H:m", patternUtil.datePatternReplace("2/3/09 21:30"));
         Assert.assertFalse(patternUtil.isDate("6/18/09 21:30:00"));
         Assert.assertTrue(patternUtil.isDatePattern("M/d/yy H:m"));
+
+        // Add a bad pattern but valid
+        boolean isAdded = patternUtil.addCustomizedDatePattern("m-d-y hh:MM"); // The correct pattern should be
+                                                                               // "d-M-yy HH:mm"
+        Assert.assertTrue(isAdded);
+        Assert.assertFalse(patternUtil.isDate("20-10-09 20:30"));
+        // Add the correct one
+        patternUtil.addCustomizedDatePattern("d-M-yy HH:mm");
+        Assert.assertTrue(patternUtil.isDate("20-10-09 20:30"));
+
+        // Add an invalid pattern
+        isAdded = patternUtil.addCustomizedDatePattern("d/m/y**y hh:mm zzzzzzz"); // invalid pattern chars.
+        Assert.assertFalse(isAdded);
+
+
     }
 
 }
