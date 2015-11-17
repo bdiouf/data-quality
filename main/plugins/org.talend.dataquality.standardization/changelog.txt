@@ -2,8 +2,8 @@
 - build standardazation library with new Maven mechanism
 - set default maxEdits parameter to 1 instead of 2
 - improvements about index matching(TDQ-11143):
-    make method getTokensFromAnalyzer() public
-    add 2 new search modes: MATCH_SEMANTIC_DICTIONARY and MATCH_SEMANTIC_KEYWORD 
+    make method getTokensFromAnalyzer() public static and stripping accents
+    add 2 new search modes: MATCH_SEMANTIC_DICTIONARY and MATCH_SEMANTIC_KEYWORD
 
 3.0.0 # sizhaoliu 2015/10/28
 - upgrade lucene library to 4.10.4

@@ -24,6 +24,7 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.core.LowerCaseFilter;
+import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
@@ -579,10 +580,17 @@ public class SynonymIndexSearcher {
         this.matchingThreshold = (float) matchingThreshold;
     }
 
-    public List<String> getTokensFromAnalyzer(String input) throws IOException {
+    /**
+     * 
+     * @param input
+     * @return a list of lower-case tokens which strips accents & punctuation
+     * @throws IOException
+     */
+    public static List<String> getTokensFromAnalyzer(String input) throws IOException {
         StandardTokenizer tokenStream = new StandardTokenizer(new StringReader(input));
         TokenStream result = new StandardFilter(tokenStream);
         result = new LowerCaseFilter(result);
+        result = new ASCIIFoldingFilter(result);
         CharTermAttribute charTermAttribute = result.addAttribute(CharTermAttribute.class);
 
         tokenStream.reset();
