@@ -23,6 +23,8 @@ import org.junit.Test;
 import org.talend.dataquality.statistics.frequency.pattern.DatePatternRecognition;
 import org.talend.dataquality.statistics.frequency.pattern.EastAsiaCharPatternRecognition;
 import org.talend.dataquality.statistics.frequency.pattern.TimePatternRecognition;
+import org.talend.dataquality.statistics.quality.DataTypeQualityAnalyzer;
+import org.talend.datascience.common.inference.type.DataType;
 import org.talend.datascience.common.inference.type.DatetimePatternManager;
 
 public class PatternFrequencyAnalyzerTest {
@@ -252,6 +254,43 @@ public class PatternFrequencyAnalyzerTest {
             }
             idx++;
         }
+        // Add value quality analyzer to have list of valid date. some date matches patterns from the file, some matches
+        // them in memory user set.
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.DATE);
+        qualityAnalyzer.init();
+        // 2-8-15 15:57 is not at date with pattern available,"2012-02-12" is a date match pattern from file, the others
+        // match pattern set as in memory
+        data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2/8/15 15:57", "2-8-15 15:57", "2012-02-12" };
+        for (String value : data) {
+            qualityAnalyzer.analyze(value);
+        }
+        qualityAnalyzer.end();
+        qualityAnalyzer.getResult().get(0).getValidCount();
+        Assert.assertEquals(5, qualityAnalyzer.getResult().get(0).getCount(), 0); // Count
+        Assert.assertEquals(4, qualityAnalyzer.getResult().get(0).getValidCount()); // Valid Count
+        // Invalid values
+        Assert.assertTrue(qualityAnalyzer.getResult().get(0).getInvalidValues().size() == 1);
+        Assert.assertEquals("2-8-15 15:57", qualityAnalyzer.getResult().get(0).getInvalidValues().toArray()[0]);
+
+        // Add new customized pattern , create new quality analyzer , check again all dates should be valid if all
+        // patterns provided.
+        DataTypeQualityAnalyzer qualityAnalyzer2 = new DataTypeQualityAnalyzer(DataType.Type.DATE);
+        // Cannot recognize "2-8-15 15:57" before add customized pattern
+        qualityAnalyzer2.init();
+        for (String value : data) {
+            qualityAnalyzer2.analyze(value);
+        }
+        qualityAnalyzer2.end();
+        Assert.assertEquals("2-8-15 15:57", qualityAnalyzer2.getResult().get(0).getInvalidValues().toArray()[0]);
+        DatetimePatternManager.getInstance().addCustomizedDatePattern("M-d-yy H:m");// Add the pattern match it.
+        qualityAnalyzer2.init();
+        for (String value : data) {
+            qualityAnalyzer2.analyze(value);
+        }
+        qualityAnalyzer2.end();
+        Assert.assertEquals(5, qualityAnalyzer2.getResult().get(0).getCount()); // Count
+        Assert.assertEquals(5, qualityAnalyzer2.getResult().get(0).getValidCount()); // Valid Count , all match.
+
 
         Assert.assertTrue(isAtLeastOneAsssert);
     }

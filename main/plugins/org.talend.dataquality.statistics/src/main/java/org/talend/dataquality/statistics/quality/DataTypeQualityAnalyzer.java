@@ -46,7 +46,7 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     @Override
     public void init() {
-        // Nothing to do.
+        results.clear();
     }
 
     @Override

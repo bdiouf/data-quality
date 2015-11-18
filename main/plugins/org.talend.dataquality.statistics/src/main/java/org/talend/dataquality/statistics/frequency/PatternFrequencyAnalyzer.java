@@ -64,7 +64,7 @@ public class PatternFrequencyAnalyzer extends FrequencyAnalyzer<PatternFrequency
      */
     public void injectRecognizer(PatternRecognition recognizerToInject) {
         if (recognizerToInject == null) {
-            new RuntimeException("null recognition is not allowed");
+            throw new RuntimeException("null recognition is not allowed");
         }
         // No need to inject if already existed.
         Iterator<PatternRecognition> recIterator = patternRecognitions.iterator();
