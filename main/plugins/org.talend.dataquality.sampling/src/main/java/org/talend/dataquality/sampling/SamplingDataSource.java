@@ -52,12 +52,4 @@ public interface SamplingDataSource<DataSource> {
      */
     public boolean finalizeDataSampling() throws Exception;
 
-    /**
-     * 
-     * Init column header
-     * 
-     * @return
-     */
-    public abstract void initColumnHeader(String[] columnHeaders);
-
 }

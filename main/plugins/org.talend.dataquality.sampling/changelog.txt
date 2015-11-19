@@ -1,5 +1,7 @@
 V2.1.2 mzhao 2015-11-13 
     - TDQ-11187 use line separator depending on system
+       sizhaoliu 2015-11-19
+    - TDQ-11292 use index instead of header to retrieve sample data
 
 V2.1.1 sizhaoliu 2015-10-22 (for Studio 6.1.0)
     - TDQ-11108 absolute paths issue in junits
