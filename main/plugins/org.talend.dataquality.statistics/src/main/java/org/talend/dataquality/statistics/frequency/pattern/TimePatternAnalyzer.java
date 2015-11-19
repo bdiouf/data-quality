@@ -12,20 +12,21 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.pattern;
 
-import org.talend.datascience.common.inference.type.DatetimePatternManager;
+import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
+import org.talend.datascience.common.inference.type.SystemDatetimePatternManager;
 import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 
 /**
- * Recognize date types given the predefined date regex pattern.
+ * Recognize time types given the predefined time regex pattern.
  * 
  * @since 1.3.0
  * @author mzhao
  */
-public class DatePatternRecognition extends PatternRecognition {
+public class TimePatternAnalyzer extends PatternFrequencyAnalyzer {
 
-    private static final long serialVersionUID = -6360092927227678935L;
+    private static final long serialVersionUID = -8037012388831672458L;
 
-    public static final int LEVEL = 1;
+    public static final int LEVEL = 2;
 
     @Override
     public int getLevel() {
@@ -35,11 +36,18 @@ public class DatePatternRecognition extends PatternRecognition {
     @Override
     public RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = RecognitionResult.getEmptyResult();
-        if (TypeInferenceUtils.isDate(stringToRecognize)) {
-            result.setResult(DatetimePatternManager.getInstance().datePatternReplace(stringToRecognize), true);
-        }else{
+        if (TypeInferenceUtils.isTime(stringToRecognize)) {
+            result.setResult(SystemDatetimePatternManager.timePatternReplace(stringToRecognize), true);
+        } else {
             result.setResult(stringToRecognize, false);
         }
         return result;
     }
+
+    @Override
+    protected String getValuePattern(String originalValue) {
+        RecognitionResult result = recognize(originalValue);
+        return result.getPatternString();
+    }
+
 }

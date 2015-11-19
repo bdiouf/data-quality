@@ -23,6 +23,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.talend.dataquality.semantic.recognizer.CategoryFrequency;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizer;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
+import org.talend.datascience.common.inference.AbstractAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
 
@@ -32,7 +33,7 @@ import org.talend.datascience.common.inference.ResizableList;
  * @see Analyzer
  * 
  */
-public class SemanticAnalyzer implements Analyzer<SemanticType> {
+public class SemanticAnalyzer extends AbstractAnalyzer<SemanticType> {
 
     private static final long serialVersionUID = 6808620909722453108L;
 

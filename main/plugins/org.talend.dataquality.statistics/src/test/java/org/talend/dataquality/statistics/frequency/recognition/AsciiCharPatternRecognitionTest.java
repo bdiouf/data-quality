@@ -20,8 +20,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.statistics.frequency.pattern.AsciiCharPatternRecognition;
-import org.talend.dataquality.statistics.frequency.pattern.DatePatternRecognition;
+import org.talend.dataquality.statistics.frequency.pattern.AsciiCharPatternAnalyzer;
+import org.talend.dataquality.statistics.frequency.pattern.DatePatternAnalyzer;
 import org.talend.dataquality.statistics.frequency.pattern.RecognitionResult;
 
 public class AsciiCharPatternRecognitionTest {
@@ -37,7 +37,7 @@ public class AsciiCharPatternRecognitionTest {
     @Test
     public void testRecognize() {
         // Assert empty
-        AsciiCharPatternRecognition recognizer = new AsciiCharPatternRecognition();
+        AsciiCharPatternAnalyzer recognizer = new AsciiCharPatternAnalyzer();
         RecognitionResult result = recognizer.recognize("");
         Assert.assertFalse(result.isComplete());
         Assert.assertEquals("", result.getPatternString());
@@ -90,7 +90,7 @@ public class AsciiCharPatternRecognitionTest {
     }
 
     private void testRecognition(Map<String,String> str2Pattern) {
-        AsciiCharPatternRecognition recognizer = new AsciiCharPatternRecognition();
+        AsciiCharPatternAnalyzer recognizer = new AsciiCharPatternAnalyzer();
         Iterator<String> strIterator = str2Pattern.keySet().iterator();
         while (strIterator.hasNext()) {
             String str = strIterator.next();
@@ -102,7 +102,7 @@ public class AsciiCharPatternRecognitionTest {
     }
 
     private void testDateRecognition(Map<String, String> str2Pattern) {
-        DatePatternRecognition recognizer = new DatePatternRecognition();
+        DatePatternAnalyzer recognizer = new DatePatternAnalyzer();
         Iterator<String> strIterator = str2Pattern.keySet().iterator();
         while (strIterator.hasNext()) {
             String str = strIterator.next();

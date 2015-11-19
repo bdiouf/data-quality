@@ -15,6 +15,7 @@ package org.talend.dataquality.statistics.cardinality;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.talend.datascience.common.inference.AbstractAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
 
@@ -31,7 +32,7 @@ import com.clearspring.analytics.stream.cardinality.HyperLogLog;
  * @author zhao
  *
  */
-public class CardinalityHLLAnalyzer implements Analyzer<CardinalityHLLStatistics> {
+public class CardinalityHLLAnalyzer extends AbstractAnalyzer<CardinalityHLLStatistics> {
 
     private static final long serialVersionUID = -5813206492367921798L;
 

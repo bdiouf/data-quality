@@ -12,15 +12,14 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.talend.dataquality.statistics.frequency.impl.CMSFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.EFrequencyAlgorithm;
 import org.talend.dataquality.statistics.frequency.impl.NaiveFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.SSFrequencyEvaluator;
+import org.talend.datascience.common.inference.AbstractAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
 
@@ -32,7 +31,7 @@ import org.talend.datascience.common.inference.ResizableList;
  * @author mzhao
  *
  */
-public abstract class FrequencyAnalyzer<T extends FrequencyStatistics> implements Analyzer<T> {
+public abstract class FrequencyAnalyzer<T extends FrequencyStatistics> extends AbstractAnalyzer<T> {
 
     private static final long serialVersionUID = 5073865267265592024L;
 
@@ -40,7 +39,7 @@ public abstract class FrequencyAnalyzer<T extends FrequencyStatistics> implement
 
     protected EFrequencyAlgorithm algorithm = EFrequencyAlgorithm.NAIVE;
 
-    protected Map<String, String> parameters = new HashMap<>();
+
 
     /**
      * Set the algorithm used to compute the frequency table.
@@ -51,21 +50,6 @@ public abstract class FrequencyAnalyzer<T extends FrequencyStatistics> implement
         this.algorithm = algorithm;
     }
 
-    /**
-     * Set parameters of the frequency analyzer. Parameters set as:<br>
-     * {@link CMSFrequencyEvaluator#EPS }<br>
-     * {@link CMSFrequencyEvaluator#SEED}<br>
-     * {@link CMSFrequencyEvaluator#CONFIDENCE}<br>
-     * {@link SSFrequencyEvaluator#CAPACITY}
-     * <P>
-     * these parameters are not mandatory since there are default values.
-     * 
-     * @param parameters parameters to be set when using algorithm {@link EFrequencyAlgorithm#SPACE_SAVER} and
-     * {@link EFrequencyAlgorithm#COUNT_MIN_SKETCH}
-     */
-    public void setParameters(HashMap<String, String> parameters) {
-        this.parameters = parameters;
-    }
 
     /**
      * Get value pattern which used to computed the frequencies.

@@ -13,6 +13,7 @@
 package org.talend.dataquality.statistics.frequency.pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
 import org.talend.datascience.common.regex.ChainResponsibilityHandler;
 import org.talend.datascience.common.regex.HandlerFactory;
 
@@ -22,7 +23,7 @@ import org.talend.datascience.common.regex.HandlerFactory;
  * @since 1.3.0
  * @author mzhao
  */
-public class EastAsiaCharPatternRecognition extends PatternRecognition {
+public class EastAsiaCharPatternAnalyzer extends PatternFrequencyAnalyzer {
 
     private static final long serialVersionUID = 3116215612379217599L;
 
@@ -46,6 +47,12 @@ public class EastAsiaCharPatternRecognition extends PatternRecognition {
         ChainResponsibilityHandler createEastAsiaPatternHandler = HandlerFactory.createEastAsiaPatternHandler();
         result.setResult(createEastAsiaPatternHandler.handleRequest(stringToRecognize), isComplete);
         return result;
+    }
+
+    @Override
+    protected String getValuePattern(String originalValue) {
+        RecognitionResult result = recognize(originalValue);
+        return result.getPatternString();
     }
 
 }

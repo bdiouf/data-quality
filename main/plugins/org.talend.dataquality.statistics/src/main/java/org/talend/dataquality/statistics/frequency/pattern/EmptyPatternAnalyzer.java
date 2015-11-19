@@ -12,21 +12,19 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.pattern;
 
-import org.talend.datascience.common.inference.type.DatetimePatternManager;
-import org.talend.datascience.common.inference.type.TypeInferenceUtils;
+import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
 
 /**
- * Recognize time types given the predefined time regex pattern.
+ * Empty recognizer handling null and "" values
  * 
  * @since 1.3.0
  * @author mzhao
  */
-public class TimePatternRecognition extends PatternRecognition {
+public class EmptyPatternAnalyzer extends PatternFrequencyAnalyzer {
 
-    private static final long serialVersionUID = -8037012388831672458L;
-
-    public static final int LEVEL = 2;
-
+    private static final long serialVersionUID = 1973291585278371232L;
+    public static final int LEVEL = 0;
     @Override
     public int getLevel() {
         return LEVEL;
@@ -35,12 +33,18 @@ public class TimePatternRecognition extends PatternRecognition {
     @Override
     public RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = RecognitionResult.getEmptyResult();
-        if (TypeInferenceUtils.isTime(stringToRecognize)) {
-            result.setResult(DatetimePatternManager.getInstance().timePatternReplace(stringToRecognize), true);
+        if (StringUtils.isEmpty(stringToRecognize)) {
+            result.setResult(stringToRecognize, true);
         } else {
             result.setResult(stringToRecognize, false);
         }
         return result;
+    }
+
+    @Override
+    protected String getValuePattern(String originalValue) {
+        RecognitionResult result = recognize(originalValue);
+        return result.getPatternString();
     }
 
 }

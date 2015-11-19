@@ -10,8 +10,9 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency;
+package org.talend.dataquality.statistics.frequency.pattern;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,12 +21,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.statistics.frequency.pattern.DatePatternRecognition;
-import org.talend.dataquality.statistics.frequency.pattern.EastAsiaCharPatternRecognition;
-import org.talend.dataquality.statistics.frequency.pattern.TimePatternRecognition;
+import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
 import org.talend.dataquality.statistics.quality.DataTypeQualityAnalyzer;
 import org.talend.datascience.common.inference.type.DataType;
-import org.talend.datascience.common.inference.type.DatetimePatternManager;
+import org.talend.datascience.common.parameter.Parameters;
 
 public class PatternFrequencyAnalyzerTest {
 
@@ -33,7 +32,7 @@ public class PatternFrequencyAnalyzerTest {
 
     @Before
     public void setUp() throws Exception {
-        patternFreqAnalyzer = new PatternFrequencyAnalyzer();
+        patternFreqAnalyzer = new CompositePatternFrequencyAnalyzer();
     }
 
     @After
@@ -42,7 +41,7 @@ public class PatternFrequencyAnalyzerTest {
 
     @Test
     public void testAsciiAndAsiaChars() {
-        PatternFrequencyAnalyzer analzyer = new PatternFrequencyAnalyzer();
+        CompositePatternFrequencyAnalyzer analzyer = new CompositePatternFrequencyAnalyzer();
 
         String patternString1 = analzyer.getValuePattern("abcd1234ィゥェ中国");
         Assert.assertEquals("aaaa9999ィゥェ中国", patternString1);
@@ -63,36 +62,36 @@ public class PatternFrequencyAnalyzerTest {
 
     @Test
     public void testRecognitionInjectAndRemoval() {
-        PatternFrequencyAnalyzer analzyer = new PatternFrequencyAnalyzer();
+        CompositePatternFrequencyAnalyzer analzyer = new CompositePatternFrequencyAnalyzer();
         // Add the Easten Asia recognition
-        analzyer.injectRecognizer(new EastAsiaCharPatternRecognition());
+        analzyer.injectRecognizer(new EastAsiaCharPatternAnalyzer());
         String patternString2 = analzyer.getValuePattern("abcd1234ゟ");
         Assert.assertEquals("aaaa9999H", patternString2);
         // No East Asia recognition.
-        analzyer.removeRecognizer(EastAsiaCharPatternRecognition.LEVEL);
+        analzyer.removeRecognizer(EastAsiaCharPatternAnalyzer.LEVEL);
         String patternString1 = analzyer.getValuePattern("abcd1234ゟ");
         Assert.assertEquals("aaaa9999ゟ", patternString1);
 
         // No date and time recognition
-        analzyer.removeRecognizer(DatePatternRecognition.LEVEL);
-        analzyer.removeRecognizer(TimePatternRecognition.LEVEL);
+        analzyer.removeRecognizer(DatePatternAnalyzer.LEVEL);
+        analzyer.removeRecognizer(TimePatternAnalyzer.LEVEL);
         String datePattern = analzyer.getValuePattern("2003-12-20");
         Assert.assertEquals("9999-99-99", datePattern);
         String timePattern = analzyer.getValuePattern("12:00:00");
         Assert.assertEquals("99:99:99", timePattern);
         // Add date recognition
-        analzyer.injectRecognizer(new DatePatternRecognition());
+        analzyer.injectRecognizer(new DatePatternAnalyzer());
         String datePattern1 = analzyer.getValuePattern("2003-12-20");
         Assert.assertEquals("yyyy-M-d", datePattern1);
-        analzyer.injectRecognizer(new TimePatternRecognition());
+        analzyer.injectRecognizer(new TimePatternAnalyzer());
         String timePattern1 = analzyer.getValuePattern("12:00:00");
         Assert.assertEquals("H:m:s", timePattern1);
     }
 
     @Test
     public void testAnalyzeFreqWithEastAsiaChar() {
-        PatternFrequencyAnalyzer analyzerWithAsiaChars = new PatternFrequencyAnalyzer();
-        analyzerWithAsiaChars.injectRecognizer(new EastAsiaCharPatternRecognition());
+        CompositePatternFrequencyAnalyzer analyzerWithAsiaChars = new CompositePatternFrequencyAnalyzer();
+        analyzerWithAsiaChars.injectRecognizer(new EastAsiaCharPatternAnalyzer());
         String[] data = new String[] { "John", "", "2015-08-20", "2012-02-12", "2003年", "2004年", "2001年" };
         analyzerWithAsiaChars.init();
         for (String value : data) {
@@ -212,7 +211,7 @@ public class PatternFrequencyAnalyzerTest {
 
     @Test
     public void testCustomizedDatePattern() {
-        PatternFrequencyAnalyzer patternAnalyzer = new PatternFrequencyAnalyzer();
+        PatternFrequencyAnalyzer patternAnalyzer = new CompositePatternFrequencyAnalyzer();
         String[] data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2015-08-20", "2012-02-12", "2/8/15 15:57",
                 "4/15/11 4:24", "2001年" };
         patternAnalyzer.init();
@@ -235,8 +234,10 @@ public class PatternFrequencyAnalyzerTest {
         }
 
         // Set customized pattern and analyze again
-        DatetimePatternManager.getInstance().addCustomizedDatePattern("M/d/yy H:m");
         patternAnalyzer.init();
+        Map<String, String> paramMap = new HashMap<String, String>();
+        paramMap.put(Parameters.DateParam.DATE_PATTERN.name(), "M/d/yy H:m");
+        patternAnalyzer.setParameters(paramMap);
         for (String value : data) {
             patternAnalyzer.analyze(value);
         }
@@ -258,8 +259,11 @@ public class PatternFrequencyAnalyzerTest {
         // them in memory user set.
         DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.DATE);
         qualityAnalyzer.init();
+        paramMap = new HashMap<String, String>();
+        paramMap.put(Parameters.DateParam.DATE_PATTERN.name(), "M/d/yy H:m");
+        qualityAnalyzer.setParameters(paramMap);
         // 2-8-15 15:57 is not at date with pattern available,"2012-02-12" is a date match pattern from file, the others
-        // match pattern set as in memory
+        // match pattern set ad-hoc
         data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2/8/15 15:57", "2-8-15 15:57", "2012-02-12" };
         for (String value : data) {
             qualityAnalyzer.analyze(value);
@@ -272,24 +276,21 @@ public class PatternFrequencyAnalyzerTest {
         Assert.assertTrue(qualityAnalyzer.getResult().get(0).getInvalidValues().size() == 1);
         Assert.assertEquals("2-8-15 15:57", qualityAnalyzer.getResult().get(0).getInvalidValues().toArray()[0]);
 
-        // Add new customized pattern , create new quality analyzer , check again all dates should be valid if all
+        // Add new customized pattern , create new quality analyzer , check again dates should be valid given customized
+        // pattern and the pattern in file.
         // patterns provided.
         DataTypeQualityAnalyzer qualityAnalyzer2 = new DataTypeQualityAnalyzer(DataType.Type.DATE);
-        // Cannot recognize "2-8-15 15:57" before add customized pattern
         qualityAnalyzer2.init();
-        for (String value : data) {
-            qualityAnalyzer2.analyze(value);
-        }
-        qualityAnalyzer2.end();
-        Assert.assertEquals("2-8-15 15:57", qualityAnalyzer2.getResult().get(0).getInvalidValues().toArray()[0]);
-        DatetimePatternManager.getInstance().addCustomizedDatePattern("M-d-yy H:m");// Add the pattern match it.
-        qualityAnalyzer2.init();
+        paramMap = new HashMap<String, String>();
+        paramMap.put(Parameters.DateParam.DATE_PATTERN.name(), "M-d-yy H:m");
+        qualityAnalyzer2.setParameters(paramMap);
         for (String value : data) {
             qualityAnalyzer2.analyze(value);
         }
         qualityAnalyzer2.end();
         Assert.assertEquals(5, qualityAnalyzer2.getResult().get(0).getCount()); // Count
-        Assert.assertEquals(5, qualityAnalyzer2.getResult().get(0).getValidCount()); // Valid Count , all match.
+        // Valid Count , only "2012-02-12" and "2-8-15 15:57" match.
+        Assert.assertEquals(2, qualityAnalyzer2.getResult().get(0).getValidCount());
 
 
         Assert.assertTrue(isAtLeastOneAsssert);

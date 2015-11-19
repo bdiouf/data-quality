@@ -15,6 +15,7 @@ package org.talend.dataquality.statistics.cardinality;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.talend.datascience.common.inference.AbstractAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
 
@@ -25,7 +26,7 @@ import org.talend.datascience.common.inference.ResizableList;
  * @author zhao
  *
  */
-public class CardinalityAnalyzer implements Analyzer<CardinalityStatistics> {
+public class CardinalityAnalyzer extends AbstractAnalyzer<CardinalityStatistics> {
 
     private static final long serialVersionUID = 1386109348901204598L;
 

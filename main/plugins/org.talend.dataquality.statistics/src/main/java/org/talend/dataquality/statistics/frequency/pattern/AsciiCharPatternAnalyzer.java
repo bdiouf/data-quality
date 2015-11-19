@@ -15,6 +15,7 @@ package org.talend.dataquality.statistics.frequency.pattern;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
 
 /**
  * * Recognize ascii characters given predefined list of Ascii characters and its pattern mappings.
@@ -22,7 +23,7 @@ import org.apache.commons.lang.StringUtils;
  * @since 1.3.0
  * @author mzhao
  */
-public class AsciiCharPatternRecognition extends PatternRecognition {
+public class AsciiCharPatternAnalyzer extends PatternFrequencyAnalyzer {
 
     private static final long serialVersionUID = -104288378010857759L;
 
@@ -71,6 +72,12 @@ public class AsciiCharPatternRecognition extends PatternRecognition {
      */
     public boolean containsAlphabetic(String patternString) {
         return charsPattern.matcher(patternString).find();
+    }
+
+    @Override
+    protected String getValuePattern(String originalValue) {
+        RecognitionResult result = recognize(originalValue);
+        return result.getPatternString();
     }
 
 }
