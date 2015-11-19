@@ -12,7 +12,9 @@
 // ============================================================================
 package org.talend.datascience.common.inference;
 
-public abstract class QualityAnalyzer<T, QT> implements Analyzer<T> {
+import org.talend.datascience.common.parameter.Parameters;
+
+public abstract class QualityAnalyzer<T, QT> extends AbstractAnalyzer<T> {
 
     private static final long serialVersionUID = 6214486020243062215L;
 
@@ -20,9 +22,15 @@ public abstract class QualityAnalyzer<T, QT> implements Analyzer<T> {
 
     protected QT types;
 
+    /**
+     * @deprecated use {@link #setParameters(java.util.HashMap)} instead with
+     * {@link Parameters.QualityParam#STORE_VALUE}
+     * @param isStoreInvalidValues
+     */
     public void setStoreInvalidValues(boolean isStoreInvalidValues) {
         this.isStoreInvalidValues = isStoreInvalidValues;
     }
+
 
     public QT getTypes() {
         return types;

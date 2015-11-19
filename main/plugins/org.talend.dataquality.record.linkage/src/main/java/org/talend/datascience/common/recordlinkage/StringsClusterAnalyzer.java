@@ -34,15 +34,16 @@ import org.talend.dataquality.record.linkage.genkey.BlockingKeyHandler;
 import org.talend.dataquality.record.linkage.utils.BlockingKeyAlgorithmEnum;
 import org.talend.dataquality.record.linkage.utils.MatchAnalysisConstant;
 import org.talend.dataquality.record.linkage.utils.SurvivorShipAlgorithmEnum;
+import org.talend.datascience.common.inference.AbstractAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 
 /**
  * String clustering analyzer.
  * 
- * @author zhao
+ * @author mzhao
  *
  */
-public class StringsClusterAnalyzer implements Analyzer<StringClusters> {
+public class StringsClusterAnalyzer extends AbstractAnalyzer<StringClusters> {
 
     private static final long serialVersionUID = -3359232597093558703L;
 

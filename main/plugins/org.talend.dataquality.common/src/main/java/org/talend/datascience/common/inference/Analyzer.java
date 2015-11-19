@@ -14,6 +14,7 @@ package org.talend.datascience.common.inference;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Implements analysis on array of Strings ("row" of values). Implementations are expected to be:
@@ -61,4 +62,18 @@ public interface Analyzer<T> extends Serializable, AutoCloseable {
      * @return new analyzer with this and another analyzer merged together.
      */
     Analyzer<T> merge(Analyzer<T> another);
+
+    /**
+     * Set parameters of the frequency analyzer. Parameters set as:<br>
+     * {@link CMSFrequencyEvaluator#EPS }<br>
+     * {@link CMSFrequencyEvaluator#SEED}<br>
+     * {@link CMSFrequencyEvaluator#CONFIDENCE}<br>
+     * {@link SSFrequencyEvaluator#CAPACITY}
+     * <P>
+     * these parameters are not mandatory since there are default values.
+     * 
+     * @param parameters parameters to be set when using algorithm {@link EFrequencyAlgorithm#SPACE_SAVER} and
+     * {@link EFrequencyAlgorithm#COUNT_MIN_SKETCH}
+     */
+    public void setParameters(Map<String, String> parameters);
 }

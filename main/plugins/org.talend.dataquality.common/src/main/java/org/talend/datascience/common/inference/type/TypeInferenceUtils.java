@@ -139,15 +139,7 @@ public class TypeInferenceUtils {
      * @return true if the value is a date type, false otherwise.
      */
     public static boolean isDate(String value) {
-        if (!isEmpty(value)) {
-            // 1. The length of date characters should not exceed 30.
-            if (value.trim().length() > 30) {
-                return false;
-            }
-            // 2. Check it by list of patterns
-            return DatetimePatternManager.getInstance().isDate(value);
-        }
-        return false;
+        return SystemDatetimePatternManager.isDate(value);
     }
 
     /**
@@ -157,15 +149,7 @@ public class TypeInferenceUtils {
      * @return
      */
     public static boolean isTime(String value) {
-        if (!isEmpty(value)) {
-            // 1. The length of date characters should not exceed 30.
-            if (value.trim().length() > 30) {
-                return false;
-            }
-            // 2. Check it by list of patterns
-            return DatetimePatternManager.getInstance().isTime(value);
-        }
-        return false;
+        return SystemDatetimePatternManager.isTime(value);
     }
 
     /**

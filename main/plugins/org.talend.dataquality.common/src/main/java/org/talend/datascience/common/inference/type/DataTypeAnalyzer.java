@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.talend.datascience.common.inference.AbstractAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
 import org.talend.datascience.common.inference.type.DataType.Type;
@@ -30,13 +31,14 @@ import org.talend.datascience.common.inference.type.DataType.Type;
  * <b>Important note:</b> This class is <b>NOT</b> thread safe.
  *
  */
-public class DataTypeAnalyzer implements Analyzer<DataType> {
+
+public class DataTypeAnalyzer extends AbstractAnalyzer<DataType> {
 
     private static final long serialVersionUID = 373694310453353502L;
 
     private final ResizableList<DataType> dataTypes = new ResizableList<>(DataType.class);
 
-    private static DataType.Type execute(String value) {
+    private DataType.Type execute(String value) {
         if (TypeInferenceUtils.isEmpty(value)) {
             // 1. detect empty
             return DataType.Type.EMPTY;
@@ -49,17 +51,24 @@ public class DataTypeAnalyzer implements Analyzer<DataType> {
         } else if (TypeInferenceUtils.isDouble(value)) {
             // 4. detect double
             return DataType.Type.DOUBLE;
-        } else if (TypeInferenceUtils.isDate(value)) {
+        } else if (isDate(value)) {
             // 5. detect date
             return DataType.Type.DATE;
-        } else if (TypeInferenceUtils.isTime(value)) {
+        } else if (isTime(value)) {
             // 6. detect date
             return DataType.Type.TIME;
         }
         // will return string when no matching
         return DataType.Type.STRING;
     }
+    
+    protected boolean isDate(String value) {
+        return TypeInferenceUtils.isDate(value);
+    }
 
+    protected boolean isTime(String value) {
+        return TypeInferenceUtils.isTime(value);
+    }
     public void init() {
         // Nothing to do.
     }

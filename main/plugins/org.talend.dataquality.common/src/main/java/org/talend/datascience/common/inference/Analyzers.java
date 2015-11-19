@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
  *
  * @see #with(Analyzer[])
  */
-public class Analyzers implements Analyzer<Analyzers.Result> {
+public class Analyzers extends AbstractAnalyzer<Analyzers.Result> {
 
     private static final long serialVersionUID = 3718737129904789140L;
 

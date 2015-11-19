@@ -1,7 +1,10 @@
 V1.3.3 2015-11-4
     - change parent pom
-       2015-11-17
+       2015-11-17 mzhao
     - Make it possible to add customized date and time pattern      
+        2005-11-19 mzhao
+    - Specify java compilation version 1.7 in pom.xml 
+    - Remove the singleton of DateTimeManager, and rename it to SystemDatetimeManager
 
 V1.3.2 2015-10-29
     - TDQ-10903 optimize dictionaries
