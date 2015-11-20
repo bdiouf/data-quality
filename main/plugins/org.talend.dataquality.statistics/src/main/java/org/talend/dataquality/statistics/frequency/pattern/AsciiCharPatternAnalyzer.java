@@ -15,7 +15,6 @@ package org.talend.dataquality.statistics.frequency.pattern;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
 
 /**
  * * Recognize ascii characters given predefined list of Ascii characters and its pattern mappings.

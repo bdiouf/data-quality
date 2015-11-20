@@ -13,10 +13,8 @@
 package org.talend.dataquality.statistics.frequency.pattern;
 
 import java.util.Locale;
-import java.util.Map;
 
-import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
-import org.talend.dataquality.statistics.type.CustomizeDatetimePatternManager;
+import org.talend.dataquality.statistics.type.CustomDatetimePatternManager;
 import org.talend.datascience.common.parameter.ParameterUtils;
 
 /**
@@ -41,19 +39,19 @@ public class DatePatternAnalyzer extends PatternFrequencyAnalyzer {
     }
 
     @Override
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
+    public void init() {
         customizedPattern = ParameterUtils.getCustomizedPattern(parameters);
         Locale newLocale = ParameterUtils.getLocale(parameters);
         if (newLocale != null) {
             locale = newLocale;
         }
+        super.init();
     }
 
     @Override
     public RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = RecognitionResult.getEmptyResult();
-        String datePatternAfterReplace = CustomizeDatetimePatternManager.datePatternReplace(stringToRecognize, customizedPattern,
+        String datePatternAfterReplace = CustomDatetimePatternManager.datePatternReplace(stringToRecognize, customizedPattern,
                 locale);
         if (stringToRecognize.equals(datePatternAfterReplace)) {
             // Did not recognized.

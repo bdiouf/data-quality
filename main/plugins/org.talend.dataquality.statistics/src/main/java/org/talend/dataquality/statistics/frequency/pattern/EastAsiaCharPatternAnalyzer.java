@@ -13,7 +13,6 @@
 package org.talend.dataquality.statistics.frequency.pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
 import org.talend.datascience.common.regex.ChainResponsibilityHandler;
 import org.talend.datascience.common.regex.HandlerFactory;
 

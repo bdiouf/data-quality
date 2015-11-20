@@ -18,7 +18,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.talend.dataquality.statistics.type.CustomizeDatetimePatternManager;
+import org.talend.dataquality.statistics.type.CustomDatetimePatternManager;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.QualityAnalyzer;
 import org.talend.datascience.common.inference.ResizableList;
@@ -45,20 +45,6 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
     private Locale locale = Locale.getDefault();
 
 
-    @Override
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
-        customizedPattern = ParameterUtils.getCustomizedPattern(parameters);
-        Locale newLocale = ParameterUtils.getLocale(parameters);
-        if (newLocale != null) {
-            locale = newLocale;
-        }
-        String storeValue = parameters.get(Parameters.QualityParam.STORE_VALUE.name());
-        if (StringUtils.isNotEmpty(storeValue)) {
-            this.isStoreInvalidValues = Boolean.valueOf(storeValue);
-        }
-    }
-
     /**
      * @deprecated use
      * {@link #DataTypeQualityAnalyzer(org.talend.datascience.common.inference.type.DataType.Type[], Map)} instead.
@@ -71,7 +57,7 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
     }
 
     public DataTypeQualityAnalyzer(DataType.Type[] types, Map<String, String> parameters) {
-        setParameters(parameters);
+        addParameters(parameters);
         this.types = types;
     }
 
@@ -82,6 +68,16 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
     @Override
     public void init() {
         results.clear();
+        // Initialize parameters
+        customizedPattern = ParameterUtils.getCustomizedPattern(parameters);
+        Locale newLocale = ParameterUtils.getLocale(parameters);
+        if (newLocale != null) {
+            locale = newLocale;
+        }
+        String storeValue = parameters.get(Parameters.QualityParam.STORE_VALUE.name());
+        if (StringUtils.isNotEmpty(storeValue)) {
+            this.isStoreInvalidValues = Boolean.valueOf(storeValue);
+        }
     }
 
     @Override
@@ -95,9 +91,9 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
             final ValueQualityStatistics valueQuality = results.get(i);
             if (TypeInferenceUtils.isEmpty(value)) {
                 valueQuality.incrementEmpty();
-            } else if (DataType.Type.DATE == types[i] && CustomizeDatetimePatternManager.isDate(value, customizedPattern, locale)) {
+            } else if (DataType.Type.DATE == types[i] && CustomDatetimePatternManager.isDate(value, customizedPattern, locale)) {
                 valueQuality.incrementValid();
-            } else if (DataType.Type.TIME == types[i] && CustomizeDatetimePatternManager.isTime(value, customizedPattern, locale)) {
+            } else if (DataType.Type.TIME == types[i] && CustomDatetimePatternManager.isTime(value, customizedPattern, locale)) {
                 valueQuality.incrementValid();
             } else if (TypeInferenceUtils.isValid(types[i], value)) {
                 valueQuality.incrementValid();

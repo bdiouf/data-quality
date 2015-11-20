@@ -10,10 +10,11 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency;
+package org.talend.dataquality.statistics.frequency.pattern;
 
 import java.util.Map;
 
+import org.talend.dataquality.statistics.frequency.FrequencyStatistics;
 import org.talend.dataquality.statistics.frequency.impl.AbstractFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.CMSFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.EFrequencyAlgorithm;

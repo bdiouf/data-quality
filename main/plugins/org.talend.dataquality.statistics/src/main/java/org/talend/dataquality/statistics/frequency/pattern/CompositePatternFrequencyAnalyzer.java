@@ -13,11 +13,8 @@
 package org.talend.dataquality.statistics.frequency.pattern;
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-
-import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
 
 /**
  * Compute the pattern frequency tables.<br>
@@ -41,6 +38,17 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
         patternRecognitions.add(new TimePatternAnalyzer());
         patternRecognitions.add(new AsciiCharPatternAnalyzer());
 
+    }
+
+
+    @Override
+    public void init() {
+        Iterator<PatternFrequencyAnalyzer> recIterator = patternRecognitions.iterator();
+        while (recIterator.hasNext()) {
+            PatternFrequencyAnalyzer next = recIterator.next();
+            next.addParameters(parameters);
+            next.init();
+        }
     }
 
     /**
@@ -131,14 +139,6 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
 
         // value is not recognized completely.
         return patternValue;
-    }
-
-    @Override
-    public void setParameters(Map<String, String> parameters) {
-        Iterator<PatternFrequencyAnalyzer> recIterator = patternRecognitions.iterator();
-        while (recIterator.hasNext()) {
-            recIterator.next().setParameters(parameters);
-        }
     }
 
     @Override

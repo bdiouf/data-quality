@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.pattern;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,7 +20,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
 import org.talend.dataquality.statistics.quality.DataTypeQualityAnalyzer;
 import org.talend.datascience.common.inference.type.DataType;
 import org.talend.datascience.common.parameter.Parameters;
@@ -234,10 +232,8 @@ public class PatternFrequencyAnalyzerTest {
         }
 
         // Set customized pattern and analyze again
+        patternAnalyzer.setParameter(Parameters.DateParam.DATE_PATTERN.name(), "M/d/yy H:m");
         patternAnalyzer.init();
-        Map<String, String> paramMap = new HashMap<String, String>();
-        paramMap.put(Parameters.DateParam.DATE_PATTERN.name(), "M/d/yy H:m");
-        patternAnalyzer.setParameters(paramMap);
         for (String value : data) {
             patternAnalyzer.analyze(value);
         }
@@ -258,10 +254,8 @@ public class PatternFrequencyAnalyzerTest {
         // Add value quality analyzer to have list of valid date. some date matches patterns from the file, some matches
         // them in memory user set.
         DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.DATE);
+        qualityAnalyzer.setParameter(Parameters.DateParam.DATE_PATTERN.name(), "M/d/yy H:m");
         qualityAnalyzer.init();
-        paramMap = new HashMap<String, String>();
-        paramMap.put(Parameters.DateParam.DATE_PATTERN.name(), "M/d/yy H:m");
-        qualityAnalyzer.setParameters(paramMap);
         // 2-8-15 15:57 is not at date with pattern available,"2012-02-12" is a date match pattern from file, the others
         // match pattern set ad-hoc
         data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2/8/15 15:57", "2-8-15 15:57", "2012-02-12" };
@@ -280,10 +274,8 @@ public class PatternFrequencyAnalyzerTest {
         // pattern and the pattern in file.
         // patterns provided.
         DataTypeQualityAnalyzer qualityAnalyzer2 = new DataTypeQualityAnalyzer(DataType.Type.DATE);
+        qualityAnalyzer2.setParameter(Parameters.DateParam.DATE_PATTERN.name(), "M-d-yy H:m");
         qualityAnalyzer2.init();
-        paramMap = new HashMap<String, String>();
-        paramMap.put(Parameters.DateParam.DATE_PATTERN.name(), "M-d-yy H:m");
-        qualityAnalyzer2.setParameters(paramMap);
         for (String value : data) {
             qualityAnalyzer2.analyze(value);
         }

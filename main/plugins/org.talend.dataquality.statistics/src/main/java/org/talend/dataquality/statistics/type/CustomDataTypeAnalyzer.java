@@ -13,7 +13,6 @@
 package org.talend.dataquality.statistics.type;
 
 import java.util.Locale;
-import java.util.Map;
 
 import org.talend.datascience.common.inference.type.DataTypeAnalyzer;
 import org.talend.datascience.common.parameter.ParameterUtils;
@@ -25,7 +24,7 @@ import org.talend.datascience.common.parameter.ParameterUtils;
  * @author zhao
  *
  */
-public class CustomizeDataTypeAnalyzer extends DataTypeAnalyzer {
+public class CustomDataTypeAnalyzer extends DataTypeAnalyzer {
 
     private static final long serialVersionUID = -9188435209256600268L;
 
@@ -34,24 +33,22 @@ public class CustomizeDataTypeAnalyzer extends DataTypeAnalyzer {
     private Locale locale = Locale.getDefault();
 
     @Override
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
+    public void init() {
         customizedPattern = ParameterUtils.getCustomizedPattern(parameters);
         Locale newLocale = ParameterUtils.getLocale(parameters);
         if (newLocale != null) {
             locale = newLocale;
         }
-
+        super.init();
     }
 
     @Override
     protected boolean isDate(String value) {
-        return CustomizeDatetimePatternManager.isDate(value, customizedPattern, locale);
+        return CustomDatetimePatternManager.isDate(value, customizedPattern, locale);
     }
-
 
     @Override
     protected boolean isTime(String value) {
-        return CustomizeDatetimePatternManager.isTime(value, customizedPattern, locale);
+        return CustomDatetimePatternManager.isTime(value, customizedPattern, locale);
     }
 }

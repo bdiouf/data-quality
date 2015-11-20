@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.pattern;
 
-import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
 import org.talend.datascience.common.inference.type.SystemDatetimePatternManager;
 import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 

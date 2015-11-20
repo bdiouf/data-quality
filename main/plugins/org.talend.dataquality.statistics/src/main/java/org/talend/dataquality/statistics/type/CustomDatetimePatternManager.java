@@ -24,7 +24,7 @@ import org.talend.datascience.common.inference.type.SystemDatetimePatternManager
  * @author mzhao
  *
  */
-public final class CustomizeDatetimePatternManager {
+public final class CustomDatetimePatternManager {
 
     /**
      * This method call the system date pattern manager to valid it again after the customized pattern does not not

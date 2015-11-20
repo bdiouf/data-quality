@@ -10,12 +10,12 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency;
+package org.talend.dataquality.statistics.frequency.pattern;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.talend.dataquality.statistics.frequency.pattern.RecognitionResult;
+import org.talend.dataquality.statistics.frequency.FrequencyAnalyzer;
 import org.talend.datascience.common.inference.ResizableList;
 
 /**
@@ -48,7 +48,7 @@ public abstract class PatternFrequencyAnalyzer extends FrequencyAnalyzer<Pattern
      * @param stringToRecognize the string whose pattern is to be recognized.
      * @return recognition result with complete status.
      */
-    public abstract RecognitionResult recognize(String stringToRecognize);
+    protected abstract RecognitionResult recognize(String stringToRecognize);
 
     @Override
     protected abstract String getValuePattern(String originalValue);

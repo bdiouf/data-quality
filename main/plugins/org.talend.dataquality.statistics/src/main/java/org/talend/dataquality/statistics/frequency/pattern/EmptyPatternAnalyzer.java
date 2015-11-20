@@ -13,7 +13,6 @@
 package org.talend.dataquality.statistics.frequency.pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.dataquality.statistics.frequency.PatternFrequencyAnalyzer;
 
 /**
  * Empty recognizer handling null and "" values

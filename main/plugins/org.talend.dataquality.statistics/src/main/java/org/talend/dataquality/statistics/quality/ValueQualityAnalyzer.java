@@ -84,7 +84,7 @@ public class ValueQualityAnalyzer extends AbstractAnalyzer<ValueQualityStatistic
     }
 
     /**
-     * @deprecated use {@link #setParameters(java.util.Map)} instead
+     * @deprecated use {@link #addParameters(java.util.Map)} instead
      * @param isStoreInvalidValues
      */
     public void setStoreInvalidValues(boolean isStoreInvalidValues) {
