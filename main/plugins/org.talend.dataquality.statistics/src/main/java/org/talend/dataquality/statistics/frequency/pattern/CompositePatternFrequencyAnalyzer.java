@@ -13,6 +13,7 @@
 package org.talend.dataquality.statistics.frequency.pattern;
 
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -28,22 +29,29 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
 
     private static final long serialVersionUID = -4658709249927616622L;
 
-    private Set<PatternFrequencyAnalyzer> patternRecognitions = new TreeSet<PatternFrequencyAnalyzer>();
+    private Set<PatternFrequencyAnalyzer> patternFreqAnalyzers = new TreeSet<PatternFrequencyAnalyzer>();
+
 
     public CompositePatternFrequencyAnalyzer() {
         // Initialize the built-in string pattern recognitions.
         // Date
-        patternRecognitions.add(new EmptyPatternAnalyzer());
-        patternRecognitions.add(new DatePatternAnalyzer());
-        patternRecognitions.add(new TimePatternAnalyzer());
-        patternRecognitions.add(new AsciiCharPatternAnalyzer());
+        patternFreqAnalyzers.add(new EmptyPatternAnalyzer());
+        patternFreqAnalyzers.add(new DatePatternAnalyzer());
+        patternFreqAnalyzers.add(new TimePatternAnalyzer());
+        patternFreqAnalyzers.add(new AsciiCharPatternAnalyzer());
 
     }
 
 
     @Override
+    public void addParameters(Map<String, String> parameters) {
+        // TODO loop on all patternFreqAnalyzers and add parameters
+    }
+
+    @Override
     public void init() {
-        Iterator<PatternFrequencyAnalyzer> recIterator = patternRecognitions.iterator();
+        // TODO remove this loop
+        Iterator<PatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
         while (recIterator.hasNext()) {
             PatternFrequencyAnalyzer next = recIterator.next();
             next.addParameters(parameters);
@@ -63,12 +71,12 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
      * 
      * @param recognizerToInject the recognition to be registered.
      */
-    public void injectRecognizer(PatternFrequencyAnalyzer recognizerToInject) {
+    public void addPatternAnalyzer(PatternFrequencyAnalyzer recognizerToInject) { // TODO refactor to addAnalyzer
         if (recognizerToInject == null) {
-            throw new RuntimeException("null recognition is not allowed");
+            throw new RuntimeException("null analyzer is not allowed");
         }
         // No need to inject if already existed.
-        Iterator<PatternFrequencyAnalyzer> recIterator = patternRecognitions.iterator();
+        Iterator<PatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
         while (recIterator.hasNext()) {
             if (recIterator.next().getLevel() == recognizerToInject.getLevel()) {
                 // Already exist.
@@ -76,7 +84,7 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
             }
         }
         // Inject
-        patternRecognitions.add(recognizerToInject);
+        patternFreqAnalyzers.add(recognizerToInject);
     }
 
     /**
@@ -85,22 +93,22 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
      * 
      * @param recognizerToRemove the recognizer instance added.
      */
-    public void removeRecognizer(PatternFrequencyAnalyzer recognizerToRemove) {
+    public void removePatternAnalyzer(PatternFrequencyAnalyzer recognizerToRemove) { // TODO refactor to removeAnalyzer
         if (recognizerToRemove == null) {
             new RuntimeException("null recognition is not allowed");
         }
-        patternRecognitions.remove(recognizerToRemove);
+        patternFreqAnalyzers.remove(recognizerToRemove);
     }
 
     /**
-     * Remove the recognizer given its level. <br>
+     * Remove the pattern analyzers by given its level. <br>
      * Note that nothing to do with this method if the recognizer to be removed does not exist in the pool.
      * 
      * @param level the recognizer's level
      */
-    public void removeRecognizer(int level) {
+    public void removePatternAnalyzer(int level) { // TODO refactor to RemoveAnalyzer
         // No need to inject if already existed.
-        Iterator<PatternFrequencyAnalyzer> recIterator = patternRecognitions.iterator();
+        Iterator<PatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
         PatternFrequencyAnalyzer toRemove = null;
         while (recIterator.hasNext()) {
             PatternFrequencyAnalyzer next = recIterator.next();
@@ -111,7 +119,7 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
             }
         }
         if (toRemove != null) {
-            patternRecognitions.remove(toRemove);
+            patternFreqAnalyzers.remove(toRemove);
         }
     }
 
@@ -124,7 +132,7 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
      */
     @Override
     protected String getValuePattern(String originalValue) {
-        Iterator<PatternFrequencyAnalyzer> recognizerIterator = patternRecognitions.iterator();
+        Iterator<PatternFrequencyAnalyzer> recognizerIterator = patternFreqAnalyzers.iterator();
         String patternValue = originalValue;
         while (recognizerIterator.hasNext()) {
             PatternFrequencyAnalyzer next = recognizerIterator.next();
@@ -147,8 +155,9 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
     }
 
     @Override
-    public RecognitionResult recognize(String stringToRecognize) {
+    protected RecognitionResult recognize(String stringToRecognize) {
         return null; // Nothing to do for composite pattern.
+        // TODO cannot injectRecognizer(CompositePatternFrequencyAnalyzer)
     }
 
 }

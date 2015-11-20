@@ -24,7 +24,7 @@ import org.talend.dataquality.statistics.quality.DataTypeQualityAnalyzer;
 import org.talend.datascience.common.inference.type.DataType;
 import org.talend.datascience.common.parameter.Parameters;
 
-public class PatternFrequencyAnalyzerTest {
+public class CompositePatternFrequencyAnalyzerTest {
 
     PatternFrequencyAnalyzer patternFreqAnalyzer = null;
 
@@ -59,29 +59,29 @@ public class PatternFrequencyAnalyzerTest {
     }
 
     @Test
-    public void testRecognitionInjectAndRemoval() {
+    public void testPatternAnalyzerAddAndRemoval() {
         CompositePatternFrequencyAnalyzer analzyer = new CompositePatternFrequencyAnalyzer();
         // Add the Easten Asia recognition
-        analzyer.injectRecognizer(new EastAsiaCharPatternAnalyzer());
+        analzyer.addPatternAnalyzer(new EastAsiaCharPatternAnalyzer());
         String patternString2 = analzyer.getValuePattern("abcd1234ゟ");
         Assert.assertEquals("aaaa9999H", patternString2);
         // No East Asia recognition.
-        analzyer.removeRecognizer(EastAsiaCharPatternAnalyzer.LEVEL);
+        analzyer.removePatternAnalyzer(EastAsiaCharPatternAnalyzer.LEVEL);
         String patternString1 = analzyer.getValuePattern("abcd1234ゟ");
         Assert.assertEquals("aaaa9999ゟ", patternString1);
 
         // No date and time recognition
-        analzyer.removeRecognizer(DatePatternAnalyzer.LEVEL);
-        analzyer.removeRecognizer(TimePatternAnalyzer.LEVEL);
+        analzyer.removePatternAnalyzer(DatePatternAnalyzer.LEVEL);
+        analzyer.removePatternAnalyzer(TimePatternAnalyzer.LEVEL);
         String datePattern = analzyer.getValuePattern("2003-12-20");
         Assert.assertEquals("9999-99-99", datePattern);
         String timePattern = analzyer.getValuePattern("12:00:00");
         Assert.assertEquals("99:99:99", timePattern);
         // Add date recognition
-        analzyer.injectRecognizer(new DatePatternAnalyzer());
+        analzyer.addPatternAnalyzer(new DatePatternAnalyzer());
         String datePattern1 = analzyer.getValuePattern("2003-12-20");
         Assert.assertEquals("yyyy-M-d", datePattern1);
-        analzyer.injectRecognizer(new TimePatternAnalyzer());
+        analzyer.addPatternAnalyzer(new TimePatternAnalyzer());
         String timePattern1 = analzyer.getValuePattern("12:00:00");
         Assert.assertEquals("H:m:s", timePattern1);
     }
@@ -89,7 +89,7 @@ public class PatternFrequencyAnalyzerTest {
     @Test
     public void testAnalyzeFreqWithEastAsiaChar() {
         CompositePatternFrequencyAnalyzer analyzerWithAsiaChars = new CompositePatternFrequencyAnalyzer();
-        analyzerWithAsiaChars.injectRecognizer(new EastAsiaCharPatternAnalyzer());
+        analyzerWithAsiaChars.addPatternAnalyzer(new EastAsiaCharPatternAnalyzer());
         String[] data = new String[] { "John", "", "2015-08-20", "2012-02-12", "2003年", "2004年", "2001年" };
         analyzerWithAsiaChars.init();
         for (String value : data) {
@@ -211,7 +211,10 @@ public class PatternFrequencyAnalyzerTest {
     public void testCustomizedDatePattern() {
         PatternFrequencyAnalyzer patternAnalyzer = new CompositePatternFrequencyAnalyzer();
         String[] data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2015-08-20", "2012-02-12", "2/8/15 15:57",
-                "4/15/11 4:24", "2001年" };
+                "4/15/11 4:24", "2001年" }; // TODO add a date in a strange format that we are sure
+                                                                 // we won't add to the list of date patterns that we
+                                                                 // have. e.g. , "12:00.000000 1?1?7"
+        // TODO list of expected patterns
         patternAnalyzer.init();
         for (String value : data) {
             patternAnalyzer.analyze(value);
@@ -224,14 +227,16 @@ public class PatternFrequencyAnalyzerTest {
         while (entrySet.hasNext()) {
             Entry<String, Long> e = entrySet.next();
             if (idx == 0) {
-                Assert.assertEquals("9/9/99 99:99", e.getKey());
-                Assert.assertEquals(2, e.getValue(), 0);
+                Assert.assertEquals("Date should not be recognised here", "9/9/99 99:99", e.getKey());
+                Assert.assertEquals(2, e.getValue(), 0); // TODO compare stat of expected pattern with stat from
+                                                         // analyzer
                 isAtLeastOneAsssert = true;
             }
             idx++;
         }
 
         // Set customized pattern and analyze again
+        // TODO: Replace Map<String, String> parameters by class PatternAnalyzerConfig
         patternAnalyzer.setParameter(Parameters.DateParam.DATE_PATTERN.name(), "M/d/yy H:m");
         patternAnalyzer.init();
         for (String value : data) {

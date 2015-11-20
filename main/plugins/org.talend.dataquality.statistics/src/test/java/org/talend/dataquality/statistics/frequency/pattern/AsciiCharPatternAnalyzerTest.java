@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency.recognition;
+package org.talend.dataquality.statistics.frequency.pattern;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,11 +20,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.statistics.frequency.pattern.AsciiCharPatternAnalyzer;
-import org.talend.dataquality.statistics.frequency.pattern.DatePatternAnalyzer;
-import org.talend.dataquality.statistics.frequency.pattern.RecognitionResult;
 
-public class AsciiCharPatternRecognitionTest {
+public class AsciiCharPatternAnalyzerTest {
 
     @Before
     public void setUp() throws Exception {
@@ -36,8 +33,8 @@ public class AsciiCharPatternRecognitionTest {
 
     @Test
     public void testRecognize() {
-        // Assert empty
         AsciiCharPatternAnalyzer recognizer = new AsciiCharPatternAnalyzer();
+        // Assert empty
         RecognitionResult result = recognizer.recognize("");
         Assert.assertFalse(result.isComplete());
         Assert.assertEquals("", result.getPatternString());

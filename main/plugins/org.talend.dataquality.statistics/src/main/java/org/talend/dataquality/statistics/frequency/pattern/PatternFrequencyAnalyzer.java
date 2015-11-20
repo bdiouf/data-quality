@@ -33,7 +33,7 @@ public abstract class PatternFrequencyAnalyzer extends FrequencyAnalyzer<Pattern
      * The recognition level indicates the priorities of which recognition class should be applied in the first place
      * when several recognizer exist. The lower this value is, the highest priority it will be applied.
      * 
-     * @return level of the recognition
+     * @return level of the PatternAnalyzer
      */
     public abstract int getLevel();
 

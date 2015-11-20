@@ -29,7 +29,7 @@ public class DatePatternAnalyzer extends PatternFrequencyAnalyzer {
 
     public static final int LEVEL = 1;
 
-    private String customizedPattern = null;
+    private String customizedPattern = null; // TODO Replace by Set or list of customized patterns
 
     private Locale locale = Locale.getDefault();
 
@@ -49,7 +49,7 @@ public class DatePatternAnalyzer extends PatternFrequencyAnalyzer {
     }
 
     @Override
-    public RecognitionResult recognize(String stringToRecognize) {
+    protected RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = RecognitionResult.getEmptyResult();
         String datePatternAfterReplace = CustomDatetimePatternManager.datePatternReplace(stringToRecognize, customizedPattern,
                 locale);

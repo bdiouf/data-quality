@@ -23,7 +23,7 @@ import org.apache.commons.lang.StringUtils;
  * @author mzhao
  * @since 1.3.0
  */
-public class RecognitionResult {
+class RecognitionResult {
 
     private String patternString;
 
@@ -31,7 +31,7 @@ public class RecognitionResult {
 
     private static RecognitionResult INSTANCE = null;
 
-    public static RecognitionResult getEmptyResult() {
+    protected static RecognitionResult getEmptyResult() {
         if (INSTANCE == null) {
             INSTANCE = new RecognitionResult();
         }
@@ -44,7 +44,7 @@ public class RecognitionResult {
         this.isComplete = false;
     }
 
-    public String getPatternString() {
+    protected String getPatternString() {
         return patternString;
     }
 
@@ -53,7 +53,7 @@ public class RecognitionResult {
      * 
      * @return true if the recognition complete.
      */
-    public boolean isComplete() {
+    protected boolean isComplete() {
         return isComplete;
     }
 
@@ -64,7 +64,7 @@ public class RecognitionResult {
      * @param patternString
      * @param isComplete
      */
-    public void setResult(String patternString, boolean isComplete) {
+    protected void setResult(String patternString, boolean isComplete) {
         this.patternString = patternString;
         this.isComplete = isComplete;
     }
