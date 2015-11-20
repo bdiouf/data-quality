@@ -23,7 +23,7 @@ public abstract class QualityAnalyzer<T, QT> extends AbstractAnalyzer<T> {
     protected QT types;
 
     /**
-     * @deprecated use {@link #setParameters(java.util.HashMap)} instead with
+     * @deprecated use {@link #addParameters(java.util.HashMap)} instead with
      * {@link Parameters.QualityParam#STORE_VALUE}
      * @param isStoreInvalidValues
      */

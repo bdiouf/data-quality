@@ -15,6 +15,9 @@ package org.talend.datascience.common.inference;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import org.talend.datascience.common.parameter.Parameters;
 
 /**
  * Implements analysis on array of Strings ("row" of values). Implementations are expected to be:
@@ -42,7 +45,6 @@ public interface Analyzer<T> extends Serializable, AutoCloseable {
      */
     boolean analyze(String... record);
 
-
     /**
      * Ends the analysis (implementations may perform result optimizations after the repeated call to
      * {@link #analyze(String[])}).
@@ -56,24 +58,36 @@ public interface Analyzer<T> extends Serializable, AutoCloseable {
      * column in record.
      */
     List<T> getResult();
-    
+
     /**
      * Merge this analyzer with another one.<br>
+     * 
      * @return new analyzer with this and another analyzer merged together.
      */
     Analyzer<T> merge(Analyzer<T> another);
 
     /**
-     * Set parameters of the frequency analyzer. Parameters set as:<br>
-     * {@link CMSFrequencyEvaluator#EPS }<br>
-     * {@link CMSFrequencyEvaluator#SEED}<br>
-     * {@link CMSFrequencyEvaluator#CONFIDENCE}<br>
-     * {@link SSFrequencyEvaluator#CAPACITY}
+     * Set parameters of the analyzer. Parameters set as:<br>
+     * {@link Parameters#DataParam}<br>
+     * {@link Parameters#QualityParam}<br>
      * <P>
-     * these parameters are not mandatory since there are default values.
+     * these parameters are not mandatory since there are default values. <br>
      * 
-     * @param parameters parameters to be set when using algorithm {@link EFrequencyAlgorithm#SPACE_SAVER} and
-     * {@link EFrequencyAlgorithm#COUNT_MIN_SKETCH}
+     * @param parameters parameters to be set.
      */
-    public void setParameters(Map<String, String> parameters);
+    public void addParameters(Map<String, String> parameters);
+
+    /**
+     * Set parameters with key and value
+     * <p>
+     * This method must called before {@link #init()} .
+     * 
+     * @param key
+     * @param value
+     */
+    public void setParameter(String key, String value);
+
+    public void removeParameter(String key);
+
+    public void removeParameters(Set<String> keys);
 }

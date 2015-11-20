@@ -14,6 +14,7 @@ package org.talend.datascience.common.inference.type;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,9 +40,9 @@ public class SystemDatetimePatternManager {
 
     private static Map<Pattern, String> TIME_PARSERS = new LinkedHashMap<Pattern, String>();
 
-    private static Set<String> DATE_PATTERN_NAMES = new ConcurrentSkipListSet<String>();
+    private static Set<String> DATE_PATTERN_NAMES = new HashSet<String>();
 
-    private static Set<String> TIME_PATTERN_NAMES = new ConcurrentSkipListSet<String>();
+    private static Set<String> TIME_PATTERN_NAMES = new HashSet<String>();
 
     static {
         try {

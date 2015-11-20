@@ -12,8 +12,9 @@
 // ============================================================================
 package org.talend.datascience.common.inference;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 
@@ -27,10 +28,29 @@ import java.util.Map;
 public abstract class AbstractAnalyzer<T> implements Analyzer<T> {
 
     private static final long serialVersionUID = -6035118696501272997L;
-    protected Map<String, String> parameters = new HashMap<>();
+
+    protected Map<String, String> parameters = new ConcurrentHashMap<String, String>();
 
     @Override
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
+    public void addParameters(Map<String, String> parameters) {
+        this.parameters.putAll(parameters);
+    }
+
+    @Override
+    public void setParameter(String key, String value) {
+        this.parameters.put(key, value);
+    }
+
+    @Override
+    public void removeParameter(String key) {
+        parameters.remove(key);
+    }
+
+
+    @Override
+    public void removeParameters(Set<String> keys) {
+        for (String key : keys) {
+            parameters.remove(key);
+        }
     }
 }

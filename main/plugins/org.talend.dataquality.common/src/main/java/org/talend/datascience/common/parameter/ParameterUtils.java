@@ -53,20 +53,20 @@ public final class ParameterUtils {
         if (newLocale == null) {
             return null;
         }
-        Locale lc = LACALE_CACHE.get(newLocale);
+        Locale lc = LOCALE_CACHE.get(newLocale);
         if (lc != null) {
             return lc;
         }
         String[] localeLangAndCountry = newLocale.split("_"); // locale string like "zh_CN","jo_JP"
         if (localeLangAndCountry.length == 1) {
             lc = new Locale(localeLangAndCountry[0]);
-            LACALE_CACHE.put(localeLangAndCountry[0], lc);
+            LOCALE_CACHE.put(localeLangAndCountry[0], lc);
         } else {
             lc = new Locale(localeLangAndCountry[0], localeLangAndCountry[1]);
-            LACALE_CACHE.put(localeLangAndCountry[0] + "_" + localeLangAndCountry[1], lc);
+            LOCALE_CACHE.put(localeLangAndCountry[0] + "_" + localeLangAndCountry[1], lc);
         }
         return lc;
     }
 
-    public static Map<String, Locale> LACALE_CACHE = new HashMap<String, Locale>();
+    private static Map<String, Locale> LOCALE_CACHE = new HashMap<String, Locale>();
 }
