@@ -63,7 +63,7 @@ public class SynonymIndexSearcher {
         MATCH_EXACT("MATCH_EXACT"),
         MATCH_ANY_FUZZY("MATCH_ANY_FUZZY"),
         MATCH_ALL_FUZZY("MATCH_ALL_FUZZY"),
-        
+
         MATCH_SEMANTIC_DICTIONARY("MATCH_SEMANTIC_DICTIONARY"), // Used only for searching semantic dictionary
         MATCH_SEMANTIC_KEYWORD("MATCH_SEMANTIC_KEYWORD");// Used only for searching semantic keyword
 
@@ -113,6 +113,8 @@ public class SynonymIndexSearcher {
     private static final float WORD_TERM_BOOST = 2F;
 
     private static final float WORD_BOOST = 1.5F;
+
+    private static final int MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH = 20;
 
     private Analyzer analyzer;
 
@@ -478,6 +480,10 @@ public class SynonymIndexSearcher {
      */
     private Query createQueryForSemanticDictionaryMatch(String input) throws IOException {
         List<String> tokens = getTokensFromAnalyzer(input);
+        // for dictionary search, ignore searching for input containing too many tokens
+        if (tokens.size() > MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH) {
+            return new TermQuery(new Term(F_SYNTERM, StringUtils.EMPTY));
+        }
         Query synTermQuery = getTermQuery(F_SYNTERM, StringUtils.join(tokens, ' '), false);
 
         return synTermQuery;
@@ -493,12 +499,18 @@ public class SynonymIndexSearcher {
     private Query createQueryForSemanticKeywordMatch(String input) throws IOException {
         BooleanQuery booleanQuery = new BooleanQuery();
         List<String> tokens = getTokensFromAnalyzer(input);
-        for (String token : tokens) {
-            booleanQuery.add(getTermQuery(F_SYN, token, false), BooleanClause.Occur.SHOULD);
+        // for keyword search, only search the beginning tokens from input
+        if (tokens.size() > MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH) {
+            for (int i = 0; i < MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH; i++) {
+                booleanQuery.add(getTermQuery(F_SYN, tokens.get(i), false), BooleanClause.Occur.SHOULD);
+            }
+        } else {
+            for (String token : tokens) {
+                booleanQuery.add(getTermQuery(F_SYN, token, false), BooleanClause.Occur.SHOULD);
+            }
         }
         return booleanQuery;
     }
-
 
     /**
      * create a combined query who searches for the input tokens in order (with double quotes around the input) and also
