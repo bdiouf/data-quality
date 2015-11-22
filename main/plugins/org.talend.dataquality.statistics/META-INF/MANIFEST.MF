@@ -6,9 +6,26 @@ Bundle-Version: 1.3.3
 Bundle-Vendor: .Talend SA.
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.apache.log4j,
+ org.apache.commons.io,
  org.apache.commons.lang,
  org.talend.dataquality.common,
  org.talend.dataquality.semantic,
  org.junit
 Bundle-ClassPath: .
-Eclipse-BundleShape: dir
+Import-Package: com.clearspring.analytics.stream,
+ com.clearspring.analytics.stream.cardinality,
+ com.clearspring.analytics.stream.frequency,
+ com.clearspring.analytics.stream.quantile,
+ org.apache.commons.math3.stat.descriptive,
+ org.apache.commons.math3.stat.descriptive.rank
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.talend.dataquality.statistics,
+ org.talend.dataquality.statistics.cardinality,
+ org.talend.dataquality.statistics.frequency,
+ org.talend.dataquality.statistics.frequency.impl,
+ org.talend.dataquality.statistics.numeric,
+ org.talend.dataquality.statistics.numeric.histogram,
+ org.talend.dataquality.statistics.numeric.quantile,
+ org.talend.dataquality.statistics.numeric.summary,
+ org.talend.dataquality.statistics.quality,
+ org.talend.dataquality.statistics.text

@@ -1,27 +1,30 @@
-V1.3.3 2015-11-4
-	- update dependencies following lucene4 upgrade in standardization library
-	   2015-11-17
-	- Make it possible to add customized date and time pattern	
-	- Expose setParameter method to Analyzer interface , add customized date type analyzer class and customized datetime manager class.
-	- Remove the recognition hierarchy and using analyzer interface for the pattern classes.
-		2015-11-20
-	- Make public class RecognitionResult protected & make all public methods: getValuePattern() in xxxPatternAnalyzer protected
-	- 
+V1.3.3 2015-11-23
+    - update dependencies following lucene4 upgrade in standardization library
+    - support custom date pattern in DatePatternAnalyzer and DataTypeQualityAnalyzer
+    - build the library as OSGI bundle
+
 V1.3.2 2015-10-29
-	- TDQ-10903 optimize dictionaries
-	- adjust OPEN/CLOSE type for some indexes
+    - TDQ-10903 optimize dictionaries
+    - adjust OPEN/CLOSE type for some indexes
 
 V1.3.1 2015-10-22 (for Studio 6.1.0)
     - TDQ-10413 compute list of invalid values according to semantic type
     - TDQ-10981 concurrent analyzer
     - TDQ-10988 latin1 supplement support in pattern statistics
     
+=== 2015-10-14 ===
+1. Separate the pattern frequency class. -mzhao
+2. Create pattern replacement for latin-1 suppliment characters. -mzhao
+
+=== 2015-10-13 ===
+1. Add junit test for histogram with randomly generated value.
+
+=== 2015-10-12 ===
+1. Add count below min , count above max and isComplete method for histogram analyzer
+
 === 2015-09-11 ===
 1. Add HistogramParameter and HistogramColumnParameter class for histogram analyzer. -mzhao
 2. Adapt HistogramAnalyzer class and its junit test using the parameter class. -mzhao
 3. Make "type[]" and "parameter" arguments as mandatory parameters in NumericalStatisticsAnalyzer constructor. -mzhao
 4. All the mandatory parameters requires by analyzer must be set in constructor. -mzhao
 5. Remove all the warnings in java classes.
-=== 2015-10-14 ===
-1. Separate the pattern frequency class. -mzhao
-2. Create pattern replacement for latin-1 suppliment characters. -mzhao
