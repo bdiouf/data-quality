@@ -74,7 +74,7 @@ public class AsciiCharPatternAnalyzer extends PatternFrequencyAnalyzer {
     }
 
     @Override
-    protected String getValuePattern(String originalValue) {
+    public String getValuePattern(String originalValue) {
         RecognitionResult result = recognize(originalValue);
         return result.getPatternString();
     }
