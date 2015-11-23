@@ -22,7 +22,7 @@ import org.apache.commons.pool.impl.GenericKeyedObjectPool;
  * A {@link Analyzer} implementation that allows use of an Analyzer pool by several threads. Please note analyzer
  * instance is <b>only</b> returned to the pool on {@link #close()} call.
  */
-public class ConcurrentAnalyzer<T> extends AbstractAnalyzer<T> {
+public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
     private static final long serialVersionUID = 6896234073310039985L;
 

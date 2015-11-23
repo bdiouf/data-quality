@@ -16,7 +16,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.talend.datascience.common.inference.AbstractAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
 import org.talend.datascience.common.inference.type.DataType.Type;
@@ -32,7 +31,7 @@ import org.talend.datascience.common.inference.type.DataType.Type;
  *
  */
 
-public class DataTypeAnalyzer extends AbstractAnalyzer<DataType> {
+public class DataTypeAnalyzer implements Analyzer<DataType> {
 
     private static final long serialVersionUID = 373694310453353502L;
 
@@ -61,7 +60,7 @@ public class DataTypeAnalyzer extends AbstractAnalyzer<DataType> {
         // will return string when no matching
         return DataType.Type.STRING;
     }
-    
+
     protected boolean isDate(String value) {
         return TypeInferenceUtils.isDate(value);
     }
@@ -69,6 +68,7 @@ public class DataTypeAnalyzer extends AbstractAnalyzer<DataType> {
     protected boolean isTime(String value) {
         return TypeInferenceUtils.isTime(value);
     }
+
     public void init() {
         // Nothing to do.
     }
@@ -146,7 +146,7 @@ public class DataTypeAnalyzer extends AbstractAnalyzer<DataType> {
 
     @Override
     public void close() throws Exception {
-        
+
     }
-    
+
 }

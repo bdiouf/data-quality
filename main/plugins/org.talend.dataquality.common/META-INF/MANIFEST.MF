@@ -14,5 +14,4 @@ Require-Bundle: org.apache.log4j,
  org.junit
 Export-Package: org.talend.datascience.common.inference,
  org.talend.datascience.common.inference.type,
- org.talend.datascience.common.parameter,
  org.talend.datascience.common.regex

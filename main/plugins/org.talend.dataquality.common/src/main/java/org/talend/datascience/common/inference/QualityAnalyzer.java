@@ -12,9 +12,8 @@
 // ============================================================================
 package org.talend.datascience.common.inference;
 
-import org.talend.datascience.common.parameter.Parameters;
 
-public abstract class QualityAnalyzer<T, QT> extends AbstractAnalyzer<T> {
+public abstract class QualityAnalyzer<T, QT> implements Analyzer<T> {
 
     private static final long serialVersionUID = 6214486020243062215L;
 

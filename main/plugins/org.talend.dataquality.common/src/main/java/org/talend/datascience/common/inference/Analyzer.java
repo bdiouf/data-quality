@@ -14,10 +14,6 @@ package org.talend.datascience.common.inference;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.talend.datascience.common.parameter.Parameters;
 
 /**
  * Implements analysis on array of Strings ("row" of values). Implementations are expected to be:
@@ -66,28 +62,4 @@ public interface Analyzer<T> extends Serializable, AutoCloseable {
      */
     Analyzer<T> merge(Analyzer<T> another);
 
-    /**
-     * Set parameters of the analyzer. Parameters set as:<br>
-     * {@link Parameters#DataParam}<br>
-     * {@link Parameters#QualityParam}<br>
-     * <P>
-     * these parameters are not mandatory since there are default values. <br>
-     * 
-     * @param parameters parameters to be set.
-     */
-    public void addParameters(Map<String, String> parameters);
-
-    /**
-     * Set parameters with key and value
-     * <p>
-     * This method must called before {@link #init()} .
-     * 
-     * @param key
-     * @param value
-     */
-    public void setParameter(String key, String value);
-
-    public void removeParameter(String key);
-
-    public void removeParameters(Set<String> keys);
 }
