@@ -14,7 +14,6 @@ package org.talend.dataquality.statistics.type;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Locale;
 
 import org.talend.datascience.common.inference.type.SystemDatetimePatternManager;
 
@@ -35,8 +34,8 @@ public final class CustomDatetimePatternManager {
      * @param locale
      * @return
      */
-    public static boolean isDate(String value, String customizedPattern, Locale locale) {
-        boolean isMatch = isMatchCustomizedPattern(value, customizedPattern, locale);
+    public static boolean isDate(String value, String customizedPattern) {
+        boolean isMatch = isMatchCustomizedPattern(value, customizedPattern);
         if (isMatch) {
             return true;
         }
@@ -44,8 +43,8 @@ public final class CustomDatetimePatternManager {
         return SystemDatetimePatternManager.isDate(value);
     }
 
-    public static boolean isTime(String value, String customizedPattern, Locale locale) {
-        boolean isMatch = isMatchCustomizedPattern(value, customizedPattern, locale);
+    public static boolean isTime(String value, String customizedPattern) {
+        boolean isMatch = isMatchCustomizedPattern(value, customizedPattern);
         if (isMatch) {
             return true;
         }
@@ -53,12 +52,12 @@ public final class CustomDatetimePatternManager {
         return SystemDatetimePatternManager.isTime(value);
     }
 
-    private static boolean isMatchCustomizedPattern(String value, String customizedPattern, Locale locale) {
+    private static boolean isMatchCustomizedPattern(String value, String customizedPattern) {
         if (customizedPattern == null) {
             return false;
         }
         try {
-            DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customizedPattern, locale);
+            DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customizedPattern);
             dtFormatter.parse(value);
         } catch (DateTimeParseException | IllegalArgumentException e) {
             // Not match user defined pattern.
@@ -67,14 +66,14 @@ public final class CustomDatetimePatternManager {
         return true;
     }
 
-    public static String datePatternReplace(String value, String customizedPattern, Locale locale) {
+    public static String datePatternReplace(String value, String customizedPattern) {
         if (customizedPattern == null) {
             // No customized pattern set.
             return SystemDatetimePatternManager.datePatternReplace(value);
         }
         boolean matchCustomizedPattern = true;
         try {
-            DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customizedPattern, locale);
+            DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customizedPattern);
             dtFormatter.parse(value);
         } catch (DateTimeParseException e) {
             // Not match user defined pattern.

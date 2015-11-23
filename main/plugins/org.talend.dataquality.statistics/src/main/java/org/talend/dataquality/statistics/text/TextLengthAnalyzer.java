@@ -2,7 +2,6 @@ package org.talend.dataquality.statistics.text;
 
 import java.util.List;
 
-import org.talend.datascience.common.inference.AbstractAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
 
@@ -14,7 +13,7 @@ import org.talend.datascience.common.inference.ResizableList;
  * @author zhao
  *
  */
-public class TextLengthAnalyzer extends AbstractAnalyzer<TextLengthStatistics> {
+public class TextLengthAnalyzer implements Analyzer<TextLengthStatistics> {
 
     private static final long serialVersionUID = -9106960246571082963L;
 

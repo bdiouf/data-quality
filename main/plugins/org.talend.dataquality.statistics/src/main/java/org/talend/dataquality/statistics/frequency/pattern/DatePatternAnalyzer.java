@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.pattern;
 
-import java.util.Locale;
-
 import org.talend.dataquality.statistics.type.CustomDatetimePatternManager;
-import org.talend.datascience.common.parameter.ParameterUtils;
 
 /**
  * Recognize date types given the predefined date regex pattern.
@@ -29,30 +26,25 @@ public class DatePatternAnalyzer extends PatternFrequencyAnalyzer {
 
     public static final int LEVEL = 1;
 
-    private String customizedPattern = null; // TODO Replace by Set or list of customized patterns
-
-    private Locale locale = Locale.getDefault();
+    private String customPattern = null; // TODO Replace by Set or list of customized patterns
 
     @Override
     public int getLevel() {
         return LEVEL;
     }
 
-    @Override
-    public void init() {
-        customizedPattern = ParameterUtils.getCustomizedPattern(parameters);
-        Locale newLocale = ParameterUtils.getLocale(parameters);
-        if (newLocale != null) {
-            locale = newLocale;
-        }
-        super.init();
+    public void setCustomPattern(String customPattern) {
+        this.customPattern = customPattern;
+    }
+
+    public String getCustomPattern() {
+        return customPattern;
     }
 
     @Override
     protected RecognitionResult recognize(String stringToRecognize) {
-        RecognitionResult result = RecognitionResult.getEmptyResult();
-        String datePatternAfterReplace = CustomDatetimePatternManager.datePatternReplace(stringToRecognize, customizedPattern,
-                locale);
+        RecognitionResult result = new RecognitionResult();
+        String datePatternAfterReplace = CustomDatetimePatternManager.datePatternReplace(stringToRecognize, customPattern);
         if (stringToRecognize.equals(datePatternAfterReplace)) {
             // Did not recognized.
             result.setResult(stringToRecognize, false);

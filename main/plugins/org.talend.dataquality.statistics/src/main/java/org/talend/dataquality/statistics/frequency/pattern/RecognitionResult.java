@@ -14,6 +14,7 @@ package org.talend.dataquality.statistics.frequency.pattern;
 
 import org.apache.commons.lang.StringUtils;
 
+
 /**
  * Recognition result bean. <b>Important</b> note that this result's instance is intended to be reused due to the memory
  * considerations when analyzing large dataset. So the you must not expect something like :<br>
@@ -25,24 +26,9 @@ import org.apache.commons.lang.StringUtils;
  */
 class RecognitionResult {
 
-    private String patternString;
+    private String patternString = StringUtils.EMPTY;
 
-    private boolean isComplete;
-
-    private static RecognitionResult INSTANCE = null;
-
-    protected static RecognitionResult getEmptyResult() {
-        if (INSTANCE == null) {
-            INSTANCE = new RecognitionResult();
-        }
-        INSTANCE.clear();
-        return INSTANCE;
-    }
-
-    private void clear() {
-        this.patternString = StringUtils.EMPTY;
-        this.isComplete = false;
-    }
+    private boolean isComplete = false;
 
     protected String getPatternString() {
         return patternString;

@@ -34,7 +34,7 @@ public class TimePatternAnalyzer extends PatternFrequencyAnalyzer {
 
     @Override
     protected RecognitionResult recognize(String stringToRecognize) {
-        RecognitionResult result = RecognitionResult.getEmptyResult();
+        RecognitionResult result = new RecognitionResult();
         if (TypeInferenceUtils.isTime(stringToRecognize)) {
             result.setResult(SystemDatetimePatternManager.timePatternReplace(stringToRecognize), true);
         } else {

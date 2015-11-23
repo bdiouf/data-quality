@@ -59,7 +59,6 @@ public abstract class PatternFrequencyAnalyzer extends FrequencyAnalyzer<Pattern
         for (int i = 0; i < size; i++) {
             PatternFrequencyStatistics freqTable = new PatternFrequencyStatistics();
             freqTable.setAlgorithm(algorithm);
-            freqTable.setParameter(parameters);
             freqTableList.add(freqTable);
         }
         freqTableStatistics = new ResizableList<>(freqTableList);

@@ -35,7 +35,7 @@ public class EastAsiaCharPatternAnalyzer extends PatternFrequencyAnalyzer {
 
     @Override
     protected RecognitionResult recognize(String stringToRecognize) {
-        RecognitionResult result = RecognitionResult.getEmptyResult();
+        RecognitionResult result = new RecognitionResult();
         if (StringUtils.isEmpty(stringToRecognize)) {
             result.setResult(stringToRecognize, false);
             return result;

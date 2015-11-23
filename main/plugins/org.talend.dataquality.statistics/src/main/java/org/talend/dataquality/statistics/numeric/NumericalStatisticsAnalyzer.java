@@ -15,7 +15,7 @@ package org.talend.dataquality.statistics.numeric;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.talend.datascience.common.inference.AbstractAnalyzer;
+import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.type.DataType;
 import org.talend.datascience.common.inference.type.DataType.Type;
 
@@ -27,7 +27,7 @@ import org.talend.datascience.common.inference.type.DataType.Type;
  *
  * @param <T>
  */
-public abstract class NumericalStatisticsAnalyzer<T> extends AbstractAnalyzer<T> {
+public abstract class NumericalStatisticsAnalyzer<T> implements Analyzer<T> {
 
     private static final long serialVersionUID = 5444082810385180383L;
 

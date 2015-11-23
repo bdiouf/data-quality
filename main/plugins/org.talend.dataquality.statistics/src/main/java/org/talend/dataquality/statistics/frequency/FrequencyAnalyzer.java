@@ -19,7 +19,6 @@ import org.talend.dataquality.statistics.frequency.impl.CMSFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.EFrequencyAlgorithm;
 import org.talend.dataquality.statistics.frequency.impl.NaiveFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.SSFrequencyEvaluator;
-import org.talend.datascience.common.inference.AbstractAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
 
@@ -31,7 +30,7 @@ import org.talend.datascience.common.inference.ResizableList;
  * @author mzhao
  *
  */
-public abstract class FrequencyAnalyzer<T extends FrequencyStatistics> extends AbstractAnalyzer<T> {
+public abstract class FrequencyAnalyzer<T extends FrequencyStatistics> implements Analyzer<T> {
 
     private static final long serialVersionUID = 5073865267265592024L;
 
@@ -101,4 +100,5 @@ public abstract class FrequencyAnalyzer<T extends FrequencyStatistics> extends A
     public void close() throws Exception {
 
     }
+
 }

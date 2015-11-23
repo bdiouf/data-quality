@@ -50,7 +50,6 @@ public class DataFrequencyAnalyzer extends FrequencyAnalyzer<DataFrequencyStatis
         for (int i = 0; i < size; i++) {
             DataFrequencyStatistics freqTable = new DataFrequencyStatistics();
             freqTable.setAlgorithm(algorithm);
-            freqTable.setParameter(parameters);
             freqTableList.add(freqTable);
         }
         freqTableStatistics = new ResizableList<>(freqTableList);

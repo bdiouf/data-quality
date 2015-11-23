@@ -17,7 +17,6 @@ import java.util.List;
 
 import org.apache.commons.lang.NullArgumentException;
 import org.apache.log4j.Logger;
-import org.talend.datascience.common.inference.AbstractAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.QualityAnalyzer;
 import org.talend.datascience.common.inference.ValueQualityStatistics;
@@ -27,7 +26,7 @@ import org.talend.datascience.common.inference.type.DataType;
  * created by talend on 2015-07-28 Detailled comment.
  *
  */
-public class ValueQualityAnalyzer extends AbstractAnalyzer<ValueQualityStatistics> {
+public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
 
     private static final long serialVersionUID = -5951511723860660263L;
 
