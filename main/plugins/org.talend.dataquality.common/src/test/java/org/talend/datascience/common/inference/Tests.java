@@ -17,12 +17,23 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.talend.datascience.common.inference.type.DataTypeAnalyzerTest;
 import org.talend.datascience.common.inference.type.TypeInferenceUtilsTest;
+import org.talend.datascience.common.regex.FullwidthLatinLowercasedLettersTest;
+import org.talend.datascience.common.regex.FullwidthLatinNumbersTest;
+import org.talend.datascience.common.regex.FullwidthLatinUppercasedLettersTest;
+import org.talend.datascience.common.regex.HangulTest;
+import org.talend.datascience.common.regex.HiraganaSmallTest;
+import org.talend.datascience.common.regex.HiraganaTest;
+import org.talend.datascience.common.regex.KanjiTest;
+import org.talend.datascience.common.regex.KatakanaSmallTest;
+import org.talend.datascience.common.regex.KatakanaTest;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ DataTypeAnalyzerTest.class, TypeInferenceUtilsTest.class })
+@SuiteClasses({ ResizableListTest.class, DataTypeAnalyzerTest.class, TypeInferenceUtilsTest.class, KatakanaTest.class,
+        KatakanaSmallTest.class, KanjiTest.class, HiraganaTest.class, HiraganaSmallTest.class, HangulTest.class,
+        FullwidthLatinUppercasedLettersTest.class, FullwidthLatinNumbersTest.class, FullwidthLatinLowercasedLettersTest.class })
 public class Tests {
 }
