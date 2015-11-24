@@ -70,7 +70,7 @@ public class DataTypeAnalyzer implements Analyzer<DataType> {
     }
 
     public void init() {
-        // Nothing to do.
+        dataTypes.clear();
     }
 
     /**
