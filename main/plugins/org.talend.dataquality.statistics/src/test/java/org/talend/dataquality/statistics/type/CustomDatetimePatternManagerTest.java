@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.talend.datascience.common.inference.type.SystemDatetimePatternManager;
 
-public class CustomizeDatetimePatternManagerTest {
+public class CustomDatetimePatternManagerTest {
 
     @Test
     public void testDatePattern() {
