@@ -14,6 +14,8 @@ package org.talend.dataquality.statistics.type;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
+import java.util.List;
 
 import org.talend.datascience.common.inference.type.SystemDatetimePatternManager;
 
@@ -66,17 +68,18 @@ public final class CustomDatetimePatternManager {
     }
 
     public static String replaceByDateTimePattern(String value, String customPattern) {
-        if (customPattern != null) {
-            boolean matchCustomPattern = true;
+        return replaceByDateTimePattern(value, Collections.singletonList(customPattern));
+    }
+
+    public static String replaceByDateTimePattern(String value, List<String> customPatterns) {
+        for (String customPattern : customPatterns) {
             try {
                 DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customPattern);
                 dtFormatter.parse(value);
+                return customPattern;
             } catch (DateTimeParseException | IllegalArgumentException e) {
                 // Cannot create DateTimeFormatter, or input data cannot match user defined pattern.
-                matchCustomPattern = false;
-            }
-            if (matchCustomPattern) {
-                return customPattern;
+                continue;
             }
         }
         // replace with system date pattern manager.

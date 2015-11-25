@@ -67,7 +67,7 @@ public class LatinExtendedCharPatternFrequencyAnalyzer extends AbstractPatternFr
     }
 
     @Override
-    protected String getValuePattern(String originalValue) {
+    public String getValuePattern(String originalValue) {
         RecognitionResult result = recognize(originalValue);
         return result.getPatternString();
     }

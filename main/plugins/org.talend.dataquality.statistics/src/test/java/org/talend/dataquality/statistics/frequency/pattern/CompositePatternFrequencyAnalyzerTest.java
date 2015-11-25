@@ -170,7 +170,7 @@ public class CompositePatternFrequencyAnalyzerTest {
 
         // Set customized pattern and analyze again
         // TODO: Replace Map<String, String> parameters by class PatternAnalyzerConfig
-        patternAnalyzer.setCustomDateTimePattern("M/d/yy H:m");
+        patternAnalyzer.addCustomDateTimePattern("M/d/yy H:m");
         patternAnalyzer.init();
         for (String value : data) {
             patternAnalyzer.analyze(value);
