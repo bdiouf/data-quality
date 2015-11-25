@@ -14,7 +14,6 @@ package org.talend.dataquality.statistics.frequency.pattern;
 
 import org.apache.commons.lang.StringUtils;
 
-
 /**
  * Recognition result bean. <b>Important</b> note that this result's instance is intended to be reused due to the memory
  * considerations when analyzing large dataset. So the you must not expect something like :<br>
@@ -35,7 +34,7 @@ class RecognitionResult {
     }
 
     /**
-     * Whether the given string is recognized completely after applying this level of recognition.
+     * Whether the given string is recognized completely
      * 
      * @return true if the recognition complete.
      */

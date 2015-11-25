@@ -26,18 +26,11 @@ public class LatinExtendedCharPatternFrequencyAnalyzer extends AbstractPatternFr
 
     private static final long serialVersionUID = -104288378010857759L;
 
-    public static final int LEVEL = 3;
-
-
     public static final String CHARS_TO_REPLACE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞß0123456789";
 
     public static final String REPLACEMENT_CHARS = "aaaaaaaaaaaaaaaaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9999999999";
 
     private Pattern charsPattern = Pattern.compile("[a-z|A-Z|à-ÿ|À-ß]");
-    @Override
-    public int getLevel() {
-        return LEVEL;
-    }
 
     @Override
     protected RecognitionResult recognize(String stringToRecognize) {
@@ -74,7 +67,7 @@ public class LatinExtendedCharPatternFrequencyAnalyzer extends AbstractPatternFr
     }
 
     @Override
-    public String getValuePattern(String originalValue) {
+    protected String getValuePattern(String originalValue) {
         RecognitionResult result = recognize(originalValue);
         return result.getPatternString();
     }

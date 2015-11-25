@@ -26,16 +26,15 @@ import org.talend.datascience.common.inference.type.SystemDatetimePatternManager
 public final class CustomDatetimePatternManager {
 
     /**
-     * This method call the system date pattern manager to valid it again after the customized pattern does not not
-     * match.
+     * This method call the system date pattern manager to valid it again after the custom pattern does not not match.
      * 
      * @param value
-     * @param customizedPattern
+     * @param customDatePattern
      * @param locale
      * @return
      */
-    public static boolean isDate(String value, String customizedPattern) {
-        boolean isMatch = isMatchCustomizedPattern(value, customizedPattern);
+    public static boolean isDate(String value, String customDatePattern) {
+        boolean isMatch = isMatchCustomPattern(value, customDatePattern);
         if (isMatch) {
             return true;
         }
@@ -43,8 +42,8 @@ public final class CustomDatetimePatternManager {
         return SystemDatetimePatternManager.isDate(value);
     }
 
-    public static boolean isTime(String value, String customizedPattern) {
-        boolean isMatch = isMatchCustomizedPattern(value, customizedPattern);
+    public static boolean isTime(String value, String customTimePattern) {
+        boolean isMatch = isMatchCustomPattern(value, customTimePattern);
         if (isMatch) {
             return true;
         }
@@ -52,12 +51,12 @@ public final class CustomDatetimePatternManager {
         return SystemDatetimePatternManager.isTime(value);
     }
 
-    private static boolean isMatchCustomizedPattern(String value, String customizedPattern) {
-        if (customizedPattern == null) {
+    private static boolean isMatchCustomPattern(String value, String customDateTimePattern) {
+        if (customDateTimePattern == null) {
             return false;
         }
         try {
-            DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customizedPattern);
+            DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customDateTimePattern);
             dtFormatter.parse(value);
         } catch (DateTimeParseException | IllegalArgumentException e) {
             // Cannot create DateTimeFormatter, or input data cannot match user defined pattern.
@@ -66,18 +65,18 @@ public final class CustomDatetimePatternManager {
         return true;
     }
 
-    public static String datetimePatternReplace(String value, String customizedPattern) {
-        if (customizedPattern != null) {
-            boolean matchCustomizedPattern = true;
+    public static String replaceByDateTimePattern(String value, String customPattern) {
+        if (customPattern != null) {
+            boolean matchCustomPattern = true;
             try {
-                DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customizedPattern);
+                DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customPattern);
                 dtFormatter.parse(value);
             } catch (DateTimeParseException | IllegalArgumentException e) {
                 // Cannot create DateTimeFormatter, or input data cannot match user defined pattern.
-                matchCustomizedPattern = false;
+                matchCustomPattern = false;
             }
-            if (matchCustomizedPattern) {
-                return customizedPattern;
+            if (matchCustomPattern) {
+                return customPattern;
             }
         }
         // replace with system date pattern manager.

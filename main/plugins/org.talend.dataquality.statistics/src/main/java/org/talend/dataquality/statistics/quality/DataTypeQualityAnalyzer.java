@@ -36,16 +36,15 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     private static Logger log = Logger.getLogger(DataTypeQualityAnalyzer.class);
 
-    private String customPattern = null;
+    private String customDateTimePattern = null;
 
-    public void setCustomPattern(String customPattern) {
-        this.customPattern = customPattern;
+    public void setCustomDateTimePattern(String pattern) {
+        this.customDateTimePattern = pattern;
     }
 
-    public String getCustomPattern() {
-        return customPattern;
+    public String getCustomDateTimePattern() {
+        return customDateTimePattern;
     }
-
 
     public DataTypeQualityAnalyzer(DataType.Type[] types, boolean isStoreInvalidValues) {
         this.isStoreInvalidValues = isStoreInvalidValues;
@@ -55,7 +54,6 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
     public DataTypeQualityAnalyzer(DataType.Type... types) {
         this.types = types;
     }
-
 
     @Override
     public void init() {
@@ -76,9 +74,9 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
             final ValueQualityStatistics valueQuality = results.get(i);
             if (TypeInferenceUtils.isEmpty(value)) {
                 valueQuality.incrementEmpty();
-            } else if (DataType.Type.DATE == types[i] && CustomDatetimePatternManager.isDate(value, customPattern)) {
+            } else if (DataType.Type.DATE == types[i] && CustomDatetimePatternManager.isDate(value, customDateTimePattern)) {
                 valueQuality.incrementValid();
-            } else if (DataType.Type.TIME == types[i] && CustomDatetimePatternManager.isTime(value, customPattern)) {
+            } else if (DataType.Type.TIME == types[i] && CustomDatetimePatternManager.isTime(value, customDateTimePattern)) {
                 valueQuality.incrementValid();
             } else if (TypeInferenceUtils.isValid(types[i], value)) {
                 valueQuality.incrementValid();

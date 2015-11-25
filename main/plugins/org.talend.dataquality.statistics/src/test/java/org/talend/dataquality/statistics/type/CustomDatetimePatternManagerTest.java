@@ -13,26 +13,26 @@ public class CustomDatetimePatternManagerTest {
 
         // valid with custom pattern
         Assert.assertTrue(CustomDatetimePatternManager.isDate("6/18/09 21:30", "M/d/yy H:m"));
-        Assert.assertEquals("M/d/yy H:m", CustomDatetimePatternManager.datetimePatternReplace("6/18/09 21:30", "M/d/yy H:m"));
+        Assert.assertEquals("M/d/yy H:m", CustomDatetimePatternManager.replaceByDateTimePattern("6/18/09 21:30", "M/d/yy H:m"));
     }
 
     @Test
     public void testValidDateNotMatchingCustomPattern() {
         Assert.assertTrue(CustomDatetimePatternManager.isDate("6/18/2009 21:30", "m-d-y hh:MM"));
-        Assert.assertEquals("M/d/yyyy H:m", CustomDatetimePatternManager.datetimePatternReplace("6/18/2009 21:30", "m-d-y hh:MM"));
+        Assert.assertEquals("M/d/yyyy H:m", CustomDatetimePatternManager.replaceByDateTimePattern("6/18/2009 21:30", "m-d-y hh:MM"));
     }
 
     @Test
     public void testInvalidDateNotMatchingCustomPattern() {
         Assert.assertFalse(CustomDatetimePatternManager.isDate("6/18/09 21:30", "m-d-y hh:MM"));
-        Assert.assertEquals("6/18/09 21:30", CustomDatetimePatternManager.datetimePatternReplace("6/18/09 21:30", "m-d-y hh:MM"));
+        Assert.assertEquals("6/18/09 21:30", CustomDatetimePatternManager.replaceByDateTimePattern("6/18/09 21:30", "m-d-y hh:MM"));
     }
 
     @Test
     public void testValidDateWithInvalidPattern() {
         Assert.assertTrue(CustomDatetimePatternManager.isDate("6/18/2009 21:30", "d/m/y**y hh:mm zzzzzzz"));
         Assert.assertEquals("M/d/yyyy H:m",
-                CustomDatetimePatternManager.datetimePatternReplace("6/18/2009 21:30", "d/m/y**y hh:mm zzzzzzz"));
+                CustomDatetimePatternManager.replaceByDateTimePattern("6/18/2009 21:30", "d/m/y**y hh:mm zzzzzzz"));
     }
 
     @Test
@@ -42,24 +42,24 @@ public class CustomDatetimePatternManagerTest {
 
         // valid with custom pattern
         Assert.assertTrue(CustomDatetimePatternManager.isTime("21?30", "H?m"));
-        Assert.assertEquals("H?m", CustomDatetimePatternManager.datetimePatternReplace("21?30", "H?m"));
+        Assert.assertEquals("H?m", CustomDatetimePatternManager.replaceByDateTimePattern("21?30", "H?m"));
     }
 
     @Test
     public void testValidTimeNotMatchingCustomPattern() {
         Assert.assertTrue(CustomDatetimePatternManager.isTime("21:30", "H-m"));
-        Assert.assertEquals("H:m", CustomDatetimePatternManager.datetimePatternReplace("21:30", "H-m"));
+        Assert.assertEquals("H:m", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "H-m"));
     }
 
     @Test
     public void testInvalidTimeNotMatchingCustomPattern() {
         Assert.assertFalse(CustomDatetimePatternManager.isTime("21?30", "H-m"));
-        Assert.assertEquals("21?30", CustomDatetimePatternManager.datetimePatternReplace("21?30", "H-m"));
+        Assert.assertEquals("21?30", CustomDatetimePatternManager.replaceByDateTimePattern("21?30", "H-m"));
     }
 
     @Test
     public void testValidTimeWithInvalidPattern() {
         Assert.assertTrue(CustomDatetimePatternManager.isTime("21:30", "d/m/y**y hh:mm zzzzzzz"));
-        Assert.assertEquals("H:m", CustomDatetimePatternManager.datetimePatternReplace("21:30", "d/m/y**y hh:mm zzzzzzz"));
+        Assert.assertEquals("H:m", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "d/m/y**y hh:mm zzzzzzz"));
     }
 }

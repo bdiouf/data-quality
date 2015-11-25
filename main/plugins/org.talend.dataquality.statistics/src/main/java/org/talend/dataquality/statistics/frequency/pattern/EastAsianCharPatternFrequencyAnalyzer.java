@@ -26,13 +26,6 @@ public class EastAsianCharPatternFrequencyAnalyzer extends AbstractPatternFreque
 
     private static final long serialVersionUID = 3116215612379217599L;
 
-    public static final int LEVEL = 4;
-
-    @Override
-    public int getLevel() {
-        return LEVEL;
-    }
-
     @Override
     protected RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = new RecognitionResult();

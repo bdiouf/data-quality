@@ -62,60 +62,11 @@ public class CompositePatternFrequencyAnalyzerTest {
     }
 
     @Test
-    public void testPatternAnalyzerAddAndRemoval() {
+    public void testDate() {
         CompositePatternFrequencyAnalyzer analzyer = new CompositePatternFrequencyAnalyzer();
-        // Add the Easten Asia recognition
-        analzyer.addPatternAnalyzer(new EastAsianCharPatternFrequencyAnalyzer());
-        String patternString2 = analzyer.getValuePattern("abcd1234ゟ");
-        Assert.assertEquals("aaaa9999H", patternString2);
-        // No East Asia recognition.
-        analzyer.removePatternAnalyzer(EastAsianCharPatternFrequencyAnalyzer.LEVEL);
-        String patternString1 = analzyer.getValuePattern("abcd1234ゟ");
-        Assert.assertEquals("aaaa9999ゟ", patternString1);
+        String patternString4 = analzyer.getValuePattern("2008-01-01");
+        Assert.assertEquals("yyyy-M-d", patternString4);
 
-        // No date and time recognition
-        analzyer.removePatternAnalyzer(DateTimePatternFrequencyAnalyzer.LEVEL);
-        String datePattern = analzyer.getValuePattern("2003-12-20");
-        Assert.assertEquals("9999-99-99", datePattern);
-        String timePattern = analzyer.getValuePattern("12:00:00");
-        Assert.assertEquals("99:99:99", timePattern);
-        // Add date recognition
-        analzyer.addPatternAnalyzer(new DateTimePatternFrequencyAnalyzer());
-        String datePattern1 = analzyer.getValuePattern("2003-12-20");
-        Assert.assertEquals("yyyy-M-d", datePattern1);
-        analzyer.addPatternAnalyzer(new DateTimePatternFrequencyAnalyzer());
-        String timePattern1 = analzyer.getValuePattern("12:00:00");
-        Assert.assertEquals("H:m:s", timePattern1);
-    }
-
-    @Test
-    public void testAnalyzeFreqWithEastAsiaChar() {
-        CompositePatternFrequencyAnalyzer analyzerWithAsiaChars = new CompositePatternFrequencyAnalyzer();
-        analyzerWithAsiaChars.addPatternAnalyzer(new EastAsianCharPatternFrequencyAnalyzer());
-        String[] data = new String[] { "John", "", "2015-08-20", "2012-02-12", "2003年", "2004年", "2001年" };
-        analyzerWithAsiaChars.init();
-        for (String value : data) {
-            analyzerWithAsiaChars.analyze(value);
-        }
-        analyzerWithAsiaChars.end();
-        Map<String, Long> freqTable = analyzerWithAsiaChars.getResult().get(0).getTopK(10);
-        Iterator<Entry<String, Long>> entrySet = freqTable.entrySet().iterator();
-        int idx = 0;
-        boolean isAtLeastOneAsssert = false;
-        while (entrySet.hasNext()) {
-            Entry<String, Long> e = entrySet.next();
-            if (idx == 0) {
-                Assert.assertEquals("9999C", e.getKey());
-                Assert.assertEquals(3, e.getValue(), 0);
-                isAtLeastOneAsssert = true;
-            } else if (idx == 1) {
-                Assert.assertEquals("yyyy-M-d", e.getKey());
-                Assert.assertEquals(2, e.getValue(), 0);
-                isAtLeastOneAsssert = true;
-            }
-            idx++;
-        }
-        Assert.assertTrue(isAtLeastOneAsssert);
     }
 
     @Test
@@ -211,15 +162,15 @@ public class CompositePatternFrequencyAnalyzerTest {
 
     @Test
     public void testCustomDatePatternAnalyzer() {
-    	DateTimePatternFrequencyAnalyzer patternAnalyzer = new DateTimePatternFrequencyAnalyzer();
+        DateTimePatternFrequencyAnalyzer patternAnalyzer = new DateTimePatternFrequencyAnalyzer();
         final String[] data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2015-08-20", "2012-02-12", "2/8/15 15:57",
                 "4/15/11 4:24", "2001年" }; // TODO add a date in a strange format that we are sure
-                                                                 // we won't add to the list of date patterns that we
-                                                                 // have. e.g. , "12:00.000000 1?1?7"
+                                           // we won't add to the list of date patterns that we
+                                           // have. e.g. , "12:00.000000 1?1?7"
 
         // Set customized pattern and analyze again
         // TODO: Replace Map<String, String> parameters by class PatternAnalyzerConfig
-        patternAnalyzer.setCustomPattern("M/d/yy H:m");
+        patternAnalyzer.setCustomDateTimePattern("M/d/yy H:m");
         patternAnalyzer.init();
         for (String value : data) {
             patternAnalyzer.analyze(value);
@@ -242,7 +193,7 @@ public class CompositePatternFrequencyAnalyzerTest {
         // Add value quality analyzer to have list of valid date. some date matches patterns from the file, some matches
         // them in memory user set.
         DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.DATE);
-        qualityAnalyzer.setCustomPattern("M/d/yy H:m");
+        qualityAnalyzer.setCustomDateTimePattern("M/d/yy H:m");
         qualityAnalyzer.init();
         // 2-8-15 15:57 is not at date with pattern available,"2012-02-12" is a date match pattern from file, the others
         // match pattern set ad-hoc
@@ -262,7 +213,7 @@ public class CompositePatternFrequencyAnalyzerTest {
         // pattern and the pattern in file.
         // patterns provided.
         DataTypeQualityAnalyzer qualityAnalyzer2 = new DataTypeQualityAnalyzer(DataType.Type.DATE);
-        qualityAnalyzer2.setCustomPattern( "M-d-yy H:m");
+        qualityAnalyzer2.setCustomDateTimePattern("M-d-yy H:m");
         qualityAnalyzer2.init();
         for (String value : data) {
             qualityAnalyzer2.analyze(value);

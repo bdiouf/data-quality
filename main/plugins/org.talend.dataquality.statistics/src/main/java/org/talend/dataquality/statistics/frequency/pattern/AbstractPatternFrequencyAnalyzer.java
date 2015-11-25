@@ -24,23 +24,9 @@ import org.talend.datascience.common.inference.ResizableList;
  * @author mzhao
  *
  */
-public abstract class AbstractPatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer<PatternFrequencyStatistics> implements
-        Comparable<AbstractPatternFrequencyAnalyzer> {
+public abstract class AbstractPatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer<PatternFrequencyStatistics> {
 
     private static final long serialVersionUID = -4658709249927616622L;
-
-    /**
-     * The recognition level indicates the priorities of which recognition class should be applied in the first place
-     * when several recognizer exist. The lower this value is, the highest priority it will be applied.
-     * 
-     * @return level of the PatternAnalyzer
-     */
-    public abstract int getLevel();
-
-    @Override
-    public int compareTo(AbstractPatternFrequencyAnalyzer another) {
-        return this.getLevel() - another.getLevel();
-    }
 
     /**
      * Recognize the string pattern and the complete status.

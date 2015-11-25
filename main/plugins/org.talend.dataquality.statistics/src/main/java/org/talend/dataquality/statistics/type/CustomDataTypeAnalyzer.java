@@ -25,23 +25,23 @@ public class CustomDataTypeAnalyzer extends DataTypeAnalyzer {
 
     private static final long serialVersionUID = -9188435209256600268L;
 
-    private String customPattern = null;
+    private String customDateTimePattern = null;
 
-    public void setCustomPattern(String customPattern) {
-        this.customPattern = customPattern;
+    public void setCustomDateTimePattern(String customDateTimePattern) {
+        this.customDateTimePattern = customDateTimePattern;
     }
 
-    public String getCustomPattern() {
-        return customPattern;
+    public String getCustomDateTimePattern() {
+        return customDateTimePattern;
     }
 
     @Override
     protected boolean isDate(String value) {
-        return CustomDatetimePatternManager.isDate(value, customPattern);
+        return CustomDatetimePatternManager.isDate(value, customDateTimePattern);
     }
 
     @Override
     protected boolean isTime(String value) {
-        return CustomDatetimePatternManager.isTime(value, customPattern);
+        return CustomDatetimePatternManager.isTime(value, customDateTimePattern);
     }
 }

@@ -24,27 +24,20 @@ public class DateTimePatternFrequencyAnalyzer extends AbstractPatternFrequencyAn
 
     private static final long serialVersionUID = -6360092927227678935L;
 
-    public static final int LEVEL = 1;
+    private String customDateTimePattern = null; // TODO Replace by Set or list of custom patterns
 
-    private String customPattern = null; // TODO Replace by Set or list of customized patterns
-
-    @Override
-    public int getLevel() {
-        return LEVEL;
+    public void setCustomDateTimePattern(String pattern) {
+        this.customDateTimePattern = pattern;
     }
 
-    public void setCustomPattern(String customPattern) {
-        this.customPattern = customPattern;
-    }
-
-    public String getCustomPattern() {
-        return customPattern;
+    public String getCustomDateTimePattern() {
+        return customDateTimePattern;
     }
 
     @Override
     protected RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = new RecognitionResult();
-        String datePatternAfterReplace = CustomDatetimePatternManager.datetimePatternReplace(stringToRecognize, customPattern);
+        String datePatternAfterReplace = CustomDatetimePatternManager.replaceByDateTimePattern(stringToRecognize, customDateTimePattern);
         if (stringToRecognize.equals(datePatternAfterReplace)) {
             // Did not recognized.
             result.setResult(stringToRecognize, false);
@@ -55,7 +48,7 @@ public class DateTimePatternFrequencyAnalyzer extends AbstractPatternFrequencyAn
     }
 
     @Override
-    public String getValuePattern(String originalValue) {
+    protected String getValuePattern(String originalValue) {
         RecognitionResult result = recognize(originalValue);
         return result.getPatternString();
     }

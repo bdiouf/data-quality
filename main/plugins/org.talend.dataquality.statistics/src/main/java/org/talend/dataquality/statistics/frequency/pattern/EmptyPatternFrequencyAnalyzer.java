@@ -23,11 +23,6 @@ import org.apache.commons.lang.StringUtils;
 public class EmptyPatternFrequencyAnalyzer extends AbstractPatternFrequencyAnalyzer {
 
     private static final long serialVersionUID = 1973291585278371232L;
-    public static final int LEVEL = 0;
-    @Override
-    public int getLevel() {
-        return LEVEL;
-    }
 
     @Override
     protected RecognitionResult recognize(String stringToRecognize) {

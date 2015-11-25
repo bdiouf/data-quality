@@ -40,7 +40,7 @@ public class CustomDataTypeAnalyzerTest {
 
         // After set Custom Data Pattern: yyyy?mm?dd, "2015?08?20" & "2012?02?12" can be recognised as date
         // the type of testColumn is DATE
-        analyzer.setCustomPattern("yyyy?mm?dd");
+        analyzer.setCustomDateTimePattern("yyyy?mm?dd");
         analyzer.init();
         for (String record : testColumn) {
             analyzer.analyze(record);

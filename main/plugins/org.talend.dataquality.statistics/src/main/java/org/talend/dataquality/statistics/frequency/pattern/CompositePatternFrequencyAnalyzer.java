@@ -12,9 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.pattern;
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
 
@@ -30,7 +29,7 @@ public class CompositePatternFrequencyAnalyzer extends AbstractPatternFrequencyA
 
     private static final long serialVersionUID = -4658709249927616622L;
 
-    private Set<AbstractPatternFrequencyAnalyzer> patternFreqAnalyzers = new TreeSet<AbstractPatternFrequencyAnalyzer>();
+    private List<AbstractPatternFrequencyAnalyzer> patternFreqAnalyzers = new ArrayList<AbstractPatternFrequencyAnalyzer>();
 
     public CompositePatternFrequencyAnalyzer() {
         // Initialize the built-in string pattern recognitions.
@@ -41,78 +40,14 @@ public class CompositePatternFrequencyAnalyzer extends AbstractPatternFrequencyA
 
     }
 
+    public CompositePatternFrequencyAnalyzer(List<AbstractPatternFrequencyAnalyzer> analyzerList) {
+        patternFreqAnalyzers.addAll(analyzerList);
+    }
+
     @Override
     public void init() {
-        Iterator<AbstractPatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
-        while (recIterator.hasNext()) {
-            AbstractPatternFrequencyAnalyzer next = recIterator.next();
-            next.init();
-        }
-    }
-
-    /**
-     * Inject the recognizer of types below:<br>
-     * <ul>
-     * <li>{@link EmptyPatternFrequencyAnalyzer}</>
-     * <li>{@link DatePatternAnalyzer}</>
-     * <li>{@link TimePatternAnalyzer}</>
-     * <li>{@link AsciiCharPatternFrequencyAnalyzer}</>
-     * <li>{@link EastAsiaCharPatternFrequencyAnalyzer}</>
-     * </ul>
-     * 
-     * @param recognizerToInject the recognition to be registered.
-     */
-    public void addPatternAnalyzer(AbstractPatternFrequencyAnalyzer recognizerToInject) { // TODO refactor to
-                                                                                          // addAnalyzer
-        if (recognizerToInject == null) {
-            throw new RuntimeException("null analyzer is not allowed");
-        }
-        // No need to inject if already existed.
-        Iterator<AbstractPatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
-        while (recIterator.hasNext()) {
-            if (recIterator.next().getLevel() == recognizerToInject.getLevel()) {
-                // Already exist.
-                return;
-            }
-        }
-        // Inject
-        patternFreqAnalyzers.add(recognizerToInject);
-    }
-
-    /**
-     * Remove the recognizer instance Note that nothing to do with this method if the recognizer to be removed does not
-     * exist in the pool.
-     * 
-     * @param recognizerToRemove the recognizer instance added.
-     */
-    public void removePatternAnalyzer(AbstractPatternFrequencyAnalyzer recognizerToRemove) { // TODO refactor to
-                                                                                             // removeAnalyzer
-        if (recognizerToRemove == null) {
-            new RuntimeException("null recognition is not allowed");
-        }
-        patternFreqAnalyzers.remove(recognizerToRemove);
-    }
-
-    /**
-     * Remove the pattern analyzers by given its level. <br>
-     * Note that nothing to do with this method if the recognizer to be removed does not exist in the pool.
-     * 
-     * @param level the recognizer's level
-     */
-    public void removePatternAnalyzer(int level) { // TODO refactor to RemoveAnalyzer
-        // No need to inject if already existed.
-        Iterator<AbstractPatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
-        AbstractPatternFrequencyAnalyzer toRemove = null;
-        while (recIterator.hasNext()) {
-            AbstractPatternFrequencyAnalyzer next = recIterator.next();
-            if (next.getLevel() == level) {
-                // Already exist.
-                toRemove = next;
-                break;
-            }
-        }
-        if (toRemove != null) {
-            patternFreqAnalyzers.remove(toRemove);
+        for (AbstractPatternFrequencyAnalyzer analyzer : patternFreqAnalyzers) {
+            analyzer.init();
         }
     }
 
@@ -125,11 +60,10 @@ public class CompositePatternFrequencyAnalyzer extends AbstractPatternFrequencyA
      */
     @Override
     protected String getValuePattern(String originalValue) {
-        Iterator<AbstractPatternFrequencyAnalyzer> recognizerIterator = patternFreqAnalyzers.iterator();
         String patternValue = originalValue;
-        while (recognizerIterator.hasNext()) {
-            AbstractPatternFrequencyAnalyzer next = recognizerIterator.next();
-            RecognitionResult result = next.recognize(patternValue);
+        for (AbstractPatternFrequencyAnalyzer analyzer : patternFreqAnalyzers) {
+            RecognitionResult result = analyzer.recognize(patternValue);
+            analyzer.getValuePattern(patternValue);
             if (result.isComplete()) {
                 return result.getPatternString();
             } else {
@@ -140,11 +74,6 @@ public class CompositePatternFrequencyAnalyzer extends AbstractPatternFrequencyA
 
         // value is not recognized completely.
         return patternValue;
-    }
-
-    @Override
-    public int getLevel() {
-        return -1;
     }
 
     @Override
