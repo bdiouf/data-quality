@@ -22,7 +22,7 @@ import org.talend.dataquality.statistics.frequency.impl.EFrequencyAlgorithm;
 
 public class CMSFrequencyStatisticsTest {
 
-    private DataFrequencyAnalyzer fta = new DataFrequencyAnalyzer();
+    private DataTypeFrequencyAnalyzer fta = new DataTypeFrequencyAnalyzer();
 
     @Before
     public void setUp() throws Exception {

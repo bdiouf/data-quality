@@ -21,7 +21,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AsciiCharPatternAnalyzerTest {
+public class LatinExtendedCharPatternFrequencyAnalyzerTest {
 
     @Before
     public void setUp() throws Exception {
@@ -33,7 +33,7 @@ public class AsciiCharPatternAnalyzerTest {
 
     @Test
     public void testRecognize() {
-        AsciiCharPatternAnalyzer recognizer = new AsciiCharPatternAnalyzer();
+        LatinExtendedCharPatternFrequencyAnalyzer recognizer = new LatinExtendedCharPatternFrequencyAnalyzer();
         // Assert empty
         RecognitionResult result = recognizer.recognize("");
         Assert.assertFalse(result.isComplete());
@@ -82,7 +82,7 @@ public class AsciiCharPatternAnalyzerTest {
     }
 
     private void testRecognition(Map<String,String> str2Pattern) {
-        AsciiCharPatternAnalyzer recognizer = new AsciiCharPatternAnalyzer();
+        LatinExtendedCharPatternFrequencyAnalyzer recognizer = new LatinExtendedCharPatternFrequencyAnalyzer();
         Iterator<String> strIterator = str2Pattern.keySet().iterator();
         while (strIterator.hasNext()) {
             String str = strIterator.next();
@@ -94,7 +94,7 @@ public class AsciiCharPatternAnalyzerTest {
     }
 
     private void testDateRecognition(Map<String, String> str2Pattern) {
-        DatePatternAnalyzer recognizer = new DatePatternAnalyzer();
+    	DateTimePatternFrequencyAnalyzer recognizer = new DateTimePatternFrequencyAnalyzer();
         Iterator<String> strIterator = str2Pattern.keySet().iterator();
         while (strIterator.hasNext()) {
             String str = strIterator.next();

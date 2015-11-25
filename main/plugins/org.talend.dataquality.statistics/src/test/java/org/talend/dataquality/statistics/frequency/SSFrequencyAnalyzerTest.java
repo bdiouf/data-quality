@@ -23,7 +23,7 @@ import org.junit.Test;
 
 public class SSFrequencyAnalyzerTest {
 
-    private DataFrequencyAnalyzer fta = new DataFrequencyAnalyzer();
+    private DataTypeFrequencyAnalyzer fta = new DataTypeFrequencyAnalyzer();
 
     @Before
     public void setUp() throws Exception {

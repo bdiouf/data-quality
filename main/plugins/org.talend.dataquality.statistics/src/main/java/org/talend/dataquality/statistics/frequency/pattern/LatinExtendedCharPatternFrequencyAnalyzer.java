@@ -22,7 +22,7 @@ import org.apache.commons.lang.StringUtils;
  * @since 1.3.0
  * @author mzhao
  */
-public class AsciiCharPatternAnalyzer extends PatternFrequencyAnalyzer {
+public class LatinExtendedCharPatternFrequencyAnalyzer extends AbstractPatternFrequencyAnalyzer {
 
     private static final long serialVersionUID = -104288378010857759L;
 

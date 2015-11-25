@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.talend.datascience.common.inference.type.DataType;
 
-public class CustomDateTypeAnalyzerTest {
+public class CustomDataTypeAnalyzerTest {
 
     CustomDataTypeAnalyzer analyzer = null;
 

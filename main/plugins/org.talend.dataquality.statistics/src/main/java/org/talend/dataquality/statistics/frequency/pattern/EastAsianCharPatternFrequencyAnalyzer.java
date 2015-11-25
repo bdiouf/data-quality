@@ -22,7 +22,7 @@ import org.talend.datascience.common.regex.HandlerFactory;
  * @since 1.3.0
  * @author mzhao
  */
-public class EastAsiaCharPatternAnalyzer extends PatternFrequencyAnalyzer {
+public class EastAsianCharPatternFrequencyAnalyzer extends AbstractPatternFrequencyAnalyzer {
 
     private static final long serialVersionUID = 3116215612379217599L;
 

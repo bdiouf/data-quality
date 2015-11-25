@@ -15,7 +15,7 @@ package org.talend.dataquality.statistics.frequency.pattern;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.talend.dataquality.statistics.frequency.FrequencyAnalyzer;
+import org.talend.dataquality.statistics.frequency.AbstractFrequencyAnalyzer;
 import org.talend.datascience.common.inference.ResizableList;
 
 /**
@@ -24,8 +24,8 @@ import org.talend.datascience.common.inference.ResizableList;
  * @author mzhao
  *
  */
-public abstract class PatternFrequencyAnalyzer extends FrequencyAnalyzer<PatternFrequencyStatistics> implements
-        Comparable<PatternFrequencyAnalyzer> {
+public abstract class AbstractPatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer<PatternFrequencyStatistics> implements
+        Comparable<AbstractPatternFrequencyAnalyzer> {
 
     private static final long serialVersionUID = -4658709249927616622L;
 
@@ -38,7 +38,7 @@ public abstract class PatternFrequencyAnalyzer extends FrequencyAnalyzer<Pattern
     public abstract int getLevel();
 
     @Override
-    public int compareTo(PatternFrequencyAnalyzer another) {
+    public int compareTo(AbstractPatternFrequencyAnalyzer another) {
         return this.getLevel() - another.getLevel();
     }
 

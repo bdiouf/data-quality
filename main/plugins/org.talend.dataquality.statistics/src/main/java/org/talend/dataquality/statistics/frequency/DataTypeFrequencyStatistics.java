@@ -26,7 +26,7 @@ import org.talend.dataquality.statistics.frequency.impl.SSFrequencyEvaluator;
  * @author mzhao
  *
  */
-public class DataFrequencyStatistics extends FrequencyStatistics {
+public class DataTypeFrequencyStatistics extends AbstractFrequencyStatistics {
 
     private AbstractFrequencyEvaluator evaluator = new NaiveFrequencyEvaluator();
 

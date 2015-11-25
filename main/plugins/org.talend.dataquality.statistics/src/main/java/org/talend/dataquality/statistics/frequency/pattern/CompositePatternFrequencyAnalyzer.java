@@ -26,28 +26,26 @@ import org.apache.commons.lang.NotImplementedException;
  * @author mzhao
  *
  */
-public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer {
+public class CompositePatternFrequencyAnalyzer extends AbstractPatternFrequencyAnalyzer {
 
     private static final long serialVersionUID = -4658709249927616622L;
 
-    private Set<PatternFrequencyAnalyzer> patternFreqAnalyzers = new TreeSet<PatternFrequencyAnalyzer>();
-
+    private Set<AbstractPatternFrequencyAnalyzer> patternFreqAnalyzers = new TreeSet<AbstractPatternFrequencyAnalyzer>();
 
     public CompositePatternFrequencyAnalyzer() {
         // Initialize the built-in string pattern recognitions.
         // Date
-        patternFreqAnalyzers.add(new EmptyPatternAnalyzer());
-        patternFreqAnalyzers.add(new DatePatternAnalyzer());
-        patternFreqAnalyzers.add(new TimePatternAnalyzer());
-        patternFreqAnalyzers.add(new AsciiCharPatternAnalyzer());
+        patternFreqAnalyzers.add(new EmptyPatternFrequencyAnalyzer());
+        patternFreqAnalyzers.add(new DateTimePatternFrequencyAnalyzer());
+        patternFreqAnalyzers.add(new LatinExtendedCharPatternFrequencyAnalyzer());
 
     }
 
     @Override
     public void init() {
-        Iterator<PatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
+        Iterator<AbstractPatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
         while (recIterator.hasNext()) {
-            PatternFrequencyAnalyzer next = recIterator.next();
+            AbstractPatternFrequencyAnalyzer next = recIterator.next();
             next.init();
         }
     }
@@ -55,21 +53,22 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
     /**
      * Inject the recognizer of types below:<br>
      * <ul>
-     * <li>{@link EmptyPatternAnalyzer}</>
+     * <li>{@link EmptyPatternFrequencyAnalyzer}</>
      * <li>{@link DatePatternAnalyzer}</>
      * <li>{@link TimePatternAnalyzer}</>
-     * <li>{@link AsciiCharPatternAnalyzer}</>
-     * <li>{@link EastAsiaCharPatternAnalyzer}</>
+     * <li>{@link AsciiCharPatternFrequencyAnalyzer}</>
+     * <li>{@link EastAsiaCharPatternFrequencyAnalyzer}</>
      * </ul>
      * 
      * @param recognizerToInject the recognition to be registered.
      */
-    public void addPatternAnalyzer(PatternFrequencyAnalyzer recognizerToInject) { // TODO refactor to addAnalyzer
+    public void addPatternAnalyzer(AbstractPatternFrequencyAnalyzer recognizerToInject) { // TODO refactor to
+                                                                                          // addAnalyzer
         if (recognizerToInject == null) {
             throw new RuntimeException("null analyzer is not allowed");
         }
         // No need to inject if already existed.
-        Iterator<PatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
+        Iterator<AbstractPatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
         while (recIterator.hasNext()) {
             if (recIterator.next().getLevel() == recognizerToInject.getLevel()) {
                 // Already exist.
@@ -86,7 +85,8 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
      * 
      * @param recognizerToRemove the recognizer instance added.
      */
-    public void removePatternAnalyzer(PatternFrequencyAnalyzer recognizerToRemove) { // TODO refactor to removeAnalyzer
+    public void removePatternAnalyzer(AbstractPatternFrequencyAnalyzer recognizerToRemove) { // TODO refactor to
+                                                                                             // removeAnalyzer
         if (recognizerToRemove == null) {
             new RuntimeException("null recognition is not allowed");
         }
@@ -101,10 +101,10 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
      */
     public void removePatternAnalyzer(int level) { // TODO refactor to RemoveAnalyzer
         // No need to inject if already existed.
-        Iterator<PatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
-        PatternFrequencyAnalyzer toRemove = null;
+        Iterator<AbstractPatternFrequencyAnalyzer> recIterator = patternFreqAnalyzers.iterator();
+        AbstractPatternFrequencyAnalyzer toRemove = null;
         while (recIterator.hasNext()) {
-            PatternFrequencyAnalyzer next = recIterator.next();
+            AbstractPatternFrequencyAnalyzer next = recIterator.next();
             if (next.getLevel() == level) {
                 // Already exist.
                 toRemove = next;
@@ -125,10 +125,10 @@ public class CompositePatternFrequencyAnalyzer extends PatternFrequencyAnalyzer 
      */
     @Override
     protected String getValuePattern(String originalValue) {
-        Iterator<PatternFrequencyAnalyzer> recognizerIterator = patternFreqAnalyzers.iterator();
+        Iterator<AbstractPatternFrequencyAnalyzer> recognizerIterator = patternFreqAnalyzers.iterator();
         String patternValue = originalValue;
         while (recognizerIterator.hasNext()) {
-            PatternFrequencyAnalyzer next = recognizerIterator.next();
+            AbstractPatternFrequencyAnalyzer next = recognizerIterator.next();
             RecognitionResult result = next.recognize(patternValue);
             if (result.isComplete()) {
                 return result.getPatternString();

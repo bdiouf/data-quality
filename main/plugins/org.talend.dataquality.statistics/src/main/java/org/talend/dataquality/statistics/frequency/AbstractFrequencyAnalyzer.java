@@ -30,7 +30,7 @@ import org.talend.datascience.common.inference.ResizableList;
  * @author mzhao
  *
  */
-public abstract class FrequencyAnalyzer<T extends FrequencyStatistics> implements Analyzer<T> {
+public abstract class AbstractFrequencyAnalyzer<T extends AbstractFrequencyStatistics> implements Analyzer<T> {
 
     private static final long serialVersionUID = 5073865267265592024L;
 
@@ -76,7 +76,7 @@ public abstract class FrequencyAnalyzer<T extends FrequencyStatistics> implement
             initFreqTableList(record.length);
         }
         for (int i = 0; i < record.length; i++) {
-            FrequencyStatistics freqStas = freqTableStatistics.get(i);
+            AbstractFrequencyStatistics freqStas = freqTableStatistics.get(i);
             freqStas.add(getValuePattern(record[i]));
         }
         return true;

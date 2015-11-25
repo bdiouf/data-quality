@@ -23,11 +23,11 @@ import org.junit.Test;
 
 public class FrequencyAnalyzerTest {
 
-    private DataFrequencyAnalyzer fta = null;
+    private DataTypeFrequencyAnalyzer fta = null;
 
     @Before
     public void setUp() throws Exception {
-        fta = new DataFrequencyAnalyzer();
+        fta = new DataTypeFrequencyAnalyzer();
     }
 
     @After

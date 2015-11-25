@@ -60,29 +60,35 @@ public final class CustomDatetimePatternManager {
             DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customizedPattern);
             dtFormatter.parse(value);
         } catch (DateTimeParseException | IllegalArgumentException e) {
-            // Not match user defined pattern.
+            // Cannot create DateTimeFormatter, or input data cannot match user defined pattern.
             return false;
         }
         return true;
     }
 
-    public static String datePatternReplace(String value, String customizedPattern) {
-        if (customizedPattern == null) {
-            // No customized pattern set.
-            return SystemDatetimePatternManager.datePatternReplace(value);
-        }
-        boolean matchCustomizedPattern = true;
-        try {
-            DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customizedPattern);
-            dtFormatter.parse(value);
-        } catch (DateTimeParseException e) {
-            // Not match user defined pattern.
-            matchCustomizedPattern = false;
-        }
-        if (matchCustomizedPattern) {
-            return customizedPattern;
+    public static String datetimePatternReplace(String value, String customizedPattern) {
+        if (customizedPattern != null) {
+            boolean matchCustomizedPattern = true;
+            try {
+                DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customizedPattern);
+                dtFormatter.parse(value);
+            } catch (DateTimeParseException | IllegalArgumentException e) {
+                // Cannot create DateTimeFormatter, or input data cannot match user defined pattern.
+                matchCustomizedPattern = false;
+            }
+            if (matchCustomizedPattern) {
+                return customizedPattern;
+            }
         }
         // replace with system date pattern manager.
-        return SystemDatetimePatternManager.datePatternReplace(value);
+        return systemPatternReplace(value);
+    }
+
+    private static String systemPatternReplace(String value) {
+        String pattern = SystemDatetimePatternManager.datePatternReplace(value);
+        if (pattern.equals(value)) {
+            pattern = SystemDatetimePatternManager.timePatternReplace(value);
+        }
+        return pattern;
     }
 }

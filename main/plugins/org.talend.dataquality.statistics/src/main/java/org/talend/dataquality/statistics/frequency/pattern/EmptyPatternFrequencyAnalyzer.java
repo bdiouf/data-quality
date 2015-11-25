@@ -12,44 +12,30 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.pattern;
 
-import org.talend.dataquality.statistics.type.CustomDatetimePatternManager;
+import org.apache.commons.lang.StringUtils;
 
 /**
- * Recognize date types given the predefined date regex pattern.
+ * Empty recognizer handling null and "" values
  * 
  * @since 1.3.0
  * @author mzhao
  */
-public class DatePatternAnalyzer extends PatternFrequencyAnalyzer {
+public class EmptyPatternFrequencyAnalyzer extends AbstractPatternFrequencyAnalyzer {
 
-    private static final long serialVersionUID = -6360092927227678935L;
-
-    public static final int LEVEL = 1;
-
-    private String customPattern = null; // TODO Replace by Set or list of customized patterns
-
+    private static final long serialVersionUID = 1973291585278371232L;
+    public static final int LEVEL = 0;
     @Override
     public int getLevel() {
         return LEVEL;
     }
 
-    public void setCustomPattern(String customPattern) {
-        this.customPattern = customPattern;
-    }
-
-    public String getCustomPattern() {
-        return customPattern;
-    }
-
     @Override
     protected RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = new RecognitionResult();
-        String datePatternAfterReplace = CustomDatetimePatternManager.datePatternReplace(stringToRecognize, customPattern);
-        if (stringToRecognize.equals(datePatternAfterReplace)) {
-            // Did not recognized.
-            result.setResult(stringToRecognize, false);
+        if (StringUtils.isEmpty(stringToRecognize)) {
+            result.setResult(stringToRecognize, true);
         } else {
-            result.setResult(datePatternAfterReplace, true);
+            result.setResult(stringToRecognize, false);
         }
         return result;
     }
@@ -59,4 +45,5 @@ public class DatePatternAnalyzer extends PatternFrequencyAnalyzer {
         RecognitionResult result = recognize(originalValue);
         return result.getPatternString();
     }
+
 }

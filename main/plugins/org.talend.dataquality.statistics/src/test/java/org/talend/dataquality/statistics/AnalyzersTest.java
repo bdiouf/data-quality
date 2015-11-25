@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.statistics.cardinality.CardinalityAnalyzer;
 import org.talend.dataquality.statistics.cardinality.CardinalityStatistics;
-import org.talend.dataquality.statistics.frequency.FrequencyStatistics;
+import org.talend.dataquality.statistics.frequency.AbstractFrequencyStatistics;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.Analyzers;
 import org.talend.datascience.common.inference.Analyzers.Result;
@@ -43,6 +43,6 @@ public class AnalyzersTest {
         }
         Assert.assertEquals(8, analyzer.getResult().get(0).get(CardinalityStatistics.class).getDistinctCount(), 0);
         Assert.assertEquals(1, analyzer.getResult().get(0).get(CardinalityStatistics.class).getDuplicateCount(), 0);
-        Assert.assertFalse(analyzer.getResult().get(0).exist(FrequencyStatistics.class));
+        Assert.assertFalse(analyzer.getResult().get(0).exist(AbstractFrequencyStatistics.class));
     }
 }

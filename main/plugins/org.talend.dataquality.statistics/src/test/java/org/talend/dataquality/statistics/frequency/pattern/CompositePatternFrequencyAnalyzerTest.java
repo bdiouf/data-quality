@@ -29,7 +29,7 @@ import org.talend.datascience.common.inference.type.DataType;
 
 public class CompositePatternFrequencyAnalyzerTest {
 
-    PatternFrequencyAnalyzer patternFreqAnalyzer = null;
+    AbstractPatternFrequencyAnalyzer patternFreqAnalyzer = null;
 
     @Before
     public void setUp() throws Exception {
@@ -65,26 +65,25 @@ public class CompositePatternFrequencyAnalyzerTest {
     public void testPatternAnalyzerAddAndRemoval() {
         CompositePatternFrequencyAnalyzer analzyer = new CompositePatternFrequencyAnalyzer();
         // Add the Easten Asia recognition
-        analzyer.addPatternAnalyzer(new EastAsiaCharPatternAnalyzer());
+        analzyer.addPatternAnalyzer(new EastAsianCharPatternFrequencyAnalyzer());
         String patternString2 = analzyer.getValuePattern("abcd1234ゟ");
         Assert.assertEquals("aaaa9999H", patternString2);
         // No East Asia recognition.
-        analzyer.removePatternAnalyzer(EastAsiaCharPatternAnalyzer.LEVEL);
+        analzyer.removePatternAnalyzer(EastAsianCharPatternFrequencyAnalyzer.LEVEL);
         String patternString1 = analzyer.getValuePattern("abcd1234ゟ");
         Assert.assertEquals("aaaa9999ゟ", patternString1);
 
         // No date and time recognition
-        analzyer.removePatternAnalyzer(DatePatternAnalyzer.LEVEL);
-        analzyer.removePatternAnalyzer(TimePatternAnalyzer.LEVEL);
+        analzyer.removePatternAnalyzer(DateTimePatternFrequencyAnalyzer.LEVEL);
         String datePattern = analzyer.getValuePattern("2003-12-20");
         Assert.assertEquals("9999-99-99", datePattern);
         String timePattern = analzyer.getValuePattern("12:00:00");
         Assert.assertEquals("99:99:99", timePattern);
         // Add date recognition
-        analzyer.addPatternAnalyzer(new DatePatternAnalyzer());
+        analzyer.addPatternAnalyzer(new DateTimePatternFrequencyAnalyzer());
         String datePattern1 = analzyer.getValuePattern("2003-12-20");
         Assert.assertEquals("yyyy-M-d", datePattern1);
-        analzyer.addPatternAnalyzer(new TimePatternAnalyzer());
+        analzyer.addPatternAnalyzer(new DateTimePatternFrequencyAnalyzer());
         String timePattern1 = analzyer.getValuePattern("12:00:00");
         Assert.assertEquals("H:m:s", timePattern1);
     }
@@ -92,7 +91,7 @@ public class CompositePatternFrequencyAnalyzerTest {
     @Test
     public void testAnalyzeFreqWithEastAsiaChar() {
         CompositePatternFrequencyAnalyzer analyzerWithAsiaChars = new CompositePatternFrequencyAnalyzer();
-        analyzerWithAsiaChars.addPatternAnalyzer(new EastAsiaCharPatternAnalyzer());
+        analyzerWithAsiaChars.addPatternAnalyzer(new EastAsianCharPatternFrequencyAnalyzer());
         String[] data = new String[] { "John", "", "2015-08-20", "2012-02-12", "2003年", "2004年", "2001年" };
         analyzerWithAsiaChars.init();
         for (String value : data) {
@@ -212,7 +211,7 @@ public class CompositePatternFrequencyAnalyzerTest {
 
     @Test
     public void testCustomDatePatternAnalyzer() {
-        DatePatternAnalyzer patternAnalyzer = new DatePatternAnalyzer();
+    	DateTimePatternFrequencyAnalyzer patternAnalyzer = new DateTimePatternFrequencyAnalyzer();
         final String[] data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2015-08-20", "2012-02-12", "2/8/15 15:57",
                 "4/15/11 4:24", "2001年" }; // TODO add a date in a strange format that we are sure
                                                                  // we won't add to the list of date patterns that we

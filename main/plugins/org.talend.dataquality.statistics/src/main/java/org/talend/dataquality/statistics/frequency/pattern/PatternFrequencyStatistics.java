@@ -14,7 +14,7 @@ package org.talend.dataquality.statistics.frequency.pattern;
 
 import java.util.Map;
 
-import org.talend.dataquality.statistics.frequency.FrequencyStatistics;
+import org.talend.dataquality.statistics.frequency.AbstractFrequencyStatistics;
 import org.talend.dataquality.statistics.frequency.impl.AbstractFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.CMSFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.EFrequencyAlgorithm;
@@ -27,7 +27,7 @@ import org.talend.dataquality.statistics.frequency.impl.SSFrequencyEvaluator;
  * @author mzhao
  *
  */
-public class PatternFrequencyStatistics extends FrequencyStatistics {
+public class PatternFrequencyStatistics extends AbstractFrequencyStatistics {
 
     private AbstractFrequencyEvaluator evaluator = new NaiveFrequencyEvaluator();
 
