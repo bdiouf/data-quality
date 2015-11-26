@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,12 +29,14 @@ public class GenerateFromFileStringTest {
 
     static final String path = GenerateFromFileStringTest.class.getResource("/data/name.txt").getFile(); //$NON-NLS-1$
 
+    static final String linuxFilePath = GenerateFromFileStringTest.class.getResource("/data/last_names.csv").getFile(); //$NON-NLS-1$
+
     static final String pathWin = GenerateFromFileStringTest.class.getResource("/data/name_win.txt").getFile(); //$NON-NLS-1$
+
     private GenerateFromFileString gffs = new GenerateFromFileString();
 
     @Before
     public void setUp() throws Exception {
-        gffs.setTokenDelimiter("\n");
         gffs.parse(path, false, new RandomWrapper(42));
     }
 

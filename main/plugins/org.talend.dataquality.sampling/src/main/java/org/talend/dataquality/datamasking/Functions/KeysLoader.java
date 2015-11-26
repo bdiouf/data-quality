@@ -12,11 +12,12 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.Functions;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Load keys from file
@@ -29,21 +30,20 @@ public class KeysLoader {
     /**
      * 
      * @param filePath the file path where keys to be loaded.
-     * @param keyDelimiter key delimiter
      * @return keys array
      * @throws FileNotFoundException
      * @throws NullPointerException
      */
-    public static List<String> loadKeys(String filePath, String keyDelimiter) throws FileNotFoundException, NullPointerException {
+    public static List<String> loadKeys(String filePath) throws IOException, NullPointerException {
         List<String> keys = new ArrayList<>();
-        Scanner in;
+        BufferedReader in;
         try {
-            in = new Scanner(new FileReader(filePath)).useDelimiter(keyDelimiter);
-            while (in.hasNext()) {
-                keys.add(in.next().trim());
+            in = new BufferedReader(new FileReader(filePath));
+            while (in.ready()) {
+                keys.add(in.readLine().trim());
             }
             in.close();
-        } catch (FileNotFoundException | NullPointerException e) {
+        } catch (NullPointerException | IOException e) {
             throw (e);
         }
         return keys;

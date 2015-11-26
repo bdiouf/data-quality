@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.Functions;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +33,8 @@ public class MaskEmail extends GenerateFromFile<String> implements Serializable 
     private void addKeys(String[] para) {
         if (para.length > 0) {
             try {
-                keys = KeysLoader.loadKeys(para[0], tokenDelimiter);
-            } catch (FileNotFoundException | NullPointerException e) {
+                keys = KeysLoader.loadKeys(para[0]);
+            } catch (IOException | NullPointerException e) {
                 for (String element : para) {
                     keys.add(element.trim());
                 }

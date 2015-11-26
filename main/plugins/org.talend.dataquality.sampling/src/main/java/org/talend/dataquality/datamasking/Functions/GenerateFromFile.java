@@ -12,11 +12,12 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.Functions;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.talend.dataquality.datamasking.Function;
+
 /**
  * created by jgonzalez on 19 juin 2015. This function works like GenerateFromList, the difference is that the parameter
  * is now a String holding the path to a file in the user’s computer.
@@ -28,24 +29,10 @@ public abstract class GenerateFromFile<T2> extends Function<T2> {
 
     protected List<String> StringTokens = new ArrayList<>();
 
-    /**
-     * String delimiter when using scanner reading tokens from a file.
-     */
-    protected String tokenDelimiter = System.lineSeparator();
-
-    /**
-     * Set the token delimiter which separating words in file.
-     * 
-     * @param delimiter
-     */
-    public void setTokenDelimiter(String delimiter) {
-        this.tokenDelimiter = delimiter;
-    }
-
     protected void init() {
         try {
-            StringTokens = KeysLoader.loadKeys(parameters[0], tokenDelimiter);
-        } catch (FileNotFoundException | NullPointerException e) {
+            StringTokens = KeysLoader.loadKeys(parameters[0]);
+        } catch (IOException | NullPointerException e) {
             // We do nothing here because in is already set.
         }
     }

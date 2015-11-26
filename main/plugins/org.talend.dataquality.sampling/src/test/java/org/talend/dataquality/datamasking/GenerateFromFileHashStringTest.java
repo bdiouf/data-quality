@@ -12,8 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Before;
@@ -31,13 +30,14 @@ public class GenerateFromFileHashStringTest {
 
     private String path = GenerateFromFileStringTest.path;
 
+    private String linuxFilePath = GenerateFromFileStringTest.linuxFilePath;
+
     private String pathWin = GenerateFromFileStringTest.pathWin;
 
     @Before
     public void setUp() throws Exception {
     }
 
-    @Test
     public void testGood() {
         GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
         gffhs.parse(path, false, new RandomWrapper(42));
@@ -45,7 +45,6 @@ public class GenerateFromFileHashStringTest {
         assertEquals("Brad X", output); //$NON-NLS-1$
     }
 
-    @Test
     public void testSeparatorWin() {
         GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
         gffhs.parse(pathWin, false, new RandomWrapper(42));
@@ -53,12 +52,24 @@ public class GenerateFromFileHashStringTest {
         String[] keysArray = new String[] { "Brad X", "Marouane", "Matthieu", "Xavier", "Aymen" };
         while (runTimes > 0) {
             output = gffhs.generateMaskedRow(null);
-            assertTrue(ArrayUtils.contains(keysArray, output)); //$NON-NLS-1$
+            assertTrue(ArrayUtils.contains(keysArray, output));
             runTimes--;
         }
     }
 
     @Test
+    public void testSeparatorLinux() {
+        GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
+        gffhs.parse(linuxFilePath, false, new RandomWrapper(42));
+        int runTimes = 5;
+        String[] keysArray = new String[] { "Mendez", "Slaven", "Posner", "Rosemont", "Wyllie" };
+        while (runTimes > 0) {
+            output = gffhs.generateMaskedRow(null);
+            assertTrue(ArrayUtils.contains(keysArray, output));
+            runTimes--;
+        }
+    }
+
     public void testNull() {
         GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
         gffhs.parse(path, false, new RandomWrapper(42));
