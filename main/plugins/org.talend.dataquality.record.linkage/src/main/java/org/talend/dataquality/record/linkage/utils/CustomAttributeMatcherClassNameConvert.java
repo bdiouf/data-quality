@@ -34,9 +34,10 @@ public class CustomAttributeMatcherClassNameConvert {
 
     /**
      * DOC zshen Comment method "getClassName".
-     *
-     * @param classPathParameter
-     * @return
+     * 
+     * @param classPathParameter like "CustomMatcherTest.jar||MycustomMatch.jar||testCustomMatcher.myCustomMatcher" last
+     * one is fully qualified name("testCustomMatcher" is package name and "myCustomMatcher" is class name).
+     * @return the class name as the demo will return testCustomMatcher.myCustomMatcher
      */
     public static String getClassName(String classPathParameter) {
         String[] allElements = classPathParameter.split(REGEXKEY);
