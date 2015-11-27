@@ -46,14 +46,14 @@ public class TDigestQuantileStatistics {
         return dist.quantile(0.5);
     }
 
-    public double getLowerQuantile() {
+    public double getLowerQuartile() {
         if (dist.centroidCount() == 1) {
             return dist.centroids().iterator().next().mean();
         }
         return dist.quantile(0.25);
     }
 
-    public double getUpperQuantile() {
+    public double getUpperQuartile() {
         if (dist.centroidCount() == 1) {
             return dist.centroids().iterator().next().mean();
         }

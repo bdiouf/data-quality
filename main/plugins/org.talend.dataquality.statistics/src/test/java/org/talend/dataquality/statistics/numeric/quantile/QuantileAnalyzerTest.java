@@ -50,13 +50,13 @@ public class QuantileAnalyzerTest {
         analyzer.end();
         tanalyzer.end();
         Assert.assertEquals(5, analyzer.getResult().get(0).getMedian(), 0);
-        Assert.assertEquals(2.5, analyzer.getResult().get(0).getLowerQuantile(), 0);
-        Assert.assertEquals(7.5, analyzer.getResult().get(0).getUpperQuantile(), 0);
+        Assert.assertEquals(2.5, analyzer.getResult().get(0).getLowerQuartile(), 0);
+        Assert.assertEquals(7.5, analyzer.getResult().get(0).getUpperQuartile(), 0);
         Assert.assertEquals(3, analyzer.getResult().get(0).getQuantile(0.3), 0);
 
         Assert.assertEquals(4.5, tanalyzer.getResult().get(0).getMedian(), 0.0);
-        Assert.assertEquals(2.75, tanalyzer.getResult().get(0).getLowerQuantile(), 0.0);
-        Assert.assertEquals(6.25, tanalyzer.getResult().get(0).getUpperQuantile(), 0);
+        Assert.assertEquals(2.75, tanalyzer.getResult().get(0).getLowerQuartile(), 0.0);
+        Assert.assertEquals(6.25, tanalyzer.getResult().get(0).getUpperQuartile(), 0);
         Assert.assertEquals(2.3, tanalyzer.getResult().get(0).getQuantile(0.3), 0.001);
 
         data = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18",
@@ -70,13 +70,13 @@ public class QuantileAnalyzerTest {
         analyzer.end();
         tanalyzer.end();
         Assert.assertEquals(11, analyzer.getResult().get(0).getMedian(), 0.0);
-        Assert.assertEquals(5.5, analyzer.getResult().get(0).getLowerQuantile(), 0.0);
-        Assert.assertEquals(16.5, analyzer.getResult().get(0).getUpperQuantile(), 0);
+        Assert.assertEquals(5.5, analyzer.getResult().get(0).getLowerQuartile(), 0.0);
+        Assert.assertEquals(16.5, analyzer.getResult().get(0).getUpperQuartile(), 0);
         Assert.assertEquals(6.6, analyzer.getResult().get(0).getQuantile(0.3), 0.001);
 
         Assert.assertEquals(10.5, tanalyzer.getResult().get(0).getMedian(), 0.0);
-        Assert.assertEquals(5.75, tanalyzer.getResult().get(0).getLowerQuantile(), 0.0);
-        Assert.assertEquals(15.25, tanalyzer.getResult().get(0).getUpperQuantile(), 0);
+        Assert.assertEquals(5.75, tanalyzer.getResult().get(0).getLowerQuartile(), 0.0);
+        Assert.assertEquals(15.25, tanalyzer.getResult().get(0).getUpperQuartile(), 0);
         Assert.assertEquals(6.7, tanalyzer.getResult().get(0).getQuantile(0.3), 0.001);
 
         data = new String[] { "1", "9", "3", "4", "6", "7", "5", "8", "2" };
@@ -89,13 +89,13 @@ public class QuantileAnalyzerTest {
         analyzer.end();
         tanalyzer.end();
         Assert.assertEquals(5, analyzer.getResult().get(0).getMedian(), 0);
-        Assert.assertEquals(2.5, analyzer.getResult().get(0).getLowerQuantile(), 0);
-        Assert.assertEquals(7.5, analyzer.getResult().get(0).getUpperQuantile(), 0);
+        Assert.assertEquals(2.5, analyzer.getResult().get(0).getLowerQuartile(), 0);
+        Assert.assertEquals(7.5, analyzer.getResult().get(0).getUpperQuartile(), 0);
         Assert.assertEquals(3, analyzer.getResult().get(0).getQuantile(0.3), 0);
 
         Assert.assertEquals(4.5, tanalyzer.getResult().get(0).getMedian(), 0.0);
-        Assert.assertEquals(2.75, tanalyzer.getResult().get(0).getLowerQuantile(), 0.0);
-        Assert.assertEquals(6.25, tanalyzer.getResult().get(0).getUpperQuantile(), 0);
+        Assert.assertEquals(2.75, tanalyzer.getResult().get(0).getLowerQuartile(), 0.0);
+        Assert.assertEquals(6.25, tanalyzer.getResult().get(0).getUpperQuartile(), 0);
         Assert.assertEquals(2.3, tanalyzer.getResult().get(0).getQuantile(0.3), 0.001);
 
         data = new String[] { "0", "0", "0", "0", "0", "0", "0", "0", "0" };
@@ -108,13 +108,13 @@ public class QuantileAnalyzerTest {
         analyzer.end();
         tanalyzer.end();
         Assert.assertEquals(0, analyzer.getResult().get(0).getMedian(), 0);
-        Assert.assertEquals(0, analyzer.getResult().get(0).getLowerQuantile(), 0);
-        Assert.assertEquals(0, analyzer.getResult().get(0).getUpperQuantile(), 0);
+        Assert.assertEquals(0, analyzer.getResult().get(0).getLowerQuartile(), 0);
+        Assert.assertEquals(0, analyzer.getResult().get(0).getUpperQuartile(), 0);
         Assert.assertEquals(0, analyzer.getResult().get(0).getQuantile(0.3), 0);
 
         Assert.assertEquals(0, tanalyzer.getResult().get(0).getMedian(), 0);
-        Assert.assertEquals(0, tanalyzer.getResult().get(0).getLowerQuantile(), 0);
-        Assert.assertEquals(0, tanalyzer.getResult().get(0).getUpperQuantile(), 0);
+        Assert.assertEquals(0, tanalyzer.getResult().get(0).getLowerQuartile(), 0);
+        Assert.assertEquals(0, tanalyzer.getResult().get(0).getUpperQuartile(), 0);
         Assert.assertEquals(0, tanalyzer.getResult().get(0).getQuantile(0.3), 0);
 
         data = new String[] { "-1", "-1", "1", "2", "3", "4", "5", "6", "7" };
@@ -127,13 +127,13 @@ public class QuantileAnalyzerTest {
         analyzer.end();
         tanalyzer.end();
         Assert.assertEquals(3, analyzer.getResult().get(0).getMedian(), 0);
-        Assert.assertEquals(0, analyzer.getResult().get(0).getLowerQuantile(), 0);
-        Assert.assertEquals(5.5, analyzer.getResult().get(0).getUpperQuantile(), 0);
+        Assert.assertEquals(0, analyzer.getResult().get(0).getLowerQuartile(), 0);
+        Assert.assertEquals(5.5, analyzer.getResult().get(0).getUpperQuartile(), 0);
         Assert.assertEquals(1, analyzer.getResult().get(0).getQuantile(0.3), 0);
 
         Assert.assertEquals(2.5, tanalyzer.getResult().get(0).getMedian(), 0);
-        Assert.assertEquals(0.5, tanalyzer.getResult().get(0).getLowerQuantile(), 0);
-        Assert.assertEquals(4.25, tanalyzer.getResult().get(0).getUpperQuantile(), 0);
+        Assert.assertEquals(0.5, tanalyzer.getResult().get(0).getLowerQuartile(), 0);
+        Assert.assertEquals(4.25, tanalyzer.getResult().get(0).getUpperQuartile(), 0);
         Assert.assertEquals(-0.4, tanalyzer.getResult().get(0).getQuantile(0.3), 0.001);
 
         data = new String[] {};
@@ -163,10 +163,10 @@ public class QuantileAnalyzerTest {
         tanalyzer.end();
         analyzer.end();
         summaryAnalyzer.end();
-        Assert.assertEquals(23.9, tanalyzer.getResult().get(0).getUpperQuantile(), 0);
-        Assert.assertEquals(16.7, tanalyzer.getResult().get(0).getLowerQuantile(), 0);
-        Assert.assertEquals(23.9, analyzer.getResult().get(0).getUpperQuantile(), 0);
-        Assert.assertEquals(16.7, analyzer.getResult().get(0).getLowerQuantile(), 0);
+        Assert.assertEquals(23.9, tanalyzer.getResult().get(0).getUpperQuartile(), 0);
+        Assert.assertEquals(16.7, tanalyzer.getResult().get(0).getLowerQuartile(), 0);
+        Assert.assertEquals(23.9, analyzer.getResult().get(0).getUpperQuartile(), 0);
+        Assert.assertEquals(16.7, analyzer.getResult().get(0).getLowerQuartile(), 0);
         Assert.assertEquals(16.7, summaryAnalyzer.getResult().get(0).getMin(), 0);
         Assert.assertEquals(32, summaryAnalyzer.getResult().get(0).getMax(), 0);
 

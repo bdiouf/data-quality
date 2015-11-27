@@ -41,11 +41,11 @@ public class QuantileStatistics {
         return median.evaluate(50);
     }
 
-    public double getLowerQuantile() {
+    public double getLowerQuartile() {
         return median.evaluate(25);
     }
 
-    public double getUpperQuantile() {
+    public double getUpperQuartile() {
         return median.evaluate(75);
     }
 
