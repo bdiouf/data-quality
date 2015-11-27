@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.talend.datascience.common.inference.type.SystemDatetimePatternManager;
 
@@ -27,16 +28,12 @@ import org.talend.datascience.common.inference.type.SystemDatetimePatternManager
  */
 public final class CustomDatetimePatternManager {
 
-    /**
-     * This method call the system date pattern manager to valid it again after the custom pattern does not not match.
-     * 
-     * @param value
-     * @param customDatePattern
-     * @param locale
-     * @return
-     */
     public static boolean isDate(String value, String customDatePattern) {
-        boolean isMatch = isMatchCustomPattern(value, customDatePattern);
+        return isDate(value, customDatePattern, Locale.getDefault());
+    }
+
+    public static boolean isDate(String value, String customDatePattern, Locale locale) {
+        boolean isMatch = isMatchCustomPattern(value, customDatePattern, locale);
         if (isMatch) {
             return true;
         }
@@ -45,7 +42,11 @@ public final class CustomDatetimePatternManager {
     }
 
     public static boolean isTime(String value, String customTimePattern) {
-        boolean isMatch = isMatchCustomPattern(value, customTimePattern);
+        return isTime(value, customTimePattern, Locale.getDefault());
+    }
+
+    public static boolean isTime(String value, String customTimePattern, Locale locale) {
+        boolean isMatch = isMatchCustomPattern(value, customTimePattern, locale);
         if (isMatch) {
             return true;
         }
@@ -53,36 +54,53 @@ public final class CustomDatetimePatternManager {
         return SystemDatetimePatternManager.isTime(value);
     }
 
-    private static boolean isMatchCustomPattern(String value, String customDateTimePattern) {
-        if (customDateTimePattern == null) {
+    private static boolean isMatchCustomPattern(String value, String customPattern, Locale locale) {
+        if (customPattern == null) {
             return false;
         }
-        try {
-            DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customDateTimePattern);
-            dtFormatter.parse(value);
+        try {// firstly, try with user-defined locale
+            DateTimeFormatter.ofPattern(customPattern, locale).parse(value);
+            return true;
         } catch (DateTimeParseException | IllegalArgumentException e) {
-            // Cannot create DateTimeFormatter, or input data cannot match user defined pattern.
-            return false;
+            if (!Locale.US.equals(locale)) {
+                try {// try with LOCALE_US if user defined locale is not US
+                    DateTimeFormatter.ofPattern(customPattern, Locale.US).parse(value);
+                    return true;
+                } catch (DateTimeParseException | IllegalArgumentException e1) {
+                    // continue
+                }
+            }
+            if (!Locale.getDefault().equals(locale) && !Locale.getDefault().equals(Locale.US)) {
+                try {// try with LOCALE_JVM it none of the above matches
+                    DateTimeFormatter.ofPattern(customPattern, Locale.getDefault()).parse(value);
+                    return true;
+                } catch (DateTimeParseException | IllegalArgumentException e2) {
+                    // no more try
+                }
+            }
         }
-        return true;
+        return false;
     }
 
     public static String replaceByDateTimePattern(String value, String customPattern) {
-        return replaceByDateTimePattern(value, Collections.singletonList(customPattern));
+        return replaceByDateTimePattern(value, customPattern, Locale.getDefault());
+    }
+
+    public static String replaceByDateTimePattern(String value, String customPattern, Locale locale) {
+        return replaceByDateTimePattern(value, Collections.singletonList(customPattern), locale);
     }
 
     public static String replaceByDateTimePattern(String value, List<String> customPatterns) {
+        return replaceByDateTimePattern(value, customPatterns, Locale.getDefault());
+    }
+
+    public static String replaceByDateTimePattern(String value, List<String> customPatterns, Locale locale) {
         for (String customPattern : customPatterns) {
-            try {
-                DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern(customPattern);
-                dtFormatter.parse(value);
+            if (isMatchCustomPattern(value, customPattern, locale)) {
                 return customPattern;
-            } catch (DateTimeParseException | IllegalArgumentException e) {
-                // Cannot create DateTimeFormatter, or input data cannot match user defined pattern.
-                continue;
             }
         }
-        // replace with system date pattern manager.
+        // otherwise, replace with system date pattern manager.
         return systemPatternReplace(value);
     }
 

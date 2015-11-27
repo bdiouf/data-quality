@@ -62,14 +62,6 @@ public class CompositePatternFrequencyAnalyzerTest {
     }
 
     @Test
-    public void testDate() {
-        CompositePatternFrequencyAnalyzer analzyer = new CompositePatternFrequencyAnalyzer();
-        String patternString4 = analzyer.getValuePattern("2008-01-01");
-        Assert.assertEquals("yyyy-M-d", patternString4);
-
-    }
-
-    @Test
     public void testAnalyze() {
         String[] data = new String[] { "John", "", "123Code", "111", "Zhao", "2015-08-20", "2012-02-12", "12/2/99", "Hois",
                 "2001年" };
