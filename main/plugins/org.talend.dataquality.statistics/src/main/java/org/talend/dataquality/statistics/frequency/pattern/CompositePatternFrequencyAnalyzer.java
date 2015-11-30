@@ -63,11 +63,10 @@ public class CompositePatternFrequencyAnalyzer extends AbstractPatternFrequencyA
         String patternValue = originalValue;
         for (AbstractPatternFrequencyAnalyzer analyzer : patternFreqAnalyzers) {
             RecognitionResult result = analyzer.recognize(patternValue);
-            analyzer.getValuePattern(patternValue);
             if (result.isComplete()) {
                 return result.getPatternString();
             } else {
-                // Go to next recognizer.
+                // Go to next recognizer
                 patternValue = result.getPatternString();
             }
         }
