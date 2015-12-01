@@ -10,7 +10,7 @@
     </parent>
     <artifactId>org.talend.dataquality.record.linkage</artifactId>
     <packaging>bundle</packaging>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
     <name>org.talend.dataquality.record.linkage</name>
     <description>Dataquality Record Linkage library description</description>
 
@@ -20,7 +20,7 @@
 
         <!-- This is used to generate README.md file -->
         <commons.componentid>org.talend.dataquality.record.linkage</commons.componentid>
-        <commons.release.version>3.0.1</commons.release.version>
+        <commons.release.version>3.0.2</commons.release.version>
     </properties>
 
 
@@ -50,9 +50,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.talend.studio</groupId>
+            <groupId>org.talend</groupId>
             <artifactId>org.talend.utils</artifactId>
-            <version>6.1.0</version>
+            <version>6.1.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>log4j</groupId>
@@ -99,5 +99,4 @@
         </dependency>
 
     </dependencies>
-
 </project>

@@ -1,7 +1,9 @@
 Talend record linkage library
+V3.0.2 2015-12-01 (for Studio 6.1.1)
+    - Update dependency version of org.talend.utils to 6.1.1
 
 V3.0.1 2015-10-22 (for Studio 6.1.0)
-    - Update dependency version of org.talend.utils
+    - Update dependency version of org.talend.utils to 6.1.0
 
 V3.0.0 sizhaoliu 2015-09-10 (TDQ-10888)
     - Code refactoring
