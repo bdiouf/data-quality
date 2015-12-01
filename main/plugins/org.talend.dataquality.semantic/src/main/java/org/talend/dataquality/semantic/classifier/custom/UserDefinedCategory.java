@@ -48,6 +48,9 @@ public class UserDefinedCategory implements ISubCategory {
         this.name = name; // avoid null name here
     }
 
+    public UserDefinedCategory() {
+    }
+
     public UserDefinedCategory(String id) {
         this(id, id);
     }
