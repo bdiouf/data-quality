@@ -15,7 +15,7 @@ package org.talend.dataquality.statistics.type;
 import org.talend.datascience.common.inference.type.DataTypeAnalyzer;
 
 /**
- * Date type analyzer with customized extention such as the date time pattern
+ * Date type analyzer with customized extension such as the date time pattern
  * 
  * @since 1.3.3
  * @author zhao
@@ -25,23 +25,21 @@ public class CustomDataTypeAnalyzer extends DataTypeAnalyzer {
 
     private static final long serialVersionUID = -9188435209256600268L;
 
-    private String customDateTimePattern = null;
-
-    public void setCustomDateTimePattern(String customDateTimePattern) {
-        this.customDateTimePattern = customDateTimePattern;
+    /**
+     * Add a custom date time pattern.
+     * @param customDateTimePattern the pattern to add.
+     */
+    public void addCustomDateTimePattern(String customDateTimePattern) {
+        this.customDateTimePatterns.add(customDateTimePattern);
     }
 
-    public String getCustomDateTimePattern() {
-        return customDateTimePattern;
-    }
 
-    @Override
     protected boolean isDate(String value) {
-        return CustomDatetimePatternManager.isDate(value, customDateTimePattern);
+        return CustomDatetimePatternManager.isDate(value, customDateTimePatterns);
     }
 
     @Override
     protected boolean isTime(String value) {
-        return CustomDatetimePatternManager.isTime(value, customDateTimePattern);
+        return CustomDatetimePatternManager.isTime(value, customDateTimePatterns);
     }
 }

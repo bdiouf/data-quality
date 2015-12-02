@@ -12,20 +12,20 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.pattern;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.statistics.quality.DataTypeQualityAnalyzer;
 import org.talend.datascience.common.inference.type.DataType;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class CompositePatternFrequencyAnalyzerTest {
 
@@ -185,7 +185,7 @@ public class CompositePatternFrequencyAnalyzerTest {
         // Add value quality analyzer to have list of valid date. some date matches patterns from the file, some matches
         // them in memory user set.
         DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.DATE);
-        qualityAnalyzer.setCustomDateTimePattern("M/d/yy H:m");
+        qualityAnalyzer.addCustomDateTimePattern("M/d/yy H:m");
         qualityAnalyzer.init();
         // 2-8-15 15:57 is not at date with pattern available,"2012-02-12" is a date match pattern from file, the others
         // match pattern set ad-hoc
@@ -205,7 +205,7 @@ public class CompositePatternFrequencyAnalyzerTest {
         // pattern and the pattern in file.
         // patterns provided.
         DataTypeQualityAnalyzer qualityAnalyzer2 = new DataTypeQualityAnalyzer(DataType.Type.DATE);
-        qualityAnalyzer2.setCustomDateTimePattern("M-d-yy H:m");
+        qualityAnalyzer2.addCustomDateTimePattern("M-d-yy H:m");
         qualityAnalyzer2.init();
         for (String value : data) {
             qualityAnalyzer2.analyze(value);

@@ -11,21 +11,10 @@ import org.talend.datascience.common.inference.type.DataType;
 
 public class CustomDataTypeAnalyzerTest {
 
-    CustomDataTypeAnalyzer analyzer = null;
-
-    @Before
-    public void setUp() throws Exception {
-        analyzer = new CustomDataTypeAnalyzer();
-        analyzer.init();
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        analyzer.end();
-    }
-
     @Test
     public void testCustomDataPattern() {
+
+        CustomDataTypeAnalyzer analyzer = new CustomDataTypeAnalyzer();
 
         String[] testColumn = new String[] { "1", "2", "2015?08?20", "2012?02?12", "12/2/99" };
 
@@ -40,7 +29,7 @@ public class CustomDataTypeAnalyzerTest {
 
         // After set Custom Data Pattern: yyyy?mm?dd, "2015?08?20" & "2012?02?12" can be recognised as date
         // the type of testColumn is DATE
-        analyzer.setCustomDateTimePattern("yyyy?mm?dd");
+        analyzer.addCustomDateTimePattern("yyyy?mm?dd");
         analyzer.init();
         for (String record : testColumn) {
             analyzer.analyze(record);

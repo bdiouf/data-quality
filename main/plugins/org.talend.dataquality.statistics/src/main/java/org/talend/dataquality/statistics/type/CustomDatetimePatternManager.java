@@ -28,30 +28,39 @@ import org.talend.datascience.common.inference.type.SystemDatetimePatternManager
  */
 public final class CustomDatetimePatternManager {
 
-    public static boolean isDate(String value, String customDatePattern) {
-        return isDate(value, customDatePattern, Locale.getDefault());
+    public static boolean isDate(String value, List<String> customPatterns) {
+        return isDate(value, customPatterns, Locale.getDefault());
     }
 
-    public static boolean isDate(String value, String customDatePattern, Locale locale) {
-        boolean isMatch = isMatchCustomPattern(value, customDatePattern, locale);
-        if (isMatch) {
+    public static boolean isDate(String value, List<String> customPatterns, Locale locale) {
+        // use custom patterns first
+        if(isMatchCustomPatterns(value, customPatterns, locale)) {
             return true;
         }
         // validate using system pattern manager
         return SystemDatetimePatternManager.isDate(value);
     }
 
-    public static boolean isTime(String value, String customTimePattern) {
-        return isTime(value, customTimePattern, Locale.getDefault());
+    public static boolean isTime(String value, List<String> customPatterns) {
+        return isTime(value, customPatterns, Locale.getDefault());
     }
 
-    public static boolean isTime(String value, String customTimePattern, Locale locale) {
-        boolean isMatch = isMatchCustomPattern(value, customTimePattern, locale);
-        if (isMatch) {
+    public static boolean isTime(String value, List<String> customPatterns, Locale locale) {
+        // use custom patterns first
+        if (isMatchCustomPatterns(value, customPatterns, locale)) {
             return true;
         }
         // validate using system pattern manager
         return SystemDatetimePatternManager.isTime(value);
+    }
+
+    private static boolean isMatchCustomPatterns(String value, List<String> customPatterns, Locale locale) {
+        for (String pattern : customPatterns) {
+            if (isMatchCustomPattern(value, pattern, locale)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean isMatchCustomPattern(String value, String customPattern, Locale locale) {

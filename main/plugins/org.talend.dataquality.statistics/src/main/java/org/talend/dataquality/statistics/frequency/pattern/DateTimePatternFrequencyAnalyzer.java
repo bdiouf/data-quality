@@ -33,6 +33,10 @@ public class DateTimePatternFrequencyAnalyzer extends AbstractPatternFrequencyAn
         this.customDateTimePatterns.add(pattern);
     }
 
+    public void addCustomDateTimePatterns(List<String> patterns) {
+        this.customDateTimePatterns.addAll(patterns);
+    }
+
     public List<String> getCustomDateTimePattern() {
         return customDateTimePatterns;
     }
