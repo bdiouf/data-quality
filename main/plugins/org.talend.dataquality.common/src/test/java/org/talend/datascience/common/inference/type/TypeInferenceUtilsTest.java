@@ -14,9 +14,7 @@ package org.talend.datascience.common.inference.type;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
@@ -200,6 +198,20 @@ public class TypeInferenceUtilsTest {
         String date = "Feb.12.2014";
         assertFalse(TypeInferenceUtils.isDate(date));
         assertTrue(TypeInferenceUtils.isDate(date, Collections.singletonList("MMM.dd.yyyy")));
+    }
+
+    @Test
+    public void testIsDateWithCustomAndLocale() throws Exception {
+        String date = "févr..12.2014";
+        assertFalse(TypeInferenceUtils.isDate(date));
+        assertTrue(TypeInferenceUtils.isDate(date, Collections.singletonList("MMM.dd.yyyy"), Locale.FRANCE));
+    }
+
+    @Test
+    public void testIsDateWithCustomAndWrongLocale() throws Exception {
+        String date = "Feb.12.2014";
+        assertFalse(TypeInferenceUtils.isDate(date));
+        assertTrue(TypeInferenceUtils.isDate(date, Collections.singletonList("MMM.dd.yyyy"), Locale.FRANCE));
     }
 
     @Test

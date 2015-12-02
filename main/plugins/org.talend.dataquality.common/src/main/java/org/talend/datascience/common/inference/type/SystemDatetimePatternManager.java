@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -32,6 +33,8 @@ import java.util.regex.Pattern;
 public class SystemDatetimePatternManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SystemDatetimePatternManager.class);
+
+    private static final Locale DEFAULT_LOCALE = Locale.US;
 
     private static Map<Pattern, String> DATE_PARSERS = new LinkedHashMap<Pattern, String>();
 
@@ -93,21 +96,44 @@ public class SystemDatetimePatternManager {
     }
 
     /**
-     * Whether the given string value is a date or not.
+     * Whether the given string value is a date or not using the default jvm locale.
      *
      * @param value the value to check if it's a date.
+     * @param customDatePatterns the list of custom date patterns.
      * @return true if the value is a date.
      */
     public static boolean isDate(String value, List<String> customDatePatterns) {
+        return isDate(value, customDatePatterns, Locale.getDefault());
+    }
+
+    /**
+     * Whether the given string value is a date or not.
+     *
+     * @param value the value to check if it's a date.
+     * @param customDatePatterns the list of custom date patterns.
+     * @param locale the locale to use.
+     * @return true if the value is a date.
+     */
+    public static boolean isDate(String value, List<String> customDatePatterns, Locale locale) {
 
         // try the custom patterns first
         for (String datePattern : customDatePatterns) {
             try {
-                SimpleDateFormat format = new SimpleDateFormat(datePattern);
+                SimpleDateFormat format = new SimpleDateFormat(datePattern, locale);
                 format.parse(value);
                 return true;
             } catch (Exception e) {
-                // use next custom pattern
+
+                // try the default locale if not already used
+                if (!DEFAULT_LOCALE.equals(locale)) {
+                    SimpleDateFormat format = new SimpleDateFormat(datePattern, DEFAULT_LOCALE);
+                    try {
+                        format.parse(value);
+                        return true;
+                    } catch (ParseException e1) {
+                        // use next custom pattern
+                    }
+                }
             }
         }
 
