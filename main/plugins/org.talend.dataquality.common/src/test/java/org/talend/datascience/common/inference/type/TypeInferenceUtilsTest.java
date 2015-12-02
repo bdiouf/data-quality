@@ -14,6 +14,7 @@ package org.talend.datascience.common.inference.type;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -86,7 +90,7 @@ public class TypeInferenceUtilsTest {
         double difference = getTimeDifference(timeStart, timeEnd);
 
         LOGGER.debug("Detect empty time diff: " + difference + " s.");
-        Assert.assertTrue(difference < 0.006);
+        assertTrue(difference < 0.006);
     }
 
     @Test
@@ -110,7 +114,7 @@ public class TypeInferenceUtilsTest {
         double difference = getTimeDifference(timeStart, timeEnd);
 
         LOGGER.debug("Detect integer time diff: " + difference + " s.");
-        Assert.assertTrue(difference < 0.08);
+        assertTrue(difference < 0.08);
     }
 
     @Test
@@ -164,7 +168,7 @@ public class TypeInferenceUtilsTest {
         double difference = getTimeDifference(timeStart, timeEnd);
 
         LOGGER.debug("Detect double time diff: " + difference + " s.");
-        Assert.assertTrue(difference < 0.09);
+        assertTrue(difference < 0.09);
 
     }
 
@@ -188,13 +192,20 @@ public class TypeInferenceUtilsTest {
         double difference = getTimeDifference(timeStart, timeEnd);
 
         LOGGER.debug("Detect date time diff: " + difference + " s.");
-        Assert.assertTrue(difference < 0.43);
+        assertTrue(difference < 0.43);
+    }
+
+    @Test
+    public void testIsDateWithCustom() throws Exception {
+        String date = "Feb.12.2014";
+        assertFalse(TypeInferenceUtils.isDate(date));
+        assertTrue(TypeInferenceUtils.isDate(date, Collections.singletonList("MMM.dd.yyyy")));
     }
 
     @Test
     public void testIsDateddMMMyyyy() {
         String dateStr = "15-Sep-2014";
-        Assert.assertTrue(TypeInferenceUtils.isDate(dateStr));
+        assertTrue(TypeInferenceUtils.isDate(dateStr));
     }
 
     private List<String> loadData(String path) throws IOException {

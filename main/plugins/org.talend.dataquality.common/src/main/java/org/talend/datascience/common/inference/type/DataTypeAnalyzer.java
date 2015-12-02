@@ -12,13 +12,11 @@
 // ============================================================================
 package org.talend.datascience.common.inference.type;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
 import org.talend.datascience.common.inference.type.DataType.Type;
+
+import java.util.*;
 
 /**
  * Type inference executor which provide several methods computing the types.<br>
@@ -30,12 +28,30 @@ import org.talend.datascience.common.inference.type.DataType.Type;
  * <b>Important note:</b> This class is <b>NOT</b> thread safe.
  *
  */
-
 public class DataTypeAnalyzer implements Analyzer<DataType> {
 
     private static final long serialVersionUID = 373694310453353502L;
 
     private final ResizableList<DataType> dataTypes = new ResizableList<>(DataType.class);
+
+    /** Optional custom date patterns. */
+    protected List<String> customDateTimePatterns = new ArrayList<>();
+
+    /**
+     * Default empty constructor.
+     */
+    public DataTypeAnalyzer() {
+        this(Collections.<String>emptyList());
+    }
+
+    /**
+     * Create a DataTypeAnalyzer with the given custom date patterns.
+     * @param customDateTimePatterns the patterns to use.
+     */
+    public DataTypeAnalyzer(List<String> customDateTimePatterns) {
+        this.customDateTimePatterns.addAll(customDateTimePatterns);
+    }
+
 
     private DataType.Type execute(String value) {
         if (TypeInferenceUtils.isEmpty(value)) {
@@ -50,7 +66,7 @@ public class DataTypeAnalyzer implements Analyzer<DataType> {
         } else if (TypeInferenceUtils.isDouble(value)) {
             // 4. detect double
             return DataType.Type.DOUBLE;
-        } else if (isDate(value)) {
+        } else if (isDate(value, customDateTimePatterns)) {
             // 5. detect date
             return DataType.Type.DATE;
         } else if (isTime(value)) {
@@ -61,8 +77,8 @@ public class DataTypeAnalyzer implements Analyzer<DataType> {
         return DataType.Type.STRING;
     }
 
-    protected boolean isDate(String value) {
-        return TypeInferenceUtils.isDate(value);
+    private boolean isDate(String value, List<String> customDatePatterns) {
+        return TypeInferenceUtils.isDate(value, customDatePatterns);
     }
 
     protected boolean isTime(String value) {

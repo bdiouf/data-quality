@@ -13,6 +13,8 @@
 package org.talend.datascience.common.inference.type;
 
 import java.math.BigInteger;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -132,14 +134,26 @@ public class TypeInferenceUtils {
 
     /**
      * Detect if the given value is a date type. <br>
-     * Date regex used to match: http://regexlib.com/REDetails.aspx?regexp_id=361 ,and regex matching yyy-MM-dd
-     * HH:mm:ss.SSS
-     * 
+     *
      * @param value the value to be detected.
      * @return true if the value is a date type, false otherwise.
+     * @see TypeInferenceUtils#isDate(String, List)
      */
     public static boolean isDate(String value) {
-        return SystemDatetimePatternManager.isDate(value);
+        return isDate(value, Collections.<String>emptyList());
+    }
+
+    /**
+     * Detect if the given value is a date type using the given custom date patterns first. <br>
+     * Date regex used to match: http://regexlib.com/REDetails.aspx?regexp_id=361 ,and regex matching yyy-MM-dd
+     * HH:mm:ss.SSS
+     *
+     * @param value the value to be detected.
+     * @param customDatePatterns optional custom date patterns to use before the registered ones.
+     * @return true if the value is a date type, false otherwise.
+     */
+    public static boolean isDate(String value, List<String> customDatePatterns) {
+        return SystemDatetimePatternManager.isDate(value, customDatePatterns);
     }
 
     /**

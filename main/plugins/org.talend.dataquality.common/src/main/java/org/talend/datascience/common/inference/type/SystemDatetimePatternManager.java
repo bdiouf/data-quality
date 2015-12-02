@@ -14,6 +14,7 @@ package org.talend.datascience.common.inference.type;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -93,6 +94,28 @@ public class SystemDatetimePatternManager {
      */
     public static boolean isTimePattern(String pattern) {
         return TIME_PATTERN_NAMES.contains(pattern);
+    }
+
+    /**
+     * Whether the given string value is a date or not.
+     *
+     * @param value the value to check if it's a date.
+     * @return true if the value is a date.
+     */
+    public static boolean isDate(String value, List<String> customDatePatterns) {
+
+        // try the custom patterns first
+        for (String datePattern : customDatePatterns) {
+            try {
+                DateTimeFormatter.ofPattern(datePattern).parse(value);
+                return true;
+            } catch (Exception e) {
+                // use next custom pattern
+            }
+        }
+
+        // fall back on registered ones
+        return isDateTime(DATE_PARSERS, value);
     }
 
     /**
