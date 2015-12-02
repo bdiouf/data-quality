@@ -12,21 +12,17 @@
 // ============================================================================
 package org.talend.datascience.common.inference.type;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.regex.Pattern;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.regex.Pattern;
 
 /**
  * Date and time patterns manager with system default definitions.
@@ -107,7 +103,8 @@ public class SystemDatetimePatternManager {
         // try the custom patterns first
         for (String datePattern : customDatePatterns) {
             try {
-                DateTimeFormatter.ofPattern(datePattern).parse(value);
+                SimpleDateFormat format = new SimpleDateFormat(datePattern);
+                format.parse(value);
                 return true;
             } catch (Exception e) {
                 // use next custom pattern
