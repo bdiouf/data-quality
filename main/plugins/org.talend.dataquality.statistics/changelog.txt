@@ -1,5 +1,9 @@
+V1.4.0 (In development)
+    - TDQ-11229 improve date pattern handling
+
 V1.3.4 2015-12-10
     - update to org.talend.dataquality.common 1.3.4
+
 V1.3.3 2015-11-23
     - update dependencies following lucene4 upgrade in standardization library
     - support custom date pattern in DatePatternAnalyzer and DataTypeQualityAnalyzer
