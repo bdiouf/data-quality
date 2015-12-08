@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  */
 public class Kanji extends ChainResponsibilityHandler {
 
-    private Pattern pattern = Pattern.compile("[\\u4E00-\\u9FFF]");
+    private Pattern pattern = Pattern.compile("[\\p{script=Han}]");
 
     /*
      * (non-Javadoc)

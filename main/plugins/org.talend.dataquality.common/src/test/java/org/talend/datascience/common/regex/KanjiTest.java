@@ -16,8 +16,6 @@ import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.talend.datascience.common.regex.FullwidthLatinLowercasedLetters;
-import org.talend.datascience.common.regex.Kanji;
 
 /**
  * DOC talend class global comment. Detailled comment
@@ -26,7 +24,8 @@ public class KanjiTest {
 
     /**
      * Test method for
-     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}.
+     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}
+     * .
      * 
      * case1 normal case
      */
@@ -39,7 +38,8 @@ public class KanjiTest {
 
     /**
      * Test method for
-     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}.
+     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}
+     * .
      * 
      * case 2 input value is null
      */
@@ -52,7 +52,8 @@ public class KanjiTest {
 
     /**
      * Test method for
-     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}.
+     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}
+     * .
      * 
      * case 3 ReplaceStr is null
      */
@@ -78,7 +79,8 @@ public class KanjiTest {
 
     /**
      * Test method for
-     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}.
+     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}
+     * .
      * 
      * case 4 Regex is null
      */
@@ -104,7 +106,8 @@ public class KanjiTest {
 
     /**
      * Test method for
-     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}.
+     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}
+     * .
      * 
      * case 5 two handler link to use
      */
@@ -116,6 +119,23 @@ public class KanjiTest {
         String input = "如果ｔａｌｅｎｄ算第二的话，那么还有谁能是最强的呢？"; //$NON-NLS-1$
         String handleRequest = kanji.handleRequest(input);
         Assert.assertEquals("CCaaaaaaCCCCC，CCCCCCCCCCC？", handleRequest); //$NON-NLS-1$
+    }
+
+    /**
+     * Test method for
+     * {@link org.talend.dataquality.statistics.frequency.regex.ChainResponsibilityHandler#handleRequest(java.lang.String)}
+     * .
+     * 
+     * case 5 two handler link to use
+     */
+    @Test
+    public void testHandleRequestCase6() {
+        Kanji kanji = new Kanji();
+        FullwidthLatinLowercasedLetters fullwidthLatinLowercasedLetters = new FullwidthLatinLowercasedLetters();
+        kanji.linkSuccessor(fullwidthLatinLowercasedLetters);
+        String input = "⺀々〇〡〻㐀一豈ab123"; //$NON-NLS-1$
+        String handleRequest = kanji.handleRequest(input);
+        Assert.assertEquals("CCCCCCCCab123", handleRequest); //$NON-NLS-1$
     }
 
 }
