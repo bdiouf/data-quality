@@ -17,13 +17,10 @@ import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -36,52 +33,58 @@ import org.talend.datascience.common.inference.type.SystemDatetimePatternManager
  */
 public class DateTimePatternManager {
 
-    private static final Locale DEFAULT_LOCALE = Locale.US;
+    // private static final Locale DEFAULT_LOCALE = Locale.US;
 
-    private static Map<String, DateTimeFormatter> DATE_PARSERS = new LinkedHashMap<String, DateTimeFormatter>();
+    private static Map<DateTimeFormatter, String> DATE_PARSERS = new LinkedHashMap<DateTimeFormatter, String>();
 
-    private static Map<String, DateTimeFormatter> TIME_PARSERS = new LinkedHashMap<String, DateTimeFormatter>();
+    private static Map<DateTimeFormatter, String> TIME_PARSERS = new LinkedHashMap<DateTimeFormatter, String>();
 
-    public static Set<String> DATE_PATTERN_NAMES = new HashSet<String>();
-
-    private static Set<String> TIME_PATTERN_NAMES = new HashSet<String>();
+    // public static Set<String> DATE_PATTERN_NAMES = new HashSet<String>();
+    //
+    // private static Set<String> TIME_PATTERN_NAMES = new HashSet<String>();
 
     static {
         try {
             // Load date patterns
-            DATE_PATTERN_NAMES = loadPatterns("DateTimePatterns.txt");
+            // DATE_PATTERN_NAMES =
+            loadPatterns("DateTimePatterns.txt");
         } catch (IOException e) {
             System.err.println("Unable to get date patterns.");
         }
 
     }
 
-    private static Set<String> loadPatterns(String patternFileName) throws IOException {
+    private static void loadPatterns(String patternFileName) throws IOException {
         InputStream stream;
         List<String> lines;
         stream = DateTimePatternManager.class.getResourceAsStream(patternFileName);
         lines = IOUtils.readLines(stream);
-        Set<String> patternNames = new ConcurrentSkipListSet<String>();
+        // Set<String> patternNames = new ConcurrentSkipListSet<String>();
         for (String line : lines) {
             if (!"".equals(line.trim())) {
-                String patternText = line.trim();
-                DATE_PARSERS.put(patternText, DateTimeFormatter.ofPattern(patternText, DEFAULT_LOCALE));
-                patternNames.add(patternText);
+                String[] localePatternText = line.trim().split("\t");
+                DATE_PARSERS.put(DateTimeFormatter.ofPattern(localePatternText[1], getLocaleFromStr(localePatternText[0])),
+                        localePatternText[1]);// ???
+                // Locale
+                // patternNames.add(localePatternText);
             }
         }
         stream.close();
-        return patternNames;
+        // return patternNames;
     }
 
+    private static Locale getLocaleFromStr(String localeStr) {
+        return Locale.US;
+    }
     /**
      * Whether the given string pattern a date pattern or not.
      * 
      * @param pattern
      * @return true if the pattern string is a date pattern.
      */
-    public static boolean isDatePattern(String pattern) {
-        return DATE_PATTERN_NAMES.contains(pattern);
-    }
+    // public static boolean isDatePattern(String pattern) {
+    // return DATE_PATTERN_NAMES.contains(pattern);
+    // }
 
     /**
      * Whether given string pattern is a time pattern or not.
@@ -89,9 +92,9 @@ public class DateTimePatternManager {
      * @param pattern
      * @return
      */
-    public static boolean isTimePattern(String pattern) {
-        return TIME_PATTERN_NAMES.contains(pattern);
-    }
+    // public static boolean isTimePattern(String pattern) {
+    // return TIME_PATTERN_NAMES.contains(pattern);
+    // }
 
     /**
      * Whether the given string value is a date or not using the default jvm locale.
@@ -140,7 +143,7 @@ public class DateTimePatternManager {
         }
 
         // fall back on registered ones
-        return isDateTime(DATE_PARSERS, value);
+        return false;// isDateTime(DATE_PARSERS, value);
     }
 
     /**
@@ -154,14 +157,14 @@ public class DateTimePatternManager {
         return isDate;
     }
 
-    private static boolean isDateTime(Map<String, DateTimeFormatter> parsers, String value) {
+    private static boolean isDateTime(Map<DateTimeFormatter, String> parsers, String value) {
         if (StringUtils.isNotEmpty(value)) {
             // 1. The length of date characters should not exceed 30.
             if (value.trim().length() > 30) {
                 return false;
             }
             // 2. Check it by list of patterns
-            for (DateTimeFormatter formatter : parsers.values()) {
+            for (DateTimeFormatter formatter : parsers.keySet()) {
                 try {
                     if (formatter.parse(value) != null) {
                         return true;
@@ -206,16 +209,16 @@ public class DateTimePatternManager {
         return dateTimePatternReplace(TIME_PARSERS, value);
     }
 
-    private static String dateTimePatternReplace(Map<String, DateTimeFormatter> parsers, String value) {
+    private static String dateTimePatternReplace(Map<DateTimeFormatter, String> parsers, String value) {
 
         if (StringUtils.isEmpty(value)) {
             return StringUtils.EMPTY;
         }
         // Parse the value given list of date regex in pattern file.
-        for (String pattern : parsers.keySet()) {
+        for (DateTimeFormatter formatter : parsers.keySet()) {
             try {
-                if (parsers.get(pattern).parse(value) != null) {
-                    return pattern;
+                if (formatter.parse(value) != null) {
+                    return parsers.get(formatter);
                 }
             } catch (Exception e) {
                 // Ignore

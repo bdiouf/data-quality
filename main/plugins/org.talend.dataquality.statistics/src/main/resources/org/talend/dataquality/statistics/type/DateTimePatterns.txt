@@ -1,241 +1,141 @@
-M/d/yy
-yy-M-d
-dd.MM.yy
-dd/MM/yy
-yy-MM-dd
-yy/MM/dd
-yyyy-M-d
-d MMM yyyy
-d-MMM-yyyy
-dd.MM.yyyy
-yyyy-MM-dd
-yyyy/MM/dd
-MMM d, yyyy
-d MMMM yyyy
-dd-MMM-yyyy
-MMMM d, yyyy
-d. MMMM yyyy
-dd MMMM yyyy
-yy-M-d ah:mm
-M/d/yy h:mm a
-dd/MM/yy H.mm
-yy/MM/dd H:mm
-dd.MM.yy HH:mm
-dd/MM/yy HH:mm
-yy-MM-dd HH:mm
-dd/MM/yy h:mm a
-yyyy'年'M'月'd'日'
-EEEE d MMMM yyyy
-yyyy-M-d H:mm:ss
-EEEE, d MMMM yyyy
-EEEE, MMMM d, yyyy
-EEEE, d. MMMM yyyy
-d-MMM-yyyy H.mm.ss
-yyyy/MM/dd H:mm:ss
-d MMM yyyy HH:mm:ss
-dd.MM.yyyy HH:mm:ss
-yyyy-MM-dd HH:mm:ss
-d-MMM-yyyy h:mm:ss a
-dd-MMM-yyyy HH:mm:ss
-yyyy'年'M'月'd'日' EEEE
-yyyy/MM/dd H:mm:ss z
-MMM d, yyyy h:mm:ss a
-d MMMM yyyy H.mm.ss z
-d MMMM yyyy HH:mm:ss z
-d. MMMM yyyy HH:mm:ss z
-dd MMMM yyyy HH:mm:ss z
-MMMM d, yyyy h:mm:ss a z
-MMMM d, yyyy h:mm:ss z a
-EEEE d MMMM yyyy H.mm.ss z
-EEEE d MMMM yyyy H' h 'mm z
-EEEE d MMMM yyyy HH' h 'mm z
-EEEE, MMMM d, yyyy h:mm:ss a z
-EEEE, d. MMMM yyyy HH:mm' Uhr 'z
-yyyy'年'M'月'd'日' H'時'mm'分'ss'秒' z
-yyyy'年'M'月'd'日' ahh'时'mm'分'ss'秒'
-EEEE, d MMMM yyyy HH:mm:ss 'o''clock' z
-yyyy'年'M'月'd'日' EEEE ahh'时'mm'分'ss'秒' z
-EEEE, MMMM d, yyyy h:mm:ss 'o''clock' a z
-
-yyyyMMddZ
-yyyy-MM-ddZZZZZ
-yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ'['VV']'
-yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
-yyyy-MM-dd'T'HH:mm:ss.SSS
-yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ
-yyyy-DZZZZZ
-yyyy-'W'w-WZZZZZ
-EEE, d MMM yyyy HH:mm:ss Z
-
-d.M.y
-M/d/yy
-d-M-yy
-d.M.yy
-yy-M-d
-yy.M.d
-yy.d.M
-d.M.yy.
-d.MM.yy
-d/MM/yy
-d.M.yyyy
-d/M/yyyy
-dd-MM-yy
-dd.MM.yy
-dd/MM/yy
-yy-MM-dd
-yy. M. d
-yy/MM/dd
-yyyy-M-d
-yyyy.d.M
-d.MM.yyyy
-d.M.y H:mm
-dd-MM-yyyy
-dd.MM.yyyy
-dd/MM/yyyy
-yyyy-MM-dd
-yyyy. M. d
-yyyy.MM.dd
-yyyy/MM/dd
-d-M-yy H:mm
-d.M.yy H.mm
-d.M.yy H:mm
-dd.MM.yyyy.
-yyyy.MM.dd.
-d.M.yy HH:mm
-d.MM.yy H:mm
-d/MM/yy H:mm
-yy.M.d HH.mm
-yy.d.M HH:mm
-d.M.yy. HH.mm
-d.M.yyyy H:mm
-dd.MM.yy H:mm
-dd/MM/yy H.mm
-yy/MM/dd H:mm
-HH:mm dd/MM/yy
-d.M.yyyy HH:mm
-dd-MM-yy HH:mm
-dd.MM.yy HH:mm
-dd/MM/yy HH:mm
-yy-MM-dd HH:mm
-yy/MM/dd HH:mm
-d.M.yyyy HH:mm:
-dd-MM-yyyy H:mm
-yyyy'年'M'月'd'日'
-HH:mm dd/MM/yyyy
-d.M.yyyy H.mm.ss
-d.M.yyyy H:mm:ss
-dd.MM.yyyy HH:mm
-dd/MM/yyyy HH:mm
-yyyy-M-d H:mm:ss
-yyyy-MM-dd HH:mm
-yyyy.MM.dd HH:mm
-yyyy.MM.dd. H:mm
-d.M.yyyy HH:mm:ss
-d.MM.yyyy H:mm:ss
-yyyy.d.M HH:mm:ss
-dd.MM.yyyy H:mm:ss
-yyyy/MM/dd H:mm:ss
-HH:mm:ss dd-MM-yyyy
-HH:mm:ss dd/MM/yyyy
-d/M/yyyy, H:mm' น.'
-dd-MM-yyyy HH:mm:ss
-dd.MM.yyyy HH:mm:ss
-dd/MM/yyyy HH:mm:ss
-yyyy-MM-dd HH.mm.ss
-yyyy-MM-dd HH:mm:ss
-yyyy.MM.dd HH:mm:ss
-yyyy.MM.dd. H:mm:ss
-dd.MM.yyyy. HH.mm.ss
-yyyy'年'M'月'd'日' EEEE
-yyyy/MM/dd H:mm:ss z
-dd.MM.yyyy. HH.mm.ss z
-yyyy'년' M'월' d'일' EEEE
-yyyy'년' M'월' d'일' '('EE')'
-'Ngày' dd 'tháng' M 'năm' yyyy
-yyyy'年'M'月'd'日' H'時'mm'分'ss'秒' z
-HH:mm:ss z 'Ngày' dd 'tháng' M 'năm' yyyy
-
-M d yy
-M-d-yy
-M.d.yy
-MMMM d
-d M yy
-d/M/yy
-M d yyyy
-M-d-yyyy
-M.d.yyyy
-M/d/yyyy
-d M yyyy
-d-M-yyyy
-yyyy M d
-yyyy d M
-yyyy-d-M
-yyyy.M.d
-yyyy/M/d
-yyyy/d/M
-yyyy MMMM
-d.MMM.yyyy
-d/MMM/yyyy
-MMMM d yyyy
-M d yyyy H:m
-M-d-yyyy H:m
-M.d.yyyy H:m
-M/d/yyyy H:m
-d M yyyy H:m
-d-M-yyyy H:m
-d.M.yyyy H:m
-d/M/yyyy H:m
-yyyy M d H:m
-yyyy d M H:m
-yyyy-M-d H:m
-yyyy-d-M H:m
-yyyy.M.d H:m
-yyyy.d.M H:m
-yyyy/M/d H:m
-yyyy/d/M H:m
-M d yyyy H:m a
-M d yyyy H:m:s
-M-d-yyyy H:m a
-M-d-yyyy H:m:s
-M.d.yyyy H:m a
-M.d.yyyy H:m:s
-M/d/yyyy H:m a
-M/d/yyyy H:m:s
-d M yyyy H:m a
-d M yyyy H:m:s
-d MMM yyyy H:m
-d-M-yyyy H:m a
-d-M-yyyy H:m:s
-d.M.yyyy H:m a
-d.M.yyyy H:m:s
-d/M/yyyy H:m a
-d/M/yyyy H:m:s
-yyyy M d H:m:s
-yyyy d M H:m:s
-yyyy-M-d H:m:s
-yyyy-d-M H:m:s
-yyyy.M.d H:m:s
-yyyy.d.M H:m:s
-yyyy/M/d H:m:s
-yyyy/d/M H:m:s
-d MMM yyyy H:m:s
-yyyy M d H:m:s.S
-yyyy d M H:m:s.S
-yyyy-M-d H:m:s.S
-yyyy-d-M H:m:s.S
-yyyy.M.d H:m:s.S
-yyyy.d.M H:m:s.S
-yyyy/M/d H:m:s.S
-yyyy/d/M H:m:s.S
-yyyy M d H:m:s:SSS
-yyyy d M H:m:s:SSS
-yyyy-M-d H:m:s:SSS
-yyyy-d-M H:m:s:SSS
-yyyy.M.d H:m:s:SSS
-yyyy.d.M H:m:s:SSS
-yyyy/M/d H:m:s:SSS
-yyyy/d/M H:m:s:SSS
-EEEE, d MMMM yyyy H:m
-EEEE, d MMMM yyyy H:m a
-EEEE, d MMMM yyyy H:m:s
-EEE, d MMMM yyyy H:m:s z
+en_US	M/d/yy
+en_US	MMM d, yyyy
+en_US	MMMM d, yyyy
+en_US	EEEE, MMMM d, yyyy
+en_US	M/d/yy h:mm a
+en_US	MMM d, yyyy h:mm:ss a
+en_US	MMMM d, yyyy h:mm:ss a z
+en_US	EEEE, MMMM d, yyyy h:mm:ss a z
+fr_FR	dd/MM/yy
+fr_FR	d MMM yyyy
+fr_FR	d MMMM yyyy
+fr_FR	EEEE d MMMM yyyy
+fr_FR	dd/MM/yy HH:mm
+fr_FR	d MMM yyyy HH:mm:ss
+fr_FR	d MMMM yyyy HH:mm:ss z
+fr_FR	EEEE d MMMM yyyy HH' h 'mm z
+de_DE	dd.MM.yy
+de_DE	dd.MM.yyyy
+de_DE	d. MMMM yyyy
+de_DE	EEEE, d. MMMM yyyy
+de_DE	dd.MM.yy HH:mm
+de_DE	dd.MM.yyyy HH:mm:ss
+de_DE	d. MMMM yyyy HH:mm:ss z
+de_DE	EEEE, d. MMMM yyyy HH:mm' Uhr 'z
+en_GB	dd-MMM-yyyy
+en_GB	dd MMMM yyyy
+en_GB	EEEE, d MMMM yyyy
+en_GB	dd-MMM-yyyy HH:mm:ss
+en_GB	dd MMMM yyyy HH:mm:ss z
+en_GB	EEEE, d MMMM yyyy HH:mm:ss 'o''clock' z
+it_IT	d-MMM-yyyy
+it_IT	d MMMM yyyy
+it_IT	EEEE d MMMM yyyy
+it_IT	dd/MM/yy H.mm
+it_IT	d-MMM-yyyy H.mm.ss
+it_IT	d MMMM yyyy H.mm.ss z
+it_IT	EEEE d MMMM yyyy H.mm.ss z
+en_CA	d-MMM-yyyy
+en_CA	MMMM d, yyyy
+en_CA	EEEE, MMMM d, yyyy
+en_CA	dd/MM/yy h:mm a
+en_CA	d-MMM-yyyy h:mm:ss a
+en_CA	MMMM d, yyyy h:mm:ss z a
+en_CA	EEEE, MMMM d, yyyy h:mm:ss 'o''clock' a z
+fr_CA	yy-MM-dd
+fr_CA	yyyy-MM-dd
+fr_CA	d MMMM yyyy
+fr_CA	EEEE d MMMM yyyy
+fr_CA	yy-MM-dd HH:mm
+fr_CA	yyyy-MM-dd HH:mm:ss
+fr_CA	d MMMM yyyy HH:mm:ss z
+fr_CA	EEEE d MMMM yyyy H' h 'mm z
+ja_JP	yy/MM/dd
+ja_JP	yyyy/MM/dd
+ja_JP	yyyy'年'M'月'd'日'
+ja_JP	yy/MM/dd H:mm
+ja_JP	yyyy/MM/dd H:mm:ss
+ja_JP	yyyy/MM/dd H:mm:ss z
+ja_JP	yyyy'年'M'月'd'日' H'時'mm'分'ss'秒' z
+zh_CN	yy-M-d
+zh_CN	yyyy-M-d
+zh_CN	yyyy'年'M'月'd'日' EEEE
+zh_CN	yy-M-d ah:mm
+zh_CN	yyyy-M-d H:mm:ss
+zh_CN	yyyy'年'M'月'd'日' ahh'时'mm'分'ss'秒'
+zh_CN	yyyy'年'M'月'd'日' EEEE ahh'时'mm'分'ss'秒' z
+en_US	yyyyMMddZ
+en_US	yyyy-MM-ddZZZZZ
+en_US	yyyy-MM-dd'T'HH:mm:ss.SSS
+en_US	yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+en_US	yyyy-MM-dd'T'HH:mm:ss.SSS
+en_US	yyyy-MM-ddZZZZZ
+en_US	yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ
+en_US	yyyy-DZZZZZ
+en_US	yyyy-'W'w-WZZZZZ
+en_US	yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ'['VV']'
+en_US	EEE, d MMM yyyy HH:mm:ss Z
+ar	dd/MM/yyyy
+be	d.M.yy
+be	d.M.yyyy
+be	d.M.yy H.mm
+be	d.M.yyyy H.mm.ss
+ca	dd/MM/yyyy HH:mm:ss
+cs	d.M.yy H:mm
+cs	d.M.yyyy H:mm:ss
+da	dd-MM-yy
+da	dd-MM-yyyy
+da	dd-MM-yy HH:mm
+da	dd-MM-yyyy HH:mm:ss
+el	d/M/yyyy
+es	d/MM/yy
+es	d/MM/yy H:mm
+et	d.MM.yy
+et	d.MM.yyyy
+et	d.MM.yy H:mm
+et	d.MM.yyyy H:mm:ss
+fi	d.M.yyyy H:mm
+ga	yy/MM/dd HH:mm
+iw	HH:mm dd/MM/yy
+iw	HH:mm:ss dd/MM/yyyy
+hr	yyyy.MM.dd
+hr	yyyy.MM.dd HH:mm
+hr	yyyy.MM.dd HH:mm:ss
+hu	yyyy.MM.dd.
+hu	yyyy.MM.dd. H:mm
+hu	yyyy.MM.dd. H:mm:ss
+is	d.M.yyyy HH:mm
+is	d.M.yyyy HH:mm:ss
+ko	yy. M. d
+ko	yyyy. M. d
+ko	yyyy'년' M'월' d'일' '('EE')'
+ko	yyyy'년' M'월' d'일' EEEE
+lt	yy.M.d
+lt	yy.M.d HH.mm
+lt	yyyy-MM-dd HH.mm.ss
+lv	yy.d.M
+lv	yyyy.d.M
+lv	yy.d.M HH:mm
+lv	yyyy.d.M HH:mm:ss
+mk	d.M.yy HH:mm
+mk	d.M.yyyy HH:mm:
+mt	dd/MM/yyyy HH:mm
+nl	d-M-yy
+nl	d-M-yy H:mm
+pt	dd-MM-yyyy H:mm
+ro	dd.MM.yyyy HH:mm
+ru	dd.MM.yy H:mm
+ru	dd.MM.yyyy H:mm:ss
+sl	d.M.y
+sl	d.M.y H:mm
+sr	d.M.yy.
+sr	dd.MM.yyyy.
+sr	d.M.yy. HH.mm
+sr	dd.MM.yyyy. HH.mm.ss
+sr	dd.MM.yyyy. HH.mm.ss z
+sv	yyyy-MM-dd HH:mm
+th	d/M/yyyy, H:mm' น.'
+vi	'Ngày' dd 'tháng' M 'năm' yyyy
+vi	HH:mm dd/MM/yyyy
+vi	HH:mm:ss dd-MM-yyyy
+vi	HH:mm:ss z 'Ngày' dd 'tháng' M 'năm' yyyy

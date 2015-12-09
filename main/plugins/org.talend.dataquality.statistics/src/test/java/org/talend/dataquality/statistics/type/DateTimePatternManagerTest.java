@@ -14,9 +14,27 @@ import org.talend.datascience.common.inference.type.SystemDatetimePatternManager
 public class DateTimePatternManagerTest {
 
     @Test
+    public void testNew() {
+        // US invalid date
+        assertFalse(DateTimePatternManager.isDate("6/18/2009 21:30"));
+
+        // US valid date
+        assertTrue(DateTimePatternManager.isDate("6/18/09 9:30 PM"));
+        assertTrue(DateTimePatternManager.isDate("6/18/09 09:30 PM"));
+
+        assertFalse(DateTimePatternManager.isDate("18-NOV-86 01.00.00.000000000 AM"));
+        assertTrue(DateTimePatternManager.isDate("6/18/09"));
+        assertFalse(DateTimePatternManager.isDate("Jan.12.2010"));
+        assertFalse(DateTimePatternManager.isDate("14/Feb/2013:13:40:51 +0100"));
+        assertTrue(DateTimePatternManager.isDate("1970-01-01T00:32:43"));
+
+    }
+
+    @Test
     public void testDateMatchingCustomPattern() {
         // invalid with system time pattern
         assertFalse(SystemDatetimePatternManager.isDate("6/18/09 21:30"));
+        assertTrue(SystemDatetimePatternManager.isDate("6/18/2009 21:30"));
 
         // valid with custom pattern
         assertTrue(DateTimePatternManager.isDate("6/18/09 21:30", Collections.<String> singletonList("M/d/yy H:m")));
