@@ -22,12 +22,16 @@ public class DateTimePatternListGenerator {
 
     static List<String> knownPatternList = new ArrayList<String>();
 
-    private final static ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.of(3333, 1, 22, 15, 6, 7, 888, ZoneId.of("Europe/Paris"));
+    private final static ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.of(2222, 3, 11, 5, 6, 7, 888, ZoneId.of("Europe/Paris"));
 
     private final static FormatStyle[] FORMAT_STYLES = new FormatStyle[] { FormatStyle.SHORT, FormatStyle.MEDIUM,
             FormatStyle.LONG, FormatStyle.FULL };
 
-    private static final boolean PRINT_DETAILED_RESULTS = false;
+    private static final boolean PRINT_DETAILED_RESULTS = true;
+
+    private static final boolean PRINT_SAMPLE_TABLE = false;
+
+    private static final boolean PRINT_PATTERN_LIST = false;
 
     private static List<LocaledPattern> processBaseDateTimePatternsByLocales() {
 
@@ -67,24 +71,29 @@ public class DateTimePatternListGenerator {
                     isDateRequired ? style : null, isTimeRequired ? style : null, IsoChronology.INSTANCE, locale);//
 
             // ignore patterns with long month for additional languages
-            if (!keepLongMonth && (pattern.contains("MMMM") || pattern.contains("MMM") || pattern.contains("a"))) {
+            if (!keepLongMonth
+                    && (pattern.contains("MMMM") || pattern.contains("MMM") || pattern.contains(" a") || pattern.contains("'"))) {
                 continue;
             }
 
             if (!knownPatternList.contains(pattern)) {
 
-                LocaledPattern lp = new LocaledPattern(pattern, locale);
+                LocaledPattern lp = new LocaledPattern(pattern, locale, style.name(), isTimeRequired);
                 knownLocaledPatternList.add(lp);
                 knownPatternList.add(pattern); // update list of pattern strings without locale
-                System.out.println(lp);
+                if (PRINT_DETAILED_RESULTS) {
+                    System.out.println(lp);
+                }
             } else {
                 if (pattern.contains("MMMM") || pattern.contains("MMM")) {
                     if (PRINT_DETAILED_RESULTS) {
-                        System.out.print("!!!duplicated pattern!!! ");
+                        System.out.print("!!!duplicated pattern with different locale!!! ");
                     }
-                    LocaledPattern lp = new LocaledPattern(pattern, locale);
+                    LocaledPattern lp = new LocaledPattern(pattern, locale, style.name(), isTimeRequired);
                     knownLocaledPatternList.add(lp);
-                    System.out.println(lp);
+                    if (PRINT_DETAILED_RESULTS) {
+                        System.out.println(lp);
+                    }
 
                 }
 
@@ -105,25 +114,31 @@ public class DateTimePatternListGenerator {
 
         List<LocaledPattern> patternList = new ArrayList<LocaledPattern>();
 
-        patternList.add(new LocaledPattern("yyyyMMddZ", Locale.US));// 1. BASIC_ISO_DATE
-        patternList.add(new LocaledPattern("yyyy-MM-ddZZZZZ", Locale.US));// 2. ISO_DATE
-        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'['VV']'", Locale.US));// 3. ISO_DATE_TIME
-        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US));// 4. ISO_INSTANT
-        patternList.add(new LocaledPattern("yyyy-MM-dd", Locale.US));// 5. ISO_LOCAL_DATE
-        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US));// 6. ISO_LOCAL_DATE_TIME
-        patternList.add(new LocaledPattern("yyyy-MM-ddZZZZZ", Locale.US));// 7. ISO_OFFSET_DATE
-        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", Locale.US));// 8. ISO_OFFSET_DATE_TIME
-        patternList.add(new LocaledPattern("yyyy-DZZZZZ", Locale.US));// 9. ISO_ORDINAL_DATE
-        patternList.add(new LocaledPattern("yyyy-'W'w-WZZZZZ", Locale.US));// 10. ISO_WEEK_DATE
-        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ'['VV']'", Locale.US));// 11.
-                                                                                                 // ISO_ZONED_DATE_TIME
-        patternList.add(new LocaledPattern("EEE, d MMM yyyy HH:mm:ss Z", Locale.US));// 12. RFC_1123_DATE_TIME
+        patternList.add(new LocaledPattern("yyyyMMddZ", Locale.US, "ISO", false));// 1. BASIC_ISO_DATE
+        patternList.add(new LocaledPattern("yyyy-MM-ddZZZZZ", Locale.US, "ISO", false));// 2. ISO_DATE
+        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'['VV']'", Locale.US, "ISO", true));// 3.
+                                                                                                         // ISO_DATE_TIME
+        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US, "ISO", true));// 4. ISO_INSTANT
+        patternList.add(new LocaledPattern("yyyy-MM-dd", Locale.US, "ISO", false));// 5. ISO_LOCAL_DATE
+        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US, "ISO", true));// 6.
+                                                                                                 // ISO_LOCAL_DATE_TIME
+        patternList.add(new LocaledPattern("yyyy-MM-ddZZZZZ", Locale.US, "ISO", false));// 7. ISO_OFFSET_DATE
+        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", Locale.US, "ISO", true));// 8.
+        // ISO_OFFSET_DATE_TIME
+        patternList.add(new LocaledPattern("yyyy-DZZZZZ", Locale.US, "ISO", false));// 9. ISO_ORDINAL_DATE
+        patternList.add(new LocaledPattern("yyyy-'W'w-WZZZZZ", Locale.US, "ISO", false));// 10. ISO_WEEK_DATE
+        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ'['VV']'", Locale.US, "ISO", true));// 11.
+        // ISO_ZONED_DATE_TIME
+        patternList.add(new LocaledPattern("EEE, d MMM yyyy HH:mm:ss Z", Locale.US, "ISO", true));// 12.
+                                                                                                  // RFC_1123_DATE_TIME
 
         for (LocaledPattern lp : patternList) {
             if (!knownPatternList.contains(lp.pattern)) {
                 knownLocaledPatternList.add(lp);
                 knownPatternList.add(lp.getPattern());
-                System.out.println(lp);
+                if (PRINT_DETAILED_RESULTS) {
+                    System.out.println(lp);
+                }
             }
         }
     }
@@ -255,30 +270,21 @@ public class DateTimePatternListGenerator {
                     ", #additionalPatterns = " + additionalPatternCount + ")\n");//
         }
 
-        List<String> allSupportedSamples = new ArrayList<String>();
-
-        if (PRINT_DETAILED_RESULTS) {
-            System.out.println("--------------------All Supported DateTime Samples---------------------------");
+        if (PRINT_SAMPLE_TABLE) {// table header
+            System.out.println("Sample\tPattern\tLocale\tFormatStyle\tIsWithTime");
         }
         for (LocaledPattern lp : knownLocaledPatternList) {
 
-            if (PRINT_DETAILED_RESULTS) {
-                System.out.println(lp + "\t"
-                        + ZONED_DATE_TIME.format(DateTimeFormatter.ofPattern(lp.getPattern(), lp.getLocale())));
-
-                System.out.println("");
+            if (PRINT_PATTERN_LIST) {
+                System.out.println(lp);
             }
-            allSupportedSamples.add(ZONED_DATE_TIME.format(DateTimeFormatter.ofPattern(lp.getPattern(), lp.getLocale())));
-        }
-
-        sortDatePattern(allSupportedSamples);
-
-        for (String str : allSupportedSamples) {
-            System.out.println(str);
+            if (PRINT_SAMPLE_TABLE) {
+                System.out.println(ZONED_DATE_TIME.format(DateTimeFormatter.ofPattern(lp.getPattern(), lp.getLocale())) + "\t"
+                        + lp.getPattern() + "\t" + lp.getLocale() + "\t" + lp.getFormatStyle() + "\t" + lp.isWithTime());
+            }
         }
 
     }
-
 }
 
 class LocaledPattern {
@@ -287,10 +293,15 @@ class LocaledPattern {
 
     Locale locale;
 
-    public LocaledPattern(String pattern, Locale locale) {
+    String formatStyle;
+
+    boolean withTime;
+
+    public LocaledPattern(String pattern, Locale locale, String formatStyle, boolean withTime) {
         this.pattern = pattern;
         this.locale = locale;
-
+        this.formatStyle = formatStyle;
+        this.withTime = withTime;
     }
 
     public String getPattern() {
@@ -299,6 +310,14 @@ class LocaledPattern {
 
     public Locale getLocale() {
         return locale;
+    }
+
+    public String getFormatStyle() {
+        return formatStyle;
+    }
+
+    public boolean isWithTime() {
+        return withTime;
     }
 
     public String toString() {
