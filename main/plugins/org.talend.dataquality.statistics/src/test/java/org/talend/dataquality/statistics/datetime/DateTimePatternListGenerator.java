@@ -31,6 +31,15 @@ public class DateTimePatternListGenerator {
 
     private static final boolean PRINT_PATTERN_LIST = true;
 
+    private static List<LocaledPattern> OTHER_COMMON_PATTERNS = new ArrayList<LocaledPattern>() {
+
+        private static final long serialVersionUID = 1L;
+
+        {
+            add(new LocaledPattern("yyyy-M-d H:mm:ss.S", Locale.US, "OTHER", true));
+        }
+    };
+
     private static List<LocaledPattern> processBaseDateTimePatternsByLocales() {
 
         Locale[] localeArray = new Locale[] { Locale.US, //
@@ -224,7 +233,18 @@ public class DateTimePatternListGenerator {
         }
         currentLocaledPatternSize = knownLocaledPatternList.size();
 
-        // 2. ISO and RFC DateTimePatterns
+        // 2. Other common DateTime patterns
+        for (LocaledPattern lp : OTHER_COMMON_PATTERNS) {
+            if (!knownPatternList.contains(lp.pattern)) {
+                knownLocaledPatternList.add(lp);
+                knownPatternList.add(lp.getPattern());
+                if (PRINT_DETAILED_RESULTS) {
+                    System.out.println(lp);
+                }
+            }
+        }
+
+        // 3. ISO and RFC DateTimePatterns
         processISOAndRFCDateTimePatternList();
         // knownPatternList.addAll(isoPatternList);
         int isoPatternCount = knownLocaledPatternList.size() - currentLocaledPatternSize;
@@ -233,7 +253,7 @@ public class DateTimePatternListGenerator {
         }
         currentLocaledPatternSize = knownLocaledPatternList.size();
 
-        // 3. Additional Localized DateTimePatterns (java8 DateTimeFormatterBuilder)
+        // 4. Additional Localized DateTimePatterns (java8 DateTimeFormatterBuilder)
         processAdditionalDateTimePatternsByLocales();
         // knownPatternList.addAll(additionalPatternList);
         int additionalPatternCount = knownLocaledPatternList.size() - currentLocaledPatternSize;
@@ -242,7 +262,7 @@ public class DateTimePatternListGenerator {
         }
         currentLocaledPatternSize = knownLocaledPatternList.size();
 
-        // TODO 4. add legacy DateTimePatterns
+        // 5. add legacy DateTimePatterns
         // getNonExistentPatternsInLegacyFile(knownPatternList);
 
         if (PRINT_DETAILED_RESULTS) {

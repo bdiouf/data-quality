@@ -189,7 +189,7 @@ public class CompositePatternFrequencyAnalyzerTest {
         qualityAnalyzer.init();
         // 2-8-15 15:57 is not at date with pattern available,"2012-02-12" is a date match pattern from file, the others
         // match pattern set ad-hoc
-        final String[] data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2/8/15 15:57", "2-8-15 15:57", "2012-02-12" };
+        final String[] data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2/8/15 15:57", "2*8*15 15:57", "2012-02-12" };
         for (String value : data) {
             qualityAnalyzer.analyze(value);
         }
@@ -199,13 +199,13 @@ public class CompositePatternFrequencyAnalyzerTest {
         Assert.assertEquals(4, qualityAnalyzer.getResult().get(0).getValidCount()); // Valid Count
         // Invalid values
         Assert.assertTrue(qualityAnalyzer.getResult().get(0).getInvalidValues().size() == 1);
-        Assert.assertEquals("2-8-15 15:57", qualityAnalyzer.getResult().get(0).getInvalidValues().toArray()[0]);
+        Assert.assertEquals("2*8*15 15:57", qualityAnalyzer.getResult().get(0).getInvalidValues().toArray()[0]);
 
         // Add new customized pattern , create new quality analyzer , check again dates should be valid given customized
         // pattern and the pattern in file.
         // patterns provided.
         DataTypeQualityAnalyzer qualityAnalyzer2 = new DataTypeQualityAnalyzer(DataTypeEnum.DATE);
-        qualityAnalyzer2.addCustomDateTimePattern("M-d-yy H:m");
+        qualityAnalyzer2.addCustomDateTimePattern("M*d*yy H:m");
         qualityAnalyzer2.init();
         for (String value : data) {
             qualityAnalyzer2.analyze(value);

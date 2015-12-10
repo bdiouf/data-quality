@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import org.talend.dataquality.statistics.datetime.SystemDatetimePatternManager;
+import org.talend.dataquality.statistics.datetime.DateTimePatternManager;
 
 /**
  * Utility class refering data types given single value
@@ -144,7 +144,7 @@ public class TypeInferenceUtils {
      * @see TypeInferenceUtils#isDate(String, List)
      */
     public static boolean isDate(String value) {
-        return isDate(value, Collections.<String>emptyList());
+        return isDate(value, Collections.<String> emptyList());
     }
 
     /**
@@ -157,7 +157,7 @@ public class TypeInferenceUtils {
      * @return true if the value is a date type, false otherwise.
      */
     public static boolean isDate(String value, List<String> customDatePatterns) {
-        return SystemDatetimePatternManager.isDate(value, customDatePatterns);
+        return DateTimePatternManager.isDate(value, customDatePatterns);
     }
 
     /**
@@ -171,7 +171,7 @@ public class TypeInferenceUtils {
      * @return true if the value is a date type, false otherwise.
      */
     public static boolean isDate(String value, List<String> customDatePatterns, Locale locale) {
-        return SystemDatetimePatternManager.isDate(value, customDatePatterns, locale);
+        return DateTimePatternManager.isDate(value, customDatePatterns, locale);
     }
 
     /**
@@ -181,7 +181,7 @@ public class TypeInferenceUtils {
      * @return
      */
     public static boolean isTime(String value) {
-        return SystemDatetimePatternManager.isTime(value);
+        return DateTimePatternManager.isTime(value);
     }
 
     /**
