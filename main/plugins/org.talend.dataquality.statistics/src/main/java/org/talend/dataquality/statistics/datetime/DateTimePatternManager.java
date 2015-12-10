@@ -34,32 +34,33 @@ public class DateTimePatternManager {
 
     private static final Locale DEFAULT_LOCALE = Locale.US;
 
-    private static Map<DateTimeFormatter, String> DATE_PARSERS = new LinkedHashMap<DateTimeFormatter, String>();
+    private static Map<DateTimeFormatter, String> DATE_PARSERS;
 
-    private static Map<DateTimeFormatter, String> TIME_PARSERS = new LinkedHashMap<DateTimeFormatter, String>();
+    private static Map<DateTimeFormatter, String> TIME_PARSERS;
 
     static {
         try {
-            loadPatterns("DateTimePatterns.txt");
+            DATE_PARSERS = loadDatePatterns("DatePatterns.txt");
+            TIME_PARSERS = loadDatePatterns("TimePatterns.txt");
         } catch (IOException e) {
             System.err.println("Unable to get date patterns.");
         }
 
     }
 
-    private static void loadPatterns(String patternFileName) throws IOException {
-        InputStream stream;
-        List<String> lines;
-        stream = DateTimePatternManager.class.getResourceAsStream(patternFileName);
-        lines = IOUtils.readLines(stream);
+    private static Map<DateTimeFormatter, String> loadDatePatterns(String patternFileName) throws IOException {
+        Map<DateTimeFormatter, String> parsers = new LinkedHashMap<DateTimeFormatter, String>();
+        InputStream stream = DateTimePatternManager.class.getResourceAsStream(patternFileName);
+        List<String> lines = IOUtils.readLines(stream);
         for (String line : lines) {
             if (!"".equals(line.trim())) {
                 String[] localePatternText = line.trim().split("\t");
-                DATE_PARSERS.put(DateTimeFormatter.ofPattern(localePatternText[1], getLocaleFromStr(localePatternText[0])),
+                parsers.put(DateTimeFormatter.ofPattern(localePatternText[1], getLocaleFromStr(localePatternText[0])),
                         localePatternText[1]);
             }
         }
         stream.close();
+        return parsers;
     }
 
     private static Locale getLocaleFromStr(String localeStr) {
@@ -76,24 +77,14 @@ public class DateTimePatternManager {
     }
 
     /**
-     * Whether the given string pattern a date pattern or not.
+     * Check if the given string value is a date or not.
      * 
-     * @param pattern
-     * @return true if the pattern string is a date pattern.
+     * @param value
+     * @return true if the value is a date.
      */
-    // public static boolean isDatePattern(String pattern) {
-    // return DATE_PATTERN_NAMES.contains(pattern);
-    // }
-
-    /**
-     * Whether given string pattern is a time pattern or not.
-     * 
-     * @param pattern
-     * @return
-     */
-    // public static boolean isTimePattern(String pattern) {
-    // return TIME_PATTERN_NAMES.contains(pattern);
-    // }
+    public static boolean isDate(String value) {
+        return isDateTime(DATE_PARSERS, value);
+    }
 
     /**
      * Whether the given string value is a date or not using the default jvm locale.
@@ -115,45 +106,42 @@ public class DateTimePatternManager {
      * @return true if the value is a date.
      */
     public static boolean isDate(String value, List<String> customDatePatterns, Locale locale) {
-
-        // try the custom patterns first
-        for (String datePattern : customDatePatterns) {
-            try {// firstly, try with user-defined locale
-                DateTimeFormatter.ofPattern(datePattern, locale).parse(value);
+        for (String customPattern : customDatePatterns) {
+            if (isMatchCustomPattern(value, customPattern, locale)) {
                 return true;
-            } catch (DateTimeParseException | IllegalArgumentException e) {
-                if (!Locale.US.equals(locale)) {
-                    try {// try with LOCALE_US if user defined locale is not US
-                        DateTimeFormatter.ofPattern(datePattern, Locale.US).parse(value);
-                        return true;
-                    } catch (DateTimeParseException | IllegalArgumentException e1) {
-                        // continue
-                    }
-                }
-                if (!Locale.getDefault().equals(locale) && !Locale.getDefault().equals(Locale.US)) {
-                    try {// try with LOCALE_JVM if none of the above matches
-                        DateTimeFormatter.ofPattern(datePattern, Locale.getDefault()).parse(value);
-                        return true;
-                    } catch (DateTimeParseException | IllegalArgumentException e2) {
-                        // no more try
-                    }
-                }
             }
         }
-
-        // fall back on registered ones
-        return isDateTime(DATE_PARSERS, value);
+        return isDate(value);
     }
 
     /**
-     * Whether the given string value is a date or not.
+     * Check if the given string value is a time or not.
      * 
      * @param value
+     * @return true if the value is type "Time", false otherwise.
+     */
+    public static boolean isTime(String value) {
+        return isDateTime(TIME_PARSERS, value);
+    }
+
+    /**
+     * Whether the given string value is a date or not using the default jvm locale.
+     *
+     * @param value the value to check if it's a date.
+     * @param customDatePatterns the list of custom date patterns.
      * @return true if the value is a date.
      */
-    public static boolean isDate(String value) {
-        boolean isDate = isDateTime(DATE_PARSERS, value);
-        return isDate;
+    public static boolean isTime(String value, List<String> customTimePatterns) {
+        return isTime(value, customTimePatterns, Locale.getDefault());
+    }
+
+    public static boolean isTime(String value, List<String> customTimePatterns, Locale locale) {
+        for (String customPattern : customTimePatterns) {
+            if (isMatchCustomPattern(value, customPattern, locale)) {
+                return true;
+            }
+        }
+        return isTime(value);
     }
 
     private static boolean isDateTime(Map<DateTimeFormatter, String> parsers, String value) {
@@ -164,58 +152,24 @@ public class DateTimePatternManager {
                         return true;
                     }
                 } catch (Exception e) {
-                    continue;
+                    // continue
                 }
             }
         }
-
         return false;
     }
 
-    /**
-     * Check if the value passed is a time or not.
-     * 
-     * @param value
-     * @return true if the value is type "Time", false otherwise.
-     */
-    public static boolean isTime(String value) {
-        boolean isTime = isDateTime(TIME_PARSERS, value);
-        return isTime;
-    }
-
-    /**
-     * Replace the value with date pattern string.
-     * 
-     * @param value
-     * @return date pattern string.
-     */
-    public static String datePatternReplace(String value) {
-        return dateTimePatternReplace(DATE_PARSERS, value);
-    }
-
-    /**
-     * Replace the value with time pattern string.
-     * 
-     * @param value
-     * @return
-     */
-    public static String timePatternReplace(String value) {
-        return dateTimePatternReplace(TIME_PARSERS, value);
-    }
-
     private static String dateTimePatternReplace(Map<DateTimeFormatter, String> parsers, String value) {
-
         if (StringUtils.isEmpty(value)) {
             return StringUtils.EMPTY;
         }
-        // Parse the value given list of date regex in pattern file.
         for (DateTimeFormatter formatter : parsers.keySet()) {
             try {
                 if (formatter.parse(value) != null) {
                     return parsers.get(formatter);
                 }
             } catch (Exception e) {
-                // Ignore
+                // continue
             }
         }
         return value;
@@ -230,20 +184,12 @@ public class DateTimePatternManager {
             DateTimeFormatter.ofPattern(customPattern, locale).parse(value);
             return true;
         } catch (DateTimeParseException | IllegalArgumentException e) {
-            if (!Locale.US.equals(locale)) {
+            if (!DEFAULT_LOCALE.equals(locale)) {
                 try {// try with LOCALE_US if user defined locale is not US
-                    DateTimeFormatter.ofPattern(customPattern, Locale.US).parse(value);
+                    DateTimeFormatter.ofPattern(customPattern, DEFAULT_LOCALE).parse(value);
                     return true;
                 } catch (DateTimeParseException | IllegalArgumentException e1) {
-                    // continue
-                }
-            }
-            if (!Locale.getDefault().equals(locale) && !Locale.getDefault().equals(Locale.US)) {
-                try {// try with LOCALE_JVM it none of the above matches
-                    DateTimeFormatter.ofPattern(customPattern, Locale.getDefault()).parse(value);
-                    return true;
-                } catch (DateTimeParseException | IllegalArgumentException e2) {
-                    // no more try
+                    // return false
                 }
             }
         }
@@ -273,9 +219,9 @@ public class DateTimePatternManager {
     }
 
     private static String systemPatternReplace(String value) {
-        String pattern = SystemDatetimePatternManager.datePatternReplace(value);
+        String pattern = dateTimePatternReplace(DATE_PARSERS, value);
         if (pattern.equals(value)) {
-            pattern = SystemDatetimePatternManager.timePatternReplace(value);
+            pattern = dateTimePatternReplace(TIME_PARSERS, value);
         }
         return pattern;
     }

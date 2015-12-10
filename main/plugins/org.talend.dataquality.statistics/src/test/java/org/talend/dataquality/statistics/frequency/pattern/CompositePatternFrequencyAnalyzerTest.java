@@ -54,7 +54,7 @@ public class CompositePatternFrequencyAnalyzerTest {
         Assert.assertNull(patternString3);
 
         String patternString4 = analzyer.getValuePattern("2008-01-01");
-        Assert.assertEquals("yyyy-M-d", patternString4);
+        Assert.assertEquals("yyyy-MM-dd", patternString4);
 
         String patternString5 = analzyer.getValuePattern("2008-1月-01");
         Assert.assertEquals("9999-9月-99", patternString5);
@@ -79,7 +79,7 @@ public class CompositePatternFrequencyAnalyzerTest {
                 Assert.assertEquals(3, e.getValue(), 0);
                 isAtLeastOneAsssert = true;
             } else if (idx == 1) {
-                Assert.assertEquals("yyyy-M-d", e.getKey());
+                Assert.assertEquals("yyyy-MM-dd", e.getKey());
                 Assert.assertEquals(2, e.getValue(), 0);
                 isAtLeastOneAsssert = true;
             }
@@ -114,7 +114,7 @@ public class CompositePatternFrequencyAnalyzerTest {
                 Assert.assertEquals(3, e.getValue(), 0);
                 isAtLeastOneAsssert = true;
             } else if (idx == 1) {
-                Assert.assertEquals("yyyy-M-d", e.getKey());
+                Assert.assertEquals("yyyy-MM-dd", e.getKey());
                 Assert.assertEquals(2, e.getValue(), 0);
                 isAtLeastOneAsssert = true;
             }

@@ -1,0 +1,32 @@
+en_US	h:mm a
+en_US	h:mm:ss a
+en_US	h:mm:ss a z
+fr_FR	HH:mm
+fr_FR	HH:mm:ss
+fr_FR	HH:mm:ss z
+fr_FR	HH' h 'mm z
+de_DE	HH:mm' Uhr 'z
+en_GB	HH:mm:ss 'o''clock' z
+it_IT	H.mm
+it_IT	H.mm.ss
+it_IT	H.mm.ss z
+en_CA	h:mm:ss z a
+en_CA	h:mm:ss 'o''clock' a z
+fr_CA	H' h 'mm z
+ja_JP	H:mm
+ja_JP	H:mm:ss
+ja_JP	H:mm:ss z
+ja_JP	H'時'mm'分'ss'秒' z
+zh_CN	ah:mm
+zh_CN	ahh'时'mm'分'ss'秒'
+zh_CN	ahh'时'mm'分'ss'秒' z
+bg	HH:mm:ss zzzz
+ko	a h:mm
+ko	a h:mm:ss
+lt	HH.mm
+lt	HH.mm.ss
+lt	HH.mm.ss z
+mk	HH:mm:
+sq	h.mm.a
+sq	h:mm:ss.a
+sq	h.mm.ss.a z

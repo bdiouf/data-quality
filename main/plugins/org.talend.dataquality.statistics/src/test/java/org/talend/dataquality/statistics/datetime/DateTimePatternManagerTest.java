@@ -9,19 +9,11 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.Test;
-import org.talend.dataquality.statistics.datetime.DateTimePatternManager;
 
 public class DateTimePatternManagerTest {
 
     @Test
     public void testNew() {
-        // US invalid date
-        assertFalse(DateTimePatternManager.isDate("6/18/2009 21:30"));
-
-        // US valid date
-        assertTrue(DateTimePatternManager.isDate("6/18/09"));
-        assertTrue(DateTimePatternManager.isDate("6/18/09 9:30 PM"));
-        assertTrue(DateTimePatternManager.isDate("6/18/09 09:30 PM"));
 
         assertFalse(DateTimePatternManager.isDate("18-NOV-86 01.00.00.000000000 AM"));
         assertTrue(DateTimePatternManager.isDate("6/18/09"));
@@ -45,8 +37,8 @@ public class DateTimePatternManagerTest {
 
     @Test
     public void testValidDateNotMatchingCustomPattern() {
-        assertTrue(DateTimePatternManager.isDate("11/03/22", Collections.<String> singletonList("m-d-y hh:MM")));
-        assertEquals("d/M/yy", DateTimePatternManager.replaceByDateTimePattern("11/03/22", "m-d-y hh:MM"));
+        assertTrue(DateTimePatternManager.isDate("15/03/22", Collections.<String> singletonList("m-d-y hh:MM")));
+        assertEquals("dd/MM/yy", DateTimePatternManager.replaceByDateTimePattern("15/03/22", "m-d-y hh:MM"));
     }
 
     @Test
@@ -57,8 +49,36 @@ public class DateTimePatternManagerTest {
 
     @Test
     public void testValidDateWithInvalidPattern() {
-        assertTrue(DateTimePatternManager.isDate("11/03/22", Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
-        assertEquals("d/M/yy", DateTimePatternManager.replaceByDateTimePattern("11/03/22", "d/m/y**y hh:mm zzzzzzz"));
+        assertTrue(DateTimePatternManager.isDate("15/03/22", Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
+        assertEquals("dd/MM/yy", DateTimePatternManager.replaceByDateTimePattern("15/03/22", "d/m/y**y hh:mm zzzzzzz"));
+    }
+
+    @Test
+    public void testTimeMatchingCustomPattern() {
+        // invalid with system time pattern
+        assertFalse(SystemDatetimePatternManager.isTime("21?30"));
+
+        // valid with custom pattern
+        assertTrue(CustomDatetimePatternManager.isTime("21?30", Collections.<String> singletonList("H?m")));
+        assertEquals("H?m", CustomDatetimePatternManager.replaceByDateTimePattern("21?30", "H?m"));
+    }
+
+    @Test
+    public void testValidTimeNotMatchingCustomPattern() {
+        assertTrue(CustomDatetimePatternManager.isTime("21:30", Collections.<String> singletonList("H-m")));
+        assertEquals("H:m", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "H-m"));
+    }
+
+    @Test
+    public void testInvalidTimeNotMatchingCustomPattern() {
+        assertFalse(CustomDatetimePatternManager.isTime("21?30", Collections.<String> singletonList("H-m")));
+        assertEquals("21?30", CustomDatetimePatternManager.replaceByDateTimePattern("21?30", "H-m"));
+    }
+
+    @Test
+    public void testValidTimeWithInvalidPattern() {
+        assertTrue(CustomDatetimePatternManager.isTime("21:30", Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
+        assertEquals("H:m", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "d/m/y**y hh:mm zzzzzzz"));
     }
 
     @Test
@@ -73,10 +93,10 @@ public class DateTimePatternManagerTest {
                 "一月 9 ?? 1970", // CN
         };
         final boolean[] EXPECTED_IS_DATE_DEFAULT = new boolean[] { true, true, false, false };
-        final boolean[] EXPECTED_IS_DATE_US = new boolean[] { true, true, false, false };
+        final boolean[] EXPECTED_IS_DATE_US = new boolean[] { true, false, false, false };
         final boolean[] EXPECTED_IS_DATE_FR = new boolean[] { true, true, false, false };
-        final boolean[] EXPECTED_IS_DATE_DE = new boolean[] { true, true, true, false };
-        final boolean[] EXPECTED_IS_DATE_CN = new boolean[] { true, true, false, true };
+        final boolean[] EXPECTED_IS_DATE_DE = new boolean[] { true, false, true, false };
+        final boolean[] EXPECTED_IS_DATE_CN = new boolean[] { true, false, false, true };
         // final String[] EXPECTED_PATTERN_STRING = new String[] { "", };
 
         StringBuilder sb = new StringBuilder();
@@ -113,10 +133,10 @@ public class DateTimePatternManagerTest {
                 "一月 9 ?? 1970", // CN
         };
         final boolean[] EXPECTED_IS_DATE_DEFAULT = new boolean[] { true, false, true, false };
-        final boolean[] EXPECTED_IS_DATE_US = new boolean[] { true, false, true, false };
-        final boolean[] EXPECTED_IS_DATE_FR = new boolean[] { true, true, true, false };
+        final boolean[] EXPECTED_IS_DATE_US = new boolean[] { true, false, false, false };
+        final boolean[] EXPECTED_IS_DATE_FR = new boolean[] { true, true, false, false };
         final boolean[] EXPECTED_IS_DATE_DE = new boolean[] { true, false, true, false };
-        final boolean[] EXPECTED_IS_DATE_CN = new boolean[] { true, false, true, true };
+        final boolean[] EXPECTED_IS_DATE_CN = new boolean[] { true, false, false, true };
         // final String[] EXPECTED_PATTERN_STRING = new String[] { "", };
 
         StringBuilder sb = new StringBuilder();

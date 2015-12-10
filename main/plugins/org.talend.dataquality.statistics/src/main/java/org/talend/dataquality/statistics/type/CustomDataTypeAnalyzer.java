@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.statistics.type;
 
-import org.talend.dataquality.statistics.datetime.CustomDatetimePatternManager;
+import org.talend.dataquality.statistics.datetime.DateTimePatternManager;
 
 /**
  * Date type analyzer with customized extension such as the date time pattern
@@ -27,19 +27,19 @@ public class CustomDataTypeAnalyzer extends DataTypeAnalyzer {
 
     /**
      * Add a custom date time pattern.
+     * 
      * @param customDateTimePattern the pattern to add.
      */
     public void addCustomDateTimePattern(String customDateTimePattern) {
         this.customDateTimePatterns.add(customDateTimePattern);
     }
 
-
     protected boolean isDate(String value) {
-        return CustomDatetimePatternManager.isDate(value, customDateTimePatterns);
+        return DateTimePatternManager.isDate(value, customDateTimePatterns);
     }
 
     @Override
     protected boolean isTime(String value) {
-        return CustomDatetimePatternManager.isTime(value, customDateTimePatterns);
+        return DateTimePatternManager.isTime(value, customDateTimePatterns);
     }
 }

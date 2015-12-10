@@ -67,9 +67,10 @@ public class DateTimePatternListGenerator {
         if (PRINT_DETAILED_RESULTS) {
             System.out.println("--------------------Locale: " + locale + "-----------------------");
         }
-        getFormatByStyle(true, false, locale, keepLongMonth);
-        getFormatByStyle(true, true, locale, keepLongMonth);
+        getFormatByStyle(true, false, locale, keepLongMonth); // Date Only
+        getFormatByStyle(true, true, locale, keepLongMonth); // Date & Time
 
+        // getFormatByStyle(false, true, locale, keepLongMonth); //Time Only
     }
 
     private static void getFormatByStyle(boolean isDateRequired, boolean isTimeRequired, Locale locale, boolean keepLongMonth) {

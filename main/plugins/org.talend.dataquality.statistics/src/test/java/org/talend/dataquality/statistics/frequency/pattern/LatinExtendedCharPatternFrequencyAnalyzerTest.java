@@ -77,11 +77,11 @@ public class LatinExtendedCharPatternFrequencyAnalyzerTest {
         str2Pattern.put("2001-9-10 - 2009-09-08", "9999-9-99 - 9999-99-99");
         testRecognition(str2Pattern);
         str2Pattern.clear();
-        str2Pattern.put("2001-20-8", "yyyy-d-M");
+        str2Pattern.put("2001-8-20", "yyyy-M-d");
         testDateRecognition(str2Pattern);
     }
 
-    private void testRecognition(Map<String,String> str2Pattern) {
+    private void testRecognition(Map<String, String> str2Pattern) {
         LatinExtendedCharPatternFrequencyAnalyzer recognizer = new LatinExtendedCharPatternFrequencyAnalyzer();
         Iterator<String> strIterator = str2Pattern.keySet().iterator();
         while (strIterator.hasNext()) {
@@ -94,7 +94,7 @@ public class LatinExtendedCharPatternFrequencyAnalyzerTest {
     }
 
     private void testDateRecognition(Map<String, String> str2Pattern) {
-    	DateTimePatternFrequencyAnalyzer recognizer = new DateTimePatternFrequencyAnalyzer();
+        DateTimePatternFrequencyAnalyzer recognizer = new DateTimePatternFrequencyAnalyzer();
         Iterator<String> strIterator = str2Pattern.keySet().iterator();
         while (strIterator.hasNext()) {
             String str = strIterator.next();
