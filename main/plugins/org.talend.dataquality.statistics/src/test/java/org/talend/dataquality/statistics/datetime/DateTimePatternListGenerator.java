@@ -25,11 +25,11 @@ public class DateTimePatternListGenerator {
     private final static FormatStyle[] FORMAT_STYLES = new FormatStyle[] { FormatStyle.SHORT, FormatStyle.MEDIUM,
             FormatStyle.LONG, FormatStyle.FULL };
 
-    private static final boolean PRINT_DETAILED_RESULTS = true;
+    private static final boolean PRINT_DETAILED_RESULTS = false;
 
     private static final boolean PRINT_SAMPLE_TABLE = false;
 
-    private static final boolean PRINT_PATTERN_LIST = false;
+    private static final boolean PRINT_PATTERN_LIST = true;
 
     private static List<LocaledPattern> processBaseDateTimePatternsByLocales() {
 

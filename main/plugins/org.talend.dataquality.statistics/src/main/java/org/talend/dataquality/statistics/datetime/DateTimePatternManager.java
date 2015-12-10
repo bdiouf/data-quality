@@ -32,20 +32,14 @@ import org.apache.commons.lang.StringUtils;
  */
 public class DateTimePatternManager {
 
-    // private static final Locale DEFAULT_LOCALE = Locale.US;
+    private static final Locale DEFAULT_LOCALE = Locale.US;
 
     private static Map<DateTimeFormatter, String> DATE_PARSERS = new LinkedHashMap<DateTimeFormatter, String>();
 
     private static Map<DateTimeFormatter, String> TIME_PARSERS = new LinkedHashMap<DateTimeFormatter, String>();
 
-    // public static Set<String> DATE_PATTERN_NAMES = new HashSet<String>();
-    //
-    // private static Set<String> TIME_PATTERN_NAMES = new HashSet<String>();
-
     static {
         try {
-            // Load date patterns
-            // DATE_PATTERN_NAMES =
             loadPatterns("DateTimePatterns.txt");
         } catch (IOException e) {
             System.err.println("Unable to get date patterns.");
@@ -58,23 +52,29 @@ public class DateTimePatternManager {
         List<String> lines;
         stream = DateTimePatternManager.class.getResourceAsStream(patternFileName);
         lines = IOUtils.readLines(stream);
-        // Set<String> patternNames = new ConcurrentSkipListSet<String>();
         for (String line : lines) {
             if (!"".equals(line.trim())) {
                 String[] localePatternText = line.trim().split("\t");
                 DATE_PARSERS.put(DateTimeFormatter.ofPattern(localePatternText[1], getLocaleFromStr(localePatternText[0])),
-                        localePatternText[1]);// ???
-                // Locale
-                // patternNames.add(localePatternText);
+                        localePatternText[1]);
             }
         }
         stream.close();
-        // return patternNames;
     }
 
     private static Locale getLocaleFromStr(String localeStr) {
-        return Locale.US;
+        if (localeStr != null) {
+            String[] parts = localeStr.split("_");
+            if (parts.length == 1) {
+                return new Locale(parts[0]);
+            } else if (parts.length == 2) {
+                return new Locale(parts[0], parts[1]);
+            }
+        }
+        // any other case
+        return DEFAULT_LOCALE;
     }
+
     /**
      * Whether the given string pattern a date pattern or not.
      * 
@@ -158,11 +158,6 @@ public class DateTimePatternManager {
 
     private static boolean isDateTime(Map<DateTimeFormatter, String> parsers, String value) {
         if (StringUtils.isNotEmpty(value)) {
-            // 1. The length of date characters should not exceed 30.
-            if (value.trim().length() > 30) {
-                return false;
-            }
-            // 2. Check it by list of patterns
             for (DateTimeFormatter formatter : parsers.keySet()) {
                 try {
                     if (formatter.parse(value) != null) {

@@ -66,10 +66,9 @@ zh_CN	yyyy'年'M'月'd'日' ahh'时'mm'分'ss'秒'
 zh_CN	yyyy'年'M'月'd'日' EEEE ahh'时'mm'分'ss'秒' z
 en_US	yyyyMMddZ
 en_US	yyyy-MM-ddZZZZZ
-en_US	yyyy-MM-dd'T'HH:mm:ss.SSS
+en_US	yyyy-MM-dd'T'HH:mm:ss.SSS'['VV']'
 en_US	yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
 en_US	yyyy-MM-dd'T'HH:mm:ss.SSS
-en_US	yyyy-MM-ddZZZZZ
 en_US	yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ
 en_US	yyyy-DZZZZZ
 en_US	yyyy-'W'w-WZZZZZ
@@ -108,8 +107,6 @@ is	d.M.yyyy HH:mm
 is	d.M.yyyy HH:mm:ss
 ko	yy. M. d
 ko	yyyy. M. d
-ko	yyyy'년' M'월' d'일' '('EE')'
-ko	yyyy'년' M'월' d'일' EEEE
 lt	yy.M.d
 lt	yy.M.d HH.mm
 lt	yyyy-MM-dd HH.mm.ss
@@ -128,14 +125,14 @@ ru	dd.MM.yy H:mm
 ru	dd.MM.yyyy H:mm:ss
 sl	d.M.y
 sl	d.M.y H:mm
+sq	yy-MM-dd h.mm.a
+sq	yyyy-MM-dd h:mm:ss.a
+sq	yyyy-MM-dd h.mm.ss.a z
 sr	d.M.yy.
 sr	dd.MM.yyyy.
 sr	d.M.yy. HH.mm
 sr	dd.MM.yyyy. HH.mm.ss
 sr	dd.MM.yyyy. HH.mm.ss z
 sv	yyyy-MM-dd HH:mm
-th	d/M/yyyy, H:mm' น.'
-vi	'Ngày' dd 'tháng' M 'năm' yyyy
 vi	HH:mm dd/MM/yyyy
 vi	HH:mm:ss dd-MM-yyyy
-vi	HH:mm:ss z 'Ngày' dd 'tháng' M 'năm' yyyy
