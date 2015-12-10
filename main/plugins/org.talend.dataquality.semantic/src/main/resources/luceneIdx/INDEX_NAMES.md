@@ -5,7 +5,7 @@ Dictionary index
 |----|---------------|:-------------:|:-----------:|:-----------:|
 |1   |`ANIMAL`|Jul. 2015|Jul. 2015|animal_cleaned.csv|
 |2   |`AIRPORT_CODE`|Jul. 2015|Oct. 2015|airport-code-wiki.csv|
-|3   |`AIRPORT`|Jul. 2015|Oct. 2015|airport-name-wiki.csv|
+|3   |`AIRPORT`|Jul. 2015|Dec. 2015|airport-name-wiki.csv|
 |4   |`BEVERAGE`|Oct. 2015|Oct. 2015|wordnet_beverages_yago2.csv|
 |5   |`CITY`|Jul. 2015|Oct. 2015|city_cleaned_without_pinyin.csv|
 |6   |`CIVILITY`|Jul. 2015|Oct. 2015|civility_cleaned.csv|

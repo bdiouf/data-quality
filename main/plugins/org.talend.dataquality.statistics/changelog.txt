@@ -1,3 +1,5 @@
+V1.3.4 2015-12-10
+    - bugfix for invalid custom date patterns
 V1.3.3 2015-11-23
     - update dependencies following lucene4 upgrade in standardization library
     - support custom date pattern in DatePatternAnalyzer and DataTypeQualityAnalyzer
