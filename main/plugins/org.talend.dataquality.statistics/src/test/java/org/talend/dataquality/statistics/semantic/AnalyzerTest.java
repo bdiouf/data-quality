@@ -1,0 +1,105 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
+package org.talend.dataquality.statistics.semantic;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
+
+/**
+ * created by talend on 2015-07-28 Detailled comment.
+ *
+ */
+public class AnalyzerTest {
+
+    protected final List<List<String[]>> INPUT_RECORDS = new ArrayList<List<String[]>>() {
+
+        private static final long serialVersionUID = 1L;
+
+        {
+            add(getRecords(AnalyzerTest.class.getResourceAsStream("customers_100_bug_TDQ10380.csv")));
+            add(getRecords(AnalyzerTest.class.getResourceAsStream("avengers.csv")));
+            add(getRecords(AnalyzerTest.class.getResourceAsStream("gender.csv")));
+            add(getRecords(AnalyzerTest.class.getResourceAsStream("dataset_with_invalid_records.csv")));
+
+        }
+    };
+
+    protected final List<String[]> EXPECTED_CATEGORIES = new ArrayList<String[]>() {
+
+        private static final long serialVersionUID = 1L;
+
+        {
+            add(new String[] { //
+            "", //
+                    SemanticCategoryEnum.FIRST_NAME.getId(), //
+                    SemanticCategoryEnum.US_COUNTY.getId(), //
+                    SemanticCategoryEnum.US_STATE_CODE.getId(), //
+                    "", //
+                    SemanticCategoryEnum.CITY.getId(), //
+                    "", //
+                    "", //
+                    "" //
+            });
+            add(new String[] { //
+            "", //
+                    SemanticCategoryEnum.FIRST_NAME.getId(), //
+                    SemanticCategoryEnum.US_COUNTY.getId(), //
+                    "", //
+                    SemanticCategoryEnum.CITY.getId() //
+            });
+            add(new String[] { //
+            SemanticCategoryEnum.FIRST_NAME.getId(), //
+                    "", //
+                    SemanticCategoryEnum.GENDER.getId() //
+            });
+            add(new String[] { //
+            SemanticCategoryEnum.FIRST_NAME.getId(), //
+                    ""//
+            });
+        }
+    };
+
+    protected static List<String[]> getRecords(InputStream inputStream) {
+        return getRecords(inputStream, ";");
+    }
+
+    protected static List<String[]> getRecords(InputStream inputStream, String lineSeparator) {
+        if (inputStream == null) {
+            throw new IllegalArgumentException("Input stream cannot be null.");
+        }
+        try {
+            List<String[]> records = new ArrayList<String[]>();
+            final List<String> lines = IOUtils.readLines(inputStream);
+            for (String line : lines) {
+                String[] record = StringUtils.splitByWholeSeparatorPreserveAllTokens(line, lineSeparator);
+                records.add(record);
+            }
+            return records;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                // Silent ignore
+                e.printStackTrace();
+            }
+        }
+    }
+}

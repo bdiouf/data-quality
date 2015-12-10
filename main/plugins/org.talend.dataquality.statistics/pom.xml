@@ -21,7 +21,7 @@
         <dependency>
             <groupId>org.talend.dataquality</groupId>
             <artifactId>org.talend.dataquality.semantic</artifactId>
-            <version>1.3.3</version>
+            <version>1.4-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
