@@ -17,13 +17,13 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.talend.dataquality.statistics.type.CustomDatetimePatternManager;
+import org.talend.dataquality.statistics.datetime.CustomDatetimePatternManager;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
+import org.talend.dataquality.statistics.type.TypeInferenceUtils;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.QualityAnalyzer;
 import org.talend.datascience.common.inference.ResizableList;
 import org.talend.datascience.common.inference.ValueQualityStatistics;
-import org.talend.datascience.common.inference.type.DataTypeEnum;
-import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.

@@ -12,20 +12,20 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.pattern;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.talend.dataquality.statistics.quality.DataTypeQualityAnalyzer;
-import org.talend.datascience.common.inference.type.DataTypeEnum;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.talend.dataquality.statistics.quality.DataTypeQualityAnalyzer;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
 
 public class CompositePatternFrequencyAnalyzerTest {
 

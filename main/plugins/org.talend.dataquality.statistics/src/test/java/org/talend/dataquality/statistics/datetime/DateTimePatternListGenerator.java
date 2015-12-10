@@ -1,4 +1,4 @@
-package org.talend.dataquality.statistics.type;
+package org.talend.dataquality.statistics.datetime;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

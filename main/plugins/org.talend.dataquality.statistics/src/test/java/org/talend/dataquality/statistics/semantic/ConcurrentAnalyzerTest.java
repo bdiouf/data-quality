@@ -32,7 +32,7 @@ import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.AnalyzerSupplier;
 import org.talend.datascience.common.inference.ConcurrentAnalyzer;
 
-public class ConcurrentAnalyzerTest extends AnalyzerTest {
+public class ConcurrentAnalyzerTest extends SemanticStatisticsTestBase {
 
     private static Logger log = Logger.getLogger(ConcurrentAnalyzerTest.class);
 

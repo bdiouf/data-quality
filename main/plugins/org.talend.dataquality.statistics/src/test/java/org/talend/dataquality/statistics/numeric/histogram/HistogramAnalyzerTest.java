@@ -23,7 +23,7 @@ import java.util.function.BiConsumer;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.talend.datascience.common.inference.type.DataTypeEnum;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
 
 public class HistogramAnalyzerTest {
 

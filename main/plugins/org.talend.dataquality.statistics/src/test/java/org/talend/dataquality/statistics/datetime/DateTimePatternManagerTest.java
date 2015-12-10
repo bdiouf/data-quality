@@ -1,4 +1,4 @@
-package org.talend.dataquality.statistics.type;
+package org.talend.dataquality.statistics.datetime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.Test;
+import org.talend.dataquality.statistics.datetime.DateTimePatternManager;
 
 public class DateTimePatternManagerTest {
 

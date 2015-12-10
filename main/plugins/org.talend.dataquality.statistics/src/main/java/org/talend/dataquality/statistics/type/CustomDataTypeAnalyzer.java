@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.statistics.type;
 
-import org.talend.datascience.common.inference.type.DataTypeAnalyzer;
+import org.talend.dataquality.statistics.datetime.CustomDatetimePatternManager;
 
 /**
  * Date type analyzer with customized extension such as the date time pattern

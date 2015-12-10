@@ -25,13 +25,13 @@ import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.statistics.SemanticAnalyzer;
 import org.talend.dataquality.semantic.statistics.SemanticType;
+import org.talend.dataquality.statistics.type.DataType;
+import org.talend.dataquality.statistics.type.DataTypeAnalyzer;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.Analyzers;
-import org.talend.datascience.common.inference.type.DataType;
-import org.talend.datascience.common.inference.type.DataTypeAnalyzer;
-import org.talend.datascience.common.inference.type.DataTypeEnum;
 
-public class CompositeAnalyzerTest extends AnalyzerTest {
+public class CompositeAnalyzerTest extends SemanticStatisticsTestBase {
 
     Analyzer<Analyzers.Result> analyzer = null;
 
@@ -53,7 +53,7 @@ public class CompositeAnalyzerTest extends AnalyzerTest {
 
     @Test
     public void testDataTypeAndSemantic() {
-        final List<String[]> records = getRecords(AnalyzerTest.class.getResourceAsStream("employee_100.csv"));
+        final List<String[]> records = getRecords(SemanticStatisticsTestBase.class.getResourceAsStream("employee_100.csv"));
         for (String[] record : records) {
             analyzer.analyze(record);
         }

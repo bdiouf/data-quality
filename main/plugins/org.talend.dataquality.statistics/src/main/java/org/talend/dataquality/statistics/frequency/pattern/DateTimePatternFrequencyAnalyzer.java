@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.pattern;
 
-import org.talend.dataquality.statistics.type.CustomDatetimePatternManager;
+import org.talend.dataquality.statistics.datetime.CustomDatetimePatternManager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,10 +17,10 @@ import java.util.List;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.math3.stat.descriptive.rank.Median;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
+import org.talend.dataquality.statistics.type.TypeInferenceUtils;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
-import org.talend.datascience.common.inference.type.DataTypeEnum;
-import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 
 /**
  * Analyzer quantile with apache commons match library.<br>

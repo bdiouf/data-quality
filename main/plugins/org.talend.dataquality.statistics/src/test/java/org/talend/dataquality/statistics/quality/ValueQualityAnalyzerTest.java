@@ -30,8 +30,8 @@ import org.junit.Test;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.statistics.SemanticQualityAnalyzer;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.datascience.common.inference.ValueQualityStatistics;
-import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.

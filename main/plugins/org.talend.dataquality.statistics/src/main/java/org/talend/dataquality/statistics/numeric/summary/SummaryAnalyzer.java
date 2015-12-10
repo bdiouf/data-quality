@@ -16,10 +16,10 @@ import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
+import org.talend.dataquality.statistics.type.TypeInferenceUtils;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
-import org.talend.datascience.common.inference.type.DataTypeEnum;
-import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 
 /**
  * Analyzer for summary statistics using apache common match library.

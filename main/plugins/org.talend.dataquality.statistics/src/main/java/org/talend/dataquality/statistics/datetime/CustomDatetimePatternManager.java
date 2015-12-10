@@ -10,15 +10,13 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.type;
+package org.talend.dataquality.statistics.datetime;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
-import org.talend.datascience.common.inference.type.SystemDatetimePatternManager;
 
 /**
  * Customized date time pattern manager.

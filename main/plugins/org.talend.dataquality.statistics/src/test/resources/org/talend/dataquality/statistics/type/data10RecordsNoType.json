@@ -1,0 +1,206 @@
+{
+  "metadata": {
+    "id": "274676f4-4b88-4bd7-8063-98352b591ae0",
+    "name": "customers_100_with_pb",
+    "author": "anonymousUser",
+    "records": 0,
+    "nbLinesHeader": 0,
+    "nbLinesFooter": 0,
+    "created": "03-02-2015 16:31"
+  },
+  "columns": [
+    {
+      "id": "id",
+      "quality": {
+        "empty": 7,
+        "invalid": 26,
+        "valid": 67
+      },
+      "type": ""
+    },
+    {
+      "id": "firstname",
+      "quality": {
+        "empty": 6,
+        "invalid": 28,
+        "valid": 66
+      },
+      "type": ""
+    },
+    {
+      "id": "lastname",
+      "quality": {
+        "empty": 4,
+        "invalid": 27,
+        "valid": 69
+      },
+      "type": ""
+    },
+    {
+      "id": "state",
+      "quality": {
+        "empty": 2,
+        "invalid": 29,
+        "valid": 69
+      },
+      "type": ""
+    },
+    {
+      "id": "registration",
+      "quality": {
+        "empty": 17,
+        "invalid": 29,
+        "valid": 54
+      },
+      "type": ""
+    },
+    {
+      "id": "city",
+      "quality": {
+        "empty": 13,
+        "invalid": 27,
+        "valid": 60
+      },
+      "type": ""
+    },
+    {
+      "id": "birth",
+      "quality": {
+        "empty": 18,
+        "invalid": 25,
+        "valid": 57
+      },
+      "type": ""
+    },
+    {
+      "id": "nbCommands",
+      "quality": {
+        "empty": 13,
+        "invalid": 27,
+        "valid": 60
+      },
+      "type": ""
+    },
+    {
+      "id": "avgAmount",
+      "quality": {
+        "empty": 13,
+        "invalid": 29,
+        "valid": 58
+      },
+      "type": ""
+    }
+  ],
+  "records": [
+    {
+      "id": "1",
+      "firstname": "Grover",
+      "lastname": "Quincy",
+      "state": "AR",
+      "registration": "17-02-2008",
+      "city": "",
+      "birth": "01-09-1973",
+      "nbCommands": "41",
+      "avgAmount": "82.4"
+    },
+    {
+      "id": "2",
+      "firstname": "Warren",
+      "lastname": "Johnson",
+      "state": "WA",
+      "registration": "18-08-2007",
+      "city": "Nashville",
+      "birth": "11-02-1960",
+      "nbCommands": "17",
+      "avgAmount": "87.6"
+    },
+    {
+      "id": "3",
+      "firstname": "Andrew",
+      "lastname": "Ford",
+      "state": "WA",
+      "registration": "13-09-2008",
+      "city": "Richmond",
+      "birth": "13-11-1971",
+      "nbCommands": "91",
+      "avgAmount": "18.3"
+    },
+    {
+      "id": "4",
+      "firstname": "Gerald",
+      "lastname": "Pierce",
+      "state": "ID",
+      "registration": "05-08-2007",
+      "city": "Pierre",
+      "birth": "30-10-1963",
+      "nbCommands": "34",
+      "avgAmount": "6.0"
+    },
+    {
+      "id": "5",
+      "firstname": "Millard",
+      "lastname": "Reagan",
+      "state": "TX",
+      "registration": "09-01-2007",
+      "city": "Montpelier",
+      "birth": "12-09-1954",
+      "nbCommands": "22",
+      "avgAmount": "15.1"
+    },
+    {
+      "id": "6",
+      "firstname": "Lyndon",
+      "lastname": "Monroe",
+      "state": "IN",
+      "registration": "19-11-2008",
+      "city": "Tallahassee",
+      "birth": "22-07-1946",
+      "nbCommands": "47",
+      "avgAmount": "5.7"
+    },
+    {
+      "id": "7",
+      "firstname": "John",
+      "lastname": "Hoover",
+      "state": "VA",
+      "registration": "09-04-2007",
+      "city": "Des Moines",
+      "birth": "14-08-1986",
+      "nbCommands": "38",
+      "avgAmount": "87.4"
+    },
+    {
+      "id": "8",
+      "firstname": "Theodore",
+      "lastname": "Taft",
+      "state": "VA",
+      "registration": "27-01-2008",
+      "city": "Harrisburg",
+      "birth": "11-08-1953",
+      "nbCommands": "72",
+      "avgAmount": "98.5"
+    },
+    {
+      "id": "9",
+      "firstname": "Grover",
+      "lastname": "Hoover",
+      "state": "",
+      "registration": "18-07-2008",
+      "city": "Annapolis",
+      "birth": "17-10-1948",
+      "nbCommands": "1",
+      "avgAmount": "56.3"
+    },
+    {
+      "id": "10",
+      "firstname": "Richard",
+      "lastname": "Roosevelt",
+      "state": "OK",
+      "registration": "08-02-2007",
+      "city": " City",
+      "birth": "06-09-1948",
+      "nbCommands": "NA",
+      "avgAmount": "44.9"
+    }
+  ]
+}

@@ -16,7 +16,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.datascience.common.inference.type.DataTypeEnum;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
 
 public class MeanValueAnalyzerTest {
 

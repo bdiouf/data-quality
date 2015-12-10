@@ -25,17 +25,17 @@ import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
  * created by talend on 2015-07-28 Detailled comment.
  *
  */
-public class AnalyzerTest {
+class SemanticStatisticsTestBase {
 
     protected final List<List<String[]>> INPUT_RECORDS = new ArrayList<List<String[]>>() {
 
         private static final long serialVersionUID = 1L;
 
         {
-            add(getRecords(AnalyzerTest.class.getResourceAsStream("customers_100_bug_TDQ10380.csv")));
-            add(getRecords(AnalyzerTest.class.getResourceAsStream("avengers.csv")));
-            add(getRecords(AnalyzerTest.class.getResourceAsStream("gender.csv")));
-            add(getRecords(AnalyzerTest.class.getResourceAsStream("dataset_with_invalid_records.csv")));
+            add(getRecords(SemanticStatisticsTestBase.class.getResourceAsStream("customers_100_bug_TDQ10380.csv")));
+            add(getRecords(SemanticStatisticsTestBase.class.getResourceAsStream("avengers.csv")));
+            add(getRecords(SemanticStatisticsTestBase.class.getResourceAsStream("gender.csv")));
+            add(getRecords(SemanticStatisticsTestBase.class.getResourceAsStream("dataset_with_invalid_records.csv")));
 
         }
     };
