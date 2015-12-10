@@ -23,9 +23,10 @@ import java.util.Map;
 public class DataType implements Serializable{
 
     private static final long serialVersionUID = -736825123668340428L;
-    private Map<Type, Long> typeFrequencies = new EnumMap<>(Type.class);
 
-    public Map<Type, Long> getTypeFrequencies() {
+    private Map<DataTypeEnum, Long> typeFrequencies = new EnumMap<>(DataTypeEnum.class);
+
+    public Map<DataTypeEnum, Long> getTypeFrequencies() {
         return typeFrequencies;
     }
 
@@ -34,7 +35,7 @@ public class DataType implements Serializable{
      * 
      * @return type suggested by system automatically given frequencies.
      */
-    public Type getSuggestedType() {
+    public DataTypeEnum getSuggestedType() {
         return getSuggestedType(0.5);
     }
 
@@ -54,13 +55,13 @@ public class DataType implements Serializable{
      * returned. E.g. for the input column: "","","","","1.2" return Type.DOUBLE. If a column is all empty, will return
      * Type.STRING
      */
-    public Type getSuggestedType(double threshold) {
+    public DataTypeEnum getSuggestedType(double threshold) {
         long max = 0;
-        long nbDouble = typeFrequencies.get(Type.DOUBLE) == null ? 0 : typeFrequencies.get(Type.DOUBLE);
-        long nbInteger = typeFrequencies.get(Type.INTEGER) == null ? 0 : typeFrequencies.get(Type.INTEGER);
-        Type electedType = Type.STRING; // String by default
-        for (Map.Entry<Type, Long> entry : typeFrequencies.entrySet()) {
-            if (Type.EMPTY.equals(entry.getKey())) {
+        long nbDouble = typeFrequencies.get(DataTypeEnum.DOUBLE) == null ? 0 : typeFrequencies.get(DataTypeEnum.DOUBLE);
+        long nbInteger = typeFrequencies.get(DataTypeEnum.INTEGER) == null ? 0 : typeFrequencies.get(DataTypeEnum.INTEGER);
+        DataTypeEnum electedType = DataTypeEnum.STRING; // String by default
+        for (Map.Entry<DataTypeEnum, Long> entry : typeFrequencies.entrySet()) {
+            if (DataTypeEnum.EMPTY.equals(entry.getKey())) {
                 continue;
             }
             if (entry.getValue() > max) {
@@ -71,12 +72,12 @@ public class DataType implements Serializable{
         // column contains mostly numeric values (doubles + integers) and the ratio of double values is greater than a
         // given threshold. For more informations, see https://jira.talendforge.org/browse/TDQ-10830
         if (((nbDouble + nbInteger) > max) && (((double) nbDouble) / (nbInteger + nbDouble) >= threshold)) {
-            return Type.DOUBLE;
+            return DataTypeEnum.DOUBLE;
         }
         return electedType;
     }
 
-    public void increment(Type type) {
+    public void increment(DataTypeEnum type) {
         if (!typeFrequencies.containsKey(type)) {
             typeFrequencies.put(type, 1l);
         } else {
@@ -84,36 +85,4 @@ public class DataType implements Serializable{
         }
     }
 
-    /**
-     * created by talend on 2015-07-28 Detailled comment.
-     *
-     */
-    public enum Type {
-        BOOLEAN,
-        INTEGER,
-        DOUBLE,
-        STRING,
-        DATE,
-        TIME,
-        EMPTY;
-
-        public static Type get(String typeName) {
-            if (BOOLEAN.name().equalsIgnoreCase(typeName)) {
-                return BOOLEAN;
-            } else if (INTEGER.name().equalsIgnoreCase(typeName)) {
-                return INTEGER;
-            } else if (DOUBLE.name().equalsIgnoreCase(typeName)) {
-                return DOUBLE;
-            } else if (STRING.name().equalsIgnoreCase(typeName)) {
-                return STRING;
-            } else if (DATE.name().equalsIgnoreCase(typeName)) {
-                return DATE;
-            }else if (TIME.name().equalsIgnoreCase(typeName)) {
-                return TIME;
-            } else if (EMPTY.name().equalsIgnoreCase(typeName)) {
-                return EMPTY;
-            }
-            return STRING;
-        }
-    }
 }

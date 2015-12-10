@@ -102,9 +102,10 @@ public class TypeInferenceUtils {
             return Double.NaN;
         }
     }
-    
+
     /**
      * Get big integer from a string.
+     * 
      * @param value
      * @return big integer instance , or null if numer format exception occurrs.
      */
@@ -182,27 +183,27 @@ public class TypeInferenceUtils {
     }
 
     /**
-     * Detect if the given value is a empty type.
+     * Detect if the given value is blank or null.
      * 
      * @param value the value to be detected.
-     * @return true if the value is a empty type, false otherwise.
+     * @return true if the value is blank or null, false otherwise.
      */
     public static boolean isEmpty(String value) {
         return (value == null || value.trim().length() == 0);
     }
-    
+
     /**
      * 
      * @param type the expected type
      * @param value the value to be detected
      * @return true if the type of value is expected, false otherwise.
      */
-	public static boolean isValid(DataType.Type type, String value) {
-		
-		switch (type) {
-		case BOOLEAN:
-			return isBoolean(value);
-		case INTEGER:
+    public static boolean isValid(DataTypeEnum type, String value) {
+
+        switch (type) {
+        case BOOLEAN:
+            return isBoolean(value);
+        case INTEGER:
             return isInteger(value);
         case DOUBLE:
             return isDouble(value);
@@ -211,10 +212,10 @@ public class TypeInferenceUtils {
         case STRING:
             // Everything can be a string
             return true;
-		default:
-			// Unsupported type
-			return false;
-		}
-	}
+        default:
+            // Unsupported type
+            return false;
+        }
+    }
 
 }

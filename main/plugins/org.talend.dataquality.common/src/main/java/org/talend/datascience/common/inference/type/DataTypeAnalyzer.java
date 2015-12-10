@@ -12,11 +12,14 @@
 // ============================================================================
 package org.talend.datascience.common.inference.type;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
-import org.talend.datascience.common.inference.type.DataType.Type;
-
-import java.util.*;
 
 /**
  * Type inference executor which provide several methods computing the types.<br>
@@ -53,28 +56,28 @@ public class DataTypeAnalyzer implements Analyzer<DataType> {
     }
 
 
-    private DataType.Type execute(String value) {
+    private DataTypeEnum execute(String value) {
         if (TypeInferenceUtils.isEmpty(value)) {
             // 1. detect empty
-            return DataType.Type.EMPTY;
+            return DataTypeEnum.EMPTY;
         } else if (TypeInferenceUtils.isBoolean(value)) {
             // 2. detect boolean
-            return DataType.Type.BOOLEAN;
+            return DataTypeEnum.BOOLEAN;
         } else if (TypeInferenceUtils.isInteger(value)) {
             // 3. detect integer
-            return DataType.Type.INTEGER;
+            return DataTypeEnum.INTEGER;
         } else if (TypeInferenceUtils.isDouble(value)) {
             // 4. detect double
-            return DataType.Type.DOUBLE;
+            return DataTypeEnum.DOUBLE;
         } else if (isDate(value, customDateTimePatterns)) {
             // 5. detect date
-            return DataType.Type.DATE;
+            return DataTypeEnum.DATE;
         } else if (isTime(value)) {
             // 6. detect date
-            return DataType.Type.TIME;
+            return DataTypeEnum.TIME;
         }
         // will return string when no matching
-        return DataType.Type.STRING;
+        return DataTypeEnum.STRING;
     }
 
     private boolean isDate(String value, List<String> customDatePatterns) {
@@ -139,11 +142,11 @@ public class DataTypeAnalyzer implements Analyzer<DataType> {
         for (DataType dt : dataTypes) {
             mergedAnalyzer.getResult().add(idx, dt);
             if (!another.getResult().isEmpty()) {
-                Map<DataType.Type, Long> typeFreqTable = dt.getTypeFrequencies();
-                Map<DataType.Type, Long> anotherTypeFreqTable = another.getResult().get(idx).getTypeFrequencies();
-                Iterator<Type> anotherDTIt = anotherTypeFreqTable.keySet().iterator();
+                Map<DataTypeEnum, Long> typeFreqTable = dt.getTypeFrequencies();
+                Map<DataTypeEnum, Long> anotherTypeFreqTable = another.getResult().get(idx).getTypeFrequencies();
+                Iterator<DataTypeEnum> anotherDTIt = anotherTypeFreqTable.keySet().iterator();
                 while (anotherDTIt.hasNext()) {
-                    Type anotherDT = anotherDTIt.next();
+                    DataTypeEnum anotherDT = anotherDTIt.next();
                     // Update the current map
                     if (typeFreqTable.containsKey(anotherDT)) {
                         mergedAnalyzer.getResult().get(idx).getTypeFrequencies()

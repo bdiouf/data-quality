@@ -52,7 +52,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         assertEquals(0, analyzer.getResult().size());
         analyzer.analyze("");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.STRING, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, analyzer.getResult().get(0).getSuggestedType());
     }
 
     @Test
@@ -70,15 +70,15 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         // One string
         analyzer.analyze("aaaa");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.STRING, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, analyzer.getResult().get(0).getSuggestedType());
         // Two strings
         analyzer.analyze("bbbb");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.STRING, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, analyzer.getResult().get(0).getSuggestedType());
         // One integer
         analyzer.analyze("2");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.STRING, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, analyzer.getResult().get(0).getSuggestedType());
     }
 
     @Test
@@ -87,15 +87,15 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         // One integer
         analyzer.analyze("0");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.INTEGER, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, analyzer.getResult().get(0).getSuggestedType());
         // Two integers
         analyzer.analyze("1");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.INTEGER, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, analyzer.getResult().get(0).getSuggestedType());
         // One string
         analyzer.analyze("aaaaa");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.INTEGER, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, analyzer.getResult().get(0).getSuggestedType());
     }
 
     @Test
@@ -105,16 +105,16 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         // One character
         analyzer.analyze("M");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.STRING, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, analyzer.getResult().get(0).getSuggestedType());
         // Two characters
         analyzer.analyze("M");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.STRING, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, analyzer.getResult().get(0).getSuggestedType());
         // The new value should invalidate previous assumptions about CHAR value
         // (no longer a CHAR).
         analyzer.analyze("Mme");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.STRING, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, analyzer.getResult().get(0).getSuggestedType());
     }
 
     // TODO All other data types
@@ -125,15 +125,15 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         // One boolean
         analyzer.analyze("true");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.BOOLEAN, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.BOOLEAN, analyzer.getResult().get(0).getSuggestedType());
         // Two booleans
         analyzer.analyze("false");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.BOOLEAN, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.BOOLEAN, analyzer.getResult().get(0).getSuggestedType());
         // One string
         analyzer.analyze("aaaaa");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.BOOLEAN, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.BOOLEAN, analyzer.getResult().get(0).getSuggestedType());
     }
 
     @Test
@@ -143,13 +143,13 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         for (String string : toTestMoreDouble) {
             analyzer.analyze(string);
         }
-        assertEquals(DataType.Type.DOUBLE, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.DOUBLE, analyzer.getResult().get(0).getSuggestedType());
 
         String[] toTestMoreInteger = { "1.2", "3.4E-10", "1", "3", "6", "80" };
         for (String string : toTestMoreInteger) {
             analyzer.analyze(string);
         }
-        assertEquals(DataType.Type.INTEGER, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, analyzer.getResult().get(0).getSuggestedType());
 
     }
 
@@ -159,8 +159,8 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         analyzer.analyze("true", "aaaa");
         analyzer.analyze("true", "bbbb");
         assertEquals(2, analyzer.getResult().size());
-        assertEquals(DataType.Type.BOOLEAN, analyzer.getResult().get(0).getSuggestedType());
-        assertEquals(DataType.Type.STRING, analyzer.getResult().get(1).getSuggestedType());
+        assertEquals(DataTypeEnum.BOOLEAN, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, analyzer.getResult().get(1).getSuggestedType());
     }
 
     @Test
@@ -172,24 +172,24 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         }
         final List<DataType> result = analyzer.getResult();
         assertEquals(18, result.size());
-        assertEquals(DataType.Type.INTEGER, result.get(0).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(1).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(2).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(3).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(4).getSuggestedType());
-        assertEquals(DataType.Type.INTEGER, result.get(5).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(6).getSuggestedType());
-        assertEquals(DataType.Type.INTEGER, result.get(7).getSuggestedType());
-        assertEquals(DataType.Type.INTEGER, result.get(8).getSuggestedType());
-        assertEquals(DataType.Type.DATE, result.get(9).getSuggestedType());
-        assertEquals(DataType.Type.DATE, result.get(10).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(11).getSuggestedType());
-        assertEquals(DataType.Type.DOUBLE, result.get(12).getSuggestedType());
-        assertEquals(DataType.Type.INTEGER, result.get(13).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(14).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(15).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(16).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(17).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(1).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(2).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(3).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(4).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(5).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(6).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(7).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(8).getSuggestedType());
+        assertEquals(DataTypeEnum.DATE, result.get(9).getSuggestedType());
+        assertEquals(DataTypeEnum.DATE, result.get(10).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(11).getSuggestedType());
+        assertEquals(DataTypeEnum.DOUBLE, result.get(12).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(13).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(14).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(15).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(16).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(17).getSuggestedType());
     }
 
     @Test
@@ -198,7 +198,7 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         analyzer.analyze("10-Oct-2015");
         analyzer.analyze("11-Oct-2015");
         assertEquals(1, analyzer.getResult().size());
-        assertEquals(DataType.Type.DATE, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.DATE, analyzer.getResult().get(0).getSuggestedType());
     }
 
     /**
@@ -213,15 +213,15 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
             analyzer.analyze(record);
         }
         final List<DataType> result = analyzer.getResult();
-        assertEquals(DataType.Type.INTEGER, result.get(0).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(1).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(2).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(3).getSuggestedType());
-        assertEquals(DataType.Type.DATE, result.get(4).getSuggestedType());
-        assertEquals(DataType.Type.STRING, result.get(5).getSuggestedType());
-        assertEquals(DataType.Type.DATE, result.get(6).getSuggestedType());
-        assertEquals(DataType.Type.INTEGER, result.get(7).getSuggestedType());
-        assertEquals(DataType.Type.DOUBLE, result.get(8).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(1).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(2).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(3).getSuggestedType());
+        assertEquals(DataTypeEnum.DATE, result.get(4).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(5).getSuggestedType());
+        assertEquals(DataTypeEnum.DATE, result.get(6).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(7).getSuggestedType());
+        assertEquals(DataTypeEnum.DOUBLE, result.get(8).getSuggestedType());
     }
 
     @Test
@@ -233,9 +233,9 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         }
         analyzer.end();
         final List<DataType> result = analyzer.getResult();
-        assertEquals(DataType.Type.INTEGER, result.get(0).getSuggestedType());
-        assertEquals(DataType.Type.INTEGER, result.get(0).getSuggestedType(0.6));
-        assertEquals(DataType.Type.DOUBLE, result.get(0).getSuggestedType(0.3));
+        assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.6));
+        assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.3));
     }
     @Test
     public void testGetDataTypeWithRatioEmpty() {
@@ -246,8 +246,8 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         }
         analyzer.end();
         final List<DataType> result = analyzer.getResult();
-        assertEquals(DataType.Type.DOUBLE, result.get(0).getSuggestedType());
-        assertEquals(DataType.Type.DOUBLE, result.get(0).getSuggestedType(0.9));
+        assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.9));
     }
     @Test
     public void testGetDataTypeWithRatioEmpty2() {
@@ -258,8 +258,8 @@ public class DataTypeAnalyzerTest extends AnalyzerTest {
         }
         analyzer.end();
         final List<DataType> result = analyzer.getResult();
-        assertEquals(DataType.Type.INTEGER, result.get(0).getSuggestedType(0.9));
-        assertEquals(DataType.Type.DOUBLE, result.get(0).getSuggestedType(0.1));
+        assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.9));
+        assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.1));
     }
 
 }
