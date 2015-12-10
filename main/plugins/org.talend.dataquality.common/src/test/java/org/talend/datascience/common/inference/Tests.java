@@ -15,8 +15,6 @@ package org.talend.datascience.common.inference;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.talend.datascience.common.inference.type.DataTypeAnalyzerTest;
-import org.talend.datascience.common.inference.type.TypeInferenceUtilsTest;
 import org.talend.datascience.common.regex.FullwidthLatinLowercasedLettersTest;
 import org.talend.datascience.common.regex.FullwidthLatinNumbersTest;
 import org.talend.datascience.common.regex.FullwidthLatinUppercasedLettersTest;
@@ -32,8 +30,8 @@ import org.talend.datascience.common.regex.KatakanaTest;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ ResizableListTest.class, DataTypeAnalyzerTest.class, TypeInferenceUtilsTest.class, KatakanaTest.class,
-        KatakanaSmallTest.class, KanjiTest.class, HiraganaTest.class, HiraganaSmallTest.class, HangulTest.class,
-        FullwidthLatinUppercasedLettersTest.class, FullwidthLatinNumbersTest.class, FullwidthLatinLowercasedLettersTest.class })
+@SuiteClasses({ ResizableListTest.class, KatakanaTest.class, KatakanaSmallTest.class, KanjiTest.class, HiraganaTest.class,
+        HiraganaSmallTest.class, HangulTest.class, FullwidthLatinUppercasedLettersTest.class, FullwidthLatinNumbersTest.class,
+        FullwidthLatinLowercasedLettersTest.class })
 public class Tests {
 }

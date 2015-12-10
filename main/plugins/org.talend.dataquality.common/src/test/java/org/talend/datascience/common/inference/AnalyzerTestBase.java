@@ -24,7 +24,7 @@ import org.apache.commons.lang.StringUtils;
  * created by talend on 2015-07-28 Detailled comment.
  *
  */
-public class AnalyzerTest {
+public class AnalyzerTestBase {
 
     protected static List<String[]> getRecords(InputStream inputStream) {
         if (inputStream == null) {
