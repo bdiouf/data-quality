@@ -18,8 +18,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.datascience.common.inference.type.DataType;
-import org.talend.datascience.common.inference.type.DataType.Type;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 public class MinMaxValueAnalyzerTest {
 
@@ -36,7 +35,7 @@ public class MinMaxValueAnalyzerTest {
 
         String[][] test2Cols_Double_Int = new String[][] { { "20", "20" }, { "1.0", "1.0" }, { "3", "3" }, { "4.5", "4.5" },
                 { "8.0", "8" } };
-        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataType.Type[] { Type.DOUBLE, Type.INTEGER });
+        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE, DataTypeEnum.INTEGER });
         for (String[] values : test2Cols_Double_Int) {
             analyzer.analyze(values);
         }
@@ -54,7 +53,7 @@ public class MinMaxValueAnalyzerTest {
 
         String[][] test2Cols_Double_Str = new String[][] { { "a str", "a" }, { "1.0", "b" }, { "3", "c" }, { "4.5", "4.5" },
                 { "8.0", "8.0" } };
-        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataType.Type[] { Type.DOUBLE, Type.STRING });
+        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE, DataTypeEnum.STRING });
         for (String[] values : test2Cols_Double_Str) {
             analyzer.analyze(values);
         }
@@ -71,7 +70,7 @@ public class MinMaxValueAnalyzerTest {
     public void testAnalyzeEmpty() {
 
         String[][] test2Cols_Empty_StrSpace = new String[][] { { "", "" }, { "", "" } };
-        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataType.Type[] { Type.EMPTY, Type.STRING });
+        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataTypeEnum[] { DataTypeEnum.EMPTY, DataTypeEnum.STRING });
         for (String[] values : test2Cols_Empty_StrSpace) {
             analyzer.analyze(values);
         }
@@ -84,7 +83,7 @@ public class MinMaxValueAnalyzerTest {
 
         // for issue: https://jira.talendforge.org/browse/TDQ-10863
         String[] testMixedCol = new String[] { "22", "21", "18", "", "23", "25", "26", "26.5" };
-        analyzer = new SummaryAnalyzer(new DataType.Type[] { Type.INTEGER });
+        analyzer = new SummaryAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER });
         for (String value : testMixedCol) {
             analyzer.analyze(value);
         }

@@ -17,7 +17,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.statistics.quality.DataTypeQualityAnalyzer;
-import org.talend.datascience.common.inference.type.DataType;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -184,7 +184,7 @@ public class CompositePatternFrequencyAnalyzerTest {
 
         // Add value quality analyzer to have list of valid date. some date matches patterns from the file, some matches
         // them in memory user set.
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.DATE);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.DATE);
         qualityAnalyzer.addCustomDateTimePattern("M/d/yy H:m");
         qualityAnalyzer.init();
         // 2-8-15 15:57 is not at date with pattern available,"2012-02-12" is a date match pattern from file, the others
@@ -204,7 +204,7 @@ public class CompositePatternFrequencyAnalyzerTest {
         // Add new customized pattern , create new quality analyzer , check again dates should be valid given customized
         // pattern and the pattern in file.
         // patterns provided.
-        DataTypeQualityAnalyzer qualityAnalyzer2 = new DataTypeQualityAnalyzer(DataType.Type.DATE);
+        DataTypeQualityAnalyzer qualityAnalyzer2 = new DataTypeQualityAnalyzer(DataTypeEnum.DATE);
         qualityAnalyzer2.addCustomDateTimePattern("M-d-yy H:m");
         qualityAnalyzer2.init();
         for (String value : data) {

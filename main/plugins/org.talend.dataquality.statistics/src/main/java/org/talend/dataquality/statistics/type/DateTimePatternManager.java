@@ -143,7 +143,7 @@ public class DateTimePatternManager {
         }
 
         // fall back on registered ones
-        return false;// isDateTime(DATE_PARSERS, value);
+        return isDateTime(DATE_PARSERS, value);
     }
 
     /**

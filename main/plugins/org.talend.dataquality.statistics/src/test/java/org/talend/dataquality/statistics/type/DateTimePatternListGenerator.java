@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.talend.datascience.common.inference.type.SystemDatetimePatternManager;
-
 public class DateTimePatternListGenerator {
 
     static List<LocaledPattern> knownLocaledPatternList = new ArrayList<LocaledPattern>();
@@ -141,22 +139,6 @@ public class DateTimePatternListGenerator {
                 }
             }
         }
-    }
-
-    private static List<String> getNonExistentPatternsInLegacyFile(List<String> knownPatternList) {
-        List<String> list = new ArrayList<String>(SystemDatetimePatternManager.DATE_PATTERN_NAMES);
-
-        List<String> nonExistentPatterns = new ArrayList<String>();
-
-        // sortDatePattern(list);
-        for (String pattern : list) {
-            // if (!knownPatternList.contains(pattern)) {
-            nonExistentPatterns.add(pattern);// TODO: add the pattern according to the regex not "pattern text"
-            System.out.println(pattern + " \t" + getFormattedDateTime(pattern, Locale.US));
-            // }
-        }
-        return nonExistentPatterns;
-
     }
 
     @SuppressWarnings("unused")

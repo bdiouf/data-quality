@@ -18,7 +18,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
-import org.talend.datascience.common.inference.type.DataType.Type;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 
 /**
@@ -40,7 +40,7 @@ public class TDigestAnalyzer extends NumericalStatisticsAnalyzer<TDigestQuantile
 
     private boolean isDigestInited = false;
 
-    public TDigestAnalyzer(Type[] types) {
+    public TDigestAnalyzer(DataTypeEnum[] types) {
         super(types);
     }
 
@@ -57,7 +57,7 @@ public class TDigestAnalyzer extends NumericalStatisticsAnalyzer<TDigestQuantile
 
     @Override
     public boolean analyze(String... record) {
-        Type[] types = this.getTypes();
+        DataTypeEnum[] types = this.getTypes();
 
         if (record.length != types.length)
             throw new IllegalArgumentException("Each column of the record should be declared a DataType.Type corresponding! \n"

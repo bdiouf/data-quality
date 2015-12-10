@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.Test;
-import org.talend.datascience.common.inference.type.SystemDatetimePatternManager;
 
 public class DateTimePatternManagerTest {
 
@@ -19,6 +18,7 @@ public class DateTimePatternManagerTest {
         assertFalse(DateTimePatternManager.isDate("6/18/2009 21:30"));
 
         // US valid date
+        assertTrue(DateTimePatternManager.isDate("6/18/09"));
         assertTrue(DateTimePatternManager.isDate("6/18/09 9:30 PM"));
         assertTrue(DateTimePatternManager.isDate("6/18/09 09:30 PM"));
 
@@ -26,15 +26,15 @@ public class DateTimePatternManagerTest {
         assertTrue(DateTimePatternManager.isDate("6/18/09"));
         assertFalse(DateTimePatternManager.isDate("Jan.12.2010"));
         assertFalse(DateTimePatternManager.isDate("14/Feb/2013:13:40:51 +0100"));
-        assertTrue(DateTimePatternManager.isDate("1970-01-01T00:32:43"));
+        assertFalse(DateTimePatternManager.isDate("1970-01-01T00:32:43"));
 
     }
 
     @Test
     public void testDateMatchingCustomPattern() {
         // invalid with system time pattern
-        assertFalse(SystemDatetimePatternManager.isDate("6/18/09 21:30"));
-        assertTrue(SystemDatetimePatternManager.isDate("6/18/2009 21:30"));
+        assertFalse(DateTimePatternManager.isDate("6/18/09 21:30"));
+        assertFalse(DateTimePatternManager.isDate("6/18/2009 21:30"));
 
         // valid with custom pattern
         assertTrue(DateTimePatternManager.isDate("6/18/09 21:30", Collections.<String> singletonList("M/d/yy H:m")));
@@ -44,8 +44,8 @@ public class DateTimePatternManagerTest {
 
     @Test
     public void testValidDateNotMatchingCustomPattern() {
-        assertTrue(DateTimePatternManager.isDate("6/18/2009 21:30", Collections.<String> singletonList("m-d-y hh:MM")));
-        assertEquals("M/d/yyyy H:m", DateTimePatternManager.replaceByDateTimePattern("6/18/2009 21:30", "m-d-y hh:MM"));
+        assertTrue(DateTimePatternManager.isDate("11/03/22", Collections.<String> singletonList("m-d-y hh:MM")));
+        assertEquals("d/M/yy", DateTimePatternManager.replaceByDateTimePattern("11/03/22", "m-d-y hh:MM"));
     }
 
     @Test
@@ -56,8 +56,8 @@ public class DateTimePatternManagerTest {
 
     @Test
     public void testValidDateWithInvalidPattern() {
-        assertTrue(DateTimePatternManager.isDate("6/18/2009 21:30", Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
-        assertEquals("M/d/yyyy H:m", DateTimePatternManager.replaceByDateTimePattern("6/18/2009 21:30", "d/m/y**y hh:mm zzzzzzz"));
+        assertTrue(DateTimePatternManager.isDate("11/03/22", Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
+        assertEquals("d/M/yy", DateTimePatternManager.replaceByDateTimePattern("11/03/22", "d/m/y**y hh:mm zzzzzzz"));
     }
 
     @Test

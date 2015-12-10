@@ -23,8 +23,7 @@ import org.junit.Test;
 import org.talend.dataquality.statistics.numeric.summary.SummaryAnalyzer;
 import org.talend.dataquality.statistics.quality.ValueQualityAnalyzerTest;
 import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.type.DataType;
-import org.talend.datascience.common.inference.type.DataType.Type;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 public class QuantileAnalyzerTest {
 
@@ -39,8 +38,8 @@ public class QuantileAnalyzerTest {
     @Test
     public void testAnalyzeStringArray() {
         String[] data = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-        QuantileAnalyzer analyzer = new QuantileAnalyzer(new DataType.Type[] { Type.INTEGER });
-        TDigestAnalyzer tanalyzer = new TDigestAnalyzer(new DataType.Type[] { Type.INTEGER });
+        QuantileAnalyzer analyzer = new QuantileAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER });
+        TDigestAnalyzer tanalyzer = new TDigestAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER });
         analyzer.init();
         tanalyzer.init();
         for (String value : data) {
@@ -149,9 +148,9 @@ public class QuantileAnalyzerTest {
     public void testQuantileOfFile() throws IOException {// test for double data, TDQ-10789, TDP-394
         final List<String[]> records = ValueQualityAnalyzerTest.getRecords(
                 this.getClass().getResourceAsStream("../../data/t-shirt_100.csv"), ",");
-        QuantileAnalyzer analyzer = new QuantileAnalyzer(new DataType.Type[] { Type.DOUBLE });
-        TDigestAnalyzer tanalyzer = new TDigestAnalyzer(new DataType.Type[] { Type.DOUBLE });
-        SummaryAnalyzer summaryAnalyzer = new SummaryAnalyzer(new DataType.Type[] { Type.DOUBLE });
+        QuantileAnalyzer analyzer = new QuantileAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE });
+        TDigestAnalyzer tanalyzer = new TDigestAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE });
+        SummaryAnalyzer summaryAnalyzer = new SummaryAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE });
         tanalyzer.init();
         analyzer.init();
         summaryAnalyzer.init();

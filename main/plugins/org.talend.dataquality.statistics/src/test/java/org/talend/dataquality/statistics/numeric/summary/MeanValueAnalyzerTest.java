@@ -16,8 +16,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.datascience.common.inference.type.DataType;
-import org.talend.datascience.common.inference.type.DataType.Type;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 public class MeanValueAnalyzerTest {
 
@@ -34,7 +33,7 @@ public class MeanValueAnalyzerTest {
     public void testAnalyze() {
         // 1. test with values of all double.
         String[] dValues = new String[] { "20", "0.3", "3", "4.5", "8" };
-        SummaryAnalyzer meanAnalyzer = new SummaryAnalyzer(new DataType.Type[] { Type.DOUBLE });
+        SummaryAnalyzer meanAnalyzer = new SummaryAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE });
         meanAnalyzer.init();
         for (String strValue : dValues) {
             meanAnalyzer.analyze(strValue);

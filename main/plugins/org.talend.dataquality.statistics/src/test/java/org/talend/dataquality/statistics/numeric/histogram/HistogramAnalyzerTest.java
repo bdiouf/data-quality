@@ -12,29 +12,22 @@
 // ============================================================================
 package org.talend.dataquality.statistics.numeric.histogram;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BiConsumer;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.talend.datascience.common.inference.type.DataType;
-import org.talend.datascience.common.inference.type.DataType.Type;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 public class HistogramAnalyzerTest {
 
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    private HistogramAnalyzer createAnalyzer(Type[] types, HistogramParameter histogramParameter) {
+    private HistogramAnalyzer createAnalyzer(DataTypeEnum[] types, HistogramParameter histogramParameter) {
         return new HistogramAnalyzer(types, histogramParameter);
     }
 
@@ -43,7 +36,7 @@ public class HistogramAnalyzerTest {
         String[][] data = { { "aaaa" }, { "5" } };
         HistogramParameter histogramParameter = new HistogramParameter();
         histogramParameter.setDefaultParameters(0, 5, 1);
-        HistogramAnalyzer analyzer = createAnalyzer(new DataType.Type[] { Type.DOUBLE }, histogramParameter);
+        HistogramAnalyzer analyzer = createAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE }, histogramParameter);
         for (String[] d : data) {
             analyzer.analyze(d);
         }
@@ -60,7 +53,7 @@ public class HistogramAnalyzerTest {
         String[] data = { "0", "2", "2.5", "4", "6", "7", "8", "9", "10" };
         HistogramParameter histogramParameter = new HistogramParameter();
         histogramParameter.setDefaultParameters(0, 10, 4);
-        HistogramAnalyzer analyzer = createAnalyzer(new DataType.Type[] { Type.DOUBLE }, histogramParameter);
+        HistogramAnalyzer analyzer = createAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE }, histogramParameter);
         for (String d : data) {
             analyzer.analyze(d);
         }
@@ -98,15 +91,16 @@ public class HistogramAnalyzerTest {
 
     @Test
     public void testAnalyzeExtended() {
-        String[] data = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+        String[] data = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
         HistogramParameter histogramParameter = new HistogramParameter();
         histogramParameter.setDefaultParameters(2, 8, 3);
-        HistogramAnalyzer analyzer = createAnalyzer(new DataType.Type[] { Type.INTEGER }, histogramParameter);
+        HistogramAnalyzer analyzer = createAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER }, histogramParameter);
         for (String d : data) {
             analyzer.analyze(d);
         }
 
-        Map<Range, Long> histogram = analyzer.getResult().get(0).getHistogram();
+        HistogramStatistics histogramStatistics = analyzer.getResult().get(0);
+        Map<Range, Long> histogram = histogramStatistics.getHistogram();
 
         Iterator<Entry<Range, Long>> entrySet = histogram.entrySet().iterator();
         int idx = 0;
@@ -134,6 +128,10 @@ public class HistogramAnalyzerTest {
 
             idx++;
         }
+        // Assert the value out of range
+        Assert.assertFalse(histogramStatistics.isComplete());
+        Assert.assertEquals(1, histogramStatistics.getCountBelowMin(), 0);
+        Assert.assertEquals(2, histogramStatistics.getCountAboveMax(), 0);
     }
 
     @Test
@@ -141,7 +139,7 @@ public class HistogramAnalyzerTest {
         String[] data = { "-2", "-4", "-6", "-7", "8", "9", "5", "1" };
         HistogramParameter histogramParameter = new HistogramParameter();
         histogramParameter.setDefaultParameters(-4, 8, 3);
-        HistogramAnalyzer analyzer = createAnalyzer(new DataType.Type[] { Type.INTEGER }, histogramParameter);
+        HistogramAnalyzer analyzer = createAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER }, histogramParameter);
         for (String d : data) {
             analyzer.analyze(d);
         }
@@ -170,7 +168,7 @@ public class HistogramAnalyzerTest {
         String[] data = { "-0.0001", "-0.00004", "-0.00006", "-0.00007", "8", "7", "9", "5", "1" };
         HistogramParameter histogramParameter = new HistogramParameter();
         histogramParameter.setDefaultParameters(-0.004, 9, 3);
-        HistogramAnalyzer analyzer = createAnalyzer(new DataType.Type[] { Type.DOUBLE }, histogramParameter);
+        HistogramAnalyzer analyzer = createAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE }, histogramParameter);
         for (String d : data) {
             analyzer.analyze(d);
         }
@@ -210,7 +208,7 @@ public class HistogramAnalyzerTest {
         HistogramColumnParameter column2Param = new HistogramColumnParameter();
         column2Param.setParameters(0, 9, 4);
         histogramParameter.putColumnParameter(1, column2Param);
-        HistogramAnalyzer analyzer = createAnalyzer(new DataType.Type[] { Type.INTEGER, Type.INTEGER, Type.STRING },
+        HistogramAnalyzer analyzer = createAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER, DataTypeEnum.INTEGER, DataTypeEnum.STRING },
                 histogramParameter);
         for (String[] d : data) {
             analyzer.analyze(d);
@@ -273,5 +271,78 @@ public class HistogramAnalyzerTest {
             }
 
         });
+    }
+
+    @Test
+    public void testMultipleRandomHistograms() {
+        final int nbLoop = 10;
+        for (int i = 0; i < nbLoop; i++) {
+            testHistogramWithRandom(3, 60, -1300 + 10 * i, 196 + 11 * i, 3435 + 10 * i, i * 37, 3 + i * 73);
+        }
+    }
+
+    private void testHistogramWithRandom(int minNbBins, int maxNbBins, int minValue, int maxMinValue, int maxValue,
+            int minNbValue, int maxNbValue) {
+        // number of bins
+        int numBins = ThreadLocalRandom.current().nextInt(minNbBins, maxNbBins);
+        // min value,max value
+        double min = ThreadLocalRandom.current().nextDouble(minValue, maxMinValue);
+        double max = ThreadLocalRandom.current().nextDouble(maxMinValue + 1, maxValue);
+        double step = (max - min) / numBins;
+        // value list
+        List<Double> values = new ArrayList<Double>();
+        // histograms
+        Map<Range, Long> histograms = new TreeMap<Range, Long>();
+        double current = min;
+        for (int i = 1; i <= numBins; i++) {
+            // generate values for each bin ( range of 5 to 10)
+            long countInBin = ThreadLocalRandom.current().nextLong(minNbValue, maxNbValue);
+            double next = current + step;
+            if (i == numBins) {
+                next = max;
+            }
+            Range currentRange = new Range(current, next);
+            for (int j = 0; j < countInBin; j++) {
+                double rValue = ThreadLocalRandom.current().nextDouble(current, next);
+                values.add(rValue);
+            }
+            if (1 == i || numBins == i) {
+                // increment count since min / max is included
+                countInBin++;
+            }
+            histograms.put(currentRange, countInBin);
+            // Go to next bin
+            current = next;
+        }
+
+        // Add min and max into value list
+        values.add(min);
+        values.add(max);
+        System.out.println("numBins: " + numBins + ", min: " + min + ", max:" + max);
+        // analyze histogram
+        HistogramParameter histogramParameter = new HistogramParameter();
+        HistogramColumnParameter columnParam = new HistogramColumnParameter();
+        columnParam.setParameters(min, max, numBins);
+        histogramParameter.putColumnParameter(0, columnParam);
+        HistogramAnalyzer analyzer = createAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE }, histogramParameter);
+        for (Double d : values) {
+            analyzer.analyze(d.toString());
+        }
+        Map<Range, Long> histogramFromAnalyzer = analyzer.getResult().get(0).getHistogram();
+
+        // do assertions
+        int binIdx = 0;
+        for (Entry<Range, Long> histEntry : histograms.entrySet()) {
+            @SuppressWarnings("unchecked")
+            Entry<Range, Long> histEntryOfAnalyzer = (Entry<Range, Long>) histogramFromAnalyzer.entrySet().toArray()[binIdx];
+            Assert.assertEquals(histEntry.getKey().getLower(), histEntryOfAnalyzer.getKey().getLower(), 0.001);
+            // System.out.print("Lower: " + histEntry.getKey().getLower());
+            Assert.assertEquals(histEntry.getKey().getUpper(), histEntryOfAnalyzer.getKey().getUpper(), 0.001);
+            // System.out.print(" Upper: " + histEntry.getKey().getUpper());
+            Assert.assertEquals(histEntry.getValue(), histEntryOfAnalyzer.getValue());
+            // System.out.println(" Count: " + histEntry.getValue());
+            binIdx++;
+        }
+
     }
 }

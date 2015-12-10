@@ -19,7 +19,7 @@ import org.apache.commons.math3.stat.descriptive.rank.Median;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
-import org.talend.datascience.common.inference.type.DataType.Type;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 
 /**
@@ -35,7 +35,7 @@ public class QuantileAnalyzer extends NumericalStatisticsAnalyzer<QuantileStatis
 
     private final ResizableList<QuantileStatistics> stats = new ResizableList<>(QuantileStatistics.class);
 
-    public QuantileAnalyzer(Type[] types) {
+    public QuantileAnalyzer(DataTypeEnum[] types) {
         super(types);
     }
 
@@ -47,7 +47,7 @@ public class QuantileAnalyzer extends NumericalStatisticsAnalyzer<QuantileStatis
 
     @Override
     public boolean analyze(String... record) {
-        Type[] types = getTypes();
+        DataTypeEnum[] types = getTypes();
         if (record.length != types.length)
             throw new IllegalArgumentException("Each column of the record should be declared a DataType.Type corresponding! \n"
                     + types.length + " type(s) declared in this quantile analyzer but " + record.length

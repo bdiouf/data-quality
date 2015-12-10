@@ -22,14 +22,14 @@ import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.QualityAnalyzer;
 import org.talend.datascience.common.inference.ResizableList;
 import org.talend.datascience.common.inference.ValueQualityStatistics;
-import org.talend.datascience.common.inference.type.DataType;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
  *
  */
-public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatistics, DataType.Type[]> {
+public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatistics, DataTypeEnum[]> {
 
     private static final long serialVersionUID = -5951511723860660263L;
 
@@ -45,12 +45,12 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
         }
     }
 
-    public DataTypeQualityAnalyzer(DataType.Type[] types, boolean isStoreInvalidValues) {
+    public DataTypeQualityAnalyzer(DataTypeEnum[] types, boolean isStoreInvalidValues) {
         this.isStoreInvalidValues = isStoreInvalidValues;
         this.types = types;
     }
 
-    public DataTypeQualityAnalyzer(DataType.Type... types) {
+    public DataTypeQualityAnalyzer(DataTypeEnum... types) {
         this.types = types;
     }
 
@@ -73,9 +73,9 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
             final ValueQualityStatistics valueQuality = results.get(i);
             if (TypeInferenceUtils.isEmpty(value)) {
                 valueQuality.incrementEmpty();
-            } else if (DataType.Type.DATE == types[i] && CustomDatetimePatternManager.isDate(value, customDateTimePatterns)) {
+            } else if (DataTypeEnum.DATE == types[i] && CustomDatetimePatternManager.isDate(value, customDateTimePatterns)) {
                 valueQuality.incrementValid();
-            } else if (DataType.Type.TIME == types[i] && CustomDatetimePatternManager.isTime(value, customDateTimePatterns)) {
+            } else if (DataTypeEnum.TIME == types[i] && CustomDatetimePatternManager.isTime(value, customDateTimePatterns)) {
                 valueQuality.incrementValid();
             } else if (TypeInferenceUtils.isValid(types[i], value)) {
                 valueQuality.incrementValid();

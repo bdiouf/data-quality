@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.datascience.common.inference.type.DataType;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 public class CustomDataTypeAnalyzerTest {
 
@@ -25,7 +26,7 @@ public class CustomDataTypeAnalyzerTest {
         }
         analyzer.end();
         final List<DataType> resultBeforeSetCustomP = analyzer.getResult();
-        assertEquals(DataType.Type.INTEGER, resultBeforeSetCustomP.get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, resultBeforeSetCustomP.get(0).getSuggestedType());
 
         // After set Custom Data Pattern: yyyy?mm?dd, "2015?08?20" & "2012?02?12" can be recognised as date
         // the type of testColumn is DATE
@@ -36,7 +37,7 @@ public class CustomDataTypeAnalyzerTest {
         }
         analyzer.end();
         final List<DataType> resultAfterSetCustomP = analyzer.getResult();
-        assertEquals(DataType.Type.DATE, resultAfterSetCustomP.get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.DATE, resultAfterSetCustomP.get(0).getSuggestedType());
 
     }
 }

@@ -18,7 +18,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ResizableList;
-import org.talend.datascience.common.inference.type.DataType.Type;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 import org.talend.datascience.common.inference.type.TypeInferenceUtils;
 
 /**
@@ -33,7 +33,7 @@ public class SummaryAnalyzer extends NumericalStatisticsAnalyzer<SummaryStatisti
 
     private final ResizableList<SummaryStatistics> summaryStats = new ResizableList<>(SummaryStatistics.class);
 
-    public SummaryAnalyzer(Type[] types) {
+    public SummaryAnalyzer(DataTypeEnum[] types) {
         super(types);
     }
 
@@ -45,7 +45,7 @@ public class SummaryAnalyzer extends NumericalStatisticsAnalyzer<SummaryStatisti
 
     @Override
     public boolean analyze(String... record) {
-        Type[] types = getTypes();
+        DataTypeEnum[] types = getTypes();
 
         if (record.length != types.length)
             throw new IllegalArgumentException("Each column of the record should be declared a DataType.Type corresponding! \n"

@@ -28,8 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.ValueQualityStatistics;
-import org.talend.datascience.common.inference.type.DataType;
-import org.talend.datascience.common.inference.type.DataType.Type;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -78,7 +77,7 @@ public class DataTypeQualityAnalyzerTest {
 
     @Before
     public void setUp() {
-        analyzer = new DataTypeQualityAnalyzer(DataType.Type.INTEGER);
+        analyzer = new DataTypeQualityAnalyzer(DataTypeEnum.INTEGER);
         analyzer.init();
     }
 
@@ -134,7 +133,7 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testInvalidValues() {
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.STRING);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.STRING);
         qualityAnalyzer.analyze("1");
         qualityAnalyzer.analyze("2");
         qualityAnalyzer.analyze("3");
@@ -150,7 +149,7 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testTwoColumnsInvalid() {
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.INTEGER, DataType.Type.DOUBLE);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.INTEGER, DataTypeEnum.DOUBLE);
         populateAnalyzeData(qualityAnalyzer);
         // --- Assert column 0
         ValueQualityStatistics valueQuality = qualityAnalyzer.getResult().get(0);
@@ -177,7 +176,7 @@ public class DataTypeQualityAnalyzerTest {
     @Test
     public void testTwoColumnsValidAndEmpty() throws Exception {
         // ---Assert when user set string type
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.STRING, DataType.Type.STRING);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.STRING, DataTypeEnum.STRING);
         populateAnalyzeData(qualityAnalyzer);
         ValueQualityStatistics valueQuality = qualityAnalyzer.getResult().get(0);
         // Valid and invalid
@@ -200,7 +199,7 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testValidIntegers() {
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.INTEGER);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.INTEGER);
         qualityAnalyzer.analyze("1");
         qualityAnalyzer.analyze("2");
         qualityAnalyzer.analyze("3");
@@ -217,7 +216,7 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testNoneStrings_double() {
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.DOUBLE);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.DOUBLE);
         populateAnalyzerNoneString(qualityAnalyzer);
         ValueQualityStatistics valueQuality = qualityAnalyzer.getResult().get(0);
         // Valid and invalid
@@ -233,7 +232,7 @@ public class DataTypeQualityAnalyzerTest {
     public void testNoneStrings_string() throws Exception {
         // ---- second pass when user set the user defined type as string---
         // Actual type
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.STRING);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.STRING);
         populateAnalyzerNoneString(qualityAnalyzer);
         ValueQualityStatistics valueQuality = qualityAnalyzer.getResult().get(0);
         // Valid and invalid
@@ -248,7 +247,7 @@ public class DataTypeQualityAnalyzerTest {
     public void testNoneStrings_integer() {
         // ---- third pass when user set the user defined type as Integer---
         // Actual type
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.INTEGER);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.INTEGER);
         populateAnalyzerNoneString(qualityAnalyzer);
         ValueQualityStatistics valueQuality = qualityAnalyzer.getResult().get(0);
         // Valid and invalid
@@ -265,7 +264,7 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testNumbers_double() {
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.DOUBLE);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.DOUBLE);
         populateAnalyzerWithNumbers(qualityAnalyzer);
         ValueQualityStatistics valueQuality = qualityAnalyzer.getResult().get(0);
         // Valid and invalid
@@ -280,7 +279,7 @@ public class DataTypeQualityAnalyzerTest {
     public void testNumbers_string() {
         // ---- send pass when user set the user defined type ---
         // Actual type
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.STRING);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.STRING);
         populateAnalyzerWithNumbers(qualityAnalyzer);
         ValueQualityStatistics valueQuality = qualityAnalyzer.getResult().get(0);
         // Valid and invalid
@@ -293,7 +292,7 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testEmptyOver() {
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.STRING);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.STRING);
         qualityAnalyzer.analyze("");
         qualityAnalyzer.analyze("");
         qualityAnalyzer.analyze("");
@@ -312,7 +311,7 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testEmptyAll() {
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.STRING);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.STRING);
         qualityAnalyzer.analyze("");
         qualityAnalyzer.analyze("");
         qualityAnalyzer.analyze(null);
@@ -331,8 +330,8 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testInvalidCount() {// for issue TDQ_10380
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(new Type[] { DataType.Type.INTEGER, Type.STRING,
-                Type.STRING, Type.STRING, Type.DATE, Type.STRING, Type.DATE, Type.INTEGER, Type.DOUBLE });
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER, DataTypeEnum.STRING,
+                DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.INTEGER, DataTypeEnum.DOUBLE });
 
         final List<String[]> records = getRecords(this.getClass().getResourceAsStream("../data/customers_100.csv"));
 
@@ -374,8 +373,8 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testMerge() {
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataType.Type.DOUBLE);
-        DataTypeQualityAnalyzer qualityAnalyzer2 = new DataTypeQualityAnalyzer(DataType.Type.DOUBLE);
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.DOUBLE);
+        DataTypeQualityAnalyzer qualityAnalyzer2 = new DataTypeQualityAnalyzer(DataTypeEnum.DOUBLE);
 
         populateAnalyzerHalfA(qualityAnalyzer);
         populateAnalyzerHalfB(qualityAnalyzer2);

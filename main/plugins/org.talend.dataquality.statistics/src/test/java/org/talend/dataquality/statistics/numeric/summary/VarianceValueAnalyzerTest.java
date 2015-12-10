@@ -17,8 +17,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.datascience.common.inference.type.DataType;
-import org.talend.datascience.common.inference.type.DataType.Type;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 public class VarianceValueAnalyzerTest {
 
@@ -32,7 +31,7 @@ public class VarianceValueAnalyzerTest {
 
     @Test
     public void testAnalyzeStringArray() {
-        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataType.Type[] { Type.DOUBLE });
+        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE });
         // 1. assert case of all double values.
         String[] pureDouble = new String[] { "20", "0.3", "3", "4.5", "8" };
         analyzer.init();

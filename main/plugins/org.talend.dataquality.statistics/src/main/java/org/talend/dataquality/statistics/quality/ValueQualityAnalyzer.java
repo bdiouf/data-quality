@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.QualityAnalyzer;
 import org.talend.datascience.common.inference.ValueQualityStatistics;
-import org.talend.datascience.common.inference.type.DataType;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -30,13 +30,13 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
 
     private static final long serialVersionUID = -5951511723860660263L;
 
-    private final QualityAnalyzer<ValueQualityStatistics, DataType.Type[]> dataTypeQualityAnalyzer;
+    private final QualityAnalyzer<ValueQualityStatistics, DataTypeEnum[]> dataTypeQualityAnalyzer;
 
     private final QualityAnalyzer<ValueQualityStatistics, String[]> semanticQualityAnalyzer;
 
     private static Logger log = Logger.getLogger(ValueQualityAnalyzer.class);
 
-    public ValueQualityAnalyzer(QualityAnalyzer<ValueQualityStatistics, DataType.Type[]> dataTypeQualityAnalyzer,
+    public ValueQualityAnalyzer(QualityAnalyzer<ValueQualityStatistics, DataTypeEnum[]> dataTypeQualityAnalyzer,
             QualityAnalyzer<ValueQualityStatistics, String[]> semanticQualityAnalyzer, boolean isStoreInvalidValues) {
 
         if (dataTypeQualityAnalyzer == null)
@@ -47,30 +47,30 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
         setStoreInvalidValues(isStoreInvalidValues);
     }
 
-    public ValueQualityAnalyzer(QualityAnalyzer<ValueQualityStatistics, DataType.Type[]> dataTypeQualityAnalyzer,
+    public ValueQualityAnalyzer(QualityAnalyzer<ValueQualityStatistics, DataTypeEnum[]> dataTypeQualityAnalyzer,
             QualityAnalyzer<ValueQualityStatistics, String[]> semanticQualityAnalyzer) {
         this(dataTypeQualityAnalyzer, semanticQualityAnalyzer, true);
     }
 
     /**
      * @deprecated use
-     * {@link DataTypeQualityAnalyzer#DataTypeQualityAnalyzer(org.talend.datascience.common.inference.type.DataType.Type[], boolean)}
+     * {@link DataTypeQualityAnalyzer#DataTypeQualityAnalyzer(org.talend.datascience.common.inference.type.DataTypeEnum[], boolean)}
      * instead
      * @param types
      * @param isStoreInvalidValues
      */
     @Deprecated
-    public ValueQualityAnalyzer(DataType.Type[] types, boolean isStoreInvalidValues) {
+    public ValueQualityAnalyzer(DataTypeEnum[] types, boolean isStoreInvalidValues) {
         this(new DataTypeQualityAnalyzer(types, isStoreInvalidValues), null, isStoreInvalidValues);
     }
 
     /**
      * @deprecated use
-     * {@link DataTypeQualityAnalyzer#DataTypeQualityAnalyzer(org.talend.datascience.common.inference.type.DataType.Type...)}
+     * {@link DataTypeQualityAnalyzer#DataTypeQualityAnalyzer(org.talend.datascience.common.inference.type.DataTypeEnum...)}
      * @param types
      */
     @Deprecated
-    public ValueQualityAnalyzer(DataType.Type... types) {
+    public ValueQualityAnalyzer(DataTypeEnum... types) {
         this(new DataTypeQualityAnalyzer(types), null);
     }
 
@@ -143,7 +143,7 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
             throw new IllegalArgumentException("Worng type error! Expected type is ValueQualityAnalyzer");
         }
 
-        QualityAnalyzer<ValueQualityStatistics, DataType.Type[]> anotherDataTypeQualityAnalyzer = ((ValueQualityAnalyzer) another).dataTypeQualityAnalyzer;
+        QualityAnalyzer<ValueQualityStatistics, DataTypeEnum[]> anotherDataTypeQualityAnalyzer = ((ValueQualityAnalyzer) another).dataTypeQualityAnalyzer;
         QualityAnalyzer<ValueQualityStatistics, String[]> anotherSemanticQualityAnalyzer = ((ValueQualityAnalyzer) another).semanticQualityAnalyzer;
 
         Analyzer<ValueQualityStatistics> mergedDataTypeQualityAnalyzer = this.dataTypeQualityAnalyzer
@@ -156,7 +156,7 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
             mergedSemanticQualityAnalyzer = anotherSemanticQualityAnalyzer;
         }
 
-        return new ValueQualityAnalyzer((QualityAnalyzer<ValueQualityStatistics, DataType.Type[]>) mergedDataTypeQualityAnalyzer,
+        return new ValueQualityAnalyzer((QualityAnalyzer<ValueQualityStatistics, DataTypeEnum[]>) mergedDataTypeQualityAnalyzer,
                 (QualityAnalyzer<ValueQualityStatistics, String[]>) mergedSemanticQualityAnalyzer);
     }
 

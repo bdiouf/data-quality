@@ -16,8 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.type.DataType;
-import org.talend.datascience.common.inference.type.DataType.Type;
+import org.talend.datascience.common.inference.type.DataTypeEnum;
 
 /**
  * 
@@ -33,13 +32,13 @@ public abstract class NumericalStatisticsAnalyzer<T> implements Analyzer<T> {
 
     private Integer[] statColIdx; // index arrays indicator which column are numerical that need to be analyzed.
 
-    private DataType.Type[] types; // types of columns
+    private DataTypeEnum[] types; // types of columns
 
     /**
      * 
      * @param types the array of columns' type
      */
-    public NumericalStatisticsAnalyzer(Type[] types) {
+    public NumericalStatisticsAnalyzer(DataTypeEnum[] types) {
         if (types == null || types.length == 0) {
             throw new IllegalArgumentException("types are required to compute numerical statistics.");
         }
@@ -55,7 +54,7 @@ public abstract class NumericalStatisticsAnalyzer<T> implements Analyzer<T> {
      * 
      * @return the array of columns' type
      */
-    public DataType.Type[] getTypes() {
+    public DataTypeEnum[] getTypes() {
         return types;
     }
 
@@ -63,7 +62,7 @@ public abstract class NumericalStatisticsAnalyzer<T> implements Analyzer<T> {
      * 
      * @param types the array of columns' type note: statColIdx will be synchronize with the new array of types
      */
-    private void setTypes(DataType.Type[] types) {
+    private void setTypes(DataTypeEnum[] types) {
         this.types = types;
         if (types == null)
             this.statColIdx = null;
@@ -82,7 +81,7 @@ public abstract class NumericalStatisticsAnalyzer<T> implements Analyzer<T> {
     private void setStatColIdx() {
         List<Integer> statIdxList = new ArrayList<Integer>();
         for (int idCol = 0; idCol < types.length; idCol++) {
-            if (types[idCol].equals(Type.INTEGER) || types[idCol].equals(Type.DOUBLE)) {
+            if (types[idCol].equals(DataTypeEnum.INTEGER) || types[idCol].equals(DataTypeEnum.DOUBLE)) {
                 statIdxList.add(idCol);
             }
         }
