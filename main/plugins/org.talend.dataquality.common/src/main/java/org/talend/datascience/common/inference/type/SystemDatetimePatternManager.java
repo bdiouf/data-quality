@@ -126,11 +126,11 @@ public class SystemDatetimePatternManager {
 
                 // try the default locale if not already used
                 if (!DEFAULT_LOCALE.equals(locale)) {
-                    SimpleDateFormat format = new SimpleDateFormat(datePattern, DEFAULT_LOCALE);
                     try {
+                        SimpleDateFormat format = new SimpleDateFormat(datePattern, DEFAULT_LOCALE);
                         format.parse(value);
                         return true;
-                    } catch (ParseException e1) {
+                    } catch (Exception e1) {
                         // use next custom pattern
                     }
                 }
