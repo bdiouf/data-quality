@@ -1,0 +1,23 @@
+Sample	Pattern	Locale	FormatStyle	IsWithTime
+5:06 AM	h:mm a	en_US	SHORT	true
+5:06:07 AM	h:mm:ss a	en_US	MEDIUM	true
+5:06:07 AM CET	h:mm:ss a z	en_US	LONG	true
+05:06	HH:mm	fr_FR	SHORT	true
+05:06:07	HH:mm:ss	fr_FR	MEDIUM	true
+05:06:07 CET	HH:mm:ss z	fr_FR	LONG	true
+05 h 06 CET	HH' h 'mm z	fr_FR	FULL	true
+05:06 Uhr MEZ	HH:mm' Uhr 'z	de_DE	FULL	true
+05:06:07 o'clock CET	HH:mm:ss 'o''clock' z	en_GB	FULL	true
+5.06	H.mm	it_IT	SHORT	true
+5.06.07	H.mm.ss	it_IT	MEDIUM	true
+5.06.07 CET	H.mm.ss z	it_IT	LONG	true
+5:06:07 CET AM	h:mm:ss z a	en_CA	LONG	true
+5:06:07 o'clock AM CET	h:mm:ss 'o''clock' a z	en_CA	FULL	true
+5 h 06 CET	H' h 'mm z	fr_CA	FULL	true
+5:06	H:mm	ja_JP	SHORT	true
+5:06:07	H:mm:ss	ja_JP	MEDIUM	true
+5:06:07 CET	H:mm:ss z	ja_JP	LONG	true
+5時06分07秒 CET	H'時'mm'分'ss'秒' z	ja_JP	FULL	true
+上午5:06	ah:mm	zh_CN	SHORT	true
+上午05时06分07秒	ahh'时'mm'分'ss'秒'	zh_CN	LONG	true
+上午05时06分07秒 CET	ahh'时'mm'分'ss'秒' z	zh_CN	FULL	true

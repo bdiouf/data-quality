@@ -29,9 +29,9 @@ public class DateTimePatternManagerTest {
     public void testDateMatchingCustomPattern() {
         // invalid with system time pattern
         assertFalse(DateTimePatternManager.isDate("6/18/09 21:30"));
-        assertFalse(DateTimePatternManager.isDate("6/18/2009 21:30"));
 
         // valid with custom pattern
+        assertTrue(DateTimePatternManager.isDate("6/18/2009 21:30"));
         assertTrue(DateTimePatternManager.isDate("6/18/09 21:30", Collections.<String> singletonList("M/d/yy H:m")));
         assertEquals("M/d/yy H:m", DateTimePatternManager.replaceByDateTimePattern("6/18/09 21:30", "M/d/yy H:m"));
 
@@ -68,7 +68,7 @@ public class DateTimePatternManagerTest {
     @Test
     public void testValidTimeNotMatchingCustomPattern() {
         assertTrue(CustomDatetimePatternManager.isTime("21:30", Collections.<String> singletonList("H-m")));
-        assertEquals("H:m", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "H-m"));
+        assertEquals("HH:mm", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "H-m"));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class DateTimePatternManagerTest {
     @Test
     public void testValidTimeWithInvalidPattern() {
         assertTrue(CustomDatetimePatternManager.isTime("21:30", Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
-        assertEquals("H:m", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "d/m/y**y hh:mm zzzzzzz"));
+        assertEquals("HH:mm", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "d/m/y**y hh:mm zzzzzzz"));
     }
 
     @Test

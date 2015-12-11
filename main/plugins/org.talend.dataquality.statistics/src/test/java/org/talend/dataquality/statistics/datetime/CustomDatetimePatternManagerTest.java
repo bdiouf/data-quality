@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.Test;
-import org.talend.dataquality.statistics.datetime.CustomDatetimePatternManager;
-import org.talend.dataquality.statistics.datetime.SystemDatetimePatternManager;
 
 public class CustomDatetimePatternManagerTest {
 
@@ -20,27 +18,28 @@ public class CustomDatetimePatternManagerTest {
         assertFalse(SystemDatetimePatternManager.isDate("6/18/09 21:30"));
 
         // valid with custom pattern
-        assertTrue(CustomDatetimePatternManager.isDate("6/18/09 21:30", Collections.<String>singletonList("M/d/yy H:m")));
+        assertTrue(CustomDatetimePatternManager.isDate("6/18/09 21:30", Collections.<String> singletonList("M/d/yy H:m")));
         assertEquals("M/d/yy H:m", CustomDatetimePatternManager.replaceByDateTimePattern("6/18/09 21:30", "M/d/yy H:m"));
 
     }
 
     @Test
     public void testValidDateNotMatchingCustomPattern() {
-        assertTrue(CustomDatetimePatternManager.isDate("6/18/2009 21:30", Collections.<String>singletonList("m-d-y hh:MM")));
-        assertEquals("M/d/yyyy H:m", CustomDatetimePatternManager.replaceByDateTimePattern("6/18/2009 21:30", "m-d-y hh:MM"));
+        assertTrue(CustomDatetimePatternManager.isDate("6/18/2009 21:30", Collections.<String> singletonList("m-d-y hh:MM")));
+        assertEquals("M/d/yyyy H:mm", CustomDatetimePatternManager.replaceByDateTimePattern("6/18/2009 21:30", "m-d-y hh:MM"));
     }
 
     @Test
     public void testInvalidDateNotMatchingCustomPattern() {
-        assertFalse(CustomDatetimePatternManager.isDate("6/18/09 21:30", Collections.<String>singletonList("m-d-y hh:MM")));
+        assertFalse(CustomDatetimePatternManager.isDate("6/18/09 21:30", Collections.<String> singletonList("m-d-y hh:MM")));
         assertEquals("6/18/09 21:30", CustomDatetimePatternManager.replaceByDateTimePattern("6/18/09 21:30", "m-d-y hh:MM"));
     }
 
     @Test
     public void testValidDateWithInvalidPattern() {
-        assertTrue(CustomDatetimePatternManager.isDate("6/18/2009 21:30", Collections.<String>singletonList("d/m/y**y hh:mm zzzzzzz")));
-        assertEquals("M/d/yyyy H:m",
+        assertTrue(CustomDatetimePatternManager.isDate("6/18/2009 21:30",
+                Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
+        assertEquals("M/d/yyyy H:mm",
                 CustomDatetimePatternManager.replaceByDateTimePattern("6/18/2009 21:30", "d/m/y**y hh:mm zzzzzzz"));
     }
 
@@ -50,26 +49,26 @@ public class CustomDatetimePatternManagerTest {
         assertFalse(SystemDatetimePatternManager.isTime("21?30"));
 
         // valid with custom pattern
-        assertTrue(CustomDatetimePatternManager.isTime("21?30", Collections.<String>singletonList("H?m")));
+        assertTrue(CustomDatetimePatternManager.isTime("21?30", Collections.<String> singletonList("H?m")));
         assertEquals("H?m", CustomDatetimePatternManager.replaceByDateTimePattern("21?30", "H?m"));
     }
 
     @Test
     public void testValidTimeNotMatchingCustomPattern() {
-        assertTrue(CustomDatetimePatternManager.isTime("21:30", Collections.<String>singletonList("H-m")));
-        assertEquals("H:m", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "H-m"));
+        assertTrue(CustomDatetimePatternManager.isTime("21:30", Collections.<String> singletonList("H-m")));
+        assertEquals("HH:mm", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "H-m"));
     }
 
     @Test
     public void testInvalidTimeNotMatchingCustomPattern() {
-        assertFalse(CustomDatetimePatternManager.isTime("21?30", Collections.<String>singletonList("H-m")));
+        assertFalse(CustomDatetimePatternManager.isTime("21?30", Collections.<String> singletonList("H-m")));
         assertEquals("21?30", CustomDatetimePatternManager.replaceByDateTimePattern("21?30", "H-m"));
     }
 
     @Test
     public void testValidTimeWithInvalidPattern() {
-        assertTrue(CustomDatetimePatternManager.isTime("21:30", Collections.<String>singletonList("d/m/y**y hh:mm zzzzzzz")));
-        assertEquals("H:m", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "d/m/y**y hh:mm zzzzzzz"));
+        assertTrue(CustomDatetimePatternManager.isTime("21:30", Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
+        assertEquals("HH:mm", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "d/m/y**y hh:mm zzzzzzz"));
     }
 
     @Test
@@ -77,7 +76,7 @@ public class CustomDatetimePatternManagerTest {
         // simulate a JVM
         Locale.setDefault(Locale.FRANCE);
 
-        final List<String> pattern = Collections.<String>singletonList("MMMM d ?? yyyy");
+        final List<String> pattern = Collections.<String> singletonList("MMMM d ?? yyyy");
         final String[] dates = new String[] { "January 9 ?? 1970",// EN
                 "janvier 9 ?? 1970", // FR
                 "Januar 9 ?? 1970", // DE
@@ -117,7 +116,7 @@ public class CustomDatetimePatternManagerTest {
         // simulate a JVM
         Locale.setDefault(Locale.GERMANY);
 
-        final List<String> pattern = Collections.<String>singletonList("MMMM d ?? yyyy");
+        final List<String> pattern = Collections.<String> singletonList("MMMM d ?? yyyy");
         final String[] dates = new String[] { "January 9 ?? 1970",// EN
                 "janvier 9 ?? 1970", // FR
                 "Januar 9 ?? 1970", // DE

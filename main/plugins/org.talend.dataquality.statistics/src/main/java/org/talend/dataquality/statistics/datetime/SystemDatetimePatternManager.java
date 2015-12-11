@@ -51,9 +51,9 @@ public class SystemDatetimePatternManager {
     static {
         try {
             // Load date patterns
-            DATE_PATTERN_NAMES = loadPatterns("datePatterns.txt", DATE_PARSERS);
+            DATE_PATTERN_NAMES = loadPatterns("DateRegexes.txt", DATE_PARSERS);
             // Load time patterns
-            TIME_PATTERN_NAMES = loadPatterns("timePatterns.txt", TIME_PARSERS);
+            TIME_PATTERN_NAMES = loadPatterns("TimeRegexes.txt", TIME_PARSERS);
         } catch (IOException e) {
             LOGGER.error("Unable to get date patterns.", e);
         }
@@ -158,8 +158,8 @@ public class SystemDatetimePatternManager {
 
     private static boolean isDateTime(Map<Pattern, String> parsers, String value) {
         if (StringUtils.isNotEmpty(value)) {
-            // 1. The length of date characters should not exceed 30.
-            if (value.trim().length() > 30) {
+            // 1. The length of date characters should not exceed 64.
+            if (value.length() > 64) {
                 return false;
             }
             // 2. Check it by list of patterns

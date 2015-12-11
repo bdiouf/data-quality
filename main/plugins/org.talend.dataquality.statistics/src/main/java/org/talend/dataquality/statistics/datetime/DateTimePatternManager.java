@@ -146,6 +146,11 @@ public class DateTimePatternManager {
 
     private static boolean isDateTime(Map<DateTimeFormatter, String> parsers, String value) {
         if (StringUtils.isNotEmpty(value)) {
+            // 1. The length of date characters should not exceed 64.
+            if (value.length() > 64) {
+                return false;
+            }
+            // 2. Check it by list of patterns
             for (DateTimeFormatter formatter : parsers.keySet()) {
                 try {
                     if (formatter.parse(value) != null) {

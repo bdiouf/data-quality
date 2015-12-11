@@ -11,19 +11,19 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.talend.dataquality.statistics.type.TypeInferenceUtilsTest;
 
-public class DateTimePatternPerformanceTest {
+public class PerformanceTest {
 
-    private static final Logger LOGGER = Logger.getLogger(DateTimePatternPerformanceTest.class);
+    private static final Logger LOGGER = Logger.getLogger(PerformanceTest.class);
 
     private static final String DATE_FILE_NAME = "testDate.csv";
 
     private static List<String> DATE_VALUES;
 
-
     @BeforeClass
     public static void loadDates() throws IOException {
         DATE_VALUES = IOUtils.readLines(TypeInferenceUtilsTest.class.getResourceAsStream(DATE_FILE_NAME));
     }
+
     @Test
     public void testIsDateLegacy() throws Exception {
         int countOfDates = 0;
@@ -41,7 +41,7 @@ public class DateTimePatternPerformanceTest {
         Date end = new Date();
         LOGGER.debug("Detect date end at: " + end);
         // Assert count of matches.
-        Assert.assertEquals(4001, countOfDates);
+        Assert.assertEquals(5000, countOfDates);
         double difference = end.getTime() - begin.getTime();
 
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
@@ -66,7 +66,7 @@ public class DateTimePatternPerformanceTest {
         Date end = new Date();
         LOGGER.debug("Detect date end at: " + end);
         // Assert count of matches.
-        Assert.assertEquals(4001, countOfDates);
+        Assert.assertEquals(5000, countOfDates);
         double difference = end.getTime() - begin.getTime();
 
         LOGGER.debug("Detect date time diff: " + difference + " ms.");

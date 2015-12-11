@@ -31,12 +31,16 @@ public class DateTimePatternListGenerator {
 
     private static final boolean PRINT_PATTERN_LIST = true;
 
+    private static final boolean PRINT_REGEX_LIST = false;
+
     private static List<LocaledPattern> OTHER_COMMON_PATTERNS = new ArrayList<LocaledPattern>() {
 
         private static final long serialVersionUID = 1L;
 
         {
+
             add(new LocaledPattern("M/d/yyyy", Locale.US, "OTHER", false));// 6/18/2009
+            add(new LocaledPattern("M/d/yyyy H:mm", Locale.US, "OTHER", false));// 6/18/2009 21:30
             add(new LocaledPattern("MMM d yyyy", Locale.US, "OTHER", false));// Jan 18 2012
             add(new LocaledPattern("MMM.d.yyyy", Locale.US, "OTHER", false));// Jan.12.2010
             add(new LocaledPattern("MMMM d yyyy", Locale.US, "OTHER", false));// January 18 2012
@@ -75,10 +79,10 @@ public class DateTimePatternListGenerator {
         if (PRINT_DETAILED_RESULTS) {
             System.out.println("--------------------Locale: " + locale + "-----------------------");
         }
-        getFormatByStyle(true, false, locale, keepLongMonth); // Date Only
-        getFormatByStyle(true, true, locale, keepLongMonth); // Date & Time
+        // getFormatByStyle(true, false, locale, keepLongMonth); // Date Only
+        // getFormatByStyle(true, true, locale, keepLongMonth); // Date & Time
 
-        // getFormatByStyle(false, true, locale, keepLongMonth); //Time Only
+        getFormatByStyle(false, true, locale, keepLongMonth); // Time Only
     }
 
     private static void getFormatByStyle(boolean isDateRequired, boolean isTimeRequired, Locale locale, boolean keepLongMonth) {
@@ -299,10 +303,17 @@ public class DateTimePatternListGenerator {
         if (PRINT_SAMPLE_TABLE) {// table header
             System.out.println("Sample\tPattern\tLocale\tFormatStyle\tIsWithTime");
         }
+
+        DateTimeRegexGenerator regexGenerator = new DateTimeRegexGenerator();
         for (LocaledPattern lp : knownLocaledPatternList) {
 
             if (PRINT_PATTERN_LIST) {
                 System.out.println(lp);
+            }
+            if (PRINT_REGEX_LIST) {
+                System.out.print("\"" + lp.getPattern() + "\"=\"^");
+                String regex = regexGenerator.convertPatternToRegex(lp.pattern);
+                System.out.print(regex + "$\"\n");
             }
             if (PRINT_SAMPLE_TABLE) {
                 System.out.println(ZONED_DATE_TIME.format(DateTimeFormatter.ofPattern(lp.getPattern(), lp.getLocale())) + "\t"
