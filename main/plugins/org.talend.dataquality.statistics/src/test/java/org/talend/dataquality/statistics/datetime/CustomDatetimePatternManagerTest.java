@@ -150,4 +150,11 @@ public class CustomDatetimePatternManagerTest {
 
         System.out.println(sb.toString());
     }
+
+    @Test
+    public void testSpecialCases() {
+        System.out.println("July".matches("(([A-Z]\\p{L}{2})|([a-z]\\p{L}{2,3}\\.?))"));
+        assertEquals("MMMM d yyyy", CustomDatetimePatternManager.replaceByDateTimePattern("July 14 2015", "M/d/yy H:m"));
+
+    }
 }

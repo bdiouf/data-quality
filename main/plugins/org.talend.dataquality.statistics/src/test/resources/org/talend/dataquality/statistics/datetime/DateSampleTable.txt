@@ -65,6 +65,7 @@ lundi 11 mars 2222 5 h 06 CET	EEEE d MMMM yyyy H' h 'mm z	fr_CA	FULL	true
 2222-3-11 5:06:07	yyyy-M-d H:mm:ss	zh_CN	MEDIUM	true
 2222年3月11日 上午05时06分07秒	yyyy'年'M'月'd'日' ahh'时'mm'分'ss'秒'	zh_CN	LONG	true
 2222年3月11日 星期一 上午05时06分07秒 CET	yyyy'年'M'月'd'日' EEEE ahh'时'mm'分'ss'秒' z	zh_CN	FULL	true
+11/03/2222	dd/MM/yyyy	en_US	OTHER	false
 3/11/2222	M/d/yyyy	en_US	OTHER	false
 3/11/2222 5:06	M/d/yyyy H:mm	en_US	OTHER	false
 Mar 11 2222	MMM d yyyy	en_US	OTHER	false
@@ -87,7 +88,6 @@ March 11 2222	MMMM d yyyy	en_US	OTHER	false
 2222-03-11T05:06:07+01:00[Europe/Paris]	yyyy-MM-dd'T'HH:mm:ssZZZZZ'['VV']'	en_US	ISO_ZONED_DATE_TIME	true
 Mon, 11 Mar 2222 05:06:07 +0100	EEE, d MMM yyyy HH:mm:ss Z	en_US	RFC1123_WITH_DAY	true
 11 Mar 2222 05:06:07 +0100	d MMM yyyy HH:mm:ss Z	en_US	RFC1123	true
-11/03/2222	dd/MM/yyyy	ar	MEDIUM	false
 11.3.22	d.M.yy	be	SHORT	false
 11.3.2222	d.M.yyyy	be	MEDIUM	false
 11.3.22 5.06	d.M.yy H.mm	be	SHORT	true

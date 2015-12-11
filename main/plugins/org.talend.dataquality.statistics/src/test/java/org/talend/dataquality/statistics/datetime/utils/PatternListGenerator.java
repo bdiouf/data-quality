@@ -38,7 +38,7 @@ public class PatternListGenerator {
         private static final long serialVersionUID = 1L;
 
         {
-
+            add(new LocaledPattern("dd/MM/yyyy", Locale.US, "OTHER", false));// 06/08/2009
             add(new LocaledPattern("M/d/yyyy", Locale.US, "OTHER", false));// 6/18/2009
             add(new LocaledPattern("M/d/yyyy H:mm", Locale.US, "OTHER", false));// 6/18/2009 21:30
             add(new LocaledPattern("MMM d yyyy", Locale.US, "OTHER", false));// Jan 18 2012

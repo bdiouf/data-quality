@@ -64,6 +64,7 @@ zh_CN	yy-M-d ah:mm
 zh_CN	yyyy-M-d H:mm:ss
 zh_CN	yyyy'年'M'月'd'日' ahh'时'mm'分'ss'秒'
 zh_CN	yyyy'年'M'月'd'日' EEEE ahh'时'mm'分'ss'秒' z
+en_US	dd/MM/yyyy
 en_US	M/d/yyyy
 en_US	M/d/yyyy H:mm
 en_US	MMM d yyyy
@@ -86,7 +87,6 @@ en_US	yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ'['VV']'
 en_US	yyyy-MM-dd'T'HH:mm:ssZZZZZ'['VV']'
 en_US	EEE, d MMM yyyy HH:mm:ss Z
 en_US	d MMM yyyy HH:mm:ss Z
-ar	dd/MM/yyyy
 be	d.M.yy
 be	d.M.yyyy
 be	d.M.yy H.mm
