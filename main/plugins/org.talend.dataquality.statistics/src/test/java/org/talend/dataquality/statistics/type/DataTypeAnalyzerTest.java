@@ -14,6 +14,7 @@ package org.talend.dataquality.statistics.type;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -207,7 +208,8 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
     @Test
     public void testInferTypesColumnIndexOrder() {
         DataTypeAnalyzer analyzer = createDataTypeanalyzer();
-        final List<String[]> records = getRecords(DataTypeStatiticsTestBase.class.getResourceAsStream("customers_100_bug_TDQ10380.csv"));
+        final List<String[]> records = getRecords(DataTypeStatiticsTestBase.class
+                .getResourceAsStream("customers_100_bug_TDQ10380.csv"));
         for (String[] record : records) {
             analyzer.analyze(record);
         }
@@ -236,6 +238,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.6));
         assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.3));
     }
+
     @Test
     public void testGetDataTypeWithRatioEmpty() {
         DataTypeAnalyzer analyzer = createDataTypeanalyzer();
@@ -248,6 +251,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
         assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType());
         assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.9));
     }
+
     @Test
     public void testGetDataTypeWithRatioEmpty2() {
         DataTypeAnalyzer analyzer = createDataTypeanalyzer();
@@ -259,6 +263,35 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
         final List<DataType> result = analyzer.getResult();
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.9));
         assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.1));
+    }
+
+    @Test
+    public void testCustomDataPattern() {
+
+        DataTypeAnalyzer analyzer = new DataTypeAnalyzer();
+
+        String[] testColumn = new String[] { "1", "2", "2015?08?20", "2012?02?12", "12/2/99" };
+
+        // Before set Custom Data Pattern: yyyy?mm?dd
+        // the type of testColumn is INTEGER, since "2015?08?20" & "2012?02?12" can't be recognised as date
+        for (String record : testColumn) {
+            analyzer.analyze(record);
+        }
+        analyzer.end();
+        final List<DataType> resultBeforeSetCustomP = analyzer.getResult();
+        assertEquals(DataTypeEnum.INTEGER, resultBeforeSetCustomP.get(0).getSuggestedType());
+
+        // After set Custom Data Pattern: yyyy?mm?dd, "2015?08?20" & "2012?02?12" can be recognised as date
+        // the type of testColumn is DATE
+        analyzer = new DataTypeAnalyzer(Collections.singletonList("yyyy?mm?dd"));
+        analyzer.init();
+        for (String record : testColumn) {
+            analyzer.analyze(record);
+        }
+        analyzer.end();
+        final List<DataType> resultAfterSetCustomP = analyzer.getResult();
+        assertEquals(DataTypeEnum.DATE, resultAfterSetCustomP.get(0).getSuggestedType());
+
     }
 
 }

@@ -12,8 +12,8 @@ import org.junit.Test;
 public class SampleTest {
 
     @Test
-    public void testAllSupportedPatterns() throws IOException {
-        InputStream stream = DateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
+    public void testAllSupportedDatesWithPatterns() throws IOException {
+        InputStream stream = SystemDatetimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
         List<String> lines = IOUtils.readLines(stream);
 
         for (int i = 1; i < lines.size(); i++) {
@@ -27,8 +27,8 @@ public class SampleTest {
     }
 
     @Test
-    public void testAllSupportedDatePatternsWithRegex() throws IOException {
-        InputStream stream = DateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
+    public void testAllSupportedDatesWithRegexes() throws IOException {
+        InputStream stream = SystemDatetimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
         List<String> lines = IOUtils.readLines(stream);
 
         for (int i = 1; i < lines.size(); i++) {
@@ -46,8 +46,8 @@ public class SampleTest {
     }
 
     @Test
-    public void testAllSupportedTimePatternsWithRegex() throws IOException {
-        InputStream stream = DateTimePatternManager.class.getResourceAsStream("TimeSampleTable.txt");
+    public void testAllSupportedTimesWithRegexes() throws IOException {
+        InputStream stream = SystemDatetimePatternManager.class.getResourceAsStream("TimeSampleTable.txt");
         List<String> lines = IOUtils.readLines(stream);
 
         for (int i = 1; i < lines.size(); i++) {

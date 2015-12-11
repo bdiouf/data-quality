@@ -32,7 +32,7 @@ public final class CustomDatetimePatternManager {
 
     public static boolean isDate(String value, List<String> customPatterns, Locale locale) {
         // use custom patterns first
-        if(isMatchCustomPatterns(value, customPatterns, locale)) {
+        if (isMatchCustomPatterns(value, customPatterns, locale)) {
             return true;
         }
         // validate using system pattern manager
@@ -89,11 +89,12 @@ public final class CustomDatetimePatternManager {
         return false;
     }
 
-    public static String replaceByDateTimePattern(String value, String customPattern) {
+    // for junit only
+    static String replaceByDateTimePattern(String value, String customPattern) {
         return replaceByDateTimePattern(value, customPattern, Locale.getDefault());
     }
 
-    public static String replaceByDateTimePattern(String value, String customPattern, Locale locale) {
+    static String replaceByDateTimePattern(String value, String customPattern, Locale locale) {
         return replaceByDateTimePattern(value, Collections.singletonList(customPattern), locale);
     }
 

@@ -61,26 +61,26 @@ public class DateTimePatternManagerTest {
         assertFalse(SystemDatetimePatternManager.isTime("21?30"));
 
         // valid with custom pattern
-        assertTrue(CustomDatetimePatternManager.isTime("21?30", Collections.<String> singletonList("H?m")));
-        assertEquals("H?m", CustomDatetimePatternManager.replaceByDateTimePattern("21?30", "H?m"));
+        assertTrue(DateTimePatternManager.isTime("21?30", Collections.<String> singletonList("H?m")));
+        assertEquals("H?m", DateTimePatternManager.replaceByDateTimePattern("21?30", "H?m"));
     }
 
     @Test
     public void testValidTimeNotMatchingCustomPattern() {
-        assertTrue(CustomDatetimePatternManager.isTime("21:30", Collections.<String> singletonList("H-m")));
-        assertEquals("HH:mm", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "H-m"));
+        assertTrue(DateTimePatternManager.isTime("21:30", Collections.<String> singletonList("H-m")));
+        assertEquals("HH:mm", DateTimePatternManager.replaceByDateTimePattern("21:30", "H-m"));
     }
 
     @Test
     public void testInvalidTimeNotMatchingCustomPattern() {
-        assertFalse(CustomDatetimePatternManager.isTime("21?30", Collections.<String> singletonList("H-m")));
-        assertEquals("21?30", CustomDatetimePatternManager.replaceByDateTimePattern("21?30", "H-m"));
+        assertFalse(DateTimePatternManager.isTime("21?30", Collections.<String> singletonList("H-m")));
+        assertEquals("21?30", DateTimePatternManager.replaceByDateTimePattern("21?30", "H-m"));
     }
 
     @Test
     public void testValidTimeWithInvalidPattern() {
-        assertTrue(CustomDatetimePatternManager.isTime("21:30", Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
-        assertEquals("HH:mm", CustomDatetimePatternManager.replaceByDateTimePattern("21:30", "d/m/y**y hh:mm zzzzzzz"));
+        assertTrue(DateTimePatternManager.isTime("21:30", Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
+        assertEquals("HH:mm", DateTimePatternManager.replaceByDateTimePattern("21:30", "d/m/y**y hh:mm zzzzzzz"));
     }
 
     @Test

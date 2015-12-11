@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.talend.dataquality.statistics.datetime.DateTimePatternManager;
+import org.talend.dataquality.statistics.datetime.CustomDatetimePatternManager;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.dataquality.statistics.type.TypeInferenceUtils;
 import org.talend.datascience.common.inference.Analyzer;
@@ -73,9 +73,9 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
             final ValueQualityStatistics valueQuality = results.get(i);
             if (TypeInferenceUtils.isEmpty(value)) {
                 valueQuality.incrementEmpty();
-            } else if (DataTypeEnum.DATE == types[i] && DateTimePatternManager.isDate(value, customDateTimePatterns)) {
+            } else if (DataTypeEnum.DATE == types[i] && CustomDatetimePatternManager.isDate(value, customDateTimePatterns)) {
                 valueQuality.incrementValid();
-            } else if (DataTypeEnum.TIME == types[i] && DateTimePatternManager.isTime(value, customDateTimePatterns)) {
+            } else if (DataTypeEnum.TIME == types[i] && CustomDatetimePatternManager.isTime(value, customDateTimePatterns)) {
                 valueQuality.incrementValid();
             } else if (TypeInferenceUtils.isValid(types[i], value)) {
                 valueQuality.incrementValid();

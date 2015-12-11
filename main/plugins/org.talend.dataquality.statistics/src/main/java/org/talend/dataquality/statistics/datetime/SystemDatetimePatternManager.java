@@ -14,8 +14,6 @@ package org.talend.dataquality.statistics.datetime;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -44,16 +42,12 @@ public class SystemDatetimePatternManager {
 
     private static Map<Pattern, String> TIME_PARSERS = new LinkedHashMap<Pattern, String>();
 
-    private static Set<String> DATE_PATTERN_NAMES = new HashSet<String>();
-
-    private static Set<String> TIME_PATTERN_NAMES = new HashSet<String>();
-
     static {
         try {
             // Load date patterns
-            DATE_PATTERN_NAMES = loadPatterns("DateRegexes.txt", DATE_PARSERS);
+            loadPatterns("DateRegexes.txt", DATE_PARSERS);
             // Load time patterns
-            TIME_PATTERN_NAMES = loadPatterns("TimeRegexes.txt", TIME_PARSERS);
+            loadPatterns("TimeRegexes.txt", TIME_PARSERS);
         } catch (IOException e) {
             LOGGER.error("Unable to get date patterns.", e);
         }
@@ -61,10 +55,8 @@ public class SystemDatetimePatternManager {
     }
 
     private static Set<String> loadPatterns(String patternFileName, Map<Pattern, String> patternParsers) throws IOException {
-        InputStream stream;
-        List<String> lines;
-        stream = TypeInferenceUtils.class.getResourceAsStream(patternFileName);
-        lines = IOUtils.readLines(stream);
+        InputStream stream = TypeInferenceUtils.class.getResourceAsStream(patternFileName);
+        List<String> lines = IOUtils.readLines(stream);
         Set<String> patternNames = new ConcurrentSkipListSet<String>();
         for (String line : lines) {
             if (!"".equals(line.trim())) {
@@ -80,80 +72,23 @@ public class SystemDatetimePatternManager {
     }
 
     /**
-     * Whether the given string pattern a date pattern or not.
-     * 
-     * @param pattern
-     * @return true if the pattern string is a date pattern.
-     */
-    public static boolean isDatePattern(String pattern) {
-        return DATE_PATTERN_NAMES.contains(pattern);
-    }
-
-    /**
-     * Whether given string pattern is a time pattern or not.
-     * 
-     * @param pattern
-     * @return
-     */
-    public static boolean isTimePattern(String pattern) {
-        return TIME_PATTERN_NAMES.contains(pattern);
-    }
-
-    /**
-     * Whether the given string value is a date or not using the default jvm locale.
-     *
-     * @param value the value to check if it's a date.
-     * @param customDatePatterns the list of custom date patterns.
-     * @return true if the value is a date.
-     */
-    public static boolean isDate(String value, List<String> customDatePatterns) {
-        return isDate(value, customDatePatterns, Locale.getDefault());
-    }
-
-    /**
-     * Whether the given string value is a date or not.
-     *
-     * @param value the value to check if it's a date.
-     * @param customDatePatterns the list of custom date patterns.
-     * @param locale the locale to use.
-     * @return true if the value is a date.
-     */
-    public static boolean isDate(String value, List<String> customDatePatterns, Locale locale) {
-
-        // try the custom patterns first
-        for (String datePattern : customDatePatterns) {
-            try {
-                SimpleDateFormat format = new SimpleDateFormat(datePattern, locale);
-                format.parse(value);
-                return true;
-            } catch (Exception e) {
-
-                // try the default locale if not already used
-                if (!DEFAULT_LOCALE.equals(locale)) {
-                    try {
-                        SimpleDateFormat format = new SimpleDateFormat(datePattern, DEFAULT_LOCALE);
-                        format.parse(value);
-                        return true;
-                    } catch (Exception e1) {
-                        // use next custom pattern
-                    }
-                }
-            }
-        }
-
-        // fall back on registered ones
-        return isDateTime(DATE_PARSERS, value);
-    }
-
-    /**
      * Whether the given string value is a date or not.
      * 
      * @param value
      * @return true if the value is a date.
      */
     public static boolean isDate(String value) {
-        boolean isDate = isDateTime(DATE_PARSERS, value);
-        return isDate;
+        return isDateTime(DATE_PARSERS, value);
+    }
+
+    /**
+     * Check if the value passed is a time or not.
+     * 
+     * @param value
+     * @return true if the value is type "Time", false otherwise.
+     */
+    public static boolean isTime(String value) {
+        return isDateTime(TIME_PARSERS, value);
     }
 
     private static boolean isDateTime(Map<Pattern, String> parsers, String value) {
@@ -173,19 +108,7 @@ public class SystemDatetimePatternManager {
                 }
             }
         }
-
         return false;
-    }
-
-    /**
-     * Check if the value passed is a time or not.
-     * 
-     * @param value
-     * @return true if the value is type "Time", false otherwise.
-     */
-    public static boolean isTime(String value) {
-        boolean isTime = isDateTime(TIME_PARSERS, value);
-        return isTime;
     }
 
     /**
@@ -209,7 +132,6 @@ public class SystemDatetimePatternManager {
     }
 
     private static String dateTimePatternReplace(Map<Pattern, String> parsers, String value) {
-
         if (StringUtils.isEmpty(value)) {
             return StringUtils.EMPTY;
         }
@@ -224,7 +146,6 @@ public class SystemDatetimePatternManager {
             }
         }
         return value;
-
     }
 
 }

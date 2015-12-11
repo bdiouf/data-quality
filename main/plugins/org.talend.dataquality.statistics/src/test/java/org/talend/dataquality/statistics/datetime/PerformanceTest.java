@@ -25,32 +25,7 @@ public class PerformanceTest {
     }
 
     @Test
-    public void testIsDateLegacy() throws Exception {
-        int countOfDates = 0;
-
-        SystemDatetimePatternManager.isDate("12/02/99");// init DateTimeFormatters
-        Date begin = new Date();
-        LOGGER.debug("Detect date start at: " + begin);
-        // Assert total count.
-        Assert.assertEquals(10000, DATE_VALUES.size());
-        for (String value : DATE_VALUES) {
-            if (SystemDatetimePatternManager.isDate(value)) {
-                countOfDates++;
-            }
-        }
-        Date end = new Date();
-        LOGGER.debug("Detect date end at: " + end);
-        // Assert count of matches.
-        Assert.assertEquals(5000, countOfDates);
-        double difference = end.getTime() - begin.getTime();
-
-        LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        System.out.println("Legacy System: " + difference);
-        // assertTrue(difference < 0.43);
-    }
-
-    @Test
-    public void testIsDateNew() throws Exception {
+    public void testIsDateUsingPattern() throws Exception {
         int countOfDates = 0;
 
         DateTimePatternManager.isDate("12/02/99");// init DateTimeFormatters
@@ -70,7 +45,32 @@ public class PerformanceTest {
         double difference = end.getTime() - begin.getTime();
 
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        System.out.println("New System: " + difference);
+        System.out.println("Total duration using patterns: " + difference);
+        // assertTrue(difference < 0.43);
+    }
+
+    @Test
+    public void testIsDateUsingRegex() throws Exception {
+        int countOfDates = 0;
+
+        SystemDatetimePatternManager.isDate("12/02/99");// init DateTimeFormatters
+        Date begin = new Date();
+        LOGGER.debug("Detect date start at: " + begin);
+        // Assert total count.
+        Assert.assertEquals(10000, DATE_VALUES.size());
+        for (String value : DATE_VALUES) {
+            if (SystemDatetimePatternManager.isDate(value)) {
+                countOfDates++;
+            }
+        }
+        Date end = new Date();
+        LOGGER.debug("Detect date end at: " + end);
+        // Assert count of matches.
+        Assert.assertEquals(5000, countOfDates);
+        double difference = end.getTime() - begin.getTime();
+
+        LOGGER.debug("Detect date time diff: " + difference + " ms.");
+        System.out.println("Totol duration using regexes: " + difference);
         // assertTrue(difference < 0.43);
     }
 

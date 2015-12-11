@@ -1,9 +1,9 @@
-package org.talend.dataquality.statistics.datetime;
+package org.talend.dataquality.statistics.datetime.utils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DateTimeRegexGenerator {
+public class RegexGenerator {
 
     Map<String, String> PATTERN_REGEX_MAP = new LinkedHashMap<String, String>() {
 
@@ -58,9 +58,6 @@ public class DateTimeRegexGenerator {
     };
 
     public String convertPatternToRegex(String pattern) {
-        if (pattern.contains("'")) {
-            // System.out.print(pattern);
-        }
         String regex = pattern;
         regex = regex.replace("' h '", "*****");
         regex = regex.replace("Uhr", "===");
@@ -76,9 +73,6 @@ public class DateTimeRegexGenerator {
         regex = regex.replace("!!", "'");
         regex = regex.replace("*****", " h ");
 
-        if (pattern.contains("'")) {
-            // System.out.print(pattern);
-        }
         return regex;
     }
 }

@@ -1,4 +1,4 @@
-package org.talend.dataquality.statistics.datetime;
+package org.talend.dataquality.statistics.datetime.utils;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-public class DateTimePatternListGenerator {
+public class PatternListGenerator {
 
     static List<LocaledPattern> knownLocaledPatternList = new ArrayList<LocaledPattern>();
 
@@ -79,10 +79,10 @@ public class DateTimePatternListGenerator {
         if (PRINT_DETAILED_RESULTS) {
             System.out.println("--------------------Locale: " + locale + "-----------------------");
         }
-        // getFormatByStyle(true, false, locale, keepLongMonth); // Date Only
-        // getFormatByStyle(true, true, locale, keepLongMonth); // Date & Time
+        getFormatByStyle(true, false, locale, keepLongMonth); // Date Only
+        getFormatByStyle(true, true, locale, keepLongMonth); // Date & Time
 
-        getFormatByStyle(false, true, locale, keepLongMonth); // Time Only
+        // getFormatByStyle(false, true, locale, keepLongMonth); // Time Only
     }
 
     private static void getFormatByStyle(boolean isDateRequired, boolean isTimeRequired, Locale locale, boolean keepLongMonth) {
@@ -304,7 +304,7 @@ public class DateTimePatternListGenerator {
             System.out.println("Sample\tPattern\tLocale\tFormatStyle\tIsWithTime");
         }
 
-        DateTimeRegexGenerator regexGenerator = new DateTimeRegexGenerator();
+        RegexGenerator regexGenerator = new RegexGenerator();
         for (LocaledPattern lp : knownLocaledPatternList) {
 
             if (PRINT_PATTERN_LIST) {
