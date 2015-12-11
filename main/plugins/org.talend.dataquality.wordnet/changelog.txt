@@ -1,3 +1,6 @@
+V1.0.1 2015-12-11
+	- include WordNet license file
+
 V1.0.0 sizhaoliu 2015-10-05 (TDQ-10004)
     - first version of WordNet validation library
     
