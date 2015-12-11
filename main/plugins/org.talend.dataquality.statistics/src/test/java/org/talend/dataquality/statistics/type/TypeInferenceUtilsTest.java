@@ -200,9 +200,9 @@ public class TypeInferenceUtilsTest {
 
     @Test
     public void testIsDateWithCustom() throws Exception {
-        String date = "Feb.12.2014";
+        String date = "Feb.12.2014=";
         assertFalse(TypeInferenceUtils.isDate(date));
-        assertTrue(TypeInferenceUtils.isDate(date, Collections.singletonList("MMM.dd.yyyy")));
+        assertTrue(TypeInferenceUtils.isDate(date, Collections.singletonList("MMM.dd.yyyy=")));
     }
 
     @Test
@@ -214,9 +214,9 @@ public class TypeInferenceUtilsTest {
 
     @Test
     public void testIsDateWithCustomAndWrongLocale() throws Exception {
-        String date = "Feb.12.2014";
+        String date = "Feb.12.2014=";
         assertFalse(TypeInferenceUtils.isDate(date));
-        assertTrue(TypeInferenceUtils.isDate(date, Collections.singletonList("MMM.dd.yyyy"), Locale.FRANCE));
+        assertTrue(TypeInferenceUtils.isDate(date, Collections.singletonList("MMM.dd.yyyy="), Locale.FRANCE));
     }
 
     @Test

@@ -27,16 +27,25 @@ public class DateTimePatternListGenerator {
 
     private static final boolean PRINT_DETAILED_RESULTS = false;
 
-    private static final boolean PRINT_SAMPLE_TABLE = false;
+    private static final boolean PRINT_SAMPLE_TABLE = true;
 
-    private static final boolean PRINT_PATTERN_LIST = true;
+    private static final boolean PRINT_PATTERN_LIST = false;
 
     private static List<LocaledPattern> OTHER_COMMON_PATTERNS = new ArrayList<LocaledPattern>() {
 
         private static final long serialVersionUID = 1L;
 
         {
-            add(new LocaledPattern("yyyy-M-d H:mm:ss.S", Locale.US, "OTHER", true));
+            add(new LocaledPattern("M/d/yyyy", Locale.US, "OTHER", false));// 6/18/2009
+            add(new LocaledPattern("MMM d yyyy", Locale.US, "OTHER", false));// Jan 18 2012
+            add(new LocaledPattern("MMM.d.yyyy", Locale.US, "OTHER", false));// Jan.12.2010
+            add(new LocaledPattern("MMMM d yyyy", Locale.US, "OTHER", false));// January 18 2012
+            add(new LocaledPattern("yyyy-M-d H:mm:ss.S", Locale.US, "OTHER", true));//
+            add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss", Locale.US, "OTHER", false));// 1970-01-01T00:32:43
+            add(new LocaledPattern("d/MMM/yyyy H:mm:ss Z", Locale.US, "OTHER", true));// 14/Feb/2013 13:40:51 +0100
+            // add(new LocaledPattern("dd-MMM-yy hh.mm.ss.S a",//
+            // Locale.US, "OTHER", true));// 18-Nov-86 01.00.00.000000000 AM
+
         }
     };
 

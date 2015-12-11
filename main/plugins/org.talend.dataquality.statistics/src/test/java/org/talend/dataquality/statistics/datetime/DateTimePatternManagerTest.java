@@ -13,13 +13,15 @@ import org.junit.Test;
 public class DateTimePatternManagerTest {
 
     @Test
-    public void testNew() {
+    public void testNewPatterns() {
 
-        assertFalse(DateTimePatternManager.isDate("18-NOV-86 01.00.00.000000000 AM"));
+        assertFalse(DateTimePatternManager.isDate("18-Nov-86 01.00.00.000000000 AM"));
         assertTrue(DateTimePatternManager.isDate("6/18/09"));
-        assertFalse(DateTimePatternManager.isDate("Jan.12.2010"));
-        assertFalse(DateTimePatternManager.isDate("14/Feb/2013:13:40:51 +0100"));
-        assertFalse(DateTimePatternManager.isDate("1970-01-01T00:32:43"));
+        assertTrue(DateTimePatternManager.isDate("Jan.12.2010"));
+        assertTrue(DateTimePatternManager.isDate("14/Feb/2013 13:40:51 +0100"));
+        assertTrue(DateTimePatternManager.isDate("1970-01-01T00:32:43"));
+
+        assertTrue(DateTimePatternManager.isDate("05/15/1962"));
 
     }
 
