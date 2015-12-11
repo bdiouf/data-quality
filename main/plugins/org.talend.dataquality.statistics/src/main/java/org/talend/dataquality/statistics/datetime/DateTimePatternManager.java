@@ -151,7 +151,7 @@ public class DateTimePatternManager {
                     if (formatter.parse(value) != null) {
                         return true;
                     }
-                } catch (Exception e) {
+                } catch (DateTimeParseException e) {
                     // continue
                 }
             }
@@ -168,7 +168,7 @@ public class DateTimePatternManager {
                 if (formatter.parse(value) != null) {
                     return parsers.get(formatter);
                 }
-            } catch (Exception e) {
+            } catch (DateTimeParseException e) {
                 // continue
             }
         }
