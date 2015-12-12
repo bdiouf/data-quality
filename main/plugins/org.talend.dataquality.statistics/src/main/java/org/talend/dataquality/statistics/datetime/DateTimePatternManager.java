@@ -34,21 +34,21 @@ public class DateTimePatternManager {
 
     private static final Locale DEFAULT_LOCALE = Locale.US;
 
-    private static Map<DateTimeFormatter, String> DATE_PARSERS;
+    private static Map<DateTimeFormatter, String> DATE_FORMATTERS;
 
-    private static Map<DateTimeFormatter, String> TIME_PARSERS;
+    private static Map<DateTimeFormatter, String> TIME_FORMATTERS;
 
     static {
         try {
-            DATE_PARSERS = loadDatePatterns("DatePatterns.txt");
-            TIME_PARSERS = loadDatePatterns("TimePatterns.txt");
+            DATE_FORMATTERS = loadDateFormats("DateFormats.txt");
+            TIME_FORMATTERS = loadDateFormats("TimeFormats.txt");
         } catch (IOException e) {
             System.err.println("Unable to get date patterns.");
         }
 
     }
 
-    private static Map<DateTimeFormatter, String> loadDatePatterns(String patternFileName) throws IOException {
+    private static Map<DateTimeFormatter, String> loadDateFormats(String patternFileName) throws IOException {
         Map<DateTimeFormatter, String> parsers = new LinkedHashMap<DateTimeFormatter, String>();
         InputStream stream = DateTimePatternManager.class.getResourceAsStream(patternFileName);
         List<String> lines = IOUtils.readLines(stream);
@@ -83,7 +83,7 @@ public class DateTimePatternManager {
      * @return true if the value is a date.
      */
     public static boolean isDate(String value) {
-        return isDateTime(DATE_PARSERS, value);
+        return isDateTime(DATE_FORMATTERS, value);
     }
 
     /**
@@ -94,7 +94,7 @@ public class DateTimePatternManager {
      * @return true if the value is a date.
      */
     public static boolean isDate(String value, List<String> customDatePatterns) {
-        return isDate(value, customDatePatterns, Locale.getDefault());
+        return isDate(value, customDatePatterns, DEFAULT_LOCALE);
     }
 
     /**
@@ -121,7 +121,7 @@ public class DateTimePatternManager {
      * @return true if the value is type "Time", false otherwise.
      */
     public static boolean isTime(String value) {
-        return isDateTime(TIME_PARSERS, value);
+        return isDateTime(TIME_FORMATTERS, value);
     }
 
     /**
@@ -132,7 +132,7 @@ public class DateTimePatternManager {
      * @return true if the value is a date.
      */
     public static boolean isTime(String value, List<String> customTimePatterns) {
-        return isTime(value, customTimePatterns, Locale.getDefault());
+        return isTime(value, customTimePatterns, DEFAULT_LOCALE);
     }
 
     public static boolean isTime(String value, List<String> customTimePatterns, Locale locale) {
@@ -202,7 +202,7 @@ public class DateTimePatternManager {
     }
 
     public static String replaceByDateTimePattern(String value, String customPattern) {
-        return replaceByDateTimePattern(value, customPattern, Locale.getDefault());
+        return replaceByDateTimePattern(value, customPattern, DEFAULT_LOCALE);
     }
 
     public static String replaceByDateTimePattern(String value, String customPattern, Locale locale) {
@@ -210,7 +210,7 @@ public class DateTimePatternManager {
     }
 
     public static String replaceByDateTimePattern(String value, List<String> customPatterns) {
-        return replaceByDateTimePattern(value, customPatterns, Locale.getDefault());
+        return replaceByDateTimePattern(value, customPatterns, DEFAULT_LOCALE);
     }
 
     public static String replaceByDateTimePattern(String value, List<String> customPatterns, Locale locale) {
@@ -224,9 +224,9 @@ public class DateTimePatternManager {
     }
 
     private static String systemPatternReplace(String value) {
-        String pattern = dateTimePatternReplace(DATE_PARSERS, value);
+        String pattern = dateTimePatternReplace(DATE_FORMATTERS, value);
         if (pattern.equals(value)) {
-            pattern = dateTimePatternReplace(TIME_PARSERS, value);
+            pattern = dateTimePatternReplace(TIME_FORMATTERS, value);
         }
         return pattern;
     }

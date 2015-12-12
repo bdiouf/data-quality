@@ -13,7 +13,7 @@ public class SampleTest {
 
     @Test
     public void testAllSupportedDatesWithPatterns() throws IOException {
-        InputStream stream = SystemDatetimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
+        InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
         List<String> lines = IOUtils.readLines(stream);
 
         for (int i = 1; i < lines.size(); i++) {
@@ -28,7 +28,7 @@ public class SampleTest {
 
     @Test
     public void testAllSupportedDatesWithRegexes() throws IOException {
-        InputStream stream = SystemDatetimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
+        InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
         List<String> lines = IOUtils.readLines(stream);
 
         for (int i = 1; i < lines.size(); i++) {
@@ -40,14 +40,14 @@ public class SampleTest {
                 // String locale = sampleLine[2];
                 // System.out.println(SystemDatetimePatternManager.isDate(sample) + "\t" + locale + "\t" + sample + "\t"
                 // + expectedPattern);
-                assertTrue(SystemDatetimePatternManager.isDate(sample));
+                assertTrue(SystemDateTimePatternManager.isDate(sample));
             }
         }
     }
 
     @Test
     public void testAllSupportedTimesWithRegexes() throws IOException {
-        InputStream stream = SystemDatetimePatternManager.class.getResourceAsStream("TimeSampleTable.txt");
+        InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("TimeSampleTable.txt");
         List<String> lines = IOUtils.readLines(stream);
 
         for (int i = 1; i < lines.size(); i++) {
@@ -59,7 +59,7 @@ public class SampleTest {
                 // String locale = sampleLine[2];
                 // System.out.println(SystemDatetimePatternManager.isTime(sample) + "\t" + locale + "\t" + sample + "\t"
                 // + expectedPattern);
-                assertTrue(SystemDatetimePatternManager.isTime(sample));
+                assertTrue(SystemDateTimePatternManager.isTime(sample));
             }
         }
     }

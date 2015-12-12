@@ -58,7 +58,7 @@ public class DateTimePatternManagerTest {
     @Test
     public void testTimeMatchingCustomPattern() {
         // invalid with system time pattern
-        assertFalse(SystemDatetimePatternManager.isTime("21?30"));
+        assertFalse(SystemDateTimePatternManager.isTime("21?30"));
 
         // valid with custom pattern
         assertTrue(DateTimePatternManager.isTime("21?30", Collections.<String> singletonList("H?m")));
@@ -94,7 +94,7 @@ public class DateTimePatternManagerTest {
                 "Januar 9 ?? 1970", // DE
                 "一月 9 ?? 1970", // CN
         };
-        final boolean[] EXPECTED_IS_DATE_DEFAULT = new boolean[] { true, true, false, false };
+        final boolean[] EXPECTED_IS_DATE_DEFAULT = new boolean[] { true, false, false, false };
         final boolean[] EXPECTED_IS_DATE_US = new boolean[] { true, false, false, false };
         final boolean[] EXPECTED_IS_DATE_FR = new boolean[] { true, true, false, false };
         final boolean[] EXPECTED_IS_DATE_DE = new boolean[] { true, false, true, false };
@@ -134,7 +134,7 @@ public class DateTimePatternManagerTest {
                 "Januar 9 ?? 1970", // DE
                 "一月 9 ?? 1970", // CN
         };
-        final boolean[] EXPECTED_IS_DATE_DEFAULT = new boolean[] { true, false, true, false };
+        final boolean[] EXPECTED_IS_DATE_DEFAULT = new boolean[] { true, false, false, false };
         final boolean[] EXPECTED_IS_DATE_US = new boolean[] { true, false, false, false };
         final boolean[] EXPECTED_IS_DATE_FR = new boolean[] { true, true, false, false };
         final boolean[] EXPECTED_IS_DATE_DE = new boolean[] { true, false, true, false };

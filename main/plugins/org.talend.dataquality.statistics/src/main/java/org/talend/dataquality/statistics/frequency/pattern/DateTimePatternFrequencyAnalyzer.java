@@ -15,7 +15,7 @@ package org.talend.dataquality.statistics.frequency.pattern;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.talend.dataquality.statistics.datetime.CustomDatetimePatternManager;
+import org.talend.dataquality.statistics.datetime.CustomDateTimePatternManager;
 
 /**
  * Recognize date types given the predefined date regex pattern.
@@ -44,7 +44,7 @@ public class DateTimePatternFrequencyAnalyzer extends AbstractPatternFrequencyAn
     @Override
     protected RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = new RecognitionResult();
-        String datePatternAfterReplace = CustomDatetimePatternManager.replaceByDateTimePattern(stringToRecognize,
+        String datePatternAfterReplace = CustomDateTimePatternManager.replaceByDateTimePattern(stringToRecognize,
                 customDateTimePatterns);
         if (stringToRecognize.equals(datePatternAfterReplace)) {
             // Did not recognized.

@@ -53,13 +53,13 @@ public class PerformanceTest {
     public void testIsDateUsingRegex() throws Exception {
         int countOfDates = 0;
 
-        SystemDatetimePatternManager.isDate("12/02/99");// init DateTimeFormatters
+        SystemDateTimePatternManager.isDate("12/02/99");// init DateTimeFormatters
         Date begin = new Date();
         LOGGER.debug("Detect date start at: " + begin);
         // Assert total count.
         Assert.assertEquals(10000, DATE_VALUES.size());
         for (String value : DATE_VALUES) {
-            if (SystemDatetimePatternManager.isDate(value)) {
+            if (SystemDateTimePatternManager.isDate(value)) {
                 countOfDates++;
             }
         }
