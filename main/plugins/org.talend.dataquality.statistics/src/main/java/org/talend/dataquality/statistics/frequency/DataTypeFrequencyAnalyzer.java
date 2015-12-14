@@ -33,17 +33,6 @@ public class DataTypeFrequencyAnalyzer extends AbstractFrequencyAnalyzer<DataTyp
 
     private static final long serialVersionUID = 1333273197291146797L;
 
-    /**
-     * Get value pattern which used to computed the frequencies.
-     * 
-     * @param originalValue the original value
-     * @return value used to compute the frequencies.
-     */
-    @Override
-    protected String getValuePattern(String originalValue) {
-        return originalValue;
-    }
-
     @Override
     protected void initFreqTableList(int size) {
         List<DataTypeFrequencyStatistics> freqTableList = new ArrayList<>();

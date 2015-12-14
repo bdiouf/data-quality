@@ -12,6 +12,9 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.recognition;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 import org.talend.datascience.common.regex.ChainResponsibilityHandler;
 import org.talend.datascience.common.regex.HandlerFactory;
@@ -24,25 +27,25 @@ import org.talend.datascience.common.regex.HandlerFactory;
  */
 public class EastAsianCharPatternRecognizer extends AbstractPatternRecognizer {
 
+    private final ChainResponsibilityHandler createEastAsiaPatternHandler = HandlerFactory.createEastAsiaPatternHandler();
+
     @Override
     public RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = new RecognitionResult();
         if (StringUtils.isEmpty(stringToRecognize)) {
-            result.setResult(stringToRecognize, false);
+            result.setResult(Collections.singleton(stringToRecognize), false);
             return result;
         }
         // since the current implementation of East Asia character replacement is using regex macher , there is no way
         // to get the "isComplete" status during the process. So here the status simply deemed as "not complete yet".
-        boolean isComplete = false;
-        ChainResponsibilityHandler createEastAsiaPatternHandler = HandlerFactory.createEastAsiaPatternHandler();
-        result.setResult(createEastAsiaPatternHandler.handleRequest(stringToRecognize), isComplete);
+        result.setResult(Collections.singleton(createEastAsiaPatternHandler.handleRequest(stringToRecognize)), true);
         return result;
     }
 
     @Override
-    protected String getValuePattern(String originalValue) {
+    protected Set<String> getValuePattern(String originalValue) {
         RecognitionResult result = recognize(originalValue);
-        return result.getPatternString();
+        return result.getPatternStringSet();
     }
 
 }

@@ -1,5 +1,7 @@
 package org.talend.dataquality.statistics.frequency.recognition;
 
+import java.util.Set;
+
 public abstract class AbstractPatternRecognizer {
 
     /**
@@ -10,6 +12,6 @@ public abstract class AbstractPatternRecognizer {
      */
     public abstract RecognitionResult recognize(String stringToRecognize);
 
-    protected abstract String getValuePattern(String originalValue);
+    protected abstract Set<String> getValuePattern(String originalValue);
 
 }

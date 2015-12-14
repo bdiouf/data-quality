@@ -28,7 +28,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * Date and time patterns manager with system default definitions.
  * 
- * @deprecated use Regex Pattern Manager instead for better performance
+ * @deprecated use {@link CustomDateTimePatternManager} instead for better performance
  */
 public class DateTimePatternManager {
 

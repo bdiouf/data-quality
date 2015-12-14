@@ -15,7 +15,9 @@ package org.talend.dataquality.statistics.frequency.pattern;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -47,20 +49,14 @@ public class CompositePatternFrequencyAnalyzerTest {
     public void testAsciiAndAsiaChars() {
         CompositePatternFrequencyAnalyzer analzyer = new CompositePatternFrequencyAnalyzer();
 
-        String patternString1 = analzyer.getValuePattern("abcd1234ィゥェ中国");
-        Assert.assertEquals("aaaa9999ィゥェ中国", patternString1);
+        Set<String> patternString1 = analzyer.getValuePatternSet("abcd1234ィゥェ中国");
+        Assert.assertEquals(Collections.singleton("aaaa9999ィゥェ中国"), patternString1);
 
-        String patternString2 = analzyer.getValuePattern("");
-        Assert.assertEquals("", patternString2);
+        Set<String> patternString4 = analzyer.getValuePatternSet("2008-01-01");
+        Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[] { "yyyy-M-d", "yyyy-MM-dd" })), patternString4);
 
-        String patternString3 = analzyer.getValuePattern(null);
-        Assert.assertNull(patternString3);
-
-        String patternString4 = analzyer.getValuePattern("2008-01-01");
-        Assert.assertEquals("yyyy-MM-dd", patternString4);
-
-        String patternString5 = analzyer.getValuePattern("2008-1月-01");
-        Assert.assertEquals("9999-9月-99", patternString5);
+        Set<String> patternString5 = analzyer.getValuePatternSet("2008-1月-01");
+        Assert.assertEquals(Collections.singleton("9999-9月-99"), patternString5);
 
     }
 

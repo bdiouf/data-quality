@@ -13,12 +13,14 @@
 package org.talend.dataquality.statistics.frequency.pattern;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.talend.dataquality.statistics.frequency.AbstractFrequencyAnalyzer;
+import org.talend.dataquality.statistics.frequency.AbstractFrequencyStatistics;
 import org.talend.dataquality.statistics.frequency.recognition.AbstractPatternRecognizer;
 import org.talend.dataquality.statistics.frequency.recognition.DateTimePatternRecognizer;
-import org.talend.dataquality.statistics.frequency.recognition.EmptyPatternRecognizer;
 import org.talend.dataquality.statistics.frequency.recognition.LatinExtendedCharPatternRecognizer;
 import org.talend.dataquality.statistics.frequency.recognition.RecognitionResult;
 import org.talend.datascience.common.inference.ResizableList;
@@ -39,7 +41,6 @@ public class CompositePatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer
 
     public CompositePatternFrequencyAnalyzer() {
         // Initialize the built-in string pattern recognitions.
-        patternFreqRecognizers.add(new EmptyPatternRecognizer());
         patternFreqRecognizers.add(new DateTimePatternRecognizer());
         patternFreqRecognizers.add(new LatinExtendedCharPatternRecognizer());
 
@@ -49,6 +50,13 @@ public class CompositePatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer
         patternFreqRecognizers.addAll(analyzerList);
     }
 
+    @Override
+    protected void analyzeField(String field, AbstractFrequencyStatistics freqStats) {
+        for (String pattern : getValuePatternSet(field)) {
+            freqStats.add(pattern);
+        }
+    }
+
     /**
      * Recognize the string and return the pattern of the string with a boolean indicating the pattern replacement is
      * complete if true ,false otherwise.
@@ -56,21 +64,22 @@ public class CompositePatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer
      * @param originalValue the string to be replaced by its pattern string
      * @return the recognition result bean.
      */
-    @Override
-    protected String getValuePattern(String originalValue) {
-        String patternValue = originalValue;
-        for (AbstractPatternRecognizer analyzer : patternFreqRecognizers) {
-            RecognitionResult result = analyzer.recognize(patternValue);
+    Set<String> getValuePatternSet(String originalValue) {
+        Set<String> resultSet = new HashSet<String>();
+        String patternString = originalValue;
+        for (AbstractPatternRecognizer recognizer : patternFreqRecognizers) {
+            RecognitionResult result = recognizer.recognize(patternString);
+            resultSet = result.getPatternStringSet();
             if (result.isComplete()) {
-                return result.getPatternString();
+                break;
             } else {
-                // Go to next recognizer
-                patternValue = result.getPatternString();
+                if (!resultSet.isEmpty()) {
+                    patternString = resultSet.iterator().next();
+                }
             }
         }
-
         // value is not recognized completely.
-        return patternValue;
+        return resultSet;
     }
 
     @Override

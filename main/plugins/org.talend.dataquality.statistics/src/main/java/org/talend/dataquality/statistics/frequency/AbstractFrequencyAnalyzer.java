@@ -15,6 +15,7 @@ package org.talend.dataquality.statistics.frequency;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang.StringUtils;
 import org.talend.dataquality.statistics.frequency.impl.CMSFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.EFrequencyAlgorithm;
 import org.talend.dataquality.statistics.frequency.impl.NaiveFrequencyEvaluator;
@@ -38,8 +39,6 @@ public abstract class AbstractFrequencyAnalyzer<T extends AbstractFrequencyStati
 
     protected EFrequencyAlgorithm algorithm = EFrequencyAlgorithm.NAIVE;
 
-
-
     /**
      * Set the algorithm used to compute the frequency table.
      * 
@@ -48,15 +47,6 @@ public abstract class AbstractFrequencyAnalyzer<T extends AbstractFrequencyStati
     public void setAlgorithm(EFrequencyAlgorithm algorithm) {
         this.algorithm = algorithm;
     }
-
-
-    /**
-     * Get value pattern which used to computed the frequencies.
-     * 
-     * @param originalValue the original value
-     * @return value pattern used to compute the frequencies.
-     */
-    protected abstract String getValuePattern(String originalValue);
 
     protected abstract void initFreqTableList(int size);
 
@@ -76,10 +66,18 @@ public abstract class AbstractFrequencyAnalyzer<T extends AbstractFrequencyStati
             initFreqTableList(record.length);
         }
         for (int i = 0; i < record.length; i++) {
-            AbstractFrequencyStatistics freqStas = freqTableStatistics.get(i);
-            freqStas.add(getValuePattern(record[i]));
+            String field = record[i];
+            if (field == null || field != null && StringUtils.EMPTY.equals(field.trim())) {
+                continue;
+            }
+            AbstractFrequencyStatistics freqStats = freqTableStatistics.get(i);
+            analyzeField(field, freqStats);
         }
         return true;
+    }
+
+    protected void analyzeField(String field, AbstractFrequencyStatistics freqStats) {
+        freqStats.add(field);
     }
 
     @Override

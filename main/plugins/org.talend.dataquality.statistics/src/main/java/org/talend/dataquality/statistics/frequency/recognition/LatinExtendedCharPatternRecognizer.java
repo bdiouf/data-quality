@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.recognition;
 
+import java.util.Collections;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
@@ -34,7 +36,7 @@ public class LatinExtendedCharPatternRecognizer extends AbstractPatternRecognize
     public RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = new RecognitionResult();
         if (StringUtils.isEmpty(stringToRecognize)) {
-            result.setResult(stringToRecognize, false);
+            result.setResult(Collections.singleton(stringToRecognize), false);
             return result;
         }
         boolean isComplete = true;
@@ -50,7 +52,7 @@ public class LatinExtendedCharPatternRecognizer extends AbstractPatternRecognize
                 isComplete = false;
             }
         }
-        result.setResult(sb.toString(), isComplete);
+        result.setResult(Collections.singleton(sb.toString()), isComplete);
         return result;
     }
 
@@ -65,9 +67,9 @@ public class LatinExtendedCharPatternRecognizer extends AbstractPatternRecognize
     }
 
     @Override
-    public String getValuePattern(String originalValue) {
+    public Set<String> getValuePattern(String originalValue) {
         RecognitionResult result = recognize(originalValue);
-        return result.getPatternString();
+        return result.getPatternStringSet();
     }
 
 }

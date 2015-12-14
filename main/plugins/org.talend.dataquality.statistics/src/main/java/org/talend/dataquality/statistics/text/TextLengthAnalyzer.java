@@ -31,8 +31,8 @@ public class TextLengthAnalyzer implements Analyzer<TextLengthStatistics> {
         }
         textStatistics.resize(record.length);
         for (int i = 0; i < record.length; i++) {
-            TextLengthStatistics freqStas = textStatistics.get(i);
-            freqStas.add(record[i]);
+            TextLengthStatistics freqStats = textStatistics.get(i);
+            freqStats.add(record[i]);
         }
         return true;
     }

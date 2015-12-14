@@ -1,6 +1,9 @@
 package org.talend.dataquality.statistics.datetime;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -45,8 +48,8 @@ public class PerformanceTest {
         double difference = end.getTime() - begin.getTime();
 
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        System.out.println("Total duration using patterns: " + difference);
-        // assertTrue(difference < 0.43);
+        System.out.println("Total duration IsDate using patterns: " + difference);
+        assertTrue(difference < 7500);
     }
 
     @Test
@@ -70,8 +73,50 @@ public class PerformanceTest {
         double difference = end.getTime() - begin.getTime();
 
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        System.out.println("Totol duration using regexes: " + difference);
-        // assertTrue(difference < 0.43);
+        System.out.println("Total duration IsDate using regexes: " + difference);
+        assertTrue(difference < 450);
     }
 
+    @Test
+    public void testGetPatternsUsingPattern() throws Exception {
+        int countOfDates = 0;
+
+        DateTimePatternManager.isDate("12/02/99");// init DateTimeFormatters
+        Date begin = new Date();
+        LOGGER.debug("Detect date start at: " + begin);
+        // Assert total count.
+        Assert.assertEquals(10000, DATE_VALUES.size());
+        for (String value : DATE_VALUES) {
+            DateTimePatternManager.replaceByDateTimePattern(value, Collections.EMPTY_LIST);
+        }
+        Date end = new Date();
+        LOGGER.debug("Detect date end at: " + end);
+        // Assert count of matches.
+        double difference = end.getTime() - begin.getTime();
+
+        LOGGER.debug("Detect date time diff: " + difference + " ms.");
+        System.out.println("Total duration GetPatterns with formats: " + difference);
+        assertTrue(difference < 9000);
+    }
+
+    @Test
+    public void testGetPatternsUsingRegex() throws Exception {
+        int countOfDates = 0;
+
+        SystemDateTimePatternManager.isDate("12/02/99");// init DateTimeFormatters
+        Date begin = new Date();
+        LOGGER.debug("Detect date start at: " + begin);
+        // Assert total count.
+        for (String value : DATE_VALUES) {
+            CustomDateTimePatternManager.replaceByDateTimePattern(value, Collections.EMPTY_LIST);
+        }
+        Date end = new Date();
+        LOGGER.debug("Detect date end at: " + end);
+        // Assert count of matches.
+        double difference = end.getTime() - begin.getTime();
+
+        LOGGER.debug("Detect date time diff: " + difference + " ms.");
+        System.out.println("Total duration GetPatterns with regexes: " + difference);
+        assertTrue(difference < 900);
+    }
 }

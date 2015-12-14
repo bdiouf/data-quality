@@ -13,7 +13,9 @@
 package org.talend.dataquality.statistics.frequency.recognition;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.talend.dataquality.statistics.datetime.CustomDateTimePatternManager;
 
@@ -42,11 +44,11 @@ public class DateTimePatternRecognizer extends AbstractPatternRecognizer {
     @Override
     public RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = new RecognitionResult();
-        String datePatternAfterReplace = CustomDateTimePatternManager.replaceByDateTimePattern(stringToRecognize,
+        Set<String> datePatternAfterReplace = CustomDateTimePatternManager.replaceByDateTimePattern(stringToRecognize,
                 customDateTimePatterns);
-        if (stringToRecognize.equals(datePatternAfterReplace)) {
+        if (datePatternAfterReplace.isEmpty()) {
             // Did not recognized.
-            result.setResult(stringToRecognize, false);
+            result.setResult(Collections.singleton(stringToRecognize), false);
         } else {
             result.setResult(datePatternAfterReplace, true);
         }
@@ -54,8 +56,8 @@ public class DateTimePatternRecognizer extends AbstractPatternRecognizer {
     }
 
     @Override
-    protected String getValuePattern(String originalValue) {
+    protected Set<String> getValuePattern(String originalValue) {
         RecognitionResult result = recognize(originalValue);
-        return result.getPatternString();
+        return result.getPatternStringSet();
     }
 }

@@ -60,8 +60,8 @@ public class QuantileAnalyzer extends NumericalStatisticsAnalyzer<QuantileStatis
             if (!TypeInferenceUtils.isValid(types[id], record[id])) {
                 continue;
             }
-            QuantileStatistics freqStas = stats.get(id);
-            freqStas.add(Double.valueOf(record[id]));
+            QuantileStatistics freqStats = stats.get(id);
+            freqStats.add(Double.valueOf(record[id]));
         }
         return true;
     }

@@ -12,7 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.statistics.frequency.recognition;
 
-import org.apache.commons.lang.StringUtils;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Recognition result bean. <b>Important</b> note that this result's instance is intended to be reused due to the memory
@@ -25,11 +26,11 @@ import org.apache.commons.lang.StringUtils;
  */
 public class RecognitionResult {
 
-    private String patternString = StringUtils.EMPTY;
+    private Set<String> patternString = new HashSet<String>();
 
     private boolean isComplete = false;
 
-    public String getPatternString() {
+    public Set<String> getPatternStringSet() {
         return patternString;
     }
 
@@ -49,7 +50,7 @@ public class RecognitionResult {
      * @param patternString
      * @param isComplete
      */
-    protected void setResult(String patternString, boolean isComplete) {
+    protected void setResult(Set<String> patternString, boolean isComplete) {
         this.patternString = patternString;
         this.isComplete = isComplete;
     }
