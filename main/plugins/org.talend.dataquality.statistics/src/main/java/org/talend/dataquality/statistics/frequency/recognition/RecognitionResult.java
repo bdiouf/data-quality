@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency.pattern;
+package org.talend.dataquality.statistics.frequency.recognition;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -23,13 +23,13 @@ import org.apache.commons.lang.StringUtils;
  * @author mzhao
  * @since 1.3.0
  */
-class RecognitionResult {
+public class RecognitionResult {
 
     private String patternString = StringUtils.EMPTY;
 
     private boolean isComplete = false;
 
-    protected String getPatternString() {
+    public String getPatternString() {
         return patternString;
     }
 
@@ -38,7 +38,7 @@ class RecognitionResult {
      * 
      * @return true if the recognition complete.
      */
-    protected boolean isComplete() {
+    public boolean isComplete() {
         return isComplete;
     }
 

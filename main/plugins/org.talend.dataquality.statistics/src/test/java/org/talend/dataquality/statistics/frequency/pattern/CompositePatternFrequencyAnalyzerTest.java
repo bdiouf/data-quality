@@ -15,6 +15,7 @@ package org.talend.dataquality.statistics.frequency.pattern;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,12 +25,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.talend.dataquality.statistics.frequency.AbstractFrequencyAnalyzer;
+import org.talend.dataquality.statistics.frequency.recognition.DateTimePatternRecognizer;
 import org.talend.dataquality.statistics.quality.DataTypeQualityAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 
 public class CompositePatternFrequencyAnalyzerTest {
 
-    AbstractPatternFrequencyAnalyzer patternFreqAnalyzer = null;
+    AbstractFrequencyAnalyzer<PatternFrequencyStatistics> patternFreqAnalyzer = null;
 
     @Before
     public void setUp() throws Exception {
@@ -154,7 +157,7 @@ public class CompositePatternFrequencyAnalyzerTest {
 
     @Test
     public void testCustomDatePatternAnalyzer() {
-        DateTimePatternFrequencyAnalyzer patternAnalyzer = new DateTimePatternFrequencyAnalyzer();
+        DateTimePatternRecognizer datetimePatternAnalyzer = new DateTimePatternRecognizer();
         final String[] data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2015-08-20", "2012-02-12", "2/8/15 15:57",
                 "4/15/11 4:24", "2001年" }; // TODO add a date in a strange format that we are sure
                                            // we won't add to the list of date patterns that we
@@ -162,7 +165,10 @@ public class CompositePatternFrequencyAnalyzerTest {
 
         // Set customized pattern and analyze again
         // TODO: Replace Map<String, String> parameters by class PatternAnalyzerConfig
-        patternAnalyzer.addCustomDateTimePattern("M/d/yy H:m");
+        datetimePatternAnalyzer.addCustomDateTimePattern("M/d/yy H:m");
+
+        CompositePatternFrequencyAnalyzer patternAnalyzer = new CompositePatternFrequencyAnalyzer(
+                Collections.singletonList(datetimePatternAnalyzer));
         patternAnalyzer.init();
         for (String value : data) {
             patternAnalyzer.analyze(value);

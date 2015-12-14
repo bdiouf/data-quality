@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency.pattern;
+package org.talend.dataquality.statistics.frequency.recognition;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -20,12 +20,10 @@ import org.apache.commons.lang.StringUtils;
  * @since 1.3.0
  * @author mzhao
  */
-public class EmptyPatternFrequencyAnalyzer extends AbstractPatternFrequencyAnalyzer {
-
-    private static final long serialVersionUID = 1973291585278371232L;
+public class EmptyPatternRecognizer extends AbstractPatternRecognizer {
 
     @Override
-    protected RecognitionResult recognize(String stringToRecognize) {
+    public RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = new RecognitionResult();
         if (StringUtils.isEmpty(stringToRecognize)) {
             result.setResult(stringToRecognize, true);

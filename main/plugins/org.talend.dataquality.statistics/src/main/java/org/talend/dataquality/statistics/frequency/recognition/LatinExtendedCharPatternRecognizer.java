@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency.pattern;
+package org.talend.dataquality.statistics.frequency.recognition;
 
 import java.util.regex.Pattern;
 
@@ -22,9 +22,7 @@ import org.apache.commons.lang.StringUtils;
  * @since 1.3.0
  * @author mzhao
  */
-public class LatinExtendedCharPatternFrequencyAnalyzer extends AbstractPatternFrequencyAnalyzer {
-
-    private static final long serialVersionUID = -104288378010857759L;
+public class LatinExtendedCharPatternRecognizer extends AbstractPatternRecognizer {
 
     public static final String CHARS_TO_REPLACE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞß0123456789";
 
@@ -33,7 +31,7 @@ public class LatinExtendedCharPatternFrequencyAnalyzer extends AbstractPatternFr
     private Pattern charsPattern = Pattern.compile("[a-z|A-Z|à-ÿ|À-ß]");
 
     @Override
-    protected RecognitionResult recognize(String stringToRecognize) {
+    public RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = new RecognitionResult();
         if (StringUtils.isEmpty(stringToRecognize)) {
             result.setResult(stringToRecognize, false);

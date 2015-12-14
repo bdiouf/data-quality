@@ -15,7 +15,13 @@ package org.talend.dataquality.statistics.frequency.pattern;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.talend.dataquality.statistics.frequency.AbstractFrequencyAnalyzer;
+import org.talend.dataquality.statistics.frequency.recognition.AbstractPatternRecognizer;
+import org.talend.dataquality.statistics.frequency.recognition.DateTimePatternRecognizer;
+import org.talend.dataquality.statistics.frequency.recognition.EmptyPatternRecognizer;
+import org.talend.dataquality.statistics.frequency.recognition.LatinExtendedCharPatternRecognizer;
+import org.talend.dataquality.statistics.frequency.recognition.RecognitionResult;
+import org.talend.datascience.common.inference.ResizableList;
 
 /**
  * Compute the pattern frequency tables.<br>
@@ -25,30 +31,22 @@ import org.apache.commons.lang.NotImplementedException;
  * @author mzhao
  *
  */
-public class CompositePatternFrequencyAnalyzer extends AbstractPatternFrequencyAnalyzer {
+public class CompositePatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer<PatternFrequencyStatistics> {
 
     private static final long serialVersionUID = -4658709249927616622L;
 
-    private List<AbstractPatternFrequencyAnalyzer> patternFreqAnalyzers = new ArrayList<AbstractPatternFrequencyAnalyzer>();
+    private List<AbstractPatternRecognizer> patternFreqRecognizers = new ArrayList<AbstractPatternRecognizer>();
 
     public CompositePatternFrequencyAnalyzer() {
         // Initialize the built-in string pattern recognitions.
-        // Date
-        patternFreqAnalyzers.add(new EmptyPatternFrequencyAnalyzer());
-        patternFreqAnalyzers.add(new DateTimePatternFrequencyAnalyzer());
-        patternFreqAnalyzers.add(new LatinExtendedCharPatternFrequencyAnalyzer());
+        patternFreqRecognizers.add(new EmptyPatternRecognizer());
+        patternFreqRecognizers.add(new DateTimePatternRecognizer());
+        patternFreqRecognizers.add(new LatinExtendedCharPatternRecognizer());
 
     }
 
-    public CompositePatternFrequencyAnalyzer(List<AbstractPatternFrequencyAnalyzer> analyzerList) {
-        patternFreqAnalyzers.addAll(analyzerList);
-    }
-
-    @Override
-    public void init() {
-        for (AbstractPatternFrequencyAnalyzer analyzer : patternFreqAnalyzers) {
-            analyzer.init();
-        }
+    public CompositePatternFrequencyAnalyzer(List<AbstractPatternRecognizer> analyzerList) {
+        patternFreqRecognizers.addAll(analyzerList);
     }
 
     /**
@@ -61,7 +59,7 @@ public class CompositePatternFrequencyAnalyzer extends AbstractPatternFrequencyA
     @Override
     protected String getValuePattern(String originalValue) {
         String patternValue = originalValue;
-        for (AbstractPatternFrequencyAnalyzer analyzer : patternFreqAnalyzers) {
+        for (AbstractPatternRecognizer analyzer : patternFreqRecognizers) {
             RecognitionResult result = analyzer.recognize(patternValue);
             if (result.isComplete()) {
                 return result.getPatternString();
@@ -76,8 +74,13 @@ public class CompositePatternFrequencyAnalyzer extends AbstractPatternFrequencyA
     }
 
     @Override
-    protected RecognitionResult recognize(String stringToRecognize) {
-        throw new NotImplementedException();
+    protected void initFreqTableList(int size) {
+        List<PatternFrequencyStatistics> freqTableList = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            PatternFrequencyStatistics freqTable = new PatternFrequencyStatistics();
+            freqTable.setAlgorithm(algorithm);
+            freqTableList.add(freqTable);
+        }
+        freqTableStatistics = new ResizableList<>(freqTableList);
     }
-
 }

@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency.pattern;
+package org.talend.dataquality.statistics.frequency.recognition;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +20,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.talend.dataquality.statistics.frequency.recognition.DateTimePatternRecognizer;
+import org.talend.dataquality.statistics.frequency.recognition.LatinExtendedCharPatternRecognizer;
+import org.talend.dataquality.statistics.frequency.recognition.RecognitionResult;
 
 public class LatinExtendedCharPatternFrequencyAnalyzerTest {
 
@@ -33,7 +36,7 @@ public class LatinExtendedCharPatternFrequencyAnalyzerTest {
 
     @Test
     public void testRecognize() {
-        LatinExtendedCharPatternFrequencyAnalyzer recognizer = new LatinExtendedCharPatternFrequencyAnalyzer();
+        LatinExtendedCharPatternRecognizer recognizer = new LatinExtendedCharPatternRecognizer();
         // Assert empty
         RecognitionResult result = recognizer.recognize("");
         Assert.assertFalse(result.isComplete());
@@ -82,7 +85,7 @@ public class LatinExtendedCharPatternFrequencyAnalyzerTest {
     }
 
     private void testRecognition(Map<String, String> str2Pattern) {
-        LatinExtendedCharPatternFrequencyAnalyzer recognizer = new LatinExtendedCharPatternFrequencyAnalyzer();
+        LatinExtendedCharPatternRecognizer recognizer = new LatinExtendedCharPatternRecognizer();
         Iterator<String> strIterator = str2Pattern.keySet().iterator();
         while (strIterator.hasNext()) {
             String str = strIterator.next();
@@ -94,7 +97,7 @@ public class LatinExtendedCharPatternFrequencyAnalyzerTest {
     }
 
     private void testDateRecognition(Map<String, String> str2Pattern) {
-        DateTimePatternFrequencyAnalyzer recognizer = new DateTimePatternFrequencyAnalyzer();
+        DateTimePatternRecognizer recognizer = new DateTimePatternRecognizer();
         Iterator<String> strIterator = str2Pattern.keySet().iterator();
         while (strIterator.hasNext()) {
             String str = strIterator.next();

@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.statistics.frequency.pattern;
+package org.talend.dataquality.statistics.frequency.recognition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +23,7 @@ import org.talend.dataquality.statistics.datetime.CustomDateTimePatternManager;
  * @since 1.3.0
  * @author mzhao
  */
-public class DateTimePatternFrequencyAnalyzer extends AbstractPatternFrequencyAnalyzer {
-
-    private static final long serialVersionUID = -6360092927227678935L;
+public class DateTimePatternRecognizer extends AbstractPatternRecognizer {
 
     private List<String> customDateTimePatterns = new ArrayList<>();
 
@@ -42,7 +40,7 @@ public class DateTimePatternFrequencyAnalyzer extends AbstractPatternFrequencyAn
     }
 
     @Override
-    protected RecognitionResult recognize(String stringToRecognize) {
+    public RecognitionResult recognize(String stringToRecognize) {
         RecognitionResult result = new RecognitionResult();
         String datePatternAfterReplace = CustomDateTimePatternManager.replaceByDateTimePattern(stringToRecognize,
                 customDateTimePatterns);
