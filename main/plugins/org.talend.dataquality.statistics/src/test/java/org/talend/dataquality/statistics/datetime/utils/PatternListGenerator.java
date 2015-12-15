@@ -42,7 +42,7 @@ public class PatternListGenerator {
             add(new LocaledPattern("M/d/yyyy", Locale.US, "OTHER", false));// 6/18/2009
             add(new LocaledPattern("M/d/yyyy H:mm", Locale.US, "OTHER", false));// 6/18/2009 21:30
             add(new LocaledPattern("MMM d yyyy", Locale.US, "OTHER", false));// Jan 18 2012
-            add(new LocaledPattern("MMM.d.yyyy", Locale.US, "OTHER", false));// Jan.12.2010
+            add(new LocaledPattern("MMM.dd.yyyy", Locale.US, "OTHER", false));// Jan.02.2010
             add(new LocaledPattern("MMMM d yyyy", Locale.US, "OTHER", false));// January 18 2012
             add(new LocaledPattern("yyyy-M-d H:mm:ss.S", Locale.US, "OTHER", true));// 2013-2-14 13:40:51.1
             add(new LocaledPattern("d/MMM/yyyy H:mm:ss Z", Locale.US, "OTHER", true));// 14/Feb/2013 13:40:51 +0100

@@ -68,7 +68,7 @@ en_US	dd/MM/yyyy
 en_US	M/d/yyyy
 en_US	M/d/yyyy H:mm
 en_US	MMM d yyyy
-en_US	MMM.d.yyyy
+en_US	MMM.dd.yyyy
 en_US	MMMM d yyyy
 en_US	yyyy-M-d H:mm:ss.S
 en_US	d/MMM/yyyy H:mm:ss Z

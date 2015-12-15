@@ -15,7 +15,7 @@ public class DateTimePatternManagerTest {
     @Test
     public void testNewPatterns() {
 
-        assertFalse(DateTimePatternManager.isDate("18-Nov-86 01.00.00.000000000 AM"));
+        assertTrue(DateTimePatternManager.isDate("18-Nov-86 01.00.00.000000000 AM"));
         assertTrue(DateTimePatternManager.isDate("6/18/09"));
         assertTrue(DateTimePatternManager.isDate("Jan.12.2010"));
         assertTrue(DateTimePatternManager.isDate("14/Feb/2013 13:40:51 +0100"));
