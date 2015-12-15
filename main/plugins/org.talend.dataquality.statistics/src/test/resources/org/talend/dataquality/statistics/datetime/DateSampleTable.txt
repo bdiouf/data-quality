@@ -73,6 +73,7 @@ Mar.11.2222	MMM.d.yyyy	en_US	OTHER	false
 March 11 2222	MMMM d yyyy	en_US	OTHER	false
 2222-3-11 5:06:07.0	yyyy-M-d H:mm:ss.S	en_US	OTHER	true
 11/Mar/2222 5:06:07 +0100	d/MMM/yyyy H:mm:ss Z	en_US	OTHER	true
+11-Mar-22 05.06.07.000000888 AM	dd-MMM-yy hh.mm.ss.nnnnnnnnn a	en_US	OTHER	true
 22220311+0100	yyyyMMddZ	en_US	BASIC_ISO_DATE	false
 22220311	yyyyMMdd	en_US	BASIC_ISO_DATE	false
 2222-03-11+01:00	yyyy-MM-ddZZZZZ	en_US	ISO_DATE	false

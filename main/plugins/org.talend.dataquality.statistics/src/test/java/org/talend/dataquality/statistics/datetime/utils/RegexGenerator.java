@@ -34,6 +34,7 @@ public class RegexGenerator {
             put("s", "([0-5]?[0-9])");
             put("SSS", "([0-9]{3})");
             put("S", "[0-9]");
+            put("nnnnnnnnn", "[0-9]{9}");
 
             // replace the 'a' char by AM|PM
             put("a", "\\p{L}{2}");
