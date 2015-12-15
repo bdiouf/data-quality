@@ -12,21 +12,6 @@ import org.junit.Test;
 public class SampleTest {
 
     @Test
-    public void testAllSupportedDatesWithPatterns() throws IOException {
-        InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
-        List<String> lines = IOUtils.readLines(stream);
-
-        for (int i = 1; i < lines.size(); i++) {
-            String line = lines.get(i);
-            if (!"".equals(line.trim())) {
-                String[] sampleLine = line.trim().split("\t");
-                String sample = sampleLine[0];
-                assertTrue(DateTimePatternManager.isDate(sample));
-            }
-        }
-    }
-
-    @Test
     public void testAllSupportedDatesWithRegexes() throws IOException {
         InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
         List<String> lines = IOUtils.readLines(stream);
