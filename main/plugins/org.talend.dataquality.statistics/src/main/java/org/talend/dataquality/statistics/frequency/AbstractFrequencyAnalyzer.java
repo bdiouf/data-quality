@@ -15,7 +15,6 @@ package org.talend.dataquality.statistics.frequency;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
-import org.apache.commons.lang.StringUtils;
 import org.talend.dataquality.statistics.frequency.impl.CMSFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.EFrequencyAlgorithm;
 import org.talend.dataquality.statistics.frequency.impl.NaiveFrequencyEvaluator;
@@ -66,12 +65,8 @@ public abstract class AbstractFrequencyAnalyzer<T extends AbstractFrequencyStati
             initFreqTableList(record.length);
         }
         for (int i = 0; i < record.length; i++) {
-            String field = record[i];
-            if (field == null || field != null && StringUtils.EMPTY.equals(field.trim())) {
-                continue;
-            }
             AbstractFrequencyStatistics freqStats = freqTableStatistics.get(i);
-            analyzeField(field, freqStats);
+            analyzeField(record[i], freqStats);
         }
         return true;
     }

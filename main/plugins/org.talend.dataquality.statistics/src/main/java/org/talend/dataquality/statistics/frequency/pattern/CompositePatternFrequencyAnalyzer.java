@@ -21,6 +21,7 @@ import org.talend.dataquality.statistics.frequency.AbstractFrequencyAnalyzer;
 import org.talend.dataquality.statistics.frequency.AbstractFrequencyStatistics;
 import org.talend.dataquality.statistics.frequency.recognition.AbstractPatternRecognizer;
 import org.talend.dataquality.statistics.frequency.recognition.DateTimePatternRecognizer;
+import org.talend.dataquality.statistics.frequency.recognition.EmptyPatternRecognizer;
 import org.talend.dataquality.statistics.frequency.recognition.LatinExtendedCharPatternRecognizer;
 import org.talend.dataquality.statistics.frequency.recognition.RecognitionResult;
 import org.talend.datascience.common.inference.ResizableList;
@@ -41,6 +42,7 @@ public class CompositePatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer
 
     public CompositePatternFrequencyAnalyzer() {
         // Initialize the built-in string pattern recognitions.
+        patternFreqRecognizers.add(new EmptyPatternRecognizer());
         patternFreqRecognizers.add(new DateTimePatternRecognizer());
         patternFreqRecognizers.add(new LatinExtendedCharPatternRecognizer());
 

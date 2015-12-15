@@ -170,7 +170,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
         for (String[] record : records) {
             analyzer.analyze(record);
         }
-        final List<DataType> result = analyzer.getResult();
+        final List<DataTypeOccurences> result = analyzer.getResult();
         assertEquals(18, result.size());
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType());
         assertEquals(DataTypeEnum.STRING, result.get(1).getSuggestedType());
@@ -213,7 +213,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
         for (String[] record : records) {
             analyzer.analyze(record);
         }
-        final List<DataType> result = analyzer.getResult();
+        final List<DataTypeOccurences> result = analyzer.getResult();
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType());
         assertEquals(DataTypeEnum.STRING, result.get(1).getSuggestedType());
         assertEquals(DataTypeEnum.STRING, result.get(2).getSuggestedType());
@@ -233,7 +233,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
             analyzer.analyze(record);
         }
         analyzer.end();
-        final List<DataType> result = analyzer.getResult();
+        final List<DataTypeOccurences> result = analyzer.getResult();
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType());
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.6));
         assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.3));
@@ -247,7 +247,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
             analyzer.analyze(record);
         }
         analyzer.end();
-        final List<DataType> result = analyzer.getResult();
+        final List<DataTypeOccurences> result = analyzer.getResult();
         assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType());
         assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.9));
     }
@@ -260,7 +260,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
             analyzer.analyze(record);
         }
         analyzer.end();
-        final List<DataType> result = analyzer.getResult();
+        final List<DataTypeOccurences> result = analyzer.getResult();
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.9));
         assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.1));
     }
@@ -278,7 +278,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
             analyzer.analyze(record);
         }
         analyzer.end();
-        final List<DataType> resultBeforeSetCustomP = analyzer.getResult();
+        final List<DataTypeOccurences> resultBeforeSetCustomP = analyzer.getResult();
         assertEquals(DataTypeEnum.INTEGER, resultBeforeSetCustomP.get(0).getSuggestedType());
 
         // After set Custom Data Pattern: yyyy?mm?dd, "2015?08?20" & "2012?02?12" can be recognised as date
@@ -289,7 +289,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
             analyzer.analyze(record);
         }
         analyzer.end();
-        final List<DataType> resultAfterSetCustomP = analyzer.getResult();
+        final List<DataTypeOccurences> resultAfterSetCustomP = analyzer.getResult();
         assertEquals(DataTypeEnum.DATE, resultAfterSetCustomP.get(0).getSuggestedType());
 
     }

@@ -20,14 +20,14 @@ import java.util.Map;
  * 
  * Data type bean hold type to frequency and type to value maps.
  */
-public class DataType implements Serializable{
+public class DataTypeOccurences implements Serializable{
 
     private static final long serialVersionUID = -736825123668340428L;
 
-    private Map<DataTypeEnum, Long> typeFrequencies = new EnumMap<>(DataTypeEnum.class);
+    private Map<DataTypeEnum, Long> typeOccurences = new EnumMap<>(DataTypeEnum.class);
 
     public Map<DataTypeEnum, Long> getTypeFrequencies() {
-        return typeFrequencies;
+        return typeOccurences;
     }
 
     /**
@@ -57,10 +57,10 @@ public class DataType implements Serializable{
      */
     public DataTypeEnum getSuggestedType(double threshold) {
         long max = 0;
-        long nbDouble = typeFrequencies.get(DataTypeEnum.DOUBLE) == null ? 0 : typeFrequencies.get(DataTypeEnum.DOUBLE);
-        long nbInteger = typeFrequencies.get(DataTypeEnum.INTEGER) == null ? 0 : typeFrequencies.get(DataTypeEnum.INTEGER);
+        long nbDouble = typeOccurences.get(DataTypeEnum.DOUBLE) == null ? 0 : typeOccurences.get(DataTypeEnum.DOUBLE);
+        long nbInteger = typeOccurences.get(DataTypeEnum.INTEGER) == null ? 0 : typeOccurences.get(DataTypeEnum.INTEGER);
         DataTypeEnum electedType = DataTypeEnum.STRING; // String by default
-        for (Map.Entry<DataTypeEnum, Long> entry : typeFrequencies.entrySet()) {
+        for (Map.Entry<DataTypeEnum, Long> entry : typeOccurences.entrySet()) {
             if (DataTypeEnum.EMPTY.equals(entry.getKey())) {
                 continue;
             }
@@ -78,10 +78,10 @@ public class DataType implements Serializable{
     }
 
     public void increment(DataTypeEnum type) {
-        if (!typeFrequencies.containsKey(type)) {
-            typeFrequencies.put(type, 1l);
+        if (!typeOccurences.containsKey(type)) {
+            typeOccurences.put(type, 1l);
         } else {
-            typeFrequencies.put(type, typeFrequencies.get(type) + 1);
+            typeOccurences.put(type, typeOccurences.get(type) + 1);
         }
     }
 

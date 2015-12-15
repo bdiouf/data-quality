@@ -31,11 +31,11 @@ import org.talend.datascience.common.inference.ResizableList;
  * <b>Important note:</b> This class is <b>NOT</b> thread safe.
  *
  */
-public class DataTypeAnalyzer implements Analyzer<DataType> {
+public class DataTypeAnalyzer implements Analyzer<DataTypeOccurences> {
 
     private static final long serialVersionUID = 373694310453353502L;
 
-    private final ResizableList<DataType> dataTypes = new ResizableList<>(DataType.class);
+    private final ResizableList<DataTypeOccurences> dataTypes = new ResizableList<>(DataTypeOccurences.class);
 
     /** Optional custom date patterns. */
     protected List<String> customDateTimePatterns = new ArrayList<>();
@@ -115,7 +115,7 @@ public class DataTypeAnalyzer implements Analyzer<DataType> {
         }
         dataTypes.resize(record.length);
         for (int i = 0; i < record.length; i++) {
-            final DataType dataType = dataTypes.get(i);
+            final DataTypeOccurences dataType = dataTypes.get(i);
             dataType.increment(execute(record[i]));
         }
         return true;
@@ -131,15 +131,15 @@ public class DataTypeAnalyzer implements Analyzer<DataType> {
      * 
      * @return A map for <b>each</b> column. Each map contains the type occurrence count.
      */
-    public List<DataType> getResult() {
+    public List<DataTypeOccurences> getResult() {
         return dataTypes;
     }
 
     @Override
-    public Analyzer<DataType> merge(Analyzer<DataType> another) {
+    public Analyzer<DataTypeOccurences> merge(Analyzer<DataTypeOccurences> another) {
         int idx = 0;
         DataTypeAnalyzer mergedAnalyzer = new DataTypeAnalyzer();
-        for (DataType dt : dataTypes) {
+        for (DataTypeOccurences dt : dataTypes) {
             mergedAnalyzer.getResult().add(idx, dt);
             if (!another.getResult().isEmpty()) {
                 Map<DataTypeEnum, Long> typeFreqTable = dt.getTypeFrequencies();

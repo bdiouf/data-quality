@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.talend.dataquality.statistics.frequency.pattern.CompositePatternFrequencyAnalyzer;
 import org.talend.dataquality.statistics.frequency.pattern.PatternFrequencyStatistics;
 
-public class DateTimePatternRecognizerTest {
+public class CustomDateTimePatternRecognizerTest {
 
     @Before
     public void setUp() throws Exception {
@@ -39,6 +39,7 @@ public class DateTimePatternRecognizerTest {
     public void testRecognize() {
 
         ArrayList<AbstractPatternRecognizer> recognizers = new ArrayList<AbstractPatternRecognizer>();
+        recognizers.add(new EmptyPatternRecognizer());
         DateTimePatternRecognizer recognizer = new DateTimePatternRecognizer();
         recognizer.addCustomDateTimePattern("=d/M/yy=");
         recognizers.add(recognizer);
@@ -52,6 +53,7 @@ public class DateTimePatternRecognizerTest {
 
             {
                 add("   ");
+                add(" ");
                 add(null);
                 add("abc");
                 add("19 rue Pagès");
@@ -77,6 +79,7 @@ public class DateTimePatternRecognizerTest {
                 put("d/M/yyyy", 3L);
                 put("dd/MM/yyyy", 2L);
                 put("M/d/yyyy", 2L);
+                put("", 2L);
                 put("aaa", 1L);
                 put("99 aaa Aaaaa", 1L);
                 put("M/d/yy", 1L);
@@ -95,6 +98,7 @@ public class DateTimePatternRecognizerTest {
         Map<String, Long> topK = stats.getTopK(10);
         assertEquals(EXPECTED_PATTERN_MAP.size(), topK.size());
         for (String key : topK.keySet()) {
+            System.out.println("put(\"" + key + "\", " + topK.get(key) + "L);");
             assertEquals("Unexpected pattern count on pattern <" + key + ">", EXPECTED_PATTERN_MAP.get(key), topK.get(key));
         }
 

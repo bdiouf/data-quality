@@ -29,25 +29,6 @@ public class PerformanceTest {
     }
 
     @Test
-    public void testIsDateUsingPattern() throws Exception {
-        DateTimePatternManager.isDate("12/02/99");// init DateTimeFormatters
-        Date begin = new Date();
-        LOGGER.debug("Detect date start at: " + begin);
-        // Assert total count.
-        Assert.assertEquals(10000, DATE_VALUES.size());
-        for (String value : DATE_VALUES) {
-            DateTimePatternManager.isDate(value);
-        }
-        Date end = new Date();
-        LOGGER.debug("Detect date end at: " + end);
-        long difference = end.getTime() - begin.getTime();
-
-        LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        // System.out.println("Total duration IsDate using formatters: " + difference);
-        assertTrue(difference < 7500);
-    }
-
-    @Test
     public void testIsDateUsingRegex() throws Exception {
         SystemDateTimePatternManager.isDate("12/02/99");// init DateTimeFormatters
         Date begin = new Date();
@@ -64,25 +45,6 @@ public class PerformanceTest {
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
         // System.out.println("Total duration IsDate using regexes: " + difference);
         assertTrue(difference < 450);
-    }
-
-    @Test
-    public void testGetPatternsUsingPattern() throws Exception {
-        DateTimePatternManager.isDate("12/02/99");// init DateTimeFormatters
-        Date begin = new Date();
-        LOGGER.debug("Detect date start at: " + begin);
-        // Assert total count.
-        Assert.assertEquals(10000, DATE_VALUES.size());
-        for (String value : DATE_VALUES) {
-            DateTimePatternManager.replaceByDateTimePattern(value, Collections.emptyList());
-        }
-        Date end = new Date();
-        LOGGER.debug("Detect date end at: " + end);
-        long difference = end.getTime() - begin.getTime();
-
-        LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        // System.out.println("Total duration GetPatterns with formatters: " + difference);
-        assertTrue(difference < 9000);
     }
 
     @Test
@@ -130,7 +92,7 @@ public class PerformanceTest {
                         long difference = after.getTime() - currentMilliseconds;
                         currentMilliseconds = after.getTime();
                         LOGGER.debug("Detect date end at: " + after);
-                        System.out.println("count: " + count + " difference:" + difference);
+                        System.out.println("count: " + count + " inteval: " + difference + "ms");
                     }
                 }
             }
@@ -142,7 +104,7 @@ public class PerformanceTest {
         long difference = end.getTime() - begin.getTime();
 
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        System.out.println("Total duration IsDates with regexes on " + count + " samples: " + difference);
+        System.out.println("Total duration IsDates with regexes on " + count + " samples: " + difference + "ms");
 
         assertTrue(difference < 3000);
     }
@@ -173,7 +135,7 @@ public class PerformanceTest {
                         long difference = after.getTime() - currentMilliseconds;
                         currentMilliseconds = after.getTime();
                         LOGGER.debug("Detect date end at: " + after);
-                        System.out.println("count: " + count + " difference:" + difference);
+                        System.out.println("count: " + count + " inteval: " + difference + "ms");
                     }
                 }
             }
@@ -185,7 +147,7 @@ public class PerformanceTest {
         long difference = end.getTime() - begin.getTime();
 
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        System.out.println("Total duration GetAllPatterns with regexes on " + count + " samples: " + difference);
+        System.out.println("Total duration GetAllPatterns with regexes on " + count + " samples: " + difference + "ms");
 
         assertTrue(difference < 6000);
     }

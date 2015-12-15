@@ -25,7 +25,7 @@ import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.statistics.SemanticAnalyzer;
 import org.talend.dataquality.semantic.statistics.SemanticType;
-import org.talend.dataquality.statistics.type.DataType;
+import org.talend.dataquality.statistics.type.DataTypeOccurences;
 import org.talend.dataquality.statistics.type.DataTypeAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.datascience.common.inference.Analyzer;
@@ -61,28 +61,28 @@ public class CompositeAnalyzerTest extends SemanticStatisticsTestBase {
         assertEquals(18, result.size());
         // Composite result assertions (there should be a DataType and a SemanticType)
         for (Analyzers.Result columnResult : result) {
-            assertNotNull(columnResult.get(DataType.class));
+            assertNotNull(columnResult.get(DataTypeOccurences.class));
             assertNotNull(columnResult.get(SemanticType.class));
         }
         // Data type assertions
-        assertEquals(DataTypeEnum.INTEGER, result.get(0).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(1).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(2).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(3).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(4).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.INTEGER, result.get(5).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(6).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.INTEGER, result.get(7).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.INTEGER, result.get(8).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.DATE, result.get(9).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.DATE, result.get(10).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(11).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.DOUBLE, result.get(12).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.INTEGER, result.get(13).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(14).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(15).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(16).get(DataType.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(17).get(DataType.class).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(0).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(1).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(2).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(3).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(4).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(5).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(6).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(7).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(8).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.DATE, result.get(9).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.DATE, result.get(10).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(11).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.DOUBLE, result.get(12).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.INTEGER, result.get(13).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(14).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(15).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(16).get(DataTypeOccurences.class).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, result.get(17).get(DataTypeOccurences.class).getSuggestedType());
         // Semantic types assertions
         String[] expectedCategories = new String[] { "", //
                 "", //
