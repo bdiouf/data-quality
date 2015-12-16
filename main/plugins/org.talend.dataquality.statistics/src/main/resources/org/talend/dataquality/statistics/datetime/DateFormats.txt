@@ -136,8 +136,6 @@ pt	dd-MM-yyyy H:mm
 ro	dd.MM.yyyy HH:mm
 ru	dd.MM.yy H:mm
 ru	dd.MM.yyyy H:mm:ss
-sl	d.M.y
-sl	d.M.y H:mm
 sq	yy-MM-dd h.mm.a
 sq	yyyy-MM-dd h:mm:ss.a
 sq	yyyy-MM-dd h.mm.ss.a z

@@ -1,0 +1,171 @@
+--------Group 1: [-?dM2y2]---------
+yy-MM-dd
+dd-MM-yy
+yy-M-d
+d-M-yy
+--------Group 2: [.?dM2y2]---------
+yy.d.M
+yy. M. d
+d.M.yy.
+yy.M.d
+dd.MM.yy
+d.M.yy
+d.MM.yy
+--------Group 3: [/?dM2y2]---------
+yy/MM/dd
+d/MM/yy
+dd/MM/yy
+M/d/yy
+--------Group 4: [-:dM2y2Hm]---------
+yy-MM-dd HH:mm
+yy-M-d ah:mm
+dd-MM-yy HH:mm
+d-M-yy H:mm
+--------Group 5: [..dM2y2Hm]---------
+d.M.yy H.mm
+yy.M.d HH.mm
+d.M.yy. HH.mm
+--------Group 6: [.:dM2y2Hm]---------
+d.MM.yy H:mm
+dd.MM.yy H:mm
+yy.d.M HH:mm
+dd.MM.yy HH:mm
+d.M.yy HH:mm
+d.M.yy H:mm
+--------Group 7: [/:dM2y2Hm]---------
+d/MM/yy H:mm
+dd/MM/yy h:mm a
+dd/MM/yy HH:mm
+yy/MM/dd HH:mm
+M/d/yy h:mm a
+yy/MM/dd H:mm
+HH:mm dd/MM/yy
+--------Group 8: [-?dM2y4]---------
+dd-MM-yyyy
+yyyy-MM-dd
+yyyy-MM-ddZZZZZ
+yyyy-M-d
+--------Group 9: [.?dM2y4]---------
+yyyy.d.M
+dd.MM.yyyy
+d.MM.yyyy
+yyyy. M. d
+yyyy.MM.dd.
+yyyy.MM.dd
+d.M.yyyy
+dd.MM.yyyy.
+--------Group 10: [/?dM2y4]---------
+yyyy/MM/dd
+d/M/yyyy
+M/d/yyyy
+dd/MM/yyyy
+--------Group 11: [??dM2y4]---------
+yyyyMMdd
+yyyy'年'M'月'd'日'
+yyyyMMddZ
+yyyy'年'M'月'd'日' EEEE
+--------Group 12: [.:dM2y4Hm]---------
+d.M.yyyy H:mm
+d.M.yyyy HH:mm:
+yyyy.MM.dd HH:mm
+dd.MM.yyyy HH:mm
+d.M.yyyy HH:mm
+yyyy.MM.dd. H:mm
+--------Group 13: [/:dM2y4Hm]---------
+M/d/yyyy H:mm
+HH:mm dd/MM/yyyy
+dd/MM/yyyy HH:mm
+--------Group 14: [-:dM2y4Hms]---------
+yyyy-MM-dd'T'HH:mm:ssZZZZZ'['VV']'
+yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ'['VV']'
+yyyy-M-d H:mm:ss
+HH:mm:ss dd-MM-yyyy
+yyyy-MM-dd'T'HH:mm:ssZZZZZ
+yyyy-MM-dd'T'HH:mm:ss.SSS
+yyyy-MM-dd HH:mm:ss
+dd-MM-yyyy HH:mm:ss
+yyyy-MM-dd'T'HH:mm:ss.SSS'['VV']'
+yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ
+yyyy-MM-dd h:mm:ss.a
+yyyy-MM-dd'T'HH:mm:ss
+yyyy-M-d H:mm:ss.S
+--------Group 15: [..dM2y4Hms]---------
+dd.MM.yyyy. HH.mm.ss z
+d.M.yyyy H.mm.ss
+dd.MM.yyyy. HH.mm.ss
+--------Group 16: [.:dM2y4Hms]---------
+d.MM.yyyy H:mm:ss
+dd.MM.yyyy H:mm:ss
+yyyy.MM.dd. H:mm:ss
+yyyy.d.M HH:mm:ss
+d.M.yyyy H:mm:ss
+dd.MM.yyyy HH:mm:ss
+d.M.yyyy HH:mm:ss
+yyyy.MM.dd HH:mm:ss
+--------Group 17: [/:dM2y4Hms]---------
+HH:mm:ss dd/MM/yyyy
+dd/MM/yyyy HH:mm:ss
+yyyy/MM/dd H:mm:ss
+yyyy/MM/dd H:mm:ss z
+--------Group 18: [??dM2y4Hms]---------
+yyyy'年'M'月'd'日' H'時'mm'分'ss'秒' z
+yyyy'年'M'月'd'日' ahh'时'mm'分'ss'秒'
+yyyy'年'M'月'd'日' EEEE ahh'时'mm'分'ss'秒' z
+--------Group 19: [ ?dM4y4]---------
+d MMMM yyyy
+EEEE, d MMMM yyyy
+d MMM yyyy
+MMMM d yyyy
+MMMM d, yyyy
+MMM d, yyyy
+MMMM d, yyyy
+EEEE, MMMM d, yyyy
+MMM d yyyy
+EEEE, d. MMMM yyyy
+d. MMMM yyyy
+d MMMM yyyy
+d MMMM yyyy
+EEEE d MMMM yyyy
+dd MMMM yyyy
+EEEE d MMMM yyyy
+EEEE, MMMM d, yyyy
+EEEE d MMMM yyyy
+--------Group 20: [-?dM4y4]---------
+d-MMM-yyyy
+d-MMM-yyyy
+dd-MMM-yyyy
+--------Group 21: [ :dM4y4Hms]---------
+d MMMM yyyy HH:mm:ss z
+d MMMM yyyy HH:mm:ss z
+MMMM d, yyyy h:mm:ss z a
+EEEE, MMMM d, yyyy h:mm:ss a z
+EEEE, d MMMM yyyy HH:mm:ss 'o''clock' z
+EEEE, MMMM d, yyyy h:mm:ss 'o''clock' a z
+d MMM yyyy HH:mm:ss Z
+dd MMMM yyyy HH:mm:ss z
+d MMM yyyy HH:mm:ss
+MMM d, yyyy h:mm:ss a
+EEE, d MMM yyyy HH:mm:ss Z
+d. MMMM yyyy HH:mm:ss z
+MMMM d, yyyy h:mm:ss a z
+--------Group 22: [OTHERS]---------
+yy-MM-dd h.mm.a
+dd/MM/yy H.mm
+dd-MM-yyyy H:mm
+yyyy-MM-dd HH:mm
+yyyy-MM-dd HH.mm.ss
+yyyy-MM-dd h.mm.ss.a z
+dd-MMM-yy hh.mm.ss.nnnnnnnnn a
+MMM.dd.yyyy
+EEEE, d. MMMM yyyy HH:mm' Uhr 'z
+EEEE d MMMM yyyy H' h 'mm z
+EEEE d MMMM yyyy HH' h 'mm z
+EEEE d MMMM yyyy H.mm.ss z
+d MMMM yyyy H.mm.ss z
+d-MMM-yyyy H.mm.ss
+dd-MMM-yyyy HH:mm:ss
+d-MMM-yyyy h:mm:ss a
+d/MMM/yyyy H:mm:ss Z
+yyyy-DZZZZZ
+yyyy-'W'w-WZZZZZ

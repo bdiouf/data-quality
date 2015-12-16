@@ -43,7 +43,7 @@ public class PerformanceTest {
         long difference = end.getTime() - begin.getTime();
 
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        // System.out.println("Total duration IsDate using regexes: " + difference);
+        System.out.println("Total duration IsDate using regexes: " + difference);
         assertTrue(difference < 450);
     }
 
@@ -62,7 +62,7 @@ public class PerformanceTest {
         long difference = end.getTime() - begin.getTime();
 
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        // System.out.println("Total duration GetPatterns with regexes: " + difference);
+        System.out.println("Total duration GetPatterns with regexes: " + difference);
         assertTrue(difference < 900);
     }
 

@@ -137,8 +137,6 @@ Mon, 11 Mar 2222 05:06:07 +0100	EEE, d MMM yyyy HH:mm:ss Z	en_US	RFC1123_WITH_DA
 11.03.2222 05:06	dd.MM.yyyy HH:mm	ro	SHORT	true
 11.03.22 5:06	dd.MM.yy H:mm	ru	SHORT	true
 11.03.2222 5:06:07	dd.MM.yyyy H:mm:ss	ru	MEDIUM	true
-11.3.2222	d.M.y	sl	SHORT	false
-11.3.2222 5:06	d.M.y H:mm	sl	SHORT	true
 22-03-11 5.06.PD	yy-MM-dd h.mm.a	sq	SHORT	true
 2222-03-11 5:06:07.PD	yyyy-MM-dd h:mm:ss.a	sq	MEDIUM	true
 2222-03-11 5.06.07.PD CET	yyyy-MM-dd h.mm.ss.a z	sq	LONG	true

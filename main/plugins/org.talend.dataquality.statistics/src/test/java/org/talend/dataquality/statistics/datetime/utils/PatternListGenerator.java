@@ -7,8 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -27,16 +25,16 @@ public class PatternListGenerator {
 
     private static final boolean PRINT_DETAILED_RESULTS = false;
 
-    private static final boolean PRINT_SAMPLE_TABLE = false;
+    private static final boolean PRINT_SAMPLE_TABLE = true;
 
-    private static final boolean PRINT_PATTERN_LIST = true;
+    private static final boolean PRINT_PATTERN_LIST = false;
 
     private static final boolean PRINT_REGEX_LIST = false;
 
     private static List<LocaledPattern> OTHER_COMMON_PATTERNS = new ArrayList<LocaledPattern>() {
 
         private static final long serialVersionUID = 1L;
-
+        // NOTE: do not use patterns containing only one "y" for year part.
         {
             add(new LocaledPattern("dd/MM/yyyy", Locale.US, "OTHER", false));// 06/08/2009
             add(new LocaledPattern("M/d/yyyy", Locale.US, "OTHER", false));// 6/18/2009
@@ -93,6 +91,10 @@ public class PatternListGenerator {
             // ignore patterns with long month for additional languages
             if (!keepLongMonth
                     && (pattern.contains("MMMM") || pattern.contains("MMM") || pattern.contains(" a") || pattern.contains("'"))) {
+                continue;
+            }
+
+            if (!pattern.contains("yy") && pattern.contains("y")) {// only one "y" to represent year part
                 continue;
             }
 
@@ -218,27 +220,6 @@ public class PatternListGenerator {
 
     }
 
-    // TODO Sort not only by length but also by other conditions: DecimalStyle, hasZone? etc.
-    private static void sortDatePattern(List<String> list) {
-        Collections.sort(list, new Comparator<String>() {
-
-            @Override
-            public int compare(String s1, String s2) {
-
-                Integer s1Length = s1.length();
-                Integer s2length = s2.length();
-                int lComp = s1Length.compareTo(s2length);
-
-                if (lComp != 0) {
-                    return lComp;
-                } else {
-                    int sComp = ("_" + s1).compareTo("_" + s2);
-                    return sComp;
-                }
-            }
-        });
-    }
-
     private static String getFormattedDateTime(String pattern, Locale locale) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern, locale);
         try {
@@ -334,6 +315,8 @@ class LocaledPattern {
 
     boolean withTime;
 
+    int groupId = 0;
+
     public LocaledPattern(String pattern, Locale locale, String formatStyle, boolean withTime) {
         this.pattern = pattern;
         this.locale = locale;
@@ -357,8 +340,12 @@ class LocaledPattern {
         return withTime;
     }
 
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
     public String toString() {
-        return locale + "\t" + pattern;
+        return locale + "\t" + pattern + (groupId == 0 ? "" : "\t" + groupId);
 
     }
 
