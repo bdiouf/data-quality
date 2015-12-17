@@ -1,5 +1,7 @@
-V1.4.0 (in development)
+V1.4.0 2015-12-17
     - refactor date time pattern analyzers
+    - use generated pattern format list with regexes instead of the previous one
+    - add some additional common patterns
 
 V1.3.4 2015-12-10
     - bugfix for invalid custom date patterns

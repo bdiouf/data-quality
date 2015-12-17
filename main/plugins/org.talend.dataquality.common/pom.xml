@@ -8,7 +8,7 @@
         <relativePath>../../libraries/pom.xml</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.common</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4.0</version>
     <packaging>bundle</packaging>
     <url>www.talend.com</url>
     <description>Data Quality Common Library is the low level library containing interfaces and common utility classes.</description>
@@ -20,7 +20,7 @@
            This is used to generate README.md file
         -->
         <commons.componentid>org.talend.dataquality.common</commons.componentid>
-        <commons.release.version>1.3.4</commons.release.version>
+        <commons.release.version>1.4.0</commons.release.version>
     </properties>
 
 
