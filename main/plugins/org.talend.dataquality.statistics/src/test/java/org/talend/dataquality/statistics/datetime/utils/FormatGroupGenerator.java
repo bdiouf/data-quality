@@ -12,35 +12,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
-import org.talend.dataquality.statistics.datetime.SystemDateTimePatternManager;
+import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.statistics.type.TypeInferenceUtils;
 
 public class FormatGroupGenerator {
 
-    private static final String DATE_SEPARATORS = " .-/";
-
-    private static final String TIME_SEPARATORS = ".:";
-
-    private static void sortDatePattern(List<String> list) {
-        Collections.sort(list, new Comparator<String>() {
-
-            @Override
-            public int compare(String s1, String s2) {
-
-                Integer s1Length = s1.length();
-                Integer s2length = s2.length();
-                int lComp = s1Length.compareTo(s2length);
-
-                if (lComp != 0) {
-                    return lComp;
-                } else {
-                    int sComp = ("_" + s1).compareTo("_" + s2);
-                    return sComp;
-                }
-            }
-        });
-    }
-
-    private static DateTimeFormatCode calculateFormatCode(String format) {
+    private static DateTimeFormatCode calculateFormatCode(String format, String regex) {
 
         String dateSeparator = "?", timeSeparator = "?";
         StringBuilder code = new StringBuilder();
@@ -115,26 +92,30 @@ public class FormatGroupGenerator {
         if (timeSeparator.equals(String.valueOf('\''))) {
             timeSeparator = "?";
         }
-        return new DateTimeFormatCode(format, code.toString(), dateSeparator, timeSeparator);
+        if (format.contains("EEEE")) {
+            code.append("E");
+        }
+        return new DateTimeFormatCode(format, regex, code.toString(), dateSeparator, timeSeparator);
     }
 
     public static void main(String[] args) throws IOException {
 
-        InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateFormats.txt");
+        InputStream stream = TypeInferenceUtils.class.getResourceAsStream("DateRegexes.txt");
         List<String> lines = IOUtils.readLines(stream);
-        List<String> formats = new ArrayList<String>();
+        Map<String, String> formatRegexMap = new LinkedHashMap<String, String>();
         for (String line : lines) {
             if (!"".equals(line.trim())) {
-                String[] localePatternText = line.trim().split("\t");
-                formats.add(localePatternText[1]);
+                String[] lineArray = line.trim().split("=");
+                String format = StringUtils.removeEnd(StringUtils.removeStart(lineArray[0], "\""), "\"");
+                String regex = StringUtils.removeEnd(StringUtils.removeStart(lineArray[1], "\""), "\"");
+                formatRegexMap.put(format, regex);
             }
         }
-        sortDatePattern(formats);
         List<DateTimeFormatCode> formatCodes = new ArrayList<DateTimeFormatCode>();
-        for (String format : formats) {
-            formatCodes.add(calculateFormatCode(format));
+        for (String format : formatRegexMap.keySet()) {
+            formatCodes.add(calculateFormatCode(format, formatRegexMap.get(format)));
         }
-        sortDateTimeFormatCode(formatCodes);
+        // sortDateTimeFormatCode(formatCodes);
 
         Map<String, Set<DateTimeFormatCode>> formatGroupMap = new LinkedHashMap<String, Set<DateTimeFormatCode>>();
 
@@ -149,12 +130,10 @@ public class FormatGroupGenerator {
         }
 
         int groupNo = 0;
-        int smallGroupPatternCount = 0;
         List<DateTimeFormatCode> patternsFromSmallGroups = new ArrayList<DateTimeFormatCode>();
         for (String key : formatGroupMap.keySet()) {
             Set<DateTimeFormatCode> formatCodeSet = formatGroupMap.get(key);
-            if (formatCodeSet.size() < 3) {
-                smallGroupPatternCount += formatCodeSet.size();
+            if (formatCodeSet.size() < 1) {
                 patternsFromSmallGroups.addAll(formatCodeSet);
             } else {
                 System.out.println("--------Group " + (++groupNo) + ": [" + key + "]---------");
@@ -163,10 +142,12 @@ public class FormatGroupGenerator {
                 }
             }
         }
-        System.out.println("--------Group " + (++groupNo) + ": [OTHERS]---------");
+        if (patternsFromSmallGroups.size() > 0) {
+            System.out.println("--------Group " + (++groupNo) + ": [OTHERS]---------");
 
-        for (DateTimeFormatCode fc : patternsFromSmallGroups) {
-            System.out.println(fc);
+            for (DateTimeFormatCode fc : patternsFromSmallGroups) {
+                System.out.println(fc);
+            }
         }
     }
 
@@ -201,21 +182,23 @@ class DateTimeFormatCode {
 
     String format;
 
+    String regex;
+
     String code;
 
     String dateSeparator;
 
     String timeSeparator;
 
-    public DateTimeFormatCode(String format, String code, String dateSeparator, String timeSeparator) {
+    public DateTimeFormatCode(String format, String regex, String code, String dateSeparator, String timeSeparator) {
         this.format = format;
+        this.regex = regex;
         this.code = code;
         this.dateSeparator = dateSeparator;
         this.timeSeparator = timeSeparator;
     }
 
     public String toString() {
-        return format;
-
+        return format + "\t" + regex;
     }
 }
