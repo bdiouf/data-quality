@@ -1,5 +1,7 @@
-V1.4.0 (In development)
-    - TDQ-11229 improve date pattern handling
+V1.4.0 2015-12-17
+	- refactor date time pattern analyzers
+	- use generated pattern format list with regexes instead of the previous one
+	- add some additional common patterns
 
 V1.3.4 2015-12-10
     - update to org.talend.dataquality.common 1.3.4

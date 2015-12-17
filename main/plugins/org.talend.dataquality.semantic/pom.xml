@@ -4,26 +4,28 @@
     <parent>
         <groupId>org.talend.dataquality</groupId>
         <artifactId>tdq-ee-libs</artifactId>
-        <version>7</version>
+        <version>8</version>
         <relativePath>../../libraries/pom.xml</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.semantic</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4.0</version>
     <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.talend.dataquality</groupId>
             <artifactId>org.talend.dataquality.common</artifactId>
-            <version>1.4-SNAPSHOT</version>
+            <version>1.4.0</version>
         </dependency>
         <dependency>
             <groupId>org.talend.dataquality</groupId>
             <artifactId>org.talend.dataquality.sampling</artifactId>
-        </dependency>        
+            <version>2.1.4</version>
+        </dependency>
         <dependency>
             <groupId>org.talend.dataquality</groupId>
             <artifactId>org.talend.dataquality.standardization</artifactId>
+            <version>3.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.elasticsearch</groupId>
