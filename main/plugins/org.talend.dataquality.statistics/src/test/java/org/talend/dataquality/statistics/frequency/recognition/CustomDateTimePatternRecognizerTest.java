@@ -65,8 +65,8 @@ public class CustomDateTimePatternRecognizerTest {
                 add("=14/5/18="); // [custom: =d/M/yy=]
                 add("4/15/18"); // [M/d/yy]
                 add("4/5/2014"); // [d/M/yyyy], [M/d/yyyy]
-                add("02/03/2014"); // [d/M/yyyy], [dd/MM/yyyy], [M/d/yyyy]
-                add("22/03/2014"); // [d/M/yyyy], [dd/MM/yyyy]
+                add("02/03/2014"); // [dd/MM/yyyy], [MM/dd/yyyy]
+                add("22/03/2014"); // [dd/MM/yyyy]
             }
         };
 
@@ -76,15 +76,15 @@ public class CustomDateTimePatternRecognizerTest {
 
             {
                 put("yyyy-M-d", 4L);
-                put("d/M/yyyy", 3L);
-                put("dd/MM/yyyy", 2L);
-                put("M/d/yyyy", 2L);
                 put("", 2L);
+                put("dd/MM/yyyy", 2L);
                 put("aaa", 1L);
                 put("99 aaa Aaaaa", 1L);
+                put("d/M/yyyy", 1L);
                 put("M/d/yy", 1L);
+                put("MM/dd/yyyy", 1L);
                 put("=d/M/yy=", 1L);
-                put("CCCC", 1L);
+                put("M/d/yyyy", 1L);
 
             }
         };
@@ -98,7 +98,7 @@ public class CustomDateTimePatternRecognizerTest {
         Map<String, Long> topK = stats.getTopK(10);
         assertEquals(EXPECTED_PATTERN_MAP.size(), topK.size());
         for (String key : topK.keySet()) {
-            System.out.println("put(\"" + key + "\", " + topK.get(key) + "L);");
+            // System.out.println("put(\"" + key + "\", " + topK.get(key) + "L);");
             assertEquals("Unexpected pattern count on pattern <" + key + ">", EXPECTED_PATTERN_MAP.get(key), topK.get(key));
         }
 

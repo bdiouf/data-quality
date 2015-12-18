@@ -14,9 +14,9 @@ import java.util.Set;
 
 public class PatternListGenerator {
 
-    static List<LocaledPattern> knownLocaledPatternList = new ArrayList<LocaledPattern>();
+    private static List<LocaledPattern> knownLocaledPatternList = new ArrayList<LocaledPattern>();
 
-    static List<String> knownPatternList = new ArrayList<String>();
+    private static List<String> knownPatternList = new ArrayList<String>();
 
     private final static ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.of(2222, 3, 11, 5, 6, 7, 888, ZoneId.of("Europe/Paris"));
 
@@ -25,24 +25,27 @@ public class PatternListGenerator {
 
     private static final boolean PRINT_DETAILED_RESULTS = false;
 
-    private static final boolean PRINT_SAMPLE_TABLE = false;
+    private static final boolean PRINT_SAMPLE_TABLE = true;
 
     private static final boolean PRINT_PATTERN_LIST = false;
 
-    private static final boolean PRINT_REGEX_LIST = true;
+    private static final boolean PRINT_REGEX_LIST = false;
+
+    private static boolean GENERATE_DATE = true; // if false, generate TIME only
 
     private static List<LocaledPattern> OTHER_COMMON_PATTERNS = new ArrayList<LocaledPattern>() {
 
         private static final long serialVersionUID = 1L;
         // NOTE: do not use patterns containing only one "y" for year part.
         {
-            add(new LocaledPattern("dd/MM/yyyy", Locale.US, "OTHER", false));// 06/08/2009
+            add(new LocaledPattern("dd/MM/yyyy", Locale.US, "OTHER", false));// 16/08/2009
+            add(new LocaledPattern("MM/dd/yyyy", Locale.US, "OTHER", false));// 06/18/2009
             add(new LocaledPattern("M/d/yyyy", Locale.US, "OTHER", false));// 6/18/2009
             add(new LocaledPattern("M/d/yyyy H:mm", Locale.US, "OTHER", false));// 6/18/2009 21:30
             add(new LocaledPattern("MMM d yyyy", Locale.US, "OTHER", false));// Jan 18 2012
             add(new LocaledPattern("MMM.dd.yyyy", Locale.US, "OTHER", false));// Jan.02.2010
             add(new LocaledPattern("MMMM d yyyy", Locale.US, "OTHER", false));// January 18 2012
-            add(new LocaledPattern("yyyy-M-d H:mm:ss.S", Locale.US, "OTHER", true));// 2013-2-14 13:40:51.1
+            add(new LocaledPattern("yyyy-MM-dd HH:mm:ss.S", Locale.US, "OTHER", true));// 2013-2-14 13:40:51.1
             add(new LocaledPattern("d/MMM/yyyy H:mm:ss Z", Locale.US, "OTHER", true));// 14/Feb/2013 13:40:51 +0100
             add(new LocaledPattern("dd-MMM-yy hh.mm.ss.nnnnnnnnn a",//
                     Locale.UK, "OTHER", true));// 18-Nov-86 01.00.00.000000000 AM
@@ -65,30 +68,33 @@ public class PatternListGenerator {
         // Set<String> dateTimePatternsList = new LinkedHashSet<String>();
         List<LocaledPattern> dateTimePatterns = new ArrayList<LocaledPattern>();
 
-        for (FormatStyle style : FORMAT_STYLES) {
-            if (PRINT_DETAILED_RESULTS) {
-                System.out.println("--------------------Style: " + style + "-----------------------");
+        if (GENERATE_DATE) {
+            for (FormatStyle style : FORMAT_STYLES) {
+                if (PRINT_DETAILED_RESULTS) {
+                    System.out.println("--------------------Style: " + style + "-----------------------");
+                }
+                for (Locale locale : localeArray) {
+                    getDateFormatsOfLocale(style, locale, true);
+                }
             }
-            for (Locale locale : localeArray) {
-                getDateFormatsOfLocale(style, locale, true);
+            for (FormatStyle style : FORMAT_STYLES) {
+                if (PRINT_DETAILED_RESULTS) {
+                    System.out.println("--------------------Style: " + style + "-----------------------");
+                }
+                for (Locale locale : localeArray) {
+                    getDateTimeFormatsOfLocale(style, locale, true);
+                }
+            }
+        } else {
+            for (FormatStyle style : FORMAT_STYLES) {
+                if (PRINT_DETAILED_RESULTS) {
+                    System.out.println("--------------------Style: " + style + "-----------------------");
+                }
+                for (Locale locale : localeArray) {
+                    getTimeFormatsOfLocale(style, locale, true);
+                }
             }
         }
-        for (FormatStyle style : FORMAT_STYLES) {
-            if (PRINT_DETAILED_RESULTS) {
-                System.out.println("--------------------Style: " + style + "-----------------------");
-            }
-            for (Locale locale : localeArray) {
-                getDateTimeFormatsOfLocale(style, locale, true);
-            }
-        }
-        // for (FormatStyle style : FORMAT_STYLES) {
-        // if (PRINT_DETAILED_RESULTS) {
-        // System.out.println("--------------------Style: " + style + "-----------------------");
-        // }
-        // for (Locale locale : localeArray) {
-        // getTimeFormatsOfLocale(style, locale, true);
-        // }
-        // }
         dateTimePatterns.removeAll(knownPatternList);
         // return new ArrayList<String>(dateTimePatterns);
         return dateTimePatterns;
@@ -279,42 +285,42 @@ public class PatternListGenerator {
         currentLocaledPatternSize = knownLocaledPatternList.size();
 
         // 2. Other common DateTime patterns
-        for (LocaledPattern lp : OTHER_COMMON_PATTERNS) {
-            if (!knownPatternList.contains(lp.pattern)) {
-                knownLocaledPatternList.add(lp);
-                knownPatternList.add(lp.getPattern());
-                if (PRINT_DETAILED_RESULTS) {
-                    System.out.println(lp);
+        if (GENERATE_DATE) {
+            for (LocaledPattern lp : OTHER_COMMON_PATTERNS) {
+                if (!knownPatternList.contains(lp.pattern)) {
+                    knownLocaledPatternList.add(lp);
+                    knownPatternList.add(lp.getPattern());
+                    if (PRINT_DETAILED_RESULTS) {
+                        System.out.println(lp);
+                    }
                 }
             }
-        }
 
-        // 3. ISO and RFC DateTimePatterns
-        processISOAndRFCDateTimePatternList();
-        // knownPatternList.addAll(isoPatternList);
-        int isoPatternCount = knownLocaledPatternList.size() - currentLocaledPatternSize;
-        if (PRINT_DETAILED_RESULTS) {
-            System.out.println("#DateTimePattern(ISO&RFC) = " + isoPatternCount + "\n");
-        }
-        currentLocaledPatternSize = knownLocaledPatternList.size();
+            // 3. ISO and RFC DateTimePatterns
+            processISOAndRFCDateTimePatternList();
+            // knownPatternList.addAll(isoPatternList);
+            int isoPatternCount = knownLocaledPatternList.size() - currentLocaledPatternSize;
+            if (PRINT_DETAILED_RESULTS) {
+                System.out.println("#DateTimePattern(ISO&RFC) = " + isoPatternCount + "\n");
+            }
+            currentLocaledPatternSize = knownLocaledPatternList.size();
 
-        // 4. Additional Localized DateTimePatterns (java8 DateTimeFormatterBuilder)
-        processAdditionalDateTimePatternsByLocales();
-        // knownPatternList.addAll(additionalPatternList);
-        int additionalPatternCount = knownLocaledPatternList.size() - currentLocaledPatternSize;
-        if (PRINT_DETAILED_RESULTS) {
-            System.out.println("#additionalPatternList = " + additionalPatternCount + "\n");
-        }
-        currentLocaledPatternSize = knownLocaledPatternList.size();
+            // 4. Additional Localized DateTimePatterns (java8 DateTimeFormatterBuilder)
+            processAdditionalDateTimePatternsByLocales();
+            // knownPatternList.addAll(additionalPatternList);
+            int additionalPatternCount = knownLocaledPatternList.size() - currentLocaledPatternSize;
+            if (PRINT_DETAILED_RESULTS) {
+                System.out.println("#additionalPatternList = " + additionalPatternCount + "\n");
+            }
+            currentLocaledPatternSize = knownLocaledPatternList.size();
 
-        // 5. add legacy DateTimePatterns
-        // getNonExistentPatternsInLegacyFile(knownPatternList);
+            if (PRINT_DETAILED_RESULTS) {
+                System.out.println("#Total = " + knownLocaledPatternList.size() + //
+                        " (#basePatterns = " + basePatternCount + //
+                        ", #isoPatterns = " + isoPatternCount + //
+                        ", #additionalPatterns = " + additionalPatternCount + ")\n");//
+            }
 
-        if (PRINT_DETAILED_RESULTS) {
-            System.out.println("#Total = " + knownLocaledPatternList.size() + //
-                    " (#basePatterns = " + basePatternCount + //
-                    ", #isoPatterns = " + isoPatternCount + //
-                    ", #additionalPatterns = " + additionalPatternCount + ")\n");//
         }
 
         if (PRINT_SAMPLE_TABLE) {// table header

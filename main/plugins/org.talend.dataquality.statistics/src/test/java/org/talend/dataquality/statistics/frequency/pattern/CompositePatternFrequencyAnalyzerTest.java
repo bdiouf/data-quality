@@ -53,7 +53,7 @@ public class CompositePatternFrequencyAnalyzerTest {
         Assert.assertEquals(Collections.singleton("aaaa9999ィゥェ中国"), patternString1);
 
         Set<String> patternString4 = analzyer.getValuePatternSet("2008-01-01");
-        Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[] { "yyyy-M-d", "yyyy-MM-dd" })), patternString4);
+        Assert.assertEquals(new HashSet<String>(Arrays.asList(new String[] { "yyyy-MM-dd" })), patternString4);
 
         Set<String> patternString5 = analzyer.getValuePatternSet("2008-1月-01");
         Assert.assertEquals(Collections.singleton("9999-9月-99"), patternString5);

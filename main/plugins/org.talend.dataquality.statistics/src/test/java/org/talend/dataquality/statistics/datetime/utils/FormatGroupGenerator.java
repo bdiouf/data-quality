@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
-import org.talend.dataquality.statistics.type.TypeInferenceUtils;
+import org.talend.dataquality.statistics.datetime.SystemDateTimePatternManager;
 
 public class FormatGroupGenerator {
 
@@ -96,7 +96,7 @@ public class FormatGroupGenerator {
 
     public static void main(String[] args) throws IOException {
 
-        InputStream stream = TypeInferenceUtils.class.getResourceAsStream("DateRegexes.txt");
+        InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateRegexes.txt");
         List<String> lines = IOUtils.readLines(stream);
         Map<String, String> formatRegexMap = new LinkedHashMap<String, String>();
         for (String line : lines) {

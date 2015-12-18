@@ -65,12 +65,13 @@ fr_CA	EEEE d MMMM yyyy H' h 'mm z
 ja_JP	yyyy'年'M'月'd'日' H'時'mm'分'ss'秒' z
 zh_CN	yyyy'年'M'月'd'日' EEEE ahh'时'mm'分'ss'秒' z
 en_US	dd/MM/yyyy
+en_US	MM/dd/yyyy
 en_US	M/d/yyyy
 en_US	M/d/yyyy H:mm
 en_US	MMM d yyyy
 en_US	MMM.dd.yyyy
 en_US	MMMM d yyyy
-en_US	yyyy-M-d H:mm:ss.S
+en_US	yyyy-MM-dd HH:mm:ss.S
 en_US	d/MMM/yyyy H:mm:ss Z
 en_GB	dd-MMM-yy hh.mm.ss.nnnnnnnnn a
 en_US	yyyyMMddZ
