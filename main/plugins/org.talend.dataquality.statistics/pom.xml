@@ -8,7 +8,7 @@
 		<relativePath>../../libraries/pom.xml</relativePath>
 	</parent>
 	<artifactId>org.talend.dataquality.statistics</artifactId>
-	<version>1.4.0</version>
+	<version>1.4.1</version>
 	<packaging>bundle</packaging>
 	<url>www.talend.com</url>
 

@@ -1,69 +1,69 @@
 Sample	Pattern	Locale	FormatStyle	IsWithTime
 3/11/22	M/d/yy	en_US	SHORT	false
-Mar 11, 2222	MMM d, yyyy	en_US	MEDIUM	false
-March 11, 2222	MMMM d, yyyy	en_US	LONG	false
-Monday, March 11, 2222	EEEE, MMMM d, yyyy	en_US	FULL	false
-3/11/22 5:06 AM	M/d/yy h:mm a	en_US	SHORT	true
-Mar 11, 2222 5:06:07 AM	MMM d, yyyy h:mm:ss a	en_US	MEDIUM	true
-March 11, 2222 5:06:07 AM CET	MMMM d, yyyy h:mm:ss a z	en_US	LONG	true
-Monday, March 11, 2222 5:06:07 AM CET	EEEE, MMMM d, yyyy h:mm:ss a z	en_US	FULL	true
 11/03/22	dd/MM/yy	fr_FR	SHORT	false
-11 mars 2222	d MMM yyyy	fr_FR	MEDIUM	false
-11 mars 2222	d MMMM yyyy	fr_FR	LONG	false
-lundi 11 mars 2222	EEEE d MMMM yyyy	fr_FR	FULL	false
-11/03/22 05:06	dd/MM/yy HH:mm	fr_FR	SHORT	true
-11 mars 2222 05:06:07	d MMM yyyy HH:mm:ss	fr_FR	MEDIUM	true
-11 mars 2222 05:06:07 CET	d MMMM yyyy HH:mm:ss z	fr_FR	LONG	true
-lundi 11 mars 2222 05 h 06 CET	EEEE d MMMM yyyy HH' h 'mm z	fr_FR	FULL	true
 11.03.22	dd.MM.yy	de_DE	SHORT	false
-11.03.2222	dd.MM.yyyy	de_DE	MEDIUM	false
-11. März 2222	d. MMMM yyyy	de_DE	LONG	false
-Montag, 11. März 2222	EEEE, d. MMMM yyyy	de_DE	FULL	false
-11.03.22 05:06	dd.MM.yy HH:mm	de_DE	SHORT	true
-11.03.2222 05:06:07	dd.MM.yyyy HH:mm:ss	de_DE	MEDIUM	true
-11. März 2222 05:06:07 MEZ	d. MMMM yyyy HH:mm:ss z	de_DE	LONG	true
-Montag, 11. März 2222 05:06 Uhr MEZ	EEEE, d. MMMM yyyy HH:mm' Uhr 'z	de_DE	FULL	true
-11-Mar-2222	dd-MMM-yyyy	en_GB	MEDIUM	false
-11 March 2222	dd MMMM yyyy	en_GB	LONG	false
-Monday, 11 March 2222	EEEE, d MMMM yyyy	en_GB	FULL	false
-11-Mar-2222 05:06:07	dd-MMM-yyyy HH:mm:ss	en_GB	MEDIUM	true
-11 March 2222 05:06:07 CET	dd MMMM yyyy HH:mm:ss z	en_GB	LONG	true
-Monday, 11 March 2222 05:06:07 o'clock CET	EEEE, d MMMM yyyy HH:mm:ss 'o''clock' z	en_GB	FULL	true
-11-mar-2222	d-MMM-yyyy	it_IT	MEDIUM	false
-11 marzo 2222	d MMMM yyyy	it_IT	LONG	false
-lunedì 11 marzo 2222	EEEE d MMMM yyyy	it_IT	FULL	false
-11/03/22 5.06	dd/MM/yy H.mm	it_IT	SHORT	true
-11-mar-2222 5.06.07	d-MMM-yyyy H.mm.ss	it_IT	MEDIUM	true
-11 marzo 2222 5.06.07 CET	d MMMM yyyy H.mm.ss z	it_IT	LONG	true
-lunedì 11 marzo 2222 5.06.07 CET	EEEE d MMMM yyyy H.mm.ss z	it_IT	FULL	true
-11-Mar-2222	d-MMM-yyyy	en_CA	MEDIUM	false
-March 11, 2222	MMMM d, yyyy	en_CA	LONG	false
-Monday, March 11, 2222	EEEE, MMMM d, yyyy	en_CA	FULL	false
-11/03/22 5:06 AM	dd/MM/yy h:mm a	en_CA	SHORT	true
-11-Mar-2222 5:06:07 AM	d-MMM-yyyy h:mm:ss a	en_CA	MEDIUM	true
-March 11, 2222 5:06:07 CET AM	MMMM d, yyyy h:mm:ss z a	en_CA	LONG	true
-Monday, March 11, 2222 5:06:07 o'clock AM CET	EEEE, MMMM d, yyyy h:mm:ss 'o''clock' a z	en_CA	FULL	true
 22-03-11	yy-MM-dd	fr_CA	SHORT	false
-2222-03-11	yyyy-MM-dd	fr_CA	MEDIUM	false
-11 mars 2222	d MMMM yyyy	fr_CA	LONG	false
-lundi 11 mars 2222	EEEE d MMMM yyyy	fr_CA	FULL	false
-22-03-11 05:06	yy-MM-dd HH:mm	fr_CA	SHORT	true
-2222-03-11 05:06:07	yyyy-MM-dd HH:mm:ss	fr_CA	MEDIUM	true
-11 mars 2222 05:06:07 CET	d MMMM yyyy HH:mm:ss z	fr_CA	LONG	true
-lundi 11 mars 2222 5 h 06 CET	EEEE d MMMM yyyy H' h 'mm z	fr_CA	FULL	true
 22/03/11	yy/MM/dd	ja_JP	SHORT	false
-2222/03/11	yyyy/MM/dd	ja_JP	MEDIUM	false
-2222年3月11日	yyyy'年'M'月'd'日'	ja_JP	FULL	false
-22/03/11 5:06	yy/MM/dd H:mm	ja_JP	SHORT	true
-2222/03/11 5:06:07	yyyy/MM/dd H:mm:ss	ja_JP	MEDIUM	true
-2222/03/11 5:06:07 CET	yyyy/MM/dd H:mm:ss z	ja_JP	LONG	true
-2222年3月11日 5時06分07秒 CET	yyyy'年'M'月'd'日' H'時'mm'分'ss'秒' z	ja_JP	FULL	true
 22-3-11	yy-M-d	zh_CN	SHORT	false
+Mar 11, 2222	MMM d, yyyy	en_US	MEDIUM	false
+11 mars 2222	d MMM yyyy	fr_FR	MEDIUM	false
+11.03.2222	dd.MM.yyyy	de_DE	MEDIUM	false
+11-Mar-2222	dd-MMM-yyyy	en_GB	MEDIUM	false
+11-mar-2222	d-MMM-yyyy	it_IT	MEDIUM	false
+11-Mar-2222	d-MMM-yyyy	en_CA	MEDIUM	false
+2222-03-11	yyyy-MM-dd	fr_CA	MEDIUM	false
+2222/03/11	yyyy/MM/dd	ja_JP	MEDIUM	false
 2222-3-11	yyyy-M-d	zh_CN	MEDIUM	false
+March 11, 2222	MMMM d, yyyy	en_US	LONG	false
+11 mars 2222	d MMMM yyyy	fr_FR	LONG	false
+11. März 2222	d. MMMM yyyy	de_DE	LONG	false
+11 March 2222	dd MMMM yyyy	en_GB	LONG	false
+11 marzo 2222	d MMMM yyyy	it_IT	LONG	false
+March 11, 2222	MMMM d, yyyy	en_CA	LONG	false
+11 mars 2222	d MMMM yyyy	fr_CA	LONG	false
+2222年3月11日	yyyy'年'M'月'd'日'	zh_CN	LONG	false
+Monday, March 11, 2222	EEEE, MMMM d, yyyy	en_US	FULL	false
+lundi 11 mars 2222	EEEE d MMMM yyyy	fr_FR	FULL	false
+Montag, 11. März 2222	EEEE, d. MMMM yyyy	de_DE	FULL	false
+Monday, 11 March 2222	EEEE, d MMMM yyyy	en_GB	FULL	false
+lunedì 11 marzo 2222	EEEE d MMMM yyyy	it_IT	FULL	false
+Monday, March 11, 2222	EEEE, MMMM d, yyyy	en_CA	FULL	false
+lundi 11 mars 2222	EEEE d MMMM yyyy	fr_CA	FULL	false
 2222年3月11日 星期一	yyyy'年'M'月'd'日' EEEE	zh_CN	FULL	false
+3/11/22 5:06 AM	M/d/yy h:mm a	en_US	SHORT	true
+11/03/22 05:06	dd/MM/yy HH:mm	fr_FR	SHORT	true
+11.03.22 05:06	dd.MM.yy HH:mm	de_DE	SHORT	true
+11/03/22 5.06	dd/MM/yy H.mm	it_IT	SHORT	true
+11/03/22 5:06 AM	dd/MM/yy h:mm a	en_CA	SHORT	true
+22-03-11 05:06	yy-MM-dd HH:mm	fr_CA	SHORT	true
+22/03/11 5:06	yy/MM/dd H:mm	ja_JP	SHORT	true
 22-3-11 上午5:06	yy-M-d ah:mm	zh_CN	SHORT	true
+Mar 11, 2222 5:06:07 AM	MMM d, yyyy h:mm:ss a	en_US	MEDIUM	true
+11 mars 2222 05:06:07	d MMM yyyy HH:mm:ss	fr_FR	MEDIUM	true
+11.03.2222 05:06:07	dd.MM.yyyy HH:mm:ss	de_DE	MEDIUM	true
+11-Mar-2222 05:06:07	dd-MMM-yyyy HH:mm:ss	en_GB	MEDIUM	true
+11-mar-2222 5.06.07	d-MMM-yyyy H.mm.ss	it_IT	MEDIUM	true
+11-Mar-2222 5:06:07 AM	d-MMM-yyyy h:mm:ss a	en_CA	MEDIUM	true
+2222-03-11 05:06:07	yyyy-MM-dd HH:mm:ss	fr_CA	MEDIUM	true
+2222/03/11 5:06:07	yyyy/MM/dd H:mm:ss	ja_JP	MEDIUM	true
 2222-3-11 5:06:07	yyyy-M-d H:mm:ss	zh_CN	MEDIUM	true
+March 11, 2222 5:06:07 AM CET	MMMM d, yyyy h:mm:ss a z	en_US	LONG	true
+11 mars 2222 05:06:07 CET	d MMMM yyyy HH:mm:ss z	fr_FR	LONG	true
+11. März 2222 05:06:07 MEZ	d. MMMM yyyy HH:mm:ss z	de_DE	LONG	true
+11 March 2222 05:06:07 CET	dd MMMM yyyy HH:mm:ss z	en_GB	LONG	true
+11 marzo 2222 5.06.07 CET	d MMMM yyyy H.mm.ss z	it_IT	LONG	true
+March 11, 2222 5:06:07 CET AM	MMMM d, yyyy h:mm:ss z a	en_CA	LONG	true
+11 mars 2222 05:06:07 CET	d MMMM yyyy HH:mm:ss z	fr_CA	LONG	true
+2222/03/11 5:06:07 CET	yyyy/MM/dd H:mm:ss z	ja_JP	LONG	true
 2222年3月11日 上午05时06分07秒	yyyy'年'M'月'd'日' ahh'时'mm'分'ss'秒'	zh_CN	LONG	true
+Monday, March 11, 2222 5:06:07 AM CET	EEEE, MMMM d, yyyy h:mm:ss a z	en_US	FULL	true
+lundi 11 mars 2222 05 h 06 CET	EEEE d MMMM yyyy HH' h 'mm z	fr_FR	FULL	true
+Montag, 11. März 2222 05:06 Uhr MEZ	EEEE, d. MMMM yyyy HH:mm' Uhr 'z	de_DE	FULL	true
+Monday, 11 March 2222 05:06:07 o'clock CET	EEEE, d MMMM yyyy HH:mm:ss 'o''clock' z	en_GB	FULL	true
+lunedì 11 marzo 2222 5.06.07 CET	EEEE d MMMM yyyy H.mm.ss z	it_IT	FULL	true
+Monday, March 11, 2222 5:06:07 o'clock AM CET	EEEE, MMMM d, yyyy h:mm:ss 'o''clock' a z	en_CA	FULL	true
+lundi 11 mars 2222 5 h 06 CET	EEEE d MMMM yyyy H' h 'mm z	fr_CA	FULL	true
+2222年3月11日 5時06分07秒 CET	yyyy'年'M'月'd'日' H'時'mm'分'ss'秒' z	ja_JP	FULL	true
 2222年3月11日 星期一 上午05时06分07秒 CET	yyyy'年'M'月'd'日' EEEE ahh'时'mm'分'ss'秒' z	zh_CN	FULL	true
 11/03/2222	dd/MM/yyyy	en_US	OTHER	false
 3/11/2222	M/d/yyyy	en_US	OTHER	false
@@ -90,61 +90,61 @@ March 11 2222	MMMM d yyyy	en_US	OTHER	false
 Mon, 11 Mar 2222 05:06:07 +0100	EEE, d MMM yyyy HH:mm:ss Z	en_US	RFC1123_WITH_DAY	true
 11 Mar 2222 05:06:07 +0100	d MMM yyyy HH:mm:ss Z	en_US	RFC1123	true
 11.3.22	d.M.yy	be	SHORT	false
-11.3.2222	d.M.yyyy	be	MEDIUM	false
-11.3.22 5.06	d.M.yy H.mm	be	SHORT	true
-11.3.2222 5.06.07	d.M.yyyy H.mm.ss	be	MEDIUM	true
-11/03/2222 05:06:07	dd/MM/yyyy HH:mm:ss	ca	MEDIUM	true
-11.3.22 5:06	d.M.yy H:mm	cs	SHORT	true
-11.3.2222 5:06:07	d.M.yyyy H:mm:ss	cs	MEDIUM	true
 11-03-22	dd-MM-yy	da	SHORT	false
-11-03-2222	dd-MM-yyyy	da	MEDIUM	false
-11-03-22 05:06	dd-MM-yy HH:mm	da	SHORT	true
-11-03-2222 05:06:07	dd-MM-yyyy HH:mm:ss	da	MEDIUM	true
 11/3/2222	d/M/yyyy	el	SHORT	false
 11/03/22	d/MM/yy	es	SHORT	false
-11/03/22 5:06	d/MM/yy H:mm	es	SHORT	true
 11.03.22	d.MM.yy	et	SHORT	false
+11.3.2222	d.M.yyyy	fi	SHORT	false
+2222.03.11	yyyy.MM.dd	hr	SHORT	false
+2222.03.11.	yyyy.MM.dd.	hu	SHORT	false
+22. 3. 11	yy. M. d	ko	SHORT	false
+22.3.11	yy.M.d	lt	SHORT	false
+22.11.3	yy.d.M	lv	SHORT	false
+11-3-22	d-M-yy	nl	SHORT	false
+11-03-2222	dd-MM-yyyy	pt	SHORT	false
+11.3.22.	d.M.yy.	sr	SHORT	false
 11.03.2222	d.MM.yyyy	et	MEDIUM	false
+2222. 3. 11	yyyy. M. d	ko	MEDIUM	false
+2222.11.3	yyyy.d.M	lv	MEDIUM	false
+11.03.2222.	dd.MM.yyyy.	sr	MEDIUM	false
+11.3.22 5.06	d.M.yy H.mm	be	SHORT	true
+11.3.22 5:06	d.M.yy H:mm	cs	SHORT	true
+11-03-22 05:06	dd-MM-yy HH:mm	da	SHORT	true
+11/03/22 5:06	d/MM/yy H:mm	es	SHORT	true
 11.03.22 5:06	d.MM.yy H:mm	et	SHORT	true
-11.03.2222 5:06:07	d.MM.yyyy H:mm:ss	et	MEDIUM	true
 11.3.2222 5:06	d.M.yyyy H:mm	fi	SHORT	true
 22/03/11 05:06	yy/MM/dd HH:mm	ga	SHORT	true
 05:06 11/03/22	HH:mm dd/MM/yy	iw	SHORT	true
-05:06:07 11/03/2222	HH:mm:ss dd/MM/yyyy	iw	MEDIUM	true
-2222.03.11	yyyy.MM.dd	hr	SHORT	false
 2222.03.11 05:06	yyyy.MM.dd HH:mm	hr	SHORT	true
-2222.03.11 05:06:07	yyyy.MM.dd HH:mm:ss	hr	MEDIUM	true
-2222.03.11.	yyyy.MM.dd.	hu	SHORT	false
 2222.03.11. 5:06	yyyy.MM.dd. H:mm	hu	SHORT	true
-2222.03.11. 5:06:07	yyyy.MM.dd. H:mm:ss	hu	MEDIUM	true
 11.3.2222 05:06	d.M.yyyy HH:mm	is	SHORT	true
-11.3.2222 05:06:07	d.M.yyyy HH:mm:ss	is	MEDIUM	true
-22. 3. 11	yy. M. d	ko	SHORT	false
-2222. 3. 11	yyyy. M. d	ko	MEDIUM	false
-22.3.11	yy.M.d	lt	SHORT	false
 22.3.11 05.06	yy.M.d HH.mm	lt	SHORT	true
-2222-03-11 05.06.07	yyyy-MM-dd HH.mm.ss	lt	MEDIUM	true
-22.11.3	yy.d.M	lv	SHORT	false
-2222.11.3	yyyy.d.M	lv	MEDIUM	false
 22.11.3 05:06	yy.d.M HH:mm	lv	SHORT	true
-2222.11.3 05:06:07	yyyy.d.M HH:mm:ss	lv	MEDIUM	true
 11.3.22 05:06	d.M.yy HH:mm	mk	SHORT	true
-11.3.2222 05:06:	d.M.yyyy HH:mm:	mk	MEDIUM	true
 11/03/2222 05:06	dd/MM/yyyy HH:mm	mt	SHORT	true
-11-3-22	d-M-yy	nl	SHORT	false
 11-3-22 5:06	d-M-yy H:mm	nl	SHORT	true
 11-03-2222 5:06	dd-MM-yyyy H:mm	pt	SHORT	true
 11.03.2222 05:06	dd.MM.yyyy HH:mm	ro	SHORT	true
 11.03.22 5:06	dd.MM.yy H:mm	ru	SHORT	true
-11.03.2222 5:06:07	dd.MM.yyyy H:mm:ss	ru	MEDIUM	true
 22-03-11 5.06.PD	yy-MM-dd h.mm.a	sq	SHORT	true
-2222-03-11 5:06:07.PD	yyyy-MM-dd h:mm:ss.a	sq	MEDIUM	true
-2222-03-11 5.06.07.PD CET	yyyy-MM-dd h.mm.ss.a z	sq	LONG	true
-11.3.22.	d.M.yy.	sr	SHORT	false
-11.03.2222.	dd.MM.yyyy.	sr	MEDIUM	false
 11.3.22. 05.06	d.M.yy. HH.mm	sr	SHORT	true
-11.03.2222. 05.06.07	dd.MM.yyyy. HH.mm.ss	sr	MEDIUM	true
-11.03.2222. 05.06.07 CET	dd.MM.yyyy. HH.mm.ss z	sr	LONG	true
 2222-03-11 05:06	yyyy-MM-dd HH:mm	sv	SHORT	true
 05:06 11/03/2222	HH:mm dd/MM/yyyy	vi	SHORT	true
+11.3.2222 5.06.07	d.M.yyyy H.mm.ss	be	MEDIUM	true
+11/03/2222 05:06:07	dd/MM/yyyy HH:mm:ss	ca	MEDIUM	true
+11.3.2222 5:06:07	d.M.yyyy H:mm:ss	cs	MEDIUM	true
+11-03-2222 05:06:07	dd-MM-yyyy HH:mm:ss	da	MEDIUM	true
+11.03.2222 5:06:07	d.MM.yyyy H:mm:ss	et	MEDIUM	true
+05:06:07 11/03/2222	HH:mm:ss dd/MM/yyyy	iw	MEDIUM	true
+2222.03.11 05:06:07	yyyy.MM.dd HH:mm:ss	hr	MEDIUM	true
+2222.03.11. 5:06:07	yyyy.MM.dd. H:mm:ss	hu	MEDIUM	true
+11.3.2222 05:06:07	d.M.yyyy HH:mm:ss	is	MEDIUM	true
+2222-03-11 05.06.07	yyyy-MM-dd HH.mm.ss	lt	MEDIUM	true
+2222.11.3 05:06:07	yyyy.d.M HH:mm:ss	lv	MEDIUM	true
+11.3.2222 05:06:	d.M.yyyy HH:mm:	mk	MEDIUM	true
+11.03.2222 5:06:07	dd.MM.yyyy H:mm:ss	ru	MEDIUM	true
+2222-03-11 5:06:07.PD	yyyy-MM-dd h:mm:ss.a	sq	MEDIUM	true
+11.03.2222. 05.06.07	dd.MM.yyyy. HH.mm.ss	sr	MEDIUM	true
 05:06:07 11-03-2222	HH:mm:ss dd-MM-yyyy	vi	MEDIUM	true
+2222-03-11 5.06.07.PD CET	yyyy-MM-dd h.mm.ss.a z	sq	LONG	true
+11.03.2222. 05.06.07 CET	dd.MM.yyyy. HH.mm.ss z	sr	LONG	true

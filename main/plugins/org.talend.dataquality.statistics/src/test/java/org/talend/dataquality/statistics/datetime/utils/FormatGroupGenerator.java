@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.talend.dataquality.statistics.type.TypeInferenceUtils;
 
 public class FormatGroupGenerator {
@@ -92,9 +91,6 @@ public class FormatGroupGenerator {
         if (timeSeparator.equals(String.valueOf('\''))) {
             timeSeparator = "?";
         }
-        if (format.contains("EEEE")) {
-            code.append("E");
-        }
         return new DateTimeFormatCode(format, regex, code.toString(), dateSeparator, timeSeparator);
     }
 
@@ -105,9 +101,9 @@ public class FormatGroupGenerator {
         Map<String, String> formatRegexMap = new LinkedHashMap<String, String>();
         for (String line : lines) {
             if (!"".equals(line.trim())) {
-                String[] lineArray = line.trim().split("=");
-                String format = StringUtils.removeEnd(StringUtils.removeStart(lineArray[0], "\""), "\"");
-                String regex = StringUtils.removeEnd(StringUtils.removeStart(lineArray[1], "\""), "\"");
+                String[] lineArray = line.trim().split("\t");
+                String format = lineArray[0];
+                String regex = lineArray[1];
                 formatRegexMap.put(format, regex);
             }
         }

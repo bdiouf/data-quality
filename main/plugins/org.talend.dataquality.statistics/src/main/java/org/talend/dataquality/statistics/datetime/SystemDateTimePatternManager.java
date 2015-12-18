@@ -14,19 +14,18 @@ package org.talend.dataquality.statistics.datetime;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.talend.dataquality.statistics.type.TypeInferenceUtils;
 
 /**
  * Date and time patterns manager with system default definitions.
@@ -37,56 +36,45 @@ public class SystemDateTimePatternManager {
 
     private static final Logger LOGGER = Logger.getLogger(SystemDateTimePatternManager.class);
 
-    private static Map<Pattern, String> DATE_MATCHERS = new LinkedHashMap<Pattern, String>();
+    private static List<Map<Pattern, String>> DATE_PATTERN_GROUP_LIST = new ArrayList<Map<Pattern, String>>();
 
-    private static Map<Pattern, String> TIME_MATCHERS = new LinkedHashMap<Pattern, String>();
+    private static List<Map<Pattern, String>> TIME_PATTERN_GROUP_LIST = new ArrayList<Map<Pattern, String>>();
 
     static {
         try {
             // Load date patterns
-            loadPatterns("DateRegexes.txt", DATE_MATCHERS);
+            loadPatterns("DateRegexesGrouped.txt", DATE_PATTERN_GROUP_LIST);
             // Load time patterns
-            loadPatterns("TimeRegexes.txt", TIME_MATCHERS);
+            loadPatterns("TimeRegexes.txt", TIME_PATTERN_GROUP_LIST);
         } catch (IOException e) {
             LOGGER.error("Unable to get date patterns.", e);
         }
 
     }
 
-    private static void loadPatterns(String patternFileName, Map<Pattern, String> patternParsers) throws IOException {
-        InputStream stream = TypeInferenceUtils.class.getResourceAsStream(patternFileName);
-        List<String> lines = IOUtils.readLines(stream);
-        Set<String> patternNames = new ConcurrentSkipListSet<String>();
-        for (String line : lines) {
-            if (!"".equals(line.trim())) {
-                String[] lineArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(line, "=");
-                String patternName = StringUtils.removeEnd(StringUtils.removeStart(lineArray[0], "\""), "\"");
-                patternParsers.put(Pattern.compile(StringUtils.removeEnd(StringUtils.removeStart(lineArray[1], "\""), "\"")),
-                        patternName);
-                patternNames.add(patternName);
+    private static void loadPatterns(String patternFileName, List<Map<Pattern, String>> patternParsers) throws IOException {
+        InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream(patternFileName);
+        try {
+            List<String> lines = IOUtils.readLines(stream);
+            Map<Pattern, String> currentGroupMap = new HashMap<Pattern, String>();
+            patternParsers.add(currentGroupMap);
+            for (String line : lines) {
+                if (!"".equals(line.trim())) { // Not empty
+                    if (line.startsWith("--")) { // group separator
+                        currentGroupMap = new HashMap<Pattern, String>();
+                        patternParsers.add(currentGroupMap);
+                    } else {
+                        String[] lineArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(line, "\t");
+                        String format = lineArray[0];
+                        Pattern pattern = Pattern.compile(lineArray[1]);
+                        currentGroupMap.put(pattern, format);
+                    }
+                }
             }
+            stream.close();
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage());
         }
-        stream.close();
-    }
-
-    /**
-     * Whether the given string pattern a date pattern or not.
-     * 
-     * @param pattern
-     * @return true if the pattern string is a date pattern.
-     */
-    public static boolean isDatePattern(String pattern) {
-        return DATE_MATCHERS.values().contains(pattern);
-    }
-
-    /**
-     * Whether given string pattern is a time pattern or not.
-     * 
-     * @param pattern
-     * @return
-     */
-    public static boolean isTimePattern(String pattern) {
-        return TIME_MATCHERS.values().contains(pattern);
     }
 
     /**
@@ -96,7 +84,7 @@ public class SystemDateTimePatternManager {
      * @return true if the value is a date.
      */
     public static boolean isDate(String value) {
-        return isDateTime(DATE_MATCHERS, value);
+        return isDateTime(DATE_PATTERN_GROUP_LIST, value);
     }
 
     /**
@@ -106,10 +94,10 @@ public class SystemDateTimePatternManager {
      * @return true if the value is type "Time", false otherwise.
      */
     public static boolean isTime(String value) {
-        return isDateTime(TIME_MATCHERS, value);
+        return isDateTime(TIME_PATTERN_GROUP_LIST, value);
     }
 
-    private static boolean isDateTime(Map<Pattern, String> parsers, String value) {
+    private static boolean isDateTime(List<Map<Pattern, String>> patternGroupList, String value) {
         if (StringUtils.isNotEmpty(value)) {
             // 1. The length of date characters should not exceed 64.
             if (value.length() > 64) {
@@ -133,13 +121,15 @@ public class SystemDateTimePatternManager {
             }
 
             // 3. Check it by list of patterns
-            for (Pattern parser : parsers.keySet()) {
-                try {
-                    if (parser.matcher(value).find()) {
-                        return true;
+            for (Map<Pattern, String> patternMap : patternGroupList) {
+                for (Pattern parser : patternMap.keySet()) {
+                    try {
+                        if (parser.matcher(value).find()) {
+                            return true;
+                        }
+                    } catch (Exception e) {
+                        // ignore
                     }
-                } catch (Exception e) {
-                    // ignore
                 }
             }
         }
@@ -153,7 +143,7 @@ public class SystemDateTimePatternManager {
      * @return date pattern string.
      */
     public static Set<String> datePatternReplace(String value) {
-        return dateTimePatternReplace(DATE_MATCHERS, value);
+        return dateTimePatternReplace(DATE_PATTERN_GROUP_LIST, value);
     }
 
     /**
@@ -163,22 +153,26 @@ public class SystemDateTimePatternManager {
      * @return
      */
     public static Set<String> timePatternReplace(String value) {
-        return dateTimePatternReplace(TIME_MATCHERS, value);
+        return dateTimePatternReplace(TIME_PATTERN_GROUP_LIST, value);
     }
 
-    private static Set<String> dateTimePatternReplace(Map<Pattern, String> parsers, String value) {
+    private static Set<String> dateTimePatternReplace(List<Map<Pattern, String>> patternGroupList, String value) {
         if (StringUtils.isEmpty(value)) {
             return Collections.singleton(StringUtils.EMPTY);
         }
         HashSet<String> resultSet = new HashSet<String>();
-        // Parse the value given list of date regex in pattern file.
-        for (Pattern parser : parsers.keySet()) {
-            try {
-                if (parser.matcher(value).find()) {
-                    resultSet.add(parsers.get(parser));
+        for (Map<Pattern, String> patternMap : patternGroupList) {
+            for (Pattern parser : patternMap.keySet()) {
+                try {
+                    if (parser.matcher(value).find()) {
+                        resultSet.add(patternMap.get(parser));
+                    }
+                } catch (Exception e) {
+                    // Ignore
                 }
-            } catch (Exception e) {
-                // Ignore
+            }
+            if (resultSet.size() > 0) {
+                return resultSet;
             }
         }
         return resultSet;

@@ -103,49 +103,7 @@ public class PerformanceTest {
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
         System.out.println("Total duration GET_PATTERNS on " + count + " samples: " + difference + "ms");
 
-        assertTrue("The method is slower than expected", difference < 3000);
+        assertTrue("The method is slower than expected", difference < 2500);
     }
 
-    @Test
-    public void testGetPatternsUsingGroupedRegexes() throws IOException {
-
-        InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
-        List<String> lines = IOUtils.readLines(stream);
-
-        SystemDateTimePatternManager.datePatternReplace("12/02/99");// init DateTimeFormatters
-        Date begin = new Date();
-        LOGGER.debug("Detect date start at: " + begin);
-
-        long currentMilliseconds = begin.getTime();
-
-        int count = 0;
-        for (int i = 1; i < lines.size(); i++) {
-            for (int n = 0; n < REPLICATE; n++) {
-                String line = lines.get(i);
-                if (!"".equals(line.trim())) {
-                    String[] sampleLine = line.trim().split("\t");
-                    String sample = sampleLine[0];
-                    GroupedSystemDateTimePatternManager.datePatternReplace(sample);
-                    count++;
-                    if (count % INTERVAL_COUNT == 0) {
-                        Date after = new Date();
-                        long difference = after.getTime() - currentMilliseconds;
-                        currentMilliseconds = after.getTime();
-                        LOGGER.debug("Detect date end at: " + after);
-                        System.out.println("count: " + count + "\tinteval: " + difference + "ms");
-                    }
-                }
-            }
-        }
-
-        Date end = new Date();
-        LOGGER.debug("Detect date end at: " + end);
-        // Assert count of matches.
-        long difference = end.getTime() - begin.getTime();
-
-        LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        System.out.println("Total duration GET_PATTERNS with grouped regexes: " + difference + "ms");
-
-        assertTrue("The method is slower than expected", difference < 2000);
-    }
 }

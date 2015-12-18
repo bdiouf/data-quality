@@ -153,7 +153,7 @@ public class SampleTest {
     public void testDatesWithMultipleFormats() throws IOException {
 
         for (String sample : EXPECTED_FORMATS.keySet()) {
-            Set<String> patternSet = GroupedSystemDateTimePatternManager.datePatternReplace(sample);
+            Set<String> patternSet = SystemDateTimePatternManager.datePatternReplace(sample);
             assertEquals("Unexpected Format Set on sample <" + sample + ">", EXPECTED_FORMATS.get(sample), patternSet);
         }
     }

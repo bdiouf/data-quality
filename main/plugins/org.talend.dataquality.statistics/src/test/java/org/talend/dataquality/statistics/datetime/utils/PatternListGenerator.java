@@ -25,11 +25,11 @@ public class PatternListGenerator {
 
     private static final boolean PRINT_DETAILED_RESULTS = false;
 
-    private static final boolean PRINT_SAMPLE_TABLE = true;
+    private static final boolean PRINT_SAMPLE_TABLE = false;
 
     private static final boolean PRINT_PATTERN_LIST = false;
 
-    private static final boolean PRINT_REGEX_LIST = false;
+    private static final boolean PRINT_REGEX_LIST = true;
 
     private static List<LocaledPattern> OTHER_COMMON_PATTERNS = new ArrayList<LocaledPattern>() {
 
@@ -64,69 +64,105 @@ public class PatternListGenerator {
 
         // Set<String> dateTimePatternsList = new LinkedHashSet<String>();
         List<LocaledPattern> dateTimePatterns = new ArrayList<LocaledPattern>();
-        for (Locale l : localeArray) {
-            getFormatsOfLocale(l, true);
+
+        for (FormatStyle style : FORMAT_STYLES) {
+            if (PRINT_DETAILED_RESULTS) {
+                System.out.println("--------------------Style: " + style + "-----------------------");
+            }
+            for (Locale locale : localeArray) {
+                getDateFormatsOfLocale(style, locale, true);
+            }
         }
+        for (FormatStyle style : FORMAT_STYLES) {
+            if (PRINT_DETAILED_RESULTS) {
+                System.out.println("--------------------Style: " + style + "-----------------------");
+            }
+            for (Locale locale : localeArray) {
+                getDateTimeFormatsOfLocale(style, locale, true);
+            }
+        }
+        // for (FormatStyle style : FORMAT_STYLES) {
+        // if (PRINT_DETAILED_RESULTS) {
+        // System.out.println("--------------------Style: " + style + "-----------------------");
+        // }
+        // for (Locale locale : localeArray) {
+        // getTimeFormatsOfLocale(style, locale, true);
+        // }
+        // }
         dateTimePatterns.removeAll(knownPatternList);
         // return new ArrayList<String>(dateTimePatterns);
         return dateTimePatterns;
 
     }
 
-    private static void getFormatsOfLocale(Locale locale, boolean keepLongMonth) {
-        if (PRINT_DETAILED_RESULTS) {
-            System.out.println("--------------------Locale: " + locale + "-----------------------");
-        }
-        getFormatByStyle(true, false, locale, keepLongMonth); // Date Only
-        getFormatByStyle(true, true, locale, keepLongMonth); // Date & Time
-
-        // getFormatByStyle(false, true, locale, keepLongMonth); // Time Only
+    private static void getDateFormatsOfLocale(FormatStyle style, Locale locale, boolean keepLongMonth) {
+        getFormatByStyle(style, true, false, locale, keepLongMonth); // Date Only
     }
 
-    private static void getFormatByStyle(boolean isDateRequired, boolean isTimeRequired, Locale locale, boolean keepLongMonth) {
-        for (FormatStyle style : FORMAT_STYLES) {
-            String pattern = DateTimeFormatterBuilder.getLocalizedDateTimePattern(//
-                    isDateRequired ? style : null, isTimeRequired ? style : null, IsoChronology.INSTANCE, locale);//
+    private static void getDateTimeFormatsOfLocale(FormatStyle style, Locale locale, boolean keepLongMonth) {
+        getFormatByStyle(style, true, true, locale, keepLongMonth); // Date & Time
+    }
 
-            // ignore patterns with long month for additional languages
-            if (!keepLongMonth
-                    && (pattern.contains("MMMM") || pattern.contains("MMM") || pattern.contains(" a") || pattern.contains("'"))) {
-                continue;
+    private static void getTimeFormatsOfLocale(FormatStyle style, Locale locale, boolean keepLongMonth) {
+        getFormatByStyle(style, false, true, locale, keepLongMonth); // Time Only
+    }
+
+    private static void getFormatByStyle(FormatStyle style, boolean isDateRequired, boolean isTimeRequired, Locale locale,
+            boolean keepLongMonth) {
+        String pattern = DateTimeFormatterBuilder.getLocalizedDateTimePattern(//
+                isDateRequired ? style : null, isTimeRequired ? style : null, IsoChronology.INSTANCE, locale);//
+
+        // ignore patterns with long month for additional languages
+        if (!keepLongMonth
+                && (pattern.contains("MMMM") || pattern.contains("MMM") || pattern.contains(" a") || pattern.contains("'"))) {
+            return;
+        }
+
+        if (!pattern.contains("yy") && pattern.contains("y")) {// only one "y" to represent year part
+            return;
+        }
+
+        if (!knownPatternList.contains(pattern)) {
+
+            LocaledPattern lp = new LocaledPattern(pattern, locale, style.name(), isTimeRequired);
+            knownLocaledPatternList.add(lp);
+            knownPatternList.add(pattern); // update list of pattern strings without locale
+            if (PRINT_DETAILED_RESULTS) {
+                System.out.println(lp);
             }
-
-            if (!pattern.contains("yy") && pattern.contains("y")) {// only one "y" to represent year part
-                continue;
-            }
-
-            if (!knownPatternList.contains(pattern)) {
-
+        } else {
+            if (pattern.contains("MMMM") || pattern.contains("MMM")) {
+                if (PRINT_DETAILED_RESULTS) {
+                    System.out.print("!!!duplicated pattern with different locale!!! ");
+                }
                 LocaledPattern lp = new LocaledPattern(pattern, locale, style.name(), isTimeRequired);
                 knownLocaledPatternList.add(lp);
-                knownPatternList.add(pattern); // update list of pattern strings without locale
                 if (PRINT_DETAILED_RESULTS) {
                     System.out.println(lp);
                 }
-            } else {
-                if (pattern.contains("MMMM") || pattern.contains("MMM")) {
-                    if (PRINT_DETAILED_RESULTS) {
-                        System.out.print("!!!duplicated pattern with different locale!!! ");
-                    }
-                    LocaledPattern lp = new LocaledPattern(pattern, locale, style.name(), isTimeRequired);
-                    knownLocaledPatternList.add(lp);
-                    if (PRINT_DETAILED_RESULTS) {
-                        System.out.println(lp);
-                    }
-
-                }
 
             }
+
         }
     }
 
     private static void processAdditionalDateTimePatternsByLocales() {
 
-        for (String lang : Locale.getISOLanguages()) {
-            getFormatsOfLocale(new Locale(lang), false);
+        for (FormatStyle style : FORMAT_STYLES) {
+            if (PRINT_DETAILED_RESULTS) {
+                System.out.println("--------------------Style: " + style + "-----------------------");
+            }
+            for (String lang : Locale.getISOLanguages()) {
+                getDateFormatsOfLocale(style, new Locale(lang), false);
+            }
+        }
+        for (FormatStyle style : FORMAT_STYLES) {
+            if (PRINT_DETAILED_RESULTS) {
+                System.out.println("--------------------Style: " + style + "-----------------------");
+            }
+            for (String lang : Locale.getISOLanguages()) {
+                getDateTimeFormatsOfLocale(style, new Locale(lang), false);
+            }
         }
         // dateTimePatternsList.removeAll(knownPatternList);
 
@@ -292,9 +328,9 @@ public class PatternListGenerator {
                 System.out.println(lp);
             }
             if (PRINT_REGEX_LIST) {
-                System.out.print("\"" + lp.getPattern() + "\"=\"^");
+                System.out.print(lp.getPattern() + "\t^");
                 String regex = regexGenerator.convertPatternToRegex(lp.pattern);
-                System.out.print(regex + "$\"\n");
+                System.out.println(regex + "$");
             }
             if (PRINT_SAMPLE_TABLE) {
                 System.out.println(ZONED_DATE_TIME.format(DateTimeFormatter.ofPattern(lp.getPattern(), lp.getLocale())) + "\t"
