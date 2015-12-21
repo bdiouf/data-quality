@@ -216,11 +216,11 @@ public class UserDefinedClassifierTest {
             // put("132.2356", new String[] { "LONGITUDE_LATITUDE_COORDINATE" });
             put("40.7127837,-74.00594130000002", new String[] { "GPS_COORDINATE" }); //$NON-NLS-1$ //$NON-NLS-2$
 
-            put("00:00", new String[] { "TIME" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("12:00", new String[] { "TIME" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("11:23", new String[] { "TIME" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("15:53", new String[] { "TIME" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("23:59", new String[] { "TIME" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("00:00", new String[] {}); //$NON-NLS-1$ //$NON-NLS-2$
+            put("12:00", new String[] {}); //$NON-NLS-1$ //$NON-NLS-2$
+            put("11:23", new String[] {}); //$NON-NLS-1$ //$NON-NLS-2$
+            put("15:53", new String[] {}); //$NON-NLS-1$ //$NON-NLS-2$
+            put("23:59", new String[] {}); //$NON-NLS-1$ //$NON-NLS-2$
 
             put("Monday", new String[] { "EN_WEEK_DAY" }); //$NON-NLS-1$ //<$NON-NLS-2$
             put("MonDay", new String[] { "EN_WEEK_DAY" }); //$NON-NLS-1$ //$NON-NLS-2$

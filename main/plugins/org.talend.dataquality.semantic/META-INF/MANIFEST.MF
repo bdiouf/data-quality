@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Semantic Library
 Bundle-SymbolicName: org.talend.dataquality.semantic;singleton:=true
-Bundle-Version: 1.4.0
+Bundle-Version: 1.4.1
 Bundle-Vendor: .Talend SA.
 Export-Package: org.json,
  org.talend.dataquality.semantic,
@@ -26,7 +26,6 @@ Require-Bundle: org.apache.log4j,
  org.talend.dataquality.sampling,
  org.talend.dataquality.standardization
 Bundle-ClassPath: .,
- lib/datetime-3.0.1.jar,
  lib/json-20140107.jar
 Eclipse-BundleShape: dir
 Import-Package: com.fasterxml.jackson.annotation;version="2.5.3",

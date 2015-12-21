@@ -17,5 +17,5 @@ package org.talend.dataquality.semantic.validator;
  */
 public interface ISemanticValidator {
 
-    public  boolean isValid(String str);
+    public boolean isValid(String str);
 }

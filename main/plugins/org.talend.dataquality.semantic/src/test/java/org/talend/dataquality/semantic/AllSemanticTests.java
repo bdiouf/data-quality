@@ -18,7 +18,6 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.talend.dataquality.semantic.classifier.custom.UDCategorySerDeserTest;
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedClassifierTest;
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedRegexValidatorTest;
-import org.talend.dataquality.semantic.validator.DateSemanticValidatorTest;
 import org.talend.dataquality.semantic.validator.impl.SedolValidatorTest;
 
 /**
@@ -26,8 +25,7 @@ import org.talend.dataquality.semantic.validator.impl.SedolValidatorTest;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ CategoryRecognizerTest.class, RespectiveCategoryRecognizerTest.class, UserDefinedClassifierTest.class,
-        UserDefinedRegexValidatorTest.class, UDCategorySerDeserTest.class, DateSemanticValidatorTest.class,
-        SedolValidatorTest.class })
+        UserDefinedRegexValidatorTest.class, UDCategorySerDeserTest.class, SedolValidatorTest.class })
 public class AllSemanticTests {
 
 }
