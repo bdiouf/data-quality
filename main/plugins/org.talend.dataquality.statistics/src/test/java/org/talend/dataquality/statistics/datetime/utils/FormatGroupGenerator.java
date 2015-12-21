@@ -1,5 +1,8 @@
 package org.talend.dataquality.statistics.datetime.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -94,9 +97,10 @@ public class FormatGroupGenerator {
         return new DateTimeFormatCode(format, regex, code.toString(), dateSeparator, timeSeparator);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void generateDateRegexGroups() throws IOException {
 
-        InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateRegexes.txt");
+        InputStream stream = new FileInputStream(SystemDateTimePatternManager.class.getResource("DateRegexes.txt").getFile()
+                .replace("target" + File.separator + "classes", "src" + File.separator + "main" + File.separator + "resources"));
         List<String> lines = IOUtils.readLines(stream);
         Map<String, String> formatRegexMap = new LinkedHashMap<String, String>();
         for (String line : lines) {
@@ -125,6 +129,7 @@ public class FormatGroupGenerator {
             formatGroupMap.put(aggreratedCode, formatCodeSet);
         }
 
+        StringBuilder sb = new StringBuilder();
         int groupNo = 0;
         List<DateTimeFormatCode> patternsFromSmallGroups = new ArrayList<DateTimeFormatCode>();
         for (String key : formatGroupMap.keySet()) {
@@ -132,9 +137,9 @@ public class FormatGroupGenerator {
             if (formatCodeSet.size() < 1) {
                 patternsFromSmallGroups.addAll(formatCodeSet);
             } else {
-                System.out.println("--------Group " + (++groupNo) + ": [" + key + "]---------");
+                sb.append("--------Group ").append(++groupNo).append(": [").append(key).append("]---------\n");
                 for (DateTimeFormatCode fc : formatCodeSet) {
-                    System.out.println(fc);
+                    sb.append(fc).append("\n");
                 }
             }
         }
@@ -145,6 +150,11 @@ public class FormatGroupGenerator {
                 System.out.println(fc);
             }
         }
+
+        // Date Formats
+        String path = SystemDateTimePatternManager.class.getResource("DateRegexesGrouped.txt").getFile()
+                .replace("target" + File.separator + "classes", "src" + File.separator + "main" + File.separator + "resources");
+        IOUtils.write(sb.toString(), new FileOutputStream(new File(path)));
     }
 
     private static void sortDateTimeFormatCode(List<DateTimeFormatCode> formatCodes) {

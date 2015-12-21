@@ -63,10 +63,10 @@ public class CustomDateTimePatternRecognizerTest {
                 add("2011-2-20");
                 add("2013-1-20");
                 add("=14/5/18="); // [custom: =d/M/yy=]
-                add("4/15/18"); // [M/d/yy]
-                add("4/5/2014"); // [d/M/yyyy], [M/d/yyyy]
-                add("02/03/2014"); // [dd/MM/yyyy], [MM/dd/yyyy]
-                add("22/03/2014"); // [dd/MM/yyyy]
+                add("4/15/18");
+                add("4/5/2014");
+                add("02/03/2014");
+                add("22/03/2014");
             }
         };
 
@@ -76,15 +76,15 @@ public class CustomDateTimePatternRecognizerTest {
 
             {
                 put("yyyy-M-d", 4L);
+                put("d/M/yyyy", 3L);
                 put("", 2L);
                 put("dd/MM/yyyy", 2L);
+                put("M/d/yyyy", 2L);
                 put("aaa", 1L);
                 put("99 aaa Aaaaa", 1L);
-                put("d/M/yyyy", 1L);
                 put("M/d/yy", 1L);
                 put("MM/dd/yyyy", 1L);
                 put("=d/M/yy=", 1L);
-                put("M/d/yyyy", 1L);
 
             }
         };
