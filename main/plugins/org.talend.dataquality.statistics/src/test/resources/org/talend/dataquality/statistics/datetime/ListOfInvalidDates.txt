@@ -1,8 +1,15 @@
+# This file contains invalid dates. 
+# Comments can be added by using either # or //
+
 12
 13
 aaaaa
 9 rue pages, 92150 suresnes
-
 value5
+
+26/1/69 // unsupported pattern
+
 5/32/2015
 32/5/2015
+
+11 Oct 16 // unsupported pattern

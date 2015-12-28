@@ -4,12 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 public class CustomDateTimePatternManagerTest {
@@ -24,6 +28,52 @@ public class CustomDateTimePatternManagerTest {
         assertTrue(SystemDateTimePatternManager.isDate("1970-01-01T00:32:43"));
         assertTrue(SystemDateTimePatternManager.isDate("05/15/1962"));
 
+    }
+
+    private List<String> readLineContentsFromFile(String path) throws IOException {
+        InputStream dateInputStream = SystemDateTimePatternManager.class.getResourceAsStream(path);
+        List<String> contents = new ArrayList<String>();
+
+        List<String> lines = IOUtils.readLines(dateInputStream);
+        for (String line : lines) {
+            int indexComment1 = line.indexOf("#");
+            if (indexComment1 >= 0) {
+                line = line.substring(0, indexComment1);
+            }
+            int indexComment2 = line.indexOf("//");
+            if (indexComment2 >= 0) {
+                line = line.substring(0, indexComment2);
+            }
+            if (line.trim().length() > 0) {
+                contents.add(line.trim());
+            }
+        }
+
+        return contents;
+    }
+
+    @Test
+    public void testValidDatesFromFile() throws IOException {
+
+        List<String> contents = readLineContentsFromFile("ListOfValidDates.txt");
+
+        for (String line : contents) {
+            if (!line.isEmpty()) {
+                assertTrue("Unexpected Invalid Date: " + line, SystemDateTimePatternManager.isDate(line));
+            }
+        }
+    }
+
+    @Test
+    public void testInvalidDatesFromFile() throws IOException {
+
+        List<String> contents = readLineContentsFromFile("ListOfInvalidDates.txt");
+
+        for (String line : contents) {
+            if (!line.isEmpty()) {
+                assertFalse("Unexpected Valid Date: " + line, SystemDateTimePatternManager.isDate(line));
+            }
+        }
     }
 
     @Test

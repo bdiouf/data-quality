@@ -1,16 +1,20 @@
+# This file contains valid dates. 
+# Comments can be added by using either # or //
+
 2/18/1901
 1970-01-01
 1970/01/01
-January 26, 1969 at 3:21 PM
-26-jan-1969 at 3:21:00.123 pm
-1969-01-26 15:21:00.123456 PM PST
-11 Oct 16
+11 Oct 2016
 
 26/1/1969
-26/1/69
 
 1/26/1969
 1/26/69
 
 29 juin 2013
 29 Juin 2007
+
+5/31/2015
+31/5/2015
+
+11 Oct 2016
