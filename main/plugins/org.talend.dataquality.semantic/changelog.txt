@@ -1,4 +1,8 @@
-V1.4.0 (in development)
+V1.4.1 2015-12-28
+    - TDQ-11371 remove TIME from semantic category list
+
+V1.4.0 2015-12-17
+    - move 2 tests into statistics project
 
 V1.3.3 sizhaoliu & fji 2015-11-16
     - merge duplicated classes following lucene4 upgrade in standardization library

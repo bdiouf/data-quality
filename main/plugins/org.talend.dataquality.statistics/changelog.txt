@@ -1,4 +1,4 @@
-V1.4.1 2015-12-18
+V1.4.1 2015-12-28
 	- performance improvement on GetAllPatterns by using grouped regexes
 
 V1.4.0 2015-12-17
