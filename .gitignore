@@ -1,0 +1,13 @@
+.DS_Store
+target/
+bin/
+class/
+dist/
+.settings/
+.idea/
+*.ipr
+*.iml
+*.iws
+*.jardesc
+*.directory
+.cache*
