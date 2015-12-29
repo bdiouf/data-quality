@@ -1,0 +1,39 @@
+version 1.0.4 (2012-10-03) by Sebastiao Correia
+- fixed a bug in NGramFingerPrintKeyer: we want the default method to generate a 2-gram key
+
+version 1.0.3 (2012-07-10) by Sebastiao Correia
+- added the FingerPrintKeyer algorithm from Google.
+- added NGramFingerPrintKeyer algorithm from Google
+- added ColognePhonetic algorithm from Apache
+
+version 1.0. (03/12/2010) by YuChu Tao
+- remove source file from jar package
+-------------------------------------------------------------------------
+version 1.0.1 (03/09/2010) by YuChu Tao
+- rename component tWindowKey to tGenKey
+-------------------------------------------------------------------------
+Version 1.0.0 (17/08/2010) by YuChu Tao
++ add support for specifying more than one key algo for a column, 
+so the return will can not be null, otherwise can not be used in "+" operation
+
++ add algo useDefault
+--------------------------------------------------------------------------
+Version 1.0.0 (13/08/2010) by YuChu Tao
+
+Add the following algorithms in the tWindowKey component:
+"key composition"
+- exact: will simply copy the full string in the key
+
+"options"
+- lower case: will convert the field to lower case before applying the key algorithm
+- upper case: will convert the field to upper case before applying the key algorithm
+- remove diacritical marks and lower case : will remove the diacritical marks and then convert to lower case
+- remove diacritical marks and upper case : will remove the diacritical marks and then convert to upper case
+--------------------------------------------------------------------------
+Version 0.9.1 (08/07/2010)
++ Rename package name
+--------------------------------------------------------------------------
+Version 0.9.0 (09/06/2010)
++ API created
+--------------------------------------------------------------------------
+ 

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     2013-02-05  scorreia                                              
+
+     script to package org.talend.dataquality.record.linkage.jar for tRecordMatching (tMatchGroup...) component. 
+     ====================================================================== -->
+<project name="org.talend.dataquality.record.linkage" default="copy">
+	<description>
+            Package the matching library and copy it to the component folder.
+    </description>
+
+	<!-- properties that may change -->
+
+	<property name="top.dir" value="../../../top/trunk/" />
+	<property name="tos.dir" value="../../../tos/trunk/" />
+	<property name="tdq.dir" value="../../../tdq/trunk/" />
+
+	<property name="target.platform.dir" value="/home/scorreia/softwares/target_platform_for_Eclipse_36/plugins" />
+	<property name="org.apache.log4j.lib" value="${target.platform.dir}/org.apache.log4j_1.2.15.v201005080500.jar" />
+
+	<!-- Compiler settings. -->
+
+	<property name="javacFailOnError" value="true" />
+	<property name="javacDebugInfo" value="on" />
+	<property name="javacVerbose" value="false" />
+	<property name="javacSource" value="1.6" />
+	<property name="javacTarget" value="1.6" />
+
+
+	<property name="library.name" value="org.talend.dataquality.record.linkage" />
+	<property name="jar-file-name" value="${library.name}.jar" />
+
+	<property name="dq.component.dir" value="${tdq.dir}/org.talend.designer.components.tdqprovider/components" />
+
+	<property name="org.talend.libraries.apache.dir" value="${tos.dir}/org.talend.libraries.apache.common" />
+	<property name="org.talend.libraries.apache.lib.dir" value="${org.talend.libraries.apache.dir}/lib" />
+
+
+	<property name="project.dir" value="${top.dir}/org.talend.dataquality.record.linkage" />
+	<property name="src.dir" value="${project.dir}/src/main/java" />
+	<property name="src.talend.utils.dir" value="${tos.dir}/org.talend.utils/src/main/java" />
+	<property name="temp.dir" value="ant_temp" />
+	<property name="jar.dir" value="jar" />
+
+
+	<target name="unjar_dependencies" depends="clean">
+		<unzip dest="${temp.dir}">
+			<fileset dir="${target.platform.dir}">
+				<include name="${org.apache.log4j.lib}" />
+			</fileset>
+		</unzip>
+	</target>
+
+	<path id="Third-Part Lib">
+		<fileset dir="${org.talend.libraries.apache.lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${target.platform.dir}/">
+			<include name="org.apache.log4j_1.2.15*.jar" />
+		</fileset>
+
+	</path>
+
+	<target name="usage" description="Build file usage info (default task)">
+		<echo message=" " />
+		<echo message="${project-name} " />
+		<echo message="-------------------------------------------------------" />
+		<echo message="Available Targets:" />
+		<echo message=" ***" />
+		<echo message=" Cleaning up:" />
+		<echo message="  clean - Delete class files" />
+		<echo message=" ***" />
+		<echo message=" Compiling:" />
+		<echo message="  compile  - Compiles the source code" />
+		<echo message=" ***" />
+		<echo message=" Creating the library:" />
+		<echo message="  jar  - Generate an .jar for source code" />
+		<echo message=" ***" />
+		<echo message=" Copying the library" />
+		<echo message="  copy - Copy the jar file into the component directory" />
+		<echo message=" ***" />
+		<echo message="-------------------------------------------------------" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${temp.dir}" />
+		<delete dir="${jar.dir}" />
+	</target>
+
+	<target name="prepare">
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${jar.dir}" />
+	</target>
+
+	<target name="compile" depends="clean,prepare,unjar_dependencies">
+		<echo message="Compiling the source code!" />
+		<javac srcdir="${src.talend.utils.dir}/org/talend/utils/string" destdir="${temp.dir}" includeAntRuntime="no" target="${javacTarget}" source="${javacSource}">
+			<include name="AsciiUtils.java" />
+			<classpath refid="Third-Part Lib" />
+		</javac>
+		<javac srcdir="${src.dir}" destdir="${temp.dir}" includeAntRuntime="no">
+			<classpath refid="Third-Part Lib" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="${jar.dir}/${jar-file-name}">
+			<fileset dir="${temp.dir}">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="${project.dir}">
+				<include name="version.txt" />
+			</fileset>
+			<fileset dir="${src.dir}">
+				<include name="messages.properties" />
+			</fileset>
+			<manifest />
+		</jar>
+	</target>
+
+	<target name="copy" depends="jar">
+		<copy todir="${dq.component.dir}/tRecordMatching">
+			<fileset dir="${jar.dir}" id="jar.id">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+</project>

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Standardization
+Bundle-SymbolicName: org.talend.dataquality.standardization
+Bundle-Version: 6.1.0.qualifier
+Bundle-Vendor: .Talend SA.
+Require-Bundle: org.talend.libraries.apache.lucene,
+ org.talend.libraries.csv,
+ org.apache.commons.lang
+Bundle-ClassPath: .
+Export-Package: org.talend.dataquality.standardization.index

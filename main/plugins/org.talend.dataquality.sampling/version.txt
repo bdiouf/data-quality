@@ -1,0 +1,8 @@
+V1.3.0 Julien GONZALEZ 2015-08-24
+    Adding HellWeek Suggestions
+V1.2.0 Julien GONZALEZ 2015-06-25
+    Implementing factory pattern
+V1.1.0 Julien GONZALEZ 2015-06-12
+    Adding new functions + Code cleansing
+V1.0.1 Julien GONZALEZ 2015-04-03
+- API for DataMasker

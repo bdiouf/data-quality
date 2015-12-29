@@ -1,0 +1,12 @@
+Talend record linkage library version: 2.0.2
+
+Changes:
+- 2.0.2: when compute the weight and it throw an Exception,catch the Excetpion and return 0.(TDQ-10366)
+- 2.0.1: Allow to specify classloader to be used for loading custom matcher class on the match analysis side.(TDQ-8027)
+- 2.0.0: Windows key algorithms integrated into record linkage library
+- 1.0.1: the record matcher threshold can be different for each matcher of the combined matcher + attribute name stored in the attribute matcher for information.
+- 1.0.0: added the possibility to combine several matchers + handle null options
+- 0.9.7: fix bug with Jaro/Jaro-Winkler when comparing 2 blank fields. 
+         fix bug with DoubleMataphone when encoded string contains less than 2 chars.
+- 0.9.6: fix bug with Levenshtein distance computation
+- 0.9.5: added the ability to create a custom AttributeMatcher

@@ -1,0 +1,11 @@
+1|element|Thomas|R.|4151|2015-10-1|CA|A9
+2|élément|Paul|R.|4106|2013-10-1|WA|A
+3|Amburgey|PaulR|R.|4106|2013-10-2|CA|A
+4|élément|PaulR|R.|4106|2013-10-2|CA|A
+5|élément|PaulR|R.|4106|2013-10-2|CA|A
+6|element|Gregory|J.|3800|2014-10-1|BC|A4
+7|scorreia|Seb|R.|4106|2013-10-2|CA|A
+8|scorreia|Seb|R.|4106|2013-10-2|CA|A
+9|scorreia|Seb|J.|3800|2014-10-1|BC|A4
+10|scorreia|Seb|R.|4106|2013-10-2|CA|A
+11|scorreia|Seb|J.|3800|2014-10-1|BC|A4

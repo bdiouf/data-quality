@@ -1,0 +1,99 @@
+2.5.0 # sizhaoliu 2013/09/05 (for V5.4)
+- add 6 search modes for synonym library.
+  MATCH_ANY MATCH_PARTIAL MATCH_ALL MATCH_EXACT MATCH_ANY_FUZZY MATCH_ALL_FUZZY
+- add Matching Threshold option in SynonymIndexSearcher
+
+2.0.2 # sizhaoliu 2012/07/17 
+- correct some issues to improve match results of tFirstnameMatch (TDQ-1576) :  
+  for standard mode, removed the doc collector and augmented the similarity 
+  for fuzzy mode, lowercase the word to assure the prefix is identical to indexed words 
+
+2.0.1 # sizhaoliu 2012/03/15
+- Move boost changes from SynonymIndexBuilder to SynonymIndexSearcher, so that we can
+  change the boost values without regeneration of the indexes "out of the box".
+
+2.0.0 # sizhaoliu 2012/03/06
+- improvements for better scoring with combined query across multiple fields. (related to TDQ-3606)
+- do not filter English stop words any more during indexing. (related to TDQ-3330)
+- added IndexMigrator to regenerate out-of-the-box indexes.
+
+1.5.19 # sizhaoliu 2011/11/23
+- check folder before delete when "initialize" option is chosen in tSynonymOutput component.
+
+1.5.18 # sizhaoliu 2011/05/23
+- moved Explainer class to test project.
+- included missing Messages classes in the jar.
+- added missing trim() when referencing document in update and delete method.
+
+1.5.17 # sizhaoliu 2011/05/19
+- added missed trim() for F_WORD during index creation.
+- added Explainer class of lucene scoring.  
+
+1.5.16 # ytao 2011/04/15
+- change word value of empty record from "" to null
+- remove first character '|' of scores
+- if input value is empty, create an empty record
+
+1.5.15 # scorreia
+- in previous version, the score is not 0 when a field is not match. Hence, a nbMatch field is added to the Output record. 
+
+1.5.14 # scorreia
+- SynonymRecordSearch returns a result even when nothing is found. (score is 0 of course). 
+
+1.5.13 # sizhaoliu
+- added some other junit tests for new implementation of computeRows
+- changed output contents for DOCUMENT_MATCHED
+
+1.5.12 # scorreia
+- review implementation of computeRows and add new junit tests.
+ 
+1.5.11 # sizhaoliu
+- added trim() before inserting synonyms into index.
+- fixed a bug in SynonymRecordSearcher when result counts of different columns have factorization.
+- when several documents are matched, set the return value to -1 to avoid insertion by the component (when nbUpdatedDocuments == 0).
+
+1.5.10 # scorreia
+- missing classes added to file.
+
+1.5.9 # sizhaoliu
+- added information for execution error caused by no segments file
+- corrected some user information
+- removed the deprecated method setMode()
+
+1.5.8 # scorreia
+- code cleansing + javadoc added
+
+1.5.7 # scorreia
+- avoid SynonymRecordSearcher to return duplicates
+- removed the limit[] argument from the SynonymRecordSearcher.search method
+
+1.5.6 # scorreia sizhaoliu
+- add method close after utilisations of SynonymIndexSearcher.
+- fixed delete index from file system
+
+
+1.5.5 # scorreia
+- setMode marked as deprecated method (not useful)
+- avoid NPE when some synonyms are nulls
+- avoid to commit each time we delete a document
+- refactor OutputRecord in its own file + add accessors
+- search API throws exceptions that can be caught by the component
+
+1.5.4 # ytao
+- limit the number of returned results
+
+1.5.3 # scorreia
+- optimize synonym index builder and searcher
+
+1.5.2 # ytao modified
+- add support to create index path
+- add support to return error messages
+
+1.5.1 # ytao modified
+- update java doc of deleteDocumentByWord process
+- modified insertDocument process,
+ remove a clause and change to commit the document immediately
+- add java doc for closeIndex process
+
+# Talend standardization library version
+1.5.0
