@@ -1,0 +1,106 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
+package org.talend.dataquality.wordnet;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+
+import org.apache.log4j.Logger;
+
+import edu.mit.jwi.Dictionary;
+import edu.mit.jwi.IDictionary;
+import edu.mit.jwi.item.IIndexWord;
+import edu.mit.jwi.item.POS;
+
+public class WordNetDictionary {
+
+    private static final Logger LOGGER = Logger.getLogger(WordNetDictionary.class);
+
+    private static IDictionary dict;
+
+    private static WordNetDictionary instance = null;
+
+    public WordNetDictionary() {
+        initDictinary();
+    }
+
+    public static WordNetDictionary getInstance() {
+        if (instance == null) {
+            instance = new WordNetDictionary();
+        }
+        if (dict == null || !dict.isOpen()) {
+            try {
+                dict.open();
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        }
+        return instance;
+    }
+
+    private void initDictinary() {
+        String path = null;
+        URL url = WordNetDictionary.class.getResource("/dict");
+        if ("file".equals(url.getProtocol())) {
+            // nothing to do
+        } else if ("bundleresource".equals(url.getProtocol())) { // for OSGI environment
+            try {
+                path = getFilePathByPlatformURL(url);
+                url = new URL("file", null, path);//$NON-NLS-1$
+            } catch (IOException e) {
+                throw new IllegalArgumentException("Unable to open bundleresource '" + url + "'.", e);
+            }
+        } else {
+            throw new UnsupportedOperationException("Unsupported protocol '" + url.getProtocol() + "'.");
+        }
+        dict = new Dictionary(url);
+    }
+
+    private String getFilePathByPlatformURL(URL url) throws IOException {
+        String filePath = url.getPath();
+        try {
+            url.openConnection().getInputStream();
+        } catch (FileNotFoundException e) {
+            // try to get the absolute path from exception message
+            final String msg = e.getMessage();
+            if (filePath.endsWith("/")) {
+                filePath = filePath.substring(0, filePath.length() - 1);
+            }
+            final String osFilePath = filePath.replace("/", File.separator); //$NON-NLS-1$
+            final int idx = msg.indexOf(osFilePath);
+            if (idx > 0) {
+                return msg.substring(0, idx + filePath.length());
+            }
+        }
+        return filePath;
+    }
+
+    public boolean containsWord(String input) {
+        for (POS pos : POS.values()) {
+            IIndexWord idxWord = dict.getIndexWord(input, pos);
+            if (idxWord != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void close() {
+        if (dict != null && dict.isOpen()) {
+            dict.close();
+        }
+    }
+
+}

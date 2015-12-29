@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Semantic Library
+Bundle-SymbolicName: org.talend.dataquality.wordnet;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Vendor: .Talend SA.
+Export-Package: edu.mit.jwi,
+ edu.mit.jwi.data,
+ edu.mit.jwi.data.compare,
+ edu.mit.jwi.data.parse,
+ edu.mit.jwi.item,
+ edu.mit.jwi.morph,
+ org.talend.dataquality.wordnet
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.apache.log4j,
+ org.junit,
+ org.eclipse.core.runtime
+Bundle-ClassPath: .,
+ lib/jwi-2.2.3.jar
+Eclipse-BundleShape: dir

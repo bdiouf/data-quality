@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src/test/java"/>
+	<classpathentry excluding="**/*.java" kind="src" output="target/classes" path="src/test/resources"/>
+	<classpathentry exported="true" kind="lib" path="lib/datetime-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/json-20140107.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

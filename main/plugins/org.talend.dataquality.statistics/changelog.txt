@@ -1,0 +1,6 @@
+=== 2015-09-11 ===
+1. Add HistogramParameter and HistogramColumnParameter class for histogram analyzer. -mzhao
+2. Adapt HistogramAnalyzer class and its junit test using the parameter class. -mzhao
+3. Make "type[]" and "parameter" arguments as mandatory parameters in NumericalStatisticsAnalyzer constructor. -mzhao
+4. All the mandatory parameters requires by analyzer must be set in constructor. -mzhao
+5. Remove all the warnings in java classes.
