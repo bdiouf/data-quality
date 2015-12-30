@@ -1,21 +1,21 @@
 V1.4.1 2015-12-28
-    - TDQ-11371 remove TIME from semantic category list
+	- TDQ-11371 remove TIME from semantic category list
 
 V1.4.0 2015-12-17
-    - move 2 tests into statistics project
+	- move 2 tests into statistics project
 
 V1.3.3 sizhaoliu & fji 2015-11-16
-    - merge duplicated classes following lucene4 upgrade in standardization library
-    - improvements about index matching(TDQ-11143): 
-        for Data Dictionary Index: from MATCH_PARTIAL to MATCH_SEMANTIC_DICTIONARY
-        for Keyword Index: MATCH_SEMANTIC_KEYWORD and input tokens contains index tokens
-    - TDQ-11156 add 10 indexes: 
-      `FR_COMMUNE`, `FR_DEPARTEMENT`, `FR_REGION`, `LANGUAGE`, `LANGUAGE_CODE_ISO2`, `LANGUAGE_CODE_ISO3`,
-      `CA_PROVINCE_TERRITORY`, `CA_PROVINCE_TERRITORY_CODE`, `MX_ESTADO`, `MX_ESTADO_CODE`
+	- merge duplicated classes following lucene4 upgrade in standardization library
+	- improvements about index matching(TDQ-11143): 
+		for Data Dictionary Index: from MATCH_PARTIAL to MATCH_SEMANTIC_DICTIONARY
+		for Keyword Index: MATCH_SEMANTIC_KEYWORD and input tokens contains index tokens
+	- TDQ-11156 add 10 indexes: 
+	  `FR_COMMUNE`, `FR_DEPARTEMENT`, `FR_REGION`, `LANGUAGE`, `LANGUAGE_CODE_ISO2`, `LANGUAGE_CODE_ISO3`,
+	  `CA_PROVINCE_TERRITORY`, `CA_PROVINCE_TERRITORY_CODE`, `MX_ESTADO`, `MX_ESTADO_CODE`
 
 V1.3.2 2015-10-29
-    - TDQ-10903 optimize dictionaries
-    - adjust OPEN/CLOSE type for some indexes
+	- TDQ-10903 optimize dictionaries
+	- adjust OPEN/CLOSE type for some indexes
 
 V1.3.1 2015-10-22 (for Studio 6.1.0)
     - TDQ-10413 compute list of invalid values according to semantic type
@@ -25,4 +25,4 @@ V1.3.1 2015-10-22 (for Studio 6.1.0)
 V1.3.0 sizhaoliu 2015-10-05
     - add changelog file for semantic library
 V1.3.0 mzhao 2015-10-09    
-    - Add SEDOL as secondary validator
+	- Add SEDOL as secondary validator

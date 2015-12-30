@@ -47,7 +47,9 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
     private UserDefinedClassifier userDefineClassifier;
 
-    long total = 0;
+    private long emptyCount = 0;
+
+    private long total = 0;
 
     public DefaultCategoryRecognizer(Index dictionary, Index keyword) throws IOException {
         dataDictFieldClassifier = new DataDictFieldClassifier(dictionary, keyword);
@@ -55,6 +57,12 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
         userDefineClassifier = new UDCategorySerDeser().readJsonFile();
     }
 
+    /**
+     * @deprecated use {@link #getSubCategoriesSet(String)} instead.
+     * @param data
+     * @return
+     */
+    @Deprecated
     public Set<ISubCategory> getSubCategories(String data) {
         MainCategory mainCategory = MainCategory.getMainCategory(data);
         Set<ISubCategory> subCategorySet = new HashSet<>();
@@ -78,12 +86,6 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
     }
 
-    /**
-     * @deprecated use {@link #getSubCategories(String)} instead Method "getSubCategorySet".
-     * @param data
-     * @return
-     */
-    @Deprecated
     public Set<String> getSubCategorySet(String data) {
 
         MainCategory mainCategory = MainCategory.getMainCategory(data);
@@ -101,6 +103,7 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
         case NULL:
         case BLANK:
+            emptyCount++;
         case UNKNOWN:
             break;
         }
@@ -118,14 +121,14 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
         catList.clear();
         categoryToFrequency.clear();
         total = 0;
+        emptyCount = 0;
     }
 
-    /**
-     * @deprecated use {@link #processCategories(String)} instead.
+    /*
+     * (non-Javadoc)
      * 
      * @see org.talend.dataquality.semantic.recognizer.CategoryRecognizer#process(java.lang.String)
      */
-    @Deprecated
     @Override
     public String[] process(String data) {
         Set<String> categories = getSubCategorySet(data);
@@ -140,11 +143,12 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
         return categories.toArray(new String[categories.size()]);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * @deprecated use {@link #process(String)} instead.
      * 
-     * @see org.talend.dataquality.semantic.recognizer.CategoryRecognizer#processCategories(java.lang.String)
+     * @see org.talend.dataquality.semantic.recognizer.CategoryRecognizer#process(java.lang.String)
      */
+    @Deprecated
     @Override
     public ISubCategory[] processCategories(String data) {
         Set<ISubCategory> categories = getSubCategories(data);
@@ -183,8 +187,9 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
     @Override
     public Collection<CategoryFrequency> getResult() {
+        final float nonEmptyCount = total - emptyCount;
         for (CategoryFrequency category : categoryToFrequency.values()) {
-            category.frequency = Math.round(category.count * 10000 / (float) total) / 100F;
+            category.frequency = Math.round(category.count * 10000 / nonEmptyCount) / 100F;
         }
 
         Collections.sort(catList, new Comparator<CategoryFrequency>() {

@@ -27,7 +27,6 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.talend.dataquality.semantic.classifier.ISubCategory;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryFrequency;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizer;
@@ -46,27 +45,31 @@ public class CategoryRecognizerTest {
         private static final long serialVersionUID = -5067273062214728849L;
 
         {
-            put("", 16.13F);
-            put("AIRPORT_CODE", 9.68F);
+            put("", 12.9F);
             put("FIRST_NAME", 9.68F);
             put("MONTH", 9.68F);
+            put("AIRPORT_CODE", 6.45F);
+            put("FR_COMMUNE", 6.45F);
             put("CITY", 6.45F);
             put("EMAIL", 6.45F);
             put("US_POSTAL_CODE", 6.45F);
-            put("US_SSN", 6.45F);
             put("ADDRESS_LINE", 6.45F);
             put("FR_SSN", 6.45F);
+            put("FR_DEPARTEMENT", 3.23F);
             put("COUNTRY", 3.23F);
             put("COUNTRY_CODE_ISO3", 3.23F);
             put("CONTINENT_CODE", 3.23F);
             put("CURRENCY_CODE", 3.23F);
             put("ANIMAL", 3.23F);
+            put("LANGUAGE_CODE_ISO3", 3.23F);
             put("EN_MONTH", 3.23F);
-            put("FR_POSTAL_CODE", 3.23F);
             put("FR_CODE_COMMUNE_INSEE", 3.23F);
             put("DE_POSTAL_CODE", 3.23F);
+            put("FR_POSTAL_CODE", 3.23F);
+            put("COMPANY", 3.23F);
             put("GENDER", 3.23F);
             put("URL", 3.23F);
+            put("US_SSN", 3.23F);
             put("ISBN_10", 3.23F);
             put("DE_PHONE", 3.23F);
             put("FR_PHONE", 3.23F);
@@ -82,9 +85,12 @@ public class CategoryRecognizerTest {
 
         {
             put("CDG", new String[] { SemanticCategoryEnum.AIRPORT_CODE.getId() });
-            put("suresnes", new String[] { SemanticCategoryEnum.CITY.getId() });
+            put("suresnes", new String[] { SemanticCategoryEnum.CITY.getId(),//
+                    SemanticCategoryEnum.FR_COMMUNE.getId() });
             put("Paris", new String[] { SemanticCategoryEnum.CITY.getId(), //
-                    SemanticCategoryEnum.FIRST_NAME.getId() });
+                    SemanticCategoryEnum.FIRST_NAME.getId(),//
+                    SemanticCategoryEnum.FR_COMMUNE.getId(),//
+                    SemanticCategoryEnum.FR_DEPARTEMENT.getId() });
             put("France", new String[] { SemanticCategoryEnum.COUNTRY.getId(),//
                     SemanticCategoryEnum.FIRST_NAME.getId(), });
             put("CHN", new String[] { SemanticCategoryEnum.AIRPORT_CODE.getId(),//
@@ -92,7 +98,7 @@ public class CategoryRecognizerTest {
             put("EUR", new String[] { SemanticCategoryEnum.CURRENCY_CODE.getId(),//
                     SemanticCategoryEnum.CONTINENT_CODE.getId() });
             put("cat", new String[] { SemanticCategoryEnum.ANIMAL.getId(),//
-                    SemanticCategoryEnum.AIRPORT_CODE.getId() });
+                    SemanticCategoryEnum.LANGUAGE_CODE_ISO3.getId() });
             put("2012-02-03 7:08PM", new String[] {});
             put("1/2/2012", new String[] {});
             put("january", new String[] { SemanticCategoryEnum.MONTH.getId(),//
@@ -106,9 +112,8 @@ public class CategoryRecognizerTest {
                     SemanticCategoryEnum.FR_CODE_COMMUNE_INSEE.getId(),//
                     SemanticCategoryEnum.DE_POSTAL_CODE.getId(),//
                     SemanticCategoryEnum.US_POSTAL_CODE.getId() });
-            put("12345-6789", new String[] { SemanticCategoryEnum.US_SSN.getId(),//
-                    SemanticCategoryEnum.US_POSTAL_CODE.getId() });
-            put("Talend", new String[] {});
+            put("12345-6789", new String[] { SemanticCategoryEnum.US_POSTAL_CODE.getId() });
+            put("Talend", new String[] { SemanticCategoryEnum.COMPANY.getId() });
             put("9 rue pages, 92150 suresnes", new String[] { SemanticCategoryEnum.ADDRESS_LINE.getId() });
             put("avenue des champs elysees", new String[] { SemanticCategoryEnum.ADDRESS_LINE.getId() });
             put("F", new String[] { SemanticCategoryEnum.GENDER.getId() });
@@ -121,7 +126,7 @@ public class CategoryRecognizerTest {
             put("00493-1234567891", new String[] { SemanticCategoryEnum.DE_PHONE.getId() });
             put("00338.01345678", new String[] { SemanticCategoryEnum.FR_PHONE.getId() });
             put("132.2356", new String[] {});
-            put("Mr. Liu", new String[] { SemanticCategoryEnum.FULL_NAME.getId() });
+            put("Mr. John Doe", new String[] { SemanticCategoryEnum.FULL_NAME.getId() });
         }
     };
 
@@ -131,9 +136,12 @@ public class CategoryRecognizerTest {
 
         {
             put("CDG", new String[] { SemanticCategoryEnum.AIRPORT_CODE.getDisplayName() });
-            put("suresnes", new String[] { SemanticCategoryEnum.CITY.getDisplayName() });
+            put("suresnes", new String[] { SemanticCategoryEnum.CITY.getDisplayName(),//
+                    SemanticCategoryEnum.FR_COMMUNE.getDisplayName() });
             put("Paris", new String[] { SemanticCategoryEnum.CITY.getDisplayName(), //
-                    SemanticCategoryEnum.FIRST_NAME.getDisplayName() });
+                    SemanticCategoryEnum.FIRST_NAME.getDisplayName(),//
+                    SemanticCategoryEnum.FR_COMMUNE.getDisplayName(),//
+                    SemanticCategoryEnum.FR_DEPARTEMENT.getDisplayName() });
             put("France", new String[] { SemanticCategoryEnum.COUNTRY.getDisplayName(),//
                     SemanticCategoryEnum.FIRST_NAME.getDisplayName() });
             put("CHN", new String[] { SemanticCategoryEnum.AIRPORT_CODE.getDisplayName(),//
@@ -141,7 +149,7 @@ public class CategoryRecognizerTest {
             put("EUR", new String[] { SemanticCategoryEnum.CURRENCY_CODE.getDisplayName(),//
                     SemanticCategoryEnum.CONTINENT_CODE.getDisplayName() });
             put("cat", new String[] { SemanticCategoryEnum.ANIMAL.getDisplayName(),//
-                    SemanticCategoryEnum.AIRPORT_CODE.getDisplayName() });
+                    SemanticCategoryEnum.LANGUAGE_CODE_ISO3.getDisplayName() });
             put("2012-02-03 7:08PM", new String[] {});
             put("1/2/2012", new String[] {});
             put("january", new String[] { SemanticCategoryEnum.MONTH.getDisplayName(),//
@@ -155,9 +163,8 @@ public class CategoryRecognizerTest {
                     SemanticCategoryEnum.FR_CODE_COMMUNE_INSEE.getDisplayName(),//
                     SemanticCategoryEnum.DE_POSTAL_CODE.getDisplayName(),//
                     SemanticCategoryEnum.US_POSTAL_CODE.getDisplayName() });
-            put("12345-6789", new String[] { SemanticCategoryEnum.US_SSN.getDisplayName(),//
-                    SemanticCategoryEnum.US_POSTAL_CODE.getDisplayName() });
-            put("Talend", new String[] {});
+            put("12345-6789", new String[] { SemanticCategoryEnum.US_POSTAL_CODE.getDisplayName() });
+            put("Talend", new String[] { SemanticCategoryEnum.COMPANY.getDisplayName() });
             put("9 rue pages, 92150 suresnes", new String[] { SemanticCategoryEnum.ADDRESS_LINE.getDisplayName() });
             put("avenue des champs elysees", new String[] { SemanticCategoryEnum.ADDRESS_LINE.getDisplayName() });
             put("F", new String[] { SemanticCategoryEnum.GENDER.getDisplayName() });
@@ -170,7 +177,41 @@ public class CategoryRecognizerTest {
             put("00493-1234567891", new String[] { SemanticCategoryEnum.DE_PHONE.getDisplayName() });
             put("00338.01345678", new String[] { SemanticCategoryEnum.FR_PHONE.getDisplayName() });
             put("132.2356", new String[] {});
-            put("Mr. Liu", new String[] { SemanticCategoryEnum.FULL_NAME.getDisplayName() });
+            put("Mr. John Doe", new String[] { SemanticCategoryEnum.FULL_NAME.getDisplayName() });
+        }
+    };
+
+    private static Map<String, String[]> EXPECTED_CAT_ID_FOR_SINGLE_VALUES = new LinkedHashMap<String, String[]>() {
+
+        private static final long serialVersionUID = -5067273062214728849L;
+
+        {
+            put("KÄNGURU", new String[] { SemanticCategoryEnum.ANIMAL.getId() });
+
+            put("Rueil-Malmaison", new String[] { SemanticCategoryEnum.CITY.getId(),//
+                    SemanticCategoryEnum.FR_COMMUNE.getId() });
+            put("Buenos Aires", new String[] { SemanticCategoryEnum.CITY.getId(), SemanticCategoryEnum.AIRPORT.getId() });
+            put("Bruxelles(Jette)", new String[] {});
+
+            put("technical support", new String[] {});
+            put("Software Engineer", new String[] {});
+            put("ABDUL-AZIZ", new String[] { SemanticCategoryEnum.FIRST_NAME.getId() });
+            put("Rue de la Cité d'Antin", new String[] { SemanticCategoryEnum.ADDRESS_LINE.getId() });
+
+            put("BEL", new String[] { SemanticCategoryEnum.CITY.getId(), SemanticCategoryEnum.COUNTRY_CODE_ISO3.getId(),
+                    SemanticCategoryEnum.LANGUAGE_CODE_ISO3.getId(), SemanticCategoryEnum.AIRPORT_CODE.getId() });
+            put("AND", new String[] { SemanticCategoryEnum.COUNTRY_CODE_ISO3.getId(), SemanticCategoryEnum.AIRPORT_CODE.getId() });
+            put("AVI", new String[] { SemanticCategoryEnum.FIRST_NAME.getId(), SemanticCategoryEnum.AIRPORT_CODE.getId() });
+
+            put("Mr", new String[] { SemanticCategoryEnum.COUNTRY_CODE_ISO2.getId(),//
+                    SemanticCategoryEnum.LANGUAGE_CODE_ISO2.getId(), SemanticCategoryEnum.CIVILITY.getId() });
+
+            put("Mr.", new String[] { SemanticCategoryEnum.CIVILITY.getId(),
+                    // TODO for the code indexes: e.g. COUNTRY_CODE_ISO2, LANGUAGE_CODE_ISO2 we should move to regex
+                    SemanticCategoryEnum.COUNTRY_CODE_ISO2.getId(), SemanticCategoryEnum.LANGUAGE_CODE_ISO2.getId() });
+
+            put("Hartsfield–Jackson Atlanta International Airport", new String[] { SemanticCategoryEnum.AIRPORT.getId() });
+
         }
     };
 
@@ -197,7 +238,7 @@ public class CategoryRecognizerTest {
         for (String data : EXPECTED_CAT_ID.keySet()) {
 
             System.out.println("-------------------------------");
-            ISubCategory[] catNames = catRecognizer.processCategories(data);
+            String[] catNames = catRecognizer.process(data);
             System.out.printf("%-30s  \t  %-20s\n", "[" + data + "]", Arrays.toString(catNames));
 
             Collection<CategoryFrequency> result = catRecognizer.getResult();
@@ -216,18 +257,16 @@ public class CategoryRecognizerTest {
     public void testSingleColumn() {
         catRecognizer.prepare();
         for (String data : EXPECTED_CAT_ID.keySet()) {
-            ISubCategory[] catNames = catRecognizer.processCategories(data);
+            String[] catNames = catRecognizer.process(data);
             // System.out.println(data + " data:   " + Arrays.asList(catNames));
             // System.out.println(data + " expected category id: " + Arrays.asList(EXPECTED_CAT_ID.get(data)));
             // System.out.println(data + " expected displayname: " + Arrays.asList(EXPECTED_DISPLAYNAME.get(data)));
             assertEquals("Invalid assumption for data " + data, EXPECTED_CAT_ID.get(data).length, catNames.length); //$NON-NLS-1$
             assertEquals("Invalid assumption for data " + data, EXPECTED_DISPLAYNAME.get(data).length, catNames.length); //$NON-NLS-1$
-            for (ISubCategory catName : catNames) {
+            for (String catName : catNames) {
                 // System.out.println(Arrays.asList(EXPECTED_DISPLAYNAME.get(data)) + catName.toString());
-                assertTrue("Category ID <" + catName.getId() + "> is not recognized for data <" + data + ">",
-                        Arrays.asList(EXPECTED_CAT_ID.get(data)).contains(catName.getId()));
-                assertTrue("Category Name <" + catName.getId() + "> is not recognized for data <" + data + ">",
-                        Arrays.asList(EXPECTED_DISPLAYNAME.get(data)).contains(catName.getName()));
+                assertTrue("Category ID <" + catName + "> is not recognized for data <" + data + ">",
+                        Arrays.asList(EXPECTED_CAT_ID.get(data)).contains(catName));
             }
         }
 
@@ -238,52 +277,31 @@ public class CategoryRecognizerTest {
             log.debug("frequencyTableItem = " + tableItem.getCategoryId() + " / " + tableItem.getCount() + " / "
                     + tableItem.getFrequency() + " %");
 
-            // System.out.println("put(\"" + tableItem.getCategoryId() + "\", " + tableItem.getFrequency() + "F);");
+            System.out.println("put(\"" + tableItem.getCategoryId() + "\", " + tableItem.getFrequency() + "F);");
             assertEquals(EXPECTED_FREQUECY_TABLE.get(tableItem.getCategoryId()), tableItem.getFrequency(), 0.001);
         }
 
     }
-
-    private static Map<String, String[]> EXPECTED_CAT_ID_FOR_SINGLE_VALUES = new LinkedHashMap<String, String[]>() {
-
-        private static final long serialVersionUID = -5067273062214728849L;
-
-        {
-            put("KÄNGURU", new String[] { SemanticCategoryEnum.ANIMAL.getId() });
-
-            put("Rueil-Malmaison", new String[] { SemanticCategoryEnum.CITY.getId() });
-            put("Buenos Aires", new String[] { SemanticCategoryEnum.CITY.getId(), SemanticCategoryEnum.AIRPORT.getId() });
-            put("Bruxelles(Jette)", new String[] {});
-
-            put("technical support", new String[] {});
-            put("Software Engineer", new String[] {});
-            put("ABDUL-AZIZ", new String[] { SemanticCategoryEnum.FIRST_NAME.getId() });
-            put("Cité d'Antin", new String[] { SemanticCategoryEnum.ADDRESS_LINE.getId() });
-
-            put("BEL", new String[] { SemanticCategoryEnum.CITY.getId(), SemanticCategoryEnum.COUNTRY_CODE_ISO3.getId(),
-                    SemanticCategoryEnum.AIRPORT_CODE.getId() });
-            put("AND", new String[] { SemanticCategoryEnum.COUNTRY_CODE_ISO3.getId(), SemanticCategoryEnum.AIRPORT_CODE.getId() });
-            put("AVI", new String[] { SemanticCategoryEnum.FIRST_NAME.getId(), SemanticCategoryEnum.AIRPORT_CODE.getId() });
-        }
-    };
 
     @Test
     public void testSingleValues() {
         catRecognizer.prepare();
 
         for (String data : EXPECTED_CAT_ID_FOR_SINGLE_VALUES.keySet()) {
-            ISubCategory[] catNames = catRecognizer.processCategories(data);
+            String[] catNames = catRecognizer.process(data);
             assertEquals(
                     "Invalid assumption for data <" + data + ">, actual categories: " + Arrays.asList(catNames), EXPECTED_CAT_ID_FOR_SINGLE_VALUES.get(data).length, catNames.length); //$NON-NLS-1$
             // System.out.println("\n" + data + " => expected: " +
             // Arrays.asList(EXPECTED_CAT_ID_FOR_SINGLE_VALUES.get(data)));
 
-            for (ISubCategory catName : catNames) {
-                // System.out.println(data + " => actual: " + catName.getId());
-
-                assertTrue(Arrays.asList(EXPECTED_CAT_ID_FOR_SINGLE_VALUES.get(data)).contains(catName.getId()));
+            for (String catName : catNames) {
+                assertTrue(
+                        data + " => actual: " + catName + " => expected: "
+                                + Arrays.asList(EXPECTED_CAT_ID_FOR_SINGLE_VALUES.get(data)),
+                        Arrays.asList(EXPECTED_CAT_ID_FOR_SINGLE_VALUES.get(data)).contains(catName));
             }
         }
 
     }
+
 }

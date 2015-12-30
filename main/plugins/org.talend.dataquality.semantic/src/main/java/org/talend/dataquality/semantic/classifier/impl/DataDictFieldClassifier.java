@@ -38,19 +38,16 @@ public class DataDictFieldClassifier implements ISubCategoryClassifier {
     }
 
     @Override
-    @Deprecated
     public Set<String> classify(String data) {
         StringTokenizer t = new StringTokenizer(data, " ");
         final int tokenCount = t.countTokens();
 
         HashSet<String> result = new HashSet<String>();
         // if it's a valid syntactic data --> search in DD
-        if (tokenCount < 2) {
+        if (tokenCount < 3) {
             result.addAll(dictionary.findCategories(data));
-        } else if (tokenCount == 2) {
+        } else {
             result.addAll(dictionary.findCategories(data));
-            result.addAll(keyword.findCategories(data));
-        } else if (tokenCount > 2) {
             result.addAll(keyword.findCategories(data));
         }
 
@@ -62,6 +59,7 @@ public class DataDictFieldClassifier implements ISubCategoryClassifier {
      * 
      * @see org.talend.dataquality.semantic.classifier.ISubCategoryClassifier#classifyIntoCategories(java.lang.String)
      */
+    @Deprecated
     @Override
     public Set<ISubCategory> classifyIntoCategories(String data) {
         Set<ISubCategory> categories = new HashSet<>();

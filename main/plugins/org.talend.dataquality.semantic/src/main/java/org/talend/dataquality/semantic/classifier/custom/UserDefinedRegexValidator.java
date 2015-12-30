@@ -42,7 +42,9 @@ public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
      */
     private String subValidatorClassName = "";
 
-    private ISemanticValidator subValidator = createSubValidator(subValidatorClassName);
+    private ISemanticValidator subValidator;
+
+    private boolean isSetSubValidator = false;
 
     /**
      * Getter for subValidatorClassName.
@@ -54,15 +56,21 @@ public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
     }
 
     /**
-     * Sets the subValidatorClassName.
-     * <br>
-     * The subValidatorClassName should be a full qualified class name like <code>org.talend.dataquality.semantic.validator.impl.SedolValidator</code> <br>
+     * Sets the subValidatorClassName. <br>
+     * The subValidatorClassName should be a full qualified class name like
+     * <code>org.talend.dataquality.semantic.validator.impl.SedolValidator</code> <br>
      * A runtime exception will be thrown if given class name is incorrect or not loaded properly.
+     * 
      * @param subValidatorClassName the subValidatorClassName to set
      */
     public void setSubValidatorClassName(String subValidatorClassName) {
         this.subValidatorClassName = subValidatorClassName;
         this.subValidator = createSubValidator(subValidatorClassName);
+        isSetSubValidator = (this.subValidator != null);
+    }
+
+    boolean isSetSubValidator() {
+        return isSetSubValidator;
     }
 
     /**
@@ -88,8 +96,8 @@ public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
     }
 
     public void setPatternString(String patternString) {
-        if(StringUtils.isEmpty(patternString)){
-            throw new  RuntimeException("null argument of patternString is not allowed.");
+        if (StringUtils.isEmpty(patternString)) {
+            throw new RuntimeException("null argument of patternString is not allowed.");
         }
         this.patternString = patternString;
         pattern = caseInsensitive ? Pattern.compile(patternString, Pattern.CASE_INSENSITIVE) : Pattern.compile(patternString);
@@ -102,10 +110,18 @@ public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
      */
     @Override
     public boolean isValid(String str) {
-        return super.isValid(str) && this.validateWithSubValidator(str);
+        if (!super.isValid(str)) {
+            return false;
+        }
+        // else
+        if (isSetSubValidator && !this.validateWithSubValidator(str)) {
+            return false;
+        }
+        // else all checks validated
+        return true;
     }
 
-    private static ISemanticValidator createSubValidator(String validatorName) {
+    private ISemanticValidator createSubValidator(String validatorName) {
         if (validatorName != null && !validatorName.isEmpty()) {
             try {
                 Class<?> subValidator = Class.forName(validatorName);
@@ -118,15 +134,12 @@ public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
                 log.error(e, e);
             }
             // exception caught => default subValidator
+            // remove any existing subvalidator
+            this.isSetSubValidator = false;
+            this.subValidator = null;
+            throw new IllegalArgumentException("Invalid validator class name: " + validatorName); //$NON-NLS-1$
         }
-        // else return a default subvalidator
-        return new ISemanticValidator() {
-
-            @Override
-            public boolean isValid(String str) {
-                return true;
-            }
-        };
+        return null;
     }
 
     /**

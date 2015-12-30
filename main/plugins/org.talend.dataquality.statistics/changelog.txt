@@ -10,13 +10,13 @@ V1.3.4 2015-12-10
     - update to org.talend.dataquality.common 1.3.4
 
 V1.3.3 2015-11-23
-    - update dependencies following lucene4 upgrade in standardization library
-    - support custom date pattern in DatePatternAnalyzer and DataTypeQualityAnalyzer
-    - build the library as OSGI bundle
+	- update dependencies following lucene4 upgrade in standardization library
+	- support custom date pattern in DatePatternAnalyzer and DataTypeQualityAnalyzer
+	- build the library as OSGI bundle
 
 V1.3.2 2015-10-29
-    - TDQ-10903 optimize dictionaries
-    - adjust OPEN/CLOSE type for some indexes
+	- TDQ-10903 optimize dictionaries
+	- adjust OPEN/CLOSE type for some indexes
 
 V1.3.1 2015-10-22 (for Studio 6.1.0)
     - TDQ-10413 compute list of invalid values according to semantic type

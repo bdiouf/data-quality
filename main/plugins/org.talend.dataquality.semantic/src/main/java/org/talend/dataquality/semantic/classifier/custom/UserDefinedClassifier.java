@@ -68,12 +68,21 @@ public class UserDefinedClassifier extends AbstractSubCategoryClassifier {
         return potentialSubCategories.remove(category);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.talend.dataquality.semantic.classifier.impl.AbstractSubCategoryClassifier#classifyIntoCategories(java.lang
+     * .String)
+     */
+    @Deprecated
     @Override
     public Set<ISubCategory> classifyIntoCategories(String str) {
         MainCategory mainCategory = MainCategory.getMainCategory(str);
         return classifyIntoCategories(str, mainCategory);
     }
 
+    @Deprecated
     public Set<ISubCategory> classifyIntoCategories(String str, MainCategory mainCategory) {
         Set<ISubCategory> catSet = new HashSet<>();
         if (mainCategory == MainCategory.UNKNOWN || mainCategory == MainCategory.NULL || mainCategory == MainCategory.BLANK) {
@@ -119,11 +128,10 @@ public class UserDefinedClassifier extends AbstractSubCategoryClassifier {
     }
 
     /**
-     * @deprecated use {@link #classifyIntoCategories(String)} instead
+     * classify data into Semantic Category IDs
      * 
      * @see org.talend.dataquality.semantic.classifier.impl.AbstractSubCategoryClassifier#classify(java.lang.String)
      */
-    @Deprecated
     @Override
     public Set<String> classify(String str) {
         MainCategory mainCategory = MainCategory.getMainCategory(str);
@@ -131,8 +139,11 @@ public class UserDefinedClassifier extends AbstractSubCategoryClassifier {
     }
 
     /**
-     * @deprecated use {@link #classifyIntoCategories(String, MainCategory)} instead Validate this input data to adpt
-     * which customed rules.
+     * TODO check javadoc
+     * 
+     * classify data into Semantic Category IDs
+     * <p/>
+     * Validate this input data to adapt which customized rules.
      * <p/>
      * Actually, the main category can be calculated based on the input string, but this method has better performance
      * in case the mainCategory is already calculated previously.
@@ -141,7 +152,6 @@ public class UserDefinedClassifier extends AbstractSubCategoryClassifier {
      * @param mainCategory: the MainCategory is computed by the input data
      * @return
      */
-    @Deprecated
     public Set<String> classify(String str, MainCategory mainCategory) {
         Set<ISubCategory> categories = classifyIntoCategories(str, mainCategory);
         Set<String> catSet = new HashSet<>();

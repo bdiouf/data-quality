@@ -83,7 +83,7 @@ public class CategoryInferenceManager {
                 categoryRecognizer.prepare();
                 categoryRecognizers.put(colIdx, categoryRecognizer);
             }
-            categoryRecognizer.processCategories(fieldData == null ? null : fieldData.toString());
+            categoryRecognizer.process(fieldData == null ? null : fieldData.toString());
             colIdx++;
         }
         return true;

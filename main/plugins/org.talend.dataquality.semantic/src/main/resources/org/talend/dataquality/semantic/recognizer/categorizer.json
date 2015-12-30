@@ -35,13 +35,13 @@
         "id" : "AT_VAT_NUMBER",
         "mainCategory" : "AlphaNumeric",
         "name" : "AT VAT Number",
-        "validator" : { "patternString" : "^(AT){0,1}[U]{0,1}[0-9]{8}$" }
+        "validator" : { "patternString" : "^AT[0-9]{8}$" }
       },
       { "description" : "Bulgaria VAT number",
         "id" : "BG_VAT_NUMBER",
         "mainCategory" : "AlphaNumeric",
         "name" : "BG VAT Number",
-        "validator" : { "patternString" : "^(BG){0,1}([0-9]{9}|[0-9]{10})$" }
+        "validator" : { "patternString" : "^BG[0-9]{9,10}$" }
       },
       { "description" : "French VAT number",
         "id" : "FR_VAT_NUMBER",
@@ -89,7 +89,7 @@
         "id" : "US_SSN",
         "mainCategory" : "Numeric",
         "name" : "US Social Security Number",
-        "validator" : { "patternString" : "^\\d{3}-?\\d{2}-?\\d{4}$" }
+        "validator" : { "patternString" : "^\\d{3}-\\d{2}-\\d{4}$" }
       },
       { "description" : "national identification number, national identity number, or national insurance number generally called an NI Number (NINO)",
         "id" : "UK_SSN",

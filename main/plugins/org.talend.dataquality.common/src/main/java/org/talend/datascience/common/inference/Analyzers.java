@@ -73,17 +73,16 @@ public class Analyzers implements Analyzer<Analyzers.Result> {
     public List<Result> getResult() {
         for (Analyzer<?> analyzer : analyzers) {
             final List<?> analysis = analyzer.getResult();
-            for (int i = 0; i < analysis.size(); i++) {
-                for (int j = 0; j < analysis.size(); j++) {
-                    results.get(j).add(analysis.get(j));
-                }
+            for (int j = 0; j < analysis.size(); j++) {
+                results.get(j).add(analysis.get(j));
             }
         }
         return results;
     }
 
     /**
-     * Composite result aggregates several analyzer's result together.
+     * <<<<<<< HEAD A generic composite result which aggregates several analyzer's results. ======= Composite result
+     * aggregates several analyzer's result together. >>>>>>> workitem/TDQ-10955_remove_analyzeArray_method
      *
      */
     public static class Result {
@@ -97,11 +96,15 @@ public class Analyzers implements Analyzer<Analyzers.Result> {
             throw new IllegalArgumentException("No result of type '" + clazz.getName() + "'.");
         }
 
+        public <T> boolean exist(Class<T> clazz) {
+            return results.containsKey(clazz);
+        }
+
         public void add(Object result) {
             results.put(result.getClass(), result);
         }
     }
-    
+
     @Override
     public Analyzer<Result> merge(Analyzer<Result> another) {
         throw new NotImplementedException();

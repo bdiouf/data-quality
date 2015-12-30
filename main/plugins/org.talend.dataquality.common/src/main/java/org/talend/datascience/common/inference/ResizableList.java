@@ -13,7 +13,12 @@
 package org.talend.datascience.common.inference;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 /**
  * A {@link List} that can resize to a given maximum size and ensure that all index in list have an instance of
  * <i>T</i>. <b>Important:</b>type <i>T</i> must have a public zero args constructor.
@@ -21,7 +26,7 @@ import java.util.*;
  * @param <T> A class with a zero-arg constructor.
  * @see #resize(int)
  */
-public class ResizableList<T> implements List<T>,Serializable {
+public class ResizableList<T> implements List<T>, Serializable {
 
     private static final long serialVersionUID = -4643753633617225999L;
 
@@ -44,15 +49,16 @@ public class ResizableList<T> implements List<T>,Serializable {
         this.itemClass = itemClass;
         this.innerList = new ArrayList<T>();
     }
+
     /**
      * Creates a list with a copy of list.
      * 
      * @param copyOfList list to be initialized.
      */
-    public  ResizableList(List<T> copyOfList) {
+    public ResizableList(List<T> copyOfList) {
         this.innerList = copyOfList;
     }
-    
+
     /**
      * Resize the list so it contains <code>size</code> instances of <i>T</i>. Method only scales up, never down.
      * 
@@ -178,4 +184,5 @@ public class ResizableList<T> implements List<T>,Serializable {
     public List<T> subList(int i, int i1) {
         return innerList.subList(i, i1);
     }
+
 }

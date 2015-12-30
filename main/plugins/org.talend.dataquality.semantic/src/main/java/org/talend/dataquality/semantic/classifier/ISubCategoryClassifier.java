@@ -20,21 +20,20 @@ import java.util.Set;
 public interface ISubCategoryClassifier {
 
     /**
-     * Method "classify".
+     * Return a set of category IDs
      * 
-     * @deprecated use {@link #classifyIntoCategories(String)} instead
      * @param str the string that helps to classify
-     * @return the category names found for this string
+     * @return the category IDs found for this string
      */
-    @Deprecated
     public Set<String> classify(String str);
 
     /**
-     * Method "classifyIntoCategories".
+     * @deprecated Use {@link #classify(String)} instead
      * 
      * @param str the string that helps to classify
      * @return the categories found for this string
      */
+    @Deprecated
     public Set<ISubCategory> classifyIntoCategories(String str);
 
 }

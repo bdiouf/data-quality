@@ -26,16 +26,16 @@ public interface CategoryRecognizer {
 
     void reset();
 
+    String[] process(String data);
+
     /**
-     * @deprecated use {@link #processCategories(String)} instead.
+     * @deprecated use {@link #process(String)} instead.
      * 
      * Method "process".
      * @param data
      * @return
      */
     @Deprecated
-    String[] process(String data);
-
     ISubCategory[] processCategories(String data);
 
     Collection<CategoryFrequency> getResult();

@@ -142,7 +142,7 @@ public class UserDefinedClassifierTest {
             put("abc@gmail", new String[] {}); //$NON-NLS-1$
             put("12345", new String[] { "FR_CODE_COMMUNE_INSEE", "FR_POSTAL_CODE", "DE_POSTAL_CODE", "US_POSTAL_CODE" }); //$NON-NLS-1$  //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
             put("2A345", new String[] { "FR_CODE_COMMUNE_INSEE" }); //$NON-NLS-1$  //$NON-NLS-2$
-            put("12345-6789", new String[] { "US_POSTAL_CODE", "US_SSN" }); //$NON-NLS-1$  //$NON-NLS-2$  //$NON-NLS-3$
+            put("12345-6789", new String[] { "US_POSTAL_CODE" }); //$NON-NLS-1$  //$NON-NLS-2$  //$NON-NLS-3$
             put("Talend", new String[] {}); //$NON-NLS-1$
             put("9 rue pages, 92150 suresnes", new String[] {}); //$NON-NLS-1$
             put("avenue des champs elysees", new String[] {}); //$NON-NLS-1$
@@ -211,7 +211,7 @@ public class UserDefinedClassifierTest {
 
             put("BG123456789", new String[] { "BG_VAT_NUMBER" });//$NON-NLS-1$ //$NON-NLS-2$
             put("BG123456789", new String[] { "BG_VAT_NUMBER" });//$NON-NLS-1$ //$NON-NLS-2$
-            put("ATU12345678", new String[] { "AT_VAT_NUMBER" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("AT12345678", new String[] { "AT_VAT_NUMBER" });//$NON-NLS-1$ //$NON-NLS-2$
 
             // put("132.2356", new String[] { "LONGITUDE_LATITUDE_COORDINATE" });
             put("40.7127837,-74.00594130000002", new String[] { "GPS_COORDINATE" }); //$NON-NLS-1$ //$NON-NLS-2$
@@ -254,13 +254,13 @@ public class UserDefinedClassifierTest {
     public void testClassify() throws IOException {
         UserDefinedClassifier userDefinedClassifier = new UDCategorySerDeser().readJsonFile();
         for (String str : TEST_DATA.keySet()) {
-            Set<ISubCategory> cats = userDefinedClassifier.classifyIntoCategories(str);
+            Set<String> cats = userDefinedClassifier.classify(str);
             String[] expect_values = TEST_DATA.get(str);
             assertEquals("unexpected size for " + str, expect_values.length, cats.size()); //$NON-NLS-1$
             Object[] catsArray = new String[cats.size()];
             int i = 0;
-            for (ISubCategory iSubCategory : cats) {
-                catsArray[i++] = iSubCategory.getId();
+            for (String cat : cats) {
+                catsArray[i++] = cat;
             }
             Arrays.sort(catsArray);
             Arrays.sort(expect_values);

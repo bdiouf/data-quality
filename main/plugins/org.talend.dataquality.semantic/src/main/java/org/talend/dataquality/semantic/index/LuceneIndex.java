@@ -15,8 +15,12 @@ package org.talend.dataquality.semantic.index;
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
 
@@ -29,7 +33,7 @@ public class LuceneIndex implements Index {
 
     public LuceneIndex(URI indexPath, SynonymIndexSearcher.SynonymSearchMode searchMode) {
         searcher = new SynonymIndexSearcher(indexPath);
-        searcher.setTopDocLimit(5);
+        searcher.setTopDocLimit(10);
         searcher.setSearchMode(searchMode);
     }
 
@@ -49,15 +53,34 @@ public class LuceneIndex implements Index {
         Set<String> foundCategorySet = new HashSet<String>();
         try {
             TopDocs docs = searcher.searchDocumentBySynonym(data);
-            for (int i = 0; i < docs.scoreDocs.length; i++) {
-                int docNumber = docs.scoreDocs[i].doc;
-                String category = searcher.getWordByDocNumber(docNumber);
-                foundCategorySet.add(category);
+            List<String> inputTokens = searcher.getTokensFromAnalyzer(data);// get tokenized input data
+
+            String joinedTokens = StringUtils.join(inputTokens, ' ');
+            for (ScoreDoc scoreDoc : docs.scoreDocs) {
+                int docNumber = scoreDoc.doc;
+                Document document = searcher.getDocument(docNumber);
+                String category = document.getValues(SynonymIndexSearcher.F_WORD)[0];
+                if (foundCategorySet.contains(category)) {
+                    continue;
+                }
+                String[] synonyms = document.getValues(SynonymIndexSearcher.F_SYNTERM);
+                for (String syn : synonyms) {
+                    // verify if the tokenized input data contains all tokens from the search result
+                    if (SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_KEYWORD.equals(searcher.getSearchMode())) {
+                        // for KW index
+                        if (joinedTokens.contains(syn)) {
+                            foundCategorySet.add(category);
+                            break;
+                        }
+                    } else {
+                        foundCategorySet.add(category);
+                        break;
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return foundCategorySet;
     }
-
 }

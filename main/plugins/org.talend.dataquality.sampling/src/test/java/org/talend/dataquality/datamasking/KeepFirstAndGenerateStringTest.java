@@ -27,7 +27,7 @@ public class KeepFirstAndGenerateStringTest {
 
     private String output;
 
-    private String input = "123456"; //$NON-NLS-1$
+    private String input = "a1b2c3d456"; //$NON-NLS-1$
 
     private KeepFirstAndGenerateString kfag = new KeepFirstAndGenerateString();
 
@@ -40,7 +40,7 @@ public class KeepFirstAndGenerateStringTest {
     public void testGood() {
         kfag.integerParam = 3;
         output = kfag.generateMaskedRow(input);
-        assertEquals(output, "123830"); //$NON-NLS-1$
+        assertEquals(output, "a1b2c3d830"); //$NON-NLS-1$
     }
 
     @Test

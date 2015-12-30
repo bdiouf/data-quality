@@ -84,11 +84,6 @@ public class CategoryRecognizerBuilder {
         return this;
     }
 
-    public CategoryRecognizerBuilder setMode(Mode m) {
-        this.mode = m;
-        return this;
-    }
-
     public CategoryRecognizer build() throws IOException {
 
         switch (mode) {
@@ -111,14 +106,14 @@ public class CategoryRecognizerBuilder {
 
     private LuceneIndex getDataDictIndex() {
         if (dataDictIndex == null) {
-            dataDictIndex = new LuceneIndex(ddPath, SynonymIndexSearcher.SynonymSearchMode.MATCH_EXACT);
+            dataDictIndex = new LuceneIndex(ddPath, SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_DICTIONARY);
         }
         return dataDictIndex;
     }
 
     private LuceneIndex getKeywordIndex() {
         if (keywordIndex == null) {
-            keywordIndex = new LuceneIndex(kwPath, SynonymIndexSearcher.SynonymSearchMode.MATCH_ANY);
+            keywordIndex = new LuceneIndex(kwPath, SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_KEYWORD);
         }
         return keywordIndex;
     }
@@ -137,14 +132,16 @@ public class CategoryRecognizerBuilder {
         ELASTIC_SEARCH
     }
 
-    /**
-     * created by talend on 2015-07-28 Detailled comment.
-     *
-     */
-    public enum Dictionary {
-        ALL,
-        CITY,
-        AIRPORT
+    public Mode getMode() {
+        return mode;
+    }
+
+    public URI getDDPath() {
+        return ddPath;
+    }
+
+    public URI getKWPath() {
+        return kwPath;
     }
 
 }

@@ -1,23 +1,23 @@
 V1.4.0 2015-12-17
-    - refactor date time pattern analyzers
-    - use generated pattern format list with regexes instead of the previous one
-    - add some additional common patterns
+	- refactor date time pattern analyzers
+	- use generated pattern format list with regexes instead of the previous one
+	- add some additional common patterns
 
 V1.3.4 2015-12-10
     - bugfix for invalid custom date patterns
 
 V1.3.3 2015-11-4
-    - change parent pom
-       2015-11-17 mzhao
-    - Make it possible to add customized date and time pattern      
-        2005-11-19 mzhao
-    - Specify java compilation version 1.7 in pom.xml 
-    - Remove the singleton of DateTimeManager, and rename it to SystemDatetimeManager
-    - Add setParameter , addParameters and related remove methods.
+	- change parent pom
+	   2015-11-17 mzhao
+	- Make it possible to add customized date and time pattern		
+		2005-11-19 mzhao
+	- Specify java compilation version 1.7 in pom.xml 
+	- Remove the singleton of DateTimeManager, and rename it to SystemDatetimeManager
+	- Add setParameter , addParameters and related remove methods.
 
 V1.3.2 2015-10-29
-    - TDQ-10903 optimize dictionaries
-    - adjust OPEN/CLOSE type for some indexes
+	- TDQ-10903 optimize dictionaries
+	- adjust OPEN/CLOSE type for some indexes
 
 V1.3.1 2015-10-22 (for Studio 6.1.0)
     - TDQ-10413 compute list of invalid values according to semantic type

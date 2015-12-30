@@ -81,10 +81,9 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
             for (int i = 0; i < record.length; i++) {
                 CategoryRecognizer categoryRecognizer = columnIdxToCategoryRecognizer.get(i);
                 if (categoryRecognizer == null) {
-                    System.err.println("CategoryRecognizer is null for record and i=" + i + " " + Arrays.asList(record));
                     throw new RuntimeException("CategoryRecognizer is null for record and i=" + i + " " + Arrays.asList(record));
                 } else {
-                    categoryRecognizer.processCategories(record[i]);
+                    categoryRecognizer.process(record[i]);
                 }
             }
             currentCount++;

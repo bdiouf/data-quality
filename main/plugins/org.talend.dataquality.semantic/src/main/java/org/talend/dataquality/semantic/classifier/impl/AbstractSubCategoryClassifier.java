@@ -27,8 +27,12 @@ public abstract class AbstractSubCategoryClassifier implements ISubCategoryClass
 
     protected Set<ISubCategory> potentialSubCategories = new HashSet<>();
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.dataquality.semantic.classifier.ISubCategoryClassifier#classify(java.lang.String)
+     */
     @Override
-    @Deprecated
     public Set<String> classify(String str) {
         Set<String> catSet = new HashSet<>();
         Set<ISubCategory> categories = classifyIntoCategories(str);
@@ -38,6 +42,12 @@ public abstract class AbstractSubCategoryClassifier implements ISubCategoryClass
         return catSet;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.dataquality.semantic.classifier.ISubCategoryClassifier#classifyIntoCategories(java.lang.String)
+     */
+    @Deprecated
     @Override
     public Set<ISubCategory> classifyIntoCategories(String str) {
         Set<ISubCategory> catSet = new HashSet<>();

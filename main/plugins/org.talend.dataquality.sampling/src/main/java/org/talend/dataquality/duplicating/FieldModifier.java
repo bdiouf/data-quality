@@ -182,11 +182,9 @@ public class FieldModifier {
                 for (int i = 0; i < modifCount; i++) {
                     int pos = random.nextInt(sb.length());
                     char charToReplace = sb.charAt(pos);
-                    System.out.println("charToReplace: " + charToReplace);
                     int idx = Character.toUpperCase(charToReplace) - 'A';
                     if (idx >= 0 && idx < 26) {
                         List<Character> soundexSet = getInverseSoundexMap().get(soundexMap[idx]);
-                        System.out.println("soundexSet: " + soundexSet);
                         if (soundexSet != null) {
                             charSet.clear();
                             charSet.addAll(soundexSet);
@@ -197,7 +195,6 @@ public class FieldModifier {
                                 if (Character.isLowerCase(charToReplace)) {
                                     newChar = Character.toLowerCase(newChar);
                                 }
-                                System.out.println("newChar: " + newChar);
                                 sb.setCharAt(pos, newChar);
                             }
                         }
