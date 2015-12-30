@@ -84,6 +84,13 @@ public class SystemDateTimePatternManager {
      * @return true if the value is a date.
      */
     public static boolean isDate(String value) {
+        if (StringUtils.isEmpty(value)) {
+            return false;
+        }
+        // The length of date strings must not be less than 6, and must not exceed 64.
+        if (value.length() < 6 || value.length() > 64) {
+            return false;
+        }
         return isDateTime(DATE_PATTERN_GROUP_LIST, value);
     }
 
@@ -94,16 +101,19 @@ public class SystemDateTimePatternManager {
      * @return true if the value is type "Time", false otherwise.
      */
     public static boolean isTime(String value) {
+        if (StringUtils.isEmpty(value)) {
+            return false;
+        }
+        // The length of date strings must not be less than 4, and must not exceed 24.
+        if (value.length() < 4 || value.length() > 24) {
+            return false;
+        }
         return isDateTime(TIME_PATTERN_GROUP_LIST, value);
     }
 
     private static boolean isDateTime(List<Map<Pattern, String>> patternGroupList, String value) {
         if (StringUtils.isNotEmpty(value)) {
-            // 1. The length of date characters should not exceed 64.
-            if (value.length() > 64) {
-                return false;
-            }
-            // 2. at least 3 digit
+            // at least 3 digit
             boolean hasEnoughDigits = false;
             int digitCount = 0;
             for (int i = 0; i < value.length(); i++) {
@@ -120,7 +130,7 @@ public class SystemDateTimePatternManager {
                 return false;
             }
 
-            // 3. Check it by list of patterns
+            // Check the value with a list of regex patterns
             for (Map<Pattern, String> patternMap : patternGroupList) {
                 for (Pattern parser : patternMap.keySet()) {
                     try {
