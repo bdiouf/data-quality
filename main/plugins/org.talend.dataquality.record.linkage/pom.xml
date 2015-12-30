@@ -4,9 +4,9 @@
 
     <parent>
         <groupId>org.talend.dataquality</groupId>
-        <artifactId>tdq-se-libs</artifactId>
-        <version>4</version>
-        <relativePath>../../libraries/pom.xml</relativePath>
+        <artifactId>tdq-library-parent</artifactId>
+        <version>1</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.record.linkage</artifactId>
     <packaging>bundle</packaging>
@@ -64,7 +64,7 @@
         <dependency>
             <groupId>org.talend.dataquality</groupId>
             <artifactId>org.talend.dataquality.common</artifactId>
-            <version>1.3.3</version>
+            <version>1.4.0</version>
         </dependency>
 
         <dependency>
