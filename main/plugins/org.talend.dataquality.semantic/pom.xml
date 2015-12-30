@@ -15,17 +15,17 @@
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>
 			<artifactId>org.talend.dataquality.common</artifactId>
-			<version>1.4.0</version>
+			<version>1.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>
 			<artifactId>org.talend.dataquality.sampling</artifactId>
-			<version>2.1.4</version>
+			<version>2.1.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>
 			<artifactId>org.talend.dataquality.standardization</artifactId>
-			<version>3.0.1</version>
+			<version>3.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.elasticsearch</groupId>

@@ -1,3 +1,6 @@
+V2.1.5 2015-12-30
+    - move to data-quality repository, change parent pom
+
 v2.1.4 zshen 2015-11-26
     - TDQ-11187 use BufferedReader instead of Scanner and remove parameter keyDelimiter from method KeysLoader.loadKeys
 

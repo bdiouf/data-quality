@@ -1,3 +1,6 @@
+V1.4.1 2015-12-30
+    - move to data-quality repository, change parent pom
+
 V1.4.0 2015-12-17
 	- refactor date time pattern analyzers
 	- use generated pattern format list with regexes instead of the previous one

@@ -1,3 +1,6 @@
+3.0.2 2015-12-30
+    - move to data-quality repository, change parent pom
+
 3.0.1 # sizhaoliu and fji 2015/11/23
 - build standardazation library with new Maven mechanism
 - set default maxEdits parameter to 1 instead of 2

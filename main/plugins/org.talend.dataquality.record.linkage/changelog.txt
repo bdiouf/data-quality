@@ -1,4 +1,6 @@
-Talend record linkage library
+V3.0.3 2015-12-30
+    - move to data-quality repository, change parent pom
+
 V3.0.2 2015-12-01 (for Studio 6.1.1)
     - Update dependency version of org.talend.utils to 6.1.1
 

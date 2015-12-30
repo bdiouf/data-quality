@@ -1,4 +1,5 @@
-V1.4.1 2015-12-28
+V1.4.1 2015-12-30
+    - move to data-quality repository, change parent pom
 	- TDQ-11371 remove TIME from semantic category list
 
 V1.4.0 2015-12-17
