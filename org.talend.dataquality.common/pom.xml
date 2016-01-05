@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.talend.dataquality</groupId>
-        <artifactId>tdq-library-parent</artifactId>
-        <version>1</version>
-        <relativePath>../pom.xml</relativePath>
+        <artifactId>dataquality-libraries</artifactId>
+        <version>${dataquality.libraries.version}</version>
+        <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.common</artifactId>
-    <version>1.4.1</version>
+    <version>${dataquality.libraries.version}</version>
     <packaging>bundle</packaging>
     <url>www.talend.com</url>
     <description>Data Quality Common Library is the low level library containing interfaces and common utility classes.</description>
@@ -16,9 +16,8 @@
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <!--
-           This is used to generate README.md file
-        -->
+
+        <!-- This is used to generate README.md file -->
         <commons.componentid>org.talend.dataquality.common</commons.componentid>
         <commons.release.version>1.4.1</commons.release.version>
     </properties>

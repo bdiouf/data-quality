@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.talend.dataquality</groupId>
-		<artifactId>tdq-library-parent</artifactId>
-		<version>1</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+    <parent>
+        <groupId>org.talend.dataquality</groupId>
+        <artifactId>dataquality-libraries</artifactId>
+        <version>${dataquality.libraries.version}</version>
+        <relativePath>../dataquality-libraries</relativePath>
+    </parent>
 	<artifactId>org.talend.dataquality.statistics</artifactId>
-	<version>1.4.1</version>
+	<version>${dataquality.libraries.version}</version>
 	<packaging>bundle</packaging>
 	<url>www.talend.com</url>
 
@@ -16,12 +16,12 @@
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>
 			<artifactId>org.talend.dataquality.common</artifactId>
-			<version>1.4.1</version>
+			<version>${dataquality.libraries.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>
 			<artifactId>org.talend.dataquality.semantic</artifactId>
-			<version>1.4.1</version>
+			<version>${dataquality.libraries.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

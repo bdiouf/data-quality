@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.talend.dataquality</groupId>
+        <artifactId>dataquality-parent</artifactId>
+        <version>1</version>
+        <relativePath>..</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.talend.dataquality</groupId>
+    <artifactId>dataquality-libraries</artifactId>
+    <version>1.4.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>dataquality-libraries</name>
+    <properties>
+        <org.talend.utils.version>6.1.1</org.talend.utils.version>
+        
+        <dataquality.libraries.version>1.4.1-SNAPSHOT</dataquality.libraries.version>
+        <dataquality.record.linkage.version>3.0.3-SNAPSHOT</dataquality.record.linkage.version>
+        <dataquality.sampling.version>2.1.5-SNAPSHOT</dataquality.sampling.version>
+        <dataquality.standardization.version>3.0.2-SNAPSHOT</dataquality.standardization.version>
+        <dataquality.wordnet.version>1.0.2-SNAPSHOT</dataquality.wordnet.version>
+    </properties>
+    <modules>
+        <module>../org.talend.dataquality.common</module>
+        <module>../org.talend.dataquality.record.linkage</module>
+        <module>../org.talend.dataquality.sampling</module>
+        <module>../org.talend.dataquality.standardization</module>
+        <module>../org.talend.dataquality.semantic</module>
+        <module>../org.talend.dataquality.statistics</module>
+        <module>../org.talend.dataquality.wordnet</module>
+    </modules>
+</project>

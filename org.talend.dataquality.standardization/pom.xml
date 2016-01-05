@@ -1,16 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.talend.dataquality</groupId>
-        <artifactId>tdq-library-parent</artifactId>
-        <version>1</version>
-        <relativePath>../pom.xml</relativePath>
+        <artifactId>dataquality-libraries</artifactId>
+        <version>${dataquality.libraries.version}</version>
+        <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.standardization</artifactId>
     <packaging>bundle</packaging>
-    <version>3.0.2</version>
+    <version>${dataquality.standardization.version}</version>
     <name>org.talend.dataquality.standardization</name>
     <description>Dataquality Standardization library description</description>
 
