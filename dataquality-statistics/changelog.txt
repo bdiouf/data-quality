@@ -1,6 +1,8 @@
 V1.4.1 2015-12-30
-    - move to data-quality repository, change parent pom
+	- move to data-quality repository, change parent pom
 	- performance improvement on GetAllPatterns by using grouped regexes
+	- remove patterns with single y for year part
+	- correct some regex generation rule to make it compatible with Java8 DateTimeFormatter API 
 
 V1.4.0 2015-12-17
 	- refactor date time pattern analyzers
@@ -8,7 +10,7 @@ V1.4.0 2015-12-17
 	- add some additional common patterns
 
 V1.3.4 2015-12-10
-    - update to org.talend.dataquality.common 1.3.4
+	- update to org.talend.dataquality.common 1.3.4
 
 V1.3.3 2015-11-23
 	- update dependencies following lucene4 upgrade in standardization library
@@ -20,10 +22,10 @@ V1.3.2 2015-10-29
 	- adjust OPEN/CLOSE type for some indexes
 
 V1.3.1 2015-10-22 (for Studio 6.1.0)
-    - TDQ-10413 compute list of invalid values according to semantic type
-    - TDQ-10981 concurrent analyzer
-    - TDQ-10988 latin1 supplement support in pattern statistics
-    
+	- TDQ-10413 compute list of invalid values according to semantic type
+	- TDQ-10981 concurrent analyzer
+	- TDQ-10988 latin1 supplement support in pattern statistics
+
 === 2015-10-14 ===
 1. Separate the pattern frequency class. -mzhao
 2. Create pattern replacement for latin-1 suppliment characters. -mzhao

@@ -2,10 +2,10 @@ Data Quality - Statistics API
 ===================
 ![alt text](http://www.talend.com/sites/all/themes/talend_responsive/images/logo.png "Talend")
 
-This is a Java 8 API for statistical analysis. 
-This API built using [Apache Maven](http://maven.apache.org/) run:
+This module contains API for statistical analysis. 
+This API can be built with [Apache Maven](http://maven.apache.org/): (JDK 8 is required)
 
-    build/mvn -DskipTests clean package
+    mvn clean install
 
 ## Packages Information
 
