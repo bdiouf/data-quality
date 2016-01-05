@@ -11,3 +11,4 @@ dist/
 *.jardesc
 *.directory
 .cache*
+/.project
