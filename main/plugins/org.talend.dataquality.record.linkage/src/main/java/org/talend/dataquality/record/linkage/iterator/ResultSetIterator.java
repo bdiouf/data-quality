@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.talend.dataquality.matchmerge.Attribute;
 import org.talend.dataquality.matchmerge.Record;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
@@ -41,6 +42,8 @@ public class ResultSetIterator implements Iterator<Record> {
     private List<String> columnNames;
 
     private long index = 0;
+
+    private Logger log = Logger.getLogger(ResultSetIterator.class);
 
     public ResultSetIterator(Connection sqlConnection, String sqlQuery, List<String> elementNames) throws SQLException {
         this.connection = sqlConnection;
@@ -90,12 +93,15 @@ public class ResultSetIterator implements Iterator<Record> {
             }
             for (int i = 0; i < metaData.getColumnCount(); i++) {
                 Attribute attribute = new Attribute(columnNames.get(i), i);
-
                 String value = String.valueOf(resultSet.getObject(i + 1));
                 attribute.setValue(value);
                 attributes.add(attribute);
             }
             return new RichRecord(attributes, String.valueOf(index++), 0, StringUtils.EMPTY);
+        } catch (SQLException exp) {
+            // TDQ-11425 if SQLException,should return null so that skip the current record and continue to do others.
+            log.error(exp, exp);
+            return null;
         } catch (Exception e) {
             throw new RuntimeException("Could not build next result", e); //$NON-NLS-1$
         }
