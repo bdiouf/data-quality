@@ -22,12 +22,12 @@
         <dataquality.wordnet.version>1.0.2-SNAPSHOT</dataquality.wordnet.version>
     </properties>
     <modules>
-        <module>../org.talend.dataquality.common</module>
-        <module>../org.talend.dataquality.record.linkage</module>
-        <module>../org.talend.dataquality.sampling</module>
-        <module>../org.talend.dataquality.standardization</module>
-        <module>../org.talend.dataquality.semantic</module>
-        <module>../org.talend.dataquality.statistics</module>
-        <module>../org.talend.dataquality.wordnet</module>
+        <module>../dataquality-common</module>
+        <module>../dataquality-record-linkage</module>
+        <module>../dataquality-sampling</module>
+        <module>../dataquality-standardization</module>
+        <module>../dataquality-semantic</module>
+        <module>../dataquality-statistics</module>
+        <module>../dataquality-wordnet</module>
     </modules>
 </project>
