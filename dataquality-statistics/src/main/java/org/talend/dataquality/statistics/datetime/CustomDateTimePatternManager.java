@@ -69,30 +69,40 @@ public final class CustomDateTimePatternManager {
         return false;
     }
 
+    private static DateTimeFormatter getDateTimeFormatterByPattern(String customPattern, Locale locale) {
+        String localeStr = locale.toString();
+        DateTimeFormatter formatter = dateTimeFormatterCache.get(customPattern + localeStr);
+        if (formatter == null) {
+            try {
+                formatter = DateTimeFormatter.ofPattern(customPattern, locale);
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
+            dateTimeFormatterCache.put(customPattern + localeStr, formatter);
+        }
+        return formatter;
+    }
+
     private static boolean isMatchCustomPattern(String value, String customPattern, Locale locale) {
         if (customPattern == null) {
             return false;
         }
 
-        DateTimeFormatter formatter = dateTimeFormatterCache.get(customPattern);
-        if (formatter == null) {
-            try {
-                formatter = DateTimeFormatter.ofPattern(customPattern, locale);
-            } catch (IllegalArgumentException e) {
-                return false;
-            }
-            dateTimeFormatterCache.put(customPattern, formatter);
-        }
-
         try {// firstly, try with user-defined locale
-            formatter.parse(value);
-            return true;
-        } catch (DateTimeParseException | IllegalArgumentException e) {
+            final DateTimeFormatter formatter = getDateTimeFormatterByPattern(customPattern, locale);
+            if (formatter != null) {
+                formatter.parse(value);
+                return true;
+            }
+        } catch (DateTimeParseException e) {
             if (!DEFAULT_LOCALE.equals(locale)) {
                 try {// try with LOCALE_US if user defined locale is not US
-                    DateTimeFormatter.ofPattern(customPattern, Locale.US).parse(value);
-                    return true;
-                } catch (DateTimeParseException | IllegalArgumentException e1) {
+                    final DateTimeFormatter formatter = getDateTimeFormatterByPattern(customPattern, Locale.US);
+                    if (formatter != null) {
+                        formatter.parse(value);
+                        return true;
+                    }
+                } catch (DateTimeParseException e2) {
                     // return false
                 }
             }
