@@ -15,11 +15,9 @@ package org.talend.dataquality.statistics.datetime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -28,11 +26,9 @@ import java.util.Set;
  * @author mzhao
  *
  */
-public final class CustomDateTimePatternManager {
+public final class CustomDateTimePatternManagerOld {
 
     private static final Locale DEFAULT_LOCALE = Locale.US;
-
-    private static Map<String, DateTimeFormatter> dateTimeFormatterCache = new HashMap<String, DateTimeFormatter>();
 
     public static boolean isDate(String value, List<String> customPatterns) {
         return isDate(value, customPatterns, DEFAULT_LOCALE);
@@ -73,19 +69,8 @@ public final class CustomDateTimePatternManager {
         if (customPattern == null) {
             return false;
         }
-
-        DateTimeFormatter formatter = dateTimeFormatterCache.get(customPattern);
-        if (formatter == null) {
-            try {
-                formatter = DateTimeFormatter.ofPattern(customPattern, locale);
-            } catch (IllegalArgumentException e) {
-                return false;
-            }
-            dateTimeFormatterCache.put(customPattern, formatter);
-        }
-
         try {// firstly, try with user-defined locale
-            formatter.parse(value);
+            DateTimeFormatter.ofPattern(customPattern, locale).parse(value);
             return true;
         } catch (DateTimeParseException | IllegalArgumentException e) {
             if (!DEFAULT_LOCALE.equals(locale)) {
