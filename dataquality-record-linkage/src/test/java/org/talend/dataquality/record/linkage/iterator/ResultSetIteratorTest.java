@@ -18,23 +18,32 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Array;
 import java.sql.Blob;
+import java.sql.CallableStatement;
 import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.Date;
 import java.sql.NClob;
+import java.sql.PreparedStatement;
 import java.sql.Ref;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.RowId;
+import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.SQLXML;
+import java.sql.Savepoint;
 import java.sql.Statement;
+import java.sql.Struct;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.Executor;
 
 import junit.framework.TestCase;
 
@@ -68,8 +77,8 @@ public class ResultSetIteratorTest extends TestCase {
         dataObjects.add("Lily"); //$NON-NLS-1$
         dataObjects.add("2015-6-25"); //$NON-NLS-1$
 
-        ResultSet resultset = new ResultSetImpl(dataObjects);
-        ResultSetIterator resIterator = new ResultSetIterator(resultset, elementNames);
+        Connection conn = new MyConnectionImpl(dataObjects);
+        ResultSetIterator resIterator = new ResultSetIterator(conn, null, elementNames);
         Record next = resIterator.next();
         Assert.assertNotNull(next);
         List<Attribute> attributes = next.getAttributes();
@@ -93,19 +102,20 @@ public class ResultSetIteratorTest extends TestCase {
         dataObjects.add("Lily"); //$NON-NLS-1$
         dataObjects.add("0000-00-00 00:00:00"); //$NON-NLS-1$
 
-        ResultSet resultset = new ResultSetImpl(dataObjects);
-        ResultSetIterator resIterator = new ResultSetIterator(resultset, elementNames);
+        // ResultSet resultset = new ResultSetImpl(dataObjects);
+        Connection conn = new MyConnectionImpl(dataObjects);
+        ResultSetIterator resIterator = new ResultSetIterator(conn, null, elementNames);
         Record next = resIterator.next();
         Assert.assertNotNull(next);
         Assert.assertTrue(next.getAttributes().size() == 3);
         Assert.assertNull(next.getAttributes().get(2).getValue());
     }
 
-    private class ResultSetImpl implements ResultSet {
+    private class MyResultSetImpl implements ResultSet {
 
         List<Object> dataObjects = null;
 
-        public ResultSetImpl(List<Object> dataObjects) {
+        public MyResultSetImpl(List<Object> dataObjects) {
             this.dataObjects = dataObjects;
         }
 
@@ -2475,6 +2485,1107 @@ public class ResultSetIteratorTest extends TestCase {
         public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
             // TODO Auto-generated method stub
             return null;
+        }
+
+    }
+
+    private class MyConnectionImpl implements Connection {
+
+        List<Object> dataObjects = null;
+
+        public MyConnectionImpl(List<Object> dataObjects) {
+            this.dataObjects = dataObjects;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Wrapper#unwrap(java.lang.Class)
+         */
+        @Override
+        public <T> T unwrap(Class<T> iface) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)
+         */
+        @Override
+        public boolean isWrapperFor(Class<?> iface) throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#createStatement()
+         */
+        @Override
+        public Statement createStatement() throws SQLException {
+            MyStatementImpl stm = new MyStatementImpl(dataObjects);
+            return stm;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#prepareStatement(java.lang.String)
+         */
+        @Override
+        public PreparedStatement prepareStatement(String sql) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#prepareCall(java.lang.String)
+         */
+        @Override
+        public CallableStatement prepareCall(String sql) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#nativeSQL(java.lang.String)
+         */
+        @Override
+        public String nativeSQL(String sql) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setAutoCommit(boolean)
+         */
+        @Override
+        public void setAutoCommit(boolean autoCommit) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getAutoCommit()
+         */
+        @Override
+        public boolean getAutoCommit() throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#commit()
+         */
+        @Override
+        public void commit() throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#rollback()
+         */
+        @Override
+        public void rollback() throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#close()
+         */
+        @Override
+        public void close() throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#isClosed()
+         */
+        @Override
+        public boolean isClosed() throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getMetaData()
+         */
+        @Override
+        public DatabaseMetaData getMetaData() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setReadOnly(boolean)
+         */
+        @Override
+        public void setReadOnly(boolean readOnly) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#isReadOnly()
+         */
+        @Override
+        public boolean isReadOnly() throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setCatalog(java.lang.String)
+         */
+        @Override
+        public void setCatalog(String catalog) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getCatalog()
+         */
+        @Override
+        public String getCatalog() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setTransactionIsolation(int)
+         */
+        @Override
+        public void setTransactionIsolation(int level) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getTransactionIsolation()
+         */
+        @Override
+        public int getTransactionIsolation() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getWarnings()
+         */
+        @Override
+        public SQLWarning getWarnings() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#clearWarnings()
+         */
+        @Override
+        public void clearWarnings() throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#createStatement(int, int)
+         */
+        @Override
+        public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#prepareStatement(java.lang.String, int, int)
+         */
+        @Override
+        public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#prepareCall(java.lang.String, int, int)
+         */
+        @Override
+        public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getTypeMap()
+         */
+        @Override
+        public Map<String, Class<?>> getTypeMap() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setTypeMap(java.util.Map)
+         */
+        @Override
+        public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setHoldability(int)
+         */
+        @Override
+        public void setHoldability(int holdability) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getHoldability()
+         */
+        @Override
+        public int getHoldability() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setSavepoint()
+         */
+        @Override
+        public Savepoint setSavepoint() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setSavepoint(java.lang.String)
+         */
+        @Override
+        public Savepoint setSavepoint(String name) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#rollback(java.sql.Savepoint)
+         */
+        @Override
+        public void rollback(Savepoint savepoint) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#releaseSavepoint(java.sql.Savepoint)
+         */
+        @Override
+        public void releaseSavepoint(Savepoint savepoint) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#createStatement(int, int, int)
+         */
+        @Override
+        public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability)
+                throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#prepareStatement(java.lang.String, int, int, int)
+         */
+        @Override
+        public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency,
+                int resultSetHoldability) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#prepareCall(java.lang.String, int, int, int)
+         */
+        @Override
+        public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability)
+                throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#prepareStatement(java.lang.String, int)
+         */
+        @Override
+        public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#prepareStatement(java.lang.String, int[])
+         */
+        @Override
+        public PreparedStatement prepareStatement(String sql, int[] columnIndexes) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#prepareStatement(java.lang.String, java.lang.String[])
+         */
+        @Override
+        public PreparedStatement prepareStatement(String sql, String[] columnNames) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#createClob()
+         */
+        @Override
+        public Clob createClob() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#createBlob()
+         */
+        @Override
+        public Blob createBlob() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#createNClob()
+         */
+        @Override
+        public NClob createNClob() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#createSQLXML()
+         */
+        @Override
+        public SQLXML createSQLXML() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#isValid(int)
+         */
+        @Override
+        public boolean isValid(int timeout) throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setClientInfo(java.lang.String, java.lang.String)
+         */
+        @Override
+        public void setClientInfo(String name, String value) throws SQLClientInfoException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setClientInfo(java.util.Properties)
+         */
+        @Override
+        public void setClientInfo(Properties properties) throws SQLClientInfoException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getClientInfo(java.lang.String)
+         */
+        @Override
+        public String getClientInfo(String name) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getClientInfo()
+         */
+        @Override
+        public Properties getClientInfo() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#createArrayOf(java.lang.String, java.lang.Object[])
+         */
+        @Override
+        public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#createStruct(java.lang.String, java.lang.Object[])
+         */
+        @Override
+        public Struct createStruct(String typeName, Object[] attributes) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setSchema(java.lang.String)
+         */
+        @Override
+        public void setSchema(String schema) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getSchema()
+         */
+        @Override
+        public String getSchema() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#abort(java.util.concurrent.Executor)
+         */
+        @Override
+        public void abort(Executor executor) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#setNetworkTimeout(java.util.concurrent.Executor, int)
+         */
+        @Override
+        public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Connection#getNetworkTimeout()
+         */
+        @Override
+        public int getNetworkTimeout() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+    }
+
+    private class MyStatementImpl implements Statement {
+
+        List<Object> dataObjects = null;
+
+        public MyStatementImpl(List<Object> dataObjects) {
+            this.dataObjects = dataObjects;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Wrapper#unwrap(java.lang.Class)
+         */
+        @Override
+        public <T> T unwrap(Class<T> iface) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)
+         */
+        @Override
+        public boolean isWrapperFor(Class<?> iface) throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#executeQuery(java.lang.String)
+         */
+        @Override
+        public ResultSet executeQuery(String sql) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#executeUpdate(java.lang.String)
+         */
+        @Override
+        public int executeUpdate(String sql) throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#close()
+         */
+        @Override
+        public void close() throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getMaxFieldSize()
+         */
+        @Override
+        public int getMaxFieldSize() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#setMaxFieldSize(int)
+         */
+        @Override
+        public void setMaxFieldSize(int max) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getMaxRows()
+         */
+        @Override
+        public int getMaxRows() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#setMaxRows(int)
+         */
+        @Override
+        public void setMaxRows(int max) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#setEscapeProcessing(boolean)
+         */
+        @Override
+        public void setEscapeProcessing(boolean enable) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getQueryTimeout()
+         */
+        @Override
+        public int getQueryTimeout() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#setQueryTimeout(int)
+         */
+        @Override
+        public void setQueryTimeout(int seconds) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#cancel()
+         */
+        @Override
+        public void cancel() throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getWarnings()
+         */
+        @Override
+        public SQLWarning getWarnings() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#clearWarnings()
+         */
+        @Override
+        public void clearWarnings() throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#setCursorName(java.lang.String)
+         */
+        @Override
+        public void setCursorName(String name) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#execute(java.lang.String)
+         */
+        @Override
+        public boolean execute(String sql) throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getResultSet()
+         */
+        @Override
+        public ResultSet getResultSet() throws SQLException {
+
+            return new MyResultSetImpl(dataObjects);
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getUpdateCount()
+         */
+        @Override
+        public int getUpdateCount() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getMoreResults()
+         */
+        @Override
+        public boolean getMoreResults() throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#setFetchDirection(int)
+         */
+        @Override
+        public void setFetchDirection(int direction) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getFetchDirection()
+         */
+        @Override
+        public int getFetchDirection() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#setFetchSize(int)
+         */
+        @Override
+        public void setFetchSize(int rows) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getFetchSize()
+         */
+        @Override
+        public int getFetchSize() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getResultSetConcurrency()
+         */
+        @Override
+        public int getResultSetConcurrency() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getResultSetType()
+         */
+        @Override
+        public int getResultSetType() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#addBatch(java.lang.String)
+         */
+        @Override
+        public void addBatch(String sql) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#clearBatch()
+         */
+        @Override
+        public void clearBatch() throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#executeBatch()
+         */
+        @Override
+        public int[] executeBatch() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getConnection()
+         */
+        @Override
+        public Connection getConnection() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getMoreResults(int)
+         */
+        @Override
+        public boolean getMoreResults(int current) throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getGeneratedKeys()
+         */
+        @Override
+        public ResultSet getGeneratedKeys() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#executeUpdate(java.lang.String, int)
+         */
+        @Override
+        public int executeUpdate(String sql, int autoGeneratedKeys) throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#executeUpdate(java.lang.String, int[])
+         */
+        @Override
+        public int executeUpdate(String sql, int[] columnIndexes) throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#executeUpdate(java.lang.String, java.lang.String[])
+         */
+        @Override
+        public int executeUpdate(String sql, String[] columnNames) throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#execute(java.lang.String, int)
+         */
+        @Override
+        public boolean execute(String sql, int autoGeneratedKeys) throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#execute(java.lang.String, int[])
+         */
+        @Override
+        public boolean execute(String sql, int[] columnIndexes) throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#execute(java.lang.String, java.lang.String[])
+         */
+        @Override
+        public boolean execute(String sql, String[] columnNames) throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#getResultSetHoldability()
+         */
+        @Override
+        public int getResultSetHoldability() throws SQLException {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#isClosed()
+         */
+        @Override
+        public boolean isClosed() throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#setPoolable(boolean)
+         */
+        @Override
+        public void setPoolable(boolean poolable) throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#isPoolable()
+         */
+        @Override
+        public boolean isPoolable() throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#closeOnCompletion()
+         */
+        @Override
+        public void closeOnCompletion() throws SQLException {
+            // TODO Auto-generated method stub
+
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.sql.Statement#isCloseOnCompletion()
+         */
+        @Override
+        public boolean isCloseOnCompletion() throws SQLException {
+            // TODO Auto-generated method stub
+            return false;
         }
 
     }

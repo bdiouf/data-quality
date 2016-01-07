@@ -51,13 +51,6 @@ public class ResultSetIterator implements Iterator<Record> {
         this.columnNames = elementNames;
     }
 
-    public ResultSetIterator(ResultSet resultSet, List<String> elementNames) {
-        this.connection = null;
-        this.statement = null;
-        this.resultSet = resultSet;
-        this.columnNames = elementNames;
-    }
-
     /*
      * check if the resultset has the next record, if not, close the connection
      * 
