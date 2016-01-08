@@ -29,4 +29,10 @@
         <module>../dataquality-statistics</module>
         <module>../dataquality-wordnet</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+    </dependencies>
 </project>
