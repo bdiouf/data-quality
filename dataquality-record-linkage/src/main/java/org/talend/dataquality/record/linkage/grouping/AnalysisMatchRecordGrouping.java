@@ -221,11 +221,9 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
      * (non-Javadoc)
      * 
      * @see org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping#createCOLUMNArray(int)
+     * 
+     * @Override protected String[] createTYPEArray(int size) { return new String[size]; }
      */
-    @Override
-    protected String[] createTYPEArray(int size) {
-        return new String[size];
-    }
 
     /*
      * (non-Javadoc)
@@ -237,4 +235,13 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
         return String.valueOf(objectValue);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping#createTYPEArray(int)
+     */
+    @Override
+    protected Object[] createTYPEArray(int size) {
+        return new Object[size];
+    }
 }
