@@ -12,7 +12,7 @@
     <packaging>pom</packaging>
     <name>dataquality-libraries</name>
     <properties>
-        <org.talend.utils.version>6.1.1</org.talend.utils.version>
+        <org.talend.utils.version>6.2.0-SNAPSHOT</org.talend.utils.version>
         
         <dataquality.libraries.version>1.4.1-SNAPSHOT</dataquality.libraries.version>
         <dataquality.record.linkage.version>3.0.3-SNAPSHOT</dataquality.record.linkage.version>
@@ -29,4 +29,10 @@
         <module>../dataquality-statistics</module>
         <module>../dataquality-wordnet</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+    </dependencies>
 </project>

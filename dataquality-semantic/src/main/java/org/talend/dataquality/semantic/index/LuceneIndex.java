@@ -33,7 +33,7 @@ public class LuceneIndex implements Index {
 
     public LuceneIndex(URI indexPath, SynonymIndexSearcher.SynonymSearchMode searchMode) {
         searcher = new SynonymIndexSearcher(indexPath);
-        searcher.setTopDocLimit(10);
+        searcher.setTopDocLimit(20);
         searcher.setSearchMode(searchMode);
     }
 

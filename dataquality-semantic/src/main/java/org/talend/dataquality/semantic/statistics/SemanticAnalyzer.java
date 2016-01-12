@@ -47,7 +47,7 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
     // sample with small size.
     private int limit = 100;
 
-    private int currentCount = 1;
+    private int currentCount = 0;
 
     public SemanticAnalyzer(CategoryRecognizerBuilder builder) {
         this.builder = builder;
@@ -65,7 +65,7 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
 
     @Override
     public void init() {
-        currentCount = 1;
+        currentCount = 0;
         columnIdxToCategoryRecognizer.clear();
         results.clear();
     }
@@ -77,7 +77,7 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
     public boolean analyze(String... record) {
         results.resize(record.length);
         resizeCategoryRecognizer(record);
-        if (currentCount <= limit) {
+        if (currentCount < limit || limit <= 0) {
             for (int i = 0; i < record.length; i++) {
                 CategoryRecognizer categoryRecognizer = columnIdxToCategoryRecognizer.get(i);
                 if (categoryRecognizer == null) {

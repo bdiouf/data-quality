@@ -397,6 +397,7 @@ public class RespectiveCategoryRecognizerTest {
                 private static final long serialVersionUID = -2018495996354511195L;
 
                 {
+                    add(ImmutablePair.of("Orange", true));
                     add(ImmutablePair.of("Suresnes", true));
                 }
             });
