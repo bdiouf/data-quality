@@ -42,7 +42,7 @@ import org.talend.utils.classloader.TalendURLClassLoader;
  */
 public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TYPE> {
 
-    private List<TYPE[]> masterRecords = new ArrayList<TYPE[]>();
+    protected List<TYPE[]> masterRecords = new ArrayList<TYPE[]>();
 
     public static final float DEFAULT_THRESHOLD = 0.95f;
 
@@ -51,7 +51,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
     // Output distance details or not.
     private boolean isOutputDistDetails = Boolean.FALSE;
 
-    private CombinedRecordMatcher combinedRecordMatcher = RecordMatcherFactory.createCombinedRecordMatcher();
+    protected CombinedRecordMatcher combinedRecordMatcher = RecordMatcherFactory.createCombinedRecordMatcher();
 
     /**
      * @deprecated use {{@link #multiMatchRules}
@@ -61,7 +61,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
 
     private List<List<Map<String, String>>> multiMatchRules = new ArrayList<List<Map<String, String>>>();
 
-    private SurvivorShipAlgorithmParams survivorShipAlgorithmParams = null;
+    protected SurvivorShipAlgorithmParams survivorShipAlgorithmParams = null;
 
     protected String columnDelimiter = null;
 
@@ -191,37 +191,43 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
         // extSize + 1 when isSeperateOutput is enabled.
         extSize = isComputeGrpQuality ? extSize + 1 : extSize;
 
-        // if the inputRow size less than original column size,should set 'isLinkToPrevious' to false and work on
-        // none-multi-pass.
-        if (isLinkToPrevious && inputRow.length <= originalInputColumnSize) {
-            isLinkToPrevious = false;
-        }
-        // In case of current component is linked to previous, and the record is NOT master, just put it to the output
-        // and continue;
-        if (isLinkToPrevious && !isMaster(inputRow[originalInputColumnSize + 2])) {
-            TYPE[] inputRowWithExtColumns = createNewInputRowForMultPass(inputRow, originalInputColumnSize + extSize);
-            outputRow(inputRowWithExtColumns);
-            return;
-        }
-
         if (multiMatchRules.size() == 0) {
             // No rule defined.
             return;
         }
-        // temporary array to store attributes to match
-        List<Map<String, String>> matchingRule = multiMatchRules.get(0);
-        String[] lookupDataArray = new String[matchingRule.size()];
-
-        for (int idx = 0; idx < lookupDataArray.length; idx++) {
-            Object inputObj = inputRow[Integer.parseInt(matchingRule.get(idx).get(IRecordGrouping.COLUMN_IDX))];
-            lookupDataArray[idx] = inputObj == null ? null : String.valueOf(inputObj);
-        }
         switch (matchAlgo) {
         case simpleVSRMatcher:
+            // if the inputRow size less than original column size,should set 'isLinkToPrevious' to false and work on
+            // none-multi-pass.
+            if (isLinkToPrevious && inputRow.length <= originalInputColumnSize) {
+                isLinkToPrevious = false;
+            }
+            // In case of current component is linked to previous, and the record is NOT master, just put it to the
+            // output
+            // and continue;
+            if (isLinkToPrevious && !isMaster(inputRow[originalInputColumnSize + 2])) {
+                TYPE[] inputRowWithExtColumns = createNewInputRowForMultPass(inputRow, originalInputColumnSize + extSize);
+                outputRow(inputRowWithExtColumns);
+                return;
+            }
+            // temporary array to store attributes to match
+            List<Map<String, String>> matchingRule = multiMatchRules.get(0);
+            String[] lookupDataArray = new String[matchingRule.size()];
+
+            for (int idx = 0; idx < lookupDataArray.length; idx++) {
+                Object inputObj = inputRow[Integer.parseInt(matchingRule.get(idx).get(IRecordGrouping.COLUMN_IDX))];
+                lookupDataArray[idx] = inputObj == null ? null : String.valueOf(inputObj);
+            }
+
             vsrMatch(inputRow, matchingRule, lookupDataArray);
             break;
         case T_SwooshAlgorithm:
-            swooshGrouping.addToList(inputRow, multiMatchRules);
+            if (isLinkToPrevious) {
+                TYPE[] inputRowWithExtColumns = createNewInputRowForMultPass(inputRow, originalInputColumnSize + extSize);
+                swooshGrouping.addToList(inputRowWithExtColumns, multiMatchRules);
+            } else {
+                swooshGrouping.addToList(inputRow, multiMatchRules);
+            }
         }
     }
 
@@ -343,7 +349,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
     private TYPE[] createNewInputRowForMultPass(TYPE[] inputRow, int newLength) {
         TYPE[] inputRowWithExtColumn = createTYPEArray(newLength);
         for (int idx = 0; idx < inputRow.length; idx++) {
-            inputRowWithExtColumn[idx] = inputRow[idx];
+            inputRowWithExtColumn[idx] = inputRow[idx];// == null ? null : (TYPE) String.valueOf(inputRow[idx]);
         }
 
         int extInd = 0;

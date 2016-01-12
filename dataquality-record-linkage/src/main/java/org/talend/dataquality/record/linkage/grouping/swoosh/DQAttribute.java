@@ -18,7 +18,9 @@ import org.talend.dataquality.matchmerge.Attribute;
  * created by zhao on Jul 14, 2014 Detailled comment
  * 
  */
-public class DQAttribute<TYPE> extends Attribute {
+public class DQAttribute<TYPE extends Object> extends Attribute {
+
+    private TYPE originalValue;
 
     /**
      * DOC zhao DQAtrribute constructor comment.
@@ -40,7 +42,26 @@ public class DQAttribute<TYPE> extends Attribute {
         this(label, colIdx);
         if (value != null) {
             setValue(value.toString());
+            setOriginalValue(value);
         }
+    }
+
+    /**
+     * Getter for originalValue.
+     * 
+     * @return the originalValue
+     */
+    public TYPE getOriginalValue() {
+        return this.originalValue;
+    }
+
+    /**
+     * Sets the originalValue.
+     * 
+     * @param originalValue the originalValue to set
+     */
+    public void setOriginalValue(TYPE originalValue) {
+        this.originalValue = originalValue;
     }
 
 }

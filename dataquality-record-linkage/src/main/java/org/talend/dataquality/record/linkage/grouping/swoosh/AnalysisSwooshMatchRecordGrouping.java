@@ -32,6 +32,17 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
 
     private Map<Integer, Attribute> attributesAsMatchKey;
 
+    private boolean isComponentMode = false;
+
+    /**
+     * Sets the isCompositeMode.
+     * 
+     * @param isCompositeMode the isCompositeMode to set
+     */
+    public void setComponentMode(boolean isCompositeMode) {
+        this.isComponentMode = isCompositeMode;
+    }
+
     /**
      * DOC yyin AnalysisSwooshMatchRecordGrouping constructor comment.
      * 
@@ -39,6 +50,10 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
      */
     public AnalysisSwooshMatchRecordGrouping(MatchGroupResultConsumer matchResultConsumer) {
         super(matchResultConsumer);
+    }
+
+    public AnalysisSwooshMatchRecordGrouping() {
+
     }
 
     @Override
@@ -49,7 +64,11 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
 
     @Override
     public void initialize() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        super.initialize();
+        if (isComponentMode) {
+            masterRecords.clear();
+        } else {
+            super.initialize();
+        }
         // get the match keys attributes, and put them in the map, no need to do this again for each record
         attributesAsMatchKey = new HashMap<Integer, Attribute>();
         for (List<Map<String, String>> matchRule : getMultiMatchRules()) {
@@ -99,6 +118,28 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
 
     @Override
     public void end() {
+        if (isComponentMode) {
+            swooshGrouping.swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams);
+        }
         swooshGrouping.afterAllRecordFinished();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.talend.dataquality.record.linkage.grouping.AnalysisMatchRecordGrouping#outputRow(org.talend.dataquality.record
+     * .linkage.grouping.swoosh.RichRecord)
+     */
+    @Override
+    protected void outputRow(RichRecord row) {
+        List<DQAttribute<?>> originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
+        String[] strRow = new String[originRow.size()];
+        int idx = 0;
+        for (DQAttribute<?> attr : originRow) {
+            strRow[idx] = attr.getValue();
+            idx++;
+        }
+        outputRow(strRow);
     }
 }

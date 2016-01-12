@@ -101,7 +101,8 @@ public class TSwooshGrouping<TYPE> {
 
                     @Override
                     public java.lang.String newValue() {
-                        return (java.lang.String) inputRow[Integer.valueOf(recordMap.get(IRecordGrouping.COLUMN_IDX))];
+                        TYPE value = inputRow[Integer.valueOf(recordMap.get(IRecordGrouping.COLUMN_IDX))];
+                        return value == null ? null : value.toString();
                     }
                 });
             }
