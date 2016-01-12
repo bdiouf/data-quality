@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  */
 public class GenerateFromFileHashIntegerTest {
 
-    static String path = GenerateFromFileHashIntegerTest.class.getResource("/data/numbers.txt").getFile(); //$NON-NLS-1$
+    static String path = GenerateFromFileHashIntegerTest.class.getResource("data/numbers.txt").getFile(); //$NON-NLS-1$
 
     private GenerateFromFileHashInteger gffhi = new GenerateFromFileHashInteger();
 
