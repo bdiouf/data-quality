@@ -15,7 +15,7 @@
         <org.talend.utils.version>6.2.0-SNAPSHOT</org.talend.utils.version>
         
         <dataquality.libraries.version>1.4.1-SNAPSHOT</dataquality.libraries.version>
-        <dataquality.record.linkage.version>3.0.3-SNAPSHOT</dataquality.record.linkage.version>
+        <dataquality.record.linkage.version>3.1.0-SNAPSHOT</dataquality.record.linkage.version>
         <dataquality.sampling.version>2.1.5-SNAPSHOT</dataquality.sampling.version>
         <dataquality.standardization.version>3.0.2-SNAPSHOT</dataquality.standardization.version>
         <dataquality.wordnet.version>1.0.2-SNAPSHOT</dataquality.wordnet.version>

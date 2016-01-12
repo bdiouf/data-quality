@@ -1,3 +1,6 @@
+V3.1.0 2016-01-12
+    - add T-Swoosh support to tMatchGroup component
+
 V3.0.3 2016-01-02
     - move to data-quality repository, change parent pom
     - TDQ-11425 Add catch SQLException, continue to do next when execute "next()" and get SQLException
