@@ -14,6 +14,8 @@ package org.talend.dataquality.datamasking;
 
 import static org.junit.Assert.assertEquals;
 
+import java.net.URISyntaxException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.datamasking.Functions.GenerateFromFileHashInteger;
@@ -25,12 +27,11 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  */
 public class GenerateFromFileHashIntegerTest {
 
-    static String path = GenerateFromFileHashIntegerTest.class.getResource("data/numbers.txt").getFile(); //$NON-NLS-1$
-
     private GenerateFromFileHashInteger gffhi = new GenerateFromFileHashInteger();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws URISyntaxException {
+        String path = this.getClass().getResource("data/numbers.txt").toURI().getPath(); //$NON-NLS-1$
         gffhi.parse(path, false, new RandomWrapper(42));
     }
 
