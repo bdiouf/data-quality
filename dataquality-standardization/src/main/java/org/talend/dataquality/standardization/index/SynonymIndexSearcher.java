@@ -36,17 +36,9 @@ import org.apache.lucene.index.CheckIndex.Status;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.FuzzyQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.PhraseQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.talend.dataquality.standardization.i18n.Messages;
 
 /**
  * @author scorreia A class to create an index with synonyms.
@@ -189,11 +181,6 @@ public class SynonymIndexSearcher {
      */
     public void openIndexInFS(URI path) throws IOException {
         Directory indexDir = ClassPathDirectory.open(path);
-        CheckIndex check = new CheckIndex(indexDir);
-        Status status = check.checkIndex();
-        if (status.missingSegments) {
-            LOGGER.error(Messages.getString("SynonymIndexBuilder.print"));//$NON-NLS-1$
-        }
         IndexReader reader = DirectoryReader.open(indexDir);
         this.searcher = new IndexSearcher(reader);
     }
