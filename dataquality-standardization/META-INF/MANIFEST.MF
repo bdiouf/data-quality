@@ -9,8 +9,7 @@ Require-Bundle: org.apache.log4j,
  org.apache.commons.lang,
  org.junit
 Bundle-ClassPath: .
-Export-Package: com.talend.csv,
- org.talend.dataquality.standardization,
+Export-Package: org.talend.dataquality.standardization,
  org.talend.dataquality.standardization.action,
  org.talend.dataquality.standardization.constant,
  org.talend.dataquality.standardization.i18n,
