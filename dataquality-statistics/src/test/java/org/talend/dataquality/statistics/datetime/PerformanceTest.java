@@ -9,12 +9,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PerformanceTest {
 
-    private static final Logger LOGGER = Logger.getLogger(PerformanceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PerformanceTest.class);
 
     private static final int REPLICATE = 333;
 
@@ -45,7 +46,6 @@ public class PerformanceTest {
                         Date after = new Date();
                         long difference = after.getTime() - currentMilliseconds;
                         currentMilliseconds = after.getTime();
-                        LOGGER.debug("Detect date end at: " + after);
                         System.out.println("count: " + count + "\tinteval: " + difference + "ms");
                     }
                 }
@@ -88,7 +88,6 @@ public class PerformanceTest {
                         Date after = new Date();
                         long difference = after.getTime() - currentMilliseconds;
                         currentMilliseconds = after.getTime();
-                        LOGGER.debug("Detect date end at: " + after);
                         System.out.println("count: " + count + "\tinteval: " + difference + "ms");
                     }
                 }

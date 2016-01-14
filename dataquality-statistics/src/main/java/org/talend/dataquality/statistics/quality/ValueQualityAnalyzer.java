@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.NullArgumentException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.datascience.common.inference.Analyzer;
 import org.talend.datascience.common.inference.QualityAnalyzer;
@@ -34,7 +35,7 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
 
     private final QualityAnalyzer<ValueQualityStatistics, String[]> semanticQualityAnalyzer;
 
-    private static Logger log = Logger.getLogger(ValueQualityAnalyzer.class);
+    private static Logger log = LoggerFactory.getLogger(ValueQualityAnalyzer.class);
 
     public ValueQualityAnalyzer(QualityAnalyzer<ValueQualityStatistics, DataTypeEnum[]> dataTypeQualityAnalyzer,
             QualityAnalyzer<ValueQualityStatistics, String[]> semanticQualityAnalyzer, boolean isStoreInvalidValues) {

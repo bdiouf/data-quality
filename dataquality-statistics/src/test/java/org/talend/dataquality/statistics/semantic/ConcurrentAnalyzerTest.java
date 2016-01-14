@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.statistics.SemanticAnalyzer;
 import org.talend.dataquality.semantic.statistics.SemanticType;
@@ -34,7 +35,7 @@ import org.talend.datascience.common.inference.ConcurrentAnalyzer;
 
 public class ConcurrentAnalyzerTest extends SemanticStatisticsTestBase {
 
-    private static Logger log = Logger.getLogger(ConcurrentAnalyzerTest.class);
+    private static Logger log = LoggerFactory.getLogger(ConcurrentAnalyzerTest.class);
 
     private AtomicBoolean errorOccurred = new AtomicBoolean();
 
