@@ -25,11 +25,12 @@ import java.util.Locale;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -37,7 +38,7 @@ import org.junit.Test;
  */
 public class TypeInferenceUtilsTest {
 
-    private static final Logger LOGGER = Logger.getLogger(TypeInferenceUtilsTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TypeInferenceUtilsTest.class);
 
     @Before
     public void setUp() throws Exception {

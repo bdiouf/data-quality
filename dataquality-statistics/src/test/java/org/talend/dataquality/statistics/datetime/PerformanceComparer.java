@@ -8,11 +8,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PerformanceComparer {
 
-    private static final Logger LOGGER = Logger.getLogger(PerformanceComparer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PerformanceComparer.class);
 
     private static final List<String> CUSTOM_PATTERN_LIST = Arrays.asList(new String[] {//
             "yyyy/MMM/d", "yyyy/MMM/dd", "yyyy/MMMM/dd" });

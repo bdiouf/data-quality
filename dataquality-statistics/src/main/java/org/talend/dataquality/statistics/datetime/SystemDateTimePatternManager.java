@@ -25,7 +25,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Date and time patterns manager with system default definitions.
@@ -34,7 +35,7 @@ import org.apache.log4j.Logger;
  */
 public class SystemDateTimePatternManager {
 
-    private static final Logger LOGGER = Logger.getLogger(SystemDateTimePatternManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SystemDateTimePatternManager.class);
 
     private static List<Map<Pattern, String>> DATE_PATTERN_GROUP_LIST = new ArrayList<Map<Pattern, String>>();
 

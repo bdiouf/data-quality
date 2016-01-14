@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.talend.dataquality.statistics;singleton:=true
 Bundle-Version: 1.4.1
 Bundle-Vendor: .Talend SA.
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.apache.log4j,
+Require-Bundle: slf4j.api,
  org.apache.commons.io,
  org.apache.commons.lang,
  org.talend.dataquality.common,

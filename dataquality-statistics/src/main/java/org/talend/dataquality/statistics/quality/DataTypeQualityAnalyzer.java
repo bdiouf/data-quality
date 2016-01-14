@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.talend.dataquality.statistics.datetime.CustomDateTimePatternManager;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.dataquality.statistics.type.TypeInferenceUtils;
@@ -35,7 +36,7 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     private final ResizableList<ValueQualityStatistics> results = new ResizableList<>(ValueQualityStatistics.class);
 
-    private static Logger log = Logger.getLogger(DataTypeQualityAnalyzer.class);
+    private static Logger log = LoggerFactory.getLogger(DataTypeQualityAnalyzer.class);
 
     private List<String> customDateTimePatterns = new ArrayList<>();
 
