@@ -133,9 +133,14 @@ public class SurvivorshipUtils {
         SurvivorshipFunction func = survivorShipAlgorithmParams.new SurvivorshipFunction();
         func.setSurvivorShipKey(survDef.get("ATTRIBUTE_NAME"));
         func.setParameter(survDef.get("PARAMETER"));
-        SurvivorShipAlgorithmEnum surAlgo = SurvivorShipAlgorithmEnum.getTypeBySavedValue(survDef.get("SURVIVORSHIP_FUNCTION"));
+        String functionName = survDef.get("SURVIVORSHIP_FUNCTION"); //$NON-NLS-1$
+        SurvivorShipAlgorithmEnum surAlgo = SurvivorShipAlgorithmEnum.getTypeBySavedValue(functionName);
         if (surAlgo == null) {
-            surAlgo = SurvivorShipAlgorithmEnum.getTypeByIndex(Integer.parseInt(survDef.get("SURVIVORSHIP_FUNCTION")));
+            Integer typeIndex = 0;
+            if (functionName != null && functionName.trim().length() > 0) {
+                typeIndex = Integer.parseInt(functionName);
+            }
+            surAlgo = SurvivorShipAlgorithmEnum.getTypeByIndex(typeIndex);
         }
         func.setSurvivorShipAlgoEnum(surAlgo);
         return func;

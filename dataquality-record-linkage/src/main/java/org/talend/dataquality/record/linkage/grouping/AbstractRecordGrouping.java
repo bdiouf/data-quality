@@ -542,7 +542,13 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
             arrMatchHandleNull[keyIdx] = recordMap.get(IRecordGrouping.HANDLE_NULL);
             if (matchAlgo == RecordMatcherType.T_SwooshAlgorithm) {
                 // Set attribute threshold
-                attrThresholds[keyIdx] = Double.parseDouble(recordMap.get(IRecordGrouping.ATTRIBUTE_THRESHOLD));
+                String thresholdValue = recordMap.get(IRecordGrouping.ATTRIBUTE_THRESHOLD);
+                if (thresholdValue == null || thresholdValue.trim().length() == 0) {
+                    // default value when the algorithm switch from vsr to swooth
+                    attrThresholds[keyIdx] = 1.0D;
+                } else {
+                    attrThresholds[keyIdx] = Double.parseDouble(thresholdValue);
+                }
 
             }
             String rcdMathThresholdEach = recordMap.get(IRecordGrouping.RECORD_MATCH_THRESHOLD);
