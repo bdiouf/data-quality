@@ -6,8 +6,8 @@ Bundle-Version: 1.0.2
 Bundle-Vendor: .Talend SA.
 Export-Package: org.talend.dataquality.wordnet
 Bundle-ActivationPolicy: lazy
-Require-Bundle: slf4j.api,
- org.junit
+Require-Bundle: org.junit,
+ org.apache.log4j
 Bundle-ClassPath: .,
  lib/jwi-2.2.3.jar
 Eclipse-BundleShape: dir
