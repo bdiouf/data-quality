@@ -121,11 +121,14 @@ public class TSwooshGrouping<TYPE> {
     }
 
     public void swooshMatch(IRecordMatcher combinedRecordMatcher, SurvivorShipAlgorithmParams survParams) {
-        MatchMergeAlgorithm malgorithm = createTswooshAlgorithm(combinedRecordMatcher, survParams, null);
+        algorithm = (DQMFB) createTswooshAlgorithm(combinedRecordMatcher, survParams, new GroupingCallBack());
 
         Iterator<Record> iterator = new DQRecordIterator(totalCount, rcdsGenerators);
-        List<Record> mergedRecords = malgorithm.execute(iterator, new GroupingCallBack());
-        outputResult(mergedRecords);
+        while (iterator.hasNext()) {
+            algorithm.matchOneRecord(iterator.next());
+        }
+        // List<Record> mergedRecords = malgorithm.getResult();
+        // outputResult(mergedRecords);
     }
 
     /**

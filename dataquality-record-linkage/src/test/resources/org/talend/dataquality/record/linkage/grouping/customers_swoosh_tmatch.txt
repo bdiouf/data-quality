@@ -1,0 +1,20 @@
+0|Tlaxiaco|Mexico
+1|Tlaxiaco|Mexico
+2|Sooke|Canada
+3|Issaquah|USA
+4|Burnaby|Canada
+5|Novato|$$#
+6|Lynnwood|$$#
+7||Mexico
+8|San Andres|Mexico
+9||Canada
+10|$$#|USA
+11||USA
+12||USA
+13||Mexico
+14|Lincoln Acres|USA
+15|Oak Bay|Canada
+16||Mexico
+17||null
+18|Altadena|USA
+19|Oakland|USA

@@ -42,7 +42,7 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
 
     // Temporarily store the match result so that it can be iterated to be handled later after all of the records are
     // computed.
-    private List<RichRecord> tmpMatchResult = new ArrayList<RichRecord>();
+    protected List<RichRecord> tmpMatchResult = new ArrayList<RichRecord>();
 
     private MatchGroupResultConsumer matchResultConsumer = null;
 
