@@ -35,6 +35,7 @@ import org.apache.lucene.index.CheckIndex;
 import org.apache.lucene.index.CheckIndex.Status;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexReaderContext;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
@@ -388,6 +389,31 @@ public class SynonymIndexSearcher {
         return fuzzy ? new FuzzyQuery(term, maxEdits) : new TermQuery(term);
     }
 
+    public TopDocs findSimilarValuesInCategory(String input, String category) throws IOException {
+        BooleanQuery combinedQuery = new BooleanQuery();
+        if (category != null && !StringUtils.EMPTY.equals(category)) {
+            Term catTerm = new Term(F_WORDTERM, category);
+            Query catQuery = new TermQuery(catTerm);
+            combinedQuery.add(catQuery, BooleanClause.Occur.MUST);
+        }
+
+        BooleanQuery valueQuery = new BooleanQuery();
+        List<String> tokens = getTokensFromAnalyzer(input);
+        Query inputTermQuery = getTermQuery(F_SYNTERM, StringUtils.join(tokens, ' '), true);
+        valueQuery.add(inputTermQuery, BooleanClause.Occur.SHOULD);
+
+        BooleanQuery inputTokenQuery = new BooleanQuery();
+        for (String token : tokens) {
+            inputTokenQuery.add(getTermQuery(F_SYN, token, true), BooleanClause.Occur.SHOULD);
+        }
+        valueQuery.add(inputTokenQuery, BooleanClause.Occur.SHOULD);
+
+        combinedQuery.add(valueQuery, BooleanClause.Occur.MUST);
+
+        TopDocs topDocs = this.searcher.search(combinedQuery, 50);
+        return topDocs;
+    }
+
     /**
      * create a combined query who searches for the input tokens separately (with QueryParser) and also the entire input
      * string (with TermQuery or FuzzyQuery).
@@ -585,7 +611,7 @@ public class SynonymIndexSearcher {
      * @return a list of lower-case tokens which strips accents & punctuation
      * @throws IOException
      */
-    public static List<String> getTokensFromAnalyzer(String input) throws IOException {
+    public List<String> getTokensFromAnalyzer(String input) throws IOException {
         StandardTokenizer tokenStream = new StandardTokenizer(new StringReader(input));
         TokenStream result = new StandardFilter(tokenStream);
         result = new LowerCaseFilter(result);
