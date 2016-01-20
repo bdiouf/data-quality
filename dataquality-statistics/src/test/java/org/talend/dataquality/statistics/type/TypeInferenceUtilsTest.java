@@ -124,27 +124,43 @@ public class TypeInferenceUtilsTest {
         String[] validFrDoubleValues = { "0,9", "1,0e-4" };
         String[] invalidDoubleValues = { "NaN", "3.4d", "123L", "123l", " 0.8", "0.8 ", "0. 8", "1.0 e-4", "1. 0e-4", "1.0e -4" };
 
-        int valideCount = 0;
         for (String value : (String[]) ArrayUtils.addAll(validEnDoubleValues, validFrDoubleValues)) {
-            if (TypeInferenceUtils.isDouble(value))
-                valideCount++;
+            Assert.assertTrue(value + " is expected to be a valid decimal value but actually not.",
+                    TypeInferenceUtils.isDouble(value));
         }
-        Assert.assertEquals(valideCount, validEnDoubleValues.length);
 
-        int invalideCount = 0;
         for (String value : invalidDoubleValues) {
-            if (!TypeInferenceUtils.isDouble(value))
-                invalideCount++;
+            Assert.assertFalse(value + " is expected to be an invalid decimal value but actually not.",
+                    TypeInferenceUtils.isDouble(value));
         }
-        Assert.assertEquals(invalideCount, invalidDoubleValues.length);
+    }
 
-        // TODO Currently, we support only English locale, but we may support other locale(eg. FR) later
-        // count = 0;
-        // for (String value : (String[]) ArrayUtils.addAll(enDoubleValues, frDoubleValues)) {
-        // if (TypeInferenceUtils.isDouble(value))
-        // count++;
-        // }
-        // Assert.assertEquals(count, frDoubleValues.length);
+    @Test
+    public void testIsDecimal() throws Exception {
+
+        String[] validEnDoubleValues = { "5538297118", "1045.35", "1,045.35", "1,045", "1,045,350" };
+        String[] validFrDoubleValues = { "1045,35", "1 045,35", "1.045,35", "1.045", "1 045", "1.045.350", "1 045 350" };
+        String[] invalidDoubleValues = { "1 045.35", // no space allowed in US format
+                "1.045.35", "1,045,35", // decimal point should not repeat
+                "1,045 35", "1.045 35", // no space is allowed in decimal part
+                "1,045 350", "1.045 350", // different thousands separators should not be mixed
+                "1 045 35" };// grouped parts must contain 3 digits except the first one
+
+        for (String value : validEnDoubleValues) {
+            Assert.assertTrue(value + " is expected to be a valid decimal value but actually not.",
+                    TypeInferenceUtils.isDouble(value));
+        }
+
+        for (String value : validFrDoubleValues) {
+            Assert.assertTrue(value + " is expected to be a valid decimal value but actually not.",
+                    TypeInferenceUtils.isDouble(value));
+        }
+        
+        for (String value : invalidDoubleValues) {
+            Assert.assertFalse(value + " is expected to be an invalid decimal value but actually not.",
+                    TypeInferenceUtils.isDouble(value));
+        }
+
     }
 
     @Test
@@ -164,7 +180,7 @@ public class TypeInferenceUtilsTest {
         String timeEnd = getCurrentTimeStamp();
         LOGGER.debug("Detect double end at: " + timeEnd);
         // Assert count of matches.
-        Assert.assertEquals(5000, countOfDoubles);
+        Assert.assertEquals(5002, countOfDoubles);
         // Assert time span.
         double difference = getTimeDifference(timeStart, timeEnd);
 
