@@ -4,11 +4,11 @@
     <parent>
         <groupId>org.talend.dataquality</groupId>
         <artifactId>dataquality-libraries</artifactId>
-        <version>1.4.1-SNAPSHOT</version>
+        <version>${dataquality.libraries.snapshot.version}</version>
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.sampling</artifactId>
-    <version>${dataquality.sampling.version}</version>
+    <version>${dataquality.sampling.snapshot.version}</version>
     <packaging>bundle</packaging>
     <name>org.talend.dataquality.sampling</name>
     <description>Dataquality Sampling library description</description>
@@ -19,7 +19,7 @@
 
         <!-- This is used to generate README.md file -->
         <commons.componentid>org.talend.dataquality.sampling</commons.componentid>
-        <commons.release.version>2.1.5</commons.release.version>
+        <commons.release.version>${dataquality.sampling.released.version}</commons.release.version>
     </properties>
 
     <dependencies>

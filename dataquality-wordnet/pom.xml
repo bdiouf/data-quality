@@ -4,13 +4,19 @@
     <parent>
         <groupId>org.talend.dataquality</groupId>
         <artifactId>dataquality-libraries</artifactId>
-        <version>1.4.1-SNAPSHOT</version>
+        <version>${dataquality.libraries.snapshot.version}</version>
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.wordnet</artifactId>
-    <version>${dataquality.wordnet.version}</version>
+    <version>${dataquality.wordnet.snapshot.version}</version>
     <packaging>bundle</packaging>
-
+    
+    <properties>
+        <!-- This is used to generate README.md file -->
+        <commons.componentid>org.talend.dataquality.standardization</commons.componentid>
+        <commons.release.version>${dataquality.libraries.released.version}</commons.release.version>
+    </properties>
+    
     <dependencies>
         <dependency>
             <groupId>edu.mit</groupId>

@@ -4,11 +4,11 @@
     <parent>
         <groupId>org.talend.dataquality</groupId>
         <artifactId>dataquality-libraries</artifactId>
-        <version>1.4.1-SNAPSHOT</version>
+        <version>${dataquality.libraries.snapshot.version}</version>
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.standardization</artifactId>
-    <version>${dataquality.standardization.version}</version>
+    <version>${dataquality.standardization.snapshot.version}</version>
     <packaging>bundle</packaging>
     <name>org.talend.dataquality.standardization</name>
     <description>Dataquality Standardization library description</description>
@@ -19,7 +19,7 @@
 
         <!-- This is used to generate README.md file -->
         <commons.componentid>org.talend.dataquality.standardization</commons.componentid>
-        <commons.release.version>3.0.2</commons.release.version>
+        <commons.release.version>${dataquality.standardization.released.version}</commons.release.version>
     </properties>
 
     <dependencies>
