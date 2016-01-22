@@ -155,7 +155,7 @@ public class TypeInferenceUtilsTest {
             Assert.assertTrue(value + " is expected to be a valid decimal value but actually not.",
                     TypeInferenceUtils.isDouble(value));
         }
-        
+
         for (String value : invalidDoubleValues) {
             Assert.assertFalse(value + " is expected to be an invalid decimal value but actually not.",
                     TypeInferenceUtils.isDouble(value));
@@ -207,7 +207,7 @@ public class TypeInferenceUtilsTest {
         String timeEnd = getCurrentTimeStamp();
         LOGGER.debug("Detect date end at: " + timeEnd);
         // Assert count of matches.
-        Assert.assertEquals(5000, countOfDates);
+        Assert.assertEquals(5001, countOfDates);
         double difference = getTimeDifference(timeStart, timeEnd);
 
         LOGGER.debug("Detect date time diff: " + difference + " s.");

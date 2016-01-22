@@ -65,10 +65,51 @@ Monday, March 11, 2222 5:06:07 o'clock AM CET	EEEE, MMMM d, yyyy h:mm:ss 'o''clo
 lundi 11 mars 2222 5 h 06 CET	EEEE d MMMM yyyy H' h 'mm z	fr_CA	FULL	true
 2222年3月11日 5時06分07秒 CET	yyyy'年'M'月'd'日' H'時'mm'分'ss'秒' z	ja_JP	FULL	true
 2222年3月11日 星期一 上午05时06分07秒 CET	yyyy'年'M'月'd'日' EEEE ahh'时'mm'分'ss'秒' z	zh_CN	FULL	true
+11/03/22 05:06:07	dd/MM/yy HH:mm:ss	fr_FR	SHORT	true
+11.03.22 05:06:07	dd.MM.yy HH:mm:ss	de_DE	SHORT	true
+11.03.2222 05:06	dd.MM.yyyy HH:mm	de_DE	MEDIUM	true
+22/03/11 5:06:07	yy/MM/dd H:mm:ss	ja_JP	SHORT	true
+2222/03/11 5:06	yyyy/MM/dd H:mm	ja_JP	MEDIUM	true
+11/3/2222	d/M/yyyy	en_US	OTHER	false
+11/3/2222 5:06 AM	d/M/yyyy h:mm a	en_US	SHORT	true
+11/3/2222 5:06:07 AM	d/M/yyyy h:mm:ss a	en_US	MEDIUM	true
+11/3/2222 05:06	d/M/yyyy HH:mm	fr_FR	SHORT	true
+11/3/2222 05:06:07	d/M/yyyy HH:mm:ss	fr_FR	MEDIUM	true
+11/3/2222 5:06	d/M/yyyy H:mm	ja_JP	SHORT	true
+11/3/2222 5:06:07	d/M/yyyy H:mm:ss	ja_JP	MEDIUM	true
 11/03/2222	dd/MM/yyyy	en_US	OTHER	false
+11/03/2222 5:06 AM	dd/MM/yyyy h:mm a	en_US	SHORT	true
+11/03/2222 5:06:07 AM	dd/MM/yyyy h:mm:ss a	en_US	MEDIUM	true
+11/03/2222 05:06	dd/MM/yyyy HH:mm	fr_FR	SHORT	true
+11/03/2222 05:06:07	dd/MM/yyyy HH:mm:ss	fr_FR	MEDIUM	true
+11/03/2222 5:06	dd/MM/yyyy H:mm	ja_JP	SHORT	true
+11/03/2222 5:06:07	dd/MM/yyyy H:mm:ss	ja_JP	MEDIUM	true
 03/11/2222	MM/dd/yyyy	en_US	OTHER	false
+03/11/2222 5:06 AM	MM/dd/yyyy h:mm a	en_US	SHORT	true
+03/11/2222 5:06:07 AM	MM/dd/yyyy h:mm:ss a	en_US	MEDIUM	true
+03/11/2222 05:06	MM/dd/yyyy HH:mm	fr_FR	SHORT	true
+03/11/2222 05:06:07	MM/dd/yyyy HH:mm:ss	fr_FR	MEDIUM	true
+03/11/2222 5:06	MM/dd/yyyy H:mm	ja_JP	SHORT	true
+03/11/2222 5:06:07	MM/dd/yyyy H:mm:ss	ja_JP	MEDIUM	true
 3/11/2222	M/d/yyyy	en_US	OTHER	false
-3/11/2222 5:06	M/d/yyyy H:mm	en_US	OTHER	false
+3/11/2222 5:06 AM	M/d/yyyy h:mm a	en_US	SHORT	true
+3/11/2222 5:06:07 AM	M/d/yyyy h:mm:ss a	en_US	MEDIUM	true
+3/11/2222 05:06	M/d/yyyy HH:mm	fr_FR	SHORT	true
+3/11/2222 05:06:07	M/d/yyyy HH:mm:ss	fr_FR	MEDIUM	true
+3/11/2222 5:06	M/d/yyyy H:mm	ja_JP	SHORT	true
+3/11/2222 5:06:07	M/d/yyyy H:mm:ss	ja_JP	MEDIUM	true
+03-11-2222	MM-dd-yyyy	en_US	OTHER	false
+03-11-2222 5:06 AM	MM-dd-yyyy h:mm a	en_US	SHORT	true
+03-11-2222 5:06:07 AM	MM-dd-yyyy h:mm:ss a	en_US	MEDIUM	true
+03-11-2222 05:06	MM-dd-yyyy HH:mm	fr_FR	SHORT	true
+03-11-2222 05:06:07	MM-dd-yyyy HH:mm:ss	fr_FR	MEDIUM	true
+03-11-2222 5:06	MM-dd-yyyy H:mm	ja_JP	SHORT	true
+03-11-2222 5:06:07	MM-dd-yyyy H:mm:ss	ja_JP	MEDIUM	true
+2222-03-11 5:06 AM	yyyy-MM-dd h:mm a	en_US	SHORT	true
+2222-03-11 5:06:07 AM	yyyy-MM-dd h:mm:ss a	en_US	MEDIUM	true
+2222-03-11 05:06	yyyy-MM-dd HH:mm	fr_FR	SHORT	true
+2222-03-11 5:06	yyyy-MM-dd H:mm	ja_JP	SHORT	true
+2222-03-11 5:06:07	yyyy-MM-dd H:mm:ss	ja_JP	MEDIUM	true
 Mar 11 2222	MMM d yyyy	en_US	OTHER	false
 Mar.11.2222	MMM.dd.yyyy	en_US	OTHER	false
 March 11 2222	MMMM d yyyy	en_US	OTHER	false
@@ -92,7 +133,6 @@ Mon, 11 Mar 2222 05:06:07 +0100	EEE, d MMM yyyy HH:mm:ss Z	en_US	RFC1123_WITH_DA
 11 Mar 2222 05:06:07 +0100	d MMM yyyy HH:mm:ss Z	en_US	RFC1123	true
 11.3.22	d.M.yy	be	SHORT	false
 11-03-22	dd-MM-yy	da	SHORT	false
-11/3/2222	d/M/yyyy	el	SHORT	false
 11/03/22	d/MM/yy	es	SHORT	false
 11.03.22	d.MM.yy	et	SHORT	false
 11.3.2222	d.M.yyyy	fi	SHORT	false
@@ -122,17 +162,13 @@ Mon, 11 Mar 2222 05:06:07 +0100	EEE, d MMM yyyy HH:mm:ss Z	en_US	RFC1123_WITH_DA
 22.3.11 05.06	yy.M.d HH.mm	lt	SHORT	true
 22.11.3 05:06	yy.d.M HH:mm	lv	SHORT	true
 11.3.22 05:06	d.M.yy HH:mm	mk	SHORT	true
-11/03/2222 05:06	dd/MM/yyyy HH:mm	mt	SHORT	true
 11-3-22 5:06	d-M-yy H:mm	nl	SHORT	true
 11-03-2222 5:06	dd-MM-yyyy H:mm	pt	SHORT	true
-11.03.2222 05:06	dd.MM.yyyy HH:mm	ro	SHORT	true
 11.03.22 5:06	dd.MM.yy H:mm	ru	SHORT	true
 22-03-11 5.06.PD	yy-MM-dd h.mm.a	sq	SHORT	true
 11.3.22. 05.06	d.M.yy. HH.mm	sr	SHORT	true
-2222-03-11 05:06	yyyy-MM-dd HH:mm	sv	SHORT	true
 05:06 11/03/2222	HH:mm dd/MM/yyyy	vi	SHORT	true
 11.3.2222 5.06.07	d.M.yyyy H.mm.ss	be	MEDIUM	true
-11/03/2222 05:06:07	dd/MM/yyyy HH:mm:ss	ca	MEDIUM	true
 11.3.2222 5:06:07	d.M.yyyy H:mm:ss	cs	MEDIUM	true
 11-03-2222 05:06:07	dd-MM-yyyy HH:mm:ss	da	MEDIUM	true
 11.03.2222 5:06:07	d.MM.yyyy H:mm:ss	et	MEDIUM	true

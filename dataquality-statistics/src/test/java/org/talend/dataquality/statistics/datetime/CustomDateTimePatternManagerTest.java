@@ -91,7 +91,7 @@ public class CustomDateTimePatternManagerTest {
     @Test
     public void testValidDateNotMatchingCustomPattern() {
         assertTrue(CustomDateTimePatternManager.isDate("6/18/2009 21:30", Collections.<String> singletonList("m-d-y hh:MM")));
-        assertEquals(Collections.singleton("M/d/yyyy H:mm"),
+        assertEquals(new HashSet<String>(Arrays.asList(new String[] { "M/d/yyyy H:mm", "M/d/yyyy HH:mm" })),
                 CustomDateTimePatternManager.replaceByDateTimePattern("6/18/2009 21:30", "m-d-y hh:MM"));
     }
 
@@ -105,7 +105,7 @@ public class CustomDateTimePatternManagerTest {
     public void testValidDateWithInvalidPattern() {
         assertTrue(CustomDateTimePatternManager.isDate("6/18/2009 21:30",
                 Collections.<String> singletonList("d/m/y**y hh:mm zzzzzzz")));
-        assertEquals(Collections.singleton("M/d/yyyy H:mm"),
+        assertEquals(new HashSet<String>(Arrays.asList(new String[] { "M/d/yyyy H:mm", "M/d/yyyy HH:mm" })),
                 CustomDateTimePatternManager.replaceByDateTimePattern("6/18/2009 21:30", "d/m/y**y hh:mm zzzzzzz"));
     }
 
