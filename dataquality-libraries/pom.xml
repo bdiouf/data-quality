@@ -187,7 +187,7 @@
 						<_include>META-INF/MANIFEST.MF</_include>
 						<Built-By>.Talend SA.</Built-By>
 						<Private-Package></Private-Package>
-						<Include-Resource>{maven-resources},changelog.txt</Include-Resource>
+						<Include-Resource>{maven-resources},changelog.txt,LICENSE.txt</Include-Resource>
 					</instructions>
 				</configuration>
 			</plugin>
