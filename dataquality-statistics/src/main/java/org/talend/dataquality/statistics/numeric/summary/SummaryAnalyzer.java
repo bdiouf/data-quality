@@ -12,9 +12,11 @@
 // ============================================================================
 package org.talend.dataquality.statistics.numeric.summary;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.talend.dataquality.statistics.number.BigDecimalParser;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.dataquality.statistics.type.TypeInferenceUtils;
@@ -55,13 +57,17 @@ public class SummaryAnalyzer extends NumericalStatisticsAnalyzer<SummaryStatisti
 
         summaryStats.resize(record.length);
 
-        for (int id : this.getStatColIdx()) {// analysis each numerical column
+        for (int idx : this.getStatColIdx()) {// analysis each numerical column
                                              // in the record
-            if (!TypeInferenceUtils.isValid(types[id], record[id])) {
+            if (!TypeInferenceUtils.isValid(types[idx], record[idx])) {
                 continue;
             }
-            final SummaryStatistics stats = summaryStats.get(id);
-            stats.addData(Double.valueOf(record[id]));
+            final SummaryStatistics stats = summaryStats.get(idx);
+            try {
+                stats.addData(BigDecimalParser.toBigDecimal(record[idx]).doubleValue());
+            } catch (ParseException e) {
+                continue;
+            }
         }
         return true;
 

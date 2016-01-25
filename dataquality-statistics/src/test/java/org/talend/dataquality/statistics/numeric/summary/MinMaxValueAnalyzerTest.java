@@ -15,6 +15,8 @@ package org.talend.dataquality.statistics.numeric.summary;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -90,5 +92,41 @@ public class MinMaxValueAnalyzerTest {
         assertEquals(18, analyzer.getResult().get(0).getMin(), 0);
         assertEquals(26, analyzer.getResult().get(0).getMax(), 0);
 
+    }
+
+    @Test
+    public void testMixedNumberFormats() {
+
+        final String[][] testers = new String[][] {
+                //
+                { "1,1", "3.333,33", "5,555", "1E308" },//
+                { "2.2", "4,444.44", "6.666", "1E309" },//
+        };
+
+        SummaryAnalyzer analyzer = new SummaryAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE, DataTypeEnum.DOUBLE,
+                DataTypeEnum.DOUBLE, DataTypeEnum.DOUBLE, });
+
+        for (String[] values : testers) {
+            analyzer.analyze(values);
+        }
+
+        SummaryStatistics summary1 = analyzer.getResult().get(0);
+        System.out.println(summary1.getMin());
+        System.out.println(summary1.getMax());
+
+        SummaryStatistics summary2 = analyzer.getResult().get(1);
+        System.out.println(summary2.getMin());
+        System.out.println(summary2.getMax());
+
+        SummaryStatistics summary3 = analyzer.getResult().get(2);
+        System.out.println(summary3.getMin());
+        System.out.println(summary3.getMax());
+
+        SummaryStatistics summary4 = analyzer.getResult().get(3);
+        System.out.println(summary4.getMin());
+        System.out.println(summary4.getMax());
+
+        System.out.println(Double.MAX_VALUE);
+        System.out.println(BigDecimal.valueOf(Double.MAX_VALUE));
     }
 }

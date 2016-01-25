@@ -12,10 +12,12 @@
 // ============================================================================
 package org.talend.dataquality.statistics.numeric.quantile;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.math3.stat.descriptive.rank.Median;
+import org.talend.dataquality.statistics.number.BigDecimalParser;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.dataquality.statistics.type.TypeInferenceUtils;
@@ -55,13 +57,17 @@ public class QuantileAnalyzer extends NumericalStatisticsAnalyzer<QuantileStatis
                     + "Using method: setTypes(DataType.Type[] types) to set the types.");
 
         stats.resize(record.length);
-        for (int id : this.getStatColIdx()) {// analysis each numerical column
+        for (int idx : this.getStatColIdx()) {// analysis each numerical column
                                              // in the record
-            if (!TypeInferenceUtils.isValid(types[id], record[id])) {
+            if (!TypeInferenceUtils.isValid(types[idx], record[idx])) {
                 continue;
             }
-            QuantileStatistics freqStats = stats.get(id);
-            freqStats.add(Double.valueOf(record[id]));
+            QuantileStatistics freqStats = stats.get(idx);
+            try {
+                freqStats.add(BigDecimalParser.toBigDecimal(record[idx]).doubleValue());
+            } catch (ParseException e) {
+                continue;
+            }
         }
         return true;
     }

@@ -12,9 +12,11 @@
 // ============================================================================
 package org.talend.dataquality.statistics.numeric.histogram;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.talend.dataquality.statistics.number.BigDecimalParser;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.dataquality.statistics.type.TypeInferenceUtils;
@@ -88,18 +90,22 @@ public class HistogramAnalyzer extends NumericalStatisticsAnalyzer<HistogramStat
             }
         }
 
-        for (int id : this.getStatColIdx()) { // analysis each numerical column in the record
-            if (!TypeInferenceUtils.isValid(types[id], record[id])) {
+        for (int idx : this.getStatColIdx()) { // analysis each numerical column in the record
+            if (!TypeInferenceUtils.isValid(types[idx], record[idx])) {
                 continue;
             }
-            analyzerHistogram(id, record);
+            analyzerHistogram(idx, record);
         }
         return true;
     }
 
     private void analyzerHistogram(int index, String... record) {
         HistogramStatistics histStats = stats.get(index);
-        histStats.add(Double.valueOf(record[index]));
+        try {
+            histStats.add(BigDecimalParser.toBigDecimal(record[index]).doubleValue());
+        } catch (ParseException e) {
+            // skip
+        }
     }
 
     @Override

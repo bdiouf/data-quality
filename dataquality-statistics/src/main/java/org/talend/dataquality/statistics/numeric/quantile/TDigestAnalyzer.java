@@ -12,9 +12,11 @@
 // ============================================================================
 package org.talend.dataquality.statistics.numeric.quantile;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.talend.dataquality.statistics.number.BigDecimalParser;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.dataquality.statistics.type.TypeInferenceUtils;
@@ -67,16 +69,20 @@ public class TDigestAnalyzer extends NumericalStatisticsAnalyzer<TDigestQuantile
 
         stats.resize(record.length);
 
-        for (int id : this.getStatColIdx()) { // analysis each numerical column
+        for (int idx : this.getStatColIdx()) { // analysis each numerical column
                                               // in the record
-            if (!TypeInferenceUtils.isValid(types[id], record[id])) {
+            if (!TypeInferenceUtils.isValid(types[idx], record[idx])) {
                 continue;
             }
-            TDigestQuantileStatistics stat = stats.get(id);
+            TDigestQuantileStatistics stat = stats.get(idx);
             if (compression != null && !isDigestInited) {
-                stat.initTDigest(compression[id]);
+                stat.initTDigest(compression[idx]);
             }
-            stat.add(Double.valueOf(record[id]));
+            try {
+                stat.add(BigDecimalParser.toBigDecimal(record[idx]).doubleValue());
+            } catch (ParseException e) {
+                continue;
+            }
         }
 
         if (!isDigestInited) {

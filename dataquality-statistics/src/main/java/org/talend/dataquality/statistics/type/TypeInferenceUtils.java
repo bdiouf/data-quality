@@ -101,25 +101,6 @@ public class TypeInferenceUtils {
     }
 
     /**
-     * Get double value given a string value. Compute the expression if allow calculation parameter is set to true.
-     * 
-     * @author mzhao
-     * @since 1.0
-     * @param value String value to be converted to double.
-     * @param allowCalculas Whether or not an expression need to be evaluated as double (in case of the expression
-     * exist)
-     * @return converted double value , Doulbe.NaN if the string value cannot be converted as double.
-     */
-    public static double getDouble(String value, boolean allowCalculas) {
-        // TODO implement allowCalculas
-        try {
-            return Double.valueOf(value);
-        } catch (NumberFormatException e) {
-            return Double.NaN;
-        }
-    }
-
-    /**
      * Get big integer from a string.
      * 
      * @param value
