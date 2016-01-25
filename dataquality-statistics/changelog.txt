@@ -1,3 +1,7 @@
+V1.4.2 2016-01-25
+	- TDQ-11557 add more date and time patterns and different combinations
+	- TDQ-11548 improve regex of decimal value detection
+
 V1.4.1 2015-12-30
 	- move to data-quality repository, change parent pom
 	- performance improvement on GetAllPatterns by using grouped regexes
