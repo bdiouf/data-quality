@@ -19,7 +19,7 @@ This repository contains the source files of Talend Data Quality libraries.
 
 ## Product Download
 
-Talend Open Studio for Data Quality can be download from the [Talend website](http://www.talend.com/download/data-quality).
+Talend Open Studio for Data Quality can be download from the [Talend website](http://www.talend.com/download/talend-open-studio?qt-product_tos_download_new=2&utm_source=github&utm_campaign=tosdq).
 
 ## Build
 - All project are maven based.
