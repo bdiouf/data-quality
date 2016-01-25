@@ -13,6 +13,7 @@
 package org.talend.dataquality.record.linkage.grouping;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.matchmerge.Attribute;
 import org.talend.dataquality.matchmerge.MatchMergeAlgorithm;
 import org.talend.dataquality.matchmerge.Record;
 import org.talend.dataquality.matchmerge.mfb.MatchResult;
@@ -33,6 +35,7 @@ import org.talend.dataquality.record.linkage.grouping.swoosh.DQRecordIterator;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams.SurvivorshipFunction;
+import org.talend.dataquality.record.linkage.record.CombinedRecordMatcher;
 import org.talend.dataquality.record.linkage.record.IRecordMatcher;
 import org.talend.dataquality.record.linkage.utils.SurvivorShipAlgorithmEnum;
 import org.talend.utils.collections.BidiMultiMap;
@@ -89,11 +92,6 @@ public class TSwooshGrouping<TYPE> {
                 }
                 rcdMap.put(attributeName, new ValueGenerator() {
 
-                    /*
-                     * (non-Javadoc)
-                     * 
-                     * @see org.talend.dataquality.matchmerge.mfb.RecordIterator.ValueGenerator#getColumnIndex()
-                     */
                     @Override
                     public int getColumnIndex() {
                         return Integer.valueOf(recordMap.get(IRecordGrouping.COLUMN_IDX));
@@ -121,14 +119,24 @@ public class TSwooshGrouping<TYPE> {
     }
 
     public void swooshMatch(IRecordMatcher combinedRecordMatcher, SurvivorShipAlgorithmParams survParams) {
-        algorithm = (DQMFB) createTswooshAlgorithm(combinedRecordMatcher, survParams, new GroupingCallBack());
+        swooshMatch(combinedRecordMatcher, survParams, new GroupingCallBack());
+    }
+
+    /**
+     * DOC yyin Comment method "swooshMatch".
+     * 
+     * @param combinedRecordMatcher
+     * @param survParams
+     */
+    private void swooshMatch(IRecordMatcher combinedRecordMatcher, SurvivorShipAlgorithmParams survParams,
+            GroupingCallBack callBack) {
+        algorithm = (DQMFB) createTswooshAlgorithm(combinedRecordMatcher, survParams, callBack);
 
         Iterator<Record> iterator = new DQRecordIterator(totalCount, rcdsGenerators);
         while (iterator.hasNext()) {
+
             algorithm.matchOneRecord(iterator.next());
         }
-        // List<Record> mergedRecords = malgorithm.getResult();
-        // outputResult(mergedRecords);
     }
 
     /**
@@ -184,25 +192,11 @@ public class TSwooshGrouping<TYPE> {
 
     class GroupingCallBack implements MatchMergeAlgorithm.Callback {
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * org.talend.dataquality.matchmerge.MatchMergeAlgorithm.Callback#onBeginRecord(org.talend.dataquality.matchmerge
-         * .Record)
-         */
         @Override
         public void onBeginRecord(Record record) {
             // Nothing todo
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * org.talend.dataquality.matchmerge.MatchMergeAlgorithm.Callback#onMatch(org.talend.dataquality.matchmerge.
-         * Record, org.talend.dataquality.matchmerge.Record, org.talend.dataquality.matchmerge.mfb.MatchResult)
-         */
         @Override
         public void onMatch(Record record1, Record record2, MatchResult matchResult) {
 
@@ -262,13 +256,6 @@ public class TSwooshGrouping<TYPE> {
             }
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * org.talend.dataquality.matchmerge.MatchMergeAlgorithm.Callback#onNewMerge(org.talend.dataquality.matchmerge
-         * .Record)
-         */
         @Override
         public void onNewMerge(Record record) {
             // record must be RichRecord from DQ grouping implementation.
@@ -285,13 +272,6 @@ public class TSwooshGrouping<TYPE> {
             }
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * org.talend.dataquality.matchmerge.MatchMergeAlgorithm.Callback#onRemoveMerge(org.talend.dataquality.matchmerge
-         * .Record)
-         */
         @Override
         public void onRemoveMerge(Record record) {
             // record must be RichRecord from DQ grouping implementation.
@@ -304,13 +284,6 @@ public class TSwooshGrouping<TYPE> {
             richRecord.setMaster(false);
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * org.talend.dataquality.matchmerge.MatchMergeAlgorithm.Callback#onDifferent(org.talend.dataquality.matchmerge
-         * .Record, org.talend.dataquality.matchmerge.Record, org.talend.dataquality.matchmerge.mfb.MatchResult)
-         */
         @Override
         public void onDifferent(Record record1, Record record2, MatchResult matchResult) {
             RichRecord currentRecord = (RichRecord) record2;
@@ -318,54 +291,167 @@ public class TSwooshGrouping<TYPE> {
             // The rest of group properties will be set in RichRecord$getOutputRow()
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see
-         * org.talend.dataquality.matchmerge.MatchMergeAlgorithm.Callback#onEndRecord(org.talend.dataquality.matchmerge
-         * .Record)
-         */
         @Override
         public void onEndRecord(Record record) {
             // Nothing todo
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.talend.dataquality.matchmerge.MatchMergeAlgorithm.Callback#isInterrupted()
-         */
         @Override
         public boolean isInterrupted() {
             // Nothing todo
             return false;
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.talend.dataquality.matchmerge.MatchMergeAlgorithm.Callback#onBeginProcessing()
-         */
         @Override
         public void onBeginProcessing() {
             // Nothing todo
-
         }
 
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.talend.dataquality.matchmerge.MatchMergeAlgorithm.Callback#onEndProcessing()
-         */
         @Override
         public void onEndProcessing() {
             // Nothing todo
-
         }
 
     }
 
     private void output(RichRecord record) {
         recordGrouping.outputRow(record);
+    }
+
+    /**
+     * Before match, move the record(not master) out, only use the master to match. (but need to remember the old GID)
+     * 
+     * After match: if 1(1,2) combined with 3(3,4), and 3 is the new master,-> 3(1,3), and now we should merge the 2,
+     * and 4 which didnot attend the second tMatchgroup,--> 3(1,2,3,4), and the group size also need to be changed from
+     * 2 to 4.
+     * 
+     * @param indexGID
+     */
+    public void swooshMatchWithMultipass(CombinedRecordMatcher combinedRecordMatcher,
+            SurvivorShipAlgorithmParams survivorShipAlgorithmParams, int indexGID) {
+        // key:GID, value: list of rows in this group which are not master.
+        Map<String, List<List<DQAttribute<?>>>> groupRows = new HashMap<String, List<List<DQAttribute<?>>>>();
+        List<RecordGenerator> notMasterRecords = new ArrayList<RecordGenerator>();
+        for (RecordGenerator record : rcdsGenerators) {
+            List<DQAttribute<?>> originalRow = record.getOriginalRow();
+            if (!StringUtils.equalsIgnoreCase("true", originalRow.get(indexGID + 2).getValue())) {
+                List<List<DQAttribute<?>>> list = groupRows.get(originalRow.get(indexGID).getValue());
+                if (list == null) {
+                    list = new ArrayList<List<DQAttribute<?>>>();
+                    list.add(originalRow);
+                    groupRows.put(originalRow.get(indexGID).getValue(), list);
+                } else {
+                    list.add(originalRow);
+                }
+                notMasterRecords.add(record);
+            } else {
+                DQAttribute<?> groupSize = originalRow.get(indexGID + 1);
+                groupSize.setValue("0");
+                DQAttribute<?> isMaster = originalRow.get(indexGID + 2);
+                isMaster.setValue("false");
+                // originalRow.set(indexGID + 1, groupSize);
+            }
+        }
+
+        // remove the not masters before match
+        rcdsGenerators.removeAll(notMasterRecords);
+        totalCount = totalCount - notMasterRecords.size();
+
+        // match the masters
+        MultiPassGroupingCallBack multiPassGroupingCallBack = new MultiPassGroupingCallBack();
+        multiPassGroupingCallBack.setGIDindex(indexGID);
+        swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams, multiPassGroupingCallBack);
+
+        // add the not masters again
+        List<Record> result = algorithm.getResult();
+        // List<Record> needAdd = new ArrayList<Record>();
+        for (Record master : result) {
+            String oldGID = oldGID2New.get(master.getGroupId());
+            List<List<DQAttribute<?>>> list = groupRows.get(oldGID);
+            if (list != null) {
+                for (List<DQAttribute<?>> record : list) {
+                    RichRecord createRecord = createRecord(record, master.getGroupId());
+                    output(createRecord);
+                }
+            }
+        }
+
+    }
+
+    private RichRecord createRecord(List<DQAttribute<?>> originalRow, String groupID) {
+        List<Attribute> rowList = new ArrayList<Attribute>();
+        for (DQAttribute<?> attr : originalRow) {
+            rowList.add(attr);
+        }
+
+        RichRecord record = new RichRecord(rowList, originalRow.get(0).getValue(), 0, "MFB"); //$NON-NLS-1$
+
+        record.setGroupId(groupID);
+        record.setGrpSize(0);
+        record.setMaster(false);
+        record.setOriginRow(originalRow);
+        record.setRecordSize(originalRow.size());
+        return record;
+    }
+
+    class MultiPassGroupingCallBack extends GroupingCallBack {
+
+        int indexGID = 0;
+
+        public void setGIDindex(int index) {
+            indexGID = index;
+        }
+
+        @Override
+        public void onMatch(Record record1, Record record2, MatchResult matchResult) {
+            // record1 and record2 must be RichRecord from DQ grouping implementation.
+            RichRecord richRecord1 = (RichRecord) record1;
+            RichRecord richRecord2 = (RichRecord) record2;
+
+            String grpId1 = richRecord1.getOriginRow().get(indexGID).getValue();
+            richRecord1.setGroupId(grpId1);
+            String grpId2 = richRecord2.getOriginRow().get(indexGID).getValue();
+            // Both records are merged records.
+            richRecord2.setGroupId(grpId1);
+            // Put into the map: <gid2,gid1>
+            oldGID2New.put(grpId2, grpId1);
+            // Update map where value equals to gid2
+            List<String> keysOfGID2 = oldGID2New.getKeys(grpId2);
+            if (keysOfGID2 != null) {
+                for (String key : keysOfGID2) {
+                    oldGID2New.put(key, grpId1);
+                }
+            }
+            output(richRecord1);
+            output(richRecord2);
+        }
+
+        @Override
+        public void onNewMerge(Record record) {
+            // record must be RichRecord from DQ grouping implementation.
+            RichRecord richRecord = (RichRecord) record;
+            richRecord.setMaster(true);
+            richRecord.setScore(1.0);
+            richRecord.setGroupId(richRecord.getOriginRow().get(indexGID).getValue());
+            richRecord.setMerged(true);
+            richRecord.setGrpSize(richRecord.getRelatedIds().size());
+            if (richRecord.getGroupQuality() == 0) {
+                // group quality will be the confidence (score) .
+                richRecord.setGroupQuality(record.getConfidence());
+            }
+        }
+
+        @Override
+        public void onRemoveMerge(Record record) {
+            // record must be RichRecord from DQ grouping implementation.
+            RichRecord richRecord = (RichRecord) record;
+            if (richRecord.isMerged()) {
+                // removeOldValues(richRecord);
+                richRecord.setGroupQuality(0);
+            }
+            richRecord.setMerged(false);
+            richRecord.setMaster(false);
+        }
+
     }
 }

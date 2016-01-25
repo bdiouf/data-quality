@@ -121,9 +121,14 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
     @Override
     public void end() {
         if (isComponentMode) {
-            // during the match, the output in processing will not output really
             matchFinished = false;
-            swooshGrouping.swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams);
+            if (isLinkToPrevious) {// use multipass
+                swooshGrouping.swooshMatchWithMultipass(combinedRecordMatcher, survivorShipAlgorithmParams,
+                        originalInputColumnSize);
+            } else {
+                // during the match, the output in processing will not output really
+                swooshGrouping.swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams);
+            }
             matchFinished = true;
         }
         // out put
@@ -145,11 +150,19 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
         if (!matchFinished) {
             tmpMatchResult.add(row);
         } else {
-            List<DQAttribute<?>> originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
+            List<DQAttribute<?>> originRow;
+            if (isLinkToPrevious) {// use multipass
+                String oldGID = row.getOriginRow().get(originalInputColumnSize).getValue();
+                originRow = row.getOutputRow(swooshGrouping.getOldGID2New(), originalInputColumnSize);
+                String newGID = originRow.get(originalInputColumnSize).getValue();
+                swooshGrouping.getOldGID2New().put(oldGID, newGID);
+            } else {
+                originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
+            }
             String[] strRow = new String[originRow.size()];
             int idx = 0;
             for (DQAttribute<?> attr : originRow) {
-                if (row.isMaster()) {
+                if (row.isMaster() && row.isMerged()) {
                     strRow[idx] = attr.getValue();
                 } else {
                     strRow[idx] = attr.getOriginalValue() == null ? attr.getValue() : String.valueOf(attr.getOriginalValue());

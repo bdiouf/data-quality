@@ -330,4 +330,67 @@ public class RichRecord extends Record {
         return finalGID;
     }
 
+    /**
+     * for the merged master rows from multipass, no need to add, only replace.
+     * 
+     * @param oldGID2New
+     * @param originalInputColumnSize
+     * @return
+     */
+    public List<DQAttribute<?>> getOutputRow(Map<String, String> oldGID2New, int originalInputColumnSize) {
+        if (isMerged()) {
+            // Update the matching key field by the merged attributes.
+            List<Attribute> matchKeyAttrs = getAttributes();
+            for (Attribute attribute : matchKeyAttrs) {
+                originRow.get(attribute.getColumnIndex()).setValue(attribute.getValue());
+            }
+        }
+        /**
+         * Else The columns that are not maching keys will be merged at {@link DQMFBRecordMerger#createNewRecord()}
+         */
+        if (isMerged) {// Master records
+            // Update group id.
+            String finalGID = computeGID(oldGID2New);
+            if (recordSize == originRow.size()) {
+                int extSize = 5;
+                originRow.set((originRow.size() - extSize), new DQAttribute<String>("GID", originRow.size(), finalGID));
+                extSize--;
+                // group size
+                originRow.set(originRow.size() - extSize, new DQAttribute<Integer>("Group size", originRow.size(), getGrpSize()));
+                extSize--;
+                // is master
+                originRow.set(originRow.size() - extSize, new DQAttribute<Boolean>("Is master", originRow.size(), true));
+                extSize--;
+                // Score
+                originRow.set(originRow.size() - extSize, new DQAttribute<Double>("Score", originRow.size(), 1.0));
+                extSize--;
+                // group quality
+                originRow.set(originRow.size() - extSize,
+                        new DQAttribute<String>("Group quality", originRow.size(), String.valueOf(1.0)));
+
+            }
+        } else {
+            String finalGID = computeGID(oldGID2New);
+            if (recordSize == originRow.size()) {
+                int extSize = 5;
+                originRow.set((originRow.size() - extSize), new DQAttribute<String>("GID", originRow.size(), finalGID));
+                extSize--;
+                // group size
+                originRow.set(originRow.size() - extSize, new DQAttribute<Integer>("Group size", originRow.size(), 0));
+                extSize--;
+                // is master
+                originRow.set(originRow.size() - extSize, new DQAttribute<Boolean>("Is master", originRow.size(), false));
+                extSize--;
+                // Score
+                originRow.set(originRow.size() - extSize, new DQAttribute<Double>("Score", originRow.size(), 0.0));
+                extSize--;
+                // group quality
+                originRow.set(originRow.size() - extSize,
+                        new DQAttribute<String>("Group quality", originRow.size(), String.valueOf(0.0)));
+
+            }
+        }
+        return originRow;
+    }
+
 }
