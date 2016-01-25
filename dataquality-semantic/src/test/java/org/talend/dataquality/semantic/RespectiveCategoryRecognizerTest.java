@@ -47,6 +47,29 @@ public class RespectiveCategoryRecognizerTest {
         private static final long serialVersionUID = -7775617050399019496L;
 
         {
+            put(SemanticCategoryEnum.US_PHONE.getId(), new ArrayList<Pair<String, Boolean>>() {
+
+                private static final long serialVersionUID = 7983289992158907116L;
+
+                {
+                    add(ImmutablePair.of("7543010", true));// Local
+                    add(ImmutablePair.of("754-3010", true));// Local
+                    add(ImmutablePair.of("+1 (650) 539 3200", true));
+                    add(ImmutablePair.of("15417543010", true));// Dialed in the US
+                    add(ImmutablePair.of("(541)754-3010", true)); // Domestic w/o space
+                    add(ImmutablePair.of("(541) 754-3010", true)); // Domestic
+                    add(ImmutablePair.of("+1-541-754-3010", true)); // International
+                    add(ImmutablePair.of("1-541-754-3010", true));// Dialed in the US
+                    add(ImmutablePair.of("1 541 754 3010", true));// Dialed in the US
+                    add(ImmutablePair.of("1 541 754 3010 ext 23", true));// number with extension
+                    add(ImmutablePair.of("001-541-754-3010", true));// Dialed from other country
+
+                    add(ImmutablePair.of("1234567", false));
+                    add(ImmutablePair.of("41-754-3010", false));
+                    add(ImmutablePair.of("12341-754-3010", false));
+                }
+            });
+
             put(SemanticCategoryEnum.ANIMAL.getId(), new ArrayList<Pair<String, Boolean>>() {
 
                 private static final long serialVersionUID = 7983289992158907116L;

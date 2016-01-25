@@ -234,7 +234,7 @@ public class UserDefinedClassifierTest {
             put("25:59", new String[] {}); // does not match TIME (as expected) //$NON-NLS-1$
 
             put("0067340", new String[] { "SEDOL" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("4155586", new String[] { "SEDOL" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("4155586", new String[] { "SEDOL", "US_PHONE" }); //$NON-NLS-1$ //$NON-NLS-2$
             put("B01HL06", new String[] { "SEDOL" }); //$NON-NLS-1$ //$NON-NLS-2$
 
             put("132.2356", new String[] {}); //$NON-NLS-1$
