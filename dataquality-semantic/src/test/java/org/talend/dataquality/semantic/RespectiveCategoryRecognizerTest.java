@@ -99,7 +99,7 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("Guadeloupe Pôle Caraïbes", true));
                     add(ImmutablePair.of("santa fe Municipal Airport", true));
                     add(ImmutablePair.of("santa fe Municipal", true));
-                    add(ImmutablePair.of("santa fe", false));
+                    add(ImmutablePair.of("santa fe", true));
                 }
             });
 
@@ -158,8 +158,8 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("Napco Security Technologies Inc.", true));// fixed with MATCH_COMPLETE
                     add(ImmutablePair.of("Napco Security Technologies", false));// TODO check index
                     add(ImmutablePair.of("Napco Security", false));// TODO check index
-                    add(ImmutablePair.of("Coins.ph (company)", true));
-                    add(ImmutablePair.of("Solid Gold (pet food)", true));
+                    add(ImmutablePair.of("Coins.ph (company)", false));
+                    add(ImmutablePair.of("Solid Gold (pet food)", false));
                     add(ImmutablePair.of("Solid Gold ", true)); // fixed with MATCH_COMPLETE
                     add(ImmutablePair.of("Solid Gold", true));
                     add(ImmutablePair.of("DINA S.A.", true));
@@ -167,6 +167,12 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("DINA S", false));// TODO check index
                     add(ImmutablePair.of("DINA A", false));// TODO check index
                     add(ImmutablePair.of("DINA", false));// TODO check index
+
+                    add(ImmutablePair.of("Talend", true));// TODO check index
+                    add(ImmutablePair.of("talend", true));// TODO check index
+
+                    add(ImmutablePair.of("yes", false));// TODO check index
+                    add(ImmutablePair.of("no", false));// TODO check index
                 }
             });
 
@@ -422,6 +428,9 @@ public class RespectiveCategoryRecognizerTest {
                 {
                     add(ImmutablePair.of("Orange", true));
                     add(ImmutablePair.of("Suresnes", true));
+
+                    add(ImmutablePair.of("ABERGEMENT-CLEMENCIAT", true));
+                    add(ImmutablePair.of("Abergement-Clémenciat", true));
                 }
             });
 

@@ -1,5 +1,7 @@
 V1.4.2 2016-01-25
 	- TDQ-11477 fix semantic category inference issue with US_PHONE regex
+	- TDQ-11316 yes/no values are guessed as "company" as semantic domain
+	- TDQ-11475 add a missing city name into FR_COMMUNE index
 
 V1.4.1 2015-12-30
     - move to data-quality repository, change parent pom
