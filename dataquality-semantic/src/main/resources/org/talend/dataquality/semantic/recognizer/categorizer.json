@@ -71,7 +71,7 @@
         "id" : "URL",
         "mainCategory" : "AlphaNumeric",
         "name" : "URL",
-        "validator" : { "patternString" : "^(ht|f)tp(s?)\\:\\/\\/(([a-zA-Z0-9\\-\\._]+(\\.[a-zA-Z0-9\\-\\._]+)+)|localhost)(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\'\\/\\\\\\+&amp;%\\$#_]*)?([\\d\\w\\.\\/\\%\\+\\-\\=\\&amp;\\?\\:\\\\\\&quot;\\'\\,\\|\\~\\;]*)$" }
+        "validator" : { "patternString" : "^((?:ht|f)tps?)\\:\\/\\/([a-zA-Z0-9\\-\\._]+:[a-zA-Z0-9\\-\\._]+@)?((?:[a-zA-Z0-9\\-\\._]+(?:\\.[a-zA-Z0-9\\-\\._]+)+)|localhost)(\\/?)([a-zA-Z0-9\\-\\.\\,\\'\\/\\+\\&%\\$_\\\\]*)?([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\?\\:\\\"\\'\\,\\|\\~\\;#\\\\]*)$" }
       },
       { "description" : "Web site domain",
         "id" : "WEB_DOMAIN",

@@ -47,6 +47,19 @@ public class RespectiveCategoryRecognizerTest {
         private static final long serialVersionUID = -7775617050399019496L;
 
         {
+            put(SemanticCategoryEnum.URL.getId(), new ArrayList<Pair<String, Boolean>>() {
+
+                private static final long serialVersionUID = 7983289992158907116L;
+
+                {
+                    add(ImmutablePair.of("ftp://user:pass@talend.com", true));
+                    add(ImmutablePair.of("http://www.centraldiecastingmfgcoinc.com/this/is/a/path?sort=desc#anchor", true));
+                    add(ImmutablePair.of("https://info.talend.com/fr_di_di_dummies.html?type=tydl#bar", true));
+                    add(ImmutablePair.of("hdfs://127.0.0.1/user/luis/sample.txt", false));
+
+                }
+            });
+
             put(SemanticCategoryEnum.US_PHONE.getId(), new ArrayList<Pair<String, Boolean>>() {
 
                 private static final long serialVersionUID = 7983289992158907116L;

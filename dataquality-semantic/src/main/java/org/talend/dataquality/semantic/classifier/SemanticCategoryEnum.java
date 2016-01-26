@@ -114,7 +114,7 @@ public enum SemanticCategoryEnum {
     PASSPORT("Passport", "Passport number", RecognizerType.REGEX),
     SEDOL("SEDOL", "Stock Exchange Daily Official List", RecognizerType.REGEX),
     SE_SSN("SE Social Security Number", "Swedish person number", RecognizerType.REGEX),
-    URL("URL", "Web site URL", RecognizerType.REGEX),
+    URL("Web URL", "Web site URL", RecognizerType.REGEX),
 
     // UK
     UK_PHONE("UK Phone", "UK phone number", RecognizerType.REGEX),
