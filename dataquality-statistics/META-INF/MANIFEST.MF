@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Semantic Library
 Bundle-SymbolicName: org.talend.dataquality.statistics;singleton:=true
-Bundle-Version: 1.4.1
+Bundle-Version: 1.4.2
 Bundle-Vendor: .Talend SA.
 Bundle-ActivationPolicy: lazy
 Require-Bundle: slf4j.api,
@@ -26,6 +26,7 @@ Export-Package: org.talend.dataquality.statistics,
  org.talend.dataquality.statistics.frequency.impl,
  org.talend.dataquality.statistics.frequency.pattern,
  org.talend.dataquality.statistics.frequency.recognition,
+ org.talend.dataquality.statistics.number,
  org.talend.dataquality.statistics.numeric,
  org.talend.dataquality.statistics.numeric.histogram,
  org.talend.dataquality.statistics.numeric.quantile,
