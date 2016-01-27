@@ -1,3 +1,5 @@
+V1.4.2 2016-01-26
+
 V1.4.1 2015-12-30
     - move to data-quality repository, change parent pom
 
