@@ -4,28 +4,28 @@
     <parent>
         <groupId>org.talend.dataquality</groupId>
         <artifactId>dataquality-libraries</artifactId>
-        <version>1.4.2</version>
+        <version>1.4.3-SNAPSHOT</version>
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
 	<artifactId>org.talend.dataquality.semantic</artifactId>
-	<version>${dataquality.libraries.released.version}</version>
+	<version>${dataquality.libraries.snapshot.version}</version>
 	<packaging>bundle</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>
 			<artifactId>org.talend.dataquality.common</artifactId>
-			<version>${dataquality.libraries.released.version}</version>
+			<version>${dataquality.libraries.snapshot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>
 			<artifactId>org.talend.dataquality.sampling</artifactId>
-			<version>${dataquality.sampling.released.version}</version>
+			<version>${dataquality.sampling.snapshot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>
 			<artifactId>org.talend.dataquality.standardization</artifactId>
-			<version>${dataquality.standardization.released.version}</version>
+			<version>${dataquality.standardization.snapshot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.elasticsearch</groupId>

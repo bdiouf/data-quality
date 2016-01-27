@@ -4,11 +4,11 @@
     <parent>
         <groupId>org.talend.dataquality</groupId>
         <artifactId>dataquality-libraries</artifactId>
-        <version>1.4.2</version>
+        <version>1.4.3-SNAPSHOT</version>
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.record.linkage</artifactId>
-    <version>${dataquality.record.linkage.released.version}</version>
+    <version>${dataquality.record.linkage.snapshot.version}</version>
     <packaging>bundle</packaging>
     <name>org.talend.dataquality.record.linkage</name>
     <description>Dataquality Record Linkage library description</description>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>org.talend.dataquality</groupId>
             <artifactId>org.talend.dataquality.common</artifactId>
-            <version>${dataquality.libraries.released.version}</version>
+            <version>${dataquality.libraries.snapshot.version}</version>
         </dependency>
 
         <dependency>

@@ -4,11 +4,11 @@
     <parent>
         <groupId>org.talend.dataquality</groupId>
         <artifactId>dataquality-libraries</artifactId>
-        <version>1.4.2</version>
+        <version>1.4.3-SNAPSHOT</version>
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.standardization</artifactId>
-    <version>${dataquality.standardization.released.version}</version>
+    <version>${dataquality.standardization.snapshot.version}</version>
     <packaging>bundle</packaging>
     <name>org.talend.dataquality.standardization</name>
     <description>Dataquality Standardization library description</description>

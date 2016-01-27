@@ -4,11 +4,11 @@
     <parent>
         <groupId>org.talend.dataquality</groupId>
         <artifactId>dataquality-libraries</artifactId>
-        <version>1.4.2</version>
+        <version>1.4.3-SNAPSHOT</version>
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.sampling</artifactId>
-    <version>${dataquality.sampling.released.version}</version>
+    <version>${dataquality.sampling.snapshot.version}</version>
     <packaging>bundle</packaging>
     <name>org.talend.dataquality.sampling</name>
     <description>Dataquality Sampling library description</description>
