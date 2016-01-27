@@ -14,11 +14,11 @@
 	<properties>
 		<org.talend.utils.version>6.2.0-SNAPSHOT</org.talend.utils.version>
 
-		<dataquality.libraries.snapshot.version>1.4.2-SNAPSHOT</dataquality.libraries.snapshot.version>
-		<dataquality.libraries.released.version>1.4.1</dataquality.libraries.released.version>
+		<dataquality.libraries.snapshot.version>1.4.3-SNAPSHOT</dataquality.libraries.snapshot.version>
+		<dataquality.libraries.released.version>1.4.2</dataquality.libraries.released.version>
 
-		<dataquality.record.linkage.snapshot.version>3.1.0-SNAPSHOT</dataquality.record.linkage.snapshot.version>
-		<dataquality.record.linkage.released.version>3.0.3</dataquality.record.linkage.released.version>
+		<dataquality.record.linkage.snapshot.version>3.1.1-SNAPSHOT</dataquality.record.linkage.snapshot.version>
+		<dataquality.record.linkage.released.version>3.1.0</dataquality.record.linkage.released.version>
 
 		<dataquality.sampling.snapshot.version>2.1.6-SNAPSHOT</dataquality.sampling.snapshot.version>
 		<dataquality.sampling.released.version>2.1.5</dataquality.sampling.released.version>

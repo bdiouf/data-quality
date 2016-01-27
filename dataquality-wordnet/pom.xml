@@ -8,7 +8,7 @@
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.wordnet</artifactId>
-    <version>${dataquality.wordnet.snapshot.version}</version>
+    <version>${dataquality.wordnet.released.version}</version>
     <packaging>bundle</packaging>
     
     <properties>

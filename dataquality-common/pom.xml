@@ -8,7 +8,7 @@
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.common</artifactId>
-    <version>${dataquality.libraries.snapshot.version}</version>
+    <version>${dataquality.libraries.released.version}</version>
     <packaging>bundle</packaging>
     <url>www.talend.com</url>
     <description>Data Quality Common Library is the low level library containing interfaces and common utility classes.</description>
