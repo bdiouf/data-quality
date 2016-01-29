@@ -60,7 +60,7 @@ public class PerformanceTest {
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
         System.out.println("Total duration IS_DATE on " + count + " samples: " + difference + "ms");
 
-        assertTrue("The method is slower than expected", difference < 2000);
+        assertTrue("The method is slower than expected", difference < 4000);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class PerformanceTest {
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
         System.out.println("Total duration GET_PATTERNS on " + count + " samples: " + difference + "ms");
 
-        assertTrue("The method is slower than expected", difference < 2500);
+        assertTrue("The method is slower than expected", difference < 5000);
     }
 
 }
