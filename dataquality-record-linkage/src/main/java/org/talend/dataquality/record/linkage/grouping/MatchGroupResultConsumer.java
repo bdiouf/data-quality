@@ -54,10 +54,10 @@ public abstract class MatchGroupResultConsumer {
      */
     public void addOneRowOfResult(Object rowResult) {
         if (matchResult == null) {
-            matchResult = new ArrayList<Object[]>();
+            matchResult = new ArrayList<>();
         }
-        if (rowResult instanceof String[]) {
-            matchResult.add((String[]) rowResult);
+        if (rowResult instanceof Object[]) {
+            matchResult.add((Object[]) rowResult);
         }
     }
 
