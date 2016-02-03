@@ -334,7 +334,8 @@ public class TSwooshGrouping<TYPE> {
         List<RecordGenerator> notMasterRecords = new ArrayList<RecordGenerator>();
         for (RecordGenerator record : rcdsGenerators) {
             List<DQAttribute<?>> originalRow = record.getOriginalRow();
-            if (!StringUtils.equalsIgnoreCase("true", originalRow.get(indexGID + 2).getValue())) {
+            if (!StringUtils.equalsIgnoreCase("true", StringUtils.normalizeSpace(originalRow.get(indexGID + 2).getValue()))) {
+                // originalRow.get(originalRow.size() - 1).setValue(StringUtils.EMPTY);
                 List<List<DQAttribute<?>>> list = groupRows.get(originalRow.get(indexGID).getValue());
                 if (list == null) {
                     list = new ArrayList<List<DQAttribute<?>>>();
@@ -366,16 +367,33 @@ public class TSwooshGrouping<TYPE> {
         List<Record> result = algorithm.getResult();
         // List<Record> needAdd = new ArrayList<Record>();
         for (Record master : result) {
-            String oldGID = oldGID2New.get(master.getGroupId());
-            List<List<DQAttribute<?>>> list = groupRows.get(oldGID);
-            if (list != null) {
-                for (List<DQAttribute<?>> record : list) {
-                    RichRecord createRecord = createRecord(record, master.getGroupId());
-                    output(createRecord);
-                }
-            }
+            List<List<DQAttribute<?>>> list = groupRows.get(master.getGroupId());
+            addMembersIntoNewMaster(master, list);
+
+            // use the new GID to fetch some members of old GID-- which belong to a temp master in first pass, but not a
+            // master after 2nd tMatchgroup.
+            list = groupRows.get(oldGID2New.get(master.getGroupId()));
+            addMembersIntoNewMaster(master, list);
         }
 
+    }
+
+    /**
+     * DOC yyin Comment method "addMembersIntoNewMaster".
+     * 
+     * @param master
+     * @param list
+     */
+    private void addMembersIntoNewMaster(Record master, List<List<DQAttribute<?>>> list) {
+        if (list == null) {
+            return;
+        }
+        RichRecord record = (RichRecord) master;
+        record.setGrpSize(record.getGrpSize() + list.size() - 1);
+        for (List<DQAttribute<?>> attri : list) {
+            RichRecord createRecord = createRecord(attri, master.getGroupId());
+            output(createRecord);
+        }
     }
 
     private RichRecord createRecord(List<DQAttribute<?>> originalRow, String groupID) {
@@ -414,7 +432,9 @@ public class TSwooshGrouping<TYPE> {
             // Both records are merged records.
             richRecord2.setGroupId(grpId1);
             // Put into the map: <gid2,gid1>
+            oldGID2New.put(grpId1, grpId2);
             oldGID2New.put(grpId2, grpId1);
+            // System.err.println("master gid " + grpId1 + "--vs old master gid -" + grpId2);
             // Update map where value equals to gid2
             List<String> keysOfGID2 = oldGID2New.getKeys(grpId2);
             if (keysOfGID2 != null) {
@@ -422,8 +442,19 @@ public class TSwooshGrouping<TYPE> {
                     oldGID2New.put(key, grpId1);
                 }
             }
-            output(richRecord1);
+            // int groupSizeOfRecord1 = Integer.parseInt(String.valueOf(richRecord1.getOriginRow().get(indexGID + 1)
+            // .getOriginalValue()));
+            // int groupSizeOfRecord2 = Integer.parseInt(String.valueOf(richRecord2.getOriginRow().get(indexGID + 1)
+            // .getOriginalValue()));
+            // // if record1's group size >1 & record2's group size>1, do not output both of them.
+            // if ((groupSizeOfRecord1 > 1 && groupSizeOfRecord2 > 1)) {
+            // return;
+            // } else if (!(groupSizeOfRecord1 > 1)) {
+            // // if the group size >1 in the first pass, filter this temp master. because it is not master any more.
+            // output(richRecord1);
+            // }
             output(richRecord2);
+            output(richRecord1);
         }
 
         @Override

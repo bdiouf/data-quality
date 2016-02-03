@@ -152,10 +152,10 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
         } else {
             List<DQAttribute<?>> originRow;
             if (isLinkToPrevious) {// use multipass
-                String oldGID = row.getOriginRow().get(originalInputColumnSize).getValue();
+                // String oldGID = row.getOriginRow().get(originalInputColumnSize).getValue();
                 originRow = row.getOutputRow(swooshGrouping.getOldGID2New(), originalInputColumnSize);
-                String newGID = originRow.get(originalInputColumnSize).getValue();
-                swooshGrouping.getOldGID2New().put(oldGID, newGID);
+                // String newGID = originRow.get(originalInputColumnSize).getValue();
+                // swooshGrouping.getOldGID2New().put(oldGID, newGID);
             } else {
                 originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
             }
