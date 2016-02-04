@@ -1,0 +1,14 @@
+2|XX|F|2e9323d6-6fb6-45e6-af13-beae6a82075a|2|true|1.0|1.0
+1|X|J|2e9323d6-6fb6-45e6-af13-beae6a82075a|0|false|1.0|1.0
+2|X|F|2e9323d6-6fb6-45e6-af13-beae6a82075a|0|false|1.0|1.0
+7|G|F|47c80991-919c-41ab-915d-4d9924582d17|1|true|1.0|1.0
+5|WW|F|a12d5bee-b281-4ba7-a60b-36a45137f5fb|2|true|1.0|1.0
+6|W|F|a12d5bee-b281-4ba7-a60b-36a45137f5fb|0|false|1.0|1.0
+5|W|F|a12d5bee-b281-4ba7-a60b-36a45137f5fb|0|false|1.0|1.0
+12|YY|B|9b2aa5e6-2a89-4fe4-b422-7e970f4926da|2|true|1.0|1.0
+11|Y|B|9b2aa5e6-2a89-4fe4-b422-7e970f4926da|0|false|1.0|1.0
+12|Y|B|9b2aa5e6-2a89-4fe4-b422-7e970f4926da|0|false|1.0|1.0
+9|AAA|B|c9dc3aa5-5efb-49a8-9161-5201c0a9655e|3|true|1.0|1.0
+10|A|B|c9dc3aa5-5efb-49a8-9161-5201c0a9655e|0|false|1.0|1.0
+8|A|B|c9dc3aa5-5efb-49a8-9161-5201c0a9655e|0|false|1.0|1.0
+9|A|B|c9dc3aa5-5efb-49a8-9161-5201c0a9655e|0|false|1.0|1.0

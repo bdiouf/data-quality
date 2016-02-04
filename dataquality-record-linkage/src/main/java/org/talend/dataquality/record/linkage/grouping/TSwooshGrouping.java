@@ -327,10 +327,12 @@ public class TSwooshGrouping<TYPE> {
      * 
      * @param indexGID
      */
+    Map<String, List<List<DQAttribute<?>>>> groupRows;
+
     public void swooshMatchWithMultipass(CombinedRecordMatcher combinedRecordMatcher,
             SurvivorShipAlgorithmParams survivorShipAlgorithmParams, int indexGID) {
+        groupRows = new HashMap<String, List<List<DQAttribute<?>>>>();
         // key:GID, value: list of rows in this group which are not master.
-        Map<String, List<List<DQAttribute<?>>>> groupRows = new HashMap<String, List<List<DQAttribute<?>>>>();
         List<RecordGenerator> notMasterRecords = new ArrayList<RecordGenerator>();
         for (RecordGenerator record : rcdsGenerators) {
             List<DQAttribute<?>> originalRow = record.getOriginalRow();
@@ -389,7 +391,7 @@ public class TSwooshGrouping<TYPE> {
             return;
         }
         RichRecord record = (RichRecord) master;
-        record.setGrpSize(record.getGrpSize() + list.size() - 1);
+        record.setGrpSize(record.getGrpSize() + list.size());
         for (List<DQAttribute<?>> attri : list) {
             RichRecord createRecord = createRecord(attri, master.getGroupId());
             output(createRecord);
@@ -412,6 +414,26 @@ public class TSwooshGrouping<TYPE> {
         return record;
     }
 
+    /**
+     * move the records from old GID to new GID. (for multipass)
+     * 
+     * @param oldGID
+     * @param newGID
+     */
+    private void updateNotMasteredRecords(String oldGID, String newGID) {
+        System.err.println("old--" + oldGID + "--new--" + newGID);
+        List<List<DQAttribute<?>>> recordsInFirstGroup = groupRows.get(oldGID);
+        List<List<DQAttribute<?>>> recordsInNewGroup = groupRows.get(newGID);
+        if (recordsInFirstGroup != null) {
+            if (recordsInNewGroup == null) {
+                groupRows.put(newGID, recordsInFirstGroup);
+            } else {
+                recordsInNewGroup.addAll(recordsInFirstGroup);
+            }
+        }
+
+    }
+
     class MultiPassGroupingCallBack extends GroupingCallBack {
 
         int indexGID = 0;
@@ -426,50 +448,62 @@ public class TSwooshGrouping<TYPE> {
             RichRecord richRecord1 = (RichRecord) record1;
             RichRecord richRecord2 = (RichRecord) record2;
 
-            String grpId1 = richRecord1.getOriginRow().get(indexGID).getValue();
-            richRecord1.setGroupId(grpId1);
-            String grpId2 = richRecord2.getOriginRow().get(indexGID).getValue();
-            // Both records are merged records.
-            richRecord2.setGroupId(grpId1);
-            // Put into the map: <gid2,gid1>
-            oldGID2New.put(grpId1, grpId2);
-            oldGID2New.put(grpId2, grpId1);
-            // System.err.println("master gid " + grpId1 + "--vs old master gid -" + grpId2);
-            // Update map where value equals to gid2
-            List<String> keysOfGID2 = oldGID2New.getKeys(grpId2);
-            if (keysOfGID2 != null) {
-                for (String key : keysOfGID2) {
-                    oldGID2New.put(key, grpId1);
-                }
-            }
-            // int groupSizeOfRecord1 = Integer.parseInt(String.valueOf(richRecord1.getOriginRow().get(indexGID + 1)
-            // .getOriginalValue()));
-            // int groupSizeOfRecord2 = Integer.parseInt(String.valueOf(richRecord2.getOriginRow().get(indexGID + 1)
-            // .getOriginalValue()));
-            // // if record1's group size >1 & record2's group size>1, do not output both of them.
-            // if ((groupSizeOfRecord1 > 1 && groupSizeOfRecord2 > 1)) {
-            // return;
-            // } else if (!(groupSizeOfRecord1 > 1)) {
-            // // if the group size >1 in the first pass, filter this temp master. because it is not master any more.
-            // output(richRecord1);
-            // }
-            output(richRecord2);
-            output(richRecord1);
-        }
+            String grpId1 = richRecord1.getGroupId();
+            String grpId2 = richRecord2.getGroupId();
+            String oldgrpId1 = richRecord1.getOriginRow().get(indexGID).getValue();
+            String oldgrpId2 = richRecord2.getOriginRow().get(indexGID).getValue();
+            if (grpId1 == null && grpId2 == null) {
+                // Both records are original records.
+                richRecord1.setGroupId(oldgrpId1);
+                richRecord2.setGroupId(oldgrpId1);
+                // group size is 0 for none-master record
+                richRecord1.setGrpSize(0);
+                richRecord2.setGrpSize(0);
 
-        @Override
-        public void onNewMerge(Record record) {
-            // record must be RichRecord from DQ grouping implementation.
-            RichRecord richRecord = (RichRecord) record;
-            richRecord.setMaster(true);
-            richRecord.setScore(1.0);
-            richRecord.setGroupId(richRecord.getOriginRow().get(indexGID).getValue());
-            richRecord.setMerged(true);
-            richRecord.setGrpSize(richRecord.getRelatedIds().size());
-            if (richRecord.getGroupQuality() == 0) {
-                // group quality will be the confidence (score) .
-                richRecord.setGroupQuality(record.getConfidence());
+                richRecord1.setMaster(false);
+                richRecord2.setMaster(false);
+
+                updateNotMasteredRecords(oldgrpId2, oldgrpId1);
+                output(richRecord1);
+                output(richRecord2);
+
+            } else if (grpId1 != null && grpId2 != null) {
+                // Both records are merged records.
+                richRecord2.setGroupId(grpId1);
+                updateNotMasteredRecords(oldgrpId2, grpId1);
+                // Put into the map: <gid2,gid1>
+                oldGID2New.put(grpId2, grpId1);
+                // Update map where value equals to gid2
+                List<String> keysOfGID2 = oldGID2New.getKeys(grpId2);
+                if (keysOfGID2 != null) {
+                    for (String key : keysOfGID2) {
+                        oldGID2New.put(key, grpId1);
+                    }
+                }
+
+            } else if (grpId1 == null) {
+                // richRecord1 is original record
+                // GID is the gid of record 2.
+                richRecord1.setGroupId(richRecord2.getGroupId());
+                updateNotMasteredRecords(oldgrpId1, richRecord2.getGroupId());
+                // group size is 0 for none-master record
+                richRecord1.setGrpSize(0);
+                richRecord1.setMaster(false);
+
+                output(richRecord1);
+
+            } else {
+                // richRecord2 is original record.
+                // GID
+                richRecord2.setGroupId(richRecord1.getGroupId());
+                updateNotMasteredRecords(oldgrpId2, richRecord1.getGroupId());
+                // group size is 0 for none-master record
+                richRecord2.setGrpSize(0);
+                richRecord2.setMaster(false);
+
+                output(richRecord2);
             }
+
         }
 
         @Override
