@@ -337,7 +337,6 @@ public class TSwooshGrouping<TYPE> {
         for (RecordGenerator record : rcdsGenerators) {
             List<DQAttribute<?>> originalRow = record.getOriginalRow();
             if (!StringUtils.equalsIgnoreCase("true", StringUtils.normalizeSpace(originalRow.get(indexGID + 2).getValue()))) {
-                // originalRow.get(originalRow.size() - 1).setValue(StringUtils.EMPTY);
                 List<List<DQAttribute<?>>> list = groupRows.get(originalRow.get(indexGID).getValue());
                 if (list == null) {
                     list = new ArrayList<List<DQAttribute<?>>>();
@@ -352,7 +351,6 @@ public class TSwooshGrouping<TYPE> {
                 groupSize.setValue("0");
                 DQAttribute<?> isMaster = originalRow.get(indexGID + 2);
                 isMaster.setValue("false");
-                // originalRow.set(indexGID + 1, groupSize);
             }
         }
 
@@ -367,7 +365,6 @@ public class TSwooshGrouping<TYPE> {
 
         // add the not masters again
         List<Record> result = algorithm.getResult();
-        // List<Record> needAdd = new ArrayList<Record>();
         for (Record master : result) {
             List<List<DQAttribute<?>>> list = groupRows.get(master.getGroupId());
             addMembersIntoNewMaster(master, list);
@@ -421,7 +418,6 @@ public class TSwooshGrouping<TYPE> {
      * @param newGID
      */
     private void updateNotMasteredRecords(String oldGID, String newGID) {
-        System.err.println("old--" + oldGID + "--new--" + newGID);
         List<List<DQAttribute<?>>> recordsInFirstGroup = groupRows.get(oldGID);
         List<List<DQAttribute<?>>> recordsInNewGroup = groupRows.get(newGID);
         if (recordsInFirstGroup != null) {
