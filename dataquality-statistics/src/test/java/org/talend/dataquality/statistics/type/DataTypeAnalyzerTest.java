@@ -236,7 +236,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
         final List<DataTypeOccurences> result = analyzer.getResult();
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType());
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.6));
-        assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.3));
+        assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.3));
     }
 
     @Test
@@ -261,8 +261,8 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
         }
         analyzer.end();
         final List<DataTypeOccurences> result = analyzer.getResult();
-        assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.9));
-        assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.1));
+        assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.9));
+        assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.1));
     }
 
     @Test
@@ -279,7 +279,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
         }
         analyzer.end();
         final List<DataTypeOccurences> resultBeforeSetCustomP = analyzer.getResult();
-        assertEquals(DataTypeEnum.INTEGER, resultBeforeSetCustomP.get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.STRING, resultBeforeSetCustomP.get(0).getSuggestedType());
 
         // After set Custom Data Pattern: yyyy?mm?dd, "2015?08?20" & "2012?02?12" can be recognised as date
         // the type of testColumn is DATE
