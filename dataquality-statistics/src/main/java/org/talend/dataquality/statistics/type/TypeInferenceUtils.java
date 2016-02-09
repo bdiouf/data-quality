@@ -13,6 +13,7 @@
 package org.talend.dataquality.statistics.type;
 
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -215,4 +216,31 @@ public class TypeInferenceUtils {
         }
     }
 
+    public static DataTypeEnum getDataType(String value) {
+        return getDataType(value, Collections.EMPTY_LIST);
+    }
+
+    public static DataTypeEnum getDataType(String value, List<String> customDateTimePatterns) {
+        if (TypeInferenceUtils.isEmpty(value)) {
+            // 1. detect empty
+            return DataTypeEnum.EMPTY;
+        } else if (TypeInferenceUtils.isBoolean(value)) {
+            // 2. detect boolean
+            return DataTypeEnum.BOOLEAN;
+        } else if (TypeInferenceUtils.isInteger(value)) {
+            // 3. detect integer
+            return DataTypeEnum.INTEGER;
+        } else if (TypeInferenceUtils.isDouble(value)) {
+            // 4. detect double
+            return DataTypeEnum.DOUBLE;
+        } else if (isDate(value, customDateTimePatterns)) {
+            // 5. detect date
+            return DataTypeEnum.DATE;
+        } else if (isTime(value)) {
+            // 6. detect date
+            return DataTypeEnum.TIME;
+        }
+        // will return string when no matching
+        return DataTypeEnum.STRING;
+    }
 }

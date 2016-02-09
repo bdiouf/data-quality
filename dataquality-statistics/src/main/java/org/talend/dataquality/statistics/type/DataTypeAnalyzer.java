@@ -55,39 +55,6 @@ public class DataTypeAnalyzer implements Analyzer<DataTypeOccurences> {
         this.customDateTimePatterns.addAll(customDateTimePatterns);
     }
 
-
-    private DataTypeEnum execute(String value) {
-        if (TypeInferenceUtils.isEmpty(value)) {
-            // 1. detect empty
-            return DataTypeEnum.EMPTY;
-        } else if (TypeInferenceUtils.isBoolean(value)) {
-            // 2. detect boolean
-            return DataTypeEnum.BOOLEAN;
-        } else if (TypeInferenceUtils.isInteger(value)) {
-            // 3. detect integer
-            return DataTypeEnum.INTEGER;
-        } else if (TypeInferenceUtils.isDouble(value)) {
-            // 4. detect double
-            return DataTypeEnum.DOUBLE;
-        } else if (isDate(value, customDateTimePatterns)) {
-            // 5. detect date
-            return DataTypeEnum.DATE;
-        } else if (isTime(value)) {
-            // 6. detect date
-            return DataTypeEnum.TIME;
-        }
-        // will return string when no matching
-        return DataTypeEnum.STRING;
-    }
-
-    private boolean isDate(String value, List<String> customDatePatterns) {
-        return TypeInferenceUtils.isDate(value, customDatePatterns);
-    }
-
-    protected boolean isTime(String value) {
-        return TypeInferenceUtils.isTime(value);
-    }
-
     public void init() {
         dataTypes.clear();
     }
@@ -116,7 +83,7 @@ public class DataTypeAnalyzer implements Analyzer<DataTypeOccurences> {
         dataTypes.resize(record.length);
         for (int i = 0; i < record.length; i++) {
             final DataTypeOccurences dataType = dataTypes.get(i);
-            dataType.increment(execute(record[i]));
+            dataType.increment(TypeInferenceUtils.getDataType(record[i], customDateTimePatterns));
         }
         return true;
     }
