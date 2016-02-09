@@ -228,14 +228,18 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
     @Test
     public void testGetDataTypeWithRatio() {
         DataTypeAnalyzer analyzer = createDataTypeanalyzer();
+        // the integer ratio is about 0.57 in this case
         String[] records = new String[] { "1", "2", "3", "4", "1.0", "2.0", "3.0" };
         for (String record : records) {
             analyzer.analyze(record);
         }
         analyzer.end();
         final List<DataTypeOccurences> result = analyzer.getResult();
+        // the ratio 0.57 exceeds the default integer threshold 0.5, return INTEGER
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType());
-        assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.6));
+        // the ratio 0.57 is smaller than the integer threshold, return DOUBLE
+        assertEquals(DataTypeEnum.DOUBLE, result.get(0).getSuggestedType(0.6));
+        // the ratio 0.57 exceeds the threshold 0.3, return INTEGER
         assertEquals(DataTypeEnum.INTEGER, result.get(0).getSuggestedType(0.3));
     }
 

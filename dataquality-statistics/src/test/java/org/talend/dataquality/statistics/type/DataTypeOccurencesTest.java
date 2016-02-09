@@ -1,40 +1,40 @@
 package org.talend.dataquality.statistics.type;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.talend.dataquality.statistics.type.DataTypeEnum.*;
+
+import org.junit.Test;
 
 public class DataTypeOccurencesTest {
 
     @Test
-    public void shouldReturnStringWhenOnlyEmptyType(){
-        //given
+    public void shouldReturnStringWhenOnlyEmptyType() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
         typeOccurrences.increment(EMPTY);
 
-        //then
+        // then
         assertEquals(STRING, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnBooleanWhenOnlyEmptyAndBooleanType(){
-        //given
+    public void shouldReturnBooleanWhenOnlyEmptyAndBooleanType() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
         typeOccurrences.increment(EMPTY);
         typeOccurrences.increment(BOOLEAN);
 
-        //then
+        // then
         assertEquals(BOOLEAN, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnBooleanWhenBooleanExceedsDefaultThreshold(){
-        //given
+    public void shouldReturnBooleanWhenBooleanExceedsDefaultThreshold() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
@@ -43,26 +43,26 @@ public class DataTypeOccurencesTest {
         typeOccurrences.increment(BOOLEAN);
         typeOccurrences.increment(STRING);
 
-        //then
+        // then
         assertEquals(BOOLEAN, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnTimeWhenOnlyEmptyAndTimerType(){
-        //given
+    public void shouldReturnTimeWhenOnlyEmptyAndTimerType() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
         typeOccurrences.increment(EMPTY);
         typeOccurrences.increment(TIME);
 
-        //then
+        // then
         assertEquals(TIME, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnTimeWhenTimeExceedsDefaultThreshold(){
-        //given
+    public void shouldReturnTimeWhenTimeExceedsDefaultThreshold() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
@@ -71,26 +71,26 @@ public class DataTypeOccurencesTest {
         typeOccurrences.increment(BOOLEAN);
         typeOccurrences.increment(TIME);
 
-        //then
+        // then
         assertEquals(TIME, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnDateWhenOnlyEmptyAndDateType(){
-        //given
+    public void shouldReturnDateWhenOnlyEmptyAndDateType() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
         typeOccurrences.increment(EMPTY);
         typeOccurrences.increment(DATE);
 
-        //then
+        // then
         assertEquals(DATE, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnDateExceedsDefaultThreshold(){
-        //given
+    public void shouldReturnDateExceedsDefaultThreshold() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
@@ -99,26 +99,26 @@ public class DataTypeOccurencesTest {
         typeOccurrences.increment(STRING);
         typeOccurrences.increment(DATE);
 
-        //then
+        // then
         assertEquals(DATE, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnIntegerWhenOnlyEmptyAndIntegerType(){
-        //given
+    public void shouldReturnIntegerWhenOnlyEmptyAndIntegerType() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
         typeOccurrences.increment(EMPTY);
         typeOccurrences.increment(INTEGER);
 
-        //then
+        // then
         assertEquals(INTEGER, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnIntegerWhenIntegerExceedsDefaultThreshold(){
-        //given
+    public void shouldReturnIntegerWhenIntegerExceedsDefaultThreshold() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
@@ -134,26 +134,26 @@ public class DataTypeOccurencesTest {
         typeOccurrences.increment(STRING);
         typeOccurrences.increment(STRING);
 
-        //then
+        // then
         assertEquals(INTEGER, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnDoubleWhenOnlyEmptyAndDoubleType(){
-        //given
+    public void shouldReturnDoubleWhenOnlyEmptyAndDoubleType() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
         typeOccurrences.increment(EMPTY);
         typeOccurrences.increment(DOUBLE);
 
-        //then
+        // then
         assertEquals(DOUBLE, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnDoubleWhenDoubleExceedsDefaultThreshold(){
-        //given
+    public void shouldReturnDoubleWhenDoubleExceedsDefaultThreshold() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
@@ -162,13 +162,45 @@ public class DataTypeOccurencesTest {
         typeOccurrences.increment(STRING);
         typeOccurrences.increment(DOUBLE);
 
-        //then
+        // then
         assertEquals(DOUBLE, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnStringWhenEachTypeAppearsOnce(){
-        //given
+    public void shouldReturnDoubleWhenTheIntegerRatioEqualsToThreshold() {
+        // given
+        DataTypeOccurences typeOccurrences = new DataTypeOccurences();
+
+        // when
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(DOUBLE);
+        typeOccurrences.increment(DOUBLE);
+
+        // then
+        assertEquals(DOUBLE, typeOccurrences.getSuggestedType(0.6));
+    }
+
+    @Test
+    public void shouldReturnIntegerWhenTheIntegerRatioExceedsThreshold() {
+        // given
+        DataTypeOccurences typeOccurrences = new DataTypeOccurences();
+
+        // when
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(DOUBLE);
+        typeOccurrences.increment(DOUBLE);
+
+        // then
+        assertEquals(INTEGER, typeOccurrences.getSuggestedType(0.55));
+    }
+
+    @Test
+    public void shouldReturnStringWhenEachTypeAppearsOnce() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
@@ -180,13 +212,13 @@ public class DataTypeOccurencesTest {
         typeOccurrences.increment(DOUBLE);
         typeOccurrences.increment(STRING);
 
-        //then
+        // then
         assertEquals(STRING, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnStringWhenEachTypeAppearsOnce2(){
-        //given
+    public void shouldReturnStringWhenEachTypeAppearsOnce2() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
@@ -198,13 +230,13 @@ public class DataTypeOccurencesTest {
         typeOccurrences.increment(DOUBLE);
         typeOccurrences.increment(STRING);
 
-        //then
+        // then
         assertEquals(STRING, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnIntegerWhenDoubleAndIntegerExceedsDefaultThreshold(){
-        //given
+    public void shouldReturnIntegerWhenDoubleAndIntegerExceedsDefaultThreshold() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
@@ -216,13 +248,32 @@ public class DataTypeOccurencesTest {
         typeOccurrences.increment(INTEGER);
         typeOccurrences.increment(STRING);
 
-        //then
+        // then
         assertEquals(INTEGER, typeOccurrences.getSuggestedType());
     }
 
     @Test
-    public void shouldReturnIntegerWhenIntegerExceedsGivenThreshold(){
-        //given
+    public void shouldReturnIntegerWhenIntegerExceedsGivenThreshold() {
+        // given
+        DataTypeOccurences typeOccurrences = new DataTypeOccurences();
+
+        // when
+        typeOccurrences.increment(EMPTY);
+        typeOccurrences.increment(DOUBLE);
+        typeOccurrences.increment(DOUBLE);
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(STRING);
+        DataTypeEnum suggestedType = typeOccurrences.getSuggestedType(0.1, 0.5);
+
+        // then
+        assertEquals(INTEGER, suggestedType);
+    }
+
+    @Test
+    public void shouldReturnDoubleWhenIntegerDoesNotExceedGivenThreshold() {
+        // given
         DataTypeOccurences typeOccurrences = new DataTypeOccurences();
 
         // when
@@ -235,7 +286,7 @@ public class DataTypeOccurencesTest {
         typeOccurrences.increment(STRING);
         DataTypeEnum suggestedType = typeOccurrences.getSuggestedType(0.1, 0.9);
 
-        //then
-        assertEquals(INTEGER, suggestedType);
+        // then
+        assertEquals(DOUBLE, suggestedType);
     }
 }
