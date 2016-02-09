@@ -48,7 +48,7 @@ Data Quality Common Library is the low level library containing interfaces and c
 Changelog
 -------------
 
-More information can be found [here](https://github.com/Talend/tdq-studio-se/blob/master/main/plugins/org.talend.dataquality.common/changelog.txt).
+More information can be found [here](https://github.com/Talend/data-quality/blob/master/dataquality-common/changelog.txt).
 
 Where can I get the latest release?
 -----------------------------------
@@ -70,7 +70,7 @@ And include the following dependency:
 <dependency>
   <groupId>org.talend.dataquality</groupId>
   <artifactId>org.talend.dataquality.common</artifactId>
-  <version>1.4.1</version>
+  <version>1.4.2</version>
 </dependency>
 ```
 

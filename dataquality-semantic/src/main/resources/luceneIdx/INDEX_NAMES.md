@@ -41,6 +41,7 @@ Dictionary index
 |36  |`CA_PROVINCE_TERRITORY_CODE`|Nov. 2015|Nov. 2015|ca_province_territory.csv|
 |37  |`MX_ESTADO`|Nov. 2015|Nov. 2015|mx_estado.csv|
 |38  |`MX_ESTADO_CODE`|Nov. 2015|Nov. 2015|mx_estado.csv|
+|39  |`ANSWER`|Feb. 2016|Feb. 2016|N/A|
 
 
 Keyword index

@@ -48,7 +48,7 @@ Dataquality Record Linkage library description
 Changelog
 -------------
 
-More information can be found [here](https://github.com/Talend/tdq-studio-se/blob/master/main/plugins/org.talend.dataquality.record.linkage/changelog.txt).
+More information can be found [here](https://github.com/Talend/data-quality/blob/master/dataquality-record-linkage/changelog.txt).
 
 Where can I get the latest release?
 -----------------------------------
@@ -70,7 +70,7 @@ And include the following dependency:
 <dependency>
   <groupId>org.talend.dataquality</groupId>
   <artifactId>org.talend.dataquality.record.linkage</artifactId>
-  <version>3.0.3</version>
+  <version>3.1.0</version>
 </dependency>
 ```
 

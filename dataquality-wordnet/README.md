@@ -47,12 +47,12 @@ Data Quality Standardization library description
 
 -------------
 
-More information can be found [here](https://github.com/Talend/data-quality/blob/master/dataquality-standardization/changelog.txt).
+More information can be found [here](https://github.com/Talend/data-quality/blob/master/dataquality-wordnet/changelog.txt).
 
 Where can I get the latest release?
 -----------------------------------
-You can download latest stable binaries from our [Release Repository](http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceRelease/org/talend/dataquality/org.talend.dataquality.standardization).
-or snapshot binaries from our [Snapshot Repository](http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceSnapshot/org/talend/dataquality/org.talend.dataquality.standardization).
+You can download latest stable binaries from our [Release Repository](http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceRelease/org/talend/dataquality/org.talend.dataquality.wordnet).
+or snapshot binaries from our [Snapshot Repository](http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceSnapshot/org/talend/dataquality/org.talend.dataquality.wordnet).
 
 Alternatively you can add the following repository into your pom.xml file:
 ```xml
@@ -68,8 +68,8 @@ And include the following dependency:
 ```xml
 <dependency>
   <groupId>org.talend.dataquality</groupId>
-  <artifactId>org.talend.dataquality.standardization</artifactId>
-  <version>3.0.2</version>
+  <artifactId>org.talend.dataquality.wordnet</artifactId>
+  <version>1.4.2</version>
 </dependency>
 ```
 
