@@ -1,3 +1,6 @@
+V1.4.3 2016-02-09
+	- TDP-228 fix incorrect data type guess
+
 V1.4.2 2016-01-25
 	- TDQ-11557 add more date and time patterns and different combinations
 	- TDQ-11548 improve regex of decimal value detection

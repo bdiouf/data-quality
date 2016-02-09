@@ -47,6 +47,22 @@ public class RespectiveCategoryRecognizerTest {
         private static final long serialVersionUID = -7775617050399019496L;
 
         {
+            put(SemanticCategoryEnum.ANSWER.getId(), new ArrayList<Pair<String, Boolean>>() {
+
+                private static final long serialVersionUID = 7983289992158907116L;
+
+                {
+                    add(ImmutablePair.of("YES", true));
+                    add(ImmutablePair.of("NO", true));
+                    add(ImmutablePair.of("Oui", true));
+                    add(ImmutablePair.of("Non", true));
+                    add(ImmutablePair.of("ja", true));
+                    add(ImmutablePair.of("nein", true));
+                    add(ImmutablePair.of("Sí", true));
+                    add(ImmutablePair.of("Si", true));
+
+                }
+            });
             put(SemanticCategoryEnum.URL.getId(), new ArrayList<Pair<String, Boolean>>() {
 
                 private static final long serialVersionUID = 7983289992158907116L;

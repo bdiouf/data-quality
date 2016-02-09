@@ -1,3 +1,6 @@
+V1.4.3 2016-02-09
+	- TDQ-11316 add a category ANSWER for columns of mixed yes/no values
+
 V1.4.2 2016-01-25
 	- TDQ-11477 fix semantic category inference issue with US_PHONE regex
 	- TDQ-11316 yes/no values are guessed as "company" as semantic domain

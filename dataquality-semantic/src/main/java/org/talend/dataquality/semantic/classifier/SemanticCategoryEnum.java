@@ -24,6 +24,7 @@ public enum SemanticCategoryEnum {
      * the categories defined in Data Dictionary index
      */
     ANIMAL("Animal", "Animal (multilingual)", RecognizerType.OPEN_INDEX),
+    ANSWER("Answer", "Yes/No (in EN, FR, DE and ES)", RecognizerType.OPEN_INDEX),
     AIRPORT("Airport", "Airport name", RecognizerType.OPEN_INDEX),
     AIRPORT_CODE("Airport Code", "Airport name", RecognizerType.CLOSED_INDEX),
     CITY("City", "City name (multilingual)", RecognizerType.OPEN_INDEX),
