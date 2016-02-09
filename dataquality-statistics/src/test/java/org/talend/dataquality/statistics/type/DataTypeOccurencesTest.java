@@ -289,4 +289,24 @@ public class DataTypeOccurencesTest {
         // then
         assertEquals(DOUBLE, suggestedType);
     }
+
+    @Test
+    public void shouldReturnStringWhenStringIsDominantType() {
+        // given
+        DataTypeOccurences typeOccurrences = new DataTypeOccurences();
+
+        // when
+        typeOccurrences.increment(EMPTY);
+        typeOccurrences.increment(DOUBLE);
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(INTEGER);
+        typeOccurrences.increment(STRING);
+        typeOccurrences.increment(STRING);
+        typeOccurrences.increment(STRING);
+        typeOccurrences.increment(STRING);
+        DataTypeEnum suggestedType = typeOccurrences.getSuggestedType(0.1, 0.9);
+
+        // then
+        assertEquals(STRING, suggestedType);
+    }
 }

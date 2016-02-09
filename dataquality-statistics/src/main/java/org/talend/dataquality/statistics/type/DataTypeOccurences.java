@@ -57,10 +57,10 @@ public class DataTypeOccurences implements Serializable {
      * <p>
      * </p>
      * Before a non-numerical type (all types but integer and double) is returned its ratio (according to the non empty
-     * types) must be greater than <tt>typeThreshold</tt>. When the ratio (w.r.t. the number of occurrences of
-     * non empty types) of numerical types is greater than <tt>typeThreshold</tt> then, the integer ratio (
-     * according to the number of occurrences of numerical types) must be greater than <tt>integerThreshold</tt>.
-     * If not the double type is returned. <br/>
+     * types) must be greater than <tt>typeThreshold</tt>. When the ratio (w.r.t. the number of occurrences of non empty
+     * types) of numerical types is greater than <tt>typeThreshold</tt> then, the integer ratio ( according to the
+     * number of occurrences of numerical types) must be greater than <tt>integerThreshold</tt>. If not the double type
+     * is returned. <br/>
      * For instance, for following values "1.2","3.5","2","6","7" and with an <tt>integerThreshold</tt> of 0.55 the
      * suggested type will be INTEGER, whereas with an <tt>integerThreshold</tt> of 0.6 DOUBLE type is returned.
      * 
@@ -96,6 +96,8 @@ public class DataTypeOccurences implements Serializable {
 
         // if non empty types exist
         if (count > 0) {
+            final long mostFrequentTypeOccurrence = sortedTypeOccurrences.get(0).getValue();
+
             final long doubleOccurrences = typeOccurences.containsKey(DataTypeEnum.DOUBLE) ? typeOccurences
                     .get(DataTypeEnum.DOUBLE) : 0;
             final long integerOccurrences = typeOccurences.containsKey(DataTypeEnum.INTEGER) ? typeOccurences
@@ -103,14 +105,14 @@ public class DataTypeOccurences implements Serializable {
 
             final long numericalOccurrences = doubleOccurrences + integerOccurrences;
 
-            if (numericalOccurrences > occurrenceThreshold) { // The column is numeric
+            // The column is numeric (both double and integer types) and the numerical occurrences is dominant
+            if (numericalOccurrences > occurrenceThreshold && numericalOccurrences > mostFrequentTypeOccurrence) {
                 if (integerOccurrences > integerThreshold * numericalOccurrences) {
                     return DataTypeEnum.INTEGER;
                 } else {
                     return DataTypeEnum.DOUBLE;
                 }
-            } else {// The column is non-numeric
-                final long mostFrequentTypeOccurrence = sortedTypeOccurrences.get(0).getValue();
+            } else { // otherwise
                 final long secondMostFrequentTypeOccurrence = sortedTypeOccurrences.size() > 1 ? sortedTypeOccurrences.get(1)
                         .getValue() : 0;
                 // return the most frequent type if it reaches the threshold and has strictly more occurrences than the
