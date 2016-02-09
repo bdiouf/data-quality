@@ -13,14 +13,13 @@
 package org.talend.dataquality.statistics.type;
 
 import java.io.Serializable;
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 
  * Data type bean hold type to frequency and type to value maps.
  */
-public class DataTypeOccurences implements Serializable{
+public class DataTypeOccurences implements Serializable {
 
     private static final long serialVersionUID = -736825123668340428L;
 
@@ -31,50 +30,99 @@ public class DataTypeOccurences implements Serializable{
     }
 
     /**
-     * The default method for get suggested type with the Type.DOUBLE decision threshold equal 0.5
+     * The default method for get suggested type. <tt>typeThreshold</tt> is set to 0.5 and <tt>typeInteger</tt> is also
+     * set to 0.5.
      * 
      * @return type suggested by system automatically given frequencies.
      */
     public DataTypeEnum getSuggestedType() {
-        return getSuggestedType(0.5);
+        return getSuggestedType(0.5, 0.5);
     }
 
     /**
+     * Suggests a type according to the specified integer threshold and a default <tt>typeThreshold</tt> set to 0.5.
      * 
-     * DOC fji Comment method "getSuggestedType".
-     * 
-     * @param threshold the Type.DOUBLE decision threshold for a integer/double mixed Numeric column: if the ratio of
-     * doubles and the sum of integers, doubles is greater than a given threshold, then suggest column Type.DOUBLE,
-     * otherwise Type.INTEGER. So, if the threshold equal 0.5 means that we keep only the most frequent data type, and a
-     * lower threshold means that a column with some double values will be considered as double type. E.g. for the input
-     * column: "1.2","3.5","2","6","7", if threshold=0.5 return Type.INTEGER; if threshold=0.1 return Type.DOUBLE.
-     * 
-     * @return enum Type : BOOLEAN, INTEGER, DOUBLE, STRING, DATE,TIME
-     * <p>
-     * Note: there is no Type.EMPTY returned, even Type.EMPTY is the most frequent, the second most frequent will be
-     * returned. E.g. for the input column: "","","","","1.2" return Type.DOUBLE. If a column is all empty, will return
-     * Type.STRING
+     * @param integerThreshold pecifies the minimum occurrence ratio (w.r.t. the number of occurrences of numerical
+     * values which exceeds the <tt>typeThreshold</tt>) before integer type is returned as suggested type
+     * @return the suggested type
      */
-    public DataTypeEnum getSuggestedType(double threshold) {
-        long max = 0;
-        long nbDouble = typeOccurences.get(DataTypeEnum.DOUBLE) == null ? 0 : typeOccurences.get(DataTypeEnum.DOUBLE);
-        long nbInteger = typeOccurences.get(DataTypeEnum.INTEGER) == null ? 0 : typeOccurences.get(DataTypeEnum.INTEGER);
-        DataTypeEnum electedType = DataTypeEnum.STRING; // String by default
+    public DataTypeEnum getSuggestedType(double integerThreshold) {
+        return getSuggestedType(0.5, integerThreshold);
+    }
+
+    /**
+     * Suggests a type according to the so far listed types occurrences. This methods returns a type which is different
+     * with <tt>Empty type</tt>. <tt>String type</tt> is the default type which is suggested when another type can not
+     * be suggested. For instance, for following values, "", "", "", "", "1.2" DOUBLE type is returned.
+     * <p>
+     * </p>
+     * Before a non-numerical type (all types but integer and double) is returned its ratio (according to the non empty
+     * types) must be greater or equal to <tt>typeThreshold</tt>. When the ratio (w.r.t. the number of occurrences of
+     * non empty types) of numerical types is greater or equal to <tt>typeThreshold</tt> then, the integer ratio (
+     * according to the number of occurrences of numerical types) must be greater or equal to <tt>integerThreshold</tt>.
+     * If not the double type is returned. <br/>
+     * For instance, for following values "1.2","3.5","2","6","7" and with an <tt>integerThreshold</tt> of 0.6 the
+     * suggested type will be INTEGER, whereas with an <tt>integerThreshold</tt> of 0.75 DOUBLE type is returned.
+     * 
+     * @param typeThreshold specifies the minimum occurrence ratio (w.r.t. the number of occurrences of non empty types)
+     * reached by the suggested type (except for String type which is the default type).
+     * @param integerThreshold specifies the minimum occurrence ratio (w.r.t. the number of occurrences of numerical
+     * values which exceeds the <tt>typeThreshold</tt>) before integer type is returned as suggested type
+     * @return the suggested type
+     */
+
+    public DataTypeEnum getSuggestedType(double typeThreshold, double integerThreshold) {
+        final List<Map.Entry<DataTypeEnum, Long>> sortedTypeOccurrences = new ArrayList<>();
+        long count = 0;
+        // retrieve the occurrences non empty types,
         for (Map.Entry<DataTypeEnum, Long> entry : typeOccurences.entrySet()) {
-            if (DataTypeEnum.EMPTY.equals(entry.getKey())) {
-                continue;
-            }
-            if (entry.getValue() > max) {
-                max = entry.getValue();
-                electedType = entry.getKey();
+            final DataTypeEnum type = entry.getKey();
+            if (!DataTypeEnum.EMPTY.equals(type)) {
+                count += entry.getValue();
+                sortedTypeOccurrences.add(entry);
             }
         }
-        // column contains mostly numeric values (doubles + integers) and the ratio of double values is greater than a
-        // given threshold. For more informations, see https://jira.talendforge.org/browse/TDQ-10830
-        if (((nbDouble + nbInteger) > max) && (((double) nbDouble) / (nbInteger + nbDouble) >= threshold)) {
-            return DataTypeEnum.DOUBLE;
+        Comparator<Map.Entry<DataTypeEnum, Long>> decreasingOccurrenceComparator = new Comparator<Map.Entry<DataTypeEnum, Long>>() {
+
+            @Override
+            public int compare(Map.Entry<DataTypeEnum, Long> o1, Map.Entry<DataTypeEnum, Long> o2) {
+                return Long.compare(o2.getValue(), o1.getValue());
+            }
+        };
+         // sort the non empty types by decreasing occurrences number
+        Collections.sort(sortedTypeOccurrences, decreasingOccurrenceComparator);
+
+        final double occurrenceThreshold = typeThreshold * count;
+
+        // if non empty types exist
+        if (count > 0) {
+            final long mostFrequentTypeOccurrence = sortedTypeOccurrences.get(0).getValue();
+            final long secondMostFrequentTypeOccurrence = sortedTypeOccurrences.size() > 1
+                    ? sortedTypeOccurrences.get(1).getValue() : 0;
+            // return the most frequent type if it reaches the threshold and has strictly more occurrences than the
+            // second most frequent types
+            if (mostFrequentTypeOccurrence >= occurrenceThreshold
+                    && mostFrequentTypeOccurrence != secondMostFrequentTypeOccurrence) {
+                return sortedTypeOccurrences.get(0).getKey();
+            } else {
+                final long doubleOccurrences = typeOccurences.containsKey(DataTypeEnum.DOUBLE)
+                        ? typeOccurences.get(DataTypeEnum.DOUBLE) : 0;
+                final long integerOccurrences = typeOccurences.containsKey(DataTypeEnum.INTEGER)
+                        ? typeOccurences.get(DataTypeEnum.INTEGER) : 0;
+
+                final long numericalOccurrences = doubleOccurrences + integerOccurrences;
+
+                if (numericalOccurrences >= occurrenceThreshold) {
+                    if (integerOccurrences >= integerThreshold * numericalOccurrences) {
+                        return DataTypeEnum.INTEGER;
+                    } else {
+                        return DataTypeEnum.DOUBLE;
+                    }
+                }
+            }
         }
-        return electedType;
+        // fallback to string as default choice
+        return DataTypeEnum.STRING;
     }
 
     public void increment(DataTypeEnum type) {
