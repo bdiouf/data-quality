@@ -12,11 +12,10 @@
 // ============================================================================
 package org.talend.dataquality.statistics.numeric.histogram;
 
-import java.text.ParseException;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
-import org.talend.dataquality.statistics.number.BigDecimalParser;
+import org.talend.daikon.number.BigDecimalParser;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.dataquality.statistics.type.TypeInferenceUtils;
@@ -103,7 +102,7 @@ public class HistogramAnalyzer extends NumericalStatisticsAnalyzer<HistogramStat
         HistogramStatistics histStats = stats.get(index);
         try {
             histStats.add(BigDecimalParser.toBigDecimal(record[index]).doubleValue());
-        } catch (ParseException e) {
+        } catch (NumberFormatException e) {
             // skip
         }
     }
