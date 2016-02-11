@@ -19,7 +19,7 @@
 
         <!-- This is used to generate README.md file -->
         <commons.componentid>org.talend.dataquality.common</commons.componentid>
-        <commons.release.version>${dataquality.libraries.release.version}</commons.release.version>
+        <commons.release.version>${dataquality.libraries.released.version}</commons.release.version>
     </properties>
 
 
