@@ -42,7 +42,7 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
 
     // Temporarily store the match result so that it can be iterated to be handled later after all of the records are
     // computed.
-    private List<RichRecord> tmpMatchResult = new ArrayList<RichRecord>();
+    protected List<RichRecord> tmpMatchResult = new ArrayList<RichRecord>();
 
     private MatchGroupResultConsumer matchResultConsumer = null;
 
@@ -155,6 +155,7 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
     @Override
     public void end() throws IOException, InterruptedException {
         super.end();
+        swooshGrouping.afterAllRecordFinished();
         if (matchResultConsumer.isKeepDataInMemory) {
             for (RichRecord row : tmpMatchResult) {
                 // For swoosh algorithm, the GID can only be know after all of the records are computed.

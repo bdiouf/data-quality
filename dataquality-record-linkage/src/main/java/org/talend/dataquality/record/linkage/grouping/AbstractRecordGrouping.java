@@ -59,15 +59,15 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
     @Deprecated
     private List<Map<String, String>> matchingColumns = new ArrayList<Map<String, String>>();
 
-    private List<List<Map<String, String>>> multiMatchRules = new ArrayList<List<Map<String, String>>>();
+    protected List<List<Map<String, String>>> multiMatchRules = new ArrayList<List<Map<String, String>>>();
 
     protected SurvivorShipAlgorithmParams survivorShipAlgorithmParams = null;
 
     protected String columnDelimiter = null;
 
-    private Boolean isLinkToPrevious = Boolean.FALSE;
+    protected Boolean isLinkToPrevious = Boolean.FALSE;
 
-    private int originalInputColumnSize;
+    protected int originalInputColumnSize;
 
     private Boolean isDisplayAttLabels = Boolean.TRUE;
 
@@ -82,7 +82,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
     protected TSwooshGrouping<TYPE> swooshGrouping = new TSwooshGrouping<TYPE>(this);
 
     // The exthended column size.
-    int extSize;
+    protected int extSize;
 
     // Allow compute Group Quality.
     private Boolean isComputeGrpQuality = Boolean.FALSE;
@@ -203,8 +203,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
                 isLinkToPrevious = false;
             }
             // In case of current component is linked to previous, and the record is NOT master, just put it to the
-            // output
-            // and continue;
+            // output and continue;
             if (isLinkToPrevious && !isMaster(inputRow[originalInputColumnSize + 2])) {
                 TYPE[] inputRowWithExtColumns = createNewInputRowForMultPass(inputRow, originalInputColumnSize + extSize);
                 outputRow(inputRowWithExtColumns);
@@ -221,13 +220,9 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
 
             vsrMatch(inputRow, matchingRule, lookupDataArray);
             break;
-        case T_SwooshAlgorithm:
-            if (isLinkToPrevious) {
-                TYPE[] inputRowWithExtColumns = createNewInputRowForMultPass(inputRow, originalInputColumnSize + extSize);
-                swooshGrouping.addToList(inputRowWithExtColumns, multiMatchRules);
-            } else {
-                swooshGrouping.addToList(inputRow, multiMatchRules);
-            }
+        case T_SwooshAlgorithm:// used for "chart" in analysis
+            swooshGrouping.addToList(inputRow, multiMatchRules);
+            break;
         }
     }
 
@@ -542,7 +537,13 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
             arrMatchHandleNull[keyIdx] = recordMap.get(IRecordGrouping.HANDLE_NULL);
             if (matchAlgo == RecordMatcherType.T_SwooshAlgorithm) {
                 // Set attribute threshold
-                attrThresholds[keyIdx] = Double.parseDouble(recordMap.get(IRecordGrouping.ATTRIBUTE_THRESHOLD));
+                String thresholdValue = recordMap.get(IRecordGrouping.ATTRIBUTE_THRESHOLD);
+                if (thresholdValue == null || thresholdValue.trim().length() == 0) {
+                    // default value when the algorithm switch from vsr to swooth
+                    attrThresholds[keyIdx] = 1.0D;
+                } else {
+                    attrThresholds[keyIdx] = Double.parseDouble(thresholdValue);
+                }
 
             }
             String rcdMathThresholdEach = recordMap.get(IRecordGrouping.RECORD_MATCH_THRESHOLD);

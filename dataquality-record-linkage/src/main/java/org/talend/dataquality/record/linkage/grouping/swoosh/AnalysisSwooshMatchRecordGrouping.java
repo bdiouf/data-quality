@@ -116,30 +116,60 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
         currentRecord.setOriginRow(rowList);
     }
 
+    private boolean matchFinished = false;
+
     @Override
     public void end() {
         if (isComponentMode) {
-            swooshGrouping.swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams);
+            matchFinished = false;
+            if (isLinkToPrevious) {// use multipass
+                swooshGrouping.swooshMatchWithMultipass(combinedRecordMatcher, survivorShipAlgorithmParams,
+                        originalInputColumnSize);
+            } else {
+                // during the match, the output in processing will not output really
+                swooshGrouping.swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams);
+            }
+            matchFinished = true;
         }
+        // out put
         swooshGrouping.afterAllRecordFinished();
+
+        if (isComponentMode) {
+            for (RichRecord row : tmpMatchResult) {
+                // For swoosh algorithm, the GID can only be know after all of the records are computed.
+                outputRow(row);
+            }
+        }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.talend.dataquality.record.linkage.grouping.AnalysisMatchRecordGrouping#outputRow(org.talend.dataquality.record
-     * .linkage.grouping.swoosh.RichRecord)
+    /**
+     * only used for tMatchGroup, and only after swoosh match finished.
      */
     @Override
     protected void outputRow(RichRecord row) {
-        List<DQAttribute<?>> originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
-        String[] strRow = new String[originRow.size()];
-        int idx = 0;
-        for (DQAttribute<?> attr : originRow) {
-            strRow[idx] = attr.getValue();
-            idx++;
+        if (!matchFinished) {
+            tmpMatchResult.add(row);
+        } else {
+            List<DQAttribute<?>> originRow;
+            if (isLinkToPrevious) {// use multipass
+                // String oldGID = row.getOriginRow().get(originalInputColumnSize).getValue();
+                originRow = row.getOutputRow(swooshGrouping.getOldGID2New(), originalInputColumnSize);
+                // String newGID = originRow.get(originalInputColumnSize).getValue();
+                // swooshGrouping.getOldGID2New().put(oldGID, newGID);
+            } else {
+                originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
+            }
+            String[] strRow = new String[originRow.size()];
+            int idx = 0;
+            for (DQAttribute<?> attr : originRow) {
+                if (row.isMaster() && row.isMerged()) {
+                    strRow[idx] = attr.getValue();
+                } else {
+                    strRow[idx] = attr.getOriginalValue() == null ? attr.getValue() : String.valueOf(attr.getOriginalValue());
+                }
+                idx++;
+            }
+            outputRow(strRow);
         }
-        outputRow(strRow);
     }
 }
