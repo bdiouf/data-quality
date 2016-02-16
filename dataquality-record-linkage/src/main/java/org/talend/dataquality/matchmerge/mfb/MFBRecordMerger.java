@@ -211,6 +211,10 @@ public class MFBRecordMerger implements IRecordMerger {
     }
 
     private static BigDecimal parseNumberValue(String value) {
-        return value == null || value.isEmpty() ? BigDecimal.ZERO : new BigDecimal(value);
+        try {
+            return value == null || value.isEmpty() ? BigDecimal.ZERO : new BigDecimal(value);
+        } catch (java.lang.NumberFormatException e) {
+            return BigDecimal.ZERO;
+        }
     }
 }

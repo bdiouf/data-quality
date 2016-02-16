@@ -147,7 +147,7 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
      */
     @Override
     protected void outputRow(RichRecord row) {
-        if (!matchFinished) {
+        if (isComponentMode && !matchFinished) {
             tmpMatchResult.add(row);
         } else {
             List<DQAttribute<?>> originRow;
