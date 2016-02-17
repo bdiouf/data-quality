@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.utils.classloader;
+package org.talend.dataquality.common.classloader;
 
 import java.net.URL;
 import java.net.URLClassLoader;
