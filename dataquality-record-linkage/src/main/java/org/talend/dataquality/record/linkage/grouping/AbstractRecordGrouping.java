@@ -20,6 +20,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.common.classloader.TalendURLClassLoader;
 import org.talend.dataquality.matchmerge.SubString;
 import org.talend.dataquality.matchmerge.mfb.MFBAttributeMatcher;
 import org.talend.dataquality.matchmerge.mfb.MFBRecordMatcher;
@@ -33,7 +34,6 @@ import org.talend.dataquality.record.linkage.record.CombinedRecordMatcher;
 import org.talend.dataquality.record.linkage.record.IRecordMatcher;
 import org.talend.dataquality.record.linkage.record.RecordMatcherFactory;
 import org.talend.dataquality.record.linkage.utils.CustomAttributeMatcherClassNameConvert;
-import org.talend.utils.classloader.TalendURLClassLoader;
 
 /**
  * created by zhao on Jul 19, 2013 <br>
