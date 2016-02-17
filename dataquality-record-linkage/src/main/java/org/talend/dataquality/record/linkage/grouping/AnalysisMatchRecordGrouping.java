@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.talend.dataquality.matchmerge.Attribute;
+import org.talend.dataquality.record.linkage.constant.RecordMatcherType;
 import org.talend.dataquality.record.linkage.grouping.swoosh.DQAttribute;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams;
@@ -155,7 +156,9 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
     @Override
     public void end() throws IOException, InterruptedException {
         super.end();
-        swooshGrouping.afterAllRecordFinished();
+        if (matchAlgo == RecordMatcherType.T_SwooshAlgorithm) {
+            swooshGrouping.afterAllRecordFinished();
+        }
         if (matchResultConsumer.isKeepDataInMemory) {
             for (RichRecord row : tmpMatchResult) {
                 // For swoosh algorithm, the GID can only be know after all of the records are computed.

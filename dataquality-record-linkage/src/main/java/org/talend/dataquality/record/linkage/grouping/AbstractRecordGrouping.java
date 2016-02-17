@@ -77,7 +77,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
     AtomicLong atomicLongGID = new AtomicLong();
 
     // VSR algorithm by default.
-    private RecordMatcherType matchAlgo = RecordMatcherType.simpleVSRMatcher;
+    protected RecordMatcherType matchAlgo = RecordMatcherType.simpleVSRMatcher;
 
     protected TSwooshGrouping<TYPE> swooshGrouping = new TSwooshGrouping<TYPE>(this);
 
@@ -520,6 +520,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
         String[] arrMatchHandleNull = new String[recordSize];
         String[] customizedJarPath = new String[recordSize];
         double recordMatchThreshold = acceptableThreshold;// keep compatibility to older version.
+        boolean isSwoosh = matchAlgo == RecordMatcherType.T_SwooshAlgorithm;
         int keyIdx = 0;
         for (Map<String, String> recordMap : matchRule) {
             algorithmName[keyIdx][0] = recordMap.get(IRecordGrouping.MATCHING_TYPE);
@@ -535,7 +536,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
             algorithmName[keyIdx][1] = recordMap.get(IRecordGrouping.CUSTOMER_MATCH_CLASS);
             attributeNames[keyIdx] = recordMap.get(IRecordGrouping.ATTRIBUTE_NAME);
             arrMatchHandleNull[keyIdx] = recordMap.get(IRecordGrouping.HANDLE_NULL);
-            if (matchAlgo == RecordMatcherType.T_SwooshAlgorithm) {
+            if (isSwoosh) {
                 // Set attribute threshold
                 String thresholdValue = recordMap.get(IRecordGrouping.ATTRIBUTE_THRESHOLD);
                 if (thresholdValue == null || thresholdValue.trim().length() == 0) {
@@ -568,7 +569,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
             } else {
                 // Use the default class loader to load the class.
                 attributeMatcher[indx] = AttributeMatcherFactory.createMatcher(attrMatcherType, algorithmName[indx][1]);
-                if (matchAlgo == RecordMatcherType.T_SwooshAlgorithm) {
+                if (isSwoosh) {
                     attributeMatcher[indx] = MFBAttributeMatcher.wrap(attributeMatcher[indx], arrAttrWeights[indx],
                             attrThresholds[indx], SubString.NO_SUBSTRING);
                 }
@@ -579,7 +580,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
         }
 
         IRecordMatcher recordMatcher = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher);
-        if (matchAlgo == RecordMatcherType.T_SwooshAlgorithm) {
+        if (isSwoosh) {
             recordMatcher = new MFBRecordMatcher(recordMatchThreshold);
         }
         recordMatcher.setRecordSize(recordSize);
