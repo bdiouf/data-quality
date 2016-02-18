@@ -1,3 +1,7 @@
+V3.1.0 2016-02-16
+    - TDQ-11599 add catch NumberFormatException, return 0 when catch exception.
+    - TDQ-11627 change the field in AbstractRecordGrouping.java:RecordMatcherType matchAlgo, from private to protected
+
 V3.1.0 2016-01-12
     - add T-Swoosh support to tMatchGroup component
 
