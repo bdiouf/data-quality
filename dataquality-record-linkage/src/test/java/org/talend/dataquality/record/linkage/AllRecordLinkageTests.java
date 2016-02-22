@@ -16,6 +16,7 @@ package org.talend.dataquality.record.linkage;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.talend.dataquality.matchmerge.mfb.MFBRecordMatcherTest;
 import org.talend.dataquality.record.linkage.attribute.AbstractAttributeMatcherTest;
 import org.talend.dataquality.record.linkage.attribute.DoubleMetaphoneMatcherTest;
 import org.talend.dataquality.record.linkage.attribute.LevenshteinMatcherTest;
@@ -39,7 +40,8 @@ import org.talend.windowkey.NGramFingerprintKeyerTest;
 @SuiteClasses({ AbstractAttributeMatcherTest.class, DoubleMetaphoneMatcherTest.class, LevenshteinMatcherTest.class,
         MetaphoneMatcherTest.class, SoundexMatcherTest.class, AttributeMatcherTypeTest.class, AbstractRecordGroupingTest.class,
         CombinedRecordMatcherTest.class, SimpleVSRRecordMatcherTest.class, AlgorithmSwitchTest.class, QGramTokenizerTest.class,
-        AlgoBoxTest.class, FingerprintKeyerTest.class, NGramFingerprintKeyerTest.class, SwooshRecordGroupingTest.class })
+        AlgoBoxTest.class, FingerprintKeyerTest.class, NGramFingerprintKeyerTest.class, SwooshRecordGroupingTest.class,
+        MFBRecordMatcherTest.class })
 public class AllRecordLinkageTests {
 
 }
