@@ -366,13 +366,15 @@ public class TSwooshGrouping<TYPE> {
         // add the not masters again
         List<Record> result = algorithm.getResult();
         for (Record master : result) {
-            List<List<DQAttribute<?>>> list = groupRows.get(master.getGroupId());
-            addMembersIntoNewMaster(master, list);
+            String groupId = StringUtils.isBlank(master.getGroupId()) ? ((RichRecord) master).getOriginRow().get(indexGID)
+                    .getValue() : master.getGroupId();
+            List<List<DQAttribute<?>>> list = groupRows.get(groupId);
+            addMembersIntoNewMaster(master, list, groupId);
 
             // use the new GID to fetch some members of old GID-- which belong to a temp master in first pass, but not a
             // master after 2nd tMatchgroup.
             list = groupRows.get(oldGID2New.get(master.getGroupId()));
-            addMembersIntoNewMaster(master, list);
+            addMembersIntoNewMaster(master, list, groupId);
         }
 
     }
@@ -382,13 +384,17 @@ public class TSwooshGrouping<TYPE> {
      * 
      * @param master
      * @param list
+     * @param groupId
      */
-    private void addMembersIntoNewMaster(Record master, List<List<DQAttribute<?>>> list) {
+    private void addMembersIntoNewMaster(Record master, List<List<DQAttribute<?>>> list, String groupId) {
         if (list == null) {
             return;
         }
         RichRecord record = (RichRecord) master;
         record.setGrpSize(record.getGrpSize() + list.size());
+        if (StringUtils.isBlank(master.getGroupId())) {
+            record.setGroupId(groupId);
+        }
         for (List<DQAttribute<?>> attri : list) {
             RichRecord createRecord = createRecord(attri, master.getGroupId());
             output(createRecord);

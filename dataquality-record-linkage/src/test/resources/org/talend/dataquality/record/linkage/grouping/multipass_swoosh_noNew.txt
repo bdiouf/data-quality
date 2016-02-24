@@ -1,0 +1,6 @@
+5|WW|F|a12d5bee-b281-4ba7-a60b-36a45137f5fb|2|true|1.0|1.0|true
+6|W|F|a12d5bee-b281-4ba7-a60b-36a45137f5fb|0|false|1.0|1.0|false
+5|W|F|a12d5bee-b281-4ba7-a60b-36a45137f5fb|0|false|1.0|1.0|false
+12|YY|B|9b2aa5e6-2a89-4fe4-b422-7e970f4926da|2|true|1.0|1.0|true
+11|Y|B|9b2aa5e6-2a89-4fe4-b422-7e970f4926da|0|false|1.0|1.0|false
+12|Y|B|9b2aa5e6-2a89-4fe4-b422-7e970f4926da|0|false|1.0|1.0|false

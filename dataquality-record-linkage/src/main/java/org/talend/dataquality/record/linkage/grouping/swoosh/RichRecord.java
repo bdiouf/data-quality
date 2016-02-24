@@ -331,7 +331,7 @@ public class RichRecord extends Record {
     }
 
     /**
-     * for the merged master rows from multipass, no need to add, only replace.
+     * for the merged master rows from multipass, no need to add, only replace. Add one fixed output column: MERGE_INFO
      * 
      * @param oldGID2New
      * @param originalInputColumnSize
@@ -348,12 +348,12 @@ public class RichRecord extends Record {
         /**
          * Else The columns that are not maching keys will be merged at {@link DQMFBRecordMerger#createNewRecord()}
          */
-        if (isMerged) {// Master records
+        if (isMerged || isMaster) {// Master records
             // Update group id.
             String finalGID = computeGID(oldGID2New);
-            this.setGroupId(finalGID);
+            setGroupId(finalGID);
             if (recordSize == originRow.size()) {
-                int extSize = 5;
+                int extSize = 6;
                 originRow.set((originRow.size() - extSize), new DQAttribute<String>("GID", originRow.size(), finalGID));
                 extSize--;
                 // group size
@@ -364,17 +364,17 @@ public class RichRecord extends Record {
                 extSize--;
                 // Score
                 originRow.set(originRow.size() - extSize, new DQAttribute<Double>("Score", originRow.size(), 1.0));
-                // extSize--;
-                // // group quality
-                // originRow.set(originRow.size() - extSize,
-                // new DQAttribute<String>("Group quality", originRow.size(), String.valueOf(1.0)));
+                extSize--;
+                // group quality
+                originRow.set(originRow.size() - extSize,
+                        new DQAttribute<String>("Group quality", originRow.size(), String.valueOf(1.0)));
                 //
             }
         } else {
             String finalGID = computeGID(oldGID2New);
             setGroupId(finalGID);
             if (recordSize == originRow.size()) {
-                int extSize = 5;
+                int extSize = 6;
                 originRow.set((originRow.size() - extSize), new DQAttribute<String>("GID", originRow.size(), finalGID));
                 extSize--;
                 // group size
@@ -386,9 +386,9 @@ public class RichRecord extends Record {
                 // Score
                 originRow.set(originRow.size() - extSize, new DQAttribute<Double>("Score", originRow.size(), 0.0));
                 extSize--;
-                // // group quality
-                // originRow.set(originRow.size() - extSize,
-                // new DQAttribute<String>("Group quality", originRow.size(), String.valueOf(0.0)));
+                // group quality
+                originRow.set(originRow.size() - extSize,
+                        new DQAttribute<String>("Group quality", originRow.size(), String.valueOf(0.0)));
 
             }
         }
