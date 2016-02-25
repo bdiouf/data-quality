@@ -1002,7 +1002,7 @@ public class SwooshRecordGroupingTest {
         System.out.println("swoosh with multipass of 3 groups");
         for (row2Struct one : groupRows_tMatchGroup_1) {
             System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-                    + "--" + one.MASTER);
+                    + "--" + one.MASTER + "--" + one.MERGE_INFO);
             if (one.GRP_SIZE == 7) {
                 Assert.assertTrue(StringUtils.equals("FFF", one.country) || StringUtils.equals("BB", one.country));
                 Assert.assertTrue(StringUtils.equals("G", one.city) || StringUtils.equals("AAA", one.city));
@@ -1491,7 +1491,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(false);
         recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(3);
         recordGroupImp_tMatchGroup_1.setIsDisplayAttLabels(false);
-        recordGroupImp_tMatchGroup_1.setIsGIDStringType("true".equals("true") ? true : false);
+        recordGroupImp_tMatchGroup_1.setIsGIDStringType(true);
 
         // read the data from the file
         InputStream in = this.getClass().getResourceAsStream("swoosh_with_blocks.txt"); //$NON-NLS-1$

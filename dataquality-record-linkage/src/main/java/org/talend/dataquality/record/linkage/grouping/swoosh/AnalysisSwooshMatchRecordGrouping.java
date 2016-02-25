@@ -129,10 +129,12 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
                 // during the match, the output in processing will not output really
                 swooshGrouping.swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams);
             }
+            swooshGrouping.afterAllRecordFinished();
             matchFinished = true;
+        } else {
+            // out put
+            swooshGrouping.afterAllRecordFinished();
         }
-        // out put
-        swooshGrouping.afterAllRecordFinished();
 
         if (isComponentMode) {
             for (RichRecord row : tmpMatchResult) {
