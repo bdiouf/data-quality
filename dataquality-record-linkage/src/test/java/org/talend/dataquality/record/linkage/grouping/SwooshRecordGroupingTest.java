@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.record.linkage.constant.RecordMatcherType;
+import org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping;
 import org.talend.dataquality.record.linkage.grouping.swoosh.DQAttribute;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams;
@@ -520,10 +522,21 @@ public class SwooshRecordGroupingTest {
         columnWithType_tMatchGroup_1.put("MASTER", "id_Boolean");
         columnWithType_tMatchGroup_1.put("SCORE", "id_Double");
         columnWithType_tMatchGroup_1.put("GRP_QUALITY", "id_Double");
+        java.util.Map<String, String> columnWithIndex_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        columnWithIndex_tMatchGroup_1.put("customer_id", "0");
+        columnWithIndex_tMatchGroup_1.put("city", "1");
+        columnWithIndex_tMatchGroup_1.put("country", "2");
+        columnWithIndex_tMatchGroup_1.put("GID", "3");
+        columnWithIndex_tMatchGroup_1.put("GRP_SIZE", "4");
+        columnWithIndex_tMatchGroup_1.put("MASTER", "5");
+        columnWithIndex_tMatchGroup_1.put("SCORE", "6");
+        columnWithIndex_tMatchGroup_1.put("GRP_QUALITY", "7");
+
         org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorshipUtils
                 .createSurvivorShipAlgorithmParams(
                         (org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1,
-                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1);
+                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1,
+                        columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
@@ -740,10 +753,22 @@ public class SwooshRecordGroupingTest {
         columnWithType_tMatchGroup_1.put("SCORE", "id_Double");
         columnWithType_tMatchGroup_1.put("GRP_QUALITY", "id_Double");
         columnWithType_tMatchGroup_1.put("MERGE_INFO", "id_String");
+        java.util.Map<String, String> columnWithIndex_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        columnWithIndex_tMatchGroup_1.put("customer_id", "0");
+        columnWithIndex_tMatchGroup_1.put("city", "1");
+        columnWithIndex_tMatchGroup_1.put("country", "2");
+        columnWithIndex_tMatchGroup_1.put("GID", "3");
+        columnWithIndex_tMatchGroup_1.put("GRP_SIZE", "4");
+        columnWithIndex_tMatchGroup_1.put("MASTER", "5");
+        columnWithIndex_tMatchGroup_1.put("SCORE", "6");
+        columnWithIndex_tMatchGroup_1.put("GRP_QUALITY", "7");
+        columnWithIndex_tMatchGroup_1.put("MERGE_INFO", "8");
+
         org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorshipUtils
                 .createSurvivorShipAlgorithmParams(
                         (org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1,
-                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1);
+                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1,
+                        columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
@@ -948,10 +973,22 @@ public class SwooshRecordGroupingTest {
         columnWithType_tMatchGroup_1.put("SCORE", "id_Double");
         columnWithType_tMatchGroup_1.put("GRP_QUALITY", "id_Double");
         columnWithType_tMatchGroup_1.put("MERGE_INFO", "id_String");
+        java.util.Map<String, String> columnWithIndex_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        columnWithIndex_tMatchGroup_1.put("customer_id", "0");
+        columnWithIndex_tMatchGroup_1.put("city", "1");
+        columnWithIndex_tMatchGroup_1.put("country", "2");
+        columnWithIndex_tMatchGroup_1.put("GID", "3");
+        columnWithIndex_tMatchGroup_1.put("GRP_SIZE", "4");
+        columnWithIndex_tMatchGroup_1.put("MASTER", "5");
+        columnWithIndex_tMatchGroup_1.put("SCORE", "6");
+        columnWithIndex_tMatchGroup_1.put("GRP_QUALITY", "7");
+        columnWithIndex_tMatchGroup_1.put("MERGE_INFO", "8");
+
         org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorshipUtils
                 .createSurvivorShipAlgorithmParams(
                         (org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1,
-                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1);
+                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1,
+                        columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
@@ -1158,10 +1195,22 @@ public class SwooshRecordGroupingTest {
         columnWithType_tMatchGroup_1.put("SCORE", "id_Double");
         columnWithType_tMatchGroup_1.put("GRP_QUALITY", "id_Double");
         columnWithType_tMatchGroup_1.put("MERGE_INFO", "id_String");
+        java.util.Map<String, String> columnWithIndex_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        columnWithIndex_tMatchGroup_1.put("customer_id", "0");
+        columnWithIndex_tMatchGroup_1.put("city", "1");
+        columnWithIndex_tMatchGroup_1.put("country", "2");
+        columnWithIndex_tMatchGroup_1.put("GID", "3");
+        columnWithIndex_tMatchGroup_1.put("GRP_SIZE", "4");
+        columnWithIndex_tMatchGroup_1.put("MASTER", "5");
+        columnWithIndex_tMatchGroup_1.put("SCORE", "6");
+        columnWithIndex_tMatchGroup_1.put("GRP_QUALITY", "7");
+        columnWithIndex_tMatchGroup_1.put("MERGE_INFO", "8");
+
         org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorshipUtils
                 .createSurvivorShipAlgorithmParams(
                         (org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1,
-                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1);
+                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1,
+                        columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
@@ -1476,10 +1525,21 @@ public class SwooshRecordGroupingTest {
         columnWithType_tMatchGroup_1.put("MASTER", "id_Boolean");
         columnWithType_tMatchGroup_1.put("SCORE", "id_Double");
         columnWithType_tMatchGroup_1.put("GRP_QUALITY", "id_Double");
+        java.util.Map<String, String> columnWithIndex_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        columnWithIndex_tMatchGroup_1.put("customer_id", "0");
+        columnWithIndex_tMatchGroup_1.put("city", "1");
+        columnWithIndex_tMatchGroup_1.put("country", "2");
+        columnWithIndex_tMatchGroup_1.put("GID", "3");
+        columnWithIndex_tMatchGroup_1.put("GRP_SIZE", "4");
+        columnWithIndex_tMatchGroup_1.put("MASTER", "5");
+        columnWithIndex_tMatchGroup_1.put("SCORE", "6");
+        columnWithIndex_tMatchGroup_1.put("GRP_QUALITY", "7");
+
         org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorshipUtils
                 .createSurvivorShipAlgorithmParams(
                         (org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1,
-                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1);
+                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1,
+                        columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
@@ -1686,10 +1746,21 @@ public class SwooshRecordGroupingTest {
         columnWithType_tMatchGroup_1.put("MASTER", "id_Boolean");
         columnWithType_tMatchGroup_1.put("SCORE", "id_Double");
         columnWithType_tMatchGroup_1.put("GRP_QUALITY", "id_Double");
+        java.util.Map<String, String> columnWithIndex_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        columnWithIndex_tMatchGroup_1.put("customer_id", "0");
+        columnWithIndex_tMatchGroup_1.put("city", "1");
+        columnWithIndex_tMatchGroup_1.put("country", "2");
+        columnWithIndex_tMatchGroup_1.put("GID", "3");
+        columnWithIndex_tMatchGroup_1.put("GRP_SIZE", "4");
+        columnWithIndex_tMatchGroup_1.put("MASTER", "5");
+        columnWithIndex_tMatchGroup_1.put("SCORE", "6");
+        columnWithIndex_tMatchGroup_1.put("GRP_QUALITY", "7");
+
         org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorshipUtils
                 .createSurvivorShipAlgorithmParams(
                         (org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1,
-                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1);
+                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1,
+                        columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
@@ -1750,5 +1821,126 @@ public class SwooshRecordGroupingTest {
         }
         System.out.println("");
 
+    }
+
+    @Test
+    public void testSetDefaultSurvivorshipRules() {
+        java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
+        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
+        realSurShipMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        realSurShipMap_tMatchGroup_1.put("PARAMETER", "");
+        realSurShipMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "Concatenate");
+        realSurShipMap_tMatchGroup_1.put("DATA_TYPE", "BOOLEAN");
+        defaultSurvivorshipRules_tMatchGroup_1.add(realSurShipMap_tMatchGroup_1);
+        realSurShipMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        realSurShipMap_tMatchGroup_1.put("PARAMETER", "");
+        realSurShipMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "MostCommon");
+        realSurShipMap_tMatchGroup_1.put("DATA_TYPE", "STRING");
+        defaultSurvivorshipRules_tMatchGroup_1.add(realSurShipMap_tMatchGroup_1);
+        realSurShipMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        realSurShipMap_tMatchGroup_1.put("PARAMETER", "");
+        realSurShipMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "MostRecent");
+        realSurShipMap_tMatchGroup_1.put("DATA_TYPE", "NUMBER");
+        defaultSurvivorshipRules_tMatchGroup_1.add(realSurShipMap_tMatchGroup_1);
+
+        java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
+        java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
+        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
+        matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
+        tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "MostCommon");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", "1.0");
+        tmpMap_tMatchGroup_1.put("PARAMETER", "");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stu_Address");
+        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
+        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
+        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
+        tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
+        tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
+        matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
+        matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
+        java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        java.util.Map<String, String> columnWithIndex_tMatchGroup_1 = new java.util.HashMap<String, String>();
+
+        columnWithType_tMatchGroup_1.put("id", "id_Integer");
+        columnWithIndex_tMatchGroup_1.put("id", "0");
+        columnWithType_tMatchGroup_1.put("stu_Gender", "id_String");
+        columnWithIndex_tMatchGroup_1.put("stu_Gender", "1");
+        columnWithType_tMatchGroup_1.put("stu_Address", "id_String");
+        columnWithIndex_tMatchGroup_1.put("stu_Address", "2");
+        columnWithType_tMatchGroup_1.put("stu_Text", "id_String");
+        columnWithIndex_tMatchGroup_1.put("stu_Text", "3");
+        columnWithType_tMatchGroup_1.put("stu_SmallInt", "id_Short");
+        columnWithIndex_tMatchGroup_1.put("stu_SmallInt", "4");
+        columnWithType_tMatchGroup_1.put("stu_tinyint", "id_Byte");
+        columnWithIndex_tMatchGroup_1.put("stu_tinyint", "5");
+        columnWithType_tMatchGroup_1.put("stu_bigInt", "id_Long");
+        columnWithIndex_tMatchGroup_1.put("stu_bigInt", "6");
+        columnWithType_tMatchGroup_1.put("stu_double", "id_Double");
+        columnWithIndex_tMatchGroup_1.put("stu_double", "7");
+        columnWithType_tMatchGroup_1.put("stu_BIT", "id_Boolean");
+        columnWithIndex_tMatchGroup_1.put("stu_BIT", "8");
+        columnWithType_tMatchGroup_1.put("stu_Char", "id_String");
+        columnWithIndex_tMatchGroup_1.put("stu_Char", "9");
+        columnWithType_tMatchGroup_1.put("stu_date", "id_Date");
+        columnWithIndex_tMatchGroup_1.put("stu_date", "10");
+        columnWithType_tMatchGroup_1.put("GID", "id_String");
+        columnWithIndex_tMatchGroup_1.put("GID", "11");
+        columnWithType_tMatchGroup_1.put("GRP_SIZE", "id_Integer");
+        columnWithIndex_tMatchGroup_1.put("GRP_SIZE", "12");
+        columnWithType_tMatchGroup_1.put("MASTER", "id_Boolean");
+        columnWithIndex_tMatchGroup_1.put("MASTER", "13");
+        columnWithType_tMatchGroup_1.put("SCORE", "id_Double");
+        columnWithIndex_tMatchGroup_1.put("SCORE", "14");
+        columnWithType_tMatchGroup_1.put("GRP_QUALITY", "id_Double");
+        columnWithIndex_tMatchGroup_1.put("GRP_QUALITY", "15");
+
+        AnalysisSwooshMatchRecordGrouping analysisSwooshMatchRecordGrouping = new AnalysisSwooshMatchRecordGrouping();
+        analysisSwooshMatchRecordGrouping.setOrginalInputColumnSize(11);
+        analysisSwooshMatchRecordGrouping
+                .setRecordLinkAlgorithm(org.talend.dataquality.record.linkage.constant.RecordMatcherType.T_SwooshAlgorithm);
+        // add mutch rules
+        for (java.util.List<java.util.Map<String, String>> matcherList : matchingRulesAll_tMatchGroup_1) {
+            analysisSwooshMatchRecordGrouping.addMatchRule(matcherList);
+        }
+        try {
+            analysisSwooshMatchRecordGrouping.initialize();
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            Assert.fail("initial failed :" + e.getMessage());
+        }
+        SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorshipUtils
+                .createSurvivorShipAlgorithmParams(analysisSwooshMatchRecordGrouping, matchingRulesAll_tMatchGroup_1,
+                        defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1, columnWithIndex_tMatchGroup_1);
+
+        Map<Integer, SurvivorshipFunction> defaultSurviorshipRules = survivorShipAlgorithmParams_tMatchGroup_1
+                .getDefaultSurviorshipRules();
+        Iterator<Integer> keys = defaultSurviorshipRules.keySet().iterator();
+        boolean containID = false, containAdd = false, containBIT = false;
+        while (keys.hasNext()) {
+            Integer next = keys.next();
+            SurvivorshipFunction survivorshipFunction = defaultSurviorshipRules.get(next);
+            Assert.assertNotNull(survivorshipFunction);
+            Assert.assertNotEquals("", survivorshipFunction.getSurvivorShipKey());
+            Assert.assertNotNull(survivorshipFunction.getSurvivorShipKey());
+            if ("id".equals(survivorshipFunction.getSurvivorShipKey())) {
+                containID = true;
+                Assert.assertTrue(next.intValue() == 0);
+                Assert.assertEquals(SurvivorShipAlgorithmEnum.MOST_RECENT, survivorshipFunction.getSurvivorShipAlgoEnum());
+            } else if ("stu_Address".equals(survivorshipFunction.getSurvivorShipKey())) {
+                containAdd = true;
+                Assert.assertTrue(next.intValue() == 2);
+                Assert.assertEquals(SurvivorShipAlgorithmEnum.MOST_COMMON, survivorshipFunction.getSurvivorShipAlgoEnum());
+            } else if ("stu_BIT".equals(survivorshipFunction.getSurvivorShipKey())) {
+                containBIT = true;
+                Assert.assertTrue(next.intValue() == 8);
+                Assert.assertEquals(SurvivorShipAlgorithmEnum.CONCATENATE, survivorshipFunction.getSurvivorShipAlgoEnum());
+            }
+        }
+        Assert.assertTrue(containID);
+        Assert.assertTrue(containAdd);
+        Assert.assertTrue(containBIT);
     }
 }
