@@ -1,4 +1,4 @@
-V1.4.3 2016-02-09
+V1.4.3 (in development)
 	- TDP-228 fix incorrect data type guess
 
 V1.4.2 2016-01-25

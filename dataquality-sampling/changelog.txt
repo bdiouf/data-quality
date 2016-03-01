@@ -1,3 +1,6 @@
+V2.1.6 (in development)
+	- TDQ-10917 TDQ-11108 TDQ-11448 fix junits
+
 V2.1.5 2015-12-30
     - move to data-quality repository, change parent pom
 
