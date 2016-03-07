@@ -396,7 +396,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
@@ -412,11 +411,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
-        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
 
-        row2Struct masterRow_tMatchGroup_1 = null; // a master-row in a
-                                                   // group
-        row2Struct subRow_tMatchGroup_1 = null; // a sub-row in a group.
         // master rows in a group
         final java.util.List<row2Struct> masterRows_tMatchGroup_1 = new java.util.ArrayList<row2Struct>();
         // all rows in a group
@@ -425,11 +420,10 @@ public class SwooshRecordGroupingTest {
         // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
         // MASTER and only in case of separate output.
         final java.util.Map<String, Integer> indexMap_tMatchGroup_1 = new java.util.HashMap<String, Integer>();
-        final double CONFIDENCE_THRESHOLD_tMatchGroup_1 = Double.valueOf(0.9);
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
-        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping() {
+        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.ComponentSwooshMatchRecordGrouping() {
 
             @Override
             protected void outputRow(Object[] row) {
@@ -539,8 +533,6 @@ public class SwooshRecordGroupingTest {
                         columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
-        ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
-                .setComponentMode(true);
         recordGroupImp_tMatchGroup_1.setColumnDelimiter(";");
         recordGroupImp_tMatchGroup_1.setIsOutputDistDetails(false);
         recordGroupImp_tMatchGroup_1.setIsComputeGrpQuality(true);
@@ -648,7 +640,7 @@ public class SwooshRecordGroupingTest {
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
-        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping() {
+        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.ComponentSwooshMatchRecordGrouping() {
 
             @Override
             protected void outputRow(Object[] row) {
@@ -771,8 +763,6 @@ public class SwooshRecordGroupingTest {
                         columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
-        ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
-                .setComponentMode(true);
         recordGroupImp_tMatchGroup_1.setColumnDelimiter(";");
         recordGroupImp_tMatchGroup_1.setIsOutputDistDetails(false);
         recordGroupImp_tMatchGroup_1.setIsComputeGrpQuality(true);
@@ -868,7 +858,7 @@ public class SwooshRecordGroupingTest {
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
-        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping() {
+        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.ComponentSwooshMatchRecordGrouping() {
 
             @Override
             protected void outputRow(Object[] row) {
@@ -991,8 +981,6 @@ public class SwooshRecordGroupingTest {
                         columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
-        ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
-                .setComponentMode(true);
         recordGroupImp_tMatchGroup_1.setColumnDelimiter(";");
         recordGroupImp_tMatchGroup_1.setIsOutputDistDetails(false);
         recordGroupImp_tMatchGroup_1.setIsComputeGrpQuality(true);
@@ -1090,7 +1078,7 @@ public class SwooshRecordGroupingTest {
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
-        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping() {
+        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.ComponentSwooshMatchRecordGrouping() {
 
             @Override
             protected void outputRow(Object[] row) {
@@ -1213,8 +1201,6 @@ public class SwooshRecordGroupingTest {
                         columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
-        ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
-                .setComponentMode(true);
         recordGroupImp_tMatchGroup_1.setColumnDelimiter(";");
         recordGroupImp_tMatchGroup_1.setIsOutputDistDetails(false);
         recordGroupImp_tMatchGroup_1.setIsComputeGrpQuality(true);
@@ -1432,7 +1418,7 @@ public class SwooshRecordGroupingTest {
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
-        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping() {
+        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.ComponentSwooshMatchRecordGrouping() {
 
             @Override
             protected void outputRow(Object[] row) {
@@ -1542,8 +1528,6 @@ public class SwooshRecordGroupingTest {
                         columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
-        ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
-                .setComponentMode(true);
         recordGroupImp_tMatchGroup_1.setColumnDelimiter(";");
         recordGroupImp_tMatchGroup_1.setIsOutputDistDetails(false);
         recordGroupImp_tMatchGroup_1.setIsComputeGrpQuality(true);
@@ -1653,7 +1637,7 @@ public class SwooshRecordGroupingTest {
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
-        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping() {
+        recordGroupImp_tMatchGroup_1 = new org.talend.dataquality.record.linkage.grouping.swoosh.ComponentSwooshMatchRecordGrouping() {
 
             @Override
             protected void outputRow(Object[] row) {
@@ -1763,8 +1747,6 @@ public class SwooshRecordGroupingTest {
                         columnWithIndex_tMatchGroup_1);
         ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
-        ((org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
-                .setComponentMode(true);
         recordGroupImp_tMatchGroup_1.setColumnDelimiter(";");
         recordGroupImp_tMatchGroup_1.setIsOutputDistDetails(false);
         recordGroupImp_tMatchGroup_1.setIsComputeGrpQuality(true);

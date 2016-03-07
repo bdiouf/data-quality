@@ -32,16 +32,14 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
 
     private Map<Integer, Attribute> attributesAsMatchKey;
 
-    private boolean isComponentMode = false;
-
     /**
      * Sets the isCompositeMode.
      * 
      * @param isCompositeMode the isCompositeMode to set
      */
-    public void setComponentMode(boolean isCompositeMode) {
-        this.isComponentMode = isCompositeMode;
-    }
+    // public void setComponentMode(boolean isCompositeMode) {
+    // this.isComponentMode = isCompositeMode;
+    // }
 
     /**
      * DOC yyin AnalysisSwooshMatchRecordGrouping constructor comment.
@@ -64,12 +62,15 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
 
     @Override
     public void initialize() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        if (isComponentMode) {
-            masterRecords.clear();
-        } else {
-            super.initialize();
-        }
+        super.initialize();
         // get the match keys attributes, and put them in the map, no need to do this again for each record
+        getKeyAttributes();
+    }
+
+    /**
+     * DOC yyin Comment method "getKeyAttributes".
+     */
+    protected void getKeyAttributes() {
         attributesAsMatchKey = new HashMap<Integer, Attribute>();
         for (List<Map<String, String>> matchRule : getMultiMatchRules()) {
             for (Map<String, String> mkDef : matchRule) {
@@ -116,33 +117,18 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
         currentRecord.setOriginRow(rowList);
     }
 
-    private boolean matchFinished = false;
-
     @Override
     public void end() {
-        if (isComponentMode) {
-            matchFinished = false;
-            if (isLinkToPrevious) {// use multipass
-                swooshGrouping.swooshMatchWithMultipass(combinedRecordMatcher, survivorShipAlgorithmParams,
-                        originalInputColumnSize);
-            } else {
-                // during the match, the output in processing will not output really
-                swooshGrouping.swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams);
-            }
-            swooshGrouping.afterAllRecordFinished();
-            matchFinished = true;
-        } else {
-            // out put
-            swooshGrouping.afterAllRecordFinished();
-        }
-
-        if (isComponentMode) {
-            for (RichRecord row : tmpMatchResult) {
-                // For swoosh algorithm, the GID can only be know after all of the records are computed.
-                outputRow(row);
-            }
-        }
+        // out put
+        swooshGrouping.afterAllRecordFinished();
         // Clear the GID map , no use anymore.
+        clear();
+    }
+
+    /**
+     * DOC yyin Comment method "clear".
+     */
+    protected void clear() {
         swooshGrouping.getOldGID2New().clear();
         tmpMatchResult.clear();
     }
@@ -152,26 +138,22 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
      */
     @Override
     protected void outputRow(RichRecord row) {
-        if (isComponentMode && !matchFinished) {
-            tmpMatchResult.add(row);
+        List<DQAttribute<?>> originRow;
+        if (isLinkToPrevious) {// use multipass
+            originRow = row.getOutputRow(swooshGrouping.getOldGID2New(), originalInputColumnSize);
         } else {
-            List<DQAttribute<?>> originRow;
-            if (isLinkToPrevious) {// use multipass
-                originRow = row.getOutputRow(swooshGrouping.getOldGID2New(), originalInputColumnSize);
-            } else {
-                originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
-            }
-            String[] strRow = new String[originRow.size()];
-            int idx = 0;
-            for (DQAttribute<?> attr : originRow) {
-                if (row.isMaster() && row.isMerged()) {
-                    strRow[idx] = attr.getValue();
-                } else {
-                    strRow[idx] = attr.getOriginalValue() == null ? attr.getValue() : String.valueOf(attr.getOriginalValue());
-                }
-                idx++;
-            }
-            outputRow(strRow);
+            originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
         }
+        String[] strRow = new String[originRow.size()];
+        int idx = 0;
+        for (DQAttribute<?> attr : originRow) {
+            if (row.isMaster() && row.isMerged()) {
+                strRow[idx] = attr.getValue();
+            } else {
+                strRow[idx] = attr.getOriginalValue() == null ? attr.getValue() : String.valueOf(attr.getOriginalValue());
+            }
+            idx++;
+        }
+        outputRow(strRow);
     }
 }
