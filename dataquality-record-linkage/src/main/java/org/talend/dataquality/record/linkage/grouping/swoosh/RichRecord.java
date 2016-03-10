@@ -351,6 +351,12 @@ public class RichRecord extends Record {
         if (isMerged || isMaster) {// Master records
             // Update group id.
             String finalGID = computeGID(oldGID2New);
+            if (StringUtils.isBlank(finalGID)) {
+                finalGID = UUID.randomUUID().toString();
+            }
+            if (getGrpSize() == 0) {
+                setGrpSize(1);
+            }
             setGroupId(finalGID);
             if (recordSize == originRow.size()) {
                 int extSize = 6;
@@ -384,15 +390,34 @@ public class RichRecord extends Record {
                 originRow.set(originRow.size() - extSize, new DQAttribute<Boolean>("Is master", originRow.size(), false));
                 extSize--;
                 // Score
-                originRow.set(originRow.size() - extSize, new DQAttribute<Double>("Score", originRow.size(), 0.0));
+                double score2 = getScore();
+                if (score2 == 0.0) {
+                    score2 = getOriginalValue(originalInputColumnSize + 3);
+                }
+                originRow.set(originRow.size() - extSize, new DQAttribute<Double>("Score", originRow.size(), score2));
                 extSize--;
                 // group quality
+                double groupQuality2 = getGroupQuality();
+                if (groupQuality2 == 0.0) {
+                    groupQuality2 = getOriginalValue(originalInputColumnSize + 4);
+                }
                 originRow.set(originRow.size() - extSize,
-                        new DQAttribute<String>("Group quality", originRow.size(), String.valueOf(0.0)));
+                        new DQAttribute<String>("Group quality", originRow.size(), String.valueOf(groupQuality2)));
 
             }
         }
         return originRow;
     }
 
+    /**
+     * DOC yyin Comment method "getOriginalValue".
+     * 
+     * @param originalInputColumnSize
+     * @param score2
+     * @return
+     */
+    protected double getOriginalValue(int columnIndex) {
+        String value = originRow.get(columnIndex).getValue();
+        return Double.parseDouble(value == null || StringUtils.equalsIgnoreCase("null", value) ? "0.0" : value);
+    }
 }

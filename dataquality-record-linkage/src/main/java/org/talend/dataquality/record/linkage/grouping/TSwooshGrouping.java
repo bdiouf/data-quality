@@ -432,6 +432,8 @@ public class TSwooshGrouping<TYPE> {
             } else {
                 recordsInNewGroup.addAll(recordsInFirstGroup);
             }
+            // remove the oldgid's list in: groupRows
+            groupRows.remove(oldGID);
         }
 
     }
@@ -472,7 +474,7 @@ public class TSwooshGrouping<TYPE> {
             } else if (grpId1 != null && grpId2 != null) {
                 // Both records are merged records.
                 richRecord2.setGroupId(grpId1);
-                updateNotMasteredRecords(oldgrpId2, grpId1);
+                updateNotMasteredRecords(grpId2, grpId1);
                 // Put into the map: <gid2,gid1>
                 oldGID2New.put(grpId2, grpId1);
                 // Update map where value equals to gid2
@@ -519,6 +521,18 @@ public class TSwooshGrouping<TYPE> {
             richRecord.setMerged(false);
             richRecord.setMaster(false);
         }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * org.talend.dataquality.record.linkage.grouping.TSwooshGrouping.GroupingCallBack#onNewMerge(org.talend.dataquality
+         * .matchmerge.Record)
+         */
+        // @Override
+        // public void onNewMerge(Record record) {
+        // super.onNewMerge(record);
+        // }
 
     }
 }

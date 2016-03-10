@@ -1,0 +1,12 @@
+333|tianjin|15|2c6b31b9-80dc-4d94-bdfd-11fb92037361|3|true|1.0|1.0|true
+7|tianjin|15|2c6b31b9-80dc-4d94-bdfd-11fb92037361|0|false|1.0|null|false
+333|tianjin|15|2c6b31b9-80dc-4d94-bdfd-11fb92037361|0|false|1.0|null|false
+555|tianjin|15|2c6b31b9-80dc-4d94-bdfd-11fb92037361|0|false|1.0|null|false
+888|tangshan|15|7fbd18bd-487f-4465-ae1a-347f7e0f4ec0|3|true|1.0|1.0|true
+777|tangshan|15|7fbd18bd-487f-4465-ae1a-347f7e0f4ec0|0|false|1.0|null|false
+888|tangshan|15|7fbd18bd-487f-4465-ae1a-347f7e0f4ec0|0|false|1.0|null|false
+999|tangshan|15|7fbd18bd-487f-4465-ae1a-347f7e0f4ec0|0|false|1.0|null|false
+13|cangzhou|15|decaded7-e0d8-4f3c-b096-7d67bdc26b4c|2|true|1.0|1.0|true
+8|cangzhou|15|decaded7-e0d8-4f3c-b096-7d67bdc26b4c|0|false|1.0|null|false
+13|cangzhou|15|decaded7-e0d8-4f3c-b096-7d67bdc26b4c|0|false|1.0|null|false
+666|tangShan|15|fa4c62c8-98c2-40c7-8879-c87185323cf7|1|true|1.0|1.0|true
