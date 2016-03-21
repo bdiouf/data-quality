@@ -185,7 +185,7 @@ public class TypeInferenceUtilsTest {
         double difference = getTimeDifference(timeStart, timeEnd);
 
         LOGGER.debug("Detect double time diff: " + difference + " s.");
-        assertTrue(difference < 0.09);
+        assertTrue(difference < 0.18);
 
     }
 
