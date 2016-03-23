@@ -34,6 +34,8 @@ import org.talend.dataquality.record.linkage.utils.SurvivorShipAlgorithmEnum;
  */
 public class SurvivorshipUtils {
 
+    public static String DEFAULT_CONCATENATE_PARAMETER = ",";
+
     public static SurvivorShipAlgorithmParams createSurvivorShipAlgorithmParams(
             AnalysisMatchRecordGrouping analysisMatchRecordGrouping, List<List<Map<String, String>>> joinKeyRules,
             List<Map<String, String>> defaultSurvivorshipRules, Map<String, String> columnWithType,
@@ -102,7 +104,8 @@ public class SurvivorshipUtils {
                         // Use CONCATENATE by default if not specified .
                         surFuncsInMatcher[idx] = survivorShipAlgorithmParams.new SurvivorshipFunction();
                         surFuncsInMatcher[idx].setSurvivorShipAlgoEnum(SurvivorShipAlgorithmEnum.CONCATENATE);
-                        surFuncsInMatcher[idx].setParameter(StringUtils.EMPTY);
+                        // MOD TDQ-11774 set a default parameter
+                        surFuncsInMatcher[idx].setParameter(SurvivorshipUtils.DEFAULT_CONCATENATE_PARAMETER);
                     }
                 } else {
                     surFuncsInMatcher[idx] = createSurvivorshipFunction(survivorShipAlgorithmParams, mkDef);
