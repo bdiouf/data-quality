@@ -38,6 +38,9 @@ public class ComponentSwooshMatchRecordGrouping extends AnalysisSwooshMatchRecor
      */
     @Override
     public void end() {
+        if (isOutputDistDetails() && getIsDisplayAttLabels()) {
+            combinedRecordMatcher.setDisplayLabels(true);
+        }
 
         matchFinished = false;
         if (isLinkToPrevious) {// use multipass

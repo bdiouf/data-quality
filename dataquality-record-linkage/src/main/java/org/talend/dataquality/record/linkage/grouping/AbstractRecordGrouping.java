@@ -117,6 +117,24 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
         this.acceptableThreshold = acceptableThreshold;
     }
 
+    /**
+     * Getter for isOutputDistDetails.
+     * 
+     * @return the isOutputDistDetails
+     */
+    public boolean isOutputDistDetails() {
+        return this.isOutputDistDetails;
+    }
+
+    /**
+     * Getter for isDisplayAttLabels.
+     * 
+     * @return the isDisplayAttLabels
+     */
+    public Boolean getIsDisplayAttLabels() {
+        return this.isDisplayAttLabels;
+    }
+
     @Override
     public void setIsOutputDistDetails(boolean isOutputDistDetails) {
         this.isOutputDistDetails = isOutputDistDetails;
