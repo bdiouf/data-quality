@@ -11,6 +11,8 @@
 	<version>1.4.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>dataquality-libraries</name>
+	<description>Parent pom aggregating other library projects, devops tools</description>
+
 	<properties>
 		<org.talend.utils.version>6.2.0-SNAPSHOT</org.talend.utils.version>
 

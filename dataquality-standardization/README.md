@@ -43,7 +43,7 @@
 org.talend.dataquality.standardization
 ===================
 
-Data Quality Standardization library description
+Standardization library based on Apache Lucene
 
 -------------
 

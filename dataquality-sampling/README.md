@@ -43,7 +43,7 @@
 org.talend.dataquality.sampling
 ===================
 
-Dataquality Sampling library description
+Reservoir sampling, data masking, data duplication
 
 Changelog
 -------------

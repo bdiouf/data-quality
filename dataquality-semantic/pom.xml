@@ -10,6 +10,8 @@
 	<artifactId>org.talend.dataquality.semantic</artifactId>
 	<version>${dataquality.libraries.snapshot.version}</version>
 	<packaging>bundle</packaging>
+	<name>dataquality-semantic</name>
+	<description>API for semantic category analysis</description>
 
 	<dependencies>
 		<dependency>

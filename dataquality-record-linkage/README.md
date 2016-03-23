@@ -43,7 +43,7 @@
 org.talend.dataquality.record.linkage
 ===================
 
-Dataquality Record Linkage library description
+Record Matching algorithms, blocking key calculationn and T-Swoosh
 
 Changelog
 -------------

@@ -40,10 +40,10 @@
  |                                                                      |
  +======================================================================+
 --->
-org.talend.dataquality.standardization
+org.talend.dataquality.statistics
 ===================
 
-Data Quality Standardization library description
+API for data analysis and statistics
 
 -------------
 

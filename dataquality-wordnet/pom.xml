@@ -10,6 +10,8 @@
     <artifactId>org.talend.dataquality.wordnet</artifactId>
     <version>${dataquality.wordnet.snapshot.version}</version>
     <packaging>bundle</packaging>
+    <name>dataquality-wordnet</name>
+    <description>Content validation API based on WordNet dictionary</description>
     
     <properties>
         <!-- This is used to generate README.md file -->

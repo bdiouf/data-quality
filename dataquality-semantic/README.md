@@ -43,7 +43,7 @@
 org.talend.dataquality.sampling
 ===================
 
-Dataquality Sampling library description
+API for semantic category analysis
 
 Changelog
 -------------

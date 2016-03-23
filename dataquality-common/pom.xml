@@ -10,7 +10,7 @@
     <artifactId>org.talend.dataquality.common</artifactId>
     <version>${dataquality.libraries.snapshot.version}</version>
     <packaging>bundle</packaging>
-    <url>www.talend.com</url>
+    <name>dataquality-common</name>
     <description>Data Quality Common Library is the low level library containing interfaces and common utility classes.</description>
 
     <properties>

@@ -40,10 +40,10 @@
  |                                                                      |
  +======================================================================+
 --->
-org.talend.dataquality.standardization
+org.talend.dataquality.wordnet
 ===================
 
-Data Quality Standardization library description
+Content validation API based on WordNet dictionary
 
 -------------
 
@@ -69,7 +69,7 @@ And include the following dependency:
 <dependency>
   <groupId>org.talend.dataquality</groupId>
   <artifactId>org.talend.dataquality.wordnet</artifactId>
-  <version>1.4.2</version>
+  <version>1.0.2</version>
 </dependency>
 ```
 

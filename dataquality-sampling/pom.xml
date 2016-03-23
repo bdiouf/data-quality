@@ -10,8 +10,8 @@
     <artifactId>org.talend.dataquality.sampling</artifactId>
     <version>${dataquality.sampling.snapshot.version}</version>
     <packaging>bundle</packaging>
-    <name>org.talend.dataquality.sampling</name>
-    <description>Dataquality Sampling library description</description>
+    <name>dataquality-sampling</name>
+    <description>Reservoir sampling, data masking, data duplication</description>
 
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>

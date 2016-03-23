@@ -10,7 +10,8 @@
 	<artifactId>org.talend.dataquality.statistics</artifactId>
 	<version>${dataquality.libraries.snapshot.version}</version>
 	<packaging>bundle</packaging>
-	<url>www.talend.com</url>
+    <name>dataquality-statistics</name>
+	<description>API for data analysis and statistics</description>
 
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
