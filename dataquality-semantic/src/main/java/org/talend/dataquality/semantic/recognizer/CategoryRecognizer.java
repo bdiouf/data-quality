@@ -39,4 +39,6 @@ public interface CategoryRecognizer {
     ISubCategory[] processCategories(String data);
 
     Collection<CategoryFrequency> getResult();
+
+    void end();
 }

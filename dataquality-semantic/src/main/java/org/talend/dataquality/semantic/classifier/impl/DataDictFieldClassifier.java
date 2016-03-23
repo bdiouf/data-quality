@@ -70,4 +70,9 @@ public class DataDictFieldClassifier implements ISubCategoryClassifier {
         return categories;
     }
 
+    public void closeIndex() {
+        dictionary.closeIndex();
+        keyword.closeIndex();
+    }
+
 }

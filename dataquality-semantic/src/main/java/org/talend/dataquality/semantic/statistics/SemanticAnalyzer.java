@@ -108,6 +108,9 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
 
     @Override
     public void end() {
+        for (CategoryRecognizer catRecognizer : columnIdxToCategoryRecognizer.values()) {
+            catRecognizer.end();
+        }
     }
 
     /**
