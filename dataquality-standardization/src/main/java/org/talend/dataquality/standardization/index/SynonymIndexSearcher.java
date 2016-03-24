@@ -31,12 +31,16 @@ import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.CheckIndex;
-import org.apache.lucene.index.CheckIndex.Status;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.*;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.FuzzyQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.PhraseQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.SearcherManager;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -94,7 +98,7 @@ public class SynonymIndexSearcher {
 
     public static final String F_SYNTERM = "synterm";//$NON-NLS-1$
 
-    private IndexSearcher searcher;
+    private SearcherManager mgr;
 
     private int topDocLimit = 3;
 
@@ -158,19 +162,13 @@ public class SynonymIndexSearcher {
         }
     }
 
-    SynonymIndexSearcher(IndexSearcher indexSearcher) {
-        this.searcher = indexSearcher;
+    SynonymIndexSearcher(Directory indexDir) throws IOException {
+        mgr = new SearcherManager(indexDir, null);
     }
 
     public void openIndexInFS(String path) throws IOException {
         FSDirectory indexDir = FSDirectory.open(new File(path));
-        CheckIndex check = new CheckIndex(indexDir);
-        Status status = check.checkIndex();
-        if (status.missingSegments) {
-            LOGGER.error("Failed to load index. Please make sure it's not empty."); //$NON-NLS-1$
-        }
-        IndexReader reader = DirectoryReader.open(indexDir);
-        this.searcher = new IndexSearcher(reader);
+        mgr = new SearcherManager(indexDir, null);
     }
 
     /**
@@ -181,8 +179,7 @@ public class SynonymIndexSearcher {
      */
     public void openIndexInFS(URI path) throws IOException {
         Directory indexDir = ClassPathDirectory.open(path);
-        IndexReader reader = DirectoryReader.open(indexDir);
-        this.searcher = new IndexSearcher(reader);
+        mgr = new SearcherManager(indexDir, null);
     }
 
     /**
@@ -202,10 +199,12 @@ public class SynonymIndexSearcher {
         }
         TopDocs docs = null;
         try {
+            final IndexSearcher searcher = mgr.acquire();
             Query query = createWordQueryFor(tempWord);
-            docs = this.searcher.search(query, topDocLimit);
+            docs = searcher.search(query, topDocLimit);
+            mgr.release(searcher);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return docs;
     }
@@ -249,7 +248,9 @@ public class SynonymIndexSearcher {
             query = createCombinedQueryFor(stringToSearch, false, false);
             break;
         }
-        topDocs = this.searcher.search(query, topDocLimit);
+        final IndexSearcher searcher = mgr.acquire();
+        topDocs = searcher.search(query, topDocLimit);
+        mgr.release(searcher);
         return topDocs;
     }
 
@@ -263,12 +264,14 @@ public class SynonymIndexSearcher {
         try {
             Query query = createWordQueryFor(word);
             TopDocs docs;
-            docs = this.searcher.search(query, topDocLimit);
+            final IndexSearcher searcher = mgr.acquire();
+            docs = searcher.search(query, topDocLimit);
             if (docs.totalHits > 0) {
-                Document doc = this.searcher.doc(docs.scoreDocs[0].doc);
+                Document doc = searcher.doc(docs.scoreDocs[0].doc);
                 String[] synonyms = doc.getValues(F_SYN);
                 return synonyms.length;
             }
+            mgr.release(searcher);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -284,7 +287,9 @@ public class SynonymIndexSearcher {
     public Document getDocument(int docNum) {
         Document doc = null;
         try {
-            doc = this.searcher.doc(docNum);
+            final IndexSearcher searcher = mgr.acquire();
+            doc = searcher.doc(docNum);
+            mgr.release(searcher);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -319,7 +324,15 @@ public class SynonymIndexSearcher {
      * @return the number of documents in the index
      */
     public int getNumDocs() {
-        return this.searcher.getIndexReader().numDocs();
+        try {
+            final IndexSearcher searcher = mgr.acquire();
+            final int numDocs = searcher.getIndexReader().numDocs();
+            mgr.release(searcher);
+            return numDocs;
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+        return -1;
     }
 
     /**
@@ -522,19 +535,25 @@ public class SynonymIndexSearcher {
 
     public void close() {
         try {
-            searcher.getIndexReader().close();
+            mgr.acquire().getIndexReader().close();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
     /**
-     * DOC root Comment method "getIndexSearcher".
+     * @deprecated calling this method may result in unreleased indexSearcher
      *
      * @return
      */
+    @Deprecated
     public IndexSearcher getIndexSearcher() {
-        return searcher;
+        try {
+            return mgr.acquire();
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            return null;
+        }
     }
 
     public SynonymSearchMode getSearchMode() {
