@@ -92,7 +92,9 @@ public class ResultSetIterator implements Iterator<Record> {
                 Attribute attribute = new Attribute(columnNames.get(i), i);
                 String value = null;
                 try {
-                    value = String.valueOf(resultSet.getObject(i + 1));
+                    Object object = resultSet.getObject(i + 1);
+                    // when the value is null, do not turn to "null"
+                    value = object == null ? null : String.valueOf(object);
                 } catch (SQLException exp) {
                     // TDQ-11425 if SQLException, keep the current value is null and continue.
                 }
