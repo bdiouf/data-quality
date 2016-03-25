@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.talend.dataquality</groupId>
         <artifactId>dataquality-libraries</artifactId>
-        <version>1.4.3-SNAPSHOT</version>
+        <version>1.4.4-SNAPSHOT</version>
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
     <artifactId>org.talend.dataquality.record.linkage</artifactId>
