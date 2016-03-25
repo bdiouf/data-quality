@@ -40,7 +40,7 @@
  |                                                                      |
  +======================================================================+
 --->
-org.talend.dataquality.sampling
+org.talend.dataquality.semantic
 ===================
 
 API for semantic category analysis
