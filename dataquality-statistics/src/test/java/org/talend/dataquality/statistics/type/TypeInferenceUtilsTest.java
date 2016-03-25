@@ -243,7 +243,7 @@ public class TypeInferenceUtilsTest {
     }
 
     private List<String> loadData(String path) throws IOException {
-        List<String> values = IOUtils.readLines(this.getClass().getResourceAsStream(path));
+        List<String> values = IOUtils.readLines(this.getClass().getResourceAsStream(path), "UTF-8");
         return values;
     }
 

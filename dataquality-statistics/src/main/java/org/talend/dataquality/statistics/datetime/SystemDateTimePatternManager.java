@@ -56,7 +56,7 @@ public class SystemDateTimePatternManager {
     private static void loadPatterns(String patternFileName, List<Map<Pattern, String>> patternParsers) throws IOException {
         InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream(patternFileName);
         try {
-            List<String> lines = IOUtils.readLines(stream);
+            List<String> lines = IOUtils.readLines(stream, "UTF-8");
             Map<Pattern, String> currentGroupMap = new HashMap<Pattern, String>();
             patternParsers.add(currentGroupMap);
             for (String line : lines) {

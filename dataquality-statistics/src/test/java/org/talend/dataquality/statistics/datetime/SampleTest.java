@@ -220,9 +220,9 @@ public class SampleTest {
     public static void loadTestData() throws IOException {
 
         InputStream dateInputStream = SystemDateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
-        DATE_SAMPLES = IOUtils.readLines(dateInputStream);
+        DATE_SAMPLES = IOUtils.readLines(dateInputStream, "UTF-8");
         InputStream timeInputStream = SystemDateTimePatternManager.class.getResourceAsStream("TimeSampleTable.txt");
-        TIME_SAMPLES = IOUtils.readLines(timeInputStream);
+        TIME_SAMPLES = IOUtils.readLines(timeInputStream, "UTF-8");
     }
 
     @Test
