@@ -1,6 +1,8 @@
-V1.4.3 (in development)
+V1.4.3 2016-03-25
+	(no changes in this library)
 
 V1.4.2 2016-01-26
+	(no changes in this library)
 
 V1.4.1 2015-12-30
     - move to data-quality repository, change parent pom

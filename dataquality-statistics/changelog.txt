@@ -1,7 +1,8 @@
-V1.4.3 (in development)
+V1.4.3 2016-03-25
 	- TDP-228 fix incorrect data type guess
+	- TDQ-11316 add a category ANSWER for columns of mixed yes/no values
 
-V1.4.2 2016-01-25
+V1.4.2 2016-01-26
 	- TDQ-11557 add more date and time patterns and different combinations
 	- TDQ-11548 improve regex of decimal value detection
 
