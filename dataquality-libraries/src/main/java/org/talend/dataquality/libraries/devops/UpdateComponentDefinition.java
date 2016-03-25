@@ -32,7 +32,7 @@ public class UpdateComponentDefinition {
         private static final long serialVersionUID = 1L;
 
         {
-            put("org.talend.dataquality.common", "1.4.3");
+            put("org.talend.dataquality.common", "1.4.4");
             put("org.talend.dataquality.record.linkage", "3.1.1");
             put("org.talend.dataquality.sampling", "2.1.6");
             put("org.talend.dataquality.standardization", "3.0.2");

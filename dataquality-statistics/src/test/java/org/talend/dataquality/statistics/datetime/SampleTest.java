@@ -273,7 +273,8 @@ public class SampleTest {
                 // System.out.println(SystemDateTimePatternManager.isDate(sample) + "\t" + locale + "\t" + sample + "\t"
                 // + expectedPattern);
                 // System.out.println(SystemDateTimePatternManager.datePatternReplace(sample));
-                assertTrue(SystemDateTimePatternManager.isDate(sample));
+                assertTrue(sample + " is expected to be a valid date but actually not.",
+                        SystemDateTimePatternManager.isDate(sample));
             }
         }
     }
@@ -290,7 +291,8 @@ public class SampleTest {
                 // String locale = sampleLine[2];
                 // System.out.println(SystemDateTimePatternManager.isTime(sample) + "\t" + locale + "\t" + sample + "\t"
                 // + expectedPattern);
-                assertTrue(SystemDateTimePatternManager.isTime(sample));
+                assertTrue(sample + " is expected to be a valid time but actually not.",
+                        SystemDateTimePatternManager.isTime(sample));
             }
         }
     }
