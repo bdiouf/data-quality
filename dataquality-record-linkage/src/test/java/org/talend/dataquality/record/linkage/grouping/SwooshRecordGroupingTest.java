@@ -2586,53 +2586,86 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
-        matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
+        matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>(3);
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
         tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "Concatenate");
-        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchAll");
-        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
-        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", "1.0");
-        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuAddress");
-        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("PARAMETER", "");
-        tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
-        tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.86 + "");
-        matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
-        tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "Concatenate");
-        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
-        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + "");
-        tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", "1.0");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuID");
+        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "0");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "dummy");
+        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + "");
+        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
+        matcherList_tMatchGroup_1.add(0, tmpMap_tMatchGroup_1);
+        tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "Concatenate");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", "1.0");
         tmpMap_tMatchGroup_1.put("PARAMETER", "");
-        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "city");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuAddress");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "1");
-        matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
+        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
+        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
+        tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.86 + "");
+        tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
+        matcherList_tMatchGroup_1.add(1, tmpMap_tMatchGroup_1);
+        tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "Concatenate");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", "1.0");
+        tmpMap_tMatchGroup_1.put("PARAMETER", "");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuProvinceID");
+        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
+        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 2 + "");
+        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
+        tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.86 + "");
+        tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
+        matcherList_tMatchGroup_1.add(2, tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
+
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
         tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "Concatenate");
-        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchAll");
-        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + "");
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", "1.0");
+        tmpMap_tMatchGroup_1.put("PARAMETER", "");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuProvinceID");
+        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "dummy");
+        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + "");
+        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
+        matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
+        tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "Concatenate");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", "1.0");
+        tmpMap_tMatchGroup_1.put("PARAMETER", "");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuID");
+        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "0");
+        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
+        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
+        tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
+        tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
+        matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
+        tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "Concatenate");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", "1.0");
         tmpMap_tMatchGroup_1.put("PARAMETER", "");
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuAddress");
-        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
-        matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
-        tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "Concatenate");
-        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
-        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
-        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
-        tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", "1.0");
-        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "city");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "1");
-        tmpMap_tMatchGroup_1.put("PARAMETER", "");
-        tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
-        tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
+        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "dummy");
+        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + "");
+        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
+        matcherList_tMatchGroup_1.sort(new Comparator<java.util.Map<String, String>>() {
+
+            @Override
+            public int compare(Map<String, String> map1, Map<String, String> map2) {
+
+                return map1.get("COLUMN_IDX").compareTo(map2.get("COLUMN_IDX"));
+            }
+
+        });
+
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
 
         // master rows in a group
@@ -2766,7 +2799,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.setIsGIDStringType("true".equals("true") ? true : false);
 
         // read the data from the file
-        InputStream in = this.getClass().getResourceAsStream("customers_swoosh_tmatch.txt"); //$NON-NLS-1$
+        InputStream in = this.getClass().getResourceAsStream("multiRule_swoosh.txt"); //$NON-NLS-1$
         BufferedReader bfr = new BufferedReader(new InputStreamReader(in));
         List<String> listOfLines = IOUtils.readLines(bfr);
         inputList = new ArrayList<String[]>();
@@ -2809,16 +2842,20 @@ public class SwooshRecordGroupingTest {
         });
 
         // assert
-        boolean ismerged = false;
+        int groupOfOne = 0;
+        int groupOfTwo = 0;
+        ;
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" +
-            // one.GRP_SIZE
-            // + "--" + one.MASTER + "--" + one.SCORE);
-            if (one.GRP_SIZE == 20) {
-                ismerged = true;
+            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+                    + "--" + one.MASTER + "--" + one.SCORE);
+            if (one.GRP_SIZE == 1) {
+                groupOfOne++;
+            } else if (one.GRP_SIZE == 2) {
+                groupOfTwo++;
             }
         }
-        Assert.assertTrue(ismerged);
+        Assert.assertTrue(groupOfOne == 10);
+        Assert.assertTrue(groupOfTwo == 2);
 
     }
 
