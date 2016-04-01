@@ -337,7 +337,7 @@ public class RichRecord extends Record {
      * @param originalInputColumnSize
      * @return
      */
-    public List<DQAttribute<?>> getOutputRow(Map<String, String> oldGID2New, int originalInputColumnSize) {
+    public List<DQAttribute<?>> getOutputRow(Map<String, String> oldGID2New, int originalInputColumnSize, boolean withDetails) {
         if (isMerged()) {
             // Update the matching key field by the merged attributes.
             List<Attribute> matchKeyAttrs = getAttributes();
@@ -348,6 +348,10 @@ public class RichRecord extends Record {
         /**
          * Else The columns that are not maching keys will be merged at {@link DQMFBRecordMerger#createNewRecord()}
          */
+        int EXT_SIZE = 6;
+        if (withDetails) {
+            EXT_SIZE = 7;
+        }
         if (isMerged || isMaster) {// Master records
             // Update group id.
             String finalGID = computeGID(oldGID2New);
@@ -359,7 +363,7 @@ public class RichRecord extends Record {
             }
             setGroupId(finalGID);
             if (recordSize == originRow.size()) {
-                int extSize = 6;
+                int extSize = EXT_SIZE;
                 originRow.set((originRow.size() - extSize), new DQAttribute<String>("GID", originRow.size(), finalGID));
                 extSize--;
                 // group size
@@ -380,7 +384,7 @@ public class RichRecord extends Record {
             String finalGID = computeGID(oldGID2New);
             setGroupId(finalGID);
             if (recordSize == originRow.size()) {
-                int extSize = 6;
+                int extSize = EXT_SIZE;
                 originRow.set((originRow.size() - extSize), new DQAttribute<String>("GID", originRow.size(), finalGID));
                 extSize--;
                 // group size
@@ -392,7 +396,7 @@ public class RichRecord extends Record {
                 // Score
                 double score2 = getScore();
                 if (score2 == 0.0) {
-                    score2 = getOriginalValue(originalInputColumnSize + 3);
+                    score2 = getOriginalValue(originRow.size() - extSize);
                 }
                 originRow.set(originRow.size() - extSize, new DQAttribute<Double>("Score", originRow.size(), score2));
                 extSize--;
@@ -418,6 +422,9 @@ public class RichRecord extends Record {
      */
     protected double getOriginalValue(int columnIndex) {
         String value = originRow.get(columnIndex).getValue();
-        return Double.parseDouble(value == null || StringUtils.equalsIgnoreCase("null", value) ? "0.0" : value);
+        if (value == null || StringUtils.equalsIgnoreCase("null", value)) {
+            return 0.0;
+        }
+        return Double.parseDouble(value);
     }
 }

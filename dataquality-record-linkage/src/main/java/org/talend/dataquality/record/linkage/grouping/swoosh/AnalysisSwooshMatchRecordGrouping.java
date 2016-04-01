@@ -138,12 +138,7 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
      */
     @Override
     protected void outputRow(RichRecord row) {
-        List<DQAttribute<?>> originRow;
-        if (isLinkToPrevious) {// use multipass
-            originRow = row.getOutputRow(swooshGrouping.getOldGID2New(), originalInputColumnSize);
-        } else {
-            originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
-        }
+        List<DQAttribute<?>> originRow = getOutputRow(row);
         String[] strRow = new String[originRow.size()];
         int idx = 0;
         for (DQAttribute<?> attr : originRow) {
@@ -155,5 +150,15 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
             idx++;
         }
         outputRow(strRow);
+    }
+
+    /**
+     * DOC yyin Comment method "getOutputRow".
+     * 
+     * @param row
+     * @return
+     */
+    protected List<DQAttribute<?>> getOutputRow(RichRecord row) {
+        return row.getOutputRow(swooshGrouping.getOldGID2New());
     }
 }

@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.grouping.swoosh;
 
+import java.util.List;
+
 /**
  * created by yyin on 2016年3月2日 Detailled comment
  *
@@ -74,6 +76,16 @@ public class ComponentSwooshMatchRecordGrouping extends AnalysisSwooshMatchRecor
             tmpMatchResult.add(row);
         } else {
             super.outputRow(row);
+        }
+    }
+
+    // TODO: need to add the info: multipass + output DD
+    @Override
+    protected List<DQAttribute<?>> getOutputRow(RichRecord row) {
+        if (this.isLinkToPrevious) {
+            return row.getOutputRow(swooshGrouping.getOldGID2New(), originalInputColumnSize, isOutputDistDetails());
+        } else {
+            return super.getOutputRow(row);
         }
     }
 
