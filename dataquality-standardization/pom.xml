@@ -57,6 +57,11 @@
             <artifactId>log4j</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <version>7.2.8</version>
+        </dependency>
     </dependencies>
 
     <build>
