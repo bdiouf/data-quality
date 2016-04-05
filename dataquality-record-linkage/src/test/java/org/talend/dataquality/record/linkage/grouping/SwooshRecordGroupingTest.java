@@ -3497,6 +3497,11 @@ public class SwooshRecordGroupingTest {
             System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
                     + "--" + one.MASTER + "--" + one.GRP_QUALITY + "--" + one.SCORE + "--" + one.MERGE_INFO + "--"
                     + one.MATCHING_DISTANCES);
+            if (StringUtils.equals("true", one.MERGE_INFO) && !one.MASTER) {
+                Assert.assertEquals("country: 1.0", one.MATCHING_DISTANCES);
+            } else if (StringUtils.equals("false", one.MERGE_INFO) && !one.MASTER) {
+                Assert.assertEquals("address:1.0", one.MATCHING_DISTANCES);
+            }
             // if (one.GRP_SIZE == 7) {
             // Assert.assertTrue(StringUtils.equals("BB", one.country) || StringUtils.equals("FFF", one.country));
             // Assert.assertTrue(StringUtils.equals("YY", one.city) || StringUtils.equals("G", one.city));

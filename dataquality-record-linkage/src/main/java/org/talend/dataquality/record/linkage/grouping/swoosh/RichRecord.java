@@ -407,6 +407,13 @@ public class RichRecord extends Record {
                 }
                 originRow.set(originRow.size() - extSize,
                         new DQAttribute<String>("Group quality", originRow.size(), String.valueOf(groupQuality2)));
+                // TDQ-11630: when multipass & output details, set the value when the detail is not empty.
+                if (withDetails && StringUtils.isNotBlank(getLabeledAttributeScores())) {
+                    extSize--;
+                    originRow.set(originRow.size() - extSize, new DQAttribute<String>(
+                            "Attribute scores", originRow.size(), getLabeledAttributeScores())); //$NON-NLS-1$
+
+                }
 
             }
         }
