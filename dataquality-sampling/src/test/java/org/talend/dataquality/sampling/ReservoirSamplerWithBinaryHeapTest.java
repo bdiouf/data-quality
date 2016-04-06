@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -20,17 +20,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.duplicating.AllDataqualitySamplingTests;
 
-public class ReservoirSamplerTest {
+public class ReservoirSamplerWithBinaryHeapTest {
 
     private static final int SAMPLE_SIZE = 10;
 
     private static final int ORIGINAL_COUNT = 100;
 
-    private ReservoirSampler<TestRowStruct> sampler;
+    private ReservoirSamplerWithBinaryHeap<TestRowStruct> sampler;
 
     private TestRowStruct[] testers;
 
-    private static final Integer[] EXPECTED_SAMPLES = { 28, 2, 92, 4, 87, 46, 75, 74, 23, 36 };
+    private static final Integer[] EXPECTED_SAMPLES = { 89, 91, 15, 59, 93, 32, 90, 45, 31, 79 };
 
     @Before
     public void init() {
@@ -44,7 +44,7 @@ public class ReservoirSamplerTest {
 
     @Test
     public void testSample() {
-        sampler = new ReservoirSampler<TestRowStruct>(SAMPLE_SIZE, AllDataqualitySamplingTests.RANDOM_SEED);
+        sampler = new ReservoirSamplerWithBinaryHeap<TestRowStruct>(SAMPLE_SIZE, AllDataqualitySamplingTests.RANDOM_SEED);
         sampler.clear();
         for (TestRowStruct row : testers) {
             sampler.onNext(row);
