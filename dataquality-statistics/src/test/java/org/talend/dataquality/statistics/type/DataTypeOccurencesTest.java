@@ -1,7 +1,25 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
 package org.talend.dataquality.statistics.type;
 
 import static org.junit.Assert.assertEquals;
-import static org.talend.dataquality.statistics.type.DataTypeEnum.*;
+import static org.talend.dataquality.statistics.type.DataTypeEnum.BOOLEAN;
+import static org.talend.dataquality.statistics.type.DataTypeEnum.DATE;
+import static org.talend.dataquality.statistics.type.DataTypeEnum.DOUBLE;
+import static org.talend.dataquality.statistics.type.DataTypeEnum.EMPTY;
+import static org.talend.dataquality.statistics.type.DataTypeEnum.INTEGER;
+import static org.talend.dataquality.statistics.type.DataTypeEnum.STRING;
+import static org.talend.dataquality.statistics.type.DataTypeEnum.TIME;
 
 import org.junit.Test;
 
