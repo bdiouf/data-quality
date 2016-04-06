@@ -12,11 +12,14 @@
 // ============================================================================
 package org.talend.dataquality.standardization.phone;
 
+import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
+import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 /**
@@ -38,6 +41,24 @@ public class PhoneNumberHandler {
         return phoneStandardizeUtil;
     }
 
+    private PhoneNumberHandler() {
+
+    }
+
+    public PhoneNumber parseToPhoneNumber(Object data, String regionCode) {
+        if (data == null || StringUtils.isBlank(data.toString())) {
+            return null;
+        }
+        PhoneNumber phonenumber = null;
+        try {
+            phonenumber = phoneUtil.parse(data.toString(), regionCode);
+        } catch (Exception e) {
+            log.error(e);
+            return null;
+        }
+        return phonenumber;
+    }
+
     /**
      * 
      * DOC qiongli Comment method "isValidPhoneNumber".
@@ -47,33 +68,11 @@ public class PhoneNumberHandler {
      * @return
      */
     public boolean isValidPhoneNumber(Object data, String regionCode) {
-        if (data == null || StringUtils.isBlank(data.toString())) {
+        PhoneNumber phonenumber = parseToPhoneNumber(data, regionCode);
+        if (phonenumber == null) {
             return false;
         }
-        PhoneNumber phonemuber = null;
-        boolean isValid = false;
-        try {
-            phonemuber = phoneUtil.parse(data.toString(), regionCode);
-            isValid = phoneUtil.isValidNumberForRegion(phonemuber, regionCode);
-        } catch (Exception e) {
-            log.error(e);
-            return false;
-        }
-        return isValid;
-    }
-
-    /**
-     * 
-     * DOC qiongli Comment method "isValidPhoneNumber".
-     * 
-     * @param phonemuber
-     * @return
-     */
-    public boolean isValidPhoneNumber(PhoneNumber phonemuber) {
-        if (phonemuber == null) {
-            return false;
-        }
-        return phoneUtil.isValidNumber(phonemuber);
+        return phoneUtil.isValidNumberForRegion(phonenumber, regionCode);
     }
 
     /**
@@ -94,55 +93,171 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC qiongli Comment method "isPossiblePhoneNumber".
-     * 
-     * @param phonemuber
-     * @return
-     */
-    public boolean isPossiblePhoneNumber(PhoneNumber phonemuber) {
-        if (phonemuber == null) {
-            return false;
-        }
-        return phoneUtil.isPossibleNumber(phonemuber);
-    }
-
-    /**
-     * 
-     * DOC qiongli Comment method "format".
+     * DOC qiongli Comment method "formatE164".
      * 
      * @param data
      * @param regionCode
-     * @param numberFormat
      * @return
      */
-    public String format(Object data, String regionCode, PhoneNumberFormat numberFormat) {
-        if (data == null || StringUtils.isBlank(data.toString())) {
-            return "";
+    public String formatE164(Object data, String regionCode) {
+        PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
+        if (phonemuber == null) {
+            return StringUtils.EMPTY;
         }
-        PhoneNumber phonemuber = null;
-        String formated = null;
-        try {
-            phonemuber = phoneUtil.parse(data.toString(), regionCode);
-            formated = format(phonemuber, numberFormat);
-        } catch (Exception e) {
-            log.error(e);
-            return data.toString();
-        }
-        return formated;
+        return phoneUtil.format(phonemuber, PhoneNumberFormat.E164);
     }
 
     /**
      * 
-     * DOC qiongli Comment method "format".
+     * DOC qiongli Comment method "formatInternational".
      * 
-     * @param number
-     * @param numberFormat
+     * @param data
+     * @param regionCode
      * @return
      */
-    public String format(PhoneNumber number, PhoneNumberFormat numberFormat) {
-        if (numberFormat == null) {
-            return phoneUtil.format(number, PhoneNumberFormat.E164);
+    public String formatInternational(Object data, String regionCode) {
+        PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
+        if (phonemuber == null) {
+            return StringUtils.EMPTY;
         }
-        return phoneUtil.format(number, numberFormat);
+        return phoneUtil.format(phonemuber, PhoneNumberFormat.INTERNATIONAL);
     }
+
+    /**
+     * 
+     * DOC talend Comment method "formatNational".
+     * 
+     * @param data
+     * @param regionCode
+     * @return
+     */
+    public String formatNational(Object data, String regionCode) {
+        PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
+        if (phonemuber == null) {
+            return StringUtils.EMPTY;
+        }
+        return phoneUtil.format(phonemuber, PhoneNumberFormat.NATIONAL);
+    }
+
+    /**
+     * 
+     * DOC talend Comment method "formatRFC396".
+     * 
+     * @param data
+     * @param regionCode
+     * @return
+     */
+    public String formatRFC396(Object data, String regionCode) {
+        PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
+        if (phonemuber == null) {
+            return StringUtils.EMPTY;
+        }
+        return phoneUtil.format(phonemuber, PhoneNumberFormat.RFC3966);
+    }
+
+    /**
+     * 
+     * DOC qiongli Comment method "getSupportedRegions".
+     * 
+     * @return
+     */
+    public Set<String> getSupportedRegions() {
+        return phoneUtil.getSupportedRegions();
+    }
+
+    /**
+     * 
+     * DOC qiongli Comment method "getCountryCodeForRegion".
+     * 
+     * @param regionCode
+     * @return
+     */
+    public int getCountryCodeForRegion(String regionCode) {
+        return phoneUtil.getCountryCodeForRegion(regionCode);
+    }
+
+    /**
+     * 
+     * DOC qiongli Comment method "getPhoneNumberType".
+     * 
+     * @param data
+     * @param regionCode
+     * @return
+     */
+    public PhoneNumberTypeEnum getPhoneNumberType(Object data, String regionCode) {
+        PhoneNumber number = parseToPhoneNumber(data, regionCode);
+        if (number != null) {
+            PhoneNumberType numberType = phoneUtil.getNumberType(number);
+            switch (numberType) {
+            case FIXED_LINE:
+                return PhoneNumberTypeEnum.FIXED_LINE;
+            case MOBILE:
+                return PhoneNumberTypeEnum.MOBILE;
+            case FIXED_LINE_OR_MOBILE:
+                return PhoneNumberTypeEnum.FIXED_LINE_OR_MOBILE;
+            case PAGER:
+                return PhoneNumberTypeEnum.PAGER;
+            case PERSONAL_NUMBER:
+                return PhoneNumberTypeEnum.PERSONAL_NUMBER;
+            case TOLL_FREE:
+                return PhoneNumberTypeEnum.TOLL_FREE;
+            case PREMIUM_RATE:
+                return PhoneNumberTypeEnum.PREMIUM_RATE;
+            case SHARED_COST:
+                return PhoneNumberTypeEnum.SHARED_COST;
+            case UAN:
+                return PhoneNumberTypeEnum.UAN;
+            case VOICEMAIL:
+                return PhoneNumberTypeEnum.VOICEMAIL;
+            case VOIP:
+                return PhoneNumberTypeEnum.VOIP;
+            default:
+
+            }
+        }
+        return PhoneNumberTypeEnum.UNKNOWN;
+    }
+
+    /**
+     * 
+     * DOC qiongli Comment method "isValidRegionByPhoneNumber".
+     * 
+     * @param data
+     * @return
+     */
+    public boolean isValidRegionByPhoneNumber(Object data) {
+        String regionCode = getRegionCodeByPhoneNumber(data);
+        return regionCode != null && getSupportedRegions().contains(regionCode);
+    }
+
+    /**
+     * 
+     * DOC qiongli Comment method "getRegionCodeByPhoneNumber".
+     * 
+     * @param data
+     * @return
+     */
+    public String getRegionCodeByPhoneNumber(Object data) {
+        PhoneNumber phoneNumber = parseToPhoneNumber(data, null);
+        if (phoneNumber != null) {
+            return phoneUtil.getRegionCodeForNumber(phoneNumber);
+        }
+        return StringUtils.EMPTY;
+    }
+
+    /**
+     * 
+     * DOC qiongli Comment method "getCountrycodeByPhoneNumber".
+     * 
+     * @param data
+     * @return
+     */
+    public int getCountrycodeByPhoneNumber(Object data) {
+        PhoneNumber phoneNumber = parseToPhoneNumber(data, null);
+        if (phoneNumber != null) {
+            return phoneNumber.getCountryCode();
+        }
+        return 0;
+    }
+
 }

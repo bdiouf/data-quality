@@ -62,6 +62,18 @@
             <artifactId>libphonenumber</artifactId>
             <version>7.2.8</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>geocoder</artifactId>
+            <version>2.38</version>  
+        </dependency>
+        
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>carrier</artifactId>
+            <version>1.28</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -7,5 +7,7 @@
 	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src/test/java"/>
 	<classpathentry excluding="**/*.java" kind="src" output="target/classes" path="src/test/resources"/>
 	<classpathentry kind="lib" path="lib/libphonenumber-7.2.8.jar"/>
+	<classpathentry kind="lib" path="lib/geocoder-2.38.jar"/>
+	<classpathentry kind="lib" path="lib/carrier-1.28.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
