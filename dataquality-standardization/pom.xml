@@ -74,6 +74,12 @@
             <artifactId>carrier</artifactId>
             <version>1.28</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>prefixmapper</artifactId>
+            <version>2.39</version>
+        </dependency>
     </dependencies>
 
     <build>

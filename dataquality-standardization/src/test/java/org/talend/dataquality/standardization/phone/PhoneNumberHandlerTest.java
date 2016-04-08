@@ -315,7 +315,7 @@ public class PhoneNumberHandlerTest {
     }
 
     @Test
-    public void testGetCarrierNameForNumberForNumber() {
+    public void testGetCarrierNameForNumber() {
         PhoneNumber UK_MOBILE1 = new PhoneNumber().setCountryCode(244).setNationalNumber(917654321L);
         System.out.println("aa5:" + PhoneNumberToCarrierMapper.getInstance().getNameForNumber(UK_MOBILE1, Locale.ENGLISH)); //$NON-NLS-1$
 
