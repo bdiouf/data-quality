@@ -12,40 +12,44 @@
 // ============================================================================
 package org.talend.dataquality.standardization.phone;
 
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder;
 
 /**
  * DOC qiongli class global comment. Detailled comment
  */
 public class PhoneNumberHandler {
 
-    private static PhoneNumberHandler phoneStandardizeUtil = null;
-
     private static PhoneNumberUtil phoneUtil = null;
 
     private static final Logger log = Logger.getLogger(PhoneNumberHandler.class);
 
-    public static PhoneNumberHandler getInstance() {
-        if (phoneStandardizeUtil == null) {
-            phoneStandardizeUtil = new PhoneNumberHandler();
-            phoneUtil = PhoneNumberUtil.getInstance();
-        }
-        return phoneStandardizeUtil;
+    public PhoneNumberHandler() {
+        phoneUtil = PhoneNumberUtil.getInstance();
     }
 
-    private PhoneNumberHandler() {
-
-    }
-
-    public PhoneNumber parseToPhoneNumber(Object data, String regionCode) {
+    /**
+     * 
+     * Parses a string or number and returns it in proto buffer format.
+     * 
+     * @param data A String or Number
+     * @param regionCode we are expecting the number to be from. This is only used if the number being parsed is not
+     * written in international format. The country_code for the number in this case would be stored as that of the
+     * default region supplied. If the number is guaranteed to start with a '+' followed by the country calling code,
+     * then "ZZ" or null can be supplied. like as "+86 12345678912"
+     * @return
+     */
+    protected PhoneNumber parseToPhoneNumber(Object data, String regionCode) {
         if (data == null || StringUtils.isBlank(data.toString())) {
             return null;
         }
@@ -53,7 +57,7 @@ public class PhoneNumberHandler {
         try {
             phonenumber = phoneUtil.parse(data.toString(), regionCode);
         } catch (Exception e) {
-            log.error(e);
+            log.error("Phone number parsing exception with " + data, e); //$NON-NLS-1$
             return null;
         }
         return phonenumber;
@@ -61,11 +65,11 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC qiongli Comment method "isValidPhoneNumber".
+     * whether a phone number is valid for a certain region.
      * 
-     * @param data
-     * @param regionCode
-     * @return
+     * @param data the data that we want to validate
+     * @param regionCode the regionCode that we want to validate the phone number from
+     * @return a boolean that indicates whether the number is of a valid pattern
      */
     public boolean isValidPhoneNumber(Object data, String regionCode) {
         PhoneNumber phonenumber = parseToPhoneNumber(data, regionCode);
@@ -77,10 +81,11 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC qiongli Comment method "isPossiblePhoneNumber".
+     * Check whether a phone number is a possible number given a number in the form of a object, and the region where
+     * the number could be dialed from.
      * 
-     * @param data
-     * @param regionCode
+     * @param data the data that we want to validate
+     * @param regionCode the regionCode that we are expecting the number to be dialed from.
      * @return
      */
     public boolean isPossiblePhoneNumber(Object data, String regionCode) {
@@ -93,11 +98,11 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC qiongli Comment method "formatE164".
+     * Formats a phone number to E164 form .
      * 
-     * @param data
-     * @param regionCode
-     * @return
+     * @param data the data that we want to validate
+     * @param regionCode the regionCode that we are expecting the number to be dialed from
+     * @return the formatted phone number like as "+12423651234"
      */
     public String formatE164(Object data, String regionCode) {
         PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
@@ -109,11 +114,11 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC qiongli Comment method "formatInternational".
+     * Formats a phone number to International form.
      * 
-     * @param data
-     * @param regionCode
-     * @return
+     * @param data the data that we want to validate
+     * @param regionCode the regionCode that we are expecting the number to be dialed from
+     * @return the formatted phone number like as "+1 242-365-1234"
      */
     public String formatInternational(Object data, String regionCode) {
         PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
@@ -125,11 +130,11 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC talend Comment method "formatNational".
+     * Formats a phone number to National form .
      * 
-     * @param data
-     * @param regionCode
-     * @return
+     * @param data the data that we want to validate
+     * @param regionCode the regionCode that we are expecting the number to be dialed from
+     * @return the formatted phone number like as "(242) 365-1234"
      */
     public String formatNational(Object data, String regionCode) {
         PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
@@ -141,11 +146,11 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC talend Comment method "formatRFC396".
+     * Formats a phone number to RFC396 form .
      * 
-     * @param data
-     * @param regionCode
-     * @return
+     * @param data the data that we want to validate
+     * @param regionCode the regionCode that we are expecting the number to be dialed from
+     * @return the formatted phone number like as "tel:+1-242-365-1234"
      */
     public String formatRFC396(Object data, String regionCode) {
         PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
@@ -157,7 +162,7 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC qiongli Comment method "getSupportedRegions".
+     * get all supported regions.
      * 
      * @return
      */
@@ -167,7 +172,7 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC qiongli Comment method "getCountryCodeForRegion".
+     * Get country code by the region code
      * 
      * @param regionCode
      * @return
@@ -220,25 +225,27 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC qiongli Comment method "isValidRegionByPhoneNumber".
+     * whether a phone number contain a valid region.
      * 
-     * @param data
+     * @param data a phone number String or number. the data string must be guaranteed to start with a '+' followed by
+     * the country calling code. like as "+1 242-365-1234" or "+12423651234"
      * @return
      */
     public boolean isValidRegionByPhoneNumber(Object data) {
-        String regionCode = getRegionCodeByPhoneNumber(data);
+        String regionCode = extractRegionCode(data);
         return regionCode != null && getSupportedRegions().contains(regionCode);
     }
 
     /**
      * 
-     * DOC qiongli Comment method "getRegionCodeByPhoneNumber".
+     * get a region code from an phone number.
      * 
-     * @param data
+     * @param phoneData a phone number String or number. the data string must be guaranteed to start with a '+' followed
+     * by the country calling code. like as "+1 242-365-1234" or "+12423651234"
      * @return
      */
-    public String getRegionCodeByPhoneNumber(Object data) {
-        PhoneNumber phoneNumber = parseToPhoneNumber(data, null);
+    public String extractRegionCode(Object phoneData) {
+        PhoneNumber phoneNumber = parseToPhoneNumber(phoneData, null);
         if (phoneNumber != null) {
             return phoneUtil.getRegionCodeForNumber(phoneNumber);
         }
@@ -247,17 +254,59 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * DOC qiongli Comment method "getCountrycodeByPhoneNumber".
+     * get a country code from an phone number.
      * 
-     * @param data
+     * @param phoneData a phone number String or number. the data string must be guaranteed to start with a '+' followed
+     * by the country calling code. like as "+1 242-365-1234" or "+12423651234"
      * @return
      */
-    public int getCountrycodeByPhoneNumber(Object data) {
-        PhoneNumber phoneNumber = parseToPhoneNumber(data, null);
+    public int extractCountrycode(Object phoneData) {
+        PhoneNumber phoneNumber = parseToPhoneNumber(phoneData, null);
         if (phoneNumber != null) {
             return phoneNumber.getCountryCode();
         }
         return 0;
+    }
+
+    /**
+     * 
+     * Returns a text description for the given phone number, in the language provided. The description might consist of
+     * the name of the country where the phone number is from, or the name of the geographical area the phone number is
+     * from if more detailed information is available.
+     * 
+     * @param data
+     * @param languageCode the language code for which the description should be written
+     * @return
+     */
+    public String getGeocoderDescriptionForNumber(Object data, Locale languageCode) {
+        String regionCode = languageCode.getCountry();
+        PhoneNumber number = parseToPhoneNumber(data, regionCode);
+        if (number != null) {
+            return PhoneNumberOfflineGeocoder.getInstance().getDescriptionForNumber(number, languageCode);
+        }
+
+        return StringUtils.EMPTY;
+    }
+
+    /**
+     * 
+     * Gets the name of the carrier for the given phone number, in the language provided.
+     * 
+     * @param data the phone number for which we want to get a carrier name
+     * @param languageCode the language code in which the name should be written
+     * @return a carrier name for the given phone number, or empty string if the number passed in is invalid
+     */
+    public String getCarrierNameForNumber(Object data, Locale languageCode) {
+        if (languageCode == null) {
+            return StringUtils.EMPTY;
+        }
+        String regionCode = languageCode.getCountry();
+        PhoneNumber number = parseToPhoneNumber(data, regionCode);
+        if (number == null) {
+            return StringUtils.EMPTY;
+        }
+        return PhoneNumberToCarrierMapper.getInstance().getNameForValidNumber(number, languageCode);
+
     }
 
 }

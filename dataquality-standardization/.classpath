@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="lib/libphonenumber-7.2.8.jar"/>
 	<classpathentry kind="lib" path="lib/geocoder-2.38.jar"/>
 	<classpathentry kind="lib" path="lib/carrier-1.28.jar"/>
+	<classpathentry kind="lib" path="lib/prefixmapper-2.39.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

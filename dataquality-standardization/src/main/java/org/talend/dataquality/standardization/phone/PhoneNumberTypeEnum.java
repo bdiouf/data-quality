@@ -13,7 +13,7 @@
 package org.talend.dataquality.standardization.phone;
 
 /**
- * DOC qiongli class global comment. Detailled comment
+ * Type of phone numbers.
  */
 public enum PhoneNumberTypeEnum {
     FIXED_LINE("Fix_Line"), //$NON-NLS-1$
