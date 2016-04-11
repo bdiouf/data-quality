@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.standardization.phone;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -103,13 +104,24 @@ public class PhoneNumberWithDefaultRegionHandler extends PhoneNumberHandler {
 
     /**
      * 
+     * As per {@link #getTimeZonesForNumber(Object, String)} but explicitly the region code is default.
+     * 
+     * @param data
+     * @return
+     */
+    public List<String> getTimeZonesForNumber(Object data) {
+        return super.getTimeZonesForNumber(data, defaultRegion);
+    }
+
+    /**
+     * 
      * As per {@link #getGeocoderDescriptionForNumber(Object, Locale)} but explicitly the Locale is default.
      * 
      * @param data
      * @return
      */
     public String getGeocoderDescriptionForNumber(Object data) {
-        return super.getGeocoderDescriptionForNumber(data, defaultLocale);
+        return super.getGeocoderDescriptionForNumber(data, defaultRegion, defaultLocale);
     }
 
     /**
@@ -120,7 +132,7 @@ public class PhoneNumberWithDefaultRegionHandler extends PhoneNumberHandler {
      * @return
      */
     public String getCarrierNameForNumber(Object data) {
-        return super.getCarrierNameForNumber(data, defaultLocale);
+        return super.getCarrierNameForNumber(data, defaultRegion, defaultLocale);
     }
 
     public Locale getDefaultLocale() {

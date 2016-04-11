@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.standardization.phone;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -19,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper;
+import com.google.i18n.phonenumbers.PhoneNumberToTimeZonesMapper;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
@@ -275,11 +278,12 @@ public class PhoneNumberHandler {
      * from if more detailed information is available.
      * 
      * @param data
-     * @param languageCode the language code for which the description should be written
+     * @param regionCode the regionCode that we are expecting the number to be dialed from
+     * @param languageCode the language code for which the description should be written.the 'Locale.ENGLISH' is the
+     * most commonly used
      * @return
      */
-    public String getGeocoderDescriptionForNumber(Object data, Locale languageCode) {
-        String regionCode = languageCode.getCountry();
+    public String getGeocoderDescriptionForNumber(Object data, String regionCode, Locale languageCode) {
         PhoneNumber number = parseToPhoneNumber(data, regionCode);
         if (number != null) {
             return PhoneNumberOfflineGeocoder.getInstance().getDescriptionForNumber(number, languageCode);
@@ -290,23 +294,43 @@ public class PhoneNumberHandler {
 
     /**
      * 
-     * Gets the name of the carrier for the given phone number, in the language provided.
+     * Gets the name of the carrier for the given phone number, in the language provided.The carrier name is the one the
+     * number was originally allocated to, however if the country supports mobile number portability the number might
+     * not belong to the returned carrier anymore. If no mapping is found an empty string is returned.
      * 
      * @param data the phone number for which we want to get a carrier name
-     * @param languageCode the language code in which the name should be written
-     * @return a carrier name for the given phone number, or empty string if the number passed in is invalid
+     * @param regionCode the regionCode that we are expecting the number to be dialed from
+     * @param languageCode the language code for which the description should be written.the 'Locale.ENGLISH' is the
+     * most commonly used
+     * @return
      */
-    public String getCarrierNameForNumber(Object data, Locale languageCode) {
-        if (languageCode == null) {
-            return StringUtils.EMPTY;
-        }
-        String regionCode = languageCode.getCountry();
+    public String getCarrierNameForNumber(Object data, String regionCode, Locale languageCode) {
         PhoneNumber number = parseToPhoneNumber(data, regionCode);
         if (number == null) {
             return StringUtils.EMPTY;
         }
-        return PhoneNumberToCarrierMapper.getInstance().getNameForValidNumber(number, languageCode);
+        return PhoneNumberToCarrierMapper.getInstance().getNameForNumber(number, languageCode);
 
+    }
+
+    /**
+     * 
+     * Returns a list of time zones to which a phone number belongs. when the PhoneNumber is invalid ,return UNKONW TIME
+     * ZONE;when the PhoneNumberType is Not FIXED_LINE,MOBILE,FIXED_LINE_OR_MOBILE,return the list of time zones
+     * corresponding to the country calling code; or else,return the list of corresponding time zones
+     * 
+     * @param data the phone number for which we want to get a list of Time zones
+     * @param regionCode
+     * @return
+     */
+    public List<String> getTimeZonesForNumber(Object data, String regionCode) {
+        PhoneNumber number = parseToPhoneNumber(data, regionCode);
+        if (number == null) {
+            List<String> UNKNOWN_TIME_ZONE_LIST = new ArrayList<String>(1);
+            UNKNOWN_TIME_ZONE_LIST.add(PhoneNumberToTimeZonesMapper.getUnknownTimeZone());
+            return UNKNOWN_TIME_ZONE_LIST;
+        }
+        return PhoneNumberToTimeZonesMapper.getInstance().getTimeZonesForNumber(number);
     }
 
 }
