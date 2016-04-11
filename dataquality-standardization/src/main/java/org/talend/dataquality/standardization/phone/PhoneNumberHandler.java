@@ -1,336 +1,154 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2016 qiongli Inc. - www.qiongli.com
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
-// %InstallDIR%\features\org.qiongli.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
 //
 // You should have received a copy of the agreement
-// along with this program; if not, write to qiongli SA
+// along with this program; if not, write to Talend SA
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
 package org.talend.dataquality.standardization.phone;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
-import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper;
-import com.google.i18n.phonenumbers.PhoneNumberToTimeZonesMapper;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
-import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
-import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
-import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder;
 
 /**
- * DOC qiongli class global comment. Detailled comment
+ * As per {@link #PhoneNumberHandlerBase} ,but use the default region code and default Local language in this class.
  */
-public class PhoneNumberHandler {
+public class PhoneNumberHandler extends PhoneNumberHandlerBase {
 
-    private static PhoneNumberUtil phoneUtil = null;
+    private String defaultRegion = Locale.getDefault().getCountry();
 
-    private static final Logger log = Logger.getLogger(PhoneNumberHandler.class);
-
-    public PhoneNumberHandler() {
-        phoneUtil = PhoneNumberUtil.getInstance();
-    }
+    private Locale defaultLocale = Locale.getDefault();
 
     /**
      * 
-     * Parses a string or number and returns it in proto buffer format.
+     * As per {@link #isValidPhoneNumber(Object, String)} but explicitly the region code is default.
      * 
-     * @param data A String or Number
-     * @param regionCode we are expecting the number to be from. This is only used if the number being parsed is not
-     * written in international format. The country_code for the number in this case would be stored as that of the
-     * default region supplied. If the number is guaranteed to start with a '+' followed by the country calling code,
-     * then "ZZ" or null can be supplied. like as "+86 12345678912"
+     * @param data the data that we want to validate
      * @return
      */
-    protected PhoneNumber parseToPhoneNumber(Object data, String regionCode) {
-        if (data == null || StringUtils.isBlank(data.toString())) {
-            return null;
-        }
-        PhoneNumber phonenumber = null;
-        try {
-            phonenumber = phoneUtil.parse(data.toString(), regionCode);
-        } catch (Exception e) {
-            log.error("Phone number parsing exception with " + data, e); //$NON-NLS-1$
-            return null;
-        }
-        return phonenumber;
+    public boolean isValidPhoneNumber(Object data) {
+        return super.isValidPhoneNumber(data, defaultRegion);
     }
 
     /**
      * 
-     * whether a phone number is valid for a certain region.
+     * As per {@link #isPossiblePhoneNumber(Object, String)} but explicitly the region code is default.
      * 
      * @param data the data that we want to validate
-     * @param regionCode the regionCode that we want to validate the phone number from
-     * @return a boolean that indicates whether the number is of a valid pattern
-     */
-    public boolean isValidPhoneNumber(Object data, String regionCode) {
-        PhoneNumber phonenumber = parseToPhoneNumber(data, regionCode);
-        if (phonenumber == null) {
-            return false;
-        }
-        return phoneUtil.isValidNumberForRegion(phonenumber, regionCode);
-    }
-
-    /**
-     * 
-     * Check whether a phone number is a possible number given a number in the form of a object, and the region where
-     * the number could be dialed from.
-     * 
-     * @param data the data that we want to validate
-     * @param regionCode the regionCode that we are expecting the number to be dialed from.
      * @return
      */
-    public boolean isPossiblePhoneNumber(Object data, String regionCode) {
-        if (data == null || StringUtils.isBlank(data.toString())) {
-            return false;
-        }
-        return phoneUtil.isPossibleNumber(data.toString(), regionCode);
+    public boolean isPossiblePhoneNumber(Object data) {
+        return super.isPossiblePhoneNumber(data, defaultRegion);
 
     }
 
     /**
      * 
-     * Formats a phone number to E164 form .
+     * As per {@link #formatE164(Object, String)} but explicitly the region code is default.
      * 
-     * @param data the data that we want to validate
-     * @param regionCode the regionCode that we are expecting the number to be dialed from
-     * @return the formatted phone number like as "+12423651234"
+     * @param data
+     * @return
      */
-    public String formatE164(Object data, String regionCode) {
-        PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
-        if (phonemuber == null) {
-            return StringUtils.EMPTY;
-        }
-        return phoneUtil.format(phonemuber, PhoneNumberFormat.E164);
+    public String formatE164(Object data) {
+        return super.formatE164(data, defaultRegion);
     }
 
     /**
      * 
-     * Formats a phone number to International form.
+     * As per {@link #formatInternational(Object, String)} but explicitly the region code is default.
      * 
-     * @param data the data that we want to validate
-     * @param regionCode the regionCode that we are expecting the number to be dialed from
-     * @return the formatted phone number like as "+1 242-365-1234"
+     * @param data
+     * @return return a formated number like as "+1 242-365-1234".
      */
-    public String formatInternational(Object data, String regionCode) {
-        PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
-        if (phonemuber == null) {
-            return StringUtils.EMPTY;
-        }
-        return phoneUtil.format(phonemuber, PhoneNumberFormat.INTERNATIONAL);
+    public String formatInternational(Object data) {
+        return super.formatInternational(data, defaultRegion);
     }
 
     /**
      * 
-     * Formats a phone number to National form .
+     * As per {@link #formatNational(Object, String)} but explicitly the region code is default.
      * 
-     * @param data the data that we want to validate
-     * @param regionCode the regionCode that we are expecting the number to be dialed from
+     * @param data
      * @return the formatted phone number like as "(242) 365-1234"
      */
-    public String formatNational(Object data, String regionCode) {
-        PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
-        if (phonemuber == null) {
-            return StringUtils.EMPTY;
-        }
-        return phoneUtil.format(phonemuber, PhoneNumberFormat.NATIONAL);
+    public String formatNational(Object data) {
+        return super.formatNational(data, defaultRegion);
     }
 
     /**
      * 
-     * Formats a phone number to RFC396 form .
+     * As per {@link #formatRFC396(Object, String)} but explicitly the region code is default.
      * 
-     * @param data the data that we want to validate
-     * @param regionCode the regionCode that we are expecting the number to be dialed from
+     * @param data
      * @return the formatted phone number like as "tel:+1-242-365-1234"
      */
-    public String formatRFC396(Object data, String regionCode) {
-        PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
-        if (phonemuber == null) {
-            return StringUtils.EMPTY;
-        }
-        return phoneUtil.format(phonemuber, PhoneNumberFormat.RFC3966);
+    public String formatRFC396(Object data) {
+        return super.formatRFC396(data, defaultRegion);
     }
 
     /**
      * 
-     * get all supported regions.
-     * 
-     * @return
-     */
-    public Set<String> getSupportedRegions() {
-        return phoneUtil.getSupportedRegions();
-    }
-
-    /**
-     * 
-     * Get country code by the region code
-     * 
-     * @param regionCode
-     * @return
-     */
-    public int getCountryCodeForRegion(String regionCode) {
-        return phoneUtil.getCountryCodeForRegion(regionCode);
-    }
-
-    /**
-     * 
-     * DOC qiongli Comment method "getPhoneNumberType".
+     * As per {@link #getPhoneNumberType(Object, String)} but explicitly the region code is default.
      * 
      * @param data
-     * @param regionCode
      * @return
      */
-    public PhoneNumberTypeEnum getPhoneNumberType(Object data, String regionCode) {
-        PhoneNumber number = parseToPhoneNumber(data, regionCode);
-        if (number != null) {
-            PhoneNumberType numberType = phoneUtil.getNumberType(number);
-            switch (numberType) {
-            case FIXED_LINE:
-                return PhoneNumberTypeEnum.FIXED_LINE;
-            case MOBILE:
-                return PhoneNumberTypeEnum.MOBILE;
-            case FIXED_LINE_OR_MOBILE:
-                return PhoneNumberTypeEnum.FIXED_LINE_OR_MOBILE;
-            case PAGER:
-                return PhoneNumberTypeEnum.PAGER;
-            case PERSONAL_NUMBER:
-                return PhoneNumberTypeEnum.PERSONAL_NUMBER;
-            case TOLL_FREE:
-                return PhoneNumberTypeEnum.TOLL_FREE;
-            case PREMIUM_RATE:
-                return PhoneNumberTypeEnum.PREMIUM_RATE;
-            case SHARED_COST:
-                return PhoneNumberTypeEnum.SHARED_COST;
-            case UAN:
-                return PhoneNumberTypeEnum.UAN;
-            case VOICEMAIL:
-                return PhoneNumberTypeEnum.VOICEMAIL;
-            case VOIP:
-                return PhoneNumberTypeEnum.VOIP;
-            default:
-
-            }
-        }
-        return PhoneNumberTypeEnum.UNKNOWN;
+    public PhoneNumberTypeEnum getPhoneNumberType(Object data) {
+        return super.getPhoneNumberType(data, defaultRegion);
     }
 
     /**
      * 
-     * whether a phone number contain a valid region.
-     * 
-     * @param data a phone number String or number. the data string must be guaranteed to start with a '+' followed by
-     * the country calling code. like as "+1 242-365-1234" or "+12423651234"
-     * @return
-     */
-    public boolean isValidRegionByPhoneNumber(Object data) {
-        String regionCode = extractRegionCode(data);
-        return regionCode != null && getSupportedRegions().contains(regionCode);
-    }
-
-    /**
-     * 
-     * get a region code from an phone number.
-     * 
-     * @param phoneData a phone number String or number. the data string must be guaranteed to start with a '+' followed
-     * by the country calling code. like as "+1 242-365-1234" or "+12423651234"
-     * @return
-     */
-    public String extractRegionCode(Object phoneData) {
-        PhoneNumber phoneNumber = parseToPhoneNumber(phoneData, null);
-        if (phoneNumber != null) {
-            return phoneUtil.getRegionCodeForNumber(phoneNumber);
-        }
-        return StringUtils.EMPTY;
-    }
-
-    /**
-     * 
-     * get a country code from an phone number.
-     * 
-     * @param phoneData a phone number String or number. the data string must be guaranteed to start with a '+' followed
-     * by the country calling code. like as "+1 242-365-1234" or "+12423651234"
-     * @return
-     */
-    public int extractCountrycode(Object phoneData) {
-        PhoneNumber phoneNumber = parseToPhoneNumber(phoneData, null);
-        if (phoneNumber != null) {
-            return phoneNumber.getCountryCode();
-        }
-        return 0;
-    }
-
-    /**
-     * 
-     * Returns a text description for the given phone number, in the language provided. The description might consist of
-     * the name of the country where the phone number is from, or the name of the geographical area the phone number is
-     * from if more detailed information is available.
+     * As per {@link #getTimeZonesForNumber(Object, String)} but explicitly the region code is default.
      * 
      * @param data
-     * @param regionCode the regionCode that we are expecting the number to be dialed from
-     * @param languageCode the language code for which the description should be written.the 'Locale.ENGLISH' is the
-     * most commonly used
      * @return
      */
-    public String getGeocoderDescriptionForNumber(Object data, String regionCode, Locale languageCode) {
-        PhoneNumber number = parseToPhoneNumber(data, regionCode);
-        if (number != null) {
-            return PhoneNumberOfflineGeocoder.getInstance().getDescriptionForNumber(number, languageCode);
-        }
-
-        return StringUtils.EMPTY;
+    public List<String> getTimeZonesForNumber(Object data) {
+        return super.getTimeZonesForNumber(data, defaultRegion);
     }
 
     /**
      * 
-     * Gets the name of the carrier for the given phone number, in the language provided.The carrier name is the one the
-     * number was originally allocated to, however if the country supports mobile number portability the number might
-     * not belong to the returned carrier anymore. If no mapping is found an empty string is returned.
+     * As per {@link #getGeocoderDescriptionForNumber(Object, Locale)} but explicitly the Locale is default.
      * 
-     * @param data the phone number for which we want to get a carrier name
-     * @param regionCode the regionCode that we are expecting the number to be dialed from
-     * @param languageCode the language code for which the description should be written.the 'Locale.ENGLISH' is the
-     * most commonly used
+     * @param data
      * @return
      */
-    public String getCarrierNameForNumber(Object data, String regionCode, Locale languageCode) {
-        PhoneNumber number = parseToPhoneNumber(data, regionCode);
-        if (number == null) {
-            return StringUtils.EMPTY;
-        }
-        return PhoneNumberToCarrierMapper.getInstance().getNameForNumber(number, languageCode);
-
+    public String getGeocoderDescriptionForNumber(Object data) {
+        return super.getGeocoderDescriptionForNumber(data, defaultRegion, defaultLocale);
     }
 
     /**
      * 
-     * Returns a list of time zones to which a phone number belongs. when the PhoneNumber is invalid ,return UNKONW TIME
-     * ZONE;when the PhoneNumberType is Not FIXED_LINE,MOBILE,FIXED_LINE_OR_MOBILE,return the list of time zones
-     * corresponding to the country calling code; or else,return the list of corresponding time zones
+     * As per {@link #getCarrierNameForNumber(Object, String)} but explicitly the region code is default.
      * 
-     * @param data the phone number for which we want to get a list of Time zones
-     * @param regionCode
+     * @param data
      * @return
      */
-    public List<String> getTimeZonesForNumber(Object data, String regionCode) {
-        PhoneNumber number = parseToPhoneNumber(data, regionCode);
-        if (number == null) {
-            List<String> UNKNOWN_TIME_ZONE_LIST = new ArrayList<String>(1);
-            UNKNOWN_TIME_ZONE_LIST.add(PhoneNumberToTimeZonesMapper.getUnknownTimeZone());
-            return UNKNOWN_TIME_ZONE_LIST;
-        }
-        return PhoneNumberToTimeZonesMapper.getInstance().getTimeZonesForNumber(number);
+    public String getCarrierNameForNumber(Object data) {
+        return super.getCarrierNameForNumber(data, defaultRegion, defaultLocale);
+    }
+
+    public Locale getDefaultLocale() {
+        return defaultLocale;
+    }
+
+    public void setDefaultLocale(Locale defaultLocale) {
+        this.defaultLocale = defaultLocale;
+    }
+
+    public String getDefaultRegion() {
+        return defaultRegion;
+    }
+
+    public void setDefaultRegion(String defaultRegion) {
+        this.defaultRegion = defaultRegion;
     }
 
 }

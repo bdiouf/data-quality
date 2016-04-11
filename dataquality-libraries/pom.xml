@@ -27,7 +27,7 @@
 		<dataquality.sampling.snapshot.version>2.1.6-SNAPSHOT</dataquality.sampling.snapshot.version>
 		<dataquality.sampling.released.version>2.1.5</dataquality.sampling.released.version>
 
-		<dataquality.standardization.snapshot.version>3.0.3-SNAPSHOT</dataquality.standardization.snapshot.version>
+		<dataquality.standardization.snapshot.version>3.1.0-SNAPSHOT</dataquality.standardization.snapshot.version>
 		<dataquality.standardization.released.version>3.0.2</dataquality.standardization.released.version>
 
 		<dataquality.wordnet.snapshot.version>1.0.3-SNAPSHOT</dataquality.wordnet.snapshot.version>
