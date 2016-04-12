@@ -20,17 +20,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.duplicating.AllDataqualitySamplingTests;
 
-public class ReservoirSamplerWithBinaryHeapTest {
+public class FastReservoirSamplerTest {
 
     private static final int SAMPLE_SIZE = 10;
 
     private static final int ORIGINAL_COUNT = 100;
 
-    private ReservoirSamplerWithBinaryHeap<TestRowStruct> sampler;
+    private FastReservoirSampler<TestRowStruct> sampler;
 
     private TestRowStruct[] testers;
 
-    private static final Integer[] EXPECTED_SAMPLES = { 89, 91, 15, 59, 93, 32, 90, 45, 31, 79 };
+    private static final Integer[] EXPECTED_SAMPLES = { 84, 20, 37, 99, 75, 6, 92, 94, 23, 86 };
 
     @Before
     public void init() {
@@ -44,7 +44,7 @@ public class ReservoirSamplerWithBinaryHeapTest {
 
     @Test
     public void testSample() {
-        sampler = new ReservoirSamplerWithBinaryHeap<TestRowStruct>(SAMPLE_SIZE, AllDataqualitySamplingTests.RANDOM_SEED);
+        sampler = new FastReservoirSampler<TestRowStruct>(SAMPLE_SIZE, AllDataqualitySamplingTests.RANDOM_SEED);
         sampler.clear();
         for (TestRowStruct row : testers) {
             sampler.onNext(row);

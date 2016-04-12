@@ -10,7 +10,8 @@ Require-Bundle: org.apache.log4j,
 Export-Package: org.talend.dataquality.datamasking,
  org.talend.dataquality.datamasking.Functions,
  org.talend.dataquality.duplicating,
- org.talend.dataquality.sampling
+ org.talend.dataquality.sampling,
+ org.talend.dataquality.sampling.parallel
 Bundle-ClassPath: .
 Import-Package: org.apache.commons.codec.language,
  org.apache.commons.lang3.tuple,

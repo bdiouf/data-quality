@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.sampling;
+package org.talend.dataquality.sampling.parallel;
 
 import static org.junit.Assert.assertTrue;
 

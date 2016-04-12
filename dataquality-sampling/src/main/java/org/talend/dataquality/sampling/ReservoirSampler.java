@@ -28,15 +28,15 @@ import java.util.Random;
  */
 public class ReservoirSampler<T> {
 
-    int samples; // number of elements to sample.
+    private final int samples; // number of elements to sample.
 
-    List<T> candidates; // the reservoir.
+    private List<T> candidates; // the reservoir.
 
-    int count = 0;
+    private long count = 0;
 
-    boolean done = false;
+    private boolean done = false;
 
-    Random rand;
+    private Random rand;
 
     public ReservoirSampler(int samples, long seed) {
         this.samples = samples;
@@ -71,10 +71,10 @@ public class ReservoirSampler<T> {
         // do reservoir sampling.
         count++;
         // rand.nextDouble gets a pseudo random value between 0.0 and 1.0
-        int replace = (int) Math.floor(count * rand.nextDouble());
+        long replace = (long) Math.floor(count * rand.nextDouble());
         if (replace < samples) {
             // probability says replace.
-            candidates.set(replace, v);
+            candidates.set((int) replace, v);
         }
         // else keep the current sample reservoir
     }
