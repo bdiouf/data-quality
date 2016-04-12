@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.Functions;
 
+import java.io.Serializable;
+
 /**
  * DOC qzhao class global comment. Detailled comment<br>
  * 
@@ -21,7 +23,7 @@ package org.talend.dataquality.datamasking.Functions;
  * 
  * <b>See also:</b> {@link MaskEmailDomain}
  */
-public class MaskTopEmailDomainRandomly extends MaskEmailDomain {
+public class MaskTopEmailDomainRandomly extends MaskEmailDomain implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

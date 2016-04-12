@@ -39,10 +39,32 @@ public class MaskFullEmailDomainByXTest {
     }
 
     @Test
+    public void testReal() {
+        maskEmailDomainByX.parse("", true, new RandomWrapper(Long.valueOf(12345678)));
+        output = maskEmailDomainByX.generateMaskedRow("dewitt.julio@hotmail.com");
+        Assert.assertEquals("dewitt.julio@XXXXXXX.XXX", output);
+
+    }
+
+    @Test
     public void test2WithInput() {
         maskEmailDomainByX.parse("hehe", false, new RandomWrapper());
         output = maskEmailDomainByX.generateMaskedRow(mail);
-        Assert.assertEquals(mail, output);
+        Assert.assertEquals("hehe.hehe@XXXXX.XXX.XX", output);
+    }
+
+    @Test
+    public void test2WithOneCharacter() {
+        maskEmailDomainByX.parse("A", false, new RandomWrapper());
+        output = maskEmailDomainByX.generateMaskedRow(mail);
+        Assert.assertEquals("hehe.hehe@AAAAA.AAA.AA", output);
+    }
+
+    @Test
+    public void test2WithOneDigit() {
+        maskEmailDomainByX.parse("1", false, new RandomWrapper());
+        output = maskEmailDomainByX.generateMaskedRow(mail);
+        Assert.assertEquals("hehe.hehe@XXXXX.XXX.XX", output);
     }
 
     @Test

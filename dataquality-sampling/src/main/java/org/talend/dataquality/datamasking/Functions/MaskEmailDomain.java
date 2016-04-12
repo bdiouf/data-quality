@@ -13,6 +13,7 @@
 package org.talend.dataquality.datamasking.Functions;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * email address and other auxiliary methods.<br>
  * 
  */
-public abstract class MaskEmailDomain extends GenerateFromFile<String> {
+public abstract class MaskEmailDomain extends GenerateFromFile<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -105,9 +106,12 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
         int splitAddress = address.indexOf('@');
         int splitDomain = address.lastIndexOf('.', splitAddress + 1);
         ArrayList<Integer> indexes = getPointPostions(address, splitAddress);
+
+        Character maskingCrct = getMaskingCharacter();
+
         for (Integer index : indexes) {
             for (int i = splitAddress + 1; i < index; i++)
-                sb.setCharAt(i, 'X');
+                sb.setCharAt(i, maskingCrct);
             splitAddress = index;
         }
         return sb.toString();
@@ -128,6 +132,7 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
         StringBuilder sb = new StringBuilder(address);
 
         ArrayList<Integer> indexes = getPointPostions(address, splitAddress);
+
         for (Integer index : indexes) {
             for (int i = splitAddress + 1; i < index; i++)
                 sb.setCharAt(i, 'X');
@@ -170,13 +175,23 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
         StringBuilder sb = new StringBuilder(str);
         ArrayList<Integer> pointsPosition = getPointPostions(str, count);
         pointsPosition.add(str.length());
+
+        Character maskingCrct = getMaskingCharacter();
+
         for (Integer position : pointsPosition) {
             for (int i = count + 1; i < position; i++) {
-                sb.setCharAt(i, 'X');
+                sb.setCharAt(i, maskingCrct);
             }
             count = position;
         }
         return sb.toString();
+    }
+
+    private Character getMaskingCharacter() {
+        String replacement = (replacements.size() == 1) ? replacements.get(0) : null;
+        Character maskingCrct = (replacement != null && replacement.length() == 1 && Character.isLetter(replacement.charAt(0)))
+                ? replacement.charAt(0) : 'X';
+        return maskingCrct;
     }
 
     /**

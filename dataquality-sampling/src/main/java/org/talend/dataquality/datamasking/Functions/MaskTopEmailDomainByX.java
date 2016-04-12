@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.Functions;
 
+import java.io.Serializable;
+
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -20,7 +22,7 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * This class masks the top-level domain name by the character X with the realistic format, for example, the email
  * address <i>"example@talend.com"</i> will be masked to <i>"example@XXXXXX.com"</i><br>
  */
-public class MaskTopEmailDomainByX extends MaskEmailDomain {
+public class MaskTopEmailDomainByX extends MaskEmailDomain implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,12 +31,19 @@ public class MaskTopEmailDomainByX extends MaskEmailDomain {
         super.parse(extraParameter, keepNullValues, rand);
     }
 
+    /**
+     * <ul>
+     * <li>if input is empty, masks the top-level email domain by X</li>
+     * <li>if input is a character, masks the top-level email domain by input character</li>
+     * <li>if input is something different, masks the top-level email domain by X</li>
+     * </ul>
+     */
     @Override
     public String generateMaskedRow(String str) {
         if (str == null && keepNull) {
             return null;
         }
-        if (str == null || str.isEmpty() || !parameters[0].isEmpty()) {
+        if (str == null || str.isEmpty()) {
             return EMPTY_STRING;
         }
 

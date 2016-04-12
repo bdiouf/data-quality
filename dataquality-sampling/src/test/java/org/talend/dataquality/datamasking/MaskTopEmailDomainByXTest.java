@@ -54,6 +54,27 @@ public class MaskTopEmailDomainByXTest {
     }
 
     @Test
+    public void testOneCharacter() {
+        maskTopEmailDomainByX.parse("Z", false, new RandomWrapper());
+        output = maskTopEmailDomainByX.generateMaskedRow(mailMultipalDomaim);
+        Assert.assertEquals("hehe.haha@ZZZZZ.ZZ.ZZZ.cn", output);
+    }
+
+    @Test
+    public void testString() {
+        maskTopEmailDomainByX.parse("Zed", false, new RandomWrapper());
+        output = maskTopEmailDomainByX.generateMaskedRow(mailMultipalDomaim);
+        Assert.assertEquals("hehe.haha@XXXXX.XX.XXX.cn", output);
+    }
+
+    @Test
+    public void testOneDigit() {
+        maskTopEmailDomainByX.parse("Zed", false, new RandomWrapper());
+        output = maskTopEmailDomainByX.generateMaskedRow(mailMultipalDomaim);
+        Assert.assertEquals("hehe.haha@XXXXX.XX.XXX.cn", output);
+    }
+
+    @Test
     public void testNullEmail() {
         maskTopEmailDomainByX.parse("", false, new RandomWrapper());
         output = maskTopEmailDomainByX.generateMaskedRow(null);
