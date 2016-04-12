@@ -75,6 +75,10 @@ import org.talend.dataquality.datamasking.Functions.KeepLastAndGenerateString;
 import org.talend.dataquality.datamasking.Functions.KeepYear;
 import org.talend.dataquality.datamasking.Functions.MaskAddress;
 import org.talend.dataquality.datamasking.Functions.MaskEmail;
+import org.talend.dataquality.datamasking.Functions.MaskFullEmailDomainByX;
+import org.talend.dataquality.datamasking.Functions.MaskFullEmailDomainRandomly;
+import org.talend.dataquality.datamasking.Functions.MaskTopEmailDomainByX;
+import org.talend.dataquality.datamasking.Functions.MaskTopEmailDomainRandomly;
 import org.talend.dataquality.datamasking.Functions.NumericVariance;
 import org.talend.dataquality.datamasking.Functions.NumericVarianceDouble;
 import org.talend.dataquality.datamasking.Functions.NumericVarianceFloat;
@@ -176,6 +180,10 @@ public enum FunctionType {
     KEEP_YEAR(KeepYear.class),
     MASK_ADDRESS(MaskAddress.class),
     MASK_EMAIL(MaskEmail.class),
+    MASK_FULL_EMAIL_DOMAIN_BY_X(MaskFullEmailDomainByX.class),
+    MASK_FULL_EMAIL_DOMAIN_RANDOMLY(MaskFullEmailDomainRandomly.class),
+    MASK_TOP_LEVEL_EMAIL_DOMAIN_BY_X(MaskTopEmailDomainByX.class),
+    MASK_TOP_LEVEL_EMAIL_DOMAIN_RANDOMLY(MaskTopEmailDomainRandomly.class),
     NUMERIC_VARIANCE(NumericVariance.class),
     NUMERIC_VARIANCE_DOUBLE(NumericVarianceDouble.class),
     NUMERIC_VARIANCE_FlOAT(NumericVarianceFloat.class),
