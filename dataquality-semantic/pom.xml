@@ -21,11 +21,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>
-			<artifactId>org.talend.dataquality.sampling</artifactId>
-			<version>${dataquality.sampling.snapshot.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.talend.dataquality</groupId>
 			<artifactId>org.talend.dataquality.standardization</artifactId>
 			<version>${dataquality.standardization.snapshot.version}</version>
 		</dependency>
