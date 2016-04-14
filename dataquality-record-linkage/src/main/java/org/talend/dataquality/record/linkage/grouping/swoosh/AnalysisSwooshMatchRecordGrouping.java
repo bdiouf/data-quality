@@ -71,7 +71,7 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
      * DOC yyin Comment method "getKeyAttributes".
      */
     protected void getKeyAttributes() {
-        attributesAsMatchKey = new HashMap<Integer, Attribute>();
+        attributesAsMatchKey = new HashMap<>();
         for (List<Map<String, String>> matchRule : getMultiMatchRules()) {
             for (Map<String, String> mkDef : matchRule) {
                 String matcherType = mkDef.get(IRecordGrouping.MATCHING_TYPE);
@@ -100,11 +100,10 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
      * @param currentRecord
      */
     private void translateRecordForSwoosh(RichRecord currentRecord) {
-        List<Attribute> matchAttrs = new ArrayList<Attribute>();
-        List<DQAttribute<?>> rowList = new ArrayList<DQAttribute<?>>();
+        List<Attribute> matchAttrs = new ArrayList<>();
+        List<DQAttribute<?>> rowList = new ArrayList<>();
         for (Attribute attribute : currentRecord.getAttributes()) {
-            DQAttribute<String> attri = new DQAttribute<String>(attribute.getLabel(), attribute.getColumnIndex(),
-                    attribute.getValue());
+            DQAttribute<String> attri = new DQAttribute<>(attribute.getLabel(), attribute.getColumnIndex(), attribute.getValue());
             rowList.add(attri);
             // if the current attribute is definde as a match key.
             Attribute matchkey = attributesAsMatchKey.get(attribute.getColumnIndex());
@@ -142,10 +141,27 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
         String[] strRow = new String[originRow.size()];
         int idx = 0;
         for (DQAttribute<?> attr : originRow) {
-            if (row.isMaster() && row.isMerged()) {
-                strRow[idx] = attr.getValue();
+            if (SwooshConstants.GROUP_QUALITY.equals(attr.getLabel())) {
+                // when it is master two case 1 group size is 0 or group size is >0
+                if (row.isMaster()) {
+                    // group size >0 mean that it is a merged item so that we get real group quality
+                    if (row.getGrpSize() != 0) {
+                        strRow[idx] = String.valueOf(row.getGroupQuality());
+                        // group size ==0 mean that it si a alone item so that the group quality should be 1.0
+                    } else {
+                        strRow[idx] = SwooshConstants.ALONE_ITEM_GROUP_QUALITY_DEFAULT_VALUE;
+                    }
+                    // when it is not a master item mean that it is sub item so that the group quality is 0.0
+                } else {
+                    strRow[idx] = SwooshConstants.SUB_ITEM_GROUP_QUALITY_DEFAULT_VALUE;
+                }
             } else {
-                strRow[idx] = attr.getOriginalValue() == null ? attr.getValue() : String.valueOf(attr.getOriginalValue());
+                if (row.isMaster() && row.isMerged()) {
+                    strRow[idx] = attr.getValue();
+                } else {
+
+                    strRow[idx] = attr.getOriginalValue() == null ? attr.getValue() : String.valueOf(attr.getOriginalValue());
+                }
             }
             idx++;
         }
