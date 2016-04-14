@@ -23,20 +23,16 @@ public class RemoveLastCharsLong extends RemoveLastChars<Long> implements Serial
     private static final long serialVersionUID = 3563086153882260632L;
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
-        } else {
-            if (l != null) {
-                Double extraP = Double.valueOf(integerParam.toString());
-                if ((int) Math.log10(l) + 1 > extraP && extraP > 0) {
-                    return l / (long) Math.pow(10.0, extraP);
-                } else {
-                    return 0L;
-                }
+    protected Long doGenerateMaskedField(Long l) {
+        if (l != null) {
+            Double extraP = Double.valueOf(integerParam.toString());
+            if ((int) Math.log10(l) + 1 > extraP && extraP > 0) {
+                return l / (long) Math.pow(10.0, extraP);
             } else {
                 return 0L;
             }
+        } else {
+            return 0L;
         }
     }
 }

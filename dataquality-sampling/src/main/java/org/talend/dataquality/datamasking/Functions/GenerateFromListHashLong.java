@@ -35,28 +35,24 @@ public class GenerateFromListHashLong extends GenerateFromListHash<Long> impleme
     }
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
-        } else {
-            for (int j = 0; j < StringTokens.size(); ++j) {
-                long tmp = 0L;
-                try {
-                    tmp = Long.parseLong(StringTokens.get(j));
-                } catch (NumberFormatException e) {
-                    // Do Nothing
-                }
-                LongTokens.add(tmp);
+    protected Long doGenerateMaskedField(Long l) {
+        for (int j = 0; j < StringTokens.size(); ++j) {
+            long tmp = 0L;
+            try {
+                tmp = Long.parseLong(StringTokens.get(j));
+            } catch (NumberFormatException e) {
+                // Do Nothing
             }
-            if (LongTokens.size() > 0) {
-                if (l == null) {
-                    return LongTokens.get(rnd.nextInt(LongTokens.size()));
-                } else {
-                    return LongTokens.get(Math.abs(l.hashCode() % LongTokens.size()));
-                }
+            LongTokens.add(tmp);
+        }
+        if (LongTokens.size() > 0) {
+            if (l == null) {
+                return LongTokens.get(rnd.nextInt(LongTokens.size()));
             } else {
-                return 0L;
+                return LongTokens.get(Math.abs(l.hashCode() % LongTokens.size()));
             }
+        } else {
+            return 0L;
         }
     }
 }

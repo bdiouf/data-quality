@@ -42,10 +42,7 @@ public class MaskFullEmailDomainByX extends MaskEmailDomain implements Serializa
      * </ul>
      */
     @Override
-    public String generateMaskedRow(String str) {
-        if (str == null && keepNull) {
-            return null;
-        }
+    protected String doGenerateMaskedField(String str) {
 
         if (str == null || str.isEmpty()) {
             return EMPTY_STRING;

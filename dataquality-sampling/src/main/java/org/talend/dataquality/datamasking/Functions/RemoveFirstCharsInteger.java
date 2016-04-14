@@ -23,15 +23,11 @@ public class RemoveFirstCharsInteger extends RemoveFirstChars<Integer> implement
     private static final long serialVersionUID = -8172824699689903857L;
 
     @Override
-    public Integer generateMaskedRow(Integer i) {
-        if (i == null && keepNull) {
-            return null;
+    protected Integer doGenerateMaskedField(Integer i) {
+        if (i != null && (int) Math.log10(i) + 1 > integerParam && integerParam > 0) {
+            return Integer.parseInt(i.toString().substring(integerParam));
         } else {
-            if (i != null && (int) Math.log10(i) + 1 > integerParam && integerParam > 0) {
-                return Integer.parseInt(i.toString().substring(integerParam));
-            } else {
-                return 0;
-            }
+            return 0;
         }
     }
 }

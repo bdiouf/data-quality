@@ -25,30 +25,26 @@ public class ReplaceLastCharsString extends ReplaceLastChars<String> implements 
     private int parameter = 0;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
-        } else {
-            if (str != null && !EMPTY_STRING.equals(str) && integerParam > 0) {
-                parameter = integerParam > str.length() ? str.length() : integerParam;
-                StringBuilder sb = new StringBuilder(str);
-                StringBuilder repla = new StringBuilder(EMPTY_STRING);
-                for (int i = sb.length() - parameter; i < sb.length(); ++i) {
-                    if (Character.isDigit(str.charAt(i))) {
-                        repla.append(rnd.nextInt(9));
-                    } else if (Character.isUpperCase(str.charAt(i))) {
-                        repla.append(UPPER.charAt(rnd.nextInt(26)));
-                    } else if (Character.isLowerCase(str.charAt(i))) {
-                        repla.append(LOWER.charAt(rnd.nextInt(26)));
-                    } else {
-                        repla.append(str.charAt(i));
-                    }
+    protected String doGenerateMaskedField(String str) {
+        if (str != null && !EMPTY_STRING.equals(str) && integerParam > 0) {
+            parameter = integerParam > str.length() ? str.length() : integerParam;
+            StringBuilder sb = new StringBuilder(str);
+            StringBuilder repla = new StringBuilder(EMPTY_STRING);
+            for (int i = sb.length() - parameter; i < sb.length(); ++i) {
+                if (Character.isDigit(str.charAt(i))) {
+                    repla.append(rnd.nextInt(9));
+                } else if (Character.isUpperCase(str.charAt(i))) {
+                    repla.append(UPPER.charAt(rnd.nextInt(26)));
+                } else if (Character.isLowerCase(str.charAt(i))) {
+                    repla.append(LOWER.charAt(rnd.nextInt(26)));
+                } else {
+                    repla.append(str.charAt(i));
                 }
-                sb.replace(str.length() - parameter, str.length(), repla.toString());
-                return sb.toString();
-            } else {
-                return EMPTY_STRING;
             }
+            sb.replace(str.length() - parameter, str.length(), repla.toString());
+            return sb.toString();
+        } else {
+            return EMPTY_STRING;
         }
     }
 }

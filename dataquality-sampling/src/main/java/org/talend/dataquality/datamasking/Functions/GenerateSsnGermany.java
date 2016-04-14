@@ -25,16 +25,12 @@ public class GenerateSsnGermany extends Function<String> implements Serializable
     private static final long serialVersionUID = -3060510098713442546L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
-        } else {
-            StringBuilder result = new StringBuilder(EMPTY_STRING);
-            for (int i = 0; i < 11; ++i) {
-                result.append(rnd.nextInt(9));
-            }
-            return result.toString();
+    protected String doGenerateMaskedField(String str) {
+        StringBuilder result = new StringBuilder(EMPTY_STRING);
+        for (int i = 0; i < 11; ++i) {
+            result.append(rnd.nextInt(9));
         }
+        return result.toString();
     }
 
 }

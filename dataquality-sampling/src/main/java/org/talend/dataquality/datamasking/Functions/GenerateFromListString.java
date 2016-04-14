@@ -31,15 +31,11 @@ public class GenerateFromListString extends GenerateFromList<String> implements 
     }
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
+    protected String doGenerateMaskedField(String str) {
+        if (StringTokens.size() > 0) {
+            return StringTokens.get(rnd.nextInt(StringTokens.size()));
         } else {
-            if (StringTokens.size() > 0) {
-                return StringTokens.get(rnd.nextInt(StringTokens.size()));
-            } else {
-                return EMPTY_STRING;
-            }
+            return EMPTY_STRING;
         }
     }
 }

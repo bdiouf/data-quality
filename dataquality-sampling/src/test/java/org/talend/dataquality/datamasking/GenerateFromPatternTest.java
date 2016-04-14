@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,14 +36,14 @@ public class GenerateFromPatternTest {
 
     @Test
     public void testGood() {
-        gfp.parameters = "aaAA99".split(","); //$NON-NLS-1$ //$NON-NLS-2$ 
+        gfp.parameters = "aaAA99".split(","); //$NON-NLS-1$ //$NON-NLS-2$
         output = gfp.generateMaskedRow(null);
         assertEquals(output, "ahWM07"); //$NON-NLS-1$
     }
 
     @Test
     public void testGood2() {
-        gfp.parameters = "aaAA99\\1, @gmail.com".split(","); //$NON-NLS-1$ //$NON-NLS-2$ 
+        gfp.parameters = "aaAA99\\1, @gmail.com".split(","); //$NON-NLS-1$ //$NON-NLS-2$
         output = gfp.generateMaskedRow(null);
         assertEquals(output, "ahWM07@gmail.com"); //$NON-NLS-1$
     }

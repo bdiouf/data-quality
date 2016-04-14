@@ -23,22 +23,18 @@ public class GenerateCreditCardFormatLong extends GenerateCreditCardFormat<Long>
     private static final long serialVersionUID = 4432818921989956298L;
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
+    protected Long doGenerateMaskedField(Long l) {
+        CreditCardType cct_format = null;
+        if (l == null) {
+            cct_format = super.chooseCreditCardType();
+            return super.generateCreditCard(cct_format);
         } else {
-            CreditCardType cct_format = null;
-            if (l == null) {
+            cct_format = super.getCreditCardType(l);
+            if (cct_format != null) {
+                return super.generateCreditCardFormat(cct_format, l);
+            } else {
                 cct_format = super.chooseCreditCardType();
                 return super.generateCreditCard(cct_format);
-            } else {
-                cct_format = super.getCreditCardType(l);
-                if (cct_format != null) {
-                    return super.generateCreditCardFormat(cct_format, l);
-                } else {
-                    cct_format = super.chooseCreditCardType();
-                    return super.generateCreditCard(cct_format);
-                }
             }
         }
     }

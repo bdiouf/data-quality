@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +45,7 @@ public class ReplaceCharactersTest {
 
     @Test
     public void testBad() {
-        rc.parameters = rc.EMPTY_STRING.split(","); //$NON-NLS-1$ 
+        rc.parameters = rc.EMPTY_STRING.split(","); //$NON-NLS-1$
         output = rc.generateMaskedRow(input);
         assertEquals(output, "AAAAA AAAAA"); //$NON-NLS-1$
     }

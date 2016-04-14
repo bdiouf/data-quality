@@ -35,7 +35,7 @@ public class KeepYearTest {
 
     @Before
     public void setUp() throws Exception {
-        dateToModify = sdf.parse("05-08-1982"); //$NON-NLS-1$ 
+        dateToModify = sdf.parse("05-08-1982"); //$NON-NLS-1$
     }
 
     @Test

@@ -31,11 +31,7 @@ public class GenerateBetweenFloat extends GenerateBetween<Float> implements Seri
     }
 
     @Override
-    public Float generateMaskedRow(Float f) {
-        if (f == null && keepNull) {
-            return null;
-        } else {
-            return (float) rnd.nextInt((max - min) + 1) + min;
-        }
+    protected Float doGenerateMaskedField(Float f) {
+        return (float) rnd.nextInt((max - min) + 1) + min;
     }
 }

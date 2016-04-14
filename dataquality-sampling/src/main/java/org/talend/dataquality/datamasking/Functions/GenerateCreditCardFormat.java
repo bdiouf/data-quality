@@ -20,5 +20,5 @@ package org.talend.dataquality.datamasking.Functions;
 public abstract class GenerateCreditCardFormat<T2> extends GenerateCreditCard<T2> {
 
     @Override
-    public abstract T2 generateMaskedRow(T2 t);
+    protected abstract T2 doGenerateMaskedField(T2 t);
 }

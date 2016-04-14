@@ -35,24 +35,20 @@ public class GenerateFromFileLong extends GenerateFromFile<Long> implements Seri
     }
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
+    protected Long doGenerateMaskedField(Long l) {
+        for (int i = 0; i < StringTokens.size(); ++i) {
+            long tmp = 0L;
+            try {
+                tmp = Long.parseLong(StringTokens.get(i));
+                LongTokens.add(tmp);
+            } catch (NumberFormatException e) {
+                LongTokens.add(0L);
+            }
+        }
+        if (LongTokens.size() > 0) {
+            return LongTokens.get(rnd.nextInt(LongTokens.size()));
         } else {
-            for (int i = 0; i < StringTokens.size(); ++i) {
-                long tmp = 0L;
-                try {
-                    tmp = Long.parseLong(StringTokens.get(i));
-                    LongTokens.add(tmp);
-                } catch (NumberFormatException e) {
-                    LongTokens.add(0L);
-                }
-            }
-            if (LongTokens.size() > 0) {
-                return LongTokens.get(rnd.nextInt(LongTokens.size()));
-            } else {
-                return 0L;
-            }
+            return 0L;
         }
     }
 }

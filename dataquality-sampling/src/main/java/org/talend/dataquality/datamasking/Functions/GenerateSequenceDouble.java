@@ -27,7 +27,7 @@ public class GenerateSequenceDouble extends GenerateSequence<Double> {
     }
 
     @Override
-    public Double generateMaskedRow(Double d) {
+    protected Double doGenerateMaskedField(Double d) {
         return (double) seq++;
     }
 

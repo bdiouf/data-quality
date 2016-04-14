@@ -23,22 +23,18 @@ public class KeepFirstAndGenerateInteger extends KeepFirstAndGenerate<Integer> i
     private static final long serialVersionUID = 2449634559175990103L;
 
     @Override
-    public Integer generateMaskedRow(Integer i) {
-        if (i == null && keepNull) {
-            return null;
-        } else {
-            if (i != null && integerParam > 0) {
-                if ((int) Math.log10(i) + 1 < integerParam) {
-                    return i;
-                }
-                StringBuilder sb = new StringBuilder(i.toString().substring(0, integerParam));
-                for (int j = integerParam; j < i.toString().length(); ++j) {
-                    sb.append(rnd.nextInt(9));
-                }
-                return Integer.parseInt(sb.toString());
-            } else {
-                return 0;
+    protected Integer doGenerateMaskedField(Integer i) {
+        if (i != null && integerParam > 0) {
+            if ((int) Math.log10(i) + 1 < integerParam) {
+                return i;
             }
+            StringBuilder sb = new StringBuilder(i.toString().substring(0, integerParam));
+            for (int j = integerParam; j < i.toString().length(); ++j) {
+                sb.append(rnd.nextInt(9));
+            }
+            return Integer.parseInt(sb.toString());
+        } else {
+            return 0;
         }
     }
 }

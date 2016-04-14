@@ -26,11 +26,7 @@ public class GenerateUuid extends Function<String> implements Serializable {
     private static final long serialVersionUID = 7525227345231199052L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
-        } else {
-            return UUID.randomUUID().toString();
-        }
+    protected String doGenerateMaskedField(String str) {
+        return UUID.randomUUID().toString();
     }
 }

@@ -39,10 +39,7 @@ public class MaskFullEmailDomainRandomly extends MaskEmailDomain implements Seri
      * </ul>
      */
     @Override
-    public String generateMaskedRow(String str) {
-        if (str == null && keepNull) {
-            return null;
-        }
+    protected String doGenerateMaskedField(String str) {
 
         if (str == null || str.isEmpty()) {
             return EMPTY_STRING;

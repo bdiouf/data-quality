@@ -35,28 +35,24 @@ public class GenerateFromListHashInteger extends GenerateFromListHash<Integer> i
     }
 
     @Override
-    public Integer generateMaskedRow(Integer i) {
-        if (i == null && keepNull) {
-            return null;
-        } else {
-            for (int j = 0; j < StringTokens.size(); ++j) {
-                int tmp = 0;
-                try {
-                    tmp = Integer.parseInt(StringTokens.get(j));
-                } catch (NumberFormatException e) {
-                    // Do Nothing
-                }
-                IntegerTokens.add(tmp);
+    protected Integer doGenerateMaskedField(Integer i) {
+        for (int j = 0; j < StringTokens.size(); ++j) {
+            int tmp = 0;
+            try {
+                tmp = Integer.parseInt(StringTokens.get(j));
+            } catch (NumberFormatException e) {
+                // Do Nothing
             }
-            if (IntegerTokens.size() > 0) {
-                if (i == null) {
-                    return IntegerTokens.get(rnd.nextInt(IntegerTokens.size()));
-                } else {
-                    return IntegerTokens.get(Math.abs(i.hashCode() % IntegerTokens.size()));
-                }
+            IntegerTokens.add(tmp);
+        }
+        if (IntegerTokens.size() > 0) {
+            if (i == null) {
+                return IntegerTokens.get(rnd.nextInt(IntegerTokens.size()));
             } else {
-                return 0;
+                return IntegerTokens.get(Math.abs(i.hashCode() % IntegerTokens.size()));
             }
+        } else {
+            return 0;
         }
     }
 }

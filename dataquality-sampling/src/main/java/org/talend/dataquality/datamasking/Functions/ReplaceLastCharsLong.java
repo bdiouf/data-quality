@@ -25,26 +25,22 @@ public class ReplaceLastCharsLong extends ReplaceLastChars<Long> implements Seri
     private int parameter = 0;
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
-        } else {
-            if (l != null && integerParam > 0) {
-                if (l == 0L) {
-                    return (long) rnd.nextInt(9);
-                } else {
-                    parameter = (int) Math.log10(l) + 1 <= integerParam ? (int) Math.log10(l) + 1 : integerParam;
-                    StringBuilder sbui = new StringBuilder(l.toString());
-                    StringBuilder rempl = new StringBuilder(EMPTY_STRING);
-                    for (int i = 0; i < parameter; ++i) {
-                        rempl.append(rnd.nextInt(9));
-                    }
-                    sbui.replace(sbui.length() - parameter, sbui.length(), rempl.toString());
-                    return Long.parseLong(sbui.toString());
-                }
+    protected Long doGenerateMaskedField(Long l) {
+        if (l != null && integerParam > 0) {
+            if (l == 0L) {
+                return (long) rnd.nextInt(9);
             } else {
-                return 0L;
+                parameter = (int) Math.log10(l) + 1 <= integerParam ? (int) Math.log10(l) + 1 : integerParam;
+                StringBuilder sbui = new StringBuilder(l.toString());
+                StringBuilder rempl = new StringBuilder(EMPTY_STRING);
+                for (int i = 0; i < parameter; ++i) {
+                    rempl.append(rnd.nextInt(9));
+                }
+                sbui.replace(sbui.length() - parameter, sbui.length(), rempl.toString());
+                return Long.parseLong(sbui.toString());
             }
+        } else {
+            return 0L;
         }
     }
 }

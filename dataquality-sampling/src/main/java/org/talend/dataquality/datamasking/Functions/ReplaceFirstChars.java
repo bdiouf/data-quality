@@ -21,6 +21,6 @@ import org.talend.dataquality.datamasking.Function;
 public abstract class ReplaceFirstChars<T2> extends Function<T2> {
 
     @Override
-    public abstract T2 generateMaskedRow(T2 t);
+    protected abstract T2 doGenerateMaskedField(T2 t);
 
 }

@@ -29,7 +29,7 @@ public class DateVariance extends Function<Date> implements Serializable {
     private static final Long nb_ms_per_day = 86400000L;
 
     @Override
-    public Date generateMaskedRow(Date date) {
+    protected Date doGenerateMaskedField(Date date) {
         if (date != null) {
             int variation = 0;
             if (integerParam < 0) {
@@ -44,11 +44,7 @@ public class DateVariance extends Function<Date> implements Serializable {
             Date newDate = new Date(originalDate + variation * nb_ms_per_day);
             return newDate;
         } else {
-            if (keepNull) {
-                return null;
-            } else {
-                return new Date(System.currentTimeMillis());
-            }
+            return new Date(System.currentTimeMillis());
         }
     }
 }

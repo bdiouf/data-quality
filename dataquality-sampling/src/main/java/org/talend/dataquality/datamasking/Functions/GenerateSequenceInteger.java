@@ -27,7 +27,7 @@ public class GenerateSequenceInteger extends GenerateSequence<Integer> {
     }
 
     @Override
-    public Integer generateMaskedRow(Integer i) {
+    protected Integer doGenerateMaskedField(Integer i) {
         return seq++;
     }
 

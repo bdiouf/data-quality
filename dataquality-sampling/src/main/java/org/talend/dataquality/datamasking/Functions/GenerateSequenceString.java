@@ -31,7 +31,7 @@ public class GenerateSequenceString extends GenerateSequence<String> implements 
     }
 
     @Override
-    public String generateMaskedRow(String str) {
+    protected String doGenerateMaskedField(String str) {
         return String.valueOf(seq++);
     }
 

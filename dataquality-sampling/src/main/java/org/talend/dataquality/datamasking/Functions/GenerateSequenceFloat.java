@@ -27,7 +27,7 @@ public class GenerateSequenceFloat extends GenerateSequence<Float> {
     }
 
     @Override
-    public Float generateMaskedRow(Float f) {
+    protected Float doGenerateMaskedField(Float f) {
         return (float) seq++;
     }
 

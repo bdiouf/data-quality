@@ -31,12 +31,8 @@ public class GenerateBetweenString extends GenerateBetween<String> implements Se
     }
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
-        } else {
-            int result = rnd.nextInt((max - min) + 1) + min;
-            return result == 0 ? EMPTY_STRING : String.valueOf(result);
-        }
+    protected String doGenerateMaskedField(String str) {
+        int result = rnd.nextInt((max - min) + 1) + min;
+        return result == 0 ? EMPTY_STRING : String.valueOf(result);
     }
 }

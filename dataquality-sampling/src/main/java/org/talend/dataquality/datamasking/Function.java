@@ -77,6 +77,14 @@ public abstract class Function<T> implements Serializable {
         }
         setKeepNull(keepNullValues);
         setRandomWrapper(rand);
+        // generateMaskedRow
+    }
+
+    public T generateMaskedRow(T t) {
+        if (t == null && keepNull) {
+            return null;
+        }
+        return doGenerateMaskedField(t);
     }
 
     /**
@@ -86,5 +94,5 @@ public abstract class Function<T> implements Serializable {
      * @param t The input value.
      * @return A new value after applying the function.
      */
-    public abstract T generateMaskedRow(T t);
+    protected abstract T doGenerateMaskedField(T t);
 }

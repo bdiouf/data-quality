@@ -31,11 +31,7 @@ public class GenerateBetweenDouble extends GenerateBetween<Double> implements Se
     }
 
     @Override
-    public Double generateMaskedRow(Double d) {
-        if (d == null && keepNull) {
-            return null;
-        } else {
-            return (double) rnd.nextInt((max - min) + 1) + min;
-        }
+    protected Double doGenerateMaskedField(Double d) {
+        return (double) rnd.nextInt((max - min) + 1) + min;
     }
 }

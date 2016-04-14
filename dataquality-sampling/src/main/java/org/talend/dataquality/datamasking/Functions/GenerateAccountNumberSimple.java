@@ -23,14 +23,10 @@ public class GenerateAccountNumberSimple extends GenerateAccountNumber implement
     private static final long serialVersionUID = 5440282325373170840L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
-        } else {
-            String accountNumber = super.generateIban();
-            StringBuilder sb = new StringBuilder(accountNumber);
-            return sb.toString();
-        }
+    protected String doGenerateMaskedField(String str) {
+        String accountNumber = super.generateIban();
+        StringBuilder sb = new StringBuilder(accountNumber);
+        return sb.toString();
     }
 
 }

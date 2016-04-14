@@ -35,24 +35,20 @@ public class GenerateFromListLong extends GenerateFromList<Long> implements Seri
     }
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
+    protected Long doGenerateMaskedField(Long l) {
+        for (int j = 0; j < StringTokens.size(); ++j) {
+            long tmp = 0L;
+            try {
+                tmp = Long.parseLong(StringTokens.get(j));
+            } catch (NumberFormatException e) {
+                // Do Nothing
+            }
+            LongTokens.add(tmp);
+        }
+        if (LongTokens.size() > 0) {
+            return LongTokens.get(rnd.nextInt(LongTokens.size()));
         } else {
-            for (int j = 0; j < StringTokens.size(); ++j) {
-                long tmp = 0L;
-                try {
-                    tmp = Long.parseLong(StringTokens.get(j));
-                } catch (NumberFormatException e) {
-                    // Do Nothing
-                }
-                LongTokens.add(tmp);
-            }
-            if (LongTokens.size() > 0) {
-                return LongTokens.get(rnd.nextInt(LongTokens.size()));
-            } else {
-                return 0L;
-            }
+            return 0L;
         }
     }
 }

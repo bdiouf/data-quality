@@ -28,38 +28,34 @@ public class GenerateSsnFr extends Function<String> implements Serializable {
     private static final BigInteger MOD97 = new BigInteger("97"); //$NON-NLS-1$
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
-        } else {
-            StringBuilder result = new StringBuilder(EMPTY_STRING);
-            result.append(rnd.nextInt(2) + 1);
-            int yy = rnd.nextInt(99) + 1;
-            if (yy < 10) {
-                result.append("0"); //$NON-NLS-1$
-            }
-            result.append(yy);
-            int mm = rnd.nextInt(12) + 1;
-            if (mm < 10) {
-                result.append("0"); //$NON-NLS-1$
-            }
-            result.append(mm);
-            int ll = rnd.nextInt(95) + 1;
-            if (ll < 10) {
-                result.append("0"); //$NON-NLS-1$
-            }
-            result.append(ll);
-            for (int i = 0; i < 6; ++i) {
-                result.append(rnd.nextInt(9));
-            }
-
-            BigInteger ssn = new BigInteger(result.toString());
-            int controlKey = 97 - ssn.mod(MOD97).intValue();
-
-            result.append(" "); //$NON-NLS-1$
-            result.append(controlKey);
-
-            return result.toString();
+    protected String doGenerateMaskedField(String str) {
+        StringBuilder result = new StringBuilder(EMPTY_STRING);
+        result.append(rnd.nextInt(2) + 1);
+        int yy = rnd.nextInt(99) + 1;
+        if (yy < 10) {
+            result.append("0"); //$NON-NLS-1$
         }
+        result.append(yy);
+        int mm = rnd.nextInt(12) + 1;
+        if (mm < 10) {
+            result.append("0"); //$NON-NLS-1$
+        }
+        result.append(mm);
+        int ll = rnd.nextInt(95) + 1;
+        if (ll < 10) {
+            result.append("0"); //$NON-NLS-1$
+        }
+        result.append(ll);
+        for (int i = 0; i < 6; ++i) {
+            result.append(rnd.nextInt(9));
+        }
+
+        BigInteger ssn = new BigInteger(result.toString());
+        int controlKey = 97 - ssn.mod(MOD97).intValue();
+
+        result.append(" "); //$NON-NLS-1$
+        result.append(controlKey);
+
+        return result.toString();
     }
 }

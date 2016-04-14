@@ -25,26 +25,22 @@ public class ReplaceFirstCharsLong extends ReplaceFirstChars<Long> implements Se
     private int parameter = 0;
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
-        } else {
-            if (l != null && integerParam > 0) {
-                if (l == 0L) {
-                    return (long) rnd.nextInt(9);
-                } else {
-                    parameter = (int) Math.log10(l) + 1 <= integerParam ? (int) Math.log10(l) + 1 : integerParam;
-                    StringBuilder sbu = new StringBuilder(l.toString());
-                    StringBuilder remp = new StringBuilder(EMPTY_STRING);
-                    for (int i = 0; i < parameter; ++i) {
-                        remp.append(rnd.nextInt(9));
-                    }
-                    sbu.replace(0, parameter, remp.toString());
-                    return Long.parseLong(sbu.toString());
-                }
+    protected Long doGenerateMaskedField(Long l) {
+        if (l != null && integerParam > 0) {
+            if (l == 0L) {
+                return (long) rnd.nextInt(9);
             } else {
-                return 0L;
+                parameter = (int) Math.log10(l) + 1 <= integerParam ? (int) Math.log10(l) + 1 : integerParam;
+                StringBuilder sbu = new StringBuilder(l.toString());
+                StringBuilder remp = new StringBuilder(EMPTY_STRING);
+                for (int i = 0; i < parameter; ++i) {
+                    remp.append(rnd.nextInt(9));
+                }
+                sbu.replace(0, parameter, remp.toString());
+                return Long.parseLong(sbu.toString());
             }
+        } else {
+            return 0L;
         }
     }
 }

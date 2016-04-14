@@ -24,23 +24,20 @@ public class GenerateAccountNumberFormat extends GenerateAccountNumber implement
     private static final long serialVersionUID = 116648954835024228L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
-        } else {
-            boolean keepFormat = ("true").equals(parameters[0]); //$NON-NLS-1$
-            String accountNumberFormat = EMPTY_STRING;
-            if (str != null && str.length() > 9 && !EMPTY_STRING.equals(str)) {
-                try {
-                    accountNumberFormat = super.generateIban(str, keepFormat);
-                } catch (NumberFormatException e) {
-                    accountNumberFormat = super.generateIban();
-                }
-            } else {
+    protected String doGenerateMaskedField(String str) {
+        boolean keepFormat = ("true").equals(parameters[0]); //$NON-NLS-1$
+        String accountNumberFormat = EMPTY_STRING;
+        if (str != null && str.length() > 9 && !EMPTY_STRING.equals(str)) {
+            try {
+                accountNumberFormat = super.generateIban(str, keepFormat);
+            } catch (NumberFormatException e) {
                 accountNumberFormat = super.generateIban();
             }
-            return accountNumberFormat;
+        } else {
+            accountNumberFormat = super.generateIban();
         }
+        return accountNumberFormat;
+
     }
 
 }

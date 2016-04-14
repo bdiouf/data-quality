@@ -50,12 +50,12 @@ public class BetweenIndexesReplace extends BetweenIndexes<String> implements Ser
     }
 
     @Override
-    public String generateMaskedRow(String str) {
+    protected String doGenerateMaskedField(String str) {
         if (super.check(str, 2) || super.check(str, 3)) {
             boolean isThird = true;
             try {
                 s = parameters[2].trim();
-                if (!s.matches("[0-9]|[a-zA-Z]")) { //$NON-NLS-1$                                                                                                               
+                if (!s.matches("[0-9]|[a-zA-Z]")) { //$NON-NLS-1$
                     isThird = false;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -64,11 +64,7 @@ public class BetweenIndexesReplace extends BetweenIndexes<String> implements Ser
             super.setBounds(str);
             s = replace(str, isThird);
         } else {
-            if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-                return str;
-            } else {
-                return EMPTY_STRING;
-            }
+            return EMPTY_STRING;
         }
         return s;
     }

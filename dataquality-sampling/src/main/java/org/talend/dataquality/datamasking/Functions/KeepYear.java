@@ -30,20 +30,16 @@ public class KeepYear extends Function<Date> implements Serializable {
     private static Calendar c = Calendar.getInstance();
 
     @Override
-    public Date generateMaskedRow(Date date) {
-        if (date == null && keepNull) {
-            return null;
+    protected Date doGenerateMaskedField(Date date) {
+        Date newDate = new Date(System.currentTimeMillis());
+        if (date != null) {
+            c.setTime(date);
         } else {
-            Date newDate = new Date(System.currentTimeMillis());
-            if (date != null) {
-                c.setTime(date);
-            } else {
-                c.setTime(newDate);
-            }
-            c.set(Calendar.DAY_OF_MONTH, 1);
-            c.set(Calendar.MONTH, Calendar.JANUARY);
-            newDate = c.getTime();
-            return newDate;
+            c.setTime(newDate);
         }
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        c.set(Calendar.MONTH, Calendar.JANUARY);
+        newDate = c.getTime();
+        return newDate;
     }
 }

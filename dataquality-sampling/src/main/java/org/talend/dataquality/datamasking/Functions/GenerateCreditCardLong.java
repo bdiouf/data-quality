@@ -23,12 +23,8 @@ public class GenerateCreditCardLong extends GenerateCreditCardSimple<Long> imple
     private static final long serialVersionUID = 7201691028765322530L;
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
-        } else {
-            super.generateCreditCard();
-            return number;
-        }
+    protected Long doGenerateMaskedField(Long l) {
+        super.generateCreditCard();
+        return number;
     }
 }

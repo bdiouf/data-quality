@@ -23,15 +23,11 @@ public class RemoveFirstCharsLong extends RemoveFirstChars<Long> implements Seri
     private static final long serialVersionUID = -4656535468430704086L;
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
+    protected Long doGenerateMaskedField(Long l) {
+        if (l != null && (int) Math.log10(l) + 1 > integerParam && integerParam > 0) {
+            return Long.parseLong(l.toString().substring(integerParam));
         } else {
-            if (l != null && (int) Math.log10(l) + 1 > integerParam && integerParam > 0) {
-                return Long.parseLong(l.toString().substring(integerParam));
-            } else {
-                return 0L;
-            }
+            return 0L;
         }
     }
 }

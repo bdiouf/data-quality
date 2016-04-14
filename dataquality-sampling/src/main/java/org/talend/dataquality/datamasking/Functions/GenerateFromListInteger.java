@@ -35,25 +35,20 @@ public class GenerateFromListInteger extends GenerateFromList<Integer> implement
     }
 
     @Override
-    public Integer generateMaskedRow(Integer i) {
-        if (i == null && keepNull) {
-            return null;
+    protected Integer doGenerateMaskedField(Integer i) {
+        for (int j = 0; j < StringTokens.size(); ++j) {
+            int tmp = 0;
+            try {
+                tmp = Integer.parseInt(StringTokens.get(j));
+            } catch (NumberFormatException e) {
+                // Do Nothing
+            }
+            IntegerTokens.add(tmp);
+        }
+        if (IntegerTokens.size() > 0) {
+            return IntegerTokens.get(rnd.nextInt(IntegerTokens.size()));
         } else {
-            for (int j = 0; j < StringTokens.size(); ++j) {
-                int tmp = 0;
-                try {
-                    tmp = Integer.parseInt(StringTokens.get(j));
-                } catch (NumberFormatException e) {
-                    // Do Nothing
-                }
-                IntegerTokens.add(tmp);
-            }
-            if (IntegerTokens.size() > 0) {
-                return IntegerTokens.get(rnd.nextInt(IntegerTokens.size()));
-            } else {
-                return 0;
-            }
+            return 0;
         }
     }
-
 }

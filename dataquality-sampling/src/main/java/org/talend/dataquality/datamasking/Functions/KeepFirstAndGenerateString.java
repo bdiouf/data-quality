@@ -23,37 +23,33 @@ public class KeepFirstAndGenerateString extends KeepFirstAndGenerate<String> imp
     private static final long serialVersionUID = -4560944452504153430L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null) || EMPTY_STRING.equals(str) && keepNull) {
-            return str;
-        } else {
-            StringBuilder sb = new StringBuilder(EMPTY_STRING);
-            if (str != null && !EMPTY_STRING.equals(str) && integerParam > 0) {
-                String s = str.trim();
-                int totalDigit = 0;
-                for (int i = 0; i < s.length(); ++i) {
-                    if (Character.isDigit(s.charAt(i))) {
-                        totalDigit++;
-                    }
-                }
-                if (integerParam > totalDigit) {
-                    return str;
-                }
-                for (int i = 0; i < integerParam; ++i) {
-                    sb.append(s.charAt(i));
-                    if (!Character.isDigit(s.charAt(i))) {
-                        integerParam++;
-                    }
-                }
-                for (int i = integerParam; i < s.length(); ++i) {
-                    if (Character.isDigit(s.charAt(i))) {
-                        sb.append(rnd.nextInt(9));
-                    } else {
-                        sb.append(s.charAt(i));
-                    }
+    protected String doGenerateMaskedField(String str) {
+        StringBuilder sb = new StringBuilder(EMPTY_STRING);
+        if (str != null && !EMPTY_STRING.equals(str) && integerParam > 0) {
+            String s = str.trim();
+            int totalDigit = 0;
+            for (int i = 0; i < s.length(); ++i) {
+                if (Character.isDigit(s.charAt(i))) {
+                    totalDigit++;
                 }
             }
-            return sb.toString();
+            if (integerParam > totalDigit) {
+                return str;
+            }
+            for (int i = 0; i < integerParam; ++i) {
+                sb.append(s.charAt(i));
+                if (!Character.isDigit(s.charAt(i))) {
+                    integerParam++;
+                }
+            }
+            for (int i = integerParam; i < s.length(); ++i) {
+                if (Character.isDigit(s.charAt(i))) {
+                    sb.append(rnd.nextInt(9));
+                } else {
+                    sb.append(s.charAt(i));
+                }
+            }
         }
+        return sb.toString();
     }
 }

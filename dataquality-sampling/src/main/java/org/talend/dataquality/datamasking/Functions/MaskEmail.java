@@ -49,27 +49,23 @@ public class MaskEmail extends GenerateFromFile<String> implements Serializable 
     }
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null) || EMPTY_STRING.equals(str) && keepNull) {
-            return str;
-        } else {
-            if (str != null && !EMPTY_STRING.equals(str)) {
-                StringBuilder sb = new StringBuilder(str);
-                int count = str.lastIndexOf('@');
-                if (count == -1) {
-                    count = str.length();
-                }
-                if (keys.size() == 1 && keys.get(0).equals(EMPTY_STRING) || keys.size() == 0) {
-                    for (int i = 0; i < count; ++i) {
-                        sb.setCharAt(i, 'X');
-                    }
-                } else {
-                    sb.replace(0, count, keys.get(rnd.nextInt(keys.size())));
-                }
-                return sb.toString();
-            } else {
-                return EMPTY_STRING;
+    protected String doGenerateMaskedField(String str) {
+        if (str != null && !EMPTY_STRING.equals(str)) {
+            StringBuilder sb = new StringBuilder(str);
+            int count = str.lastIndexOf('@');
+            if (count == -1) {
+                count = str.length();
             }
+            if (keys.size() == 1 && keys.get(0).equals(EMPTY_STRING) || keys.size() == 0) {
+                for (int i = 0; i < count; ++i) {
+                    sb.setCharAt(i, 'X');
+                }
+            } else {
+                sb.replace(0, count, keys.get(rnd.nextInt(keys.size())));
+            }
+            return sb.toString();
+        } else {
+            return EMPTY_STRING;
         }
     }
 }

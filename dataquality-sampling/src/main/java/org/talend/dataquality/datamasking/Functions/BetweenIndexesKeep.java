@@ -24,16 +24,12 @@ public class BetweenIndexesKeep extends BetweenIndexes<String> implements Serial
     private static final long serialVersionUID = 1913164034646800125L;
 
     @Override
-    public String generateMaskedRow(String str) {
+    protected String doGenerateMaskedField(String str) {
         if (super.check(str, 2)) {
             super.setBounds(str);
             return str.substring(begin - 1, end);
         } else {
-            if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-                return str;
-            } else {
-                return EMPTY_STRING;
-            }
+            return EMPTY_STRING;
         }
     }
 }

@@ -25,19 +25,15 @@ public class GeneratePhoneNumberJapan extends Function<String> implements Serial
     private static final long serialVersionUID = -1152538201280991701L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return null;
-        } else {
-            StringBuilder result = new StringBuilder("3 "); //$NON-NLS-1$
-            for (int i = 0; i < 4; ++i) {
-                result.append(rnd.nextInt(9));
-            }
-            result.append(" "); //$NON-NLS-1$
-            for (int i = 0; i < 4; ++i) {
-                result.append(rnd.nextInt(9));
-            }
-            return result.toString();
+    protected String doGenerateMaskedField(String str) {
+        StringBuilder result = new StringBuilder("3 "); //$NON-NLS-1$
+        for (int i = 0; i < 4; ++i) {
+            result.append(rnd.nextInt(9));
         }
+        result.append(" "); //$NON-NLS-1$
+        for (int i = 0; i < 4; ++i) {
+            result.append(rnd.nextInt(9));
+        }
+        return result.toString();
     }
 }

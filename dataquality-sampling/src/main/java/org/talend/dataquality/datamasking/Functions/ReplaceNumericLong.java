@@ -23,22 +23,17 @@ public class ReplaceNumericLong extends ReplaceNumeric<Long> implements Serializ
     private static final long serialVersionUID = -2539616719332426704L;
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
-        } else {
-            if (l != null) {
-                String res = l.toString();
-                if (integerParam >= 0 && integerParam <= 9) {
-                    res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
-                } else {
-                    throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
-                }
-                return Long.valueOf(res);
+    protected Long doGenerateMaskedField(Long l) {
+        if (l != null) {
+            String res = l.toString();
+            if (integerParam >= 0 && integerParam <= 9) {
+                res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
             } else {
-                return 0L;
+                throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
             }
+            return Long.valueOf(res);
+        } else {
+            return 0L;
         }
     }
-
 }

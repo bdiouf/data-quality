@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +46,8 @@ public class GeneratePhoneNumberFrenchTest {
         gpn.setRandomWrapper(new RandomWrapper());
         for (int i = 0; i < 10; ++i) {
             String tmp = gpn.generateMaskedRow(null);
-            res = (tmp.charAt(4) == '1' || tmp.charAt(4) == '2' || tmp.charAt(4) == '3' || tmp.charAt(4) == '4' || tmp.charAt(4) == '5');
+            res = (tmp.charAt(4) == '1' || tmp.charAt(4) == '2' || tmp.charAt(4) == '3' || tmp.charAt(4) == '4'
+                    || tmp.charAt(4) == '5');
             assertEquals("invalid pĥone number " + tmp, res, true); //$NON-NLS-1$
         }
     }

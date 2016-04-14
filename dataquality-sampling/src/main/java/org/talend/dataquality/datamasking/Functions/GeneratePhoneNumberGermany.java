@@ -25,33 +25,29 @@ public class GeneratePhoneNumberGermany extends Function<String> implements Seri
     private static final long serialVersionUID = -2193040590064798675L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return null;
-        } else {
-            StringBuilder result = new StringBuilder(EMPTY_STRING);
-            int choice = rnd.nextInt(4);
-            switch (choice) {
-            case 0:
-                result.append("030 "); //$NON-NLS-1$
-                break;
-            case 1:
-                result.append("040 "); //$NON-NLS-1$
-                break;
-            case 2:
-                result.append("069 "); //$NON-NLS-1$
-                break;
-            case 3:
-                result.append("089 "); //$NON-NLS-1$
-                break;
-            default:
-                break;
-            }
-            for (int i = 0; i < 8; ++i) {
-                result.append(rnd.nextInt(9));
-            }
-            return result.toString();
+    protected String doGenerateMaskedField(String str) {
+        StringBuilder result = new StringBuilder(EMPTY_STRING);
+        int choice = rnd.nextInt(4);
+        switch (choice) {
+        case 0:
+            result.append("030 "); //$NON-NLS-1$
+            break;
+        case 1:
+            result.append("040 "); //$NON-NLS-1$
+            break;
+        case 2:
+            result.append("069 "); //$NON-NLS-1$
+            break;
+        case 3:
+            result.append("089 "); //$NON-NLS-1$
+            break;
+        default:
+            break;
         }
+        for (int i = 0; i < 8; ++i) {
+            result.append(rnd.nextInt(9));
+        }
+        return result.toString();
     }
 
 }

@@ -23,24 +23,20 @@ public class ReplaceNumericString extends ReplaceNumeric<String> implements Seri
     private static final long serialVersionUID = 8707035612963121276L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
-        } else {
-            if (str != null && !EMPTY_STRING.equals(str)) {
-                if (parameters[0].matches("[0-9]|[a-zA-Z]| ")) { //$NON-NLS-1$
-                    if ((" ").equals(parameters[0])) { //$NON-NLS-1$
-                        return str.replaceAll("\\d", parameters[0]).replace(" ", EMPTY_STRING); //$NON-NLS-1$ //$NON-NLS-2$
-                    } else {
-                        return str.replaceAll("\\d", parameters[0]); //$NON-NLS-1$
-                    }
+    protected String doGenerateMaskedField(String str) {
+        if (str != null && !EMPTY_STRING.equals(str)) {
+            if (parameters[0].matches("[0-9]|[a-zA-Z]| ")) { //$NON-NLS-1$
+                if ((" ").equals(parameters[0])) { //$NON-NLS-1$
+                    return str.replaceAll("\\d", parameters[0]).replace(" ", EMPTY_STRING); //$NON-NLS-1$ //$NON-NLS-2$
                 } else {
-                    throw new IllegalArgumentException(
-                            "The parameter for \"replace all digits\" function must be a digit or a letter"); //$NON-NLS-1$
+                    return str.replaceAll("\\d", parameters[0]); //$NON-NLS-1$
                 }
             } else {
-                return EMPTY_STRING;
+                throw new IllegalArgumentException(
+                        "The parameter for \"replace all digits\" function must be a digit or a letter"); //$NON-NLS-1$
             }
+        } else {
+            return EMPTY_STRING;
         }
     }
 }

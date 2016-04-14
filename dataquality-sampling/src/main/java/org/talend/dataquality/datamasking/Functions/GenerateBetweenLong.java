@@ -31,11 +31,7 @@ public class GenerateBetweenLong extends GenerateBetween<Long> implements Serial
     }
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
-        } else {
-            return (long) rnd.nextInt((max - min) + 1) + min;
-        }
+    protected Long doGenerateMaskedField(Long l) {
+        return (long) rnd.nextInt((max - min) + 1) + min;
     }
 }

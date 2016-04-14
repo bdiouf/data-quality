@@ -23,15 +23,11 @@ public class RemoveLastCharsString extends RemoveLastChars<String> implements Se
     private static final long serialVersionUID = -7871203355859404648L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
+    protected String doGenerateMaskedField(String str) {
+        if (str != null && !EMPTY_STRING.equals(str) && integerParam > 0 && integerParam < str.length()) {
+            return str.substring(0, str.length() - integerParam);
         } else {
-            if (str != null && !EMPTY_STRING.equals(str) && integerParam > 0 && integerParam < str.length()) {
-                return str.substring(0, str.length() - integerParam);
-            } else {
-                return EMPTY_STRING;
-            }
+            return EMPTY_STRING;
         }
     }
 }

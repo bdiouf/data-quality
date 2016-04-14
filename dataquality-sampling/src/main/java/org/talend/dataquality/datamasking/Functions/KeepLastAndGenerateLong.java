@@ -23,22 +23,18 @@ public class KeepLastAndGenerateLong extends KeepLastAndGenerate<Long> implement
     private static final long serialVersionUID = -4367992150535472987L;
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
-        } else {
-            if (l != null && integerParam > 0 && integerParam > 0) {
-                if ((int) Math.log10(l) + 1 < integerParam) {
-                    return l;
-                }
-                StringBuilder val = new StringBuilder(EMPTY_STRING);
-                for (int i = 0; i < l.toString().length() - integerParam; ++i) {
-                    val.append(rnd.nextInt(9));
-                }
-                val.append(l.toString().substring(l.toString().length() - integerParam, l.toString().length()));
-                return Long.parseLong(val.toString());
+    protected Long doGenerateMaskedField(Long l) {
+        if (l != null && integerParam > 0 && integerParam > 0) {
+            if ((int) Math.log10(l) + 1 < integerParam) {
+                return l;
             }
-            return 0L;
+            StringBuilder val = new StringBuilder(EMPTY_STRING);
+            for (int i = 0; i < l.toString().length() - integerParam; ++i) {
+                val.append(rnd.nextInt(9));
+            }
+            val.append(l.toString().substring(l.toString().length() - integerParam, l.toString().length()));
+            return Long.parseLong(val.toString());
         }
+        return 0L;
     }
 }

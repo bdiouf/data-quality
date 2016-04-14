@@ -23,21 +23,17 @@ public class ReplaceNumericDouble extends ReplaceNumeric<Double> implements Seri
     private static final long serialVersionUID = 2373577711682777009L;
 
     @Override
-    public Double generateMaskedRow(Double d) {
-        if (d == null && keepNull) {
-            return null;
-        } else {
-            if (d != null) {
-                String res = d.toString();
-                if (integerParam >= 0 && integerParam <= 9) {
-                    res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
-                } else {
-                    throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
-                }
-                return Double.valueOf(res);
+    protected Double doGenerateMaskedField(Double d) {
+        if (d != null) {
+            String res = d.toString();
+            if (integerParam >= 0 && integerParam <= 9) {
+                res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
             } else {
-                return 0.0;
+                throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
             }
+            return Double.valueOf(res);
+        } else {
+            return 0.0;
         }
     }
 }

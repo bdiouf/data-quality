@@ -35,24 +35,20 @@ public class GenerateFromFileInteger extends GenerateFromFile<Integer> implement
     }
 
     @Override
-    public Integer generateMaskedRow(Integer j) {
-        if (j == null && keepNull) {
-            return null;
+    protected Integer doGenerateMaskedField(Integer j) {
+        for (int i = 0; i < StringTokens.size(); ++i) {
+            int tmp = 0;
+            try {
+                tmp = Integer.parseInt(StringTokens.get(i));
+                IntegerTokens.add(tmp);
+            } catch (NumberFormatException e) {
+                IntegerTokens.add(0);
+            }
+        }
+        if (IntegerTokens.size() > 0) {
+            return IntegerTokens.get(rnd.nextInt(IntegerTokens.size()));
         } else {
-            for (int i = 0; i < StringTokens.size(); ++i) {
-                int tmp = 0;
-                try {
-                    tmp = Integer.parseInt(StringTokens.get(i));
-                    IntegerTokens.add(tmp);
-                } catch (NumberFormatException e) {
-                    IntegerTokens.add(0);
-                }
-            }
-            if (IntegerTokens.size() > 0) {
-                return IntegerTokens.get(rnd.nextInt(IntegerTokens.size()));
-            } else {
-                return 0;
-            }
+            return 0;
         }
     }
 }

@@ -31,11 +31,7 @@ public class GenerateBetweenInteger extends GenerateBetween<Integer> implements 
     }
 
     @Override
-    public Integer generateMaskedRow(Integer i) {
-        if (i == null && keepNull) {
-            return null;
-        } else {
-            return rnd.nextInt((max - min) + 1) + min;
-        }
+    protected Integer doGenerateMaskedField(Integer i) {
+        return rnd.nextInt((max - min) + 1) + min;
     }
 }

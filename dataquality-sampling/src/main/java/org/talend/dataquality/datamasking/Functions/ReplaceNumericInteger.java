@@ -23,21 +23,17 @@ public class ReplaceNumericInteger extends ReplaceNumeric<Integer> implements Se
     private static final long serialVersionUID = -6679442505476932276L;
 
     @Override
-    public Integer generateMaskedRow(Integer i) {
-        if (i == null && keepNull) {
-            return null;
-        } else {
-            if (i != null) {
-                String res = i.toString();
-                if (integerParam >= 0 && integerParam <= 9) {
-                    res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
-                } else {
-                    throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
-                }
-                return Integer.valueOf(res);
+    protected Integer doGenerateMaskedField(Integer i) {
+        if (i != null) {
+            String res = i.toString();
+            if (integerParam >= 0 && integerParam <= 9) {
+                res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
             } else {
-                return 0;
+                throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
             }
+            return Integer.valueOf(res);
+        } else {
+            return 0;
         }
     }
 }

@@ -23,17 +23,13 @@ public class NumericVarianceFloat extends NumericVariance<Float> implements Seri
     private static final long serialVersionUID = -8029563336814263376L;
 
     @Override
-    public Float generateMaskedRow(Float f) {
-        if (f == null && keepNull) {
-            return null;
+    protected Float doGenerateMaskedField(Float f) {
+        if (f == null) {
+            return 0.0f;
         } else {
-            if (f == null) {
-                return 0.0f;
-            } else {
-                super.init();
-                float value = f * ((float) rate + 100) / 100;
-                return value;
-            }
+            super.init();
+            float value = f * ((float) rate + 100) / 100;
+            return value;
         }
     }
 }

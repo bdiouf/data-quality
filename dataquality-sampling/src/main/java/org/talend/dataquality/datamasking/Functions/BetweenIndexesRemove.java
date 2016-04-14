@@ -25,16 +25,12 @@ public class BetweenIndexesRemove extends BetweenIndexes<String> implements Seri
     private static final long serialVersionUID = -198474878692287672L;
 
     @Override
-    public String generateMaskedRow(String str) {
+    protected String doGenerateMaskedField(String str) {
         if (super.check(str, 2)) {
             super.setBounds(str);
             return str.substring(0, begin - 1) + str.substring(end, str.length());
         } else {
-            if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-                return str;
-            } else {
-                return EMPTY_STRING;
-            }
+            return EMPTY_STRING;
         }
     }
 }

@@ -27,7 +27,7 @@ public class SetToNull<T> extends Function<T> implements Serializable {
     private static final long serialVersionUID = -1747988334179919785L;
 
     @Override
-    public T generateMaskedRow(T t) {
+    protected T doGenerateMaskedField(T t) {
         return null;
     }
 

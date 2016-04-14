@@ -25,40 +25,36 @@ public class GenerateSsnUs extends Function<String> implements Serializable {
     private static final long serialVersionUID = -7651076296534530622L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
+    protected String doGenerateMaskedField(String str) {
+        StringBuilder result = new StringBuilder(EMPTY_STRING);
+        result.append(rnd.nextInt(8));
+        result.append(rnd.nextInt(9));
+        if (result.charAt(0) == '0' && result.charAt(1) == '0' || result.charAt(0) == '6' && result.charAt(1) == '6') {
+            int tmp = 0;
+            do {
+                tmp = rnd.nextInt(9);
+            } while ((char) tmp == result.charAt(0));
+            result.append(tmp);
         } else {
-            StringBuilder result = new StringBuilder(EMPTY_STRING);
-            result.append(rnd.nextInt(8));
             result.append(rnd.nextInt(9));
-            if (result.charAt(0) == '0' && result.charAt(1) == '0' || result.charAt(0) == '6' && result.charAt(1) == '6') {
-                int tmp = 0;
-                do {
-                    tmp = rnd.nextInt(9);
-                } while ((char) tmp == result.charAt(0));
-                result.append(tmp);
-            } else {
-                result.append(rnd.nextInt(9));
-            }
-            result.append("-"); //$NON-NLS-1$
-            result.append(rnd.nextInt(9));
-            if (result.charAt(4) == '0') {
-                result.append(rnd.nextInt(8) + 1);
-            } else {
-                result.append(rnd.nextInt(9));
-            }
-            result.append("-"); //$NON-NLS-1$
-            for (int i = 0; i < 3; ++i) {
-                result.append(rnd.nextInt(9));
-            }
-            if (result.charAt(7) == '0' && result.charAt(8) == '0' && result.charAt(9) == '0') {
-                result.append(rnd.nextInt(8) + 1);
-            } else {
-                result.append(rnd.nextInt(9));
-            }
-            return result.toString();
         }
+        result.append("-"); //$NON-NLS-1$
+        result.append(rnd.nextInt(9));
+        if (result.charAt(4) == '0') {
+            result.append(rnd.nextInt(8) + 1);
+        } else {
+            result.append(rnd.nextInt(9));
+        }
+        result.append("-"); //$NON-NLS-1$
+        for (int i = 0; i < 3; ++i) {
+            result.append(rnd.nextInt(9));
+        }
+        if (result.charAt(7) == '0' && result.charAt(8) == '0' && result.charAt(9) == '0') {
+            result.append(rnd.nextInt(8) + 1);
+        } else {
+            result.append(rnd.nextInt(9));
+        }
+        return result.toString();
     }
 
 }

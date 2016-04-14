@@ -23,17 +23,13 @@ public class NumericVarianceLong extends NumericVariance<Long> implements Serial
     private static final long serialVersionUID = -5508336438978305407L;
 
     @Override
-    public Long generateMaskedRow(Long l) {
-        if (l == null && keepNull) {
-            return null;
+    protected Long doGenerateMaskedField(Long l) {
+        if (l == null) {
+            return 0L;
         } else {
-            if (l == null) {
-                return 0L;
-            } else {
-                super.init();
-                long value = l * ((long) rate + 100) / 100;
-                return value;
-            }
+            super.init();
+            long value = l * ((long) rate + 100) / 100;
+            return value;
         }
     }
 }

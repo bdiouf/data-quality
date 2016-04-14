@@ -23,17 +23,13 @@ public class NumericVarianceDouble extends NumericVariance<Double> implements Se
     private static final long serialVersionUID = 3652667602304768170L;
 
     @Override
-    public Double generateMaskedRow(Double d) {
-        if (d == null && keepNull) {
-            return null;
+    protected Double doGenerateMaskedField(Double d) {
+        if (d == null) {
+            return 0.0;
         } else {
-            if (d == null) {
-                return 0.0;
-            } else {
-                super.init();
-                double value = d * ((double) rate + 100) / 100;
-                return value;
-            }
+            super.init();
+            double value = d * ((double) rate + 100) / 100;
+            return value;
         }
     }
 }

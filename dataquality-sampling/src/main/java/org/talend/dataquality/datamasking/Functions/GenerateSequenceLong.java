@@ -27,7 +27,7 @@ public class GenerateSequenceLong extends GenerateSequence<Long> {
     }
 
     @Override
-    public Long generateMaskedRow(Long l) {
+    protected Long doGenerateMaskedField(Long l) {
         return (long) seq++;
     }
 

@@ -36,7 +36,6 @@ public class MaskEmailTest {
         assertEquals(output, "test@talend.com"); //$NON-NLS-1$
     }
 
-
     @Test
     public void testBad() {
         String mail = "not an email"; //$NON-NLS-1$

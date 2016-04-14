@@ -23,21 +23,17 @@ public class ReplaceNumericFloat extends ReplaceNumeric<Float> implements Serial
     private static final long serialVersionUID = -2936953156402359732L;
 
     @Override
-    public Float generateMaskedRow(Float f) {
-        if (f == null && keepNull) {
-            return null;
-        } else {
-            if (f != null) {
-                String res = f.toString();
-                if (integerParam >= 0 && integerParam <= 9) {
-                    res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
-                } else {
-                    throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
-                }
-                return Float.valueOf(res);
+    protected Float doGenerateMaskedField(Float f) {
+        if (f != null) {
+            String res = f.toString();
+            if (integerParam >= 0 && integerParam <= 9) {
+                res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
             } else {
-                return 0.0f;
+                throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
             }
+            return Float.valueOf(res);
+        } else {
+            return 0.0f;
         }
     }
 }

@@ -31,19 +31,15 @@ public class GenerateFromListHashString extends GenerateFromListHash<String> imp
     }
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
-        } else {
-            if (StringTokens.size() > 0) {
-                if (str == null || EMPTY_STRING.equals(str)) {
-                    return StringTokens.get(rnd.nextInt(StringTokens.size()));
-                } else {
-                    return StringTokens.get(Math.abs(str.hashCode()) % StringTokens.size());
-                }
+    protected String doGenerateMaskedField(String str) {
+        if (StringTokens.size() > 0) {
+            if (str == null || EMPTY_STRING.equals(str)) {
+                return StringTokens.get(rnd.nextInt(StringTokens.size()));
             } else {
-                return EMPTY_STRING;
+                return StringTokens.get(Math.abs(str.hashCode()) % StringTokens.size());
             }
+        } else {
+            return EMPTY_STRING;
         }
     }
 }

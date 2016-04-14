@@ -23,13 +23,9 @@ public class GenerateCreditCardString extends GenerateCreditCardSimple<String> i
     private static final long serialVersionUID = -5085537661042535376L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
-        } else {
-            super.generateCreditCard();
-            return String.valueOf(number);
-        }
+    protected String doGenerateMaskedField(String str) {
+        super.generateCreditCard();
+        return String.valueOf(number);
     }
 
 }

@@ -25,15 +25,11 @@ public class ReplaceAll extends Function<String> implements Serializable {
     private static final long serialVersionUID = -6755455022090241272L;
 
     @Override
-    public String generateMaskedRow(String str) {
-        if ((str == null || EMPTY_STRING.equals(str)) && keepNull) {
-            return str;
+    protected String doGenerateMaskedField(String str) {
+        if (str != null && !EMPTY_STRING.equals(str) && parameters[0].matches("[0-9]|[a-zA-Z]")) { //$NON-NLS-1$
+            return str.replaceAll(".", parameters[0]); //$NON-NLS-1$
         } else {
-            if (str != null && !EMPTY_STRING.equals(str) && parameters[0].matches("[0-9]|[a-zA-Z]")) { //$NON-NLS-1$
-                return str.replaceAll(".", parameters[0]); //$NON-NLS-1$
-            } else {
-                return EMPTY_STRING;
-            }
+            return EMPTY_STRING;
         }
     }
 }
