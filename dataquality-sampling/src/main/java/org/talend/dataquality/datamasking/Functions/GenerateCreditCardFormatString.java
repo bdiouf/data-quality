@@ -32,7 +32,7 @@ public class GenerateCreditCardFormatString extends GenerateCreditCardFormat<Str
             return super.generateCreditCard(cct_format).toString();
         } else {
             try {
-                cct_format = super.getCreditCardType(Long.parseLong(str.replaceAll("\\s+", EMPTY_STRING))); //$NON-NLS-1$
+                cct_format = super.getCreditCardType(Long.parseLong(replaceSpacesInString(str))); // $NON-NLS-1$
             } catch (NumberFormatException e) {
                 cct_format = super.chooseCreditCardType();
                 return super.generateCreditCard(cct_format).toString();

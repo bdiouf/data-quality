@@ -55,7 +55,7 @@ public class BetweenIndexesReplace extends BetweenIndexes<String> implements Ser
             boolean isThird = true;
             try {
                 s = parameters[2].trim();
-                if (!s.matches("[0-9]|[a-zA-Z]")) { //$NON-NLS-1$
+                if (!patternLetterOrDigit.matcher(s).matches()) { // $NON-NLS-1$
                     isThird = false;
                 }
             } catch (ArrayIndexOutOfBoundsException e) {

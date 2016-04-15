@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.talend.dataquality.datamasking.Function;
 import org.talend.dataquality.duplicating.RandomWrapper;
@@ -31,7 +32,7 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> implement
 
     private static final long serialVersionUID = 1L;
 
-    protected String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+    protected static final Pattern EMAIL_REGEX = Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
 
     protected List<String> replacements = new ArrayList<String>();
 
@@ -45,7 +46,7 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> implement
      * @return true when the input is valid
      */
     protected boolean isValidEmailAddress(String email) {
-        return email.matches(EMAIL_REGEX);
+        return EMAIL_REGEX.matcher(email).matches();
     }
 
     private void addReplacement(String[] para) {

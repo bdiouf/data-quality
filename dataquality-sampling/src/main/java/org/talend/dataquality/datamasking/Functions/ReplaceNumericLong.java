@@ -27,7 +27,7 @@ public class ReplaceNumericLong extends ReplaceNumeric<Long> implements Serializ
         if (l != null) {
             String res = l.toString();
             if (integerParam >= 0 && integerParam <= 9) {
-                res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
+                res = replacePattern(res, String.valueOf(integerParam));
             } else {
                 throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
             }

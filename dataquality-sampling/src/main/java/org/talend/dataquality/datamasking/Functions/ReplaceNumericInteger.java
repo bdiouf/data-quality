@@ -27,7 +27,7 @@ public class ReplaceNumericInteger extends ReplaceNumeric<Integer> implements Se
         if (i != null) {
             String res = i.toString();
             if (integerParam >= 0 && integerParam <= 9) {
-                res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
+                res = replacePattern(res, String.valueOf(integerParam));
             } else {
                 throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
             }

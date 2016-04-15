@@ -27,7 +27,7 @@ public class ReplaceNumericDouble extends ReplaceNumeric<Double> implements Seri
         if (d != null) {
             String res = d.toString();
             if (integerParam >= 0 && integerParam <= 9) {
-                res = res.replaceAll("\\d", String.valueOf(integerParam)); //$NON-NLS-1$
+                res = replacePattern(res, String.valueOf(integerParam));
             } else {
                 throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
             }

@@ -24,17 +24,28 @@ public class ReplaceCharacters extends Function<String> implements Serializable 
 
     private static final long serialVersionUID = 368348491822287354L;
 
+    /**
+     * Replaces input by the pattern and replace it by the parameter
+     * 
+     * @param input
+     * @param parameter
+     * @return
+     */
+    private String replaceByParameter(String input, String parameter) {
+        return patternLetter.matcher(input).replaceAll(parameter);
+    }
+
     @Override
     protected String doGenerateMaskedField(String str) {
         if (str != null && !EMPTY_STRING.equals(str)) {
-            if (parameters[0].matches("[0-9]|[a-zA-Z]| ")) { //$NON-NLS-1$
+            if (patternSpaceOrLetterOrDigit.matcher(parameters[0]).matches()) { // $NON-NLS-1$
                 if ((" ").equals(parameters[0])) { //$NON-NLS-1$
-                    return str.replaceAll("[a-zA-Z]", parameters[0]).replace(" ", EMPTY_STRING); //$NON-NLS-1$ //$NON-NLS-2$
+                    return replaceSpacesInString(replaceByParameter(str, parameters[0]));
                 } else {
-                    return str.replaceAll("[a-zA-Z]", parameters[0]); //$NON-NLS-1$
+                    return replaceByParameter(str, parameters[0]); // $NON-NLS-1$
                 }
             } else {
-                return str.replaceAll("[a-zA-Z]", String.valueOf(UPPER.charAt(rnd.nextInt(26)))); //$NON-NLS-1$
+                return replaceByParameter(str, String.valueOf(UPPER.charAt(rnd.nextInt(26))));
             }
         } else {
             return EMPTY_STRING;

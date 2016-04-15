@@ -89,7 +89,7 @@ public abstract class GenerateCreditCard<T2> extends Function<T2> {
 
     public String generateCreditCardFormat(CreditCardType cct, String valueIn, boolean keep) {
         StringBuilder res = new StringBuilder(""); //$NON-NLS-1$
-        String str = valueIn.replaceAll("\\s+", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        String str = replaceSpacesInString(valueIn); // $NON-NLS-1$ //$NON-NLS-2$
         String prefix = ""; //$NON-NLS-1$
         if (cct == CreditCardType.VISA) {
             prefix = str.substring(0, 1);

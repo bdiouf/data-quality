@@ -21,7 +21,7 @@ import org.talend.dataquality.datamasking.Functions.ReplaceAll;
  * created by jgonzalez on 25 juin 2015 Detailled comment
  *
  */
-public class RepalceAllTest {
+public class ReplaceAllTest {
 
     private String output;
 

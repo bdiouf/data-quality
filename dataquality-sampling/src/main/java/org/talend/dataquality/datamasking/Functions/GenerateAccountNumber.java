@@ -42,33 +42,42 @@ public abstract class GenerateAccountNumber extends Function<String> {
         case 16:
             return (country.equals("BE") || country.equals("BI")); //$NON-NLS-1$ //$NON-NLS-2$
         case 18:
-            return (country.equals("DK") || country.equals("FO") || country.equals("FI") || country.equals("GL") || country.equals("NL")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            return (country.equals("DK") || country.equals("FO") || country.equals("FI") || country.equals("GL") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    || country.equals("NL")); //$NON-NLS-1$
         case 19:
             return (country.equals("MK") || country.equals("SI")); //$NON-NLS-1$ //$NON-NLS-2$
         case 20:
-            return (country.equals("AT") || country.equals("BA") || country.equals("EE") || country.equals("KZ") || country.equals("XK") || country.equals("LT") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-            || country.equals("LU")); //$NON-NLS-1$
+            return (country.equals("AT") || country.equals("BA") || country.equals("EE") || country.equals("KZ") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    || country.equals("XK") || country.equals("LT") //$NON-NLS-1$ //$NON-NLS-2$
+                    || country.equals("LU")); //$NON-NLS-1$
         case 21:
-            return (country.equals("CR") || country.equals("HR") || country.equals("LV") || country.equals("LI") || country.equals("CH")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            return (country.equals("CR") || country.equals("HR") || country.equals("LV") || country.equals("LI") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    || country.equals("CH")); //$NON-NLS-1$
         case 22:
-            return (country.equals("BH") || country.equals("BG") || country.equals("GE") || country.equals("DE") || country.equals("IE") || country.equals("ME") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+            return (country.equals("BH") || country.equals("BG") || country.equals("GE") || country.equals("DE") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    || country.equals("IE") || country.equals("ME") //$NON-NLS-1$ //$NON-NLS-2$
                     || country.equals("RS") || country.equals("GB")); //$NON-NLS-1$ //$NON-NLS-2$
         case 23:
             return (country.equals("GI") || country.equals("IL") || country.equals("AE")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         case 24:
-            return (country.equals("AD") || country.equals("CZ") || country.equals("CZ") || country.equals("MD") || country.equals("PK") || country.equals("RO") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-                    || country.equals("SA") || country.equals("SK") || country.equals("ES") || country.equals("SE") || country.equals("TN") || country.equals("VG") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-            || country.equals("DZ")); //$NON-NLS-1$
+            return (country.equals("AD") || country.equals("CZ") || country.equals("CZ") || country.equals("MD") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    || country.equals("PK") || country.equals("RO") //$NON-NLS-1$ //$NON-NLS-2$
+                    || country.equals("SA") || country.equals("SK") || country.equals("ES") || country.equals("SE") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    || country.equals("TN") || country.equals("VG") //$NON-NLS-1$ //$NON-NLS-2$
+                    || country.equals("DZ")); //$NON-NLS-1$
         case 25:
             return (country.equals("PT") || country.equals("AO") || country.equals("CV") || country.equals("MZ")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         case 26:
             return (country.equals("IS") || country.equals("TR") || country.equals("IR")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         case 27:
-            return (country.equals("FR") || country.equals("GR") || country.equals("IT") || country.equals("MR") || country.equals("MC") || country.equals("SM") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+            return (country.equals("FR") || country.equals("GR") || country.equals("IT") || country.equals("MR") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    || country.equals("MC") || country.equals("SM") //$NON-NLS-1$ //$NON-NLS-2$
                     || country.equals("CM") || country.equals("MG") || country.equals("BF")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         case 28:
-            return (country.equals("AL") || country.equals("AZ") || country.equals("CY") || country.equals("DO") || country.equals("GT") || country.equals("HU") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-                    || country.equals("LB") || country.equals("PL") || country.equals("BJ") || country.equals("CI") || country.equals("ML") || country.equals("SN")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+            return (country.equals("AL") || country.equals("AZ") || country.equals("CY") || country.equals("DO") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    || country.equals("GT") || country.equals("HU") //$NON-NLS-1$ //$NON-NLS-2$
+                    || country.equals("LB") || country.equals("PL") || country.equals("BJ") || country.equals("CI") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                    || country.equals("ML") || country.equals("SN")); //$NON-NLS-1$ //$NON-NLS-2$
         case 29:
             return (country.equals("BR") || country.equals("PS") || country.equals("QA") || country.equals("UA")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         case 30:
@@ -87,7 +96,8 @@ public abstract class GenerateAccountNumber extends Function<String> {
      * generated.
      */
     private String generateAmericanAccountNumber(String accountNumber, boolean keep) {
-        StringBuilder sb = new StringBuilder(accountNumber.replaceAll("\\s+", "").substring(0, 9)); //$NON-NLS-1$ //$NON-NLS-2$
+        StringBuilder sb = new StringBuilder(replaceSpacesInString(accountNumber).substring(0, 9)); // $NON-NLS-1$
+                                                                                                    // //$NON-NLS-2$
         for (int i = 0; i < 10; ++i) {
             sb.append(String.valueOf(rnd.nextInt(10)));
         }
@@ -109,8 +119,8 @@ public abstract class GenerateAccountNumber extends Function<String> {
      * @param accountNumber The account number given in input.
      * @return A boolean holding if the account number is correct or not.
      */
-    private static boolean isAmericanAccount(String accountNumber) {
-        String rtn = accountNumber.trim().replaceAll("\\s+", "").substring(0, 9); //$NON-NLS-1$ //$NON-NLS-2$
+    private boolean isAmericanAccount(String accountNumber) {
+        String rtn = replaceSpacesInString(accountNumber).substring(0, 9); // $NON-NLS-1$ //$NON-NLS-2$
 
         char[] rtn_chars = rtn.toCharArray();
         for (char c : rtn_chars) {
@@ -120,12 +130,13 @@ public abstract class GenerateAccountNumber extends Function<String> {
         }
 
         return ((3
-                * (Integer.parseInt(String.valueOf(rtn.charAt(0))) + Integer.parseInt(String.valueOf(rtn.charAt(3))) + Integer
-                        .parseInt(String.valueOf(rtn.charAt(6))))
-                + 7
-                * (Integer.parseInt(String.valueOf(rtn.charAt(1))) + Integer.parseInt(String.valueOf(rtn.charAt(4))) + Integer
-                        .parseInt(String.valueOf(rtn.charAt(7)))) + (Integer.parseInt(String.valueOf(rtn.charAt(2)))
-                + Integer.parseInt(String.valueOf(rtn.charAt(5))) + Integer.parseInt(String.valueOf(rtn.charAt(8))))) % 10 == 0);
+                * (Integer.parseInt(String.valueOf(rtn.charAt(0))) + Integer.parseInt(String.valueOf(rtn.charAt(3)))
+                        + Integer.parseInt(String.valueOf(rtn.charAt(6))))
+                + 7 * (Integer.parseInt(String.valueOf(rtn.charAt(1))) + Integer.parseInt(String.valueOf(rtn.charAt(4)))
+                        + Integer.parseInt(String.valueOf(rtn.charAt(7))))
+                + (Integer.parseInt(String.valueOf(rtn.charAt(2))) + Integer.parseInt(String.valueOf(rtn.charAt(5)))
+                        + Integer.parseInt(String.valueOf(rtn.charAt(8)))))
+                % 10 == 0);
     }
 
     /**
@@ -144,7 +155,7 @@ public abstract class GenerateAccountNumber extends Function<String> {
             }
         }
 
-        String accountNumber = number.trim().replaceAll("\\s+", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        String accountNumber = replaceSpacesInString(number); // $NON-NLS-1$ //$NON-NLS-2$
         if (!sizeOk(accountNumber)) {
             return generateIban();
         }
@@ -217,7 +228,7 @@ public abstract class GenerateAccountNumber extends Function<String> {
      * @return A string holding a correct French Iban number.
      */
     public String generateIban() {
-        StringBuilder sb = new StringBuilder("FR00"); //$NON-NLS-1$                                                                                                             
+        StringBuilder sb = new StringBuilder("FR00"); //$NON-NLS-1$
         for (int i = 0; i < 10; ++i) {
             sb.append(String.valueOf(rnd.nextInt(10)));
         }

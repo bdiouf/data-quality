@@ -18,7 +18,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * created by jgonzalez on 20 août 2015 Detailled comment
- *
+ * 
  */
 @RunWith(Suite.class)
 @SuiteClasses({ BetweenIndexesKeepTest.class, BetweenIndexesRemoveTest.class, BetweenIndexesReplaceTest.class,
@@ -38,7 +38,7 @@ import org.junit.runners.Suite.SuiteClasses;
         KeepYearTest.class, MaskAddressTest.class, MaskEmailTest.class, NumericVarianceIntegerTest.class,
         NumericVarianceLongTest.class, RemoveFirstCharsIntegerTest.class, RemoveFirstCharsLongTest.class,
         RemoveFirstCharsStringTest.class, RemoveLastCharsIntegerTest.class, RemoveLastCharsLongTest.class,
-        RemoveLastCharsStringTest.class, RepalceAllTest.class, ReplaceCharactersTest.class, ReplaceFirstCharsIntegerTest.class,
+        RemoveLastCharsStringTest.class, ReplaceAllTest.class, ReplaceCharactersTest.class, ReplaceFirstCharsIntegerTest.class,
         ReplaceFirstCharsLongTest.class, ReplaceFirstCharsStringTest.class, ReplaceLastCharsIntegerTest.class,
         ReplaceLastCharsLongTest.class, ReplaceLastCharsStringTest.class, ReplaceNumericIntegerTest.class,
         ReplaceNumericLongTest.class, ReplaceNumericStringTest.class, SetToNullTest.class })

@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.Functions;
 
+import java.util.regex.Pattern;
+
 import org.talend.dataquality.datamasking.Function;
 
 /**
@@ -19,6 +21,12 @@ import org.talend.dataquality.datamasking.Function;
  *
  */
 public abstract class ReplaceNumeric<T2> extends Function<T2> {
+
+    protected Pattern pattern = Pattern.compile("\\d");
+
+    protected String replacePattern(String input, String replacement) {
+        return pattern.matcher(input).replaceAll(replacement);
+    }
 
     @Override
     protected abstract T2 doGenerateMaskedField(T2 t);

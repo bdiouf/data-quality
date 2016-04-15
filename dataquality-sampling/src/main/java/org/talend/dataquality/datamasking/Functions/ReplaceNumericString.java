@@ -25,11 +25,11 @@ public class ReplaceNumericString extends ReplaceNumeric<String> implements Seri
     @Override
     protected String doGenerateMaskedField(String str) {
         if (str != null && !EMPTY_STRING.equals(str)) {
-            if (parameters[0].matches("[0-9]|[a-zA-Z]| ")) { //$NON-NLS-1$
+            if (patternSpaceOrLetterOrDigit.matcher(parameters[0]).matches()) { // $NON-NLS-1$
                 if ((" ").equals(parameters[0])) { //$NON-NLS-1$
-                    return str.replaceAll("\\d", parameters[0]).replace(" ", EMPTY_STRING); //$NON-NLS-1$ //$NON-NLS-2$
+                    return replaceSpacesInString(replacePattern(str, parameters[0]));
                 } else {
-                    return str.replaceAll("\\d", parameters[0]); //$NON-NLS-1$
+                    return replacePattern(str, parameters[0]); // $NON-NLS-1$
                 }
             } else {
                 throw new IllegalArgumentException(

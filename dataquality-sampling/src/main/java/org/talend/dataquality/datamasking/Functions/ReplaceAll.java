@@ -13,6 +13,7 @@
 package org.talend.dataquality.datamasking.Functions;
 
 import java.io.Serializable;
+import java.util.regex.Pattern;
 
 import org.talend.dataquality.datamasking.Function;
 
@@ -24,10 +25,12 @@ public class ReplaceAll extends Function<String> implements Serializable {
 
     private static final long serialVersionUID = -6755455022090241272L;
 
+    private Pattern pattern = Pattern.compile(".");
+
     @Override
     protected String doGenerateMaskedField(String str) {
-        if (str != null && !EMPTY_STRING.equals(str) && parameters[0].matches("[0-9]|[a-zA-Z]")) { //$NON-NLS-1$
-            return str.replaceAll(".", parameters[0]); //$NON-NLS-1$
+        if (str != null && !EMPTY_STRING.equals(str) && patternLetterOrDigit.matcher(parameters[0]).matches()) { // $NON-NLS-1$
+            return pattern.matcher(str).replaceAll(parameters[0]);
         } else {
             return EMPTY_STRING;
         }

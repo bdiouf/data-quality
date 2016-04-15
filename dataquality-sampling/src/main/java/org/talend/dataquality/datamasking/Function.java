@@ -13,6 +13,7 @@
 package org.talend.dataquality.datamasking;
 
 import java.io.Serializable;
+import java.util.regex.Pattern;
 
 import org.talend.dataquality.duplicating.RandomWrapper;
 
@@ -25,19 +26,27 @@ public abstract class Function<T> implements Serializable {
 
     private static final long serialVersionUID = 6333987486134315822L;
 
-    protected String EMPTY_STRING = ""; //$NON-NLS-1$
+    protected static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
-    protected String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //$NON-NLS-1$
+    protected static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //$NON-NLS-1$
 
-    protected String LOWER = "abcdefghijklmnopqrstuvwxyz"; //$NON-NLS-1$
+    protected static final String LOWER = "abcdefghijklmnopqrstuvwxyz"; //$NON-NLS-1$
 
-    protected RandomWrapper rnd = null;
+    protected RandomWrapper rnd;
 
     protected Integer integerParam = 0;
 
     protected String[] parameters = new String[1];
 
     protected boolean keepNull = false;
+
+    protected static final Pattern patternSpace = Pattern.compile("\\s+");
+
+    protected static final Pattern patternLetter = Pattern.compile("[a-zA-Z]");
+
+    protected static final Pattern patternLetterOrDigit = Pattern.compile("[0-9a-zA-Z]");
+
+    protected static final Pattern patternSpaceOrLetterOrDigit = Pattern.compile("[0-9a-zA-Z ]");
 
     /**
      * DOC jgonzalez Comment method "setRandomWrapper". This method is used to set the RandomWrapper used by all
@@ -77,7 +86,6 @@ public abstract class Function<T> implements Serializable {
         }
         setKeepNull(keepNullValues);
         setRandomWrapper(rand);
-        // generateMaskedRow
     }
 
     public T generateMaskedRow(T t) {
@@ -85,6 +93,16 @@ public abstract class Function<T> implements Serializable {
             return null;
         }
         return doGenerateMaskedField(t);
+    }
+
+    /**
+     * Replaces all the spaces in the input string
+     * 
+     * @param input
+     * @return
+     */
+    protected String replaceSpacesInString(String input) {
+        return patternSpace.matcher(input).replaceAll("");
     }
 
     /**
