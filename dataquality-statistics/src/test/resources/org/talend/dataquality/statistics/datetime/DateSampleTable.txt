@@ -110,6 +110,18 @@ lundi 11 mars 2222 5 h 06 CET	EEEE d MMMM yyyy H' h 'mm z	fr_CA	FULL	true
 2222-03-11 05:06	yyyy-MM-dd HH:mm	fr_FR	SHORT	true
 2222-03-11 5:06	yyyy-MM-dd H:mm	ja_JP	SHORT	true
 2222-03-11 5:06:07	yyyy-MM-dd H:mm:ss	ja_JP	MEDIUM	true
+3/11/22 5:06:07 AM	M/d/yy h:mm:ss a	en_US	MEDIUM	true
+3/11/22 05:06	M/d/yy HH:mm	fr_FR	SHORT	true
+3/11/22 05:06:07	M/d/yy HH:mm:ss	fr_FR	MEDIUM	true
+3/11/22 5:06	M/d/yy H:mm	ja_JP	SHORT	true
+3/11/22 5:06:07	M/d/yy H:mm:ss	ja_JP	MEDIUM	true
+03/11/22	MM/dd/yy	en_US	OTHER	false
+03/11/22 5:06 AM	MM/dd/yy h:mm a	en_US	SHORT	true
+03/11/22 5:06:07 AM	MM/dd/yy h:mm:ss a	en_US	MEDIUM	true
+03/11/22 05:06	MM/dd/yy HH:mm	fr_FR	SHORT	true
+03/11/22 05:06:07	MM/dd/yy HH:mm:ss	fr_FR	MEDIUM	true
+03/11/22 5:06	MM/dd/yy H:mm	ja_JP	SHORT	true
+03/11/22 5:06:07	MM/dd/yy H:mm:ss	ja_JP	MEDIUM	true
 Mar 11 2222	MMM d yyyy	en_US	OTHER	false
 Mar.11.2222	MMM.dd.yyyy	en_US	OTHER	false
 March 11 2222	MMMM d yyyy	en_US	OTHER	false

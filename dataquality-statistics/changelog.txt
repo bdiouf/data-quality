@@ -1,5 +1,6 @@
 V1.4.4 (in development)
 	- TDQ-11763 support numbers with non-breaking spaces
+	- TDQ-11833 support more date patterns
 
 V1.4.3 2016-03-25
 	- TDP-228 fix incorrect data type guess

@@ -39,7 +39,7 @@ public class CustomDateTimePatternManagerTest {
         assertTrue(SystemDateTimePatternManager.isDate("14/Feb/2013 13:40:51 +0100"));
         assertTrue(SystemDateTimePatternManager.isDate("1970-01-01T00:32:43"));
         assertTrue(SystemDateTimePatternManager.isDate("05/15/1962"));
-
+        assertTrue(SystemDateTimePatternManager.isDate("01/26/15 18:03")); // TDQ-11833
     }
 
     private List<String> readLineContentsFromFile(String path) throws IOException {
@@ -91,12 +91,12 @@ public class CustomDateTimePatternManagerTest {
     @Test
     public void testDateMatchingCustomPattern() {
         // invalid with system time pattern
-        assertFalse(SystemDateTimePatternManager.isDate("6/18/09 21:30"));
+        assertFalse(SystemDateTimePatternManager.isDate("6/18/09 21:30 PM"));
 
         // valid with custom pattern
-        assertTrue(CustomDateTimePatternManager.isDate("6/18/09 21:30", Collections.<String> singletonList("M/d/yy H:m")));
-        assertEquals(Collections.singleton("M/d/yy H:m"),
-                CustomDateTimePatternManager.replaceByDateTimePattern("6/18/09 21:30", "M/d/yy H:m"));
+        assertTrue(CustomDateTimePatternManager.isDate("6/18/09 21:30 PM", Collections.<String> singletonList("M/d/yy H:m a")));
+        assertEquals(Collections.singleton("M/d/yy H:m a"),
+                CustomDateTimePatternManager.replaceByDateTimePattern("6/18/09 21:30 PM", "M/d/yy H:m a"));
 
     }
 
@@ -109,8 +109,9 @@ public class CustomDateTimePatternManagerTest {
 
     @Test
     public void testInvalidDateNotMatchingCustomPattern() {
-        assertFalse(CustomDateTimePatternManager.isDate("6/18/09 21:30", Collections.<String> singletonList("m-d-y hh:MM")));
-        assertEquals(Collections.EMPTY_SET, CustomDateTimePatternManager.replaceByDateTimePattern("6/18/09 21:30", "m-d-y hh:MM"));
+        assertFalse(CustomDateTimePatternManager.isDate("6/18/09 21:30 PM", Collections.<String> singletonList("m-d-y hh:MM")));
+        assertEquals(Collections.EMPTY_SET,
+                CustomDateTimePatternManager.replaceByDateTimePattern("6/18/09 21:30 PM", "m-d-y hh:MM"));
     }
 
     @Test

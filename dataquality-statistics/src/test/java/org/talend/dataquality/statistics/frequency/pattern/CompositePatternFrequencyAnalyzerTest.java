@@ -187,11 +187,12 @@ public class CompositePatternFrequencyAnalyzerTest {
         // Add value quality analyzer to have list of valid date. some date matches patterns from the file, some matches
         // them in memory user set.
         DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.DATE);
-        qualityAnalyzer.addCustomDateTimePattern("M/d/yy H:m");
+        qualityAnalyzer.addCustomDateTimePattern("M/d/yy a H:m");
         qualityAnalyzer.init();
         // 2-8-15 15:57 is not at date with pattern available,"2012-02-12" is a date match pattern from file, the others
         // match pattern set ad-hoc
-        final String[] data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2/8/15 15:57", "2*8*15 15:57", "2012-02-12" };
+        final String[] data = new String[] { "11/19/07 AM 2:54", "7/6/09 PM 16:46", "2/8/15 PM 15:57", "2*8*15 15:57",
+                "2012-02-12" };
         for (String value : data) {
             qualityAnalyzer.analyze(value);
         }
@@ -219,9 +220,9 @@ public class CompositePatternFrequencyAnalyzerTest {
         Assert.assertTrue(qualityAnalyzer2.getResult().get(0).getInvalidValues().size() == 3);
 
         Set<String> resultSet = qualityAnalyzer2.getResult().get(0).getInvalidValues();
-        Assert.assertTrue(resultSet.contains("11/19/07 2:54"));
-        Assert.assertTrue(resultSet.contains("7/6/09 16:46"));
-        Assert.assertTrue(resultSet.contains("2/8/15 15:57"));
+        Assert.assertTrue(resultSet.contains("11/19/07 AM 2:54"));
+        Assert.assertTrue(resultSet.contains("7/6/09 PM 16:46"));
+        Assert.assertTrue(resultSet.contains("2/8/15 PM 15:57"));
 
     }
 

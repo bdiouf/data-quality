@@ -109,6 +109,18 @@ en_US	yyyy-MM-dd h:mm:ss a
 fr_FR	yyyy-MM-dd HH:mm
 ja_JP	yyyy-MM-dd H:mm
 ja_JP	yyyy-MM-dd H:mm:ss
+en_US	M/d/yy h:mm:ss a
+fr_FR	M/d/yy HH:mm
+fr_FR	M/d/yy HH:mm:ss
+ja_JP	M/d/yy H:mm
+ja_JP	M/d/yy H:mm:ss
+en_US	MM/dd/yy
+en_US	MM/dd/yy h:mm a
+en_US	MM/dd/yy h:mm:ss a
+fr_FR	MM/dd/yy HH:mm
+fr_FR	MM/dd/yy HH:mm:ss
+ja_JP	MM/dd/yy H:mm
+ja_JP	MM/dd/yy H:mm:ss
 en_US	MMM d yyyy
 en_US	MMM.dd.yyyy
 en_US	MMMM d yyyy
