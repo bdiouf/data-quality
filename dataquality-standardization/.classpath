@@ -6,9 +6,5 @@
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src/test/java"/>
 	<classpathentry excluding="**/*.java" kind="src" output="target/classes" path="src/test/resources"/>
-	<classpathentry kind="lib" path="lib/prefixmapper-2.39.jar"/>
-	<classpathentry kind="lib" path="lib/carrier-1.29.jar"/>
-	<classpathentry kind="lib" path="lib/libphonenumber-7.3.0.jar"/>
-	<classpathentry kind="lib" path="lib/geocoder-2.39.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

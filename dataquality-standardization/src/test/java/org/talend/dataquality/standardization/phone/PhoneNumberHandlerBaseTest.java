@@ -26,7 +26,7 @@ import org.junit.Test;
 /**
  * DOC qiongli class global comment. Detailled comment
  */
-public class PhoneNumberHandlerTest {
+public class PhoneNumberHandlerBaseTest {
 
     private String FR_NUM_1 = "+33656965822"; //$NON-NLS-1$
 
