@@ -129,13 +129,13 @@ public class FormatGroupGenerator {
         }
         // sortDateTimeFormatCode(formatCodes);
 
-        Map<String, Set<DateTimeFormatCode>> formatGroupMap = new LinkedHashMap<String, Set<DateTimeFormatCode>>();
+        Map<String, List<DateTimeFormatCode>> formatGroupMap = new LinkedHashMap<String, List<DateTimeFormatCode>>();
 
         for (DateTimeFormatCode fc : formatCodes) {
             String aggreratedCode = fc.dateSeparator + fc.timeSeparator + fc.code;
-            Set<DateTimeFormatCode> formatCodeSet = formatGroupMap.get(aggreratedCode);
+            List<DateTimeFormatCode> formatCodeSet = formatGroupMap.get(aggreratedCode);
             if (formatCodeSet == null) {
-                formatCodeSet = new HashSet<DateTimeFormatCode>();
+                formatCodeSet = new ArrayList<DateTimeFormatCode>();
             }
             formatCodeSet.add(fc);
             formatGroupMap.put(aggreratedCode, formatCodeSet);
@@ -145,7 +145,7 @@ public class FormatGroupGenerator {
         int groupNo = 0;
         List<DateTimeFormatCode> patternsFromSmallGroups = new ArrayList<DateTimeFormatCode>();
         for (String key : formatGroupMap.keySet()) {
-            Set<DateTimeFormatCode> formatCodeSet = formatGroupMap.get(key);
+            List<DateTimeFormatCode> formatCodeSet = formatGroupMap.get(key);
             if (formatCodeSet.size() < 1) {
                 patternsFromSmallGroups.addAll(formatCodeSet);
             } else {
@@ -167,32 +167,6 @@ public class FormatGroupGenerator {
         String path = SystemDateTimePatternManager.class.getResource("DateRegexesGrouped.txt").getFile()
                 .replace("target" + File.separator + "classes", "src" + File.separator + "main" + File.separator + "resources");
         IOUtils.write(sb.toString(), new FileOutputStream(new File(path)));
-    }
-
-    private static void sortDateTimeFormatCode(List<DateTimeFormatCode> formatCodes) {
-        Collections.sort(formatCodes, new Comparator<DateTimeFormatCode>() {
-
-            @Override
-            public int compare(DateTimeFormatCode o1, DateTimeFormatCode o2) {
-
-                String o1code = o1.code;
-                String o2code = o2.code;
-                int cComp = o1code.compareTo(o2code);
-
-                if (cComp != 0) {
-                    return cComp;
-                } else {
-                    int dsComp = o1.dateSeparator.compareTo(o2.dateSeparator);
-                    if (dsComp != 0) {
-                        return dsComp;
-                    } else {
-                        int tsComp = o1.timeSeparator.compareTo(o2.timeSeparator);
-                        return tsComp;
-                    }
-                }
-            }
-        });
-
     }
 }
 
