@@ -138,7 +138,8 @@ public class TypeInferenceUtilsTest {
     @Test
     public void testIsDecimal() throws Exception {
 
-        String[] validEnDoubleValues = { "5538297118", "1045.35", "1,045.35", "1,045", "1,045,350" };
+        String[] validEnDoubleValues = { "5538297118", "1045.35", "1,045.35", "1,045", "1,045,350", "2.68435E+17",
+                "268 435 000 000 000 000", "265" + '\u00A0' + "435" + '\u2007' + "000" + '\u202F' + "000" };
         String[] validFrDoubleValues = { "1045,35", "1 045,35", "1.045,35", "1.045", "1 045", "1.045.350", "1 045 350" };
         String[] invalidDoubleValues = { "1 045.35", // no space allowed in US format
                 "1.045.35", "1,045,35", // decimal point should not repeat

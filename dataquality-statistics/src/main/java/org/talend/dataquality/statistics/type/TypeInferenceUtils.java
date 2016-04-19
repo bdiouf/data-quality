@@ -40,7 +40,7 @@ public class TypeInferenceUtils {
             + "((,[0-9]{3})*"// US integer part
             + "(\\.[0-9]+)?"// US float part
             + "|" // OR
-            + "((\\.[0-9]{3})*|( [0-9]{3})*)"// EU integer part
+            + "((\\.[0-9]{3})*|([ \u00A0\u2007\u202F][0-9]{3})*)"// EU integer part
             + "(,[0-9]+)?)"// EU float part
             + ")"// END grouped part
             + ")" // END Alternative II
@@ -243,4 +243,5 @@ public class TypeInferenceUtils {
         // will return string when no matching
         return DataTypeEnum.STRING;
     }
+
 }

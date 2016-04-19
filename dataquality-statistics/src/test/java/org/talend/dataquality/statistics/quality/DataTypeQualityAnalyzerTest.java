@@ -215,6 +215,25 @@ public class DataTypeQualityAnalyzerTest {
     }
 
     @Test
+    public void testValidDoubles() {
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.DOUBLE);
+
+        String[] inputValues = new String[] { "5538297118", "1045.35", "1,045.35", "1,045", "1,045,350", "2.68435E+17",
+                "268 435 000 000 000 000", "265" + '\u00A0' + "435" + '\u2007' + "000" + '\u202F' + "000" };
+
+        for (String str : inputValues) {
+            qualityAnalyzer.analyze(str);
+        }
+        // Valid and invalid
+        ValueQualityStatistics valueQuality = qualityAnalyzer.getResult().get(0);
+        assertEquals(0, valueQuality.getInvalidCount());
+        assertEquals(8, valueQuality.getValidCount());
+        // Invalid values
+        Set<String> invalidValues = valueQuality.getInvalidValues();
+        assertEquals(0, invalidValues.size());
+    }
+
+    @Test
     public void testNoneStrings_double() {
         DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(DataTypeEnum.DOUBLE);
         populateAnalyzerNoneString(qualityAnalyzer);
@@ -330,8 +349,9 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testInvalidCount() {// for issue TDQ_10380
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER, DataTypeEnum.STRING,
-                DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.INTEGER, DataTypeEnum.DOUBLE });
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER,
+                DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.STRING,
+                DataTypeEnum.DATE, DataTypeEnum.INTEGER, DataTypeEnum.DOUBLE });
 
         final List<String[]> records = getRecords(this.getClass().getResourceAsStream("../data/customers_100.csv"));
 

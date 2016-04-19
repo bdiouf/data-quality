@@ -154,6 +154,15 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
     }
 
     @Test
+    public void testBigDouble_TDQ11763() {
+        DataTypeAnalyzer analyzer = createDataTypeanalyzer();
+        analyzer.analyze("true", "265" + '\u00A0' + "435" + '\u2007' + "000" + '\u202F' + "000");
+        assertEquals(2, analyzer.getResult().size());
+        assertEquals(DataTypeEnum.BOOLEAN, analyzer.getResult().get(0).getSuggestedType());
+        assertEquals(DataTypeEnum.DOUBLE, analyzer.getResult().get(1).getSuggestedType());
+    }
+
+    @Test
     public void testMultipleColumns() throws Exception {
         DataTypeAnalyzer analyzer = createDataTypeanalyzer();
         analyzer.analyze("true", "aaaa");

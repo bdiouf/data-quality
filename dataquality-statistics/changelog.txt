@@ -1,3 +1,6 @@
+V1.4.4 (in development)
+	- TDQ-11763 support numbers with non-breaking spaces
+
 V1.4.3 2016-03-25
 	- TDP-228 fix incorrect data type guess
 	- TDQ-11316 add a category ANSWER for columns of mixed yes/no values
