@@ -55,7 +55,11 @@ public abstract class Function<T> implements Serializable {
      * @param rand The RandomWrapper.
      */
     public void setRandomWrapper(RandomWrapper rand) {
-        rnd = rand;
+        if (rand == null) {
+            rnd = new RandomWrapper();
+        } else {
+            rnd = rand;
+        }
     }
 
     /**

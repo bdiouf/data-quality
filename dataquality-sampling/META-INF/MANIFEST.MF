@@ -6,9 +6,11 @@ Bundle-Version: 2.2.0
 Bundle-Vendor: .Talend SA.
 Require-Bundle: org.apache.log4j,
  org.apache.commons.lang,
- org.junit
+ org.junit,
+ javax.inject
 Export-Package: org.talend.dataquality.datamasking,
  org.talend.dataquality.datamasking.functions,
+ org.talend.dataquality.datamasking.semantic,
  org.talend.dataquality.duplicating,
  org.talend.dataquality.sampling,
  org.talend.dataquality.sampling.parallel

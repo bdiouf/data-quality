@@ -59,6 +59,11 @@ public class MaskEmail extends GenerateFromFile<String> {
                 for (int i = 0; i < count; ++i) {
                     sb.setCharAt(i, 'X');
                 }
+            } else if (keys.size() == 1 && keys.get(0).length() == 1) {
+                final char charReplace = keys.get(0).charAt(0);
+                for (int i = 0; i < count; ++i) {
+                    sb.setCharAt(i, charReplace);
+                }
             } else {
                 sb.replace(0, count, keys.get(rnd.nextInt(keys.size())));
             }
