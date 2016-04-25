@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking;
 
+import org.talend.dataquality.datamasking.functions.Function;
+
 /**
  * created by jgonzalez on 18 juin 2015 This class is the factory that will instanciate the correct function.
  *

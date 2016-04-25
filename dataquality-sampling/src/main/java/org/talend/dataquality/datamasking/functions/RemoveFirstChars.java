@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 22 juin 2015. This function will remove the n first chars of the input.
  *

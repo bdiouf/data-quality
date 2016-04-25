@@ -15,8 +15,6 @@ package org.talend.dataquality.datamasking.functions;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 18 juin 2015.This function will set the month and day fields of the date to January the
  * first, and won’t change the year.

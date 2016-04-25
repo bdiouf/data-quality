@@ -15,8 +15,6 @@ package org.talend.dataquality.datamasking.functions;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 24 juin 2015. This function will modify the input by randomly selecting one of the values
  * given as parameter.

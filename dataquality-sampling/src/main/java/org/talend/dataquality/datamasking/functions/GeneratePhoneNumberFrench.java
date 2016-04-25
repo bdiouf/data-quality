@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 19 juin 2015. This function will generate a correct French phone number.
  *

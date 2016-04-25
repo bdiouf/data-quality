@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 22 juin 2015. This class is used when the requested function is either BetweenIndexesKeep,
  * BetweenIndexesRemove or BetweenIndexesReplace. It will set the bounds of the indexes according to the input length.

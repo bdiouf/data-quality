@@ -14,8 +14,6 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.util.regex.Pattern;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 22 juin 2015. This function will replace every character by the parameter.
  *

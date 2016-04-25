@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 22 juin 2015. This function will replace the n last chars of the input.
  *

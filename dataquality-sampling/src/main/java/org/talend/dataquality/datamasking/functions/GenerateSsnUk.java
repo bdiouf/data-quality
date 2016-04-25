@@ -14,7 +14,6 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.util.HashSet;
 
-import org.talend.dataquality.datamasking.Function;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

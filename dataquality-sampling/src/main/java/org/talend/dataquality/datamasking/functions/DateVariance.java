@@ -15,8 +15,6 @@ package org.talend.dataquality.datamasking.functions;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 18 juin 2015. This function will modify the input date by adding or retieving a number of
  * days lower than the parameter.

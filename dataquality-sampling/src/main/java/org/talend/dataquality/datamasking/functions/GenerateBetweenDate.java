@@ -16,8 +16,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 18 juin 2015. This function will return a date between the two given as parameters.
  *

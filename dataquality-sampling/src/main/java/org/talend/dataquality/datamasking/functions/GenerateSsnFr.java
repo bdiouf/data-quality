@@ -14,8 +14,6 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.math.BigInteger;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 21 juil. 2015 Detailled comment
  *

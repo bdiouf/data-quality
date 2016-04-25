@@ -14,8 +14,6 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.math.BigInteger;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 24 juin 2015. This class holds all the functions required by GenerateAccountNumberFormat and
  * GenerateAccountNumberFormat.

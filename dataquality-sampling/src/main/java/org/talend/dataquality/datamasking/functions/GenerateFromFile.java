@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 19 juin 2015. This function works like GenerateFromList, the difference is that the parameter
  * is now a String holding the path to a file in the user’s computer.

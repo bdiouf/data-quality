@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 22 juin 2015. This function will keep the n first digits of the input and then replace all
  * the digits that come after by other digits. Anything that is not a digit will be kept.

@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.datamasking.Function;
-
 /**
  * created by jgonzalez on 19 juin 2015. This class is called when the required function is GenerateBetween. It will
  * parse and set the parameters.
