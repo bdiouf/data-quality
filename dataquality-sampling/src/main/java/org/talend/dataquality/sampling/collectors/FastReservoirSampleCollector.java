@@ -11,8 +11,6 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class FastReservoirSampleCollector<T> implements Collector<T, List<T>, List<T>> {
 
@@ -104,16 +102,5 @@ public class FastReservoirSampleCollector<T> implements Collector<T, List<T>, Li
     @Override
     public Function<List<T>, List<T>> finisher() {
         return (i) -> i;
-    }
-
-    public static void main(String[] args) {
-        Stream<Integer> stream = IntStream.range(0, (int) 5e8).boxed();
-        long begin = System.currentTimeMillis();
-
-        List<Integer> sample = stream.collect(new FastReservoirSampleCollector<>((int) 1e4, 12345678L));
-
-        long end = System.currentTimeMillis();
-
-        System.out.println("duration: " + (end - begin) + " ms");
     }
 }
