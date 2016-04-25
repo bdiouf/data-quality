@@ -219,7 +219,6 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     @Override
     public void end() {
-        // Nothing to do.
     }
 
     @Override
@@ -251,5 +250,6 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     @Override
     public void close() throws Exception {
+        dataDictClassifier.closeIndex();
     }
 }

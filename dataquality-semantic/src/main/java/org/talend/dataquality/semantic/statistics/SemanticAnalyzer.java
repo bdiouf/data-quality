@@ -131,7 +131,9 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
 
     @Override
     public void close() throws Exception {
-
+        for (CategoryRecognizer catRecognizer : columnIdxToCategoryRecognizer.values()) {
+            catRecognizer.end();
+        }
     }
 
 }

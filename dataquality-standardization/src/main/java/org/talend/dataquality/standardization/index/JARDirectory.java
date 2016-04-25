@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.standardization.index;
 
-import java.io.EOFException;
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.net.URI;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -41,6 +38,8 @@ public class JARDirectory extends Directory {
     private static final Logger LOGGER = Logger.getLogger(JARDirectory.class);
 
     private final JARDescriptor descriptor;
+
+    private final Object extractLock = new Object();
 
     final String uuid;
 
@@ -144,34 +143,43 @@ public class JARDirectory extends Directory {
     }
 
     @Override
-    public IndexInput openInput(final String name, final IOContext context) throws IOException {
+    public synchronized IndexInput openInput(final String name, final IOContext context) throws IOException {
         if (name == null) {
             throw new IllegalArgumentException("Name cannot be null.");
         }
-        Path start = getStartPath();
-        final IndexInput[] input = new IndexInput[1];
-        Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
 
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
-                if (name.equals(file.getFileName().toString())) {
-                    final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
-                    final String unzipFile = tempDirectory + '/' + uuid + '/' + directory + '/' + file.getFileName();
-                    final Path destFile = Paths.get(unzipFile);
-                    final File destinationFile = destFile.toFile();
-                    if (!destinationFile.exists()) {
-                        destinationFile.mkdirs();
-                        Files.copy(file, destFile, StandardCopyOption.REPLACE_EXISTING);
+        final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
+        final String unzipFile = tempDirectory + '/' + uuid + '/' + directory + '/' + name;
+        final Path destFile = Paths.get(unzipFile);
+        final File destinationFile = destFile.toFile();
+        if (destinationFile.exists()) {
+            // File was already extracted, reuse it
+            RandomAccessFile raf = new RandomAccessFile(destinationFile, "r");
+            return new SimpleFSIndexInput("SimpleFSIndexInput(path=\"" + name + "\")", raf, context);
+        } else {
+            // File was not previously extracted to temp directory, extract it and returns it.
+            // To prevent multiple concurrent extracts, lock on common object
+            synchronized (extractLock) {
+                Path start = getStartPath();
+                Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
+
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
+                        if (name.equals(file.getFileName().toString())) {
+                            if (!destinationFile.exists()) {
+                                destinationFile.mkdirs();
+                                Files.copy(file, destFile, StandardCopyOption.REPLACE_EXISTING);
+                            }
+                            return FileVisitResult.TERMINATE;
+                        } else {
+                            return FileVisitResult.CONTINUE;
+                        }
                     }
-                    RandomAccessFile raf = new RandomAccessFile(destinationFile, "r");
-                    input[0] = new SimpleFSIndexInput("SimpleFSIndexInput(path=\"" + file.getFileName() + "\")", raf, context);
-                    return FileVisitResult.TERMINATE;
-                } else {
-                    return FileVisitResult.CONTINUE;
-                }
+                });
+                RandomAccessFile raf = new RandomAccessFile(destFile.toFile(), "r");
+                return new SimpleFSIndexInput("SimpleFSIndexInput(path=\"" + name + "\")", raf, context);
             }
-        });
-        return input[0];
+        }
     }
 
     @Override
@@ -192,33 +200,35 @@ public class JARDirectory extends Directory {
         // Delete temporary resources
         final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
         final String unzipLocation = tempDirectory + '/' + uuid;
-        Path path = FileSystems.getDefault().getPath(unzipLocation);
-        if (!path.toFile().exists()) {
-            return;
-        }
-        Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
-
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
-                // Skip NFS file content
-                if (!file.getFileName().toFile().getName().startsWith(".nfs")) { //$NON-NLS-1$
-                    Files.delete(file);
-                }
-                return FileVisitResult.CONTINUE;
+        try (FileSystem fileSystem = FileSystems.getDefault()) {
+            Path path = fileSystem.getPath(unzipLocation);
+            if (!path.toFile().exists()) {
+                return;
             }
+            Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
 
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
-                if (e == null) {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
+                    // Skip NFS file content
+                    if (!file.getFileName().toFile().getName().startsWith(".nfs")) { //$NON-NLS-1$
+                        Files.delete(file);
+                    }
                     return FileVisitResult.CONTINUE;
-                } else {
-                    // directory iteration failed
-                    throw e;
                 }
+
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
+                    if (e == null) {
+                        return FileVisitResult.CONTINUE;
+                    } else {
+                        // directory iteration failed
+                        throw e;
+                    }
+                }
+            });
+            if (!path.toFile().delete()) {
+                LOGGER.warn("Unable to clean directory '" + unzipLocation + "'.");
             }
-        });
-        if (!path.toFile().delete()) {
-            LOGGER.warn("Unable to clean directory '" + unzipLocation + "'.");
         }
     }
 

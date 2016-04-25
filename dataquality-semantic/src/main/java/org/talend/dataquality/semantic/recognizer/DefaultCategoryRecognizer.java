@@ -25,7 +25,6 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.dataquality.semantic.classifier.ISubCategory;
-import org.talend.dataquality.semantic.classifier.ISubCategoryClassifier;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.classifier.custom.UDCategorySerDeser;
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedCategory;
@@ -43,7 +42,7 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
     private final Map<String, CategoryFrequency> categoryToFrequency = new HashMap<>();
 
-    private final ISubCategoryClassifier dataDictFieldClassifier;
+    private final DataDictFieldClassifier dataDictFieldClassifier;
 
     private UserDefinedClassifier userDefineClassifier;
 
@@ -200,5 +199,10 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
             }
         });
         return catList;
+    }
+
+    @Override
+    public void end() {
+        dataDictFieldClassifier.closeIndex();
     }
 }

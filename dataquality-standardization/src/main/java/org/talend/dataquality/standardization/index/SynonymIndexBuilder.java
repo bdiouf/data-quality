@@ -471,28 +471,8 @@ public class SynonymIndexBuilder {
         }
     }
 
-    /**
-     * Get a new read-only searcher at each call.
-     *
-     * @return
-     * @throws org.apache.lucene.index.CorruptIndexException
-     * @throws IOException
-     */
-    private IndexSearcher getNewIndexSearcher() throws IOException {
-        // FIXME optimization could be done if we use the IndexReader.reopen() method instead of creating a new object
-        // at each call.
-
-        CheckIndex check = new CheckIndex(indexDir);
-        Status status = check.checkIndex();
-        if (status.missingSegments) {
-            System.err.println(Messages.getString("SynonymIndexBuilder.print"));//$NON-NLS-1$
-        }
-        IndexReader reader = DirectoryReader.open(indexDir);
-        return new IndexSearcher(reader);
-    }
-
     private SynonymIndexSearcher getNewSynIdxSearcher() throws IOException {
-        return new SynonymIndexSearcher(getNewIndexSearcher());
+        return new SynonymIndexSearcher(indexDir);
     }
 
     private Document generateDocument(String word, String synonyms) {

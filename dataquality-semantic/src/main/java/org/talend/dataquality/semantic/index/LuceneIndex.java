@@ -44,7 +44,7 @@ public class LuceneIndex implements Index {
 
     @Override
     public void closeIndex() {
-
+        searcher.close();
     }
 
     @Override
