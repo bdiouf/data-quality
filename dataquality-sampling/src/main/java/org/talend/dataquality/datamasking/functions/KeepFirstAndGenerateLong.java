@@ -12,13 +12,11 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 /**
  * created by jgonzalez on 22 juin 2015. See KeepFirstAndGenerate.
  *
  */
-public class KeepFirstAndGenerateLong extends KeepFirstAndGenerate<Long> implements Serializable {
+public class KeepFirstAndGenerateLong extends KeepFirstAndGenerate<Long> {
 
     private static final long serialVersionUID = 3522517905787655968L;
 

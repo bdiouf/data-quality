@@ -12,15 +12,13 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 import org.talend.dataquality.datamasking.Function;
 
 /**
  * created by jgonzalez on 22 juil. 2015 Detailled comment
  *
  */
-public class GenerateSsnJapan extends Function<String> implements Serializable {
+public class GenerateSsnJapan extends Function<String> {
 
     private static final long serialVersionUID = -8621894245597689328L;
 

@@ -20,6 +20,8 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class GenerateCreditCard<T2> extends Function<T2> {
 
+    private static final long serialVersionUID = -5998632284990879388L;
+
     private static final String DIGITS = "0123456789"; //$NON-NLS-1$
 
     /**

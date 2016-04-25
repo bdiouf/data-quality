@@ -12,15 +12,13 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 24 juin 2015. See GenerateFromListHash.
  *
  */
-public class GenerateFromListHashString extends GenerateFromListHash<String> implements Serializable {
+public class GenerateFromListHashString extends GenerateFromListHash<String> {
 
     private static final long serialVersionUID = -6003768593059919308L;
 

@@ -12,13 +12,11 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 /**
  * created by jgonzalez on 22 juin 2015. See ReplaceLastChars.
  *
  */
-public class ReplaceLastCharsString extends ReplaceLastChars<String> implements Serializable {
+public class ReplaceLastCharsString extends ReplaceLastChars<String> {
 
     private static final long serialVersionUID = 3894256715739085888L;
 

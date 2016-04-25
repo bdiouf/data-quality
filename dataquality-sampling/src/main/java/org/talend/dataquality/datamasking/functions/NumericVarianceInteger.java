@@ -12,13 +12,11 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 /**
  * created by jgonzalez on 18 juin 2015. See NumericVariance.
  *
  */
-public class NumericVarianceInteger extends NumericVariance<Integer> implements Serializable {
+public class NumericVarianceInteger extends NumericVariance<Integer> {
 
     private static final long serialVersionUID = -5691096627763244343L;
 

@@ -12,14 +12,12 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 /**
  * created by jgonzalez on 22 juin 2015. This class is used when the requested function is BetweenIndexesKeep. It will
  * return a new String where all the elements between the indexes are replaced.
  *
  */
-public class BetweenIndexesReplace extends BetweenIndexes<String> implements Serializable {
+public class BetweenIndexesReplace extends BetweenIndexes {
 
     private static final long serialVersionUID = 1440323544625986870L;
 

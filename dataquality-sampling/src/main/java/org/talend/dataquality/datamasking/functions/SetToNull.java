@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 import org.talend.dataquality.datamasking.Function;
 
 /**
@@ -22,7 +20,7 @@ import org.talend.dataquality.datamasking.Function;
  * @param <T>
  *
  */
-public class SetToNull<T> extends Function<T> implements Serializable {
+public class SetToNull<T> extends Function<T> {
 
     private static final long serialVersionUID = -1747988334179919785L;
 

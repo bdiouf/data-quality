@@ -19,7 +19,9 @@ import org.talend.dataquality.datamasking.Function;
  * BetweenIndexesRemove or BetweenIndexesReplace. It will set the bounds of the indexes according to the input length.
  *
  */
-public abstract class BetweenIndexes<T2> extends Function<T2> {
+public abstract class BetweenIndexes extends Function<String> {
+
+    private static final long serialVersionUID = 1114307514352123034L;
 
     protected static int begin = 0;
 
@@ -50,5 +52,5 @@ public abstract class BetweenIndexes<T2> extends Function<T2> {
     }
 
     @Override
-    protected abstract T2 doGenerateMaskedField(T2 t);
+    protected abstract String doGenerateMaskedField(String t);
 }

@@ -12,15 +12,13 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 18 juin 2015. This function will return a float between the two given as parameters.
  *
  */
-public class GenerateBetweenFloat extends GenerateBetween<Float> implements Serializable {
+public class GenerateBetweenFloat extends GenerateBetween<Float> {
 
     private static final long serialVersionUID = -4512545989788331124L;
 

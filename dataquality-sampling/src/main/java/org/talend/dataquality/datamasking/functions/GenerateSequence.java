@@ -20,6 +20,8 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class GenerateSequence<T2> extends Function<T2> {
 
+    private static final long serialVersionUID = 3643893998777572476L;
+
     protected int seq = 0;
 
     public int setSeq(String s) {

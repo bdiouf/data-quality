@@ -12,14 +12,12 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 /**
  * created by jgonzalez on 19 juin 2015. This function produces a correct account number and tries to keep the country
  * where it's from.
  *
  */
-public class GenerateAccountNumberFormat extends GenerateAccountNumber implements Serializable {
+public class GenerateAccountNumberFormat extends GenerateAccountNumber {
 
     private static final long serialVersionUID = 116648954835024228L;
 

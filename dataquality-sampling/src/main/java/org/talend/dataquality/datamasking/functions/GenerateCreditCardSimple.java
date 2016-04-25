@@ -12,16 +12,14 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 /**
  * created by jgonzalez on 19 juin 2015. This function will generate a valid credit card number. It can be used on
  * String and Long values.
  *
  */
-public abstract class GenerateCreditCardSimple<T2> extends GenerateCreditCard<T2> implements Serializable {
+public abstract class GenerateCreditCardSimple<T2> extends GenerateCreditCard<T2> {
 
-    private static final long serialVersionUID = -3556491458582882652L;
+    private static final long serialVersionUID = 1364972443525284765L;
 
     protected Long number = null;
 

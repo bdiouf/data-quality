@@ -22,6 +22,8 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class ReplaceNumeric<T2> extends Function<T2> {
 
+    private static final long serialVersionUID = -6892473143126922554L;
+
     protected Pattern pattern = Pattern.compile("\\d");
 
     protected String replacePattern(String input, String replacement) {

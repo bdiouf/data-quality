@@ -12,15 +12,13 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 import org.talend.dataquality.datamasking.Function;
 
 /**
  * created by jgonzalez on 22 juin 2015. This function will replace every letter by the parameter.
  *
  */
-public class ReplaceCharacters extends Function<String> implements Serializable {
+public class ReplaceCharacters extends Function<String> {
 
     private static final long serialVersionUID = 368348491822287354L;
 

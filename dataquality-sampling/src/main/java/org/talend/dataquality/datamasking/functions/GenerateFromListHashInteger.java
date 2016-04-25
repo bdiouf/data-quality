@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * created by jgonzalez on 24 juin 2015. See GenerateFromListHash.
  *
  */
-public class GenerateFromListHashInteger extends GenerateFromListHash<Integer> implements Serializable {
+public class GenerateFromListHashInteger extends GenerateFromListHash<Integer> {
 
     private static final long serialVersionUID = 196366420689702606L;
 

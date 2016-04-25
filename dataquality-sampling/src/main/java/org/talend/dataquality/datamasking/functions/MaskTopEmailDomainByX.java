@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -22,9 +20,9 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * This class masks the top-level domain name by the character X with the realistic format, for example, the email
  * address <i>"example@talend.com"</i> will be masked to <i>"example@XXXXXX.com"</i><br>
  */
-public class MaskTopEmailDomainByX extends MaskEmailDomain implements Serializable {
+public class MaskTopEmailDomainByX extends MaskEmailDomain {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -3171431436372092807L;
 
     @Override
     public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {

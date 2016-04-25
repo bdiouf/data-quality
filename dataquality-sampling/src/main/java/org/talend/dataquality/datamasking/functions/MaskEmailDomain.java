@@ -13,7 +13,6 @@
 package org.talend.dataquality.datamasking.functions;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -28,9 +27,9 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * email address and other auxiliary methods.<br>
  * 
  */
-public abstract class MaskEmailDomain extends GenerateFromFile<String> implements Serializable {
+public abstract class MaskEmailDomain extends GenerateFromFile<String> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3837984827035744721L;
 
     protected static final Pattern EMAIL_REGEX = Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
 
@@ -105,7 +104,6 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> implement
     protected String maskTopLevelDomainByX(String address) {
         StringBuilder sb = new StringBuilder(address);
         int splitAddress = address.indexOf('@');
-        int splitDomain = address.lastIndexOf('.', splitAddress + 1);
         ArrayList<Integer> indexes = getPointPostions(address, splitAddress);
 
         Character maskingCrct = getMaskingCharacter();

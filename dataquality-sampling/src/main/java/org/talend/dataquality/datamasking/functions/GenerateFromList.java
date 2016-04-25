@@ -24,6 +24,8 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class GenerateFromList<T2> extends Function<T2> {
 
+    private static final long serialVersionUID = 8936060786451303843L;
+
     protected List<String> StringTokens = new ArrayList<>();
 
     protected void init() {

@@ -19,6 +19,8 @@ package org.talend.dataquality.datamasking.functions;
  */
 public abstract class GenerateCreditCardFormat<T2> extends GenerateCreditCard<T2> {
 
+    private static final long serialVersionUID = -6097968704420111379L;
+
     @Override
     protected abstract T2 doGenerateMaskedField(T2 t);
 }

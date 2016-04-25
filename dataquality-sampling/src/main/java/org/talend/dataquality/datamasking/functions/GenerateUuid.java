@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 import org.talend.dataquality.datamasking.Function;
@@ -21,7 +20,7 @@ import org.talend.dataquality.datamasking.Function;
  * created by jgonzalez on 22 juin 2015. This function will generate a UUID using Java's UUID.randomUUID() function.
  *
  */
-public class GenerateUuid extends Function<String> implements Serializable {
+public class GenerateUuid extends Function<String> {
 
     private static final long serialVersionUID = 7525227345231199052L;
 

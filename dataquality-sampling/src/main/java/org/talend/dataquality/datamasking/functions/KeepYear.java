@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,7 +22,7 @@ import org.talend.dataquality.datamasking.Function;
  * first, and won’t change the year.
  *
  */
-public class KeepYear extends Function<Date> implements Serializable {
+public class KeepYear extends Function<Date> {
 
     private static final long serialVersionUID = 2836713659481652846L;
 

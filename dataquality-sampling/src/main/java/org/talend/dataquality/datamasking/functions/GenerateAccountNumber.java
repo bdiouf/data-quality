@@ -23,6 +23,8 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class GenerateAccountNumber extends Function<String> {
 
+    private static final long serialVersionUID = -631455182627735683L;
+
     private static final BigInteger MOD97 = new BigInteger("97"); //$NON-NLS-1$
 
     /**

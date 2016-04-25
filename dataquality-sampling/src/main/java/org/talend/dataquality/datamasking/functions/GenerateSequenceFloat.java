@@ -20,6 +20,8 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  */
 public class GenerateSequenceFloat extends GenerateSequence<Float> {
 
+    private static final long serialVersionUID = 1643268660478079881L;
+
     @Override
     public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
         super.parse(extraParameter, keepNullValues, rand);

@@ -12,13 +12,11 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 /**
  * created by jgonzalez on 22 juin 2015. See ReplaceNumeric.
  *
  */
-public class ReplaceNumericDouble extends ReplaceNumeric<Double> implements Serializable {
+public class ReplaceNumericDouble extends ReplaceNumeric<Double> {
 
     private static final long serialVersionUID = 2373577711682777009L;
 

@@ -21,6 +21,8 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class KeepFirstAndGenerate<T2> extends Function<T2> {
 
+    private static final long serialVersionUID = 2523362343532887640L;
+
     @Override
     protected abstract T2 doGenerateMaskedField(T2 t);
 }

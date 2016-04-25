@@ -20,6 +20,8 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class ReplaceLastChars<T2> extends Function<T2> {
 
+    private static final long serialVersionUID = -1353702928838732062L;
+
     @Override
     protected abstract T2 doGenerateMaskedField(T2 t);
 }

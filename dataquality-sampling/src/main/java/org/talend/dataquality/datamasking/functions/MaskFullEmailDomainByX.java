@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -24,9 +22,9 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * 
  * <b>See also:</b> {@link MaskEmailDomain}
  */
-public class MaskFullEmailDomainByX extends MaskEmailDomain implements Serializable {
+public class MaskFullEmailDomainByX extends MaskEmailDomain {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3570889674995454850L;
 
     @Override
     public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {

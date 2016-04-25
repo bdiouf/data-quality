@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
 import java.util.HashSet;
 
 import org.talend.dataquality.datamasking.Function;
@@ -22,7 +21,7 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * created by jgonzalez on 21 juil. 2015 Detailled comment
  *
  */
-public class GenerateSsnUk extends Function<String> implements Serializable {
+public class GenerateSsnUk extends Function<String> {
 
     private static final long serialVersionUID = 4664211523958436354L;
 

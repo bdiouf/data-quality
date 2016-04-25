@@ -20,6 +20,8 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class ReplaceFirstChars<T2> extends Function<T2> {
 
+    private static final long serialVersionUID = 2584207431532787461L;
+
     @Override
     protected abstract T2 doGenerateMaskedField(T2 t);
 

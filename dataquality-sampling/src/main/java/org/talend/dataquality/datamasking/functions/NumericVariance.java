@@ -21,6 +21,7 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class NumericVariance<T2> extends Function<T2> {
 
+    private static final long serialVersionUID = -9042942041517353551L;
     protected int rate = 0;
 
     protected void init() {

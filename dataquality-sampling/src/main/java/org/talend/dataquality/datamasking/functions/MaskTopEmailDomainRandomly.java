@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 /**
  * DOC qzhao class global comment. Detailled comment<br>
  * 
@@ -23,9 +21,9 @@ import java.io.Serializable;
  * 
  * <b>See also:</b> {@link MaskEmailDomain}
  */
-public class MaskTopEmailDomainRandomly extends MaskEmailDomain implements Serializable {
+public class MaskTopEmailDomainRandomly extends MaskEmailDomain {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4725759790417755993L;
 
     /**
      * Conditions in masking top-level email domain randomly:<br>

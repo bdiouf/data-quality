@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
-
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -21,7 +19,7 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  *
  */
 
-public class GenerateFromFileString extends GenerateFromFile<String> implements Serializable {
+public class GenerateFromFileString extends GenerateFromFile<String> {
 
     private static final long serialVersionUID = 6360879458690229195L;
 

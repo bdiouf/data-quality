@@ -21,6 +21,8 @@ import org.talend.dataquality.datamasking.Function;
  */
 public abstract class GenerateBetween<T2> extends Function<T2> {
 
+    private static final long serialVersionUID = 1L;
+
     protected int min = 0;
 
     protected int max = 0;

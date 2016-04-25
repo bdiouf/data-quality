@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
 import java.util.regex.Pattern;
 
 import org.talend.dataquality.datamasking.Function;
@@ -21,7 +20,7 @@ import org.talend.dataquality.datamasking.Function;
  * created by jgonzalez on 22 juin 2015. This function will replace every character by the parameter.
  *
  */
-public class ReplaceAll extends Function<String> implements Serializable {
+public class ReplaceAll extends Function<String> {
 
     private static final long serialVersionUID = -6755455022090241272L;
 
