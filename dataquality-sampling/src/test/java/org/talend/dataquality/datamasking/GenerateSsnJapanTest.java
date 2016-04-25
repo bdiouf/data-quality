@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.GenerateSsnJapan;
+import org.talend.dataquality.datamasking.functions.GenerateSsnJapan;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

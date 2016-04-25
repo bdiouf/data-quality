@@ -15,7 +15,7 @@ package org.talend.dataquality.datamasking;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.RemoveLastCharsString;
+import org.talend.dataquality.datamasking.functions.RemoveLastCharsString;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment

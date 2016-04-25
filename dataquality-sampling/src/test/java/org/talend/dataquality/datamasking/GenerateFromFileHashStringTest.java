@@ -20,7 +20,7 @@ import java.net.URISyntaxException;
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.GenerateFromFileHashString;
+import org.talend.dataquality.datamasking.functions.GenerateFromFileHashString;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

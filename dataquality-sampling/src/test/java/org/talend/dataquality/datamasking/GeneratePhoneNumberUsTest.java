@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.GeneratePhoneNumberUS;
+import org.talend.dataquality.datamasking.functions.GeneratePhoneNumberUS;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

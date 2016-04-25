@@ -14,7 +14,7 @@ package org.talend.dataquality.datamasking;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.MaskTopEmailDomainByX;
+import org.talend.dataquality.datamasking.functions.MaskTopEmailDomainByX;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

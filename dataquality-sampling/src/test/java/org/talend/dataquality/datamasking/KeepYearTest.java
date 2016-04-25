@@ -19,7 +19,7 @@ import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.KeepYear;
+import org.talend.dataquality.datamasking.functions.KeepYear;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment

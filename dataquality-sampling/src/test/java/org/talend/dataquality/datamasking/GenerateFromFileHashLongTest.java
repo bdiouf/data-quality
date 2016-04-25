@@ -18,7 +18,7 @@ import java.net.URISyntaxException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.GenerateFromFileHashLong;
+import org.talend.dataquality.datamasking.functions.GenerateFromFileHashLong;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

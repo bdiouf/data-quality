@@ -8,7 +8,7 @@ Require-Bundle: org.apache.log4j,
  org.apache.commons.lang,
  org.junit
 Export-Package: org.talend.dataquality.datamasking,
- org.talend.dataquality.datamasking.Functions,
+ org.talend.dataquality.datamasking.functions,
  org.talend.dataquality.duplicating,
  org.talend.dataquality.sampling,
  org.talend.dataquality.sampling.parallel

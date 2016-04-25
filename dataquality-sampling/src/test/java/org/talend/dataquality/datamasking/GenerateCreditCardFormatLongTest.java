@@ -16,8 +16,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.GenerateCreditCard;
-import org.talend.dataquality.datamasking.Functions.GenerateCreditCardFormatLong;
+import org.talend.dataquality.datamasking.functions.GenerateCreditCard;
+import org.talend.dataquality.datamasking.functions.GenerateCreditCardFormatLong;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

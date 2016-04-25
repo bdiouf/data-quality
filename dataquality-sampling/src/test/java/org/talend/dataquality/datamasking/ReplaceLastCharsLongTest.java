@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.ReplaceLastCharsLong;
+import org.talend.dataquality.datamasking.functions.ReplaceLastCharsLong;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.GenerateBetweenString;
+import org.talend.dataquality.datamasking.functions.GenerateBetweenString;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

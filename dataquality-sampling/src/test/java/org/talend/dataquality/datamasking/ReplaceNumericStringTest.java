@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.ReplaceNumericString;
+import org.talend.dataquality.datamasking.functions.ReplaceNumericString;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

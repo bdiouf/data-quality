@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.GenerateBetweenDate;
+import org.talend.dataquality.datamasking.functions.GenerateBetweenDate;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

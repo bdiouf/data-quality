@@ -15,7 +15,7 @@ package org.talend.dataquality.datamasking;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.MaskEmail;
+import org.talend.dataquality.datamasking.functions.MaskEmail;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

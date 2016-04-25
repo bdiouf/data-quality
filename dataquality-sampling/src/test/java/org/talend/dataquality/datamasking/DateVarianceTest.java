@@ -19,7 +19,7 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.DateVariance;
+import org.talend.dataquality.datamasking.functions.DateVariance;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 import java.net.URISyntaxException;
 
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.GenerateFromFileLong;
+import org.talend.dataquality.datamasking.functions.GenerateFromFileLong;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

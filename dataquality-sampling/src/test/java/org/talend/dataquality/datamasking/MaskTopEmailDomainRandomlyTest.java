@@ -20,7 +20,7 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.talend.dataquality.datamasking.Functions.MaskTopEmailDomainRandomly;
+import org.talend.dataquality.datamasking.functions.MaskTopEmailDomainRandomly;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**

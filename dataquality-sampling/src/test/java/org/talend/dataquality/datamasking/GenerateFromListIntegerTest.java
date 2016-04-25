@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.Functions.GenerateFromListInteger;
+import org.talend.dataquality.datamasking.functions.GenerateFromListInteger;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
