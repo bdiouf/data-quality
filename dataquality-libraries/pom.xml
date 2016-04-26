@@ -16,7 +16,7 @@
 	<properties>
 		<org.talend.utils.version>6.2.0-SNAPSHOT</org.talend.utils.version>
 
-		<org.talend.daikon.version>0.5.0</org.talend.daikon.version>
+		<org.talend.daikon.version>0.6.0</org.talend.daikon.version>
 
 		<dataquality.libraries.snapshot.version>1.4.4-SNAPSHOT</dataquality.libraries.snapshot.version>
 		<dataquality.libraries.released.version>1.4.3</dataquality.libraries.released.version>
