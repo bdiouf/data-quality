@@ -8,7 +8,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>dataquality-libraries</artifactId>
-	<version>1.4.4-SNAPSHOT</version>
+	<version>1.4.4</version>
 	<packaging>pom</packaging>
 	<name>dataquality-libraries</name>
 	<description>Parent pom aggregating other library projects, devops tools</description>
@@ -19,16 +19,16 @@
 		<org.talend.daikon.version>0.6.0</org.talend.daikon.version>
 
 		<dataquality.libraries.snapshot.version>1.4.4-SNAPSHOT</dataquality.libraries.snapshot.version>
-		<dataquality.libraries.released.version>1.4.3</dataquality.libraries.released.version>
+		<dataquality.libraries.released.version>1.4.4</dataquality.libraries.released.version>
 
 		<dataquality.record.linkage.snapshot.version>3.1.1-SNAPSHOT</dataquality.record.linkage.snapshot.version>
 		<dataquality.record.linkage.released.version>3.1.0</dataquality.record.linkage.released.version>
 
 		<dataquality.sampling.snapshot.version>2.2.0-SNAPSHOT</dataquality.sampling.snapshot.version>
-		<dataquality.sampling.released.version>2.1.5</dataquality.sampling.released.version>
+		<dataquality.sampling.released.version>2.2.0</dataquality.sampling.released.version>
 
 		<dataquality.standardization.snapshot.version>3.1.0-SNAPSHOT</dataquality.standardization.snapshot.version>
-		<dataquality.standardization.released.version>3.0.2</dataquality.standardization.released.version>
+		<dataquality.standardization.released.version>3.1.0</dataquality.standardization.released.version>
 
 		<dataquality.wordnet.snapshot.version>1.0.3-SNAPSHOT</dataquality.wordnet.snapshot.version>
 		<dataquality.wordnet.released.version>1.0.2</dataquality.wordnet.released.version>
