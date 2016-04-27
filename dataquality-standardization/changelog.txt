@@ -1,5 +1,10 @@
-3.1.0 qiongli 2016-4-11 
-    -TDQ-11440 Add google phone number API.Create an API to validate, format, enrich phone information
+3.1.0 # 2016-4-11 (with DQ lib release 1.4.4)
+	- TDQ-11701 Lucene Index issues 
+				* use searcher manager to handle concurrent index access
+				* release file handles correctly
+				* Removes non-needed dependency on sampling in semantic module.
+				* Reuses previously extracted files when found iso. traversing source JAR again and again.
+    - TDQ-11440 Add google phone number API.Create an API to validate, format, enrich phone information
 
 3.0.2 2015-12-30
     - move to data-quality repository, change parent pom

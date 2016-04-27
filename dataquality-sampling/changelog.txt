@@ -1,4 +1,4 @@
-V2.2.0 (in development)
+V2.2.0 2016-04-27
 	- TDQ-11438 implement fast reservoir sampling
     - TDQ-11491 API for Reservoir Sampling component on Spark
 	- TDQ-10917 TDQ-11108 TDQ-11448 fix junits

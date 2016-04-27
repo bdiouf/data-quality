@@ -1,4 +1,4 @@
-V1.4.4 (in development)
+V1.4.4 2016-04-27
 	- TDQ-11763 support numbers with non-breaking spaces
 	- TDQ-11833 support more date patterns
 
