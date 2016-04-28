@@ -1,7 +1,7 @@
 V3.1.1 (in development)
     - TDQ-11666 Integrate the t-swoosh algorithm in the tMatchgroup components (step 3),extract a sub class for : AnalysisSwooshMatchRecordGrouping, to used by the component
     - TDQ-11536 move TalendURLClassLoader class from record-linkage library to dataquality.common
-
+    - TDQ-11779 fixed t-swoosh algorithm in the tMatchgroup components with mutipass mode can not get correctly group quality value
 V3.1.0 2016-02-16
     - TDQ-11599 add catch NumberFormatException, return 0 when catch exception.
     - TDQ-11627 change the field in AbstractRecordGrouping.java:RecordMatcherType matchAlgo, from private to protected
