@@ -7,7 +7,7 @@
         <version>1.5.0-SNAPSHOT</version>
         <relativePath>../dataquality-libraries</relativePath>
     </parent>
-    <artifactId>dataquality-record-inkage</artifactId>
+    <artifactId>dataquality-record-linkage</artifactId>
     <version>${dataquality.record.linkage.snapshot.version}</version>
     <packaging>bundle</packaging>
     <name>dataquality-record-linkage</name>

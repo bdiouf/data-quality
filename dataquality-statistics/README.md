@@ -52,7 +52,7 @@ More information can be found [here](https://github.com/Talend/data-quality/blob
 Where can I get the latest release?
 -----------------------------------
 You can download latest stable binaries from our [Release Repository](http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceRelease/org/talend/dataquality/org.talend.dataquality.statistics).
-or snapshot binaries from our [Snapshot Repository](http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceSnapshot/org/talend/dataquality/org.talend.dataquality.statistics).
+or snapshot binaries from our [Snapshot Repository](http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceSnapshot/org/talend/dataquality/statistics).
 
 Alternatively you can add the following repository into your pom.xml file:
 ```xml
@@ -69,7 +69,7 @@ And include the following dependency:
 <dependency>
   <groupId>org.talend.dataquality</groupId>
   <artifactId>org.talend.dataquality.statistics</artifactId>
-  <version>1.4.3</version>
+  <version>1.4.4</version>
 </dependency>
 ```
 
