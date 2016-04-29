@@ -29,13 +29,12 @@ public interface IAttributeMatcher {
     }
 
     /**
-     * Method "getMatchingWeight".
+     * Note: this is not a mathematical probability (the sum won't yield 1)
      * 
      * @param str1 a first string (must not be null)
      * @param str2 a second string (must not be null)
-     * @return the probability that the two strings match (should return a value between 0 and 1.
+     * @return the probability that the two strings match (should return a value between 0 and 1).
      */
-    // Note: this is not a mathematical probability (the sum won't yield 1)
     double getMatchingWeight(String str1, String str2);
 
     /**
@@ -81,11 +80,15 @@ public interface IAttributeMatcher {
     void setAttributeName(String name);
 
     /**
+     * the value will come from the studio UI. no need to set this value.
+     * 
      * @return The minimum score to consider a match between 2 string values.
      */
     float getThreshold();
 
     /**
+     * the value will come from the studio UI. no need to set this value.
+     * 
      * @return The weight of the attribute matcher (high value means the attribute matcher matches will have more
      * importance in the final score of a 2-record match).
      */

@@ -587,14 +587,16 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
             } else {
                 // Use the default class loader to load the class.
                 attributeMatcher[indx] = AttributeMatcherFactory.createMatcher(attrMatcherType, algorithmName[indx][1]);
-                if (isSwoosh) {
-                    attributeMatcher[indx] = MFBAttributeMatcher.wrap(attributeMatcher[indx], arrAttrWeights[indx],
-                            attrThresholds[indx], SubString.NO_SUBSTRING);
-                }
             }
+            // TDQ-11949 msjian : for the match rule which use the custom type algorithm, we will use the threshold
+            // and weight from UI to match rule too
+            if (isSwoosh) {
+                attributeMatcher[indx] = MFBAttributeMatcher.wrap(attributeMatcher[indx], arrAttrWeights[indx],
+                        attrThresholds[indx], SubString.NO_SUBSTRING);
+            }
+            // TDQ-11949~
             attributeMatcher[indx].setNullOption(arrMatchHandleNull[indx]);
             attributeMatcher[indx].setAttributeName(attributeNames[indx]);
-
         }
 
         IRecordMatcher recordMatcher = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher);
