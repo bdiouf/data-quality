@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.semantic;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -75,6 +75,18 @@ public class ValueDataMaskerTest {
             put(new String[] { "17612 38293 28232", MaskableCategoryEnum.FR_SSN.name(), "String" }, ".*");
             put(new String[] { "634217823", MaskableCategoryEnum.UK_SSN.name(), "String" }, ".*");
 
+            // Company
+            put(new String[] { "Talend", MaskableCategoryEnum.COMPANY.name(), "String" }, ".*");
+            // First Name
+            put(new String[] { "John", MaskableCategoryEnum.FIRST_NAME.name(), "String" }, ".*");
+            // Last Name
+            put(new String[] { "Dupont", MaskableCategoryEnum.LAST_NAME.name(), "String" }, ".*");
+            // FR Commune
+            put(new String[] { "Amancey", MaskableCategoryEnum.FR_COMMUNE.name(), "String" }, ".*");
+            // Job Title
+            put(new String[] { "developer", MaskableCategoryEnum.JOB_TITLE.name(), "String" }, ".*");
+            // Organization
+            put(new String[] { "Kiva", MaskableCategoryEnum.ORGANIZATION.name(), "String" }, ".*");
         }
     };
 
