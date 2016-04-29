@@ -31,12 +31,18 @@ public class KeepLastAndGenerateString extends KeepLastAndGenerate<String> {
             if (integerParam < s.length()) {
                 StringBuilder end = new StringBuilder(EMPTY_STRING);
                 for (int i = s.length() - 1; i >= s.length() - integerParam; --i) {
+                    if (i < 0) {
+                        break;
+                    }
                     end.append(s.charAt(i));
                     if (!Character.isDigit(s.charAt(i))) {
                         integerParam++;
                     }
                 }
                 for (int i = 0; i < s.length() - integerParam; ++i) {
+                    if (i < 0) {
+                        break;
+                    }
                     if (Character.isDigit(s.charAt(i))) {
                         sb.append(rnd.nextInt(9));
                     } else {
