@@ -1,5 +1,6 @@
 V2.3.0 (in development)
 	- API of data masking actions
+	- TDQ-11339 fix a "String index out of range: -1" exception for datamasking
 
 V2.2.0 2016-04-27
 	- TDQ-11438 implement fast reservoir sampling
