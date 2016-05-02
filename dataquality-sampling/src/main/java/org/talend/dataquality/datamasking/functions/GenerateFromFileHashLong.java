@@ -27,10 +27,10 @@ public class GenerateFromFileHashLong extends GenerateFromFileHash<Long> {
 
     @Override
     protected Long doGenerateMaskedField(Long l) {
-        for (int j = 0; j < StringTokens.size(); ++j) {
+        for (int j = 0; j < substituteList.size(); ++j) {
             long tmp = 0L;
             try {
-                tmp = Long.parseLong(StringTokens.get(j));
+                tmp = Long.parseLong(substituteList.get(j));
             } catch (NumberFormatException e) {
                 // Do Nothing
             }

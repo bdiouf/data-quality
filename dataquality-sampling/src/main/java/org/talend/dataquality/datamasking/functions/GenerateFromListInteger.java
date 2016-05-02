@@ -14,8 +14,7 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.talend.dataquality.duplicating.RandomWrapper;
+import java.util.Random;
 
 /**
  * created by jgonzalez on 24 juin 2015. See GenerateFromList.
@@ -28,17 +27,17 @@ public class GenerateFromListInteger extends GenerateFromList<Integer> {
     private List<Integer> IntegerTokens = new ArrayList<>();
 
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
         super.init();
     }
 
     @Override
     protected Integer doGenerateMaskedField(Integer i) {
-        for (int j = 0; j < StringTokens.size(); ++j) {
+        for (int j = 0; j < substituteList.size(); ++j) {
             int tmp = 0;
             try {
-                tmp = Integer.parseInt(StringTokens.get(j));
+                tmp = Integer.parseInt(substituteList.get(j));
             } catch (NumberFormatException e) {
                 // Do Nothing
             }

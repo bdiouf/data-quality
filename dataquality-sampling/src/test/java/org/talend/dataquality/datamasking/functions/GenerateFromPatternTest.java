@@ -51,7 +51,7 @@ public class GenerateFromPatternTest {
     public void testBad() {
         gfp.parameters = Function.EMPTY_STRING.split(","); //$NON-NLS-1$
         output = gfp.generateMaskedRow(null);
-        assertEquals(output, gfp.EMPTY_STRING);
+        assertEquals(output, Function.EMPTY_STRING);
     }
 
     @Test

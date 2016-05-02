@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
-
 /**
  * created by jgonzalez on 18 juin 2015. This function will return a double between the two given as parameters.
  *
@@ -21,12 +19,6 @@ import org.talend.dataquality.duplicating.RandomWrapper;
 public class GenerateBetweenDouble extends GenerateBetween<Double> {
 
     private static final long serialVersionUID = -6284416523120069721L;
-
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.setBounds();
-    }
 
     @Override
     protected Double doGenerateMaskedField(Double d) {

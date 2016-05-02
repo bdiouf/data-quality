@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import java.util.Random;
+
 /**
  * created by jgonzalez on 8 sept. 2015 Detailled comment
  *
@@ -21,6 +23,12 @@ public abstract class GenerateSequence<T2> extends Function<T2> {
     private static final long serialVersionUID = 3643893998777572476L;
 
     protected int seq = 0;
+
+    @Override
+    public final void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        setSeq(extraParameter);
+    }
 
     public int setSeq(String s) {
         int i = 0;

@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
+import java.util.Random;
 
 /**
  * DOC qzhao class global comment. Detailled comment<br>
@@ -27,7 +27,7 @@ public class MaskFullEmailDomainByX extends MaskEmailDomain {
     private static final long serialVersionUID = 3570889674995454850L;
 
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
     }
 

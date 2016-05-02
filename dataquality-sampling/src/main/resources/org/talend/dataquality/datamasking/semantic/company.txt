@@ -1,0 +1,100 @@
+Apple
+Google
+Samsung
+Amazon.com
+Microsoft
+General Electric
+Facebook
+IBM
+Intel
+Oracle
+Huawei
+Alibaba
+Baidu
+Accenture
+Hitachi
+Uber
+Panasonic
+QQ
+Dell
+Paypal
+Ericsson
+JD.com
+SAP
+TCS
+Sony
+eBay
+HP
+Philips
+Playstation
+Hewlett Packard Enterprise
+LG
+Canon
+Xbox
+Toshiba
+Booking
+WeChat
+NETFLIX
+Mitsubishi Electric
+Cognizant
+Xiaomi
+Yahoo!
+Adobe
+Youtube
+EMC
+Infosys
+Taiwan Semiconductor
+salesforce
+Linkedin
+Expedia
+Lenovo
+priceline
+Twitter
+Western Digital
+Qualcomm
+Xerox
+Fujitsu
+Activision Blizzard
+Fujifilm
+NetEase
+Thermo Fisher Scientific
+Emerson Electric
+Electronic Arts
+Seagate Technology
+Hikvision
+Schneider Electric
+Cap Gemini
+HCL
+Nokia
+ZTE
+Haier
+Fiserv Inc
+Gree Electric Appliances
+Cerner Corp
+Nintendo
+Wipro
+Whirlpool
+Ricoh
+Micron Technology
+Murata Manufacturing
+Texas Instruments
+TCL
+VMWARE
+Atos
+Kyocera
+Hynix Semiconductor
+Rexel
+TE Connectivity
+Sharp
+Pegatron
+Nec
+Jabil
+Rakuten
+Quanta Computer
+FIS
+Technologies
+Black & Decker
+Hon Hai Precision Industry
+360
+Harman
+Arcelik

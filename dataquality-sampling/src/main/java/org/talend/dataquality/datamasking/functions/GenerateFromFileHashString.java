@@ -22,11 +22,11 @@ public class GenerateFromFileHashString extends GenerateFromFileHash<String> {
 
     @Override
     protected String doGenerateMaskedField(String str) {
-        if (StringTokens.size() > 0) {
+        if (substituteList.size() > 0) {
             if (str == null || EMPTY_STRING.equals(str)) {
-                return StringTokens.get(rnd.nextInt(StringTokens.size()));
+                return substituteList.get(rnd.nextInt(substituteList.size()));
             } else {
-                return StringTokens.get(Math.abs(str.hashCode()) % StringTokens.size());
+                return substituteList.get(Math.abs(str.hashCode()) % substituteList.size());
             }
         } else {
             return EMPTY_STRING;

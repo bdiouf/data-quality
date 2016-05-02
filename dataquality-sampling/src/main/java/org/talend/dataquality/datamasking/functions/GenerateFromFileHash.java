@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
-
 /**
  * created by jgonzalez on 24 juin 2015. This function works like GenerateFromFile, the only difference is that it will
  * use the hashCode() function provided by Java to choose an element from the list. When having the hashCode, we apply a
@@ -24,9 +22,4 @@ public abstract class GenerateFromFileHash<T2> extends GenerateFromFile<T2> {
 
     private static final long serialVersionUID = -4616169672287269594L;
 
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.init();
-    }
 }

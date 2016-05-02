@@ -14,8 +14,7 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.talend.dataquality.duplicating.RandomWrapper;
+import java.util.Random;
 
 /**
  * created by jgonzalez on 24 juin 2015. See GenerateFromListHash.
@@ -28,7 +27,7 @@ public class GenerateFromListHashInteger extends GenerateFromListHash<Integer> {
     private List<Integer> IntegerTokens = new ArrayList<>();
 
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
         super.init();
     }

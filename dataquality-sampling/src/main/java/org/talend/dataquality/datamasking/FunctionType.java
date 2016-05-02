@@ -109,6 +109,7 @@ import org.talend.dataquality.datamasking.functions.ReplaceNumericInteger;
 import org.talend.dataquality.datamasking.functions.ReplaceNumericLong;
 import org.talend.dataquality.datamasking.functions.ReplaceNumericString;
 import org.talend.dataquality.datamasking.functions.SetToNull;
+import org.talend.dataquality.datamasking.semantic.GenerateFromFileStringProvided;
 
 /**
  * created by jgonzalez on 18 juin 2015. This enum stores all the functions that can be used in the component.
@@ -139,6 +140,7 @@ public enum FunctionType {
     GENERATE_FROM_FILE_INT(GenerateFromFileInteger.class),
     GENERATE_FROM_FILE_LONG(GenerateFromFileLong.class),
     GENERATE_FROM_FILE_STRING(GenerateFromFileString.class),
+    GENERATE_FROM_FILE_STRING_PROVIDED(GenerateFromFileStringProvided.class),
     GENERATE_FROM_FILE_HASH(GenerateFromFileHash.class),
     GENERATE_FROM_FILE_HASH_INT(GenerateFromFileHashInteger.class),
     GENERATE_FROM_FILE_HASH_LONG(GenerateFromFileHashLong.class),

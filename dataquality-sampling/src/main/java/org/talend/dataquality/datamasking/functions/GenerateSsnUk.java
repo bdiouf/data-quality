@@ -13,8 +13,7 @@
 package org.talend.dataquality.datamasking.functions;
 
 import java.util.HashSet;
-
-import org.talend.dataquality.duplicating.RandomWrapper;
+import java.util.Random;
 
 /**
  * created by jgonzalez on 21 juil. 2015 Detailled comment
@@ -31,7 +30,7 @@ public class GenerateSsnUk extends Function<String> {
     private static HashSet<String> forbid = new HashSet<>();
 
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
         forbid.add("BG"); //$NON-NLS-1$
         forbid.add("GB"); //$NON-NLS-1$

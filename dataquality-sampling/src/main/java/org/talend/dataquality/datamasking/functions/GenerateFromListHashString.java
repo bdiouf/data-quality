@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
+import java.util.Random;
 
 /**
  * created by jgonzalez on 24 juin 2015. See GenerateFromListHash.
@@ -23,7 +23,7 @@ public class GenerateFromListHashString extends GenerateFromListHash<String> {
     private static final long serialVersionUID = -6003768593059919308L;
 
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
         super.init();
     }

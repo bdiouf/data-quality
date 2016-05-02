@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import java.util.Random;
+
 /**
  * created by jgonzalez on 19 juin 2015. This class is called when the required function is GenerateBetween. It will
  * parse and set the parameters.
@@ -39,6 +41,12 @@ public abstract class GenerateBetween<T2> extends Function<T2> {
             min = max;
             max = tmp;
         }
+    }
+
+    @Override
+    public final void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        setBounds();
     }
 
     @Override

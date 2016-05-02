@@ -13,6 +13,7 @@
 package org.talend.dataquality.datamasking.functions;
 
 import java.io.Serializable;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.talend.dataquality.duplicating.RandomWrapper;
@@ -32,7 +33,7 @@ public abstract class Function<T> implements Serializable {
 
     protected static final String LOWER = "abcdefghijklmnopqrstuvwxyz"; //$NON-NLS-1$
 
-    protected RandomWrapper rnd;
+    protected Random rnd;
 
     protected Integer integerParam = 0;
 
@@ -54,7 +55,7 @@ public abstract class Function<T> implements Serializable {
      * 
      * @param rand The RandomWrapper.
      */
-    public void setRandomWrapper(RandomWrapper rand) {
+    public void setRandomWrapper(Random rand) {
         if (rand == null) {
             rnd = new RandomWrapper();
         } else {
@@ -79,7 +80,7 @@ public abstract class Function<T> implements Serializable {
      * @param keepNullValues The parameter used for setKeepNull.
      * @param rand The parameter used for setRandomMWrapper.
      */
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         if (extraParameter != null) {
             try {
                 parameters = extraParameter.split(","); //$NON-NLS-1$

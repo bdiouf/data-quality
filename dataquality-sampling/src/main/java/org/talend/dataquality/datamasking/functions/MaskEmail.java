@@ -15,8 +15,7 @@ package org.talend.dataquality.datamasking.functions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.talend.dataquality.duplicating.RandomWrapper;
+import java.util.Random;
 
 /**
  * created by jgonzalez on 19 juin 2015. This function will look for a ’@’ and replace all characters before by ’X’ and
@@ -42,7 +41,7 @@ public class MaskEmail extends GenerateFromFile<String> {
     }
 
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
         addKeys(parameters);
     }

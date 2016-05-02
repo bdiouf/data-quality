@@ -30,20 +30,20 @@ public abstract class GenerateFromList<T2> extends Function<T2> {
 
     private static final long serialVersionUID = 8936060786451303843L;
 
-    protected List<String> StringTokens = new ArrayList<>();
+    protected List<String> substituteList = new ArrayList<>();
 
     private File dataFile = null;
 
     private final static Logger log = Logger.getLogger(GenerateFromList.class);
 
     protected void init() {
-        StringTokens.clear();
+        substituteList.clear();
         // input file is exist
         if (parameters.length == 1 && integerParam == 0 && fileExist()) {
-            StringTokens = loadDefaultFile();
+            substituteList = loadDefaultFile();
         } else {
             for (String tmp : parameters) {
-                StringTokens.add(tmp.trim());
+                substituteList.add(tmp.trim());
             }
         }
     }
@@ -76,14 +76,14 @@ public abstract class GenerateFromList<T2> extends Function<T2> {
                 BufferedReader bufferedReader = new BufferedReader(read);
                 String lineTxt = null;
                 while ((lineTxt = bufferedReader.readLine()) != null) {
-                    StringTokens.add(lineTxt.trim());
+                    substituteList.add(lineTxt.trim());
                 }
                 read.close();
             }
         } catch (Exception e) {
             log.error(e, e);
         }
-        return StringTokens;
+        return substituteList;
     }
 
     /**

@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
-
 /**
  * created by jgonzalez on 24 juin 2015. This function will return the super.seq value and increment it.
  *
@@ -21,12 +19,6 @@ import org.talend.dataquality.duplicating.RandomWrapper;
 public class GenerateSequenceLong extends GenerateSequence<Long> {
 
     private static final long serialVersionUID = -2597629516990345832L;
-
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.seq = super.setSeq(extraParameter);
-    }
 
     @Override
     protected Long doGenerateMaskedField(Long l) {

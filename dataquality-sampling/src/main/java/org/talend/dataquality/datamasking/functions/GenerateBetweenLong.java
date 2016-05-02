@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
-
 /**
  * created by jgonzalez on 18 juin 2015. This function will return a long between the two given as parameters.
  *
@@ -21,12 +19,6 @@ import org.talend.dataquality.duplicating.RandomWrapper;
 public class GenerateBetweenLong extends GenerateBetween<Long> {
 
     private static final long serialVersionUID = -2361958167462225641L;
-
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.setBounds();
-    }
 
     @Override
     protected Long doGenerateMaskedField(Long l) {

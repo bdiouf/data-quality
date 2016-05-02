@@ -10,6 +10,7 @@ public class SemanticMaskerFunctionFactory {
 
     private static final Logger LOGGER = Logger.getLogger(SemanticMaskerFunctionFactory.class);
 
+    @SuppressWarnings("unchecked")
     public static Function<String> createMaskerFunctionForSemanticCategory(String semanticCategory, String dataType) {
         Function<String> function = null;
         final MaskableCategoryEnum cat = MaskableCategoryEnum.getCategoryById(semanticCategory);

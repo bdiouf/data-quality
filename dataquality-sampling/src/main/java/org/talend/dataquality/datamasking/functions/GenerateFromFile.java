@@ -15,6 +15,7 @@ package org.talend.dataquality.datamasking.functions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * created by jgonzalez on 19 juin 2015. This function works like GenerateFromList, the difference is that the parameter
@@ -25,11 +26,17 @@ public abstract class GenerateFromFile<T2> extends Function<T2> {
 
     private static final long serialVersionUID = 1556057898878709265L;
 
-    protected List<String> StringTokens = new ArrayList<>();
+    protected List<String> substituteList = new ArrayList<>();
+
+    @Override
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        init();
+    }
 
     protected void init() {
         try {
-            StringTokens = KeysLoader.loadKeys(parameters[0]);
+            substituteList = KeysLoader.loadKeys(parameters[0]);
         } catch (IOException | NullPointerException e) {
             // We do nothing here because in is already set.
         }

@@ -15,9 +15,8 @@ package org.talend.dataquality.datamasking.functions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Pattern;
-
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * DOC qzhao class global comment. Detailled comment<br>
@@ -65,7 +64,7 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
     }
 
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, RandomWrapper rand) {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
         addReplacement(parameters);
     }
