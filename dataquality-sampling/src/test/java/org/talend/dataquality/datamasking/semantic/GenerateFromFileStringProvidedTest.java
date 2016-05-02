@@ -30,26 +30,35 @@ public class GenerateFromFileStringProvidedTest {
     public void testInit() {
         GenerateFromFileStringProvided gfls = new GenerateFromFileStringProvided();
 
-        gfls.parse(MaskableCategoryEnum.FR_COMMUNE.getParameter(), true, new Random(AllDataqualitySamplingTests.RANDOM_SEED)); // $NON-NLS-1$
-        gfls.init();
-        Assert.assertEquals("Rognon", gfls.generateMaskedRow("A")); //$NON-NLS-1$
-        Assert.assertEquals("Colombier-Fontaine", gfls.generateMaskedRow("A")); //$NON-NLS-1$
-        Assert.assertEquals("Chatillon-le-Duc", gfls.generateMaskedRow("A")); //$NON-NLS-1$
+        gfls.parse(MaskableCategoryEnum.FR_COMMUNE.getParameter(), true, new Random(AllDataqualitySamplingTests.RANDOM_SEED));
+        Assert.assertEquals("Dieppe", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("Savigny-sur-Orge", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("Roanne", gfls.generateMaskedRow("A"));
 
-        gfls.parse(MaskableCategoryEnum.COMPANY.getParameter(), true, null); // $NON-NLS-1$
-        gfls.init();
+        gfls.parse(MaskableCategoryEnum.COMPANY.getParameter(), true, new Random(AllDataqualitySamplingTests.RANDOM_SEED));
+        Assert.assertEquals("Gilead Sciences", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("Fresenius", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("McDonald's", gfls.generateMaskedRow("A"));
 
-        gfls.parse(MaskableCategoryEnum.FIRST_NAME.getParameter(), true, null); // $NON-NLS-1$
-        gfls.init();
+        gfls.parse(MaskableCategoryEnum.FIRST_NAME.getParameter(), true, new Random(AllDataqualitySamplingTests.RANDOM_SEED));
+        Assert.assertEquals("Josiah", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("Mason", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("Cooper", gfls.generateMaskedRow("A"));
 
-        gfls.parse(MaskableCategoryEnum.LAST_NAME.getParameter(), true, null); // $NON-NLS-1$
-        gfls.init();
+        gfls.parse(MaskableCategoryEnum.LAST_NAME.getParameter(), true, new Random(AllDataqualitySamplingTests.RANDOM_SEED));
+        Assert.assertEquals("Robbins", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("Lambert", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("Pierce", gfls.generateMaskedRow("A"));
 
-        gfls.parse(MaskableCategoryEnum.JOB_TITLE.getParameter(), true, null); // $NON-NLS-1$
-        gfls.init();
+        gfls.parse(MaskableCategoryEnum.JOB_TITLE.getParameter(), true, new Random(AllDataqualitySamplingTests.RANDOM_SEED));
+        Assert.assertEquals("Sales Person", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("Grips", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("Environmental Scientist", gfls.generateMaskedRow("A"));
 
-        gfls.parse(MaskableCategoryEnum.ORGANIZATION.getParameter(), true, null); // $NON-NLS-1$
-        gfls.init();
+        gfls.parse(MaskableCategoryEnum.ORGANIZATION.getParameter(), true, new Random(AllDataqualitySamplingTests.RANDOM_SEED));
+        Assert.assertEquals("Environmental Defense", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("United Nations Children's Fund (UNICEF)", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("JFK Center for Performing Arts", gfls.generateMaskedRow("A"));
     }
 
 }

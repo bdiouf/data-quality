@@ -1,97 +1,80 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.talend.dataquality</groupId>
-        <artifactId>dataquality-libraries</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
-        <relativePath>../dataquality-libraries</relativePath>
-    </parent>
-    <artifactId>dataquality-sampling</artifactId>
-    <version>${dataquality.sampling.snapshot.version}</version>
-    <packaging>bundle</packaging>
-    <name>dataquality-sampling</name>
-    <description>Reservoir sampling, data masking, data duplication</description>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.talend.dataquality</groupId>
+		<artifactId>dataquality-libraries</artifactId>
+		<version>1.5.0-SNAPSHOT</version>
+		<relativePath>../dataquality-libraries</relativePath>
+	</parent>
+	<artifactId>dataquality-sampling</artifactId>
+	<version>${dataquality.sampling.snapshot.version}</version>
+	<packaging>bundle</packaging>
+	<name>dataquality-sampling</name>
+	<description>Reservoir sampling, data masking, data duplication</description>
 
-    <properties>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+	<properties>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
 
-        <scala.version>2.10.5</scala.version>
-        <scala.binary.version>2.10</scala.binary.version>
-        <spark.version>1.6.0</spark.version>
+		<scala.version>2.10.5</scala.version>
+		<scala.binary.version>2.10</scala.binary.version>
+		<spark.version>1.6.0</spark.version>
 
-        <!-- This is used to generate README.md file -->
-        <commons.componentid>org.talend.dataquality.sampling</commons.componentid>
-        <commons.release.version>${dataquality.sampling.released.version}</commons.release.version>
-    </properties>
+		<!-- This is used to generate README.md file -->
+		<commons.componentid>org.talend.dataquality.sampling</commons.componentid>
+		<commons.release.version>${dataquality.sampling.released.version}</commons.release.version>
+	</properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.3.2</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-            <version>3.3</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.3</version>
+		</dependency>
 
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
 
-        <!-- spark dependencies-->
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_${scala.binary.version}</artifactId>
-            <version>${spark.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql_${scala.binary.version}</artifactId>
-            <version>${spark.version}</version>
-        </dependency>
+		<!-- spark dependencies -->
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>${scala.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-core_${scala.binary.version}</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql_${scala.binary.version}</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- logging stuff -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-        </dependency>
-
-    </dependencies>
-      <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Include-Resource>{maven-resources},data=data</Include-Resource>
-                    </instructions>
-                </configuration>
-            </plugin>
-
-        </plugins>
-    </build>
-
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- logging stuff -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+	</dependencies>
 </project>
