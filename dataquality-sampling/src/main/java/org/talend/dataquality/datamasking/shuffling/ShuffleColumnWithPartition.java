@@ -28,12 +28,9 @@ public class ShuffleColumnWithPartition extends ShuffleColumn {
 
         List<List<Row>> subRows = seperateRowsByGroup(rowList);
 
-        // for (List<Row> subRow : subRows) {
-
-        for (int k = 356; k < subRows.size(); k++) {
-            List<Row> subRow = subRows.get(k);
+        for (List<Row> subRow : subRows) {
             int subRowSize = subRow.size();
-            if (!(subRowSize == 1)) {
+            if (subRowSize != 1) {
                 List<List<Integer>> allIndexes = new ArrayList<List<Integer>>();
                 initOriginalIndex(subRowSize, allIndexes);
 

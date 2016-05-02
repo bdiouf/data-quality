@@ -12,11 +12,12 @@ import java.util.List;
 
 public class GenerateData {
 
-    protected List<List<Object>> getTableValue() {
+    // "Shuffling_test_data.csv"
+    protected List<List<Object>> getTableValue(String file) {
 
         String pathString = "";
         try {
-            pathString = GenerateData.class.getResource("Shuffling_test_data.csv").toURI().getPath();
+            pathString = GenerateData.class.getResource(file).toURI().getPath();
         } catch (URISyntaxException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -25,6 +26,44 @@ public class GenerateData {
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
+
+        List<List<Object>> result = new ArrayList<List<Object>>();
+
+        try {
+            br = new BufferedReader(new FileReader(pathString));
+            line = br.readLine(); // read the column title
+            while ((line = br.readLine()) != null) {
+                List<Object> row = new ArrayList<Object>();
+                Object[] items = line.split(cvsSplitBy);
+                for (Object item : items) {
+                    row.add(item);
+                }
+                result.add(row);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
+
+    protected List<List<Object>> getTableValueBySimbol(String file) {
+
+        String pathString = "";
+        try {
+            pathString = GenerateData.class.getResource(file).toURI().getPath();
+        } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ";";
 
         List<List<Object>> result = new ArrayList<List<Object>>();
 
@@ -81,8 +120,8 @@ public class GenerateData {
         return position;
     }
 
-    protected List<String> getData(String column) throws URISyntaxException {
-        String pathString = GenerateData.class.getResource("Shuffling_test_data.csv").toURI().getPath();
+    protected List<String> getData(String file, String column) throws URISyntaxException {
+        String pathString = GenerateData.class.getResource(file).toURI().getPath();
 
         BufferedReader br = null;
         String line = "";
@@ -113,10 +152,10 @@ public class GenerateData {
         return null;
     }
 
-    protected List<List<String>> getMultipleData(String[] columns) throws URISyntaxException {
+    protected List<List<String>> getMultipleData(String file, String[] columns) throws URISyntaxException {
         List<List<String>> result = new ArrayList<List<String>>();
         for (String column : columns) {
-            result.add(getData(column));
+            result.add(getData(file, column));
         }
         return result;
     }

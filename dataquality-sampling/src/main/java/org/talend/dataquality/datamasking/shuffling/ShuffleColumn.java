@@ -166,13 +166,16 @@ public class ShuffleColumn {
                 changePosition(pointer, dPointer, output);
 
             } else if (dPointer == -1) {
-                dPointer = pointer - 1;
+                dPointer = pointer;
+                List<Integer> cmpIndexChanged = new ArrayList<Integer>();
                 do {
-                    dPointer = getNearestDifferentPositionUpward(dPointer, cmpIndex, output);
+                    dPointer = getNearestDifferentPositionUpward(--dPointer, cmpIndex, output);
                     if (dPointer == -1) {
                         break;
                     }
-                } while (!extractValuesFrom2DArraysByPosition(dPointer, allIndexes).contains(output.get(pointer)));
+
+                    cmpIndexChanged = extractValuesFrom2DArraysByPosition(dPointer, allIndexes);
+                } while (cmpIndexChanged.contains(output.get(pointer)));
                 changePosition(pointer, dPointer, output);
             }
             pointer++;

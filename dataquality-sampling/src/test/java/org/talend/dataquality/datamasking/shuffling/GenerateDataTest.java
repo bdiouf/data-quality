@@ -7,9 +7,11 @@ import org.junit.Test;
 
 public class GenerateDataTest {
 
+    String file = "Shuffling_test_data.csv";
+
     @Test
     public void testGetAllTable() {
-        List<List<Object>> table = new GenerateData().getTableValue();
+        List<List<Object>> table = new GenerateData().getTableValue(file);
         // System.out.println(new GenerateData().getData("email").size());
         Assert.assertEquals(1000, table.size());
     }
