@@ -71,7 +71,7 @@ public class MaskAddress extends GenerateFromFile<String> {
                 } else {
                     for (int i = 0; i < tmp.length(); ++i) {
                         if (Character.isDigit(tmp.charAt(i))) {
-                            sb.append(Character.forDigit(rnd.nextInt(9), 10));
+                            sb.append(rnd.nextInt(8) + 1);
                         } else {
                             sb.append("X"); //$NON-NLS-1$
                         }

@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.MaskAddress;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -38,7 +37,7 @@ public class MaskAddressTest {
     public void testGood() {
         String input = "5 rue de l'oise"; //$NON-NLS-1$
         output = ma.generateMaskedRow(input);
-        assertEquals(output, "8 rue XX XXXXXX"); //$NON-NLS-1$
+        assertEquals("6 rue XX XXXXXX", output); //$NON-NLS-1$
     }
 
     @Test
