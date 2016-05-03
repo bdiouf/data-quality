@@ -26,9 +26,9 @@ public class GenerateFromFileStringProvided extends GenerateFromFileString {
 
     protected void init() {
         try {
-            substituteList = KeysLoader.loadKeys(this.getClass().getResource(parameters[0]).getPath());
+            substituteList = KeysLoader.loadKeys(this.getClass().getResourceAsStream(parameters[0]));
         } catch (IOException | NullPointerException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
         }
     }
 

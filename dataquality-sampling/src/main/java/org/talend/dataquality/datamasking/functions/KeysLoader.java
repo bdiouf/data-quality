@@ -16,6 +16,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +49,24 @@ public class KeysLoader {
         } catch (NullPointerException | IOException e) {
             throw (e);
         }
+        return keys;
+    }
+
+    /**
+     * 
+     * @param ins The input stream
+     * @return keys array
+     * @throws FileNotFoundException
+     * @throws NullPointerException
+     */
+    public static List<String> loadKeys(InputStream ins) throws IOException {
+        List<String> keys = new ArrayList<>();
+        BufferedReader in;
+        in = new BufferedReader(new InputStreamReader(ins, Charset.forName("UTF-8")));
+        while (in.ready()) {
+            keys.add(in.readLine().trim());
+        }
+        in.close();
         return keys;
     }
 }
