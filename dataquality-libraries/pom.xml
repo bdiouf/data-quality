@@ -23,7 +23,7 @@
 		<junit.version>4.12</junit.version>
 
 		<org.talend.utils.version>6.2.0-SNAPSHOT</org.talend.utils.version>
-		<org.talend.daikon.version>0.6.0</org.talend.daikon.version>
+		<org.talend.daikon.version>0.8.0</org.talend.daikon.version>
 
 		<dataquality.libraries.snapshot.version>1.5.0-SNAPSHOT</dataquality.libraries.snapshot.version>
 		<dataquality.libraries.released.version>1.4.4</dataquality.libraries.released.version>
