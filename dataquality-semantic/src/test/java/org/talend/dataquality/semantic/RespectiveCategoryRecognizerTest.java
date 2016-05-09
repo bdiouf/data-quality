@@ -562,6 +562,18 @@ public class RespectiveCategoryRecognizerTest {
                                                        // codes)
                 }
             });
+
+            put(SemanticCategoryEnum.FR_PHONE.getId(), new ArrayList<Pair<String, Boolean>>() {
+
+                private static final long serialVersionUID = 7983289992158907116L;
+
+                {
+                    add(ImmutablePair.of("+33123456789", true));
+                    add(ImmutablePair.of("0033123456789", true));
+                    add(ImmutablePair.of("+33 1 23 45 67 89", true));
+                    add(ImmutablePair.of("01.23.45.67.89", true));
+                }
+            });
         }
     };
 
