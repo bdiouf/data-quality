@@ -34,6 +34,7 @@ public class GenerateFromFileStringProvidedTest {
         Assert.assertEquals("Dieppe", gfls.generateMaskedRow("A"));
         Assert.assertEquals("Savigny-sur-Orge", gfls.generateMaskedRow("A"));
         Assert.assertEquals("Roanne", gfls.generateMaskedRow("A"));
+        Assert.assertEquals("  \t", gfls.generateMaskedRow("  \t")); // SPACE_SPACE_TAB
 
         gfls.parse(MaskableCategoryEnum.COMPANY.getParameter(), true, new Random(AllDataqualitySamplingTests.RANDOM_SEED));
         Assert.assertEquals("Gilead Sciences", gfls.generateMaskedRow("A"));

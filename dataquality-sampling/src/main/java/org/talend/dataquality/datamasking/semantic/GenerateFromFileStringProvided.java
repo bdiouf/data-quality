@@ -34,8 +34,8 @@ public class GenerateFromFileStringProvided extends GenerateFromFileString {
 
     @Override
     public String generateMaskedRow(String t) {
-        if (t == null && keepNull) {
-            return null;
+        if (t == null || EMPTY_STRING.equals(t.trim())) {
+            return t;
         }
         return doGenerateMaskedField(t);
     }

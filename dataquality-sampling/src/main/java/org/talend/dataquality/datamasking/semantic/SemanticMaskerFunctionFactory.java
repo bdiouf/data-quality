@@ -5,7 +5,6 @@ import org.talend.dataquality.datamasking.functions.DateVariance;
 import org.talend.dataquality.datamasking.functions.Function;
 import org.talend.dataquality.datamasking.functions.NumericVarianceInteger;
 import org.talend.dataquality.datamasking.functions.NumericVarianceString;
-import org.talend.dataquality.datamasking.functions.ReplaceCharacters;
 
 public class SemanticMaskerFunctionFactory {
 
@@ -47,7 +46,7 @@ public class SemanticMaskerFunctionFactory {
                 function = new DateFunctionAdapter(df, "M/d/yyyy");
                 break;
             case "string":
-                function = new ReplaceCharacters();
+                function = new ReplaceCharactersWithGeneration();
                 function.parse("X", true, null);
                 break;
             default:

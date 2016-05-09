@@ -110,6 +110,7 @@ import org.talend.dataquality.datamasking.functions.ReplaceNumericLong;
 import org.talend.dataquality.datamasking.functions.ReplaceNumericString;
 import org.talend.dataquality.datamasking.functions.SetToNull;
 import org.talend.dataquality.datamasking.semantic.GenerateFromFileStringProvided;
+import org.talend.dataquality.datamasking.semantic.ReplaceCharactersWithGeneration;
 
 /**
  * created by jgonzalez on 18 juin 2015. This enum stores all the functions that can be used in the component.
@@ -201,6 +202,7 @@ public enum FunctionType {
     REMOVE_LAST_CHARS_STRING(RemoveLastCharsString.class),
     REPLACE_ALL(ReplaceAll.class),
     REPLACE_CHARACTERS(ReplaceCharacters.class),
+    REPLACE_CHARACTERS_WITH_GENERATION(ReplaceCharactersWithGeneration.class),
     REPLACE_FIRST_CHARS(ReplaceFirstChars.class),
     REPLACE_FIRST_CHARS_INT(ReplaceFirstCharsInteger.class),
     REPLACE_FIRST_CHARS_LONG(ReplaceFirstCharsLong.class),
