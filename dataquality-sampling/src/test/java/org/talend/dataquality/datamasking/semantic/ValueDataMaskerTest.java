@@ -29,7 +29,9 @@ public class ValueDataMaskerTest {
         {
 
             // 0. UNKNOWN
-            put(new String[] { "92000", "UNKNOWN", "numeric" }, ".*");
+            put(new String[] { "91000", "UNKNOWN", "integer" }, "\\d{5,6}");
+            put(new String[] { "92000", "UNKNOWN", "decimal" }, "\\d{5,6}.0");
+            put(new String[] { "93000", "UNKNOWN", "numeric" }, "\\d{5,6}");
             put(new String[] { "2023-06-07", "UNKNOWN", "date" }, ".*");
             put(new String[] { "sdkjs@talend.com", "UNKNOWN", "string" }, ".*");
 
@@ -59,7 +61,6 @@ public class ValueDataMaskerTest {
             put(new String[] { "92150", MaskableCategoryEnum.FR_POSTAL_CODE.name(), "String" }, ".*");
             put(new String[] { "63274", MaskableCategoryEnum.DE_POSTAL_CODE.name(), "String" }, ".*");
             put(new String[] { "AT1 3BW", MaskableCategoryEnum.UK_POSTAL_CODE.name(), "String" }, ".*");
-
 
             // 8 ORGANIZATION
 

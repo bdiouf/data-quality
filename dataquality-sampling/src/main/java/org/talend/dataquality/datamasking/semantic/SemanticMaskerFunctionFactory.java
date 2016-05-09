@@ -3,6 +3,7 @@ package org.talend.dataquality.datamasking.semantic;
 import org.apache.log4j.Logger;
 import org.talend.dataquality.datamasking.functions.DateVariance;
 import org.talend.dataquality.datamasking.functions.Function;
+import org.talend.dataquality.datamasking.functions.NumericVarianceInteger;
 import org.talend.dataquality.datamasking.functions.NumericVarianceString;
 import org.talend.dataquality.datamasking.functions.ReplaceCharacters;
 
@@ -29,19 +30,29 @@ public class SemanticMaskerFunctionFactory {
             }
         }
         if (function == null) {
-            if ("string".equals(dataType)) {
-                // string -> use ReplaceAll
-                function = new ReplaceCharacters();
-                function.parse("X", true, null);
-            } else if ("numeric".equals(dataType)) {
-                // numeric -> use NumericVariance
+            switch (dataType) {
+            case "numeric":
+            case "integer":
+                NumericVarianceInteger nvi = new NumericVarianceInteger();
+                nvi.parse("10", true, null);
+                function = new IntegerFunctionAdapter(nvi);
+                break;
+            case "decimal":
                 function = new NumericVarianceString();
                 function.parse("10", true, null);
-            } else if ("date".equals(dataType)) {
-                // date -> DateVariance with parameter 61 (meaning two months)
+                break;
+            case "date":
                 DateVariance df = new DateVariance();
                 df.parse("61", true, null);
-                function = new DateFunctionAdapter(df, "yyyy-MM-dd");
+                function = new DateFunctionAdapter(df, "M/d/yyyy");
+                break;
+            case "string":
+                function = new ReplaceCharacters();
+                function.parse("X", true, null);
+                break;
+            default:
+                break;
+
             }
         }
         if (function == null) {
