@@ -170,7 +170,7 @@
         "id" : "FR_PHONE",
         "mainCategory" : "Numeric",
         "name" : "FR Phone",
-        "validator" : { "patternString" : "^(0033 ?|\\+33 ?|0)[1-689]([-. ]?[0-9]{2}){4}$" }
+        "validator" : { "patternString" : "^(0033 ?|\\+33 ?|0)[1-9]([-. ]?[0-9]{2}){4}$" }
       },
       { "description" : "US State code",
         "id" : "US_STATE_CODE",

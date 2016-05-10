@@ -37,7 +37,7 @@ public class GeneratePhoneNumberFrenchTest {
     @Test
     public void testGood() {
         output = gpn.generateMaskedRow(null);
-        assertEquals(output, "+33 1308075272"); //$NON-NLS-1$
+        assertEquals(output, "+33 930807527"); //$NON-NLS-1$
     }
 
     @Test
@@ -46,8 +46,8 @@ public class GeneratePhoneNumberFrenchTest {
         gpn.setRandomWrapper(new RandomWrapper());
         for (int i = 0; i < 10; ++i) {
             String tmp = gpn.generateMaskedRow(null);
-            res = (tmp.charAt(4) == '1' || tmp.charAt(4) == '2' || tmp.charAt(4) == '3' || tmp.charAt(4) == '4'
-                    || tmp.charAt(4) == '5');
+            int digit = Integer.valueOf(tmp.charAt(4) + "");
+            res = (digit >= 1 && digit <= 9);
             assertEquals("invalid pĥone number " + tmp, res, true); //$NON-NLS-1$
         }
     }
