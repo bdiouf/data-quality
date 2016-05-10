@@ -3672,7 +3672,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.setIsGIDStringType("true".equals("true") ? true : false);
 
         // read the data from the file
-        InputStream in = this.getClass().getResourceAsStream("tdq11711.txt"); //$NON-NLS-1$
+        InputStream in = this.getClass().getResourceAsStream("tdq11599.txt"); //$NON-NLS-1$
         BufferedReader bfr = new BufferedReader(new InputStreamReader(in));
         List<String> listOfLines = IOUtils.readLines(bfr);
         inputList = new ArrayList<String[]>();
@@ -3875,7 +3875,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.setIsGIDStringType("true".equals("true") ? true : false);
 
         // read the data from the file
-        InputStream in = this.getClass().getResourceAsStream("tdq11711.txt"); //$NON-NLS-1$
+        InputStream in = this.getClass().getResourceAsStream("tdq11599.txt"); //$NON-NLS-1$
         BufferedReader bfr = new BufferedReader(new InputStreamReader(in));
         List<String> listOfLines = IOUtils.readLines(bfr);
         inputList = new ArrayList<String[]>();
