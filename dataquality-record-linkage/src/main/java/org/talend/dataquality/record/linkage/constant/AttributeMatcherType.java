@@ -34,6 +34,7 @@ public enum AttributeMatcherType {
     FINGERPRINTKEY("Fingerprintkey"), //$NON-NLS-1$
     JARO_WINKLER("Jaro-Winkler"), //$NON-NLS-1$
     Q_GRAMS("q-grams"), //$NON-NLS-1$
+    HAMMING("Hamming"), //$NON-NLS-1$
     // Dummy should be last one because of we filter it by the code else we can not use ordinal to location custom type
     CUSTOM("custom"), //$NON-NLS-1$
     DUMMY("Dummy"); //$NON-NLS-1$
