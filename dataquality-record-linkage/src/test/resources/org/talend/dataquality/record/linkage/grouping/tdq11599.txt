@@ -1,0 +1,6 @@
+0|3|Mexico
+1|9|Mexico
+7|12|Mexico
+8|1|Mexico
+13||Mexico
+16|null|Mexico

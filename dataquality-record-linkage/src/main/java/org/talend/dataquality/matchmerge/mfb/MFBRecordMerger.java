@@ -118,6 +118,12 @@ public class MFBRecordMerger implements IRecordMerger {
         case LARGEST:
             leftNumberValue = parseNumberValue(leftValue);
             rightNumberValue = parseNumberValue(rightValue);
+            if (leftNumberValue == null) {
+                return rightValue;
+            }
+            if (rightNumberValue == null) {
+                return leftValue;
+            }
             if (leftNumberValue.compareTo(rightNumberValue) >= 0) {
                 return leftValue;
             } else {
@@ -126,6 +132,12 @@ public class MFBRecordMerger implements IRecordMerger {
         case SMALLEST:
             leftNumberValue = parseNumberValue(leftValue);
             rightNumberValue = parseNumberValue(rightValue);
+            if (leftNumberValue == null) {
+                return rightValue;
+            }
+            if (rightNumberValue == null) {
+                return leftValue;
+            }
             if (leftNumberValue.compareTo(rightNumberValue) <= 0) {
                 return leftValue;
             } else {
@@ -212,9 +224,9 @@ public class MFBRecordMerger implements IRecordMerger {
 
     private static BigDecimal parseNumberValue(String value) {
         try {
-            return value == null || value.isEmpty() ? BigDecimal.ZERO : new BigDecimal(value);
+            return value == null || value.isEmpty() ? null : new BigDecimal(value);
         } catch (java.lang.NumberFormatException e) {
-            return BigDecimal.ZERO;
+            return null;
         }
     }
 }
