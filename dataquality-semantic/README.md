@@ -52,7 +52,7 @@ More information can be found [here](https://github.com/Talend/data-quality/blob
 
 Where can I get the latest release?
 -----------------------------------
-You can download latest stable binaries from our [Release Repository](http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceRelease/org/talend/dataquality/org.talend.dataquality.semantic).
+You can download latest stable binaries from our [Release Repository](http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceRelease/org/talend/dataquality/dataquality-semantic).
 or snapshot binaries from our [Snapshot Repository](http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceSnapshot/org/talend/dataquality/dataquality-semantic).
 
 Alternatively you can add the following repository into your pom.xml file:
@@ -69,8 +69,8 @@ And include the following dependency:
 ```xml
 <dependency>
   <groupId>org.talend.dataquality</groupId>
-  <artifactId>org.talend.dataquality.semantic</artifactId>
-  <version>1.4.4</version>
+  <artifactId>dataquality-semantic</artifactId>
+  <version>1.5.0</version>
 </dependency>
 ```
 
