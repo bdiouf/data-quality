@@ -569,10 +569,11 @@ public class RespectiveCategoryRecognizerTest {
 
                 {
                     add(ImmutablePair.of("+33123456789", true));
-                    add(ImmutablePair.of("+33 143134818", true));
-                    add(ImmutablePair.of("0033123456789", true));
-                    add(ImmutablePair.of("+33 1 23 45 67 89", true));
-                    add(ImmutablePair.of("01.23.45.67.89", true));
+                    add(ImmutablePair.of("+33 243134818", true));
+                    add(ImmutablePair.of("0033523456789", true));
+                    add(ImmutablePair.of("+33 6 23 45 67 89", true));
+                    add(ImmutablePair.of("07.23.45.67.89", true));
+                    add(ImmutablePair.of("08 76 54 32 10", true));
                 }
             });
         }
