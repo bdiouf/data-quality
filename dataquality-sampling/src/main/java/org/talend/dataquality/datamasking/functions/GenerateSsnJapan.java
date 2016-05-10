@@ -13,8 +13,9 @@
 package org.talend.dataquality.datamasking.functions;
 
 /**
- * created by jgonzalez on 22 juil. 2015 Detailled comment
- *
+ * The Japanese ssn has 12 numbers. As we generate every number from 0 to 8 randomly, it can generate 282 429 536 481 (9
+ * power 12) ssn numbers.<br>
+ * However, every generation is independent, this class cannot guarantee the difference among all the execution.
  */
 public class GenerateSsnJapan extends Function<String> {
 

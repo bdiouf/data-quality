@@ -13,8 +13,9 @@
 package org.talend.dataquality.datamasking.functions;
 
 /**
- * created by jgonzalez on 22 juil. 2015 Detailled comment
- *
+ * The Germany ssn has 11 numbers. As we generate every number from 0 to 8 randomly, it can generate 31 381 059 609 (9
+ * power 11) ssn numbers.<br>
+ * However, every generation is independent, this class cannot guarantee the difference among all the execution.<br>
  */
 public class GenerateSsnGermany extends Function<String> {
 

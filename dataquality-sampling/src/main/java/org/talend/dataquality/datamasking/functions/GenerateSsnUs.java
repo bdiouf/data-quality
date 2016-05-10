@@ -13,8 +13,11 @@
 package org.talend.dataquality.datamasking.functions;
 
 /**
- * created by jgonzalez on 21 juil. 2015 Detailled comment
- *
+ * The class generates the American ssn number randomly.<br>
+ * The first two characters has 72 different combinations. The the following characters, whether is 00, whether is 06,
+ * whether is an integer from 0 to 8, so it has 11 permutations. The following character has 9 combinations. The
+ * following character has 9 combinations too. The end four characters, it can generate at least 5832 combinations. <br>
+ * In totoal, it has 374 134 464 results.<br>
  */
 public class GenerateSsnUs extends Function<String> {
 

@@ -15,8 +15,10 @@ package org.talend.dataquality.datamasking.functions;
 import java.math.BigInteger;
 
 /**
- * created by jgonzalez on 21 juil. 2015 Detailled comment
- *
+ * The first character has a range of (1, 99). The second character has a range of (1, 12). The third character has a
+ * range of (1, 95). From the fourth to the ninth character, each character has a range of (0, 9). The last character
+ * has a range of (0, 97).<br>
+ * So this class proposes a ssn randomly from the range 5,877886263×10¹²<br>
  */
 public class GenerateSsnFr extends Function<String> {
 

@@ -16,8 +16,9 @@ import java.util.HashSet;
 import java.util.Random;
 
 /**
- * created by jgonzalez on 21 juil. 2015 Detailled comment
- *
+ * This class generates a ssn number randomly of United Kingdom.<br>
+ * There are 373 combinations for the first two characters. Then the the number part, it generates 531441 (9 power 6)
+ * combinations. It has 4 characters to choose from in the last position. In total, it has 792 909 972 results.<br>
  */
 public class GenerateSsnUk extends Function<String> {
 
