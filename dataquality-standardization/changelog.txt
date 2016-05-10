@@ -1,3 +1,6 @@
+V3.2.0 2016-05-10
+	- rename artifact ID to dataquality-standardization
+
 3.1.0 # 2016-4-27 (with DQ lib release 1.4.4)
 	- TDQ-11701 Lucene Index issues 
 				* use searcher manager to handle concurrent index access

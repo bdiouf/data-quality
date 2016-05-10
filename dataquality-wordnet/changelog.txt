@@ -1,3 +1,6 @@
+V1.1.0 2016-05-10
+	- rename artifact ID to dataquality-wordnet
+
 V1.0.2 2015-12-30
     - move to data-quality repository, change parent pom
 

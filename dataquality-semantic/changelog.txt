@@ -1,3 +1,7 @@
+V1.5.0 2016-05-10
+	- rename artifact ID to dataquality-semantic
+	- TDQ-11437 fix regex for FR_PHONE recognition
+	
 V1.4.4 2016-04-27
 	- TDQ-11701 remove dependency on sampling library
 

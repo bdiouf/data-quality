@@ -1,8 +1,9 @@
-V2.3.0 (in development)
-	- API of data masking actions
+V2.3.0 2016-05-10
+	- rename artifact ID to dataquality-sampling
 	- TDQ-11339 fix a "String index out of range: -1" exception for datamasking
-	- support GENERATE_FROM_LIST_STRING function with fixed file
-
+	- TDQ-11437 support GENERATE_FROM_LIST_STRING function with fixed file	
+	- TDQ-11437 API of data masking actions for data-prep
+	- TDQ-11437 fix FR_PHONE generation issue
 
 V2.2.0 2016-04-27
 	- TDQ-11438 implement fast reservoir sampling
