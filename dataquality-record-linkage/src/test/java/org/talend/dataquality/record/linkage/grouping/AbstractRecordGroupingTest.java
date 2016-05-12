@@ -72,15 +72,9 @@ public class AbstractRecordGroupingTest {
              * 
              * @see org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping#outputRow(java.lang.String)
              */
-
             @Override
             protected void outputRow(String[] row) {
                 groupingRecords.add(row);
-                for (String c : row) {
-                    System.out.print(c + ",");
-                }
-                System.out.println();
-
             }
 
             @Override
@@ -137,7 +131,7 @@ public class AbstractRecordGroupingTest {
         customRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(6));
         customRecords.put(IRecordGrouping.MATCHING_TYPE, "CUSTOM"); //$NON-NLS-1$
         customRecords.put(IRecordGrouping.CUSTOMER_MATCH_CLASS, "testCustomMatcher.myCustomMatcherNullMatchAll"); //$NON-NLS-1$
-        customRecords.put(IRecordGrouping.JAR_PATH, "src\\test\\resources\\CustomMatcherTest1.jar"); //$NON-NLS-1$
+        customRecords.put(IRecordGrouping.JAR_PATH, this.getClass().getResource("custom/CustomMatcherTest1.jar").getPath()); //$NON-NLS-1$
         customRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(0.9));
         customRecords.put(IRecordGrouping.ATTRIBUTE_THRESHOLD, String.valueOf(2));
         matchingRule.add(customRecords);
@@ -147,13 +141,13 @@ public class AbstractRecordGroupingTest {
             recordGroup.initialize();
         } catch (InstantiationException e) {
             log.error(e.getMessage(), e);
-            Assert.fail();
+            Assert.fail(e.getMessage());
         } catch (IllegalAccessException e) {
             log.error(e.getMessage(), e);
-            Assert.fail();
+            Assert.fail(e.getMessage());
         } catch (ClassNotFoundException e) {
             log.error(e.getMessage(), e);
-            Assert.fail();
+            Assert.fail(e.getMessage());
         }
 
         recordGroup.setIsOutputDistDetails(true);
