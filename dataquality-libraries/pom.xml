@@ -40,6 +40,7 @@
 		<dataquality.wordnet.snapshot.version>1.1.1-SNAPSHOT</dataquality.wordnet.snapshot.version>
 		<dataquality.wordnet.released.version>1.1.0</dataquality.wordnet.released.version>
 	</properties>
+
 	<modules>
 		<module>../dataquality-common</module>
 		<module>../dataquality-record-linkage</module>
@@ -74,7 +75,7 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
@@ -245,6 +246,86 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>net.revelc.code.formatter</groupId>
+				<artifactId>formatter-maven-plugin</artifactId>
+				<version>1.6.0-SNAPSHOT</version>
+				<configuration>
+					<configFile>talend_java_eclipse_formatter.xml</configFile>
+					<lineEnding>LF</lineEnding>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.talend.tools</groupId>
+						<artifactId>java-formatter</artifactId>
+						<version>0.1.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>!format</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>net.revelc.code.formatter</groupId>
+						<artifactId>formatter-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>validate</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>format</id>
+			<activation>
+				<property>
+					<name>format</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>net.revelc.code.formatter</groupId>
+						<artifactId>formatter-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>format</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>talend-opensource-snapshot</id>
+			<name>talend-opensource-snapshot</name>
+			<url>http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceSnapshot/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>talend-opensource-release</id>
+			<name>talend-opensource-release</name>
+			<url>http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceRelease/</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
