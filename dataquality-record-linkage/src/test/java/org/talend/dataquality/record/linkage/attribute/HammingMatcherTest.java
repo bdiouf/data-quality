@@ -24,7 +24,7 @@ public class HammingMatcherTest {
 
     /**
      * Test method for
-     * {@link org.talend.dataquality.record.linkage.attribute.LevenshteinMatcher#getMatchingWeight(java.lang.String, java.lang.String)}
+     * {@link org.talend.dataquality.record.linkage.attribute.HammingMatcher#getMatchingWeight(java.lang.String, java.lang.String)}
      * .
      */
     @Test

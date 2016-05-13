@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.attribute;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
@@ -85,6 +85,14 @@ public class AbstractAttributeMatcherTest {
             { AttributeMatcherType.Q_GRAMS.toString(), "Sebastiao", "Sepastien", "0.36" },
             { AttributeMatcherType.Q_GRAMS.toString(), "Sizhao", "sejao", "0.26" },
             { AttributeMatcherType.Q_GRAMS.toString(), "A", "Ä", "0.0" },
+
+            // tests for Hamming matcher
+            { AttributeMatcherType.HAMMING.toString(), "kate", "Cade", "0.5" },
+            { AttributeMatcherType.HAMMING.toString(), "unmottreslong", "unautremotlong", "0.0" },
+            { AttributeMatcherType.HAMMING.toString(), "steff", "stephanie", "0.0" },
+            { AttributeMatcherType.HAMMING.toString(), "Sebastiao", "Sepastien", "0.67" },
+            { AttributeMatcherType.HAMMING.toString(), "Sizhao", "sejao", "0.0" },
+            { AttributeMatcherType.HAMMING.toString(), "A", "Ä", "0.0" },
 
             // tests for blank fields
             { AttributeMatcherType.DOUBLE_METAPHONE.toString(), "", "stephanie", "0.0" },
