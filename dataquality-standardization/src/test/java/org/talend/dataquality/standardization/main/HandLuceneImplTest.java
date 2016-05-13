@@ -45,7 +45,7 @@ public class HandLuceneImplTest extends TestCase {
         super.setUp();
         File f = new File(indexfolder);
         if (!f.exists()) {
-            f.mkdir();
+            f.mkdirs();
         }
         boolean back = hl.createIndex(filename, indexfolder);
         assertTrue("Index " + indexfolder + " not created.", back); // $NON-NLS-1$
@@ -89,7 +89,8 @@ public class HandLuceneImplTest extends TestCase {
 
                 String res2 = hl.replaceNameWithGenderInfo(indexfolder, "Philippe", "0", false);//$NON-NLS-1$ $NON-NLS-2$
                 assertEquals("Philippe", res2);
-                String res3 = hl.replaceNameWithCountryGenderInfo(indexfolder, "Philippe", "china", "1", false);//$NON-NLS-1$ $NON-NLS-2$ $NON-NLS-3$
+                String res3 = hl.replaceNameWithCountryGenderInfo(indexfolder, "Philippe", "china", "1", false);//$NON-NLS-1$ $NON-NLS-2$
+                                                                                                                // $NON-NLS-3$
                 assertEquals("Philippe", res3);
             } catch (Exception e) {
                 e.printStackTrace();
