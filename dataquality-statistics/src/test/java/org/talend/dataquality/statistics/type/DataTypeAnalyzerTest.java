@@ -217,8 +217,8 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
     @Test
     public void testInferTypesColumnIndexOrder() {
         DataTypeAnalyzer analyzer = createDataTypeanalyzer();
-        final List<String[]> records = getRecords(DataTypeStatiticsTestBase.class
-                .getResourceAsStream("customers_100_bug_TDQ10380.csv"));
+        final List<String[]> records = getRecords(
+                DataTypeStatiticsTestBase.class.getResourceAsStream("customers_100_bug_TDQ10380.csv"));
         for (String[] record : records) {
             analyzer.analyze(record);
         }
@@ -296,7 +296,7 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
 
         // After set Custom Data Pattern: yyyy?mm?dd, "2015?08?20" & "2012?02?12" can be recognised as date
         // the type of testColumn is DATE
-        analyzer = new DataTypeAnalyzer(Collections.singletonList("yyyy?mm?dd"));
+        analyzer = new DataTypeAnalyzer(Collections.singletonList("yyyy?MM?dd"));
         analyzer.init();
         for (String record : testColumn) {
             analyzer.analyze(record);

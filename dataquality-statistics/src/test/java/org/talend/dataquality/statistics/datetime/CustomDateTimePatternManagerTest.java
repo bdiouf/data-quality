@@ -158,7 +158,7 @@ public class CustomDateTimePatternManagerTest {
         Locale.setDefault(Locale.FRANCE);
 
         final List<String> pattern = Collections.<String> singletonList("MMMM d ?? yyyy");
-        final String[] dates = new String[] { "January 9 ?? 1970",// EN
+        final String[] dates = new String[] { "January 9 ?? 1970", // EN
                 "janvier 9 ?? 1970", // FR
                 "Januar 9 ?? 1970", // DE
                 "一月 9 ?? 1970", // CN
@@ -198,7 +198,7 @@ public class CustomDateTimePatternManagerTest {
         Locale.setDefault(Locale.GERMANY);
 
         final List<String> pattern = Collections.<String> singletonList("MMMM d ?? yyyy");
-        final String[] dates = new String[] { "January 9 ?? 1970",// EN
+        final String[] dates = new String[] { "January 9 ?? 1970", // EN
                 "janvier 9 ?? 1970", // FR
                 "Januar 9 ?? 1970", // DE
                 "一月 9 ?? 1970", // CN
@@ -236,6 +236,15 @@ public class CustomDateTimePatternManagerTest {
     public void testSpecialCases() {
         assertEquals(Collections.singleton("MMMM d yyyy"),
                 CustomDateTimePatternManager.replaceByDateTimePattern("July 14 2015", "M/d/yy H:m"));
+
+    }
+
+    @Test
+    public void testWeeklyBasedYear_TDQ11802() {
+        assertTrue(
+                CustomDateTimePatternManager.isDate("July / 1940 / 06", Collections.<String> singletonList("MMMM / yyyy / dd")));
+        assertFalse(
+                CustomDateTimePatternManager.isDate("July / 1940 / 06", Collections.<String> singletonList("MMMM / YYYY / dd")));
 
     }
 }

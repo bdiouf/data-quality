@@ -14,6 +14,8 @@ package org.talend.dataquality.statistics.datetime;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalQueries;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -91,16 +93,21 @@ public final class CustomDateTimePatternManager {
         try {// firstly, try with user-defined locale
             final DateTimeFormatter formatter = getDateTimeFormatterByPattern(customPattern, locale);
             if (formatter != null) {
-                formatter.parse(value);
-                return true;
+                final TemporalAccessor temporal = formatter.parse(value);
+                if (temporal.query(TemporalQueries.localDate()) != null || temporal.query(TemporalQueries.localTime()) != null) {
+                    return true;
+                }
             }
         } catch (DateTimeParseException e) {
             if (!DEFAULT_LOCALE.equals(locale)) {
                 try {// try with LOCALE_US if user defined locale is not US
                     final DateTimeFormatter formatter = getDateTimeFormatterByPattern(customPattern, Locale.US);
                     if (formatter != null) {
-                        formatter.parse(value);
-                        return true;
+                        final TemporalAccessor temporal = formatter.parse(value);
+                        if (temporal.query(TemporalQueries.localDate()) != null
+                                || temporal.query(TemporalQueries.localTime()) != null) {
+                            return true;
+                        }
                     }
                 } catch (DateTimeParseException e2) {
                     // return false
