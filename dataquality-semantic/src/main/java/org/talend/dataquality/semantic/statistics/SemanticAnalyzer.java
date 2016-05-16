@@ -20,11 +20,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.ResizableList;
 import org.talend.dataquality.semantic.recognizer.CategoryFrequency;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizer;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
-import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.ResizableList;
 
 /**
  * Semantic type infer executor. <br>

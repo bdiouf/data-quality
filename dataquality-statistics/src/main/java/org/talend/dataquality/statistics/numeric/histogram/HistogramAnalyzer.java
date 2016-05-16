@@ -16,11 +16,11 @@ import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.talend.daikon.number.BigDecimalParser;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.ResizableList;
 import org.talend.dataquality.statistics.numeric.NumericalStatisticsAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.dataquality.statistics.type.TypeInferenceUtils;
-import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.ResizableList;
 
 /**
  * Analyzer the histograms.<br>

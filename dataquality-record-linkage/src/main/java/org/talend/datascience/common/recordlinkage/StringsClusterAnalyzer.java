@@ -34,7 +34,7 @@ import org.talend.dataquality.record.linkage.genkey.BlockingKeyHandler;
 import org.talend.dataquality.record.linkage.utils.BlockingKeyAlgorithmEnum;
 import org.talend.dataquality.record.linkage.utils.MatchAnalysisConstant;
 import org.talend.dataquality.record.linkage.utils.SurvivorShipAlgorithmEnum;
-import org.talend.datascience.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.Analyzer;
 
 /**
  * String clustering analyzer.
@@ -115,7 +115,6 @@ public class StringsClusterAnalyzer implements Analyzer<StringClusters> {
         records.clear();
         currentBlockIndex = 0;
     }
-
 
     public boolean analyze(String... record) {
         if (record == null || record.length != 1) {
@@ -230,8 +229,9 @@ public class StringsClusterAnalyzer implements Analyzer<StringClusters> {
             throw new UnsupportedOperationException("remove");
         }
     }
+
     @Override
     public void close() throws Exception {
-        
+
     }
 }

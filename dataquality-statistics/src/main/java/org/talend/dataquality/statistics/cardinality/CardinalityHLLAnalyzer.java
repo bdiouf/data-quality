@@ -15,8 +15,8 @@ package org.talend.dataquality.statistics.cardinality;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
-import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.ResizableList;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.ResizableList;
 
 import com.clearspring.analytics.stream.cardinality.HyperLogLog;
 

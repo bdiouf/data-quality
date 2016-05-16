@@ -21,15 +21,15 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.Analyzers;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.statistics.SemanticAnalyzer;
 import org.talend.dataquality.semantic.statistics.SemanticType;
-import org.talend.dataquality.statistics.type.DataTypeOccurences;
 import org.talend.dataquality.statistics.type.DataTypeAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
-import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.Analyzers;
+import org.talend.dataquality.statistics.type.DataTypeOccurences;
 
 public class CompositeAnalyzerTest extends SemanticStatisticsTestBase {
 

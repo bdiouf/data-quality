@@ -16,8 +16,8 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.datascience.common.regex.ChainResponsibilityHandler;
-import org.talend.datascience.common.regex.HandlerFactory;
+import org.talend.dataquality.common.regex.ChainResponsibilityHandler;
+import org.talend.dataquality.common.regex.HandlerFactory;
 
 /**
  * * Recognize East Asia characters given predefined list of characters and its pattern mappings.

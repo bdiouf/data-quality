@@ -20,10 +20,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.talend.dataquality.common.inference.Analyzer;
 import org.talend.dataquality.statistics.numeric.summary.SummaryAnalyzer;
 import org.talend.dataquality.statistics.quality.ValueQualityAnalyzerTest;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
-import org.talend.datascience.common.inference.Analyzer;
 
 public class QuantileAnalyzerTest {
 
@@ -146,8 +146,8 @@ public class QuantileAnalyzerTest {
 
     @Test
     public void testQuantileOfFile() throws IOException {// test for double data, TDQ-10789, TDP-394
-        final List<String[]> records = ValueQualityAnalyzerTest.getRecords(
-                this.getClass().getResourceAsStream("../../data/t-shirt_100.csv"), ",");
+        final List<String[]> records = ValueQualityAnalyzerTest
+                .getRecords(this.getClass().getResourceAsStream("../../data/t-shirt_100.csv"), ",");
         QuantileAnalyzer analyzer = new QuantileAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE });
         TDigestAnalyzer tanalyzer = new TDigestAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE });
         SummaryAnalyzer summaryAnalyzer = new SummaryAnalyzer(new DataTypeEnum[] { DataTypeEnum.DOUBLE });

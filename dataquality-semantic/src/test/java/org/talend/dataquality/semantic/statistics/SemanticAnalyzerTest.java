@@ -22,9 +22,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
-import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.Analyzers;
-import org.talend.datascience.common.inference.Analyzers.Result;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.Analyzers;
+import org.talend.dataquality.common.inference.Analyzers.Result;
 
 public class SemanticAnalyzerTest {
 

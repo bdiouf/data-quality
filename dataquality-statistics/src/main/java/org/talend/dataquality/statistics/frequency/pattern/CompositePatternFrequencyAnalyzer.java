@@ -24,7 +24,7 @@ import org.talend.dataquality.statistics.frequency.recognition.DateTimePatternRe
 import org.talend.dataquality.statistics.frequency.recognition.EmptyPatternRecognizer;
 import org.talend.dataquality.statistics.frequency.recognition.LatinExtendedCharPatternRecognizer;
 import org.talend.dataquality.statistics.frequency.recognition.RecognitionResult;
-import org.talend.datascience.common.inference.ResizableList;
+import org.talend.dataquality.common.inference.ResizableList;
 
 /**
  * Compute the pattern frequency tables.<br>

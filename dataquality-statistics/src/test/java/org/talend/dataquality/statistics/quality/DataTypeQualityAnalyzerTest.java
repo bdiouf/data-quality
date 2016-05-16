@@ -26,9 +26,9 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.ValueQualityStatistics;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
-import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.ValueQualityStatistics;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -349,9 +349,9 @@ public class DataTypeQualityAnalyzerTest {
 
     @Test
     public void testInvalidCount() {// for issue TDQ_10380
-        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER,
-                DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.STRING,
-                DataTypeEnum.DATE, DataTypeEnum.INTEGER, DataTypeEnum.DOUBLE });
+        DataTypeQualityAnalyzer qualityAnalyzer = new DataTypeQualityAnalyzer(
+                new DataTypeEnum[] { DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.STRING,
+                        DataTypeEnum.DATE, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.INTEGER, DataTypeEnum.DOUBLE });
 
         final List<String[]> records = getRecords(this.getClass().getResourceAsStream("../data/customers_100.csv"));
 

@@ -18,8 +18,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.ResizableList;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.ResizableList;
 
 /**
  * Type inference executor which provide several methods computing the types.<br>
@@ -44,11 +44,12 @@ public class DataTypeAnalyzer implements Analyzer<DataTypeOccurences> {
      * Default empty constructor.
      */
     public DataTypeAnalyzer() {
-        this(Collections.<String>emptyList());
+        this(Collections.<String> emptyList());
     }
 
     /**
      * Create a DataTypeAnalyzer with the given custom date patterns.
+     * 
      * @param customDateTimePatterns the patterns to use.
      */
     public DataTypeAnalyzer(List<String> customDateTimePatterns) {
@@ -116,11 +117,11 @@ public class DataTypeAnalyzer implements Analyzer<DataTypeOccurences> {
                     DataTypeEnum anotherDT = anotherDTIt.next();
                     // Update the current map
                     if (typeFreqTable.containsKey(anotherDT)) {
-                        mergedAnalyzer.getResult().get(idx).getTypeFrequencies()
-                                .put(anotherDT, typeFreqTable.get(anotherDT) + anotherTypeFreqTable.get(anotherDT));
+                        mergedAnalyzer.getResult().get(idx).getTypeFrequencies().put(anotherDT,
+                                typeFreqTable.get(anotherDT) + anotherTypeFreqTable.get(anotherDT));
                     } else {
-                        mergedAnalyzer.getResult().get(idx).getTypeFrequencies()
-                                .put(anotherDT, anotherTypeFreqTable.get(anotherDT));
+                        mergedAnalyzer.getResult().get(idx).getTypeFrequencies().put(anotherDT,
+                                anotherTypeFreqTable.get(anotherDT));
                     }
                 }
             }

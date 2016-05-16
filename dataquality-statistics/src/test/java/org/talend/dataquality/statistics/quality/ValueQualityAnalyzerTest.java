@@ -27,11 +27,11 @@ import java.util.Set;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
+import org.talend.dataquality.common.inference.ValueQualityStatistics;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.statistics.SemanticQualityAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
-import org.talend.datascience.common.inference.ValueQualityStatistics;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -81,8 +81,9 @@ public class ValueQualityAnalyzerTest {
     @Test
     public void testValueQualityAnalyzerWithoutSemanticQuality() throws URISyntaxException {
 
-        DataTypeQualityAnalyzer dataTypeQualityAnalyzer = new DataTypeQualityAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER,
-                DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.INTEGER, DataTypeEnum.DOUBLE });
+        DataTypeQualityAnalyzer dataTypeQualityAnalyzer = new DataTypeQualityAnalyzer(
+                new DataTypeEnum[] { DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.STRING,
+                        DataTypeEnum.DATE, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.INTEGER, DataTypeEnum.DOUBLE });
         String[] semanticTypes = new String[] { SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.UNKNOWN.name(),
                 SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.UNKNOWN.name(),
                 SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.UNKNOWN.name(),
@@ -178,8 +179,8 @@ public class ValueQualityAnalyzerTest {
             }
         };
 
-        DataTypeQualityAnalyzer dataTypeQualityAnalyzer = new DataTypeQualityAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER,
-                DataTypeEnum.STRING, DataTypeEnum.STRING });
+        DataTypeQualityAnalyzer dataTypeQualityAnalyzer = new DataTypeQualityAnalyzer(
+                new DataTypeEnum[] { DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.STRING });
         SemanticQualityAnalyzer semanticQualityAnalyzer = new SemanticQualityAnalyzer(createCategoryRecognizerBuilder(),
                 new String[] { SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.US_STATE_CODE.name(),
                         SemanticCategoryEnum.CITY.name() });

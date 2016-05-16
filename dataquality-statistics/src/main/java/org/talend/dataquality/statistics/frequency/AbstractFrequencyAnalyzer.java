@@ -15,12 +15,12 @@ package org.talend.dataquality.statistics.frequency;
 import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.ResizableList;
 import org.talend.dataquality.statistics.frequency.impl.CMSFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.EFrequencyAlgorithm;
 import org.talend.dataquality.statistics.frequency.impl.NaiveFrequencyEvaluator;
 import org.talend.dataquality.statistics.frequency.impl.SSFrequencyEvaluator;
-import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.ResizableList;
 
 /**
  * Frequency analyzer which delegate the computation to {@link NaiveFrequencyEvaluator} , {@link SSFrequencyEvaluator}

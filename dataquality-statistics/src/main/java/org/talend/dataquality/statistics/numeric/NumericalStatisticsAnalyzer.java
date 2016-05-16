@@ -15,8 +15,8 @@ package org.talend.dataquality.statistics.numeric;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.talend.dataquality.common.inference.Analyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
-import org.talend.datascience.common.inference.Analyzer;
 
 /**
  * 

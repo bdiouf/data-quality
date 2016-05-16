@@ -26,12 +26,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.AnalyzerSupplier;
+import org.talend.dataquality.common.inference.ConcurrentAnalyzer;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.statistics.SemanticAnalyzer;
 import org.talend.dataquality.semantic.statistics.SemanticType;
-import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.AnalyzerSupplier;
-import org.talend.datascience.common.inference.ConcurrentAnalyzer;
 
 public class ConcurrentAnalyzerTest extends SemanticStatisticsTestBase {
 

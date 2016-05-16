@@ -11,6 +11,6 @@ Require-Bundle: org.apache.log4j,
  org.apache.commons.lang,
  org.apache.commons.pool,
  org.junit
-Export-Package: org.talend.datascience.common.inference,
- org.talend.datascience.common.regex
+Export-Package: org.talend.dataquality.common.inference,
+ org.talend.dataquality.common.regex
 Import-Package: org.slf4j

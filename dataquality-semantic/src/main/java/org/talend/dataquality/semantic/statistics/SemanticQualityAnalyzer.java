@@ -26,10 +26,10 @@ import org.talend.dataquality.semantic.index.LuceneIndex;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder.Mode;
 import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
-import org.talend.datascience.common.inference.Analyzer;
-import org.talend.datascience.common.inference.QualityAnalyzer;
-import org.talend.datascience.common.inference.ResizableList;
-import org.talend.datascience.common.inference.ValueQualityStatistics;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.QualityAnalyzer;
+import org.talend.dataquality.common.inference.ResizableList;
+import org.talend.dataquality.common.inference.ValueQualityStatistics;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
