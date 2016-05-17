@@ -58,7 +58,7 @@ public class PatternListGenerator {
     private static Locale[] localeArray = new Locale[] { Locale.US, //
             Locale.FRANCE, //
             Locale.GERMANY, //
-            Locale.UK,//
+            Locale.UK, //
             Locale.ITALY, //
             Locale.CANADA, Locale.CANADA_FRENCH, //
             Locale.JAPAN, //
@@ -68,7 +68,7 @@ public class PatternListGenerator {
     private static Locale[] primaryLocaleArray = new Locale[] { Locale.US, //
             Locale.FRANCE, //
             Locale.GERMANY, //
-            Locale.UK,//
+            Locale.UK, //
             Locale.JAPAN, //
     };
 
@@ -98,7 +98,7 @@ public class PatternListGenerator {
             add(new LocaledPattern("MMMM d yyyy", Locale.US, "OTHER", false));// January 18 2012
             add(new LocaledPattern("yyyy-MM-dd HH:mm:ss.S", Locale.US, "OTHER", true));// 2013-2-14 13:40:51.1
             add(new LocaledPattern("d/MMM/yyyy H:mm:ss Z", Locale.US, "OTHER", true));// 14/Feb/2013 13:40:51 +0100
-            add(new LocaledPattern("dd-MMM-yy hh.mm.ss.nnnnnnnnn a",//
+            add(new LocaledPattern("dd-MMM-yy hh.mm.ss.nnnnnnnnn a", //
                     Locale.UK, "OTHER", true));// 18-Nov-86 01.00.00.000000000 AM
 
         }
@@ -266,7 +266,7 @@ public class PatternListGenerator {
                 // DateTimeFormatter.ISO_TIME, //
                 DateTimeFormatter.ISO_INSTANT, // 4
                 DateTimeFormatter.ISO_LOCAL_DATE, // 5
-                DateTimeFormatter.ISO_LOCAL_DATE_TIME,// 6
+                DateTimeFormatter.ISO_LOCAL_DATE_TIME, // 6
                 // DateTimeFormatter.ISO_LOCAL_TIME, //
                 DateTimeFormatter.ISO_OFFSET_DATE, // 7
                 DateTimeFormatter.ISO_OFFSET_DATE_TIME, // 8
@@ -375,9 +375,8 @@ public class PatternListGenerator {
 
             String regex = regexGenerator.convertPatternToRegex(lp.pattern);
             dateRegexFileTextBuilder.append(lp.getPattern()).append("\t^").append(regex).append("$\n");
-            dateSampleFileTextBuilder
-                    .append(ZONED_DATE_TIME.format(DateTimeFormatter.ofPattern(lp.getPattern(), lp.getLocale()))).append("\t")
-                    .append(lp.getPattern())//
+            dateSampleFileTextBuilder.append(ZONED_DATE_TIME.format(DateTimeFormatter.ofPattern(lp.getPattern(), lp.getLocale())))
+                    .append("\t").append(lp.getPattern())//
                     .append("\t").append(lp.getLocale())//
                     .append("\t").append(lp.getFormatStyle())//
                     .append("\t").append(lp.isWithTime()).append("\n");
@@ -432,9 +431,8 @@ public class PatternListGenerator {
             String regex = regexGenerator.convertPatternToRegex(lp.pattern);
             timeRegexFileTextBuilder.append(lp.getPattern()).append("\t^").append(regex).append("$\n");
 
-            timeSampleFileTextBuilder
-                    .append(ZONED_DATE_TIME.format(DateTimeFormatter.ofPattern(lp.getPattern(), lp.getLocale()))).append("\t")
-                    .append(lp.getPattern())//
+            timeSampleFileTextBuilder.append(ZONED_DATE_TIME.format(DateTimeFormatter.ofPattern(lp.getPattern(), lp.getLocale())))
+                    .append("\t").append(lp.getPattern())//
                     .append("\t").append(lp.getLocale())//
                     .append("\t").append(lp.getFormatStyle())//
                     .append("\t").append(lp.isWithTime()).append("\n");

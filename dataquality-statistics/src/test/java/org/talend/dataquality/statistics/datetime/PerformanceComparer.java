@@ -27,7 +27,7 @@ public class PerformanceComparer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PerformanceComparer.class);
 
-    private static final List<String> CUSTOM_PATTERN_LIST = Arrays.asList(new String[] {//
+    private static final List<String> CUSTOM_PATTERN_LIST = Arrays.asList(new String[] { //
             "yyyy/MMM/d", "yyyy/MMM/dd", "yyyy/MMMM/dd" });
 
     private List<String> LINES = new ArrayList<>();
@@ -72,8 +72,6 @@ public class PerformanceComparer {
         long difference = end.getTime() - begin.getTime();
 
         LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        // System.out.println("Total duration with " + (useNewImpl ? "NEW" : "OLD") + " solution on " + count +
-        // " samples: " + difference + "ms");
         return difference;
     }
 
@@ -94,17 +92,17 @@ public class PerformanceComparer {
             oldSum += testIsDateWithCustomPatterns(false, replicate);
         }
         double oldAverage = oldSum / trialCount;
-        System.out.println("Average Duration with old solution: " + oldAverage);
+        LOGGER.debug("Average Duration with old solution: " + oldAverage);
 
         long newSum = 0;
         for (int i = 0; i < trialCount; i++) {
             newSum += testIsDateWithCustomPatterns(true, replicate);
         }
         double newAverage = newSum / trialCount;
-        System.out.println("Average Duration with new solution: " + newAverage);
+        LOGGER.debug("Average Duration with new solution: " + newAverage);
 
         double rate = (oldAverage - newAverage) * 10000 / newAverage;
-        System.out.println("On " + replicate * LINES.size() + " records, the new solution is " + rate / 100 + "% faster.\n");
+        LOGGER.debug("On " + replicate * LINES.size() + " records, the new solution is " + rate / 100 + "% faster.\n");
 
     }
 }

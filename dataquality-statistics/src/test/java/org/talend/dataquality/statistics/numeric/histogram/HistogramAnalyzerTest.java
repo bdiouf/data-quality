@@ -23,9 +23,13 @@ import java.util.function.BiConsumer;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
 
 public class HistogramAnalyzerTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(HistogramAnalyzerTest.class);
 
     private HistogramAnalyzer createAnalyzer(DataTypeEnum[] types, HistogramParameter histogramParameter) {
         return new HistogramAnalyzer(types, histogramParameter);
@@ -108,19 +112,19 @@ public class HistogramAnalyzerTest {
             Entry<Range, Long> entry = entrySet.next();
             Range r = entry.getKey();
             if (idx == 0) {
-                System.out.println(r.getLower() + " to " + r.getUpper() + ", count:" + entry.getValue());
+                LOGGER.debug(r.getLower() + " to " + r.getUpper() + ", count:" + entry.getValue());
                 Assert.assertEquals(2, r.getLower(), 0.00);
                 Assert.assertEquals(4, r.getUpper(), 0.00);
                 Assert.assertEquals(2, entry.getValue(), 0);
             }
             if (idx == 1) {
-                System.out.println(r.getLower() + " to " + r.getUpper() + ", count:" + entry.getValue());
+                LOGGER.debug(r.getLower() + " to " + r.getUpper() + ", count:" + entry.getValue());
                 Assert.assertEquals(4, r.getLower(), 0.00);
                 Assert.assertEquals(6, r.getUpper(), 0.00);
                 Assert.assertEquals(2, entry.getValue(), 0);
             }
             if (idx == 2) {
-                System.out.println(r.getLower() + " to " + r.getUpper() + ", count:" + entry.getValue());
+                LOGGER.debug(r.getLower() + " to " + r.getUpper() + ", count:" + entry.getValue());
                 Assert.assertEquals(6, r.getLower(), 0.00);
                 Assert.assertEquals(8, r.getUpper(), 0.00);
                 Assert.assertEquals(3, entry.getValue(), 0);
@@ -148,7 +152,7 @@ public class HistogramAnalyzerTest {
 
             @Override
             public void accept(Range t, Long u) {
-                System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                 if (t.getLower() == -4.0) {
                     Assert.assertEquals(2, u, 0.0);
                 }
@@ -179,17 +183,17 @@ public class HistogramAnalyzerTest {
             public void accept(Range t, Long u) {
                 if (t.getLower() == -0.004) {
                     Assert.assertEquals(5, u, 0.0);
-                    System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                    LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                     return;
                 }
                 if (Math.round(t.getLower() * 1000.0) / 1000.0 == 2.997) {
                     Assert.assertEquals(1, u, 0.0);
-                    System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                    LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                     return;
                 }
                 if (Math.round(t.getLower() * 1000.0) / 1000.0 == 5.999) {
                     Assert.assertEquals(3, u, 0.0);
-                    System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                    LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                 }
             }
 
@@ -208,8 +212,8 @@ public class HistogramAnalyzerTest {
         HistogramColumnParameter column2Param = new HistogramColumnParameter();
         column2Param.setParameters(0, 9, 4);
         histogramParameter.putColumnParameter(1, column2Param);
-        HistogramAnalyzer analyzer = createAnalyzer(new DataTypeEnum[] { DataTypeEnum.INTEGER, DataTypeEnum.INTEGER, DataTypeEnum.STRING },
-                histogramParameter);
+        HistogramAnalyzer analyzer = createAnalyzer(
+                new DataTypeEnum[] { DataTypeEnum.INTEGER, DataTypeEnum.INTEGER, DataTypeEnum.STRING }, histogramParameter);
         for (String[] d : data) {
             analyzer.analyze(d);
         }
@@ -222,19 +226,19 @@ public class HistogramAnalyzerTest {
                 if (t.getLower() == 2) {
                     Assert.assertEquals(2, u, 0.0);
                     Assert.assertEquals(4, t.getUpper(), 0.0);
-                    System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                    LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                     return;
                 }
                 if (t.getLower() == 4) {
                     Assert.assertEquals(2, u, 0.0);
                     Assert.assertEquals(6, t.getUpper(), 0.0);
-                    System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                    LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                     return;
                 }
                 if (t.getLower() == 6) {
                     Assert.assertEquals(3, u, 0.0);
                     Assert.assertEquals(8, t.getUpper(), 0.0);
-                    System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                    LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                     return;
                 }
             }
@@ -247,25 +251,25 @@ public class HistogramAnalyzerTest {
                 if (t.getLower() == 0) {
                     Assert.assertEquals(2, u, 0.0);
                     Assert.assertEquals(2.25, t.getUpper(), 0.0);
-                    System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                    LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                     return;
                 }
                 if (t.getLower() == 2.25) {
                     Assert.assertEquals(2, u, 0.0);
                     Assert.assertEquals(4.5, t.getUpper(), 0.0);
-                    System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                    LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                     return;
                 }
                 if (t.getLower() == 4.5) {
                     Assert.assertEquals(2, u, 0.0);
                     Assert.assertEquals(6.75, t.getUpper(), 0.0);
-                    System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                    LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                     return;
                 }
                 if (t.getLower() == 6.75) {
                     Assert.assertEquals(3, u, 0.0);
                     Assert.assertEquals(9, t.getUpper(), 0.0);
-                    System.out.println(t.getLower() + " to " + t.getUpper() + ", count:" + u);
+                    LOGGER.debug(t.getLower() + " to " + t.getUpper() + ", count:" + u);
                     return;
                 }
             }
@@ -318,7 +322,7 @@ public class HistogramAnalyzerTest {
         // Add min and max into value list
         values.add(min);
         values.add(max);
-        System.out.println("numBins: " + numBins + ", min: " + min + ", max:" + max);
+        LOGGER.debug("numBins: " + numBins + ", min: " + min + ", max:" + max);
         // analyze histogram
         HistogramParameter histogramParameter = new HistogramParameter();
         HistogramColumnParameter columnParam = new HistogramColumnParameter();
@@ -336,11 +340,8 @@ public class HistogramAnalyzerTest {
             @SuppressWarnings("unchecked")
             Entry<Range, Long> histEntryOfAnalyzer = (Entry<Range, Long>) histogramFromAnalyzer.entrySet().toArray()[binIdx];
             Assert.assertEquals(histEntry.getKey().getLower(), histEntryOfAnalyzer.getKey().getLower(), 0.001);
-            // System.out.print("Lower: " + histEntry.getKey().getLower());
             Assert.assertEquals(histEntry.getKey().getUpper(), histEntryOfAnalyzer.getKey().getUpper(), 0.001);
-            // System.out.print(" Upper: " + histEntry.getKey().getUpper());
             Assert.assertEquals(histEntry.getValue(), histEntryOfAnalyzer.getValue());
-            // System.out.println(" Count: " + histEntry.getValue());
             binIdx++;
         }
 

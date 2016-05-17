@@ -43,7 +43,6 @@ public class PerformanceTest {
 
         SystemDateTimePatternManager.isDate("12/02/99");// init DateTimeFormatters
         Date begin = new Date();
-        LOGGER.debug("Detect date start at: " + begin);
 
         long currentMilliseconds = begin.getTime();
 
@@ -60,19 +59,17 @@ public class PerformanceTest {
                         Date after = new Date();
                         long difference = after.getTime() - currentMilliseconds;
                         currentMilliseconds = after.getTime();
-                        System.out.println("count: " + count + "\tinteval: " + difference + "ms");
+                        LOGGER.debug("count: " + count + "\tinteval: " + difference + "ms");
                     }
                 }
             }
         }
 
         Date end = new Date();
-        LOGGER.debug("Detect date end at: " + end);
         // Assert count of matches.
         long difference = end.getTime() - begin.getTime();
 
-        LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        System.out.println("Total duration IS_DATE on " + count + " samples: " + difference + "ms");
+        LOGGER.debug("Total duration IS_DATE on " + count + " samples: " + difference + "ms");
 
         assertTrue("The method is slower than expected", difference < 4000);
     }
@@ -86,7 +83,6 @@ public class PerformanceTest {
 
         SystemDateTimePatternManager.datePatternReplace("12/02/99");// init DateTimeFormatters
         Date begin = new Date();
-        LOGGER.debug("Detect date start at: " + begin);
 
         long currentMilliseconds = begin.getTime();
 
@@ -103,19 +99,17 @@ public class PerformanceTest {
                         Date after = new Date();
                         long difference = after.getTime() - currentMilliseconds;
                         currentMilliseconds = after.getTime();
-                        System.out.println("count: " + count + "\tinteval: " + difference + "ms");
+                        LOGGER.debug("count: " + count + "\tinteval: " + difference + "ms");
                     }
                 }
             }
         }
 
         Date end = new Date();
-        LOGGER.debug("Detect date end at: " + end);
         // Assert count of matches.
         long difference = end.getTime() - begin.getTime();
 
-        LOGGER.debug("Detect date time diff: " + difference + " ms.");
-        System.out.println("Total duration GET_PATTERNS on " + count + " samples: " + difference + "ms");
+        LOGGER.debug("Total duration GET_PATTERNS on " + count + " samples: " + difference + "ms");
 
         assertTrue("The method is slower than expected", difference < 5000);
     }

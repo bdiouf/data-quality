@@ -27,8 +27,12 @@ import java.util.Locale;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CustomDateTimePatternManagerTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomDateTimePatternManagerTest.class);
 
     @Test
     public void testNewPatterns_TDQ11229() {
@@ -170,7 +174,7 @@ public class CustomDateTimePatternManagerTest {
         final boolean[] EXPECTED_IS_DATE_CN = new boolean[] { true, false, false, true };
         // final String[] EXPECTED_PATTERN_STRING = new String[] { "", };
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("\n");
         sb.append("-------------- JVM Locale: " + Locale.getDefault().toString() + " ------\n");
         sb.append("Input \\ UserLocale\tN/A\tEN\tFR\tDE\tCN\n");
         for (int i = 0; i < dates.length; i++) {
@@ -189,7 +193,7 @@ public class CustomDateTimePatternManagerTest {
             assertEquals(EXPECTED_IS_DATE_CN[i], CustomDateTimePatternManager.isDate(dates[i], pattern, Locale.CHINA));
         }
 
-        System.out.println(sb.toString());
+        LOGGER.info(sb.toString());
     }
 
     @Test
@@ -210,7 +214,7 @@ public class CustomDateTimePatternManagerTest {
         final boolean[] EXPECTED_IS_DATE_CN = new boolean[] { true, false, false, true };
         // final String[] EXPECTED_PATTERN_STRING = new String[] { "", };
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("\n");
         sb.append("-------------- JVM Locale: " + Locale.getDefault().toString() + " ------\n");
         sb.append("Input \\ UserLocale\tN/A\tEN\tFR\tDE\tCN\n");
         for (int i = 0; i < dates.length; i++) {
@@ -229,7 +233,7 @@ public class CustomDateTimePatternManagerTest {
             assertEquals(EXPECTED_IS_DATE_CN[i], CustomDateTimePatternManager.isDate(dates[i], pattern, Locale.CHINA));
         }
 
-        System.out.println(sb.toString());
+        LOGGER.info(sb.toString());
     }
 
     @Test

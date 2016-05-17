@@ -10,7 +10,8 @@ Require-Bundle: slf4j.api,
  org.apache.commons.lang,
  org.talend.dataquality.common,
  org.talend.dataquality.semantic,
- org.junit
+ org.junit,
+ org.eclipse.m2e.maven.runtime.slf4j.simple
 Bundle-ClassPath: .
 Import-Package: com.clearspring.analytics.stream,
  com.clearspring.analytics.stream.cardinality,
