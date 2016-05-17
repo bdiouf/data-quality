@@ -1,8 +1,12 @@
 package org.talend.dataquality.datamasking.shuffling;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -26,11 +30,12 @@ public class ShuffleColumnTest {
 
     private static GenerateData generation = new GenerateData();
 
-    private static List<List<Integer>> columns = new ArrayList<List<Integer>>();
+    private static List<List<String>> columns = new ArrayList<List<String>>();
 
-    private static List<String> keys = Arrays.asList(new String[] { "talend", "apple", "français" });
+    private static List<String> allColumns = Arrays
+            .asList(new String[] { "id", "first_name", "last_name", "email", "gender", "birth", "city", "zip_code", "country" });
 
-    private ShuffleColumn shuffleColumn = new ShuffleColumn();
+    private static ShuffleColumn shuffleColumn = null;
 
     @BeforeClass
     public static void generateData() {
@@ -38,210 +43,172 @@ public class ShuffleColumnTest {
             data.add(i);
         }
 
-        GenerateData generation = new GenerateData();
-        List<Integer> idName = Arrays
-                .asList(new Integer[] { generation.getColumnIndex("id"), generation.getColumnIndex("first_name") });
-        List<Integer> email = Arrays.asList(new Integer[] { generation.getColumnIndex("email") });
-        List<Integer> address = Arrays
-                .asList(new Integer[] { generation.getColumnIndex("city"), generation.getColumnIndex("zip code") });
+        List<String> column1 = Arrays.asList(new String[] { "id", "first_name" });
+        List<String> column2 = Arrays.asList(new String[] { "email" });
+        List<String> column3 = Arrays.asList(new String[] { "city", "zip_code" });
+        columns.add(column1);
+        columns.add(column2);
+        columns.add(column3);
 
-        columns.add(idName);
-        columns.add(email);
-        columns.add(address);
+        shuffleColumn = new ShuffleColumn(columns, allColumns);
+
     }
 
     @Test
-    public void testGetKeyOrder1() {
-        String key = "apple";
-        List<Integer> keyOrder = shuffleColumn.getOrderFromKey(key);
-        int[] expected = new int[] { 0, 3, 4, 2, 1 };
+    public void testReplacement() {
+        int size = 995;
+        int prime = 97;
+        int shift = 0;
+        do {
+            shift = new Random().nextInt(size);
+        } while (shift == 0);
 
-        for (int i = 0; i < keyOrder.size(); i++) {
-            Assert.assertEquals(expected[i], keyOrder.get(i).intValue());
+        List<Integer> list1 = new ArrayList<Integer>();
+        List<Integer> list2 = new ArrayList<Integer>();
+        List<Integer> list3 = new ArrayList<Integer>();
+
+        for (int i = 0; i < size; i++) {
+            list1.add(((i + shift) < size) ? i + shift : i + shift - size);
+            list2.add(((list1.get(i) + shift) < size) ? list1.get(i) + shift : list1.get(i) + shift - size);
+            list3.add(((list2.get(i) + shift) < size) ? list2.get(i) + shift : list2.get(i) + shift - size);
         }
 
-    }
-
-    @Test
-    public void testGetKeyOrder2() {
-        String key = "Talend";
-        List<Integer> keyOrder = shuffleColumn.getOrderFromKey(key);
-        int[] expected = new int[] { 0, 1, 4, 3, 5, 2 };
-
-        for (int i = 0; i < keyOrder.size(); i++) {
-            Assert.assertEquals(expected[i], keyOrder.get(i).intValue());
-        }
-    }
-
-    @Test
-    public void testGetKeyOrder3() {
-        String key = "français";
-        List<Integer> keyOrder = shuffleColumn.getOrderFromKey(key);
-        int[] expected = new int[] { 2, 5, 0, 4, 7, 1, 3, 6 };
-
-        for (int i = 0; i < keyOrder.size(); i++) {
-            Assert.assertEquals(expected[i], keyOrder.get(i).intValue());
+        List<Integer> replacements = shuffleColumn.calculateReplacementInteger(size, prime);
+        for (int i = 0; i < size; i++) {
+            // test whether the three cells can still cover the information
+            int index1 = replacements.get(list1.get(i));
+            int index2 = replacements.get(list2.get(i));
+            int index3 = replacements.get(list3.get(i));
+            assertTrue(index1 != index2);
+            assertTrue(index3 != index2);
+            assertTrue(index1 != index3);
         }
     }
 
     @Test
-    public void testShuffledIndexArray() {
-        int[][] grid = new int[3][5];
-        int i = 0;
-        for (int row = 0; row < 2; row++) {
-            for (int column = 0; column < 5; column++) {
-                grid[row][column] = i++;
+    public void testReplacementBigInteger() {
+        int size = 23000000;
+        int prime = 198491329;
+        // System.out.println((long) Integer.MAX_VALUE * Integer.MAX_VALUE);
+
+        for (long i = 0; i < size; i++) {
+            int result = (int) (((i + 1) * prime) % size);
+            if (result == i || (result < 0)) {
+                System.out.println(i + " => " + result);
+                fail("result is identical");
             }
         }
-
-        for (int column = 0; column < 4; column++) {
-            grid[2][column] = i++;
-        }
-
-        List<List<Integer>> allIndex = new ArrayList<List<Integer>>();
-
-        // Original index
-        List<Integer> oIndex = new ArrayList<Integer>();
-        for (int j = 0; j < data.size(); j++) {
-            oIndex.add(j);
-        }
-        allIndex.add(oIndex);
-
-        // first shiffling
-        Integer[] firstOutput = { 0, 5, 10, 1, 6, 11, 2, 7, 12, 3, 8, 13, 4, 9 };
-        List<Integer> fList = Arrays.asList(firstOutput);
-        List<Integer> fListExpected = Arrays.asList(new Integer[] { 5, 0, 10, 1, 6, 11, 2, 12, 7, 3, 8, 13, 4, 9 });
-        shuffleColumn.scrambleOutputArray(fList, allIndex);
-        for (int j = 0; j < fList.size(); j++) {
-            Assert.assertEquals(fListExpected.get(j), fList.get(j));
-        }
-
-        // Second tour
-        allIndex.add(fList);
-        List<Integer> sList = Arrays.asList(new Integer[] { 5, 11, 8, 0, 2, 13, 10, 12, 4, 1, 7, 9, 6, 3 });
-        shuffleColumn.scrambleOutputArray(sList, allIndex);
-        List<Integer> sListExpected = Arrays.asList(new Integer[] { 11, 5, 8, 0, 2, 13, 10, 4, 12, 1, 7, 9, 6, 3 });
-        for (int j = 0; j < fList.size(); j++) {
-            Assert.assertEquals(sListExpected.get(j), sList.get(j));
-        }
-
-        // Third tour
-        allIndex.add(sList);
-        List<Integer> tList = Arrays.asList(new Integer[] { 11, 13, 7, 5, 10, 9, 8, 4, 6, 0, 12, 3, 2, 1 });
-        shuffleColumn.scrambleOutputArray(tList, allIndex);
-        List<Integer> tListExpected = Arrays.asList(new Integer[] { 13, 11, 7, 5, 10, 9, 8, 6, 4, 0, 12, 3, 2, 1 });
-        for (int j = 0; j < tList.size(); j++) {
-            Assert.assertEquals(tListExpected.get(j), tList.get(j));
-        }
-
-        // Beside the tour, some special situation
-        allIndex.add(tList);
-        List<Integer> ffList = Arrays.asList(new Integer[] { 11, 5, 7, 10, 9, 8, 6, 4, 13, 0, 12, 3, 2, 1 });
-        shuffleColumn.scrambleOutputArray(ffList, allIndex);
-        List<Integer> ffListExpected = Arrays.asList(new Integer[] { 7, 10, 11, 9, 5, 8, 4, 13, 6, 12, 0, 1, 3, 2 });
-        for (int j = 0; j < fList.size(); j++) {
-            Assert.assertEquals(ffListExpected.get(j), ffList.get(j));
-        }
-
     }
 
     @Test
-    public void test1WithSmallIndexArray() {
-        List<List<Integer>> allIndex = new ArrayList<List<Integer>>();
-        allIndex.add(Arrays.asList(new Integer[] { 1, 2, 3 }));
-        allIndex.add(Arrays.asList(new Integer[] { 1, 3, 2 }));
-        allIndex.add(Arrays.asList(new Integer[] { 2, 3, 1 }));
-        allIndex.add(Arrays.asList(new Integer[] { 2, 1, 3 }));
-        allIndex.add(Arrays.asList(new Integer[] { 3, 1, 2 }));
-        allIndex.add(Arrays.asList(new Integer[] { 3, 2, 1 }));
+    public void testReplacement5000() {
+        int size = 5000;
+        int prime = 47;
+        int shift = 0;
+        do {
+            shift = new Random().nextInt(size);
+        } while (shift == 0);
 
-        List<Integer> test = Arrays.asList(new Integer[] { 1, 2, 3 });
-        shuffleColumn.scrambleOutputArray(test, allIndex);
-        for (int i = 0; i < test.size(); i++) {
-            Assert.assertEquals(allIndex.get(0).get(i), test.get(i));
+        List<Integer> list1 = new ArrayList<Integer>();
+        List<Integer> list2 = new ArrayList<Integer>();
+        List<Integer> list3 = new ArrayList<Integer>();
+
+        for (int i = 0; i < size; i++) {
+            list1.add(((i + shift) < size) ? i + shift : i + shift - size);
+            list2.add(((list1.get(i) + shift) < size) ? list1.get(i) + shift : list1.get(i) + shift - size);
+            list3.add(((list2.get(i) + shift) < size) ? list2.get(i) + shift : list2.get(i) + shift - size);
         }
 
+        List<Integer> replacements = shuffleColumn.calculateReplacementInteger(size, prime);
+        for (int i = 0; i < size; i++) {
+            // test whether the three cells can still cover the information
+            int index1 = replacements.get(list1.get(i));
+            int index2 = replacements.get(list2.get(i));
+            int index3 = replacements.get(list3.get(i));
+            assertTrue(index1 != index2);
+            assertTrue(index3 != index2);
+            assertTrue(index1 != index3);
+        }
     }
 
     @Test
-    public void testOneColumn() {
-        GenerateData generation = new GenerateData();
-
-        List<List<Object>> fileDataShuffled = generation.getTableValue(file);
-        List<List<Integer>> columnsOne = new ArrayList<List<Integer>>();
-        List<Integer> email = Arrays.asList(new Integer[] { generation.getColumnIndex("email") });
-        columnsOne.add(email);
-        List<String> keys = Arrays.asList(new String[] { "apple" });
-
-        // test with email
-
-        List<List<Object>> fileData = new ArrayList<List<Object>>();
-        fileData = generation.getTableValue(file);
-        shuffleColumn.shuffleColumnsData(fileDataShuffled, columnsOne, keys);
-
-        // test whether email are all changes
-        for (int i = 0; i < 1000; i++) {
-            Assert.assertTrue(!fileData.get(i).get(3).equals(fileDataShuffled.get(i).get(3)));
-        }
-
-    }
-
-    @Test
-    public void testOneColumn5000() {
-        GenerateData generation = new GenerateData();
-
-        List<List<Object>> fileDataShuffled = generation.getTableValue(file5000);
-        List<List<Integer>> columnsOne = new ArrayList<List<Integer>>();
-        List<Integer> email = Arrays.asList(new Integer[] { generation.getColumnIndex("email") });
-        columnsOne.add(email);
-        List<String> keys = Arrays.asList(new String[] { "apple" });
-
-        // test with email
-
-        List<List<Object>> fileData = new ArrayList<List<Object>>();
-        fileData = generation.getTableValue(file5000);
-        shuffleColumn.shuffleColumnsData(fileDataShuffled, columnsOne, keys);
-
-        // test whether email are all changes
-        for (int i = 0; i < 1000; i++) {
-            Assert.assertTrue(!fileData.get(i).get(3).equals(fileDataShuffled.get(i).get(3)));
-        }
-
-    }
-
-    @Test
-    public void testOneColumn10000() {
-        GenerateData generation = new GenerateData();
-
-        List<List<Object>> fileDataShuffled = generation.getTableValue(file10000);
-        List<List<Integer>> columnsOne = new ArrayList<List<Integer>>();
-        List<Integer> email = Arrays.asList(new Integer[] { generation.getColumnIndex("email") });
-        columnsOne.add(email);
-        List<String> keys = Arrays.asList(new String[] { "apple" });
-
-        // test with email
-
-        List<List<Object>> fileData = new ArrayList<List<Object>>();
-        fileData = generation.getTableValue(file10000);
-        shuffleColumn.shuffleColumnsData(fileDataShuffled, columnsOne, keys);
-
-        // test whether email are all changes
-        for (int i = 0; i < 1000; i++) {
-            Assert.assertTrue(!fileData.get(i).get(3).equals(fileDataShuffled.get(i).get(3)));
-        }
-
-    }
-
-    @Test
-    public void testshuffleColumnsData() {
+    public void testshuffleColumnsData1000() {
 
         List<List<Object>> fileDataShuffled = generation.getTableValue(file);
         List<List<Object>> fileData = generation.getTableValue(file);
 
-        long start = System.currentTimeMillis();
-        shuffleColumn.shuffleColumnsData(fileDataShuffled, columns, keys);
-        long end = System.currentTimeMillis();
-        System.out.println("1000 rows " + (end - start));
+        shuffleColumn.setRows(fileDataShuffled);
+
+        shuffleColumn.shuffle();
+
+        fileDataShuffled = shuffleColumn.getRows();
+
+        List<Object> idColumnSL = new ArrayList<Object>();
+        List<Object> firstNameColumnSL = new ArrayList<Object>();
+        List<Object> emailSL = new ArrayList<Object>();
+        List<Object> citySL = new ArrayList<Object>();
+        List<Object> zipSL = new ArrayList<Object>();
+
+        List<Object> idColumnL = new ArrayList<Object>();
+        List<Object> firstNameColumnL = new ArrayList<Object>();
+        List<Object> emailL = new ArrayList<Object>();
+        List<Object> cityL = new ArrayList<Object>();
+        List<Object> zipL = new ArrayList<Object>();
+        for (int i = 0; i < fileData.size(); i++) {
+            Object idS = fileDataShuffled.get(i).get(0);
+            Object firstNameS = fileDataShuffled.get(i).get(1);
+            Object emailS = fileDataShuffled.get(i).get(3);
+            Object cityS = fileDataShuffled.get(i).get(6);
+            Object zipS = fileDataShuffled.get(i).get(7);
+
+            idColumnSL.add(idS);
+            firstNameColumnSL.add(firstNameS);
+            emailSL.add(emailS);
+            citySL.add(cityS);
+            zipSL.add(zipS);
+
+            Object id = fileData.get(i).get(0);
+            Object firstName = fileData.get(i).get(1);
+            Object email = fileData.get(i).get(3);
+            Object city = fileData.get(i).get(6);
+            Object zip = fileData.get(i).get(7);
+
+            idColumnL.add(id);
+            firstNameColumnL.add(firstName);
+            emailL.add(email);
+            cityL.add(city);
+            zipL.add(zip);
+        }
+
+        for (int i = 0; i < fileData.size(); i++) {
+            // test whether all email address retain
+            Assert.assertTrue(emailSL.contains(emailL.get(i)));
+            // test whether all name retain
+            Assert.assertTrue(firstNameColumnSL.contains(firstNameColumnSL.get(i)));
+
+            Object oid = idColumnL.get(i);
+            Object oName = firstNameColumnL.get(i);
+
+            // test whether the id and first name's relation retains
+            int sIdIndex = idColumnSL.indexOf(oid);
+            Object sFirstName = firstNameColumnSL.get(sIdIndex);
+            Assert.assertTrue(oName.equals(sFirstName));
+
+        }
+
+    }
+
+    @Test
+    public void testshuffleColumnsData5000() {
+
+        List<List<Object>> fileDataShuffled = generation.getTableValue(file5000);
+        List<List<Object>> fileData = generation.getTableValue(file5000);
+
+        shuffleColumn.setRows(fileDataShuffled);
+
+        shuffleColumn.shuffle();
+
+        fileDataShuffled = shuffleColumn.getRows();
 
         List<Object> idColumnSL = new ArrayList<Object>();
         List<Object> firstNameColumnSL = new ArrayList<Object>();
@@ -279,11 +246,6 @@ public class ShuffleColumnTest {
             emailL.add(email);
             cityL.add(city);
             zipL.add(zip);
-            // test whether all ids are shuffled
-            Assert.assertTrue(!id.equals(idS));
-
-            // test whether all email are shuffled
-            Assert.assertTrue(!email.equals(emailS));
         }
 
         for (int i = 0; i < fileData.size(); i++) {
@@ -294,102 +256,12 @@ public class ShuffleColumnTest {
 
             Object oid = idColumnL.get(i);
             Object oName = firstNameColumnL.get(i);
-            Object oEmail = emailL.get(i);
-            Object oZip = zipL.get(i);
-
-            int soIndex = emailSL.indexOf(oEmail);
-            Object sZip = zipSL.get(soIndex);
-            Object sID = idColumnSL.get(soIndex);
-
-            // test whether the email the real address are masked
-            Assert.assertTrue(!oZip.equals(sZip));
-            Assert.assertTrue(!oid.equals(sID));
 
             // test whether the id and first name's relation retains
             int sIdIndex = idColumnSL.indexOf(oid);
             Object sFirstName = firstNameColumnSL.get(sIdIndex);
             Assert.assertTrue(oName.equals(sFirstName));
-        }
 
-    }
-
-    @Test
-    public void testshuffleColumnsData5000() {
-
-        List<List<Object>> fileDataShuffled = generation.getTableValue(file5000);
-        List<List<Object>> fileData = generation.getTableValue(file5000);
-
-        long start = System.currentTimeMillis();
-        shuffleColumn.shuffleColumnsData(fileDataShuffled, columns, keys);
-        long end = System.currentTimeMillis();
-        System.out.println("5000 rows " + (end - start));
-
-        List<Object> idColumnSL = new ArrayList<Object>();
-        List<Object> firstNameColumnSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
-
-        List<Object> idColumnL = new ArrayList<Object>();
-        List<Object> firstNameColumnL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Object idS = fileDataShuffled.get(i).get(0);
-            Object firstNameS = fileDataShuffled.get(i).get(1);
-            Object emailS = fileDataShuffled.get(i).get(3);
-            Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
-
-            idColumnSL.add(idS);
-            firstNameColumnSL.add(firstNameS);
-            emailSL.add(emailS);
-            citySL.add(cityS);
-            stateSL.add(stateS);
-
-            Object id = fileData.get(i).get(0);
-            Object firstName = fileData.get(i).get(1);
-            Object email = fileData.get(i).get(3);
-            Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
-
-            idColumnL.add(id);
-            firstNameColumnL.add(firstName);
-            emailL.add(email);
-            cityL.add(city);
-            stateL.add(state);
-            // test whether all ids are shuffled
-            Assert.assertTrue(!id.equals(idS));
-
-            // test whether all email are shuffled
-            Assert.assertTrue(!email.equals(emailS));
-        }
-
-        for (int i = 0; i < fileData.size(); i++) {
-            // test whether all email address retain
-            Assert.assertTrue(emailSL.contains(emailL.get(i)));
-            // test whether all name retain
-            Assert.assertTrue(firstNameColumnSL.contains(firstNameColumnSL.get(i)));
-
-            Object oid = idColumnL.get(i);
-            Object oName = firstNameColumnL.get(i);
-            Object oEmail = emailL.get(i);
-            stateL.get(i);
-
-            int soIndex = emailSL.indexOf(oEmail);
-            stateSL.get(soIndex);
-            Object sID = idColumnSL.get(soIndex);
-
-            // test whether the email the real address are masked
-            // Assert.assertTrue(!oZip.equals(sZip));
-            Assert.assertTrue(!oid.equals(sID));
-
-            // test whether the id and first name's relation retains
-            int sIdIndex = idColumnSL.indexOf(oid);
-            Object sFirstName = firstNameColumnSL.get(sIdIndex);
-            Assert.assertTrue(oName.equals(sFirstName));
         }
 
     }
@@ -399,52 +271,49 @@ public class ShuffleColumnTest {
 
         List<List<Object>> fileDataShuffled = generation.getTableValue(file10000);
         List<List<Object>> fileData = generation.getTableValue(file10000);
-        long start = System.currentTimeMillis();
-        shuffleColumn.shuffleColumnsData(fileDataShuffled, columns, keys);
-        long end = System.currentTimeMillis();
-        System.out.println("10000 rows " + (end - start));
+
+        shuffleColumn.setRows(fileDataShuffled);
+
+        shuffleColumn.shuffle();
+
+        fileDataShuffled = shuffleColumn.getRows();
 
         List<Object> idColumnSL = new ArrayList<Object>();
         List<Object> firstNameColumnSL = new ArrayList<Object>();
         List<Object> emailSL = new ArrayList<Object>();
         List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
+        List<Object> zipSL = new ArrayList<Object>();
 
         List<Object> idColumnL = new ArrayList<Object>();
         List<Object> firstNameColumnL = new ArrayList<Object>();
         List<Object> emailL = new ArrayList<Object>();
         List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
+        List<Object> zipL = new ArrayList<Object>();
 
         for (int i = 0; i < fileData.size(); i++) {
             Object idS = fileDataShuffled.get(i).get(0);
             Object firstNameS = fileDataShuffled.get(i).get(1);
             Object emailS = fileDataShuffled.get(i).get(3);
             Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
+            Object zipS = fileDataShuffled.get(i).get(7);
 
             idColumnSL.add(idS);
             firstNameColumnSL.add(firstNameS);
             emailSL.add(emailS);
             citySL.add(cityS);
-            stateSL.add(stateS);
+            zipSL.add(zipS);
 
             Object id = fileData.get(i).get(0);
             Object firstName = fileData.get(i).get(1);
             Object email = fileData.get(i).get(3);
             Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
+            Object zip = fileData.get(i).get(7);
 
             idColumnL.add(id);
             firstNameColumnL.add(firstName);
             emailL.add(email);
             cityL.add(city);
-            stateL.add(state);
-            // test whether all ids are shuffled
-            Assert.assertTrue(!id.equals(idS));
-
-            // test whether all email are shuffled
-            Assert.assertTrue(!email.equals(emailS));
+            zipL.add(zip);
         }
 
         for (int i = 0; i < fileData.size(); i++) {
@@ -455,21 +324,12 @@ public class ShuffleColumnTest {
 
             Object oid = idColumnL.get(i);
             Object oName = firstNameColumnL.get(i);
-            Object oEmail = emailL.get(i);
-            stateL.get(i);
-
-            int soIndex = emailSL.indexOf(oEmail);
-            stateSL.get(soIndex);
-            Object sID = idColumnSL.get(soIndex);
-
-            // test whether the email the real address are masked
-            // Assert.assertTrue(!oZip.equals(sZip));
-            Assert.assertTrue(!oid.equals(sID));
 
             // test whether the id and first name's relation retains
             int sIdIndex = idColumnSL.indexOf(oid);
             Object sFirstName = firstNameColumnSL.get(sIdIndex);
             Assert.assertTrue(oName.equals(sFirstName));
+
         }
 
     }
@@ -479,52 +339,49 @@ public class ShuffleColumnTest {
 
         List<List<Object>> fileDataShuffled = generation.getTableValue(file20000);
         List<List<Object>> fileData = generation.getTableValue(file20000);
-        long start = System.currentTimeMillis();
-        shuffleColumn.shuffleColumnsData(fileDataShuffled, columns, keys);
-        long end = System.currentTimeMillis();
-        System.out.println("20000 rows " + (end - start));
+
+        shuffleColumn.setRows(fileDataShuffled);
+
+        shuffleColumn.shuffle();
+
+        fileDataShuffled = shuffleColumn.getRows();
 
         List<Object> idColumnSL = new ArrayList<Object>();
         List<Object> firstNameColumnSL = new ArrayList<Object>();
         List<Object> emailSL = new ArrayList<Object>();
         List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
+        List<Object> zipSL = new ArrayList<Object>();
 
         List<Object> idColumnL = new ArrayList<Object>();
         List<Object> firstNameColumnL = new ArrayList<Object>();
         List<Object> emailL = new ArrayList<Object>();
         List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
+        List<Object> zipL = new ArrayList<Object>();
 
         for (int i = 0; i < fileData.size(); i++) {
             Object idS = fileDataShuffled.get(i).get(0);
             Object firstNameS = fileDataShuffled.get(i).get(1);
             Object emailS = fileDataShuffled.get(i).get(3);
             Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
+            Object zipS = fileDataShuffled.get(i).get(7);
 
             idColumnSL.add(idS);
             firstNameColumnSL.add(firstNameS);
             emailSL.add(emailS);
             citySL.add(cityS);
-            stateSL.add(stateS);
+            zipSL.add(zipS);
 
             Object id = fileData.get(i).get(0);
             Object firstName = fileData.get(i).get(1);
             Object email = fileData.get(i).get(3);
             Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
+            Object zip = fileData.get(i).get(7);
 
             idColumnL.add(id);
             firstNameColumnL.add(firstName);
             emailL.add(email);
             cityL.add(city);
-            stateL.add(state);
-            // test whether all ids are shuffled
-            Assert.assertTrue(!id.equals(idS));
-
-            // test whether all email are shuffled
-            Assert.assertTrue(!email.equals(emailS));
+            zipL.add(zip);
         }
 
         for (int i = 0; i < fileData.size(); i++) {
@@ -535,21 +392,12 @@ public class ShuffleColumnTest {
 
             Object oid = idColumnL.get(i);
             Object oName = firstNameColumnL.get(i);
-            Object oEmail = emailL.get(i);
-            stateL.get(i);
-
-            int soIndex = emailSL.indexOf(oEmail);
-            stateSL.get(soIndex);
-            Object sID = idColumnSL.get(soIndex);
-
-            // test whether the email the real address are masked
-            // Assert.assertTrue(!oZip.equals(sZip));
-            Assert.assertTrue(!oid.equals(sID));
 
             // test whether the id and first name's relation retains
             int sIdIndex = idColumnSL.indexOf(oid);
             Object sFirstName = firstNameColumnSL.get(sIdIndex);
             Assert.assertTrue(oName.equals(sFirstName));
+
         }
 
     }
@@ -560,52 +408,48 @@ public class ShuffleColumnTest {
         List<List<Object>> fileDataShuffled = generation.getTableValue(file50000);
         List<List<Object>> fileData = generation.getTableValue(file50000);
 
-        long start = System.currentTimeMillis();
-        shuffleColumn.shuffleColumnsData(fileDataShuffled, columns, keys);
-        long end = System.currentTimeMillis();
-        System.out.println("50000 rows " + (end - start));
+        shuffleColumn.setRows(fileDataShuffled);
+
+        shuffleColumn.shuffle();
+
+        fileDataShuffled = shuffleColumn.getRows();
 
         List<Object> idColumnSL = new ArrayList<Object>();
         List<Object> firstNameColumnSL = new ArrayList<Object>();
         List<Object> emailSL = new ArrayList<Object>();
         List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
+        List<Object> zipSL = new ArrayList<Object>();
 
         List<Object> idColumnL = new ArrayList<Object>();
         List<Object> firstNameColumnL = new ArrayList<Object>();
         List<Object> emailL = new ArrayList<Object>();
         List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
+        List<Object> zipL = new ArrayList<Object>();
 
         for (int i = 0; i < fileData.size(); i++) {
             Object idS = fileDataShuffled.get(i).get(0);
             Object firstNameS = fileDataShuffled.get(i).get(1);
             Object emailS = fileDataShuffled.get(i).get(3);
             Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
+            Object zipS = fileDataShuffled.get(i).get(7);
 
             idColumnSL.add(idS);
             firstNameColumnSL.add(firstNameS);
             emailSL.add(emailS);
             citySL.add(cityS);
-            stateSL.add(stateS);
+            zipSL.add(zipS);
 
             Object id = fileData.get(i).get(0);
             Object firstName = fileData.get(i).get(1);
             Object email = fileData.get(i).get(3);
             Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
+            Object zip = fileData.get(i).get(7);
 
             idColumnL.add(id);
             firstNameColumnL.add(firstName);
             emailL.add(email);
             cityL.add(city);
-            stateL.add(state);
-            // test whether all ids are shuffled
-            Assert.assertTrue(!id.equals(idS));
-
-            // test whether all email are shuffled
-            Assert.assertTrue(!email.equals(emailS));
+            zipL.add(zip);
         }
 
         for (int i = 0; i < fileData.size(); i++) {
@@ -616,21 +460,12 @@ public class ShuffleColumnTest {
 
             Object oid = idColumnL.get(i);
             Object oName = firstNameColumnL.get(i);
-            Object oEmail = emailL.get(i);
-            stateL.get(i);
-
-            int soIndex = emailSL.indexOf(oEmail);
-            stateSL.get(soIndex);
-            Object sID = idColumnSL.get(soIndex);
-
-            // test whether the email the real address are masked
-            // Assert.assertTrue(!oZip.equals(sZip));
-            Assert.assertTrue(!oid.equals(sID));
 
             // test whether the id and first name's relation retains
             int sIdIndex = idColumnSL.indexOf(oid);
             Object sFirstName = firstNameColumnSL.get(sIdIndex);
             Assert.assertTrue(oName.equals(sFirstName));
+
         }
 
     }
@@ -641,52 +476,47 @@ public class ShuffleColumnTest {
         List<List<Object>> fileDataShuffled = generation.getTableValue(file100000);
         List<List<Object>> fileData = generation.getTableValue(file100000);
 
-        long start = System.currentTimeMillis();
-        shuffleColumn.shuffleColumnsData(fileDataShuffled, columns, keys);
-        long end = System.currentTimeMillis();
-        System.out.println("100000 rows " + (end - start));
+        shuffleColumn.setRows(fileDataShuffled);
 
+        shuffleColumn.shuffle();
+
+        fileDataShuffled = shuffleColumn.getRows();
         List<Object> idColumnSL = new ArrayList<Object>();
         List<Object> firstNameColumnSL = new ArrayList<Object>();
         List<Object> emailSL = new ArrayList<Object>();
         List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
+        List<Object> zipSL = new ArrayList<Object>();
 
         List<Object> idColumnL = new ArrayList<Object>();
         List<Object> firstNameColumnL = new ArrayList<Object>();
         List<Object> emailL = new ArrayList<Object>();
         List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
+        List<Object> zipL = new ArrayList<Object>();
 
         for (int i = 0; i < fileData.size(); i++) {
             Object idS = fileDataShuffled.get(i).get(0);
             Object firstNameS = fileDataShuffled.get(i).get(1);
             Object emailS = fileDataShuffled.get(i).get(3);
             Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
+            Object zipS = fileDataShuffled.get(i).get(7);
 
             idColumnSL.add(idS);
             firstNameColumnSL.add(firstNameS);
             emailSL.add(emailS);
             citySL.add(cityS);
-            stateSL.add(stateS);
+            zipSL.add(zipS);
 
             Object id = fileData.get(i).get(0);
             Object firstName = fileData.get(i).get(1);
             Object email = fileData.get(i).get(3);
             Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
+            Object zip = fileData.get(i).get(7);
 
             idColumnL.add(id);
             firstNameColumnL.add(firstName);
             emailL.add(email);
             cityL.add(city);
-            stateL.add(state);
-            // test whether all ids are shuffled
-            Assert.assertTrue(!id.equals(idS));
-
-            // test whether all email are shuffled
-            Assert.assertTrue(!email.equals(emailS));
+            zipL.add(zip);
         }
 
         for (int i = 0; i < fileData.size(); i++) {
@@ -697,21 +527,12 @@ public class ShuffleColumnTest {
 
             Object oid = idColumnL.get(i);
             Object oName = firstNameColumnL.get(i);
-            Object oEmail = emailL.get(i);
-            stateL.get(i);
-
-            int soIndex = emailSL.indexOf(oEmail);
-            stateSL.get(soIndex);
-            Object sID = idColumnSL.get(soIndex);
-
-            // test whether the email the real address are masked
-            // Assert.assertTrue(!oZip.equals(sZip));
-            Assert.assertTrue(!oid.equals(sID));
 
             // test whether the id and first name's relation retains
             int sIdIndex = idColumnSL.indexOf(oid);
             Object sFirstName = firstNameColumnSL.get(sIdIndex);
             Assert.assertTrue(oName.equals(sFirstName));
+
         }
 
     }

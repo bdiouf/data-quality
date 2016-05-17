@@ -22,147 +22,146 @@ public class ShuffleColumnWithPartitionTest {
 
     private String file100000 = "Shuffling_test_data_100000.csv";
 
-    private static List<Integer> group = new ArrayList<Integer>();
+    private static List<String> group = new ArrayList<String>();
 
-    private static List<List<Integer>> numColumn = new ArrayList<List<Integer>>();
+    private static List<List<String>> numColumn = new ArrayList<List<String>>();
+
+    private static List<String> allColumns = Arrays
+            .asList(new String[] { "id", "first_name", "last_name", "email", "gender", "birth", "city", "zip_code", "country" });
 
     private static GenerateData generator = new GenerateData();
 
-    private ShuffleColumnWithPartition partition = new ShuffleColumnWithPartition();
+    private static ShuffleColumn partition = null;
 
     @BeforeClass
     public static void prepareData() {
-        group.add(6);
-        group.add(7);
-        group.add(8);
+        group.add("city");
+        group.add("zip_code");
+        group.add("country");
 
-        List<Integer> column1 = Arrays.asList(new Integer[] { 0, 1 });
-        List<Integer> column2 = Arrays.asList(new Integer[] { 3 });
+        List<String> column1 = Arrays.asList(new String[] { "id", "first_name" });
+        List<String> column2 = Arrays.asList(new String[] { "email" });
         numColumn.add(column1);
         numColumn.add(column2);
+
+        partition = new ShuffleColumn(numColumn, allColumns, group);
     }
 
     @Test
-    public void testshuffleColumnDataByGroup() {
+    public void testshuffleColumnDataByGroup1000() {
         List<List<Object>> fileDataShuffled = generator.getTableValue(file);
         List<List<Object>> fileData = generator.getTableValue(file);
-        partition.shuffleColumnByGroup(fileDataShuffled, numColumn, Arrays.asList(new String[] { "talend", "computer" }), group);
+
+        partition.setRows(fileDataShuffled);
+
+        partition.shuffle();
+
+        fileDataShuffled = partition.getRows();
+
+        List<Row> fileRowShuffled = new ArrayList<Row>();
+        List<Row> fileRow = new ArrayList<Row>();
+
+        for (int i = 0; i < fileData.size(); i++) {
+            fileRowShuffled.add(new Row(i, fileDataShuffled.get(i), fileDataShuffled.get(i).subList(6, 9)));
+            fileRow.add(new Row(i, fileData.get(i), fileData.get(i).subList(6, 9)));
+        }
 
         List<Object> idSL = new ArrayList<Object>();
         List<Object> firstNameSL = new ArrayList<Object>();
         List<Object> emailSL = new ArrayList<Object>();
         List<Object> citySL = new ArrayList<Object>();
-        List<Object> zipSL = new ArrayList<Object>();
+        List<Object> stateSL = new ArrayList<Object>();
 
         List<Object> idL = new ArrayList<Object>();
         List<Object> firstNameL = new ArrayList<Object>();
         List<Object> emailL = new ArrayList<Object>();
         List<Object> cityL = new ArrayList<Object>();
-        List<Object> zipL = new ArrayList<Object>();
+        List<Object> stateL = new ArrayList<Object>();
 
         for (int i = 0; i < fileData.size(); i++) {
             Object idS = fileDataShuffled.get(i).get(0);
             Object firstNameS = fileDataShuffled.get(i).get(1);
             Object emailS = fileDataShuffled.get(i).get(3);
             Object cityS = fileDataShuffled.get(i).get(6);
-            Object zipS = fileDataShuffled.get(i).get(7);
+            Object stateS = fileDataShuffled.get(i).get(7);
 
             idSL.add(idS);
             firstNameSL.add(firstNameS);
             emailSL.add(emailS);
             citySL.add(cityS);
-            zipSL.add(zipS);
+            stateSL.add(stateS);
 
             Object id = fileData.get(i).get(0);
             Object firstName = fileData.get(i).get(1);
             Object email = fileData.get(i).get(3);
             Object city = fileData.get(i).get(6);
-            Object zip = fileData.get(i).get(7);
+            Object state = fileData.get(i).get(7);
 
             idL.add(id);
             firstNameL.add(firstName);
             emailL.add(email);
             cityL.add(city);
-            zipL.add(zip);
+            stateL.add(state);
         }
 
         for (int i = 0; i < fileData.size(); i++) {
-
-            Object zip = zipL.get(i);
-
-            int firstZip = zipL.indexOf(zip);
-            int lastZip = zipL.lastIndexOf(zip);
+            Row row = fileRow.get(i);
+            int firstGroup = fileRow.indexOf(row);
+            int lastGroup = fileRow.lastIndexOf(row);
 
             // test whether the city and the zip code are unique
-            if (firstZip == lastZip) {
+            if (firstGroup == lastGroup) {
                 // only one record in the table, checks whether the information retains the same
-                int idcmp = Integer.parseInt((String) idL.get(i));
-                String fncmp = (String) firstNameL.get(i);
-                String emailcmp = (String) emailL.get(i);
-                String citycmp = (String) cityL.get(i);
-                String zipcmp = (String) zipL.get(i);
+                int idcmp = Integer.parseInt((String) fileRow.get(i).rItems.get(0));
+                String fncmp = (String) fileRow.get(i).rItems.get(1);
+                String emailcmp = (String) fileRow.get(i).rItems.get(3);
+                String citycmp = (String) fileRow.get(i).rItems.get(6);
+                String statecmp = (String) fileRow.get(i).rItems.get(7);
 
-                int idscmp = Integer.parseInt((String) idSL.get(i));
-                String fnscmp = (String) firstNameSL.get(i);
-                String emailscmp = (String) emailSL.get(i);
-                String cityscmp = (String) citySL.get(i);
-                String zipscmp = (String) zipSL.get(i);
+                int idscmp = Integer.parseInt((String) fileRowShuffled.get(i).rItems.get(0));
+                String fnscmp = (String) fileRowShuffled.get(i).rItems.get(1);
+                String emailscmp = (String) fileRowShuffled.get(i).rItems.get(3);
+                String cityscmp = (String) fileRowShuffled.get(i).rItems.get(6);
+                String statescmp = (String) fileRowShuffled.get(i).rItems.get(7);
 
                 Assert.assertEquals(idcmp, idscmp);
                 Assert.assertEquals(fncmp, fnscmp);
                 Assert.assertEquals(emailcmp, emailscmp);
                 Assert.assertEquals(citycmp, cityscmp);
-                Assert.assertEquals(zipcmp, zipscmp);
+                Assert.assertEquals(statecmp, statescmp);
 
-            } else if (firstZip != lastZip && i == firstZip) {
+            } else if (firstGroup != lastGroup && i == firstGroup) {
                 // zip code has several records
-
-                String zipcmp = (String) zipL.get(i);
-
                 List<Integer> rIndex = new ArrayList<Integer>();
-                for (int row = firstZip; row <= lastZip; row++) {
-                    if (zipcmp.equals((String) zipSL.get(row))) {
-                        rIndex.add(row);
+                for (int j = firstGroup; j <= lastGroup; j++) {
+                    if (fileRow.get(i).equals(fileRowShuffled.get(j))) {
+                        rIndex.add(j);
                     }
                 }
 
                 if (rIndex.size() > 2) {
+                    for (int rowI : rIndex) {
+                        String citycmp = (String) fileRow.get(rowI).rItems.get(6);
+                        String statecmp = (String) fileRow.get(rowI).rItems.get(7);
 
-                    for (int row : rIndex) {
-                        String citycmp = (String) cityL.get(row);
-                        zipcmp = (String) zipL.get(row);
-
-                        String fnscmp = (String) firstNameSL.get(row);
-                        String emailscmp = (String) emailSL.get(row);
-                        String cityscmp = (String) citySL.get(row);
-                        String zipscmp = (String) zipSL.get(row);
+                        String fnscmp = (String) fileRowShuffled.get(rowI).rItems.get(1);
+                        String emailscmp = (String) fileRowShuffled.get(rowI).rItems.get(3);
+                        String cityscmp = (String) fileRowShuffled.get(rowI).rItems.get(6);
+                        String statescmp = (String) fileRowShuffled.get(rowI).rItems.get(7);
 
                         // test whether city changes
                         Assert.assertEquals(citycmp, cityscmp);
 
                         // test whether zip code changes
-                        Assert.assertEquals(zipcmp, zipscmp);
+                        Assert.assertEquals(statecmp, statescmp);
 
-                        // test whether the id and the first name change the position
-                        int originalIndex = idL.indexOf(idSL.get(row));
-                        Assert.assertTrue(originalIndex != row);
+                        // test whether the original information remain, id and email, at least one is shuffled
+                        String ido = (String) idL.get(rowI);
+                        String ids = (String) idSL.get(rowI);
+                        String emailo = (String) emailL.get(rowI);
+                        String emails = (String) emailSL.get(rowI);
+                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
 
-                        // test whether id the first name change the group
-                        Assert.assertEquals(firstNameL.get(originalIndex), fnscmp);
-
-                        // test whether the email changes the position
-                        int originalIndexE = emailL.indexOf(emailscmp);
-                        Assert.assertTrue(originalIndexE != row);
-
-                        // test whether the mail's group changes the group
-                        String citycmpE = (String) cityL.get(originalIndexE);
-                        String zipcmpE = (String) zipL.get(originalIndexE);
-                        Assert.assertEquals(citycmpE, cityscmp);
-                        Assert.assertEquals(zipcmpE, zipscmp);
-
-                        // test whether the (id first-name) remains the information of email
-                        String emailO = (String) emailL.get(originalIndex);
-                        Assert.assertTrue(!emailO.equals(emailscmp));
                     }
                 }
 
@@ -175,7 +174,12 @@ public class ShuffleColumnWithPartitionTest {
     public void testshuffleColumnDataByGroup5000() {
         List<List<Object>> fileDataShuffled = generator.getTableValue(file5000);
         List<List<Object>> fileData = generator.getTableValue(file5000);
-        partition.shuffleColumnByGroup(fileDataShuffled, numColumn, Arrays.asList(new String[] { "talend", "computer" }), group);
+
+        partition.setRows(fileDataShuffled);
+
+        partition.shuffle();
+
+        fileDataShuffled = partition.getRows();
 
         List<Row> fileRowShuffled = new ArrayList<Row>();
         List<Row> fileRow = new ArrayList<Row>();
@@ -274,26 +278,13 @@ public class ShuffleColumnWithPartitionTest {
                         // test whether zip code changes
                         Assert.assertEquals(statecmp, statescmp);
 
-                        // test whether the id and the first name change the position
-                        int originalIndex = idL.indexOf(idSL.get(rowI));
-                        Assert.assertTrue(originalIndex != rowI);
+                        // test whether the original information remain, id and email, at least one is shuffled
+                        String ido = (String) idL.get(rowI);
+                        String ids = (String) idSL.get(rowI);
+                        String emailo = (String) emailL.get(rowI);
+                        String emails = (String) emailSL.get(rowI);
+                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
 
-                        // test whether id the first name change the group
-                        Assert.assertEquals(firstNameL.get(originalIndex), fnscmp);
-
-                        // test whether the email changes the position
-                        int originalIndexE = emailL.indexOf(emailscmp);
-                        Assert.assertTrue(originalIndexE != rowI);
-
-                        // test whether the mail's group changes the group
-                        String citycmpE = (String) cityL.get(originalIndexE);
-                        String statecmpE = (String) stateL.get(originalIndexE);
-                        Assert.assertEquals(citycmpE, cityscmp);
-                        Assert.assertEquals(statecmpE, statecmp);
-
-                        // test whether the (id first-name) remains the information of email
-                        String emailO = (String) emailL.get(originalIndex);
-                        Assert.assertTrue(!emailO.equals(emailscmp));
                     }
                 }
 
@@ -306,10 +297,12 @@ public class ShuffleColumnWithPartitionTest {
     public void testshuffleColumnDataByGroup10000() {
         List<List<Object>> fileDataShuffled = generator.getTableValue(file10000);
         List<List<Object>> fileData = generator.getTableValue(file10000);
-        long startTime = System.currentTimeMillis();
-        partition.shuffleColumnByGroup(fileDataShuffled, numColumn, Arrays.asList(new String[] { "talend", "computer" }), group);
-        long endTime = System.currentTimeMillis();
-        System.out.println("10000 rows " + (endTime - startTime));
+
+        partition.setRows(fileDataShuffled);
+
+        partition.shuffle();
+
+        fileDataShuffled = partition.getRows();
 
         List<Row> fileRowShuffled = new ArrayList<Row>();
         List<Row> fileRow = new ArrayList<Row>();
@@ -408,26 +401,12 @@ public class ShuffleColumnWithPartitionTest {
                         // test whether zip code changes
                         Assert.assertEquals(statecmp, statescmp);
 
-                        // test whether the id and the first name change the position
-                        int originalIndex = idL.indexOf(idSL.get(rowI));
-                        Assert.assertTrue(originalIndex != rowI);
-
-                        // test whether id the first name change the group
-                        Assert.assertEquals(firstNameL.get(originalIndex), fnscmp);
-
-                        // test whether the email changes the position
-                        int originalIndexE = emailL.indexOf(emailscmp);
-                        Assert.assertTrue(originalIndexE != rowI);
-
-                        // test whether the mail's group changes the group
-                        String citycmpE = (String) cityL.get(originalIndexE);
-                        String statecmpE = (String) stateL.get(originalIndexE);
-                        Assert.assertEquals(citycmpE, cityscmp);
-                        Assert.assertEquals(statecmpE, statecmp);
-
-                        // test whether the (id first-name) remains the information of email
-                        String emailO = (String) emailL.get(originalIndex);
-                        Assert.assertTrue(!emailO.equals(emailscmp));
+                        // test whether the original information remain, id and email, at least one is shuffled
+                        String ido = (String) idL.get(rowI);
+                        String ids = (String) idSL.get(rowI);
+                        String emailo = (String) emailL.get(rowI);
+                        String emails = (String) emailSL.get(rowI);
+                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
                     }
                 }
 
@@ -440,10 +419,12 @@ public class ShuffleColumnWithPartitionTest {
     public void testshuffleColumnDataByGroup20000() {
         List<List<Object>> fileDataShuffled = generator.getTableValue(file20000);
         List<List<Object>> fileData = generator.getTableValue(file20000);
-        long startTime = System.currentTimeMillis();
-        partition.shuffleColumnByGroup(fileDataShuffled, numColumn, Arrays.asList(new String[] { "talend", "computer" }), group);
-        long endTime = System.currentTimeMillis();
-        System.out.println("20000 rows " + (endTime - startTime));
+
+        partition.setRows(fileDataShuffled);
+
+        partition.shuffle();
+
+        fileDataShuffled = partition.getRows();
 
         List<Row> fileRowShuffled = new ArrayList<Row>();
         List<Row> fileRow = new ArrayList<Row>();
@@ -542,26 +523,12 @@ public class ShuffleColumnWithPartitionTest {
                         // test whether zip code changes
                         Assert.assertEquals(statecmp, statescmp);
 
-                        // test whether the id and the first name change the position
-                        int originalIndex = idL.indexOf(idSL.get(rowI));
-                        Assert.assertTrue(originalIndex != rowI);
-
-                        // test whether id the first name change the group
-                        Assert.assertEquals(firstNameL.get(originalIndex), fnscmp);
-
-                        // test whether the email changes the position
-                        int originalIndexE = emailL.indexOf(emailscmp);
-                        Assert.assertTrue(originalIndexE != rowI);
-
-                        // test whether the mail's group changes the group
-                        String citycmpE = (String) cityL.get(originalIndexE);
-                        String statecmpE = (String) stateL.get(originalIndexE);
-                        Assert.assertEquals(citycmpE, cityscmp);
-                        Assert.assertEquals(statecmpE, statecmp);
-
-                        // test whether the (id first-name) remains the information of email
-                        String emailO = (String) emailL.get(originalIndex);
-                        Assert.assertTrue(!emailO.equals(emailscmp));
+                        // test whether the original information remain, id and email, at least one is shuffled
+                        String ido = (String) idL.get(rowI);
+                        String ids = (String) idSL.get(rowI);
+                        String emailo = (String) emailL.get(rowI);
+                        String emails = (String) emailSL.get(rowI);
+                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
                     }
                 }
 
@@ -574,10 +541,12 @@ public class ShuffleColumnWithPartitionTest {
     public void testshuffleColumnDataByGroup50000() {
         List<List<Object>> fileDataShuffled = generator.getTableValue(file50000);
         List<List<Object>> fileData = generator.getTableValue(file50000);
-        long startTime = System.currentTimeMillis();
-        partition.shuffleColumnByGroup(fileDataShuffled, numColumn, Arrays.asList(new String[] { "talend", "computer" }), group);
-        long endTime = System.currentTimeMillis();
-        System.out.println("50000 rows " + (endTime - startTime));
+
+        partition.setRows(fileDataShuffled);
+
+        partition.shuffle();
+
+        fileDataShuffled = partition.getRows();
 
         List<Row> fileRowShuffled = new ArrayList<Row>();
         List<Row> fileRow = new ArrayList<Row>();
@@ -623,6 +592,7 @@ public class ShuffleColumnWithPartitionTest {
             emailL.add(email);
             cityL.add(city);
             stateL.add(state);
+
         }
 
         for (int i = 0; i < fileData.size(); i++) {
@@ -676,26 +646,15 @@ public class ShuffleColumnWithPartitionTest {
                         // test whether zip code changes
                         Assert.assertEquals(statecmp, statescmp);
 
-                        // test whether the id and the first name change the position
-                        int originalIndex = idL.indexOf(idSL.get(rowI));
-                        Assert.assertTrue(originalIndex != rowI);
-
-                        // test whether id the first name change the group
-                        Assert.assertEquals(firstNameL.get(originalIndex), fnscmp);
-
-                        // test whether the email changes the position
-                        int originalIndexE = emailL.indexOf(emailscmp);
-                        Assert.assertTrue(originalIndexE != rowI);
-
-                        // test whether the mail's group changes the group
-                        String citycmpE = (String) cityL.get(originalIndexE);
-                        String statecmpE = (String) stateL.get(originalIndexE);
-                        Assert.assertEquals(citycmpE, cityscmp);
-                        Assert.assertEquals(statecmpE, statecmp);
-
-                        // test whether the (id first-name) remains the information of email
-                        String emailO = (String) emailL.get(originalIndex);
-                        Assert.assertTrue(!emailO.equals(emailscmp));
+                        // test whether the original information remain, id and email, at least one is shuffled
+                        String ido = (String) idL.get(rowI);
+                        String ids = (String) idSL.get(rowI);
+                        String emailo = (String) emailL.get(rowI);
+                        String emails = (String) emailSL.get(rowI);
+                        if ((ido.equals(ids)) && emailo.equals(emails)) {
+                            System.out.println(" equals " + rowI + " r Index " + rIndex);
+                        }
+                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
                     }
                 }
 
@@ -708,10 +667,12 @@ public class ShuffleColumnWithPartitionTest {
     public void testshuffleColumnDataByGroup100000() {
         List<List<Object>> fileDataShuffled = generator.getTableValue(file100000);
         List<List<Object>> fileData = generator.getTableValue(file100000);
-        long startTime = System.currentTimeMillis();
-        partition.shuffleColumnByGroup(fileDataShuffled, numColumn, Arrays.asList(new String[] { "talend", "computer" }), group);
-        long endTime = System.currentTimeMillis();
-        System.out.println("100000 rows " + (endTime - startTime));
+
+        partition.setRows(fileDataShuffled);
+
+        partition.shuffle();
+
+        fileDataShuffled = partition.getRows();
 
         List<Row> fileRowShuffled = new ArrayList<Row>();
         List<Row> fileRow = new ArrayList<Row>();
@@ -795,12 +756,12 @@ public class ShuffleColumnWithPartitionTest {
                 }
 
                 if (rIndex.size() > 2) {
+                    // System.out.println(rIndex);
                     for (int rowI : rIndex) {
+
                         String citycmp = (String) fileRow.get(rowI).rItems.get(6);
                         String statecmp = (String) fileRow.get(rowI).rItems.get(7);
 
-                        String fnscmp = (String) fileRowShuffled.get(rowI).rItems.get(1);
-                        String emailscmp = (String) fileRowShuffled.get(rowI).rItems.get(3);
                         String cityscmp = (String) fileRowShuffled.get(rowI).rItems.get(6);
                         String statescmp = (String) fileRowShuffled.get(rowI).rItems.get(7);
 
@@ -810,26 +771,16 @@ public class ShuffleColumnWithPartitionTest {
                         // test whether zip code changes
                         Assert.assertEquals(statecmp, statescmp);
 
-                        // test whether the id and the first name change the position
-                        int originalIndex = idL.indexOf(idSL.get(rowI));
-                        Assert.assertTrue(originalIndex != rowI);
+                        // test whether the original information remain, id and email, at least one is shuffled
+                        String ido = (String) idL.get(rowI);
+                        String ids = (String) idSL.get(rowI);
+                        String emailo = (String) emailL.get(rowI);
+                        String emails = (String) emailSL.get(rowI);
+                        if ((ido.equals(ids)) && emailo.equals(emails)) {
+                            System.out.println(" equals " + rowI + " r Index " + rIndex);
+                        }
+                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
 
-                        // test whether id the first name change the group
-                        Assert.assertEquals(firstNameL.get(originalIndex), fnscmp);
-
-                        // test whether the email changes the position
-                        int originalIndexE = emailL.indexOf(emailscmp);
-                        Assert.assertTrue(originalIndexE != rowI);
-
-                        // test whether the mail's group changes the group
-                        String citycmpE = (String) cityL.get(originalIndexE);
-                        String statecmpE = (String) stateL.get(originalIndexE);
-                        Assert.assertEquals(citycmpE, cityscmp);
-                        Assert.assertEquals(statecmpE, statecmp);
-
-                        // test whether the (id first-name) remains the information of email
-                        String emailO = (String) emailL.get(originalIndex);
-                        Assert.assertTrue(!emailO.equals(emailscmp));
                     }
                 }
 

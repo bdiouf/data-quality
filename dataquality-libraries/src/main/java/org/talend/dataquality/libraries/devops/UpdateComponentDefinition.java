@@ -24,7 +24,7 @@ import org.apache.commons.io.IOUtils;
 
 public class UpdateComponentDefinition {
 
-    private static final String GIT_REPO_ROOT = "/Volumes/Macintosh/repo-td"; // the location of local git repo
+    private static final String GIT_REPO_ROOT = "/home/qzhao/talend_code_repo"; // the location of local git repo
 
     private static final String TDQ_STUDIO_EE_ROOT = GIT_REPO_ROOT + "/tdq-studio-ee";
 
@@ -33,9 +33,9 @@ public class UpdateComponentDefinition {
     private static final String COMPONENTS_FOLDER = "/components";
 
     private static final String[] PROVIDERS = new String[] { //
-    "/org.talend.designer.components.tdqprovider",//
-            "/org.talend.designer.components.tdqhadoopprovider",//
-            "/org.talend.designer.components.tdqsparkprovider",//
+            "/org.talend.designer.components.tdqprovider", //
+            "/org.talend.designer.components.tdqhadoopprovider", //
+            "/org.talend.designer.components.tdqsparkprovider", //
             "/org.talend.designer.components.tdqsparkstprovider",//
     };
 
@@ -45,9 +45,9 @@ public class UpdateComponentDefinition {
 
         {
             put("org.talend.dataquality.common", "1.4.4");
-            put("org.talend.dataquality.record.linkage", "3.1.1");
-            put("org.talend.dataquality.sampling", "2.2.0");
-            put("org.talend.dataquality.standardization", "3.0.2");
+            put("org.talend.dataquality.record.linkage", "3.1.2");
+            put("org.talend.dataquality.sampling", "2.3.1");
+            put("org.talend.dataquality.standardization", "3.1.0");
         }
     };
 
@@ -73,10 +73,10 @@ public class UpdateComponentDefinition {
                     for (String line : lines) {
                         for (String depName : DEP_VERSION_MAP.keySet()) {
                             if (line.contains(depName)) {
-                                line = line.replaceAll(depName + "([-/])\\d.\\d.\\d(-SNAPSHOT)?(.jar)?\"", depName + "$1"
-                                        + DEP_VERSION_MAP.get(depName) + "$3\"");
-                                line = line.replaceAll(depName + "_\\d.\\d.\\d(-SNAPSHOT)?.jar\"", depName + "_"
-                                        + DEP_VERSION_MAP.get(depName).substring(0, 5) + ".jar\"");
+                                line = line.replaceAll(depName + "([-/])\\d.\\d.\\d(-SNAPSHOT)?(.jar)?\"",
+                                        depName + "$1" + DEP_VERSION_MAP.get(depName) + "$3\"");
+                                line = line.replaceAll(depName + "_\\d.\\d.\\d(-SNAPSHOT)?.jar\"",
+                                        depName + "_" + DEP_VERSION_MAP.get(depName).substring(0, 5) + ".jar\"");
                             }
                         }
                         IOUtils.write(line + "\n", fos);
