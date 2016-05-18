@@ -73,4 +73,8 @@ public class CategoryFrequency {
         return getCategoryId() != null ? getCategoryId().hashCode() : 0;
     }
 
+    @Override
+    public String toString() {
+        return "[Category: " + category + " Count: " + count + " Frequency: " + frequency + "]";
+    }
 }

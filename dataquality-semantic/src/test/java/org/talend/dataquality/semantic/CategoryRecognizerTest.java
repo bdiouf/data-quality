@@ -46,34 +46,34 @@ public class CategoryRecognizerTest {
 
         {
             put("", 12.9F);
-            put("FIRST_NAME", 9.68F);
-            put("MONTH", 9.68F);
+            put("FIRST_NAME", 9.67F);
+            put("MONTH", 9.67F);
             put("AIRPORT_CODE", 6.45F);
-            put("FR_COMMUNE", 6.45F);
             put("CITY", 6.45F);
+            put("FR_COMMUNE", 6.45F);
             put("EMAIL", 6.45F);
             put("US_POSTAL_CODE", 6.45F);
             put("ADDRESS_LINE", 6.45F);
             put("FR_SSN", 6.45F);
-            put("FR_DEPARTEMENT", 3.23F);
-            put("COUNTRY", 3.23F);
-            put("COUNTRY_CODE_ISO3", 3.23F);
-            put("CONTINENT_CODE", 3.23F);
-            put("CURRENCY_CODE", 3.23F);
-            put("ANIMAL", 3.23F);
-            put("LANGUAGE_CODE_ISO3", 3.23F);
-            put("EN_MONTH", 3.23F);
-            put("FR_CODE_COMMUNE_INSEE", 3.23F);
-            put("DE_POSTAL_CODE", 3.23F);
-            put("FR_POSTAL_CODE", 3.23F);
-            put("COMPANY", 3.23F);
-            put("GENDER", 3.23F);
-            put("URL", 3.23F);
-            put("US_SSN", 3.23F);
-            put("ISBN_10", 3.23F);
-            put("DE_PHONE", 3.23F);
-            put("FR_PHONE", 3.23F);
-            put("FULL_NAME", 3.23F);
+            put("FR_DEPARTEMENT", 3.22F);
+            put("COUNTRY", 3.22F);
+            put("COUNTRY_CODE_ISO3", 3.22F);
+            put("CONTINENT_CODE", 3.22F);
+            put("CURRENCY_CODE", 3.22F);
+            put("LANGUAGE_CODE_ISO3", 3.22F);
+            put("ANIMAL", 3.22F);
+            put("EN_MONTH", 3.22F);
+            put("FR_POSTAL_CODE", 3.22F);
+            put("FR_CODE_COMMUNE_INSEE", 3.22F);
+            put("DE_POSTAL_CODE", 3.22F);
+            put("COMPANY", 3.22F);
+            put("GENDER", 3.22F);
+            put("URL", 3.22F);
+            put("US_SSN", 3.22F);
+            put("ISBN_10", 3.22F);
+            put("DE_PHONE", 3.22F);
+            put("FR_PHONE", 3.22F);
+            put("FULL_NAME", 3.22F);
 
         }
 

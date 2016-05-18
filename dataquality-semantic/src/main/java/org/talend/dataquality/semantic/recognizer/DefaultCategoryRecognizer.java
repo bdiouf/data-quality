@@ -186,9 +186,8 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
     @Override
     public Collection<CategoryFrequency> getResult() {
-        final float nonEmptyCount = total - emptyCount;
         for (CategoryFrequency category : categoryToFrequency.values()) {
-            category.frequency = Math.round(category.count * 10000 / nonEmptyCount) / 100F;
+            category.frequency = Math.round(category.count * 10000 / total) / 100F;
         }
 
         Collections.sort(catList, new Comparator<CategoryFrequency>() {
