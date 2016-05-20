@@ -19,7 +19,7 @@ import org.junit.Test;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
- * DOC jteuladedenantes class global comment. Detailled comment
+ * @author jteuladedenantes
  */
 public class GenerateUniqueSsnFrTest {
 
@@ -33,8 +33,8 @@ public class GenerateUniqueSsnFrTest {
     }
 
     @Test
-    public void testKeepUnvalidPatternTrue() {
-        gnf.setKeepUnvalidPattern(true);
+    public void testKeepInvalidPatternTrue() {
+        gnf.setKeepInvalidPattern(true);
         output = gnf.generateMaskedRow(null);
         assertEquals(output, null);
         output = gnf.generateMaskedRow("");
@@ -44,8 +44,8 @@ public class GenerateUniqueSsnFrTest {
     }
 
     @Test
-    public void testKeepUnvalidPatternFalse() {
-        gnf.setKeepUnvalidPattern(false);
+    public void testKeepInvalidPatternFalse() {
+        gnf.setKeepInvalidPattern(false);
         output = gnf.generateMaskedRow(null);
         assertEquals(output, null);
         output = gnf.generateMaskedRow("");
@@ -58,16 +58,17 @@ public class GenerateUniqueSsnFrTest {
     public void testGood() {
         output = gnf.generateMaskedRow("1860348282074 19");
         assertEquals(output, "2550348184792 24");
-        output = gnf.generateMaskedRow("2121215953006 88");
-        assertEquals(output, "2390985440849 25");
+        // with spaces
+        output = gnf.generateMaskedRow("2 12 12 15 953 006   88");
+        assertEquals(output, "1 13 07 38 154 671   92");
         // corse department
-        output = gnf.generateMaskedRow("105012B532895 34");
-        assertEquals(output, "2040976885934 91");
+        output = gnf.generateMaskedRow("10501 2B 532895 34");
+        assertEquals(output, "23210 35 639916 62");
     }
 
     @Test
     public void testWrongSsnField() {
-        gnf.setKeepUnvalidPattern(false);
+        gnf.setKeepInvalidPattern(false);
         // without a number
         output = gnf.generateMaskedRow("186034828207 19");
         assertEquals(output, null);

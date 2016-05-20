@@ -15,12 +15,14 @@ package org.talend.dataquality.datamasking.functions;
 import java.util.List;
 
 /**
- * DOC jteuladedenantes class global comment. Detailled comment
+ * @author jteuladedenantes
+ * 
+ * A FieldEnum is a list of specific values. We defined a FieldEnum by an exhaustive list of all possible values.
  */
 public class FieldEnum implements Field {
 
     /**
-     * the exhaustive list of values
+     * The exhaustive list of values
      */
     private List<String> enumValues;
 
@@ -29,11 +31,6 @@ public class FieldEnum implements Field {
         this.enumValues = enumValues;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.dataquality.datamasking.functions.Field#getWidth()
-     */
     @Override
     public long getWidth() {
         return this.enumValues.size();
@@ -46,7 +43,8 @@ public class FieldEnum implements Field {
 
     @Override
     public String decode(long number) {
+        if (number >= this.getWidth())
+            return "";
         return this.enumValues.get((int) number);
     }
-
 }

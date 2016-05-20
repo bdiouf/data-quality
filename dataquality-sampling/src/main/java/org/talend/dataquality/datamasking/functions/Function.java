@@ -41,7 +41,7 @@ public abstract class Function<T> implements Serializable {
 
     protected boolean keepNull = false;
 
-    protected boolean keepUnvalidPattern = true;
+    protected boolean keepInvalidPattern = true;
 
     protected static final Pattern patternSpace = Pattern.compile("\\s+");
 
@@ -74,14 +74,8 @@ public abstract class Function<T> implements Serializable {
         this.keepNull = keep;
     }
 
-    /**
-     * 
-     * DOC jteuladedenantes Comment method "setKeepUnvalidPattern".
-     * 
-     * @param keepUnvalidPattern
-     */
-    public void setKeepUnvalidPattern(boolean keepUnvalidPattern) {
-        this.keepUnvalidPattern = keepUnvalidPattern;
+    public void setKeepInvalidPattern(boolean keepInvalidPattern) {
+        this.keepInvalidPattern = keepInvalidPattern;
     }
 
     /**

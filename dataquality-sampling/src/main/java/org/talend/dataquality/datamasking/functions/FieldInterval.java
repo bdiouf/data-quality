@@ -13,7 +13,10 @@
 package org.talend.dataquality.datamasking.functions;
 
 /**
- * DOC jteuladedenantes class global comment. Detailled comment
+ * @author jteuladedenantes
+ * 
+ * A FieldInterval is a set of values defined by a interval. So all values included in this interval are possible
+ * values.
  */
 public class FieldInterval implements Field {
 
@@ -27,11 +30,6 @@ public class FieldInterval implements Field {
         this.maxInterval = maxInterval;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.dataquality.datamasking.functions.Field#getWidth()
-     */
     @Override
     public long getWidth() {
         return maxInterval - minInterval + 1;
@@ -48,14 +46,15 @@ public class FieldInterval implements Field {
             return -1L;
         }
         return longStr - this.minInterval;
-
     }
 
     @Override
     public String decode(long number) {
-
+        if (number >= this.getWidth())
+            return "";
         String res = String.valueOf(number + this.minInterval);
         int size = String.valueOf(this.maxInterval).length();
+        // we add the potential missing zeros
         while (res.length() < size)
             res = "0" + res;
         return res;

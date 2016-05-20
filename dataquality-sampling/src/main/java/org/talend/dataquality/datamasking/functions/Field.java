@@ -13,19 +13,27 @@
 package org.talend.dataquality.datamasking.functions;
 
 /**
- * DOC jteuladedenantes class global comment. Detailled comment
+ * @author jteuladedenantes
+ * 
+ * A Field is a set of values. According to a field, we can encode a value in a number or decode a number in a value of
+ * the field
  */
 public interface Field {
 
+    /**
+     * @return the number of different possible values in this field
+     */
     public long getWidth();
 
     /**
-     * DOC jteuladedenantes Comment method "encode".
-     * 
-     * @param str
-     * @return -1 if we can't encode the string
+     * @param str, the string to encode
+     * @return the position number related to this string, -1 if str doesn't exist in this field
      */
     public Long encode(String str);
 
+    /**
+     * @param number, the number to decode
+     * @return the string related to this number, "" if number is longer than the width
+     */
     public String decode(long number);
 }

@@ -16,7 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DOC jteuladedenantes class global comment. Detailled comment
+ * 
+ * @author jteuladedenantes
+ * 
+ * The french SSN has 6 fields : [1, 2], [1, 99], [1, 12], {[1, 19] U {2A, 2B} U [20, 99]}, [1, 990], [1, 999]
  */
 public class GenerateUniqueSsnFr extends Function<String> {
 
@@ -24,50 +27,64 @@ public class GenerateUniqueSsnFr extends Function<String> {
 
     private static final int MOD97 = 97; // $NON-NLS-1$
 
+    private GenerateUniqueRandomPatterns frenchSsnPattern;
+
     @Override
     protected String doGenerateMaskedField(String str) {
         if (str == null)
             return null;
 
-        // TODO, is it useful ? to check with the studio
-        str = str.replace(" ", "");
+        String strWithoutSpaces = str.replace(" ", "");
 
         // check if the pattern is valid with french ssn number
-        if (str.isEmpty() || str.length() != 15) {
-            if (keepUnvalidPattern)
-                return str;
+        if (strWithoutSpaces.isEmpty() || strWithoutSpaces.length() != 15) {
+            if (keepInvalidPattern)
+                return strWithoutSpaces;
             else
                 return null;
         }
 
-        // fill each field according to the pattern
-        List<Field> fields = createFieldsListFromFrPattern();
-        // read the input str
+        // read the input strWithoutSpaces
         List<String> strs = new ArrayList<String>();
-        strs.add(str.substring(0, 1));
-        strs.add(str.substring(1, 3));
-        strs.add(str.substring(3, 5));
-        strs.add(str.substring(5, 7));
-        strs.add(str.substring(7, 10));
-        strs.add(str.substring(10, 13));
+        strs.add(strWithoutSpaces.substring(0, 1));
+        strs.add(strWithoutSpaces.substring(1, 3));
+        strs.add(strWithoutSpaces.substring(3, 5));
+        strs.add(strWithoutSpaces.substring(5, 7));
+        strs.add(strWithoutSpaces.substring(7, 10));
+        strs.add(strWithoutSpaces.substring(10, 13));
 
-        StringBuilder result = GenerateUniqueRandomNumbers.generateUniqueString(strs, fields, this.rnd.nextInt(9000) + 1000);
+        if (frenchSsnPattern == null) {
+            List<Field> fields = createFieldsListFromFrPattern();
+            this.frenchSsnPattern = new GenerateUniqueRandomPatterns(fields, this.rnd.nextInt(9000) + 1000);
+        }
+
+        StringBuilder result = frenchSsnPattern.generateUniqueString(strs);
         if (result == null) {
-            if (keepUnvalidPattern)
-                return str;
+            if (keepInvalidPattern)
+                return strWithoutSpaces;
             else
                 return null;
         }
 
         // add the security key specified for french SSN
-        String keyResult = (new String(result)).replaceAll("2A", "19").replaceAll("2B", "18");
-        int controlKey = 97 - (int) (Long.valueOf(keyResult) % MOD97);
-
-        result.append(" " + controlKey);
+        StringBuilder keyResult = new StringBuilder(result);
+        if (keyResult.charAt(5) == '2') {
+            keyResult.setCharAt(5, '1');
+            keyResult.setCharAt(6, (keyResult.charAt(6) == 'A') ? '9' : '8');
+        }
+        int controlKey = 97 - (int) (Long.valueOf(keyResult.toString()) % MOD97);
+        result.append(controlKey);
+        for (int i = 0; i < str.length(); i++)
+            if (str.charAt(i) == ' ')
+                result.insert(i, ' ');
         return result.toString();
     }
 
-    List<Field> createFieldsListFromFrPattern() {
+    /**
+     * 
+     * @return the list of each field
+     */
+    private List<Field> createFieldsListFromFrPattern() {
         List<Field> fields = new ArrayList<Field>();
         fields.add(new FieldInterval(1, 2));
         fields.add(new FieldInterval(0, 99));
