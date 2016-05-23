@@ -94,5 +94,12 @@ public interface IAttributeMatcher {
      */
     double getWeight();
 
+    /**
+     * we will not use this method, so that the user no need to define this. we can use "attributeMatcher instanceof
+     * DummyMatcher" instead
+     * 
+     * @return
+     */
+    @Deprecated
     boolean isDummyMatcher();
 }

@@ -48,6 +48,7 @@ public class DummyMatcher extends AbstractAttributeMatcher {
      * 
      * @see org.talend.dataquality.record.linkage.attribute.AbstractAttributeMatcher#isDummyMatcher()
      */
+    @Deprecated
     @Override
     public boolean isDummyMatcher() {
         return true;

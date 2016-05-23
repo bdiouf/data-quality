@@ -5,7 +5,7 @@ V3.1.1 (in development)
     - TDQ-11666 Integrate the t-swoosh algorithm in the tMatchgroup components (step 3),extract a sub class for : AnalysisSwooshMatchRecordGrouping, to used by the component
     - TDQ-11536 move TalendURLClassLoader class from record-linkage library to dataquality.common
     - TDQ-11779 fixed t-swoosh algorithm in the tMatchgroup components with mutipass mode can not get correctly group quality value
-    - TDQ-11949 for the match rule which use the custom type algorithm, we will use the threshold and weight from UI and add test
+    - TDQ-11949 for the match rule which use the custom type algorithm, we will use the threshold and weight from UI and add test; and deprecated IAttributeMatcher.isDummyMatcher
     - TDQ-11599 return null if the number is null, then the smallest will be 2 in (2,5,null)
 V3.1.0 2016-02-16
     - TDQ-11599 add catch NumberFormatException, return 0 when catch exception.

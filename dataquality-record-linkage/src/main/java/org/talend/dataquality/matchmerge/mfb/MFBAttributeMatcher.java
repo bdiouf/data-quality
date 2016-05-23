@@ -42,6 +42,7 @@ public class MFBAttributeMatcher implements IAttributeMatcher {
      * 
      * @see org.talend.dataquality.record.linkage.attribute.IAttributeMatcher#isDummyMatcher()
      */
+    @Deprecated
     @Override
     public boolean isDummyMatcher() {
         return delegate.isDummyMatcher();
