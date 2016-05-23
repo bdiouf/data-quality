@@ -3,9 +3,12 @@ package org.talend.dataquality.datamasking.shuffling;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ShuffleColumnWithPartitionTest {
@@ -22,6 +25,8 @@ public class ShuffleColumnWithPartitionTest {
 
     private String file100000 = "Shuffling_test_data_100000.csv";
 
+    private String file1000000 = "Shuffling_test_data_1000000.csv";
+
     private static List<String> group = new ArrayList<String>();
 
     private static List<List<String>> numColumn = new ArrayList<List<String>>();
@@ -30,8 +35,6 @@ public class ShuffleColumnWithPartitionTest {
             .asList(new String[] { "id", "first_name", "last_name", "email", "gender", "birth", "city", "zip_code", "country" });
 
     private static GenerateData generator = new GenerateData();
-
-    private static ShuffleColumn partition = null;
 
     @BeforeClass
     public static void prepareData() {
@@ -44,815 +47,124 @@ public class ShuffleColumnWithPartitionTest {
         numColumn.add(column1);
         numColumn.add(column2);
 
-        partition = new ShuffleColumn(numColumn, allColumns, group);
     }
 
+    /**
+     * Tests by the partitions.<br>
+     * <ul>
+     * 
+     * <li>Partition runs well :
+     * <ul>
+     * <li>id is in the rage of partition</li>
+     * <li>email's original index is in the range of partition</li>
+     * <li>the city and state do not move</li>
+     * </ul>
+     * </li>
+     * 
+     * <li>Integration of data :
+     * <ul>
+     * <li>id and the first name remain its original correspondence</li>
+     * <li>email exists in the list</li>
+     * </ul>
+     * </li>
+     * 
+     * <li>Shuffling quality :
+     * <ul>
+     * <li>the id group (id and the first) and the email, at least one has changed its original position</li>
+     * </ul>
+     * </li>
+     * 
+     * </ul>
+     * 
+     * @throws InterruptedException
+     */
     @Test
-    public void testshuffleColumnDataByGroup1000() {
-        List<List<Object>> fileDataShuffled = generator.getTableValue(file);
-        List<List<Object>> fileData = generator.getTableValue(file);
-
-        partition.setRows(fileDataShuffled);
-
-        partition.shuffle();
-
-        fileDataShuffled = partition.getRows();
-
-        List<Row> fileRowShuffled = new ArrayList<Row>();
-        List<Row> fileRow = new ArrayList<Row>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            fileRowShuffled.add(new Row(i, fileDataShuffled.get(i), fileDataShuffled.get(i).subList(6, 9)));
-            fileRow.add(new Row(i, fileData.get(i), fileData.get(i).subList(6, 9)));
-        }
-
-        List<Object> idSL = new ArrayList<Object>();
-        List<Object> firstNameSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
-
-        List<Object> idL = new ArrayList<Object>();
-        List<Object> firstNameL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Object idS = fileDataShuffled.get(i).get(0);
-            Object firstNameS = fileDataShuffled.get(i).get(1);
-            Object emailS = fileDataShuffled.get(i).get(3);
-            Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
-
-            idSL.add(idS);
-            firstNameSL.add(firstNameS);
-            emailSL.add(emailS);
-            citySL.add(cityS);
-            stateSL.add(stateS);
-
-            Object id = fileData.get(i).get(0);
-            Object firstName = fileData.get(i).get(1);
-            Object email = fileData.get(i).get(3);
-            Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
-
-            idL.add(id);
-            firstNameL.add(firstName);
-            emailL.add(email);
-            cityL.add(city);
-            stateL.add(state);
-        }
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Row row = fileRow.get(i);
-            int firstGroup = fileRow.indexOf(row);
-            int lastGroup = fileRow.lastIndexOf(row);
-
-            // test whether the city and the zip code are unique
-            if (firstGroup == lastGroup) {
-                // only one record in the table, checks whether the information retains the same
-                int idcmp = Integer.parseInt((String) fileRow.get(i).rItems.get(0));
-                String fncmp = (String) fileRow.get(i).rItems.get(1);
-                String emailcmp = (String) fileRow.get(i).rItems.get(3);
-                String citycmp = (String) fileRow.get(i).rItems.get(6);
-                String statecmp = (String) fileRow.get(i).rItems.get(7);
-
-                int idscmp = Integer.parseInt((String) fileRowShuffled.get(i).rItems.get(0));
-                String fnscmp = (String) fileRowShuffled.get(i).rItems.get(1);
-                String emailscmp = (String) fileRowShuffled.get(i).rItems.get(3);
-                String cityscmp = (String) fileRowShuffled.get(i).rItems.get(6);
-                String statescmp = (String) fileRowShuffled.get(i).rItems.get(7);
-
-                Assert.assertEquals(idcmp, idscmp);
-                Assert.assertEquals(fncmp, fnscmp);
-                Assert.assertEquals(emailcmp, emailscmp);
-                Assert.assertEquals(citycmp, cityscmp);
-                Assert.assertEquals(statecmp, statescmp);
-
-            } else if (firstGroup != lastGroup && i == firstGroup) {
-                // zip code has several records
-                List<Integer> rIndex = new ArrayList<Integer>();
-                for (int j = firstGroup; j <= lastGroup; j++) {
-                    if (fileRow.get(i).equals(fileRowShuffled.get(j))) {
-                        rIndex.add(j);
-                    }
-                }
-
-                if (rIndex.size() > 2) {
-                    for (int rowI : rIndex) {
-                        String citycmp = (String) fileRow.get(rowI).rItems.get(6);
-                        String statecmp = (String) fileRow.get(rowI).rItems.get(7);
-
-                        String fnscmp = (String) fileRowShuffled.get(rowI).rItems.get(1);
-                        String emailscmp = (String) fileRowShuffled.get(rowI).rItems.get(3);
-                        String cityscmp = (String) fileRowShuffled.get(rowI).rItems.get(6);
-                        String statescmp = (String) fileRowShuffled.get(rowI).rItems.get(7);
-
-                        // test whether city changes
-                        Assert.assertEquals(citycmp, cityscmp);
-
-                        // test whether zip code changes
-                        Assert.assertEquals(statecmp, statescmp);
-
-                        // test whether the original information remain, id and email, at least one is shuffled
-                        String ido = (String) idL.get(rowI);
-                        String ids = (String) idSL.get(rowI);
-                        String emailo = (String) emailL.get(rowI);
-                        String emails = (String) emailSL.get(rowI);
-                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
-
-                    }
-                }
-
-            }
-        }
-
-    }
-
-    @Test
-    public void testshuffleColumnDataByGroup5000() {
-        List<List<Object>> fileDataShuffled = generator.getTableValue(file5000);
-        List<List<Object>> fileData = generator.getTableValue(file5000);
-
-        partition.setRows(fileDataShuffled);
-
-        partition.shuffle();
-
-        fileDataShuffled = partition.getRows();
-
-        List<Row> fileRowShuffled = new ArrayList<Row>();
-        List<Row> fileRow = new ArrayList<Row>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            fileRowShuffled.add(new Row(i, fileDataShuffled.get(i), fileDataShuffled.get(i).subList(6, 9)));
-            fileRow.add(new Row(i, fileData.get(i), fileData.get(i).subList(6, 9)));
-        }
-
-        List<Object> idSL = new ArrayList<Object>();
-        List<Object> firstNameSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
-
-        List<Object> idL = new ArrayList<Object>();
-        List<Object> firstNameL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Object idS = fileDataShuffled.get(i).get(0);
-            Object firstNameS = fileDataShuffled.get(i).get(1);
-            Object emailS = fileDataShuffled.get(i).get(3);
-            Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
-
-            idSL.add(idS);
-            firstNameSL.add(firstNameS);
-            emailSL.add(emailS);
-            citySL.add(cityS);
-            stateSL.add(stateS);
-
-            Object id = fileData.get(i).get(0);
-            Object firstName = fileData.get(i).get(1);
-            Object email = fileData.get(i).get(3);
-            Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
-
-            idL.add(id);
-            firstNameL.add(firstName);
-            emailL.add(email);
-            cityL.add(city);
-            stateL.add(state);
-        }
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Row row = fileRow.get(i);
-            int firstGroup = fileRow.indexOf(row);
-            int lastGroup = fileRow.lastIndexOf(row);
-
-            // test whether the city and the zip code are unique
-            if (firstGroup == lastGroup) {
-                // only one record in the table, checks whether the information retains the same
-                int idcmp = Integer.parseInt((String) fileRow.get(i).rItems.get(0));
-                String fncmp = (String) fileRow.get(i).rItems.get(1);
-                String emailcmp = (String) fileRow.get(i).rItems.get(3);
-                String citycmp = (String) fileRow.get(i).rItems.get(6);
-                String statecmp = (String) fileRow.get(i).rItems.get(7);
-
-                int idscmp = Integer.parseInt((String) fileRowShuffled.get(i).rItems.get(0));
-                String fnscmp = (String) fileRowShuffled.get(i).rItems.get(1);
-                String emailscmp = (String) fileRowShuffled.get(i).rItems.get(3);
-                String cityscmp = (String) fileRowShuffled.get(i).rItems.get(6);
-                String statescmp = (String) fileRowShuffled.get(i).rItems.get(7);
-
-                Assert.assertEquals(idcmp, idscmp);
-                Assert.assertEquals(fncmp, fnscmp);
-                Assert.assertEquals(emailcmp, emailscmp);
-                Assert.assertEquals(citycmp, cityscmp);
-                Assert.assertEquals(statecmp, statescmp);
-
-            } else if (firstGroup != lastGroup && i == firstGroup) {
-                // zip code has several records
-                List<Integer> rIndex = new ArrayList<Integer>();
-                for (int j = firstGroup; j <= lastGroup; j++) {
-                    if (fileRow.get(i).equals(fileRowShuffled.get(j))) {
-                        rIndex.add(j);
-                    }
-                }
-
-                if (rIndex.size() > 2) {
-                    for (int rowI : rIndex) {
-                        String citycmp = (String) fileRow.get(rowI).rItems.get(6);
-                        String statecmp = (String) fileRow.get(rowI).rItems.get(7);
-
-                        String fnscmp = (String) fileRowShuffled.get(rowI).rItems.get(1);
-                        String emailscmp = (String) fileRowShuffled.get(rowI).rItems.get(3);
-                        String cityscmp = (String) fileRowShuffled.get(rowI).rItems.get(6);
-                        String statescmp = (String) fileRowShuffled.get(rowI).rItems.get(7);
-
-                        // test whether city changes
-                        Assert.assertEquals(citycmp, cityscmp);
-
-                        // test whether zip code changes
-                        Assert.assertEquals(statecmp, statescmp);
-
-                        // test whether the original information remain, id and email, at least one is shuffled
-                        String ido = (String) idL.get(rowI);
-                        String ids = (String) idSL.get(rowI);
-                        String emailo = (String) emailL.get(rowI);
-                        String emails = (String) emailSL.get(rowI);
-                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
-
-                    }
-                }
-
-            }
-        }
-
-    }
-
-    @Test
-    public void testshuffleColumnDataByGroup10000() {
-        List<List<Object>> fileDataShuffled = generator.getTableValue(file10000);
-        List<List<Object>> fileData = generator.getTableValue(file10000);
-
-        partition.setRows(fileDataShuffled);
-
-        partition.shuffle();
-
-        fileDataShuffled = partition.getRows();
-
-        List<Row> fileRowShuffled = new ArrayList<Row>();
-        List<Row> fileRow = new ArrayList<Row>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            fileRowShuffled.add(new Row(i, fileDataShuffled.get(i), fileDataShuffled.get(i).subList(6, 9)));
-            fileRow.add(new Row(i, fileData.get(i), fileData.get(i).subList(6, 9)));
-        }
-
-        List<Object> idSL = new ArrayList<Object>();
-        List<Object> firstNameSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
-
-        List<Object> idL = new ArrayList<Object>();
-        List<Object> firstNameL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Object idS = fileDataShuffled.get(i).get(0);
-            Object firstNameS = fileDataShuffled.get(i).get(1);
-            Object emailS = fileDataShuffled.get(i).get(3);
-            Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
-
-            idSL.add(idS);
-            firstNameSL.add(firstNameS);
-            emailSL.add(emailS);
-            citySL.add(cityS);
-            stateSL.add(stateS);
-
-            Object id = fileData.get(i).get(0);
-            Object firstName = fileData.get(i).get(1);
-            Object email = fileData.get(i).get(3);
-            Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
-
-            idL.add(id);
-            firstNameL.add(firstName);
-            emailL.add(email);
-            cityL.add(city);
-            stateL.add(state);
-        }
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Row row = fileRow.get(i);
-            int firstGroup = fileRow.indexOf(row);
-            int lastGroup = fileRow.lastIndexOf(row);
-
-            // test whether the city and the zip code are unique
-            if (firstGroup == lastGroup) {
-                // only one record in the table, checks whether the information retains the same
-                int idcmp = Integer.parseInt((String) fileRow.get(i).rItems.get(0));
-                String fncmp = (String) fileRow.get(i).rItems.get(1);
-                String emailcmp = (String) fileRow.get(i).rItems.get(3);
-                String citycmp = (String) fileRow.get(i).rItems.get(6);
-                String statecmp = (String) fileRow.get(i).rItems.get(7);
-
-                int idscmp = Integer.parseInt((String) fileRowShuffled.get(i).rItems.get(0));
-                String fnscmp = (String) fileRowShuffled.get(i).rItems.get(1);
-                String emailscmp = (String) fileRowShuffled.get(i).rItems.get(3);
-                String cityscmp = (String) fileRowShuffled.get(i).rItems.get(6);
-                String statescmp = (String) fileRowShuffled.get(i).rItems.get(7);
-
-                Assert.assertEquals(idcmp, idscmp);
-                Assert.assertEquals(fncmp, fnscmp);
-                Assert.assertEquals(emailcmp, emailscmp);
-                Assert.assertEquals(citycmp, cityscmp);
-                Assert.assertEquals(statecmp, statescmp);
-
-            } else if (firstGroup != lastGroup && i == firstGroup) {
-                // zip code has several records
-                List<Integer> rIndex = new ArrayList<Integer>();
-                for (int j = firstGroup; j <= lastGroup; j++) {
-                    if (fileRow.get(i).equals(fileRowShuffled.get(j))) {
-                        rIndex.add(j);
-                    }
-                }
-
-                if (rIndex.size() > 2) {
-                    for (int rowI : rIndex) {
-                        String citycmp = (String) fileRow.get(rowI).rItems.get(6);
-                        String statecmp = (String) fileRow.get(rowI).rItems.get(7);
-
-                        String fnscmp = (String) fileRowShuffled.get(rowI).rItems.get(1);
-                        String emailscmp = (String) fileRowShuffled.get(rowI).rItems.get(3);
-                        String cityscmp = (String) fileRowShuffled.get(rowI).rItems.get(6);
-                        String statescmp = (String) fileRowShuffled.get(rowI).rItems.get(7);
-
-                        // test whether city changes
-                        Assert.assertEquals(citycmp, cityscmp);
-
-                        // test whether zip code changes
-                        Assert.assertEquals(statecmp, statescmp);
-
-                        // test whether the original information remain, id and email, at least one is shuffled
-                        String ido = (String) idL.get(rowI);
-                        String ids = (String) idSL.get(rowI);
-                        String emailo = (String) emailL.get(rowI);
-                        String emails = (String) emailSL.get(rowI);
-                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
-                    }
-                }
-
-            }
-        }
-
-    }
-
-    @Test
-    public void testshuffleColumnDataByGroup20000() {
-        List<List<Object>> fileDataShuffled = generator.getTableValue(file20000);
-        List<List<Object>> fileData = generator.getTableValue(file20000);
-
-        partition.setRows(fileDataShuffled);
-
-        partition.shuffle();
-
-        fileDataShuffled = partition.getRows();
-
-        List<Row> fileRowShuffled = new ArrayList<Row>();
-        List<Row> fileRow = new ArrayList<Row>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            fileRowShuffled.add(new Row(i, fileDataShuffled.get(i), fileDataShuffled.get(i).subList(6, 9)));
-            fileRow.add(new Row(i, fileData.get(i), fileData.get(i).subList(6, 9)));
-        }
-
-        List<Object> idSL = new ArrayList<Object>();
-        List<Object> firstNameSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
-
-        List<Object> idL = new ArrayList<Object>();
-        List<Object> firstNameL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Object idS = fileDataShuffled.get(i).get(0);
-            Object firstNameS = fileDataShuffled.get(i).get(1);
-            Object emailS = fileDataShuffled.get(i).get(3);
-            Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
-
-            idSL.add(idS);
-            firstNameSL.add(firstNameS);
-            emailSL.add(emailS);
-            citySL.add(cityS);
-            stateSL.add(stateS);
-
-            Object id = fileData.get(i).get(0);
-            Object firstName = fileData.get(i).get(1);
-            Object email = fileData.get(i).get(3);
-            Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
-
-            idL.add(id);
-            firstNameL.add(firstName);
-            emailL.add(email);
-            cityL.add(city);
-            stateL.add(state);
-        }
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Row row = fileRow.get(i);
-            int firstGroup = fileRow.indexOf(row);
-            int lastGroup = fileRow.lastIndexOf(row);
-
-            // test whether the city and the zip code are unique
-            if (firstGroup == lastGroup) {
-                // only one record in the table, checks whether the information retains the same
-                int idcmp = Integer.parseInt((String) fileRow.get(i).rItems.get(0));
-                String fncmp = (String) fileRow.get(i).rItems.get(1);
-                String emailcmp = (String) fileRow.get(i).rItems.get(3);
-                String citycmp = (String) fileRow.get(i).rItems.get(6);
-                String statecmp = (String) fileRow.get(i).rItems.get(7);
-
-                int idscmp = Integer.parseInt((String) fileRowShuffled.get(i).rItems.get(0));
-                String fnscmp = (String) fileRowShuffled.get(i).rItems.get(1);
-                String emailscmp = (String) fileRowShuffled.get(i).rItems.get(3);
-                String cityscmp = (String) fileRowShuffled.get(i).rItems.get(6);
-                String statescmp = (String) fileRowShuffled.get(i).rItems.get(7);
-
-                Assert.assertEquals(idcmp, idscmp);
-                Assert.assertEquals(fncmp, fnscmp);
-                Assert.assertEquals(emailcmp, emailscmp);
-                Assert.assertEquals(citycmp, cityscmp);
-                Assert.assertEquals(statecmp, statescmp);
-
-            } else if (firstGroup != lastGroup && i == firstGroup) {
-                // zip code has several records
-                List<Integer> rIndex = new ArrayList<Integer>();
-                for (int j = firstGroup; j <= lastGroup; j++) {
-                    if (fileRow.get(i).equals(fileRowShuffled.get(j))) {
-                        rIndex.add(j);
-                    }
-                }
-
-                if (rIndex.size() > 2) {
-                    for (int rowI : rIndex) {
-                        String citycmp = (String) fileRow.get(rowI).rItems.get(6);
-                        String statecmp = (String) fileRow.get(rowI).rItems.get(7);
-
-                        String fnscmp = (String) fileRowShuffled.get(rowI).rItems.get(1);
-                        String emailscmp = (String) fileRowShuffled.get(rowI).rItems.get(3);
-                        String cityscmp = (String) fileRowShuffled.get(rowI).rItems.get(6);
-                        String statescmp = (String) fileRowShuffled.get(rowI).rItems.get(7);
-
-                        // test whether city changes
-                        Assert.assertEquals(citycmp, cityscmp);
-
-                        // test whether zip code changes
-                        Assert.assertEquals(statecmp, statescmp);
-
-                        // test whether the original information remain, id and email, at least one is shuffled
-                        String ido = (String) idL.get(rowI);
-                        String ids = (String) idSL.get(rowI);
-                        String emailo = (String) emailL.get(rowI);
-                        String emails = (String) emailSL.get(rowI);
-                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
-                    }
-                }
-
-            }
-        }
-
-    }
-
-    @Test
-    public void testshuffleColumnDataByGroup50000() {
-        List<List<Object>> fileDataShuffled = generator.getTableValue(file50000);
-        List<List<Object>> fileData = generator.getTableValue(file50000);
-
-        partition.setRows(fileDataShuffled);
-
-        partition.shuffle();
-
-        fileDataShuffled = partition.getRows();
-
-        List<Row> fileRowShuffled = new ArrayList<Row>();
-        List<Row> fileRow = new ArrayList<Row>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            fileRowShuffled.add(new Row(i, fileDataShuffled.get(i), fileDataShuffled.get(i).subList(6, 9)));
-            fileRow.add(new Row(i, fileData.get(i), fileData.get(i).subList(6, 9)));
-        }
-
-        List<Object> idSL = new ArrayList<Object>();
-        List<Object> firstNameSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
-
-        List<Object> idL = new ArrayList<Object>();
-        List<Object> firstNameL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Object idS = fileDataShuffled.get(i).get(0);
-            Object firstNameS = fileDataShuffled.get(i).get(1);
-            Object emailS = fileDataShuffled.get(i).get(3);
-            Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
-
-            idSL.add(idS);
-            firstNameSL.add(firstNameS);
-            emailSL.add(emailS);
-            citySL.add(cityS);
-            stateSL.add(stateS);
-
-            Object id = fileData.get(i).get(0);
-            Object firstName = fileData.get(i).get(1);
-            Object email = fileData.get(i).get(3);
-            Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
-
-            idL.add(id);
-            firstNameL.add(firstName);
-            emailL.add(email);
-            cityL.add(city);
-            stateL.add(state);
-
-        }
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Row row = fileRow.get(i);
-            int firstGroup = fileRow.indexOf(row);
-            int lastGroup = fileRow.lastIndexOf(row);
-
-            // test whether the city and the zip code are unique
-            if (firstGroup == lastGroup) {
-                // only one record in the table, checks whether the information retains the same
-                int idcmp = Integer.parseInt((String) fileRow.get(i).rItems.get(0));
-                String fncmp = (String) fileRow.get(i).rItems.get(1);
-                String emailcmp = (String) fileRow.get(i).rItems.get(3);
-                String citycmp = (String) fileRow.get(i).rItems.get(6);
-                String statecmp = (String) fileRow.get(i).rItems.get(7);
-
-                int idscmp = Integer.parseInt((String) fileRowShuffled.get(i).rItems.get(0));
-                String fnscmp = (String) fileRowShuffled.get(i).rItems.get(1);
-                String emailscmp = (String) fileRowShuffled.get(i).rItems.get(3);
-                String cityscmp = (String) fileRowShuffled.get(i).rItems.get(6);
-                String statescmp = (String) fileRowShuffled.get(i).rItems.get(7);
-
-                Assert.assertEquals(idcmp, idscmp);
-                Assert.assertEquals(fncmp, fnscmp);
-                Assert.assertEquals(emailcmp, emailscmp);
-                Assert.assertEquals(citycmp, cityscmp);
-                Assert.assertEquals(statecmp, statescmp);
-
-            } else if (firstGroup != lastGroup && i == firstGroup) {
-                // zip code has several records
-                List<Integer> rIndex = new ArrayList<Integer>();
-                for (int j = firstGroup; j <= lastGroup; j++) {
-                    if (fileRow.get(i).equals(fileRowShuffled.get(j))) {
-                        rIndex.add(j);
-                    }
-                }
-
-                if (rIndex.size() > 2) {
-                    for (int rowI : rIndex) {
-                        String citycmp = (String) fileRow.get(rowI).rItems.get(6);
-                        String statecmp = (String) fileRow.get(rowI).rItems.get(7);
-
-                        String fnscmp = (String) fileRowShuffled.get(rowI).rItems.get(1);
-                        String emailscmp = (String) fileRowShuffled.get(rowI).rItems.get(3);
-                        String cityscmp = (String) fileRowShuffled.get(rowI).rItems.get(6);
-                        String statescmp = (String) fileRowShuffled.get(rowI).rItems.get(7);
-
-                        // test whether city changes
-                        Assert.assertEquals(citycmp, cityscmp);
-
-                        // test whether zip code changes
-                        Assert.assertEquals(statecmp, statescmp);
-
-                        // test whether the original information remain, id and email, at least one is shuffled
-                        String ido = (String) idL.get(rowI);
-                        String ids = (String) idSL.get(rowI);
-                        String emailo = (String) emailL.get(rowI);
-                        String emails = (String) emailSL.get(rowI);
-                        if ((ido.equals(ids)) && emailo.equals(emails)) {
-                            System.out.println(" equals " + rowI + " r Index " + rIndex);
-                        }
-                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
-                    }
-                }
-
-            }
-        }
-
-    }
-
-    @Test
-    public void testshuffleColumnDataByGroup100000() {
-        List<List<Object>> fileDataShuffled = generator.getTableValue(file100000);
-        List<List<Object>> fileData = generator.getTableValue(file100000);
-
-        partition.setRows(fileDataShuffled);
-
-        partition.shuffle();
-
-        fileDataShuffled = partition.getRows();
-
-        List<Row> fileRowShuffled = new ArrayList<Row>();
-        List<Row> fileRow = new ArrayList<Row>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            fileRowShuffled.add(new Row(i, fileDataShuffled.get(i), fileDataShuffled.get(i).subList(6, 9)));
-            fileRow.add(new Row(i, fileData.get(i), fileData.get(i).subList(6, 9)));
-        }
-
-        List<Object> idSL = new ArrayList<Object>();
-        List<Object> firstNameSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> stateSL = new ArrayList<Object>();
-
-        List<Object> idL = new ArrayList<Object>();
-        List<Object> firstNameL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> stateL = new ArrayList<Object>();
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Object idS = fileDataShuffled.get(i).get(0);
-            Object firstNameS = fileDataShuffled.get(i).get(1);
-            Object emailS = fileDataShuffled.get(i).get(3);
-            Object cityS = fileDataShuffled.get(i).get(6);
-            Object stateS = fileDataShuffled.get(i).get(7);
-
-            idSL.add(idS);
-            firstNameSL.add(firstNameS);
-            emailSL.add(emailS);
-            citySL.add(cityS);
-            stateSL.add(stateS);
-
-            Object id = fileData.get(i).get(0);
-            Object firstName = fileData.get(i).get(1);
-            Object email = fileData.get(i).get(3);
-            Object city = fileData.get(i).get(6);
-            Object state = fileData.get(i).get(7);
-
-            idL.add(id);
-            firstNameL.add(firstName);
-            emailL.add(email);
-            cityL.add(city);
-            stateL.add(state);
-        }
-
-        for (int i = 0; i < fileData.size(); i++) {
-            Row row = fileRow.get(i);
-            int firstGroup = fileRow.indexOf(row);
-            int lastGroup = fileRow.lastIndexOf(row);
-
-            // test whether the city and the zip code are unique
-            if (firstGroup == lastGroup) {
-                // only one record in the table, checks whether the information retains the same
-                int idcmp = Integer.parseInt((String) fileRow.get(i).rItems.get(0));
-                String fncmp = (String) fileRow.get(i).rItems.get(1);
-                String emailcmp = (String) fileRow.get(i).rItems.get(3);
-                String citycmp = (String) fileRow.get(i).rItems.get(6);
-                String statecmp = (String) fileRow.get(i).rItems.get(7);
-
-                int idscmp = Integer.parseInt((String) fileRowShuffled.get(i).rItems.get(0));
-                String fnscmp = (String) fileRowShuffled.get(i).rItems.get(1);
-                String emailscmp = (String) fileRowShuffled.get(i).rItems.get(3);
-                String cityscmp = (String) fileRowShuffled.get(i).rItems.get(6);
-                String statescmp = (String) fileRowShuffled.get(i).rItems.get(7);
-
-                Assert.assertEquals(idcmp, idscmp);
-                Assert.assertEquals(fncmp, fnscmp);
-                Assert.assertEquals(emailcmp, emailscmp);
-                Assert.assertEquals(citycmp, cityscmp);
-                Assert.assertEquals(statecmp, statescmp);
-
-            } else if (firstGroup != lastGroup && i == firstGroup) {
-                // zip code has several records
-                List<Integer> rIndex = new ArrayList<Integer>();
-                for (int j = firstGroup; j <= lastGroup; j++) {
-                    if (fileRow.get(i).equals(fileRowShuffled.get(j))) {
-                        rIndex.add(j);
-                    }
-                }
-
-                if (rIndex.size() > 2) {
-                    // System.out.println(rIndex);
-                    for (int rowI : rIndex) {
-
-                        String citycmp = (String) fileRow.get(rowI).rItems.get(6);
-                        String statecmp = (String) fileRow.get(rowI).rItems.get(7);
-
-                        String cityscmp = (String) fileRowShuffled.get(rowI).rItems.get(6);
-                        String statescmp = (String) fileRowShuffled.get(rowI).rItems.get(7);
-
-                        // test whether city changes
-                        Assert.assertEquals(citycmp, cityscmp);
-
-                        // test whether zip code changes
-                        Assert.assertEquals(statecmp, statescmp);
-
-                        // test whether the original information remain, id and email, at least one is shuffled
-                        String ido = (String) idL.get(rowI);
-                        String ids = (String) idSL.get(rowI);
-                        String emailo = (String) emailL.get(rowI);
-                        String emails = (String) emailSL.get(rowI);
-                        if ((ido.equals(ids)) && emailo.equals(emails)) {
-                            System.out.println(" equals " + rowI + " r Index " + rIndex);
-                        }
-                        Assert.assertTrue(!((ido.equals(ids)) && emailo.equals(emails)));
-
-                    }
-                }
-
-            }
-        }
-
-    }
-
-    class Row implements Comparable<Row> {
-
-        int rIndex;
-
-        List<Object> rGroup = new ArrayList<Object>();
-
-        List<Object> rItems = new ArrayList<Object>();
-
-        public Row(int rIndex, List<Object> rItems, List<Object> rGroup) {
-            super();
-            this.rIndex = rIndex;
-            for (Object o : rItems) {
-                this.rItems.add(o);
+    @Ignore
+    public void testPartitionOneMillion() throws InterruptedException {
+        List<List<Object>> fileData = generator.getTableValue(file1000000);
+        int partition = 100000;
+        Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
+
+        ShufflingService service = new ShufflingService(numColumn, allColumns, group);
+
+        ShufflingHandler handler = new ShufflingHandler(service, result);
+        service.setShufflingHandler(handler);
+        service.setSeperationSize(partition);
+
+        long time1 = System.currentTimeMillis();
+        service.setRows(fileData);
+        Thread.sleep(1000);
+        long time2 = System.currentTimeMillis();
+        service.setHasFinished(true);
+        System.out.println("one million line generation time " + (time2 - time1));
+
+        Assert.assertEquals(fileData.size() / partition, result.size());
+
+        for (int i = 0; i < fileData.size() / partition; i++) {
+            List<String> emailsO = new ArrayList<String>();
+            List<String> fnsO = new ArrayList<String>();
+            List<String> citisO = new ArrayList<String>();
+            List<String> statesO = new ArrayList<String>();
+
+            List<String> emailsS = new ArrayList<String>();
+            List<String> fnsS = new ArrayList<String>();
+            List<Integer> idsS = new ArrayList<Integer>();
+            List<String> citisS = new ArrayList<String>();
+            List<String> statesS = new ArrayList<String>();
+
+            List<List<Object>> subRows = result.poll();
+            Assert.assertEquals(partition, subRows.size());
+
+            for (int row = 0; row < subRows.size(); row++) {
+                int idS = Integer.parseInt(subRows.get(row).get(0).toString());
+                // Partition runs well: id is in the range of partition
+                Assert.assertTrue(idS >= (partition * i + 1));
+                Assert.assertTrue(idS < (partition * (i + 1) + 1));
+
+                emailsO.add(fileData.get(row + partition * i).get(3).toString());
+                fnsO.add(fileData.get(row + partition * i).get(1).toString());
+                citisO.add(fileData.get(row + partition * i).get(6).toString());
+                statesO.add(fileData.get(row + partition * i).get(7).toString());
+
+                idsS.add(idS);
+                fnsS.add(subRows.get(row).get(1).toString());
+                emailsS.add(subRows.get(row).get(3).toString());
+                citisS.add(subRows.get(row).get(6).toString());
+                statesS.add(subRows.get(row).get(7).toString());
             }
 
-            if (rGroup == null) {
-                this.rGroup = null;
-            } else {
-                for (Object o : rGroup) {
-                    this.rGroup.add(o);
-                }
+            for (int row = 0; row < subRows.size(); row++) {
+                if (row % 50000 == 0)
+                    System.out.println("i " + i + " row " + row);
+                // Partition runs well: email's original index is in the range of partition && Integration of data :
+                // email exists in the list
+                Assert.assertTrue(emailsO.contains(emailsS.get(row)));
+
+                int ids = idsS.get(row);
+                int idO = ids - i * partition - 1;
+
+                // Partition runs well: the city and state do not move
+                String cityS = citisS.get(row);
+                String cityO = citisO.get(idO);
+                Assert.assertEquals(cityO, cityS);
+
+                String stateS = statesS.get(row);
+                String stateO = statesO.get(idO);
+                Assert.assertEquals(stateO, stateS);
+
+                // Integration of data : id and the first name remain its original correspondence
+                ;
+                String fnO = fnsO.get(idO);
+                Assert.assertEquals(fnO, fnsS.get(row));
+
+                // Shuffling quality : the id group (id and the first) and the email, at least one has changed its
+                // original position
+                String emailS = emailsS.get(row);
+                String emailO = emailsO.get(row);
+                Assert.assertTrue(ids != (row + 1 + partition * i) || !emailS.equals(emailO));
             }
 
         }
-
-        @Override
-        public String toString() {
-            return "( " + rIndex + " " + " rItems " + rItems + " rGroup " + rGroup + " )";
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (!(o instanceof Row)) {
-                return false;
-            }
-            Row r = (Row) o;
-            boolean equal = true;
-            for (int i = 0; i < rGroup.size(); i++) {
-                if (!rGroup.get(i).equals(r.rGroup.get(i))) {
-                    equal = false;
-                }
-            }
-
-            return equal;
-        }
-
-        @Override
-        public int compareTo(Row r) {
-            int max = (rGroup.size() <= r.rGroup.size()) ? rGroup.size() : r.rGroup.size();
-            int cmp = -1;
-            for (int i = 0; i < max; i++) {
-                cmp = ((String) rGroup.get(i)).compareTo(((String) r.rGroup.get(i)));
-                if (cmp != 0) {
-                    return cmp;
-                }
-            }
-
-            return cmp;
-        }
-
-        Object getItem(int index) {
-            return rItems.get(index);
-        }
-
     }
 
 }

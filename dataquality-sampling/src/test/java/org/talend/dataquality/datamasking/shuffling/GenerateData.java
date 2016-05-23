@@ -149,7 +149,7 @@ public class GenerateData {
             e.printStackTrace();
         }
 
-        return null;
+        return result;
     }
 
     protected List<List<String>> getMultipleData(String file, String[] columns) throws URISyntaxException {

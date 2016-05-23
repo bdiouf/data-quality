@@ -22,13 +22,7 @@ public class ShuffleColumn {
 
     private List<String> allInputColumns = new ArrayList<String>();
 
-    private List<List<Object>> rows = new ArrayList<List<Object>>();
-
     private RandomWrapper randomWrapper = new RandomWrapper();
-
-    private ShuffleHandler handler = null;
-
-    private int seperationSize = Integer.MAX_VALUE;
 
     /**
      * Constructor without the partition choice
@@ -49,12 +43,7 @@ public class ShuffleColumn {
         this.partitionColumns = partitionColumns == null ? null : getPartitionIndex(partitionColumns);
     }
 
-    /**
-     * This methods shuffles the variable 2D list in the class, so to use this method, it should initialize the variable
-     * by the method {@code setNextRow} and add the row one by one or by the method setRows to set all the table data.
-     * <br>
-     */
-    public void shuffle() {
+    public void shuffle(List<List<Object>> rows) {
         if (partitionColumns == null || partitionColumns.isEmpty()) {
             shuffleTable(rows, numColumns);
         } else {
@@ -104,58 +93,91 @@ public class ShuffleColumn {
      */
     protected void shuffleTable(List<List<Object>> rowList, List<List<Integer>> numColumn) {
         List<Row> rows = generateRows(rowList, null);
+        processShuffleTable(rowList, rows, numColumn);
+        rows.clear();
 
-        int shift = numColumn.size() == 1 ? 0 : 1;
+    }
+
+    private void processShuffleTable(List<List<Object>> rowList, List<Row> rows, List<List<Integer>> numColumn) {
         List<Integer> replacements = calculateReplacementInteger(rows.size(), gerPrimeNumber());
+        List<Integer> shifts = new ArrayList<Integer>();
 
         for (int group = 0; group < numColumn.size(); group++) {
+
+            int shift = getShift(shifts, rows.size());
+            shifts.add(shift);
+
             for (int row = 0; row < rows.size(); row++) {
-                int replacement = replacements.get((row + shift * (group + 1)) % rows.size());
+                int resultAddDeplacement = row + shift;
+                int replacementIndex = (resultAddDeplacement < rows.size()) ? resultAddDeplacement
+                        : resultAddDeplacement - rows.size();
+                int replacement = replacements.get(replacementIndex) % rows.size();
                 for (int column : numColumn.get(group)) {
-                    rowList.get(row).set(column, rows.get(replacement).rItems.get(column));
+                    // rowList.get(row).set(column, rows.get(replacement).rItems.get(column));
+                    rowList.get(rows.get(row).rIndex).set(column, rows.get(replacement).rItems.get(column));
                 }
             }
         }
+
+    }
+
+    /**
+     * Gets the shift of row index.
+     * 
+     * @param shifts
+     * @param integer
+     * @return
+     */
+    private int getShift(List<Integer> shifts, int integer) {
+        int shift = 0;
+        if (shifts.size() >= integer) {
+            return randomWrapper.nextInt(integer);
+        }
+        do {
+            shift = randomWrapper.nextInt(integer);
+        } while (shifts.contains(shift));
+        return shift;
     }
 
     /**
      * 
      * Shuffles the columns by a given group<br>
      * 
-     * @param rows input table value
+     * @param rowList input table value
      * @param numColumn 2D list of integer containing the shuffled columns' number
      * @param partition a list of column's index as a group
      * @return shuffled rows' data on 2D list
      */
-    protected void shuffleColumnWithPartition(List<List<Object>> rows, List<List<Integer>> numColumn, List<Integer> partition) {
-        List<Row> rowList = generateRows(rows, partition);
-        Collections.sort(rowList);
-        List<List<Row>> subRows = seperateRowsByGroup(rowList);
+    protected void shuffleColumnWithPartition(List<List<Object>> rowList, List<List<Integer>> numColumn,
+            List<Integer> partition) {
+        List<Row> rows = generateRows(rowList, partition);
+        Collections.sort(rows);
+        List<List<Row>> subRows = seperateRowsByGroup(rows);
 
-        int primeNumber = gerPrimeNumber();
+        // int primeNumber = gerPrimeNumber();
 
         for (List<Row> subRow : subRows) {
             int subRowSize = subRow.size();
             if (subRowSize != 1) {
-                int shift = numColumn.size() == 1 ? 0 : 1;
-                List<Integer> replacements = calculateReplacementInteger(subRowSize, primeNumber);
-                if (numColumn.size() == 1) {
-                    checkReplacementsList(replacements);
-                }
-                for (int groupC = 0; groupC < numColumn.size(); groupC++) {
+                processShuffleTable(rowList, subRow, numColumn);
+                // int shift = numColumn.size() == 1 ? 0 : 1;
+                // List<Integer> replacements = calculateReplacementInteger(subRowSize, primeNumber);
+                // if (numColumn.size() == 1) {
+                // checkReplacementsList(replacements);
+                // }
+                // for (int group = 0; group < numColumn.size(); group++) {
+                //
+                // for (int row = 0; row < subRowSize; row++) {
+                // int replacement = replacements.get((row + shift * (group + 1)) % subRowSize);
+                //
+                // for (int column : numColumn.get(group)) {
+                // rowList.get(subRow.get(row).rIndex).set(column, subRow.get(replacement).rItems.get(column));
+                // }
+                // }
+                // }
 
-                    for (int row = 0; row < subRowSize; row++) {
-                        int replacement = replacements.get((row + shift * (groupC + 1)) % subRowSize);
-
-                        for (int column : numColumn.get(groupC)) {
-                            rows.get(subRow.get(row).rIndex).set(column, subRow.get(replacement).rItems.get(column));
-                        }
-                    }
-
-                }
             }
         }
-
     }
 
     /**
@@ -191,30 +213,8 @@ public class ShuffleColumn {
         return subRows;
     }
 
-    public List<List<Object>> getRows() {
-        return rows;
-    }
-
-    public void setRows(List<List<Object>> rows) {
-        this.rows.clear();
-        this.rows = rows;
-    }
-
     public void setRandomSeed(long seed) {
         this.randomWrapper.setSeed(seed);
-    }
-
-    /**
-     * Adds the the row values
-     * 
-     * @param row a list of object
-     */
-    public void setNextRow(List<Object> row) {
-        this.rows.add(row);
-    }
-
-    public void setSeperationSize(int seperationSize) {
-        this.seperationSize = seperationSize;
     }
 
     /**
@@ -356,5 +356,4 @@ public class ShuffleColumn {
         }
 
     }
-
 }
