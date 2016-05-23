@@ -88,6 +88,7 @@ public class ShuffleColumnTest {
 
         service.setHasFinished(true);
         Assert.assertEquals(size / partition, result.size());
+        System.out.println(">>>>>>> " + result.size());
         for (int i = 0; i < result.size(); i++) {
             List<List<Object>> rows = result.poll();
             for (int position = 0; position < rows.size(); position++) {
@@ -103,6 +104,7 @@ public class ShuffleColumnTest {
     }
 
     @Test
+    @Ignore
     public void testOneColumnBigIntegerHasModulo() {
         int partition = 100000;
         int size = 10000999;
@@ -325,7 +327,6 @@ public class ShuffleColumnTest {
     }
 
     @Test
-    @Ignore
     public void testshuffleColumnsData10000() {
         Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
 
@@ -573,7 +574,8 @@ public class ShuffleColumnTest {
 
         }
         for (int i = 0; i < fileData.size(); i++) {
-            System.out.println(i);
+            if (i % 20000 == 0)
+                System.out.println(i);
             // test whether all email address retain
             Assert.assertTrue(emailSL.contains(emailL.get(i)));
             // test whether all name retain

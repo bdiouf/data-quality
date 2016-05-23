@@ -102,19 +102,44 @@ public class ShuffleColumn {
         List<Integer> replacements = calculateReplacementInteger(rows.size(), gerPrimeNumber());
         List<Integer> shifts = new ArrayList<Integer>();
 
-        for (int group = 0; group < numColumn.size(); group++) {
-
-            int shift = getShift(shifts, rows.size());
-            shifts.add(shift);
-
+        if (numColumn.size() == 1) {
+            adjustReplacements(replacements);
             for (int row = 0; row < rows.size(); row++) {
-                int resultAddDeplacement = row + shift;
-                int replacementIndex = (resultAddDeplacement < rows.size()) ? resultAddDeplacement
-                        : resultAddDeplacement - rows.size();
-                int replacement = replacements.get(replacementIndex) % rows.size();
-                for (int column : numColumn.get(group)) {
-                    // rowList.get(row).set(column, rows.get(replacement).rItems.get(column));
-                    rowList.get(rows.get(row).rIndex).set(column, rows.get(replacement).rItems.get(column));
+                for (int column : numColumn.get(0)) {
+                    rowList.get(rows.get(row).rIndex).set(column, rows.get(replacements.get(row)).rItems.get(column));
+                }
+            }
+        } else {
+            for (int group = 0; group < numColumn.size(); group++) {
+                int shift = getShift(shifts, rows.size());
+                shifts.add(shift);
+                for (int row = 0; row < rows.size(); row++) {
+                    int resultAddDeplacement = row + shift;
+                    int replacementIndex = (resultAddDeplacement < rows.size()) ? resultAddDeplacement
+                            : resultAddDeplacement - rows.size();
+                    int replacement = replacements.get(replacementIndex) % rows.size();
+
+                    for (int column : numColumn.get(group)) {
+                        // rowList.get(row).set(column, rows.get(replacement).rItems.get(column));
+                        rowList.get(rows.get(row).rIndex).set(column, rows.get(replacement).rItems.get(column));
+                    }
+                }
+            }
+        }
+
+    }
+
+    private void adjustReplacements(List<Integer> replacements) {
+        for (int i = 0; i < replacements.size(); i++) {
+            if (i == replacements.get(i)) {
+                if (i != replacements.size() - 1) {
+                    int temp = replacements.get(i + 1);
+                    replacements.set(i, temp);
+                    replacements.set(i + 1, i);
+                } else {
+                    int temp = replacements.get(i - 1);
+                    replacements.set(i, temp);
+                    replacements.set(i - 1, i);
                 }
             }
         }
