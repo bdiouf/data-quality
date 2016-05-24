@@ -30,12 +30,12 @@ public abstract class AbstractGenerateUniqueSsn extends Function<String> {
 
     /**
      * Used in some countries to check the SSN number.
-     * The initialization can be done in createFieldsListFromFrPattern method if necessary.
+     * The initialization can be done in createFieldsListFromPattern method if necessary.
      */
     protected int checkSumSize = 0;
 
     public AbstractGenerateUniqueSsn() {
-        List<AbstractField> fields = createFieldsListFromFrPattern();
+        List<AbstractField> fields = createFieldsListFromPattern();
         ssnPattern = new GenerateUniqueRandomPatterns(fields);
     }
 
@@ -80,7 +80,7 @@ public abstract class AbstractGenerateUniqueSsn extends Function<String> {
     /**
      * @return the list of patterns for each field
      */
-    protected abstract List<AbstractField> createFieldsListFromFrPattern();
+    protected abstract List<AbstractField> createFieldsListFromPattern();
 
     protected abstract StringBuilder doValidGenerateMaskedField(String str);
 

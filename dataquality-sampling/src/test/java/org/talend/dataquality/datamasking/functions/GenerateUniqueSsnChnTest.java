@@ -19,13 +19,13 @@ import org.junit.Test;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
- * @author jteuladedenantes
+ * @author dprot
  */
-public class GenerateUniqueSsnFrTest {
+public class GenerateUniqueSsnChnTest {
 
     private String output;
 
-    private AbstractGenerateUniqueSsn gnf = new GenerateUniqueSsnFr();
+    private AbstractGenerateUniqueSsn gnf = new GenerateUniqueSsnChn();
 
     @Before
     public void setUp() throws Exception {
@@ -55,30 +55,30 @@ public class GenerateUniqueSsnFrTest {
     }
 
     @Test
-    public void testGood1() {
-        output = gnf.generateMaskedRow("1860348282074 19");
-        assertEquals("2000132446558 52", output);
+    public void testGood() {
+        output = gnf.generateMaskedRow("64010119520414123X");
+        assertEquals("150923205211538130", output);
     }
 
     @Test
-    public void testGood2() {
+    public void testGoodSpace() {
         // with spaces
-        output = gnf.generateMaskedRow("2 12 12 15 953 006   88");
-        assertEquals("1 17 05 11 293 176   22", output);
+        output = gnf.generateMaskedRow("231202 19510411 456   4");
+        assertEquals("410422 19840319 136   X", output);
     }
 
     @Test
-    public void testGood3() {
-        // corse department
-        output = gnf.generateMaskedRow("10501 2B 532895 34");
-        assertEquals("12312 85 719322 48", output);
+    public void testGoodLeapYear() {
+        // leap year for date of birth
+        output = gnf.generateMaskedRow("232723 19960229 459 4");
+        assertEquals("445322 19370707 229 X", output);
     }
 
     @Test
     public void testWrongSsnFieldNumber() {
         gnf.setKeepInvalidPattern(false);
         // without a number
-        output = gnf.generateMaskedRow("186034828207 19");
+        output = gnf.generateMaskedRow("6401011920414123X");
         assertEquals(null, output);
     }
 
@@ -86,15 +86,39 @@ public class GenerateUniqueSsnFrTest {
     public void testWrongSsnFieldLetter() {
         gnf.setKeepInvalidPattern(false);
         // with a wrong letter
-        output = gnf.generateMaskedRow("186034Y282079 19");
+        output = gnf.generateMaskedRow("640101195204141C3X");
         assertEquals(null, output);
     }
 
     @Test
-    public void testWrongSsnFieldPattern() {
+    public void testWrongSsnFieldRegion() {
         gnf.setKeepInvalidPattern(false);
-        // with a letter instead of a number
-        output = gnf.generateMaskedRow("1860I48282079 19");
+        // With an invalid region code
+        output = gnf.generateMaskedRow("11000119520414123X");
+        assertEquals(null, output);
+    }
+
+    @Test
+    public void testWrongSsnFieldBirth() {
+        gnf.setKeepInvalidPattern(false);
+        // With an invalid date of birth (wrong year)
+        output = gnf.generateMaskedRow("64010118520414123X");
+        assertEquals(null, output);
+    }
+
+    @Test
+    public void testWrongSsnFieldBirth2() {
+        gnf.setKeepInvalidPattern(false);
+        // With an invalid date of birth (day not existing)
+        output = gnf.generateMaskedRow("64010119520434123X");
+        assertEquals(null, output);
+    }
+
+    @Test
+    public void testWrongSsnFieldBirth3() {
+        gnf.setKeepInvalidPattern(false);
+        // With an invalid date of birth (29th February in a non-leap year)
+        output = gnf.generateMaskedRow("64010119530229123X");
         assertEquals(null, output);
     }
 

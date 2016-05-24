@@ -27,7 +27,7 @@ public class GenerateUniqueSsnJapan extends AbstractGenerateUniqueSsn {
     private static final long serialVersionUID = -2321693247791991249L;
 
     @Override
-    protected List<AbstractField> createFieldsListFromFrPattern() {
+    protected List<AbstractField> createFieldsListFromPattern() {
         List<AbstractField> fields = new ArrayList<AbstractField>();
         fields.add(new FieldInterval(1, 1000000000000L - 1));
         return fields;
@@ -40,7 +40,7 @@ public class GenerateUniqueSsnJapan extends AbstractGenerateUniqueSsn {
         strs.add(str.substring(0, 12));
 
         if (super.ssnPattern == null) {
-            List<AbstractField> fields = createFieldsListFromFrPattern();
+            List<AbstractField> fields = createFieldsListFromPattern();
             super.ssnPattern = new GenerateUniqueRandomPatterns(fields);
         }
 

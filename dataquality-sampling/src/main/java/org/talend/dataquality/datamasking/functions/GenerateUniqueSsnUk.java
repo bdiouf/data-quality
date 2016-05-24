@@ -29,7 +29,7 @@ public class GenerateUniqueSsnUk extends AbstractGenerateUniqueSsn {
     private static final long serialVersionUID = 2583289679952923493L;
 
     @Override
-    protected List<AbstractField> createFieldsListFromFrPattern() {
+    protected List<AbstractField> createFieldsListFromPattern() {
         List<Character> forbiddenLetters = new ArrayList<Character>(Arrays.asList('D', 'F', 'I', 'Q', 'U', 'V'));
 
         List<AbstractField> fields = new ArrayList<AbstractField>();

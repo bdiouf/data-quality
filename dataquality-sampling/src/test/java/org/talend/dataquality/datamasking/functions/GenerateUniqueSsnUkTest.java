@@ -36,26 +36,36 @@ public class GenerateUniqueSsnUkTest {
     @Test
     public void testGood1() {
         output = gnu.generateMaskedRow("AL 486934 D");
-        assertEquals(output, "TG 807846 D");
+        assertEquals("TG 807846 D", output);
     }
 
     @Test
     public void testGood2() {
         output = gnu.generateMaskedRow("PP132459A ");
-        assertEquals(output, "NJ207147A ");
+        assertEquals("NJ207147A ", output);
     }
 
     @Test
-    public void testWrongSsnField() {
+    public void testWrongSsnFieldNumber() {
         gnu.setKeepInvalidPattern(false);
         // without a number
         output = gnu.generateMaskedRow("PP13259A");
-        assertEquals(output, null);
-        // with the fobidden letter D
+        assertEquals(null, output);
+    }
+
+    @Test
+    public void testWrongSsnFieldForbiddenD() {
+        gnu.setKeepInvalidPattern(false);
+        // with the forbidden letter D
         output = gnu.generateMaskedRow("LO 486934 A");
-        assertEquals(output, null);
-        // with the fobidden letters NK
+        assertEquals(null, output);
+    }
+
+    @Test
+    public void testWrongSsnFieldForbiddenNK() {
+        gnu.setKeepInvalidPattern(false);
+        // with the forbidden letters NK
         output = gnu.generateMaskedRow("NK 486934 B");
-        assertEquals(output, null);
+        assertEquals(null, output);
     }
 }

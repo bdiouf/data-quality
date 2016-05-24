@@ -66,7 +66,7 @@ public class GenerateUniqueSsnFr extends AbstractGenerateUniqueSsn {
      * @return the list of each field
      */
     @Override
-    protected List<AbstractField> createFieldsListFromFrPattern() {
+    protected List<AbstractField> createFieldsListFromPattern() {
         List<AbstractField> fields = new ArrayList<AbstractField>();
 
         fields.add(new FieldInterval(1, 2));

@@ -28,7 +28,7 @@ public class GenerateUniqueSsnUs extends AbstractGenerateUniqueSsn {
     private static final long serialVersionUID = 948793448882763445L;
 
     @Override
-    protected List<AbstractField> createFieldsListFromFrPattern() {
+    protected List<AbstractField> createFieldsListFromPattern() {
         List<AbstractField> fields = new ArrayList<AbstractField>();
         List<String> firstField = new ArrayList<String>();
         for (int i = 1; i < 900; i++) {

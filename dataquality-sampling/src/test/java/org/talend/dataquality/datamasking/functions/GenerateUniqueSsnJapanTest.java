@@ -35,23 +35,28 @@ public class GenerateUniqueSsnJapanTest {
     @Test
     public void testGood1() {
         output = gnj.generateMaskedRow("830807527228");
-        assertEquals(output, "477564837070");
+        assertEquals("477564837070", output);
     }
 
     @Test
     public void testGood2() {
         output = gnj.generateMaskedRow("486953617449");
-        assertEquals(output, "370892787197");
+        assertEquals("370892787197", output);
     }
 
     @Test
-    public void testWrongSsnField() {
+    public void testWrongSsnFieldNumber() {
         gnj.setKeepInvalidPattern(false);
         // without a number
         output = gnj.generateMaskedRow("83080727228");
-        assertEquals(output, null);
+        assertEquals(null, output);
+    }
+
+    @Test
+    public void testWrongSsnFieldLetter() {
+        gnj.setKeepInvalidPattern(false);
         // with a letter instead of a number
         output = gnj.generateMaskedRow("83080752722P");
-        assertEquals(output, null);
+        assertEquals(null, output);
     }
 }
