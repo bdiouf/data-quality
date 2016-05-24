@@ -1,0 +1,87 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
+package org.talend.dataquality.datamasking.functions;
+
+import java.util.List;
+import java.util.Random;
+
+import org.talend.dataquality.duplicating.RandomWrapper;
+
+/**
+ * @author jteuladedenantes
+ * 
+ * This abstract class contains all attributes and methods similar among the SNN numbers.
+ */
+public abstract class AbstractGenerateUniqueSsn extends Function<String> {
+
+    private static final long serialVersionUID = -2459692854626505777L;
+
+    protected GenerateUniqueRandomPatterns ssnPattern;
+
+    /**
+     * Used in some countries to check the SSN number.
+     * The initialization can be done in createFieldsListFromFrPattern method if necessary.
+     */
+    protected int checkSumSize = 0;
+
+    public AbstractGenerateUniqueSsn() {
+        List<AbstractField> fields = createFieldsListFromFrPattern();
+        ssnPattern = new GenerateUniqueRandomPatterns(fields);
+    }
+
+    @Override
+    public void setRandomWrapper(Random rand) {
+        if (rand == null) {
+            rnd = new RandomWrapper();
+        } else {
+            rnd = rand;
+        }
+        ssnPattern.setKey(rand.nextInt() % 10000 + 1000);
+    }
+
+    @Override
+    protected String doGenerateMaskedField(String str) {
+        if (str == null)
+            return null;
+
+        String strWithoutSpaces = str.replace(" ", "");
+        // check if the pattern is valid
+        if (strWithoutSpaces.isEmpty() || strWithoutSpaces.length() != ssnPattern.getFieldsCharsLength() + checkSumSize) {
+            if (keepInvalidPattern)
+                return str;
+            else
+                return null;
+        }
+
+        StringBuilder result = doValidGenerateMaskedField(strWithoutSpaces);
+        if (result == null) {
+            if (keepInvalidPattern)
+                return str;
+            else
+                return null;
+        }
+
+        for (int i = 0; i < str.length(); i++)
+            if (str.charAt(i) == ' ')
+                result.insert(i, ' ');
+        return result.toString();
+    }
+
+    /**
+     * @return the list of patterns for each field
+     */
+    protected abstract List<AbstractField> createFieldsListFromFrPattern();
+
+    protected abstract StringBuilder doValidGenerateMaskedField(String str);
+
+}

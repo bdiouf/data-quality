@@ -21,37 +21,41 @@ import org.talend.dataquality.duplicating.RandomWrapper;
 /**
  * @author jteuladedenantes
  */
-public class GenerateUniqueSsnJapanTest {
+
+public class GenerateUniqueSsnUkTest {
 
     private String output;
 
-    private AbstractGenerateUniqueSsn gnj = new GenerateUniqueSsnJapan();
+    private AbstractGenerateUniqueSsn gnu = new GenerateUniqueSsnUk();
 
     @Before
     public void setUp() throws Exception {
-        gnj.setRandomWrapper(new RandomWrapper(42));
+        gnu.setRandomWrapper(new RandomWrapper(42));
     }
 
     @Test
     public void testGood1() {
-        output = gnj.generateMaskedRow("830807527228");
-        assertEquals(output, "477564837070");
+        output = gnu.generateMaskedRow("AL 486934 D");
+        assertEquals(output, "TG 807846 D");
     }
 
     @Test
     public void testGood2() {
-        output = gnj.generateMaskedRow("486953617449");
-        assertEquals(output, "370892787197");
+        output = gnu.generateMaskedRow("PP132459A ");
+        assertEquals(output, "NJ207147A ");
     }
 
     @Test
     public void testWrongSsnField() {
-        gnj.setKeepInvalidPattern(false);
+        gnu.setKeepInvalidPattern(false);
         // without a number
-        output = gnj.generateMaskedRow("83080727228");
+        output = gnu.generateMaskedRow("PP13259A");
         assertEquals(output, null);
-        // with a letter instead of a number
-        output = gnj.generateMaskedRow("83080752722P");
+        // with the fobidden letter D
+        output = gnu.generateMaskedRow("LO 486934 A");
+        assertEquals(output, null);
+        // with the fobidden letters NK
+        output = gnu.generateMaskedRow("NK 486934 B");
         assertEquals(output, null);
     }
 }

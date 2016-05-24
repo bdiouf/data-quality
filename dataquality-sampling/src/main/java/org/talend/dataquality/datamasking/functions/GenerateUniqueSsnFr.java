@@ -19,51 +19,34 @@ import java.util.List;
  * 
  * @author jteuladedenantes
  * 
- * The french SSN has 6 fields : [1, 2], [1, 99], [1, 12], {[1, 19] U {2A, 2B} U [20, 99]}, [1, 990], [1, 999]
+ * French patter: a-bb-cc-dd-eee-fff
+ * a: 1 -> 2
+ * bb: 1 -> 99
+ * cc: 1 -> 12
+ * dd: 1 -> 19 ; (2A, 2B) ; 20 -> 99
+ * eee: 1 -> 990
+ * fff: 1 -> 999
  */
-public class GenerateUniqueSsnFr extends Function<String> {
+public class GenerateUniqueSsnFr extends AbstractGenerateUniqueSsn {
 
     private static final long serialVersionUID = 4514471121590047091L;
 
     private static final int MOD97 = 97; // $NON-NLS-1$
 
-    private GenerateUniqueRandomPatterns frenchSsnPattern;
-
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (str == null)
-            return null;
-
-        String strWithoutSpaces = str.replace(" ", "");
-
-        // check if the pattern is valid with french ssn number
-        if (strWithoutSpaces.isEmpty() || strWithoutSpaces.length() != 15) {
-            if (keepInvalidPattern)
-                return strWithoutSpaces;
-            else
-                return null;
-        }
-
-        // read the input strWithoutSpaces
+    protected StringBuilder doValidGenerateMaskedField(String str) {
+        // read the input str
         List<String> strs = new ArrayList<String>();
-        strs.add(strWithoutSpaces.substring(0, 1));
-        strs.add(strWithoutSpaces.substring(1, 3));
-        strs.add(strWithoutSpaces.substring(3, 5));
-        strs.add(strWithoutSpaces.substring(5, 7));
-        strs.add(strWithoutSpaces.substring(7, 10));
-        strs.add(strWithoutSpaces.substring(10, 13));
+        strs.add(str.substring(0, 1));
+        strs.add(str.substring(1, 3));
+        strs.add(str.substring(3, 5));
+        strs.add(str.substring(5, 7));
+        strs.add(str.substring(7, 10));
+        strs.add(str.substring(10, 13));
 
-        if (frenchSsnPattern == null) {
-            List<Field> fields = createFieldsListFromFrPattern();
-            this.frenchSsnPattern = new GenerateUniqueRandomPatterns(fields, this.rnd.nextInt(9000) + 1000);
-        }
-
-        StringBuilder result = frenchSsnPattern.generateUniqueString(strs);
+        StringBuilder result = ssnPattern.generateUniqueString(strs);
         if (result == null) {
-            if (keepInvalidPattern)
-                return strWithoutSpaces;
-            else
-                return null;
+            return null;
         }
 
         // add the security key specified for french SSN
@@ -74,21 +57,22 @@ public class GenerateUniqueSsnFr extends Function<String> {
         }
         int controlKey = 97 - (int) (Long.valueOf(keyResult.toString()) % MOD97);
         result.append(controlKey);
-        for (int i = 0; i < str.length(); i++)
-            if (str.charAt(i) == ' ')
-                result.insert(i, ' ');
-        return result.toString();
+
+        return result;
     }
 
     /**
      * 
      * @return the list of each field
      */
-    private List<Field> createFieldsListFromFrPattern() {
-        List<Field> fields = new ArrayList<Field>();
+    @Override
+    protected List<AbstractField> createFieldsListFromFrPattern() {
+        List<AbstractField> fields = new ArrayList<AbstractField>();
+
         fields.add(new FieldInterval(1, 2));
         fields.add(new FieldInterval(0, 99));
         fields.add(new FieldInterval(1, 12));
+
         List<String> departments = new ArrayList<String>();
         for (int department = 1; department <= 99; department++) {
             if (department < 10)
@@ -99,9 +83,12 @@ public class GenerateUniqueSsnFr extends Function<String> {
             } else
                 departments.add(String.valueOf(department));
         }
-        fields.add(new FieldEnum(departments));
+        fields.add(new FieldEnum(departments, 2));
+
         fields.add(new FieldInterval(1, 990));
         fields.add(new FieldInterval(1, 999));
+
+        super.checkSumSize = 2;
         return fields;
     }
 

@@ -19,15 +19,21 @@ import java.util.List;
  * 
  * A FieldEnum is a list of specific values. We defined a FieldEnum by an exhaustive list of all possible values.
  */
-public class FieldEnum implements Field {
+public class FieldEnum extends AbstractField {
 
     /**
      * The exhaustive list of values
      */
     private List<String> enumValues;
 
-    public FieldEnum(List<String> enumValues) {
-        super();
+    public FieldEnum(List<String> enumValues, int length) {
+        super.length = length;
+        for (String value : enumValues)
+            if (value.length() != length) {
+                // TODO
+                // Error in the field constructor
+                return;
+            }
         this.enumValues = enumValues;
     }
 

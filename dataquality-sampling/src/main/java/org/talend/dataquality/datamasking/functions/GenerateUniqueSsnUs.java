@@ -16,34 +16,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author jteuladedenantes class global comment. Detailled comment
+ * @author jteuladedenantes
  * 
- * Japan pattern: aaaaaaaaaaaa
- * aaaaaaaaaaaa: 1 -> 1000000000000 - 1
+ * US pattern: aaa-bb-cccc
+ * aaa: 001 -> 665 ; 667 -> 899
+ * bb: 01 -> 99
+ * cccc: 0001->9999
  */
+public class GenerateUniqueSsnUs extends AbstractGenerateUniqueSsn {
 
-public class GenerateUniqueSsnJapan extends AbstractGenerateUniqueSsn {
-
-    private static final long serialVersionUID = -2321693247791991249L;
+    private static final long serialVersionUID = 948793448882763445L;
 
     @Override
     protected List<AbstractField> createFieldsListFromFrPattern() {
         List<AbstractField> fields = new ArrayList<AbstractField>();
-        fields.add(new FieldInterval(1, 1000000000000L - 1));
+        List<String> firstField = new ArrayList<String>();
+        for (int i = 1; i < 900; i++) {
+            if (i < 10)
+                firstField.add("00" + String.valueOf(i));
+            else if (i < 100)
+                firstField.add("0" + String.valueOf(i));
+            else if (i != 666)
+                firstField.add(String.valueOf(i));
+        }
+        fields.add(new FieldEnum(firstField, 3));
+        fields.add(new FieldInterval(1, 99));
+        fields.add(new FieldInterval(1, 9999));
         return fields;
     }
 
     @Override
     protected StringBuilder doValidGenerateMaskedField(String str) {
-        // read the input str
+        // read the input strWithoutSpaces
         List<String> strs = new ArrayList<String>();
-        strs.add(str.substring(0, 12));
-
-        if (super.ssnPattern == null) {
-            List<AbstractField> fields = createFieldsListFromFrPattern();
-            super.ssnPattern = new GenerateUniqueRandomPatterns(fields);
-        }
+        strs.add(str.substring(0, 3));
+        strs.add(str.substring(3, 5));
+        strs.add(str.substring(5, 9));
 
         return super.ssnPattern.generateUniqueString(strs);
     }
+
 }

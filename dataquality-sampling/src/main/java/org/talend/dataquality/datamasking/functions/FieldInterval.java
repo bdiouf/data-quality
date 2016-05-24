@@ -18,7 +18,7 @@ package org.talend.dataquality.datamasking.functions;
  * A FieldInterval is a set of values defined by a interval. So all values included in this interval are possible
  * values.
  */
-public class FieldInterval implements Field {
+public class FieldInterval extends AbstractField {
 
     private long minInterval;
 
@@ -26,6 +26,7 @@ public class FieldInterval implements Field {
 
     public FieldInterval(long minInterval, long maxInterval) {
         super();
+        super.length = String.valueOf(maxInterval).length();
         this.minInterval = minInterval;
         this.maxInterval = maxInterval;
     }
@@ -53,9 +54,8 @@ public class FieldInterval implements Field {
         if (number >= this.getWidth())
             return "";
         String res = String.valueOf(number + this.minInterval);
-        int size = String.valueOf(this.maxInterval).length();
         // we add the potential missing zeros
-        while (res.length() < size)
+        while (res.length() < super.length)
             res = "0" + res;
         return res;
     }

@@ -18,22 +18,35 @@ package org.talend.dataquality.datamasking.functions;
  * A Field is a set of values. According to a field, we can encode a value in a number or decode a number in a value of
  * the field
  */
-public interface Field {
+public abstract class AbstractField {
+
+    /**
+     * the number of characters in a field
+     */
+    protected int length;
 
     /**
      * @return the number of different possible values in this field
      */
-    public long getWidth();
+    public abstract long getWidth();
 
     /**
      * @param str, the string to encode
      * @return the position number related to this string, -1 if str doesn't exist in this field
      */
-    public Long encode(String str);
+    public abstract Long encode(String str);
 
     /**
      * @param number, the number to decode
      * @return the string related to this number, "" if number is longer than the width
      */
-    public String decode(long number);
+    public abstract String decode(long number);
+
+    /**
+     * @return the number of characters in a field
+     */
+    public int getLength() {
+        return length;
+    }
+
 }

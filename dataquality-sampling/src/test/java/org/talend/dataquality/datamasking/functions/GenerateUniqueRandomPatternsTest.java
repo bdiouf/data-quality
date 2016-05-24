@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.Before;
@@ -16,30 +17,30 @@ public class GenerateUniqueRandomPatternsTest {
 
     private GenerateUniqueRandomPatterns pattern;
 
-    private int key = 454594;
-
     @Before
     public void setUp() throws Exception {
         // pattern we want to test
-        List<Field> fields = new ArrayList<Field>();
+        List<AbstractField> fields = new ArrayList<AbstractField>();
         List<String> enums = new ArrayList<String>(Arrays.asList("O", "P", "G", "U", "M", "S"));
-        fields.add(new FieldEnum(enums));
+        fields.add(new FieldEnum(enums, 1));
         enums = new ArrayList<String>(Arrays.asList("SF", "KI", "QG", "DU"));
-        fields.add(new FieldEnum(enums));
+        fields.add(new FieldEnum(enums, 2));
         fields.add(new FieldInterval(0, 500));
         fields.add(new FieldInterval(5, 20));
-        pattern = new GenerateUniqueRandomPatterns(fields, key);
+
+        pattern = new GenerateUniqueRandomPatterns(fields);
+        pattern.setKey(new Random(454594).nextInt() % 10000 + 1000);
     }
 
     @Test
     public void testGenerateUniqueString() {
 
         StringBuilder result = pattern.generateUniqueString(new ArrayList<String>(Arrays.asList("U", "KI", "453", "12")));
-        assertEquals(result.toString(), "SKI17214");
+        assertEquals(result.toString(), "USF40818");
 
         // test with padding 0
         result = pattern.generateUniqueString(new ArrayList<String>(Arrays.asList("U", "KI", "123", "12")));
-        assertEquals(result.toString(), "UQG07314");
+        assertEquals(result.toString(), "UKI40518");
     }
 
     @Test

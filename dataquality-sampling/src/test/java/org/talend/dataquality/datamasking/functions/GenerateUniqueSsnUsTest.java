@@ -21,37 +21,40 @@ import org.talend.dataquality.duplicating.RandomWrapper;
 /**
  * @author jteuladedenantes
  */
-public class GenerateUniqueSsnJapanTest {
+public class GenerateUniqueSsnUsTest {
 
     private String output;
 
-    private AbstractGenerateUniqueSsn gnj = new GenerateUniqueSsnJapan();
+    private AbstractGenerateUniqueSsn gnu = new GenerateUniqueSsnUs();
 
     @Before
     public void setUp() throws Exception {
-        gnj.setRandomWrapper(new RandomWrapper(42));
+        gnu.setRandomWrapper(new RandomWrapper(42));
     }
 
     @Test
     public void testGood1() {
-        output = gnj.generateMaskedRow("830807527228");
-        assertEquals(output, "477564837070");
+        output = gnu.generateMaskedRow("153 65 4862");
+        assertEquals(output, "513 99 6374");
     }
 
     @Test
     public void testGood2() {
-        output = gnj.generateMaskedRow("486953617449");
-        assertEquals(output, "370892787197");
+        output = gnu.generateMaskedRow("1 56 46 45 99");
+        assertEquals(output, "1 63 91 55 89");
     }
 
     @Test
     public void testWrongSsnField() {
-        gnj.setKeepInvalidPattern(false);
+        gnu.setKeepInvalidPattern(false);
         // without a number
-        output = gnj.generateMaskedRow("83080727228");
+        output = gnu.generateMaskedRow("153 65 486");
         assertEquals(output, null);
-        // with a letter instead of a number
-        output = gnj.generateMaskedRow("83080752722P");
+        // with the fobidden number 666
+        output = gnu.generateMaskedRow("666 65 4862");
+        assertEquals(output, null);
+        // with the fobidden number 00
+        output = gnu.generateMaskedRow("153 00 4862");
         assertEquals(output, null);
     }
 }

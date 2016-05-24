@@ -25,7 +25,7 @@ public class GenerateUniqueSsnFrTest {
 
     private String output;
 
-    private GenerateUniqueSsnFr gnf = new GenerateUniqueSsnFr();
+    private AbstractGenerateUniqueSsn gnf = new GenerateUniqueSsnFr();
 
     @Before
     public void setUp() throws Exception {
@@ -55,15 +55,23 @@ public class GenerateUniqueSsnFrTest {
     }
 
     @Test
-    public void testGood() {
+    public void testGood1() {
         output = gnf.generateMaskedRow("1860348282074 19");
-        assertEquals(output, "2550348184792 24");
+        assertEquals(output, "2000132446558 52");
+    }
+
+    @Test
+    public void testGood2() {
         // with spaces
         output = gnf.generateMaskedRow("2 12 12 15 953 006   88");
-        assertEquals(output, "1 13 07 38 154 671   92");
+        assertEquals(output, "1 17 05 11 293 176   22");
+    }
+
+    @Test
+    public void testGood3() {
         // corse department
         output = gnf.generateMaskedRow("10501 2B 532895 34");
-        assertEquals(output, "23210 35 639916 62");
+        assertEquals(output, "12312 85 719322 48");
     }
 
     @Test

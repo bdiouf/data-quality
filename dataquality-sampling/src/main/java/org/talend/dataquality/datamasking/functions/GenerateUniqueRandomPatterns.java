@@ -15,6 +15,7 @@ package org.talend.dataquality.datamasking.functions;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
@@ -33,12 +34,12 @@ public class GenerateUniqueRandomPatterns implements Serializable {
     /**
      * The random key to make impossible the decoding
      */
-    private int key;
+    private Integer key;
 
     /**
      * The list of all possible values for each field
      */
-    private List<Field> fields;
+    private List<AbstractField> fields;
 
     /**
      * The product of width fields, i.e. the combination of all possibles values
@@ -50,9 +51,8 @@ public class GenerateUniqueRandomPatterns implements Serializable {
      */
     private List<Long> basedWidthsList;
 
-    public GenerateUniqueRandomPatterns(List<Field> fields, int key) {
+    public GenerateUniqueRandomPatterns(List<AbstractField> fields) {
         super();
-        this.key = Math.abs(key);
         this.fields = fields;
 
         // longestWidth init
@@ -71,16 +71,20 @@ public class GenerateUniqueRandomPatterns implements Serializable {
         LOGGER.debug("basedWidthsList = " + this.basedWidthsList);
     }
 
-    public List<Field> getFields() {
+    public List<AbstractField> getFields() {
         return fields;
     }
 
-    public void setFields(List<Field> fields) {
+    public void setFields(List<AbstractField> fields) {
         this.fields = fields;
     }
 
     public int getFieldsNumber() {
         return fields.size();
+    }
+
+    public void setKey(int key) {
+        this.key = key;
     }
 
     /**
@@ -126,7 +130,9 @@ public class GenerateUniqueRandomPatterns implements Serializable {
             numberToMask += listToMask.get(i) * this.basedWidthsList.get(i);
         LOGGER.debug("numberToMask = " + numberToMask);
 
-        long coprimeNumber = findLargestCoprime(this.key);
+        if (this.key == null)
+            this.setKey((new Random()).nextInt() % 10000 + 1000);
+        long coprimeNumber = findLargestCoprime(Math.abs(this.key));
         // uniqueMaskedNumber is the number we masked
         long uniqueMaskedNumber = (numberToMask * coprimeNumber) % this.longestWidth;
         LOGGER.debug("uniqueMaskedNumber = " + uniqueMaskedNumber);
@@ -150,7 +156,7 @@ public class GenerateUniqueRandomPatterns implements Serializable {
      * @param the key from we want to find a coprime number with longestWidth
      * @return the largest coprime number with longestWidth less than key
      */
-    private long findLargestCoprime(int key) {
+    private long findLargestCoprime(long key) {
         if (pgcdModulo(key, this.longestWidth) == 1) {
             return key;
         } else {
@@ -162,6 +168,17 @@ public class GenerateUniqueRandomPatterns implements Serializable {
         if (b == 0)
             return a;
         return pgcdModulo(b, a % b);
+    }
+
+    /**
+     * @return the sum of fields length (i.e. the number of characters in a field)
+     */
+    public int getFieldsCharsLength() {
+        int length = 0;
+        for (AbstractField field : fields) {
+            length += field.getLength();
+        }
+        return length;
     }
 
 }
