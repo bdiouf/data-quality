@@ -41,7 +41,7 @@ public abstract class Function<T> implements Serializable {
 
     protected boolean keepNull = false;
 
-    protected boolean keepInvalidPattern = true;
+    protected boolean keepInvalidPattern = false;
 
     protected static final Pattern patternSpace = Pattern.compile("\\s+");
 
