@@ -80,6 +80,8 @@ public enum FunctionType {
     GENERATE_UNIQUE_SSN_JAPAN(GenerateUniqueSsnJapan.class),
     GENERATE_UNIQUE_SSN_UK(GenerateUniqueSsnUk.class),
     GENERATE_UNIQUE_SSN_US(GenerateUniqueSsnUs.class),
+    GENERATE_UNIQUE_SSN_GERMANY(GenerateUniqueSsnGermany.class),
+    GENERATE_UNIQUE_SSN_INDIA(GenerateUniqueSsnIndia.class),
     GENERATE_UUID(GenerateUuid.class),
     KEEP_FIRST_AND_GENERATE(KeepFirstAndGenerate.class),
     KEEP_FIRST_AND_GENERATE_INT(KeepFirstAndGenerateInteger.class),
