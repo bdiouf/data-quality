@@ -50,15 +50,24 @@ public class GenerateUniqueSsnFr extends AbstractGenerateUniqueSsn {
         }
 
         // add the security key specified for french SSN
-        StringBuilder keyResult = new StringBuilder(result);
+        String key = computeFrenchKey(result.toString());
+
+        result.append(key);
+
+        return result;
+    }
+
+    private String computeFrenchKey(String string) {
+
+        StringBuilder keyResult = new StringBuilder(string);
+
         if (keyResult.charAt(5) == '2') {
             keyResult.setCharAt(5, '1');
             keyResult.setCharAt(6, (keyResult.charAt(6) == 'A') ? '9' : '8');
         }
         int controlKey = 97 - (int) (Long.valueOf(keyResult.toString()) % MOD97);
-        result.append(controlKey);
 
-        return result;
+        return String.valueOf(controlKey);
     }
 
     /**

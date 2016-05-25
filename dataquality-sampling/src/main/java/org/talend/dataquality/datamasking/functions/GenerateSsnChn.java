@@ -14,7 +14,6 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -25,15 +24,18 @@ import org.apache.log4j.Logger;
 /**
  * 
  * @author dprot
- * 
+ * This class proposes a pure-random Chinese SSN number
  * The Chinese SSN has 4 fields : the first one, on 6 digits, stands for the birth place; the second one, with format
  * YYYYMMDD for the date of birth; the third one, with 3 digits; the last one, on one digit, is a checksum key
  */
-public class GenerateUniqueSsnChn extends AbstractGenerateUniqueSsn {
+public class GenerateSsnChn extends Function<String> {
 
-    private static final long serialVersionUID = 4514471121590047091L;
+    private static final long serialVersionUID = 8845031997964609626L;
 
-    private static final Logger LOGGER = Logger.getLogger(GenerateUniqueSsnChn.class);
+    private static final Logger LOGGER = Logger.getLogger(GenerateSsnChn.class);
+
+    public static final List<Integer> monthSize = Collections
+            .unmodifiableList(Arrays.asList(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31));
 
     private static final List<Integer> keyWeight = Collections
             .unmodifiableList(Arrays.asList(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2));
@@ -53,42 +55,46 @@ public class GenerateUniqueSsnChn extends AbstractGenerateUniqueSsn {
     }
 
     @Override
-    protected StringBuilder doValidGenerateMaskedField(String str) {
-        // read the input strWithoutSpaces
-        List<String> strs = new ArrayList<String>();
-        strs.add(str.substring(0, 6));
-        strs.add(str.substring(6, 14));
-        strs.add(str.substring(14, 17));
+    protected String doGenerateMaskedField(String str) {
+        StringBuilder result = new StringBuilder(EMPTY_STRING);
 
-        StringBuilder result = ssnPattern.generateUniqueString(strs);
-        if (result == null) {
-            return null;
-        }
-
-        // Add the security key specified for Chinese SSN
-        String controlKey = computeChineseKey(result.toString());
-        result.append(controlKey);
-
-        return result;
-    }
-
-    @Override
-    protected List<AbstractField> createFieldsListFromPattern() {
-        List<AbstractField> fields = new ArrayList<AbstractField>();
-
+        // Region code
         InputStream is = GenerateUniqueSsnChn.class.getResourceAsStream("RegionListChina.txt");
+        List<String> places = null;
         try {
-            List<String> places = IOUtils.readLines(is, "UTF-8");
-
-            fields.add(new FieldEnum(places, 6));
+            places = IOUtils.readLines(is, "UTF-8");
 
         } catch (IOException e) {
             LOGGER.error("The file of chinese regions is not correctly loaded " + e.getMessage(), e);
         }
-        fields.add(new FieldDate());
-        fields.add(new FieldInterval(0, 999));
-        super.checkSumSize = 1;
-        return fields;
-    }
 
+        result.append(places.get(rnd.nextInt(places.size())));
+
+        // Year
+        int yyyy = rnd.nextInt(200) + 1900;
+        result.append(yyyy);
+        // Month
+        int mm = rnd.nextInt(12) + 1;
+        if (mm < 10) {
+            result.append("0"); //$NON-NLS-1$
+        }
+        result.append(mm);
+        // Day
+        int dd = 1 + rnd.nextInt(monthSize.get(mm - 1));
+        if (dd < 10) {
+            result.append("0"); //$NON-NLS-1$
+        }
+        // Birth rank
+        result.append(dd);
+        for (int i = 0; i < 3; ++i) {
+            result.append(rnd.nextInt(10));
+        }
+
+        // Checksum
+
+        String controlKey = computeChineseKey(result.toString());
+        result.append(controlKey);
+
+        return result.toString();
+    }
 }

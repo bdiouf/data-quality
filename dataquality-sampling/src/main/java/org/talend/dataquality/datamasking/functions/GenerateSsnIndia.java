@@ -12,10 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
+ * /**
  * 
  * @author dprot
  * 
@@ -24,9 +22,9 @@ import java.util.List;
  * b: 0 -> 9
  * c: checksum with Verhoeff' algorithm
  */
-public class GenerateUniqueSsnIndia extends AbstractGenerateUniqueSsn {
+public class GenerateSsnIndia extends Function<String> {
 
-    private static final long serialVersionUID = 4514471121590047091L;
+    private static final long serialVersionUID = -8621894245597689328L;
 
     // The multiplication table (for checksum)
     static int[][] d = new int[][] { { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 0, 6, 7, 8, 9, 5 },
@@ -43,37 +41,18 @@ public class GenerateUniqueSsnIndia extends AbstractGenerateUniqueSsn {
     static int[] inv = { 0, 4, 3, 2, 1, 5, 6, 7, 8, 9 };
 
     @Override
-    protected StringBuilder doValidGenerateMaskedField(String str) {
-        // read the input str
-        List<String> strs = new ArrayList<String>();
-        strs.add(str.substring(0, 1));
-        strs.add(str.substring(1, 11));
-
-        StringBuilder result = ssnPattern.generateUniqueString(strs);
-        if (result == null) {
-            return null;
+    protected String doGenerateMaskedField(String str) {
+        StringBuilder result = new StringBuilder(EMPTY_STRING);
+        result.append(1 + rnd.nextInt(9));
+        for (int i = 0; i < 10; ++i) {
+            result.append(rnd.nextInt(10));
         }
 
         // add the security key specified for Indian SSN
         String controlKey = computeIndianKey(result.toString());
         result.append(controlKey);
 
-        return result;
-    }
-
-    /**
-     * 
-     * @return the list of each field
-     */
-    @Override
-    protected List<AbstractField> createFieldsListFromPattern() {
-        List<AbstractField> fields = new ArrayList<AbstractField>();
-
-        fields.add(new FieldInterval(1, 9));
-        fields.add(new FieldInterval(0, 9999999999L));
-
-        super.checkSumSize = 1;
-        return fields;
+        return result.toString();
     }
 
     /**
@@ -122,4 +101,5 @@ public class GenerateUniqueSsnIndia extends AbstractGenerateUniqueSsn {
 
         return reversed;
     }
+
 }
