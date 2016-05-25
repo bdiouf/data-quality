@@ -12,13 +12,17 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import java.io.Serializable;
+
 /**
  * @author jteuladedenantes
  * 
  * A Field is a set of values. According to a field, we can encode a value in a number or decode a number in a value of
  * the field
  */
-public abstract class AbstractField {
+public abstract class AbstractField implements Serializable {
+
+    private static final long serialVersionUID = 9219485812042520145L;
 
     /**
      * the number of characters in a field
