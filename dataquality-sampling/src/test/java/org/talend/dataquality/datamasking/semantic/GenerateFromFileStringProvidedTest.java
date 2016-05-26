@@ -51,11 +51,6 @@ public class GenerateFromFileStringProvidedTest {
         Assert.assertEquals("Lambert", gfls.generateMaskedRow("A"));
         Assert.assertEquals("Pierce", gfls.generateMaskedRow("A"));
 
-        gfls.parse(MaskableCategoryEnum.JOB_TITLE.getParameter(), true, new Random(AllDataqualitySamplingTests.RANDOM_SEED));
-        Assert.assertEquals("Sales Person", gfls.generateMaskedRow("A"));
-        Assert.assertEquals("Grips", gfls.generateMaskedRow("A"));
-        Assert.assertEquals("Environmental Scientist", gfls.generateMaskedRow("A"));
-
         gfls.parse(MaskableCategoryEnum.ORGANIZATION.getParameter(), true, new Random(AllDataqualitySamplingTests.RANDOM_SEED));
         Assert.assertEquals("Environmental Defense", gfls.generateMaskedRow("A"));
         Assert.assertEquals("United Nations Children's Fund (UNICEF)", gfls.generateMaskedRow("A"));
