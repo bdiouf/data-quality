@@ -14,6 +14,7 @@ package org.talend.dataquality.semantic.index.utils;
 
 import org.talend.dataquality.semantic.index.utils.optimizer.AirportOptimizer;
 import org.talend.dataquality.semantic.index.utils.optimizer.CategoryOptimizer;
+import org.talend.dataquality.semantic.index.utils.optimizer.FrCommuneOptimizer;
 import org.talend.dataquality.semantic.index.utils.optimizer.UsCountyOptimizer;
 
 public enum DictionaryGenerationSpec {
@@ -88,7 +89,11 @@ public enum DictionaryGenerationSpec {
 
     SECTOR("industry_sector_GICS_simplified.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 1 }),
 
-    FR_COMMUNE("fr_comsimp2015.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 11 }),
+    FR_COMMUNE(
+            "fr_comsimp2015.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 10, 11 },
+            new FrCommuneOptimizer()),
 
     FR_DEPARTEMENT("fr_depts2015.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 5 }),
 

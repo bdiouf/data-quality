@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -57,52 +59,63 @@ public class SemanticDictionaryGenerator {
             csvFormat = csvFormat.withFirstRecordAsHeader();
         }
 
-        int[] columnsToIndex = spec.getColumnsToIndex();
-        CategoryOptimizer optimizer = spec.getOptimizer();
-
         // collect synonyms
         Set<String> synonymSet = new LinkedHashSet<String>();
         Iterable<CSVRecord> records = csvFormat.parse(reader);
-        for (CSVRecord record : records) {
-            if (columnsToIndex.length == 0) {
+        if (DictionaryGenerationSpec.CITY.equals(spec)) { // For CITY index, take all columns
+            for (CSVRecord record : records) {
                 for (int col = 0; col < record.size(); col++) {
                     String value = record.get(col);
                     String[] values = SPLITTER.split(value);
-                    if (optimizer != null) {
-                        synonymSet.addAll(optimizer.optimize(values));
-                    } else {
-                        synonymSet.addAll(Arrays.asList(values));
-                    }
-                }
-            } else {
-                for (int col : columnsToIndex) {
-                    if (col < record.size()) {
-                        String value = record.get(col);
-                        if (value != null && value.trim().length() > 0) {
-                            String[] values = SPLITTER.split(value);
-                            if (optimizer != null) {
-                                synonymSet.addAll(optimizer.optimize(values));
-                            } else {
-                                for (String syn : values) {
-                                    if (STOP_WORDS.contains(syn.toLowerCase())
-                                            && ("CITY".equals(spec.name()) || "COMPANY".equals(spec.name()))) {
-                                        // skip
-                                        continue;
-                                    }
-                                    synonymSet.add(syn);
-                                }
-                            }
+                    for (String syn : values) {
+                        if (STOP_WORDS.contains(syn.toLowerCase())) {
+                            continue;
                         }
+                        synonymSet.add(syn);
                     }
                 }
             }
+        } else {
+            synonymSet.addAll(getSynonymsForDocument(records, spec));
         }
 
         for (String syn : synonymSet) {
             writer.addDocument(generateDocument(spec.name(), Collections.singleton(syn)));
         }
+        System.out.println("Total document count: " + synonymSet.size() + "\n");
 
         reader.close();
+    }
+
+    private Set<String> getSynonymsForDocument(Iterable<CSVRecord> records, DictionaryGenerationSpec spec) {
+        Set<String> results = new LinkedHashSet<String>();
+        int[] columnsToIndex = spec.getColumnsToIndex();
+        CategoryOptimizer optimizer = spec.getOptimizer();
+        for (CSVRecord record : records) {
+            final List<String> allInputColumns = new ArrayList<String>();
+            for (int col : columnsToIndex) {
+                if (col < record.size()) {
+                    String value = record.get(col);
+                    if (value != null && value.trim().length() > 0) {
+                        String[] values = SPLITTER.split(value);
+                        allInputColumns.addAll(Arrays.asList(values));
+                    }
+                }
+            }
+
+            if (optimizer != null) {
+                results.addAll(optimizer.optimize(allInputColumns.toArray(new String[0])));
+            } else {
+                for (String syn : allInputColumns) {
+                    if (STOP_WORDS.contains(syn.toLowerCase()) && DictionaryGenerationSpec.COMPANY.equals(spec)) {
+                        continue;
+                    }
+                    results.add(syn);
+                }
+            }
+        }
+        return results;
+
     }
 
     /**
