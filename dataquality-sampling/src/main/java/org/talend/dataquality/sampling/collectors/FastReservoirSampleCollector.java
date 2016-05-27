@@ -1,42 +1,60 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
 package org.talend.dataquality.sampling.collectors;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collector;
 
-public class FastReservoirSampleCollector<T> implements Collector<T, List<T>, List<T>> {
+/**
+ * Fast reservoir sampling implementation on Java Stream.
+ */
+public class FastReservoirSampleCollector<T> extends AbstractReservoirSampleCollector<T> {
 
-    final Random rand;
+    private final Random rand;
 
-    final int nbSamples;
+    private final int nbSamples;
 
-    int count = 0;
+    private int count = 0;
 
     private final int threshold;
 
     private int g = 0;
 
+    /**
+     * FastReservoirSampleCollector constructor.
+     * 
+     * @param nbSamples
+     * @param seed
+     */
     public FastReservoirSampleCollector(int nbSamples, long seed) {
         this.nbSamples = nbSamples;
-        threshold = 4 * nbSamples;
-        rand = new Random(seed);
+        this.threshold = 4 * nbSamples;
+        this.rand = new Random(seed);
     }
 
+    /**
+     * FastReservoirSampleCollector constructor.
+     * 
+     * @param nbSamples
+     */
     public FastReservoirSampleCollector(int nbSamples) {
         this.nbSamples = nbSamples;
-        threshold = 4 * nbSamples;
-        rand = new SecureRandom();
+        this.threshold = 4 * nbSamples;
+        this.rand = new SecureRandom();
     }
 
-    private void addIt(final List<T> candidates, T v) {
+    protected void addIt(final List<T> candidates, T v) {
 
         if (count < nbSamples) {
             // for the first n elements.
@@ -46,8 +64,7 @@ public class FastReservoirSampleCollector<T> implements Collector<T, List<T>, Li
         }
 
         if (count < threshold) {
-
-            // do reservoir sampling.
+            // do classic reservoir sampling.
             // rand.nextDouble gets a pseudo random value between 0.0 and 1.0
             long replace = (long) Math.floor(count * rand.nextDouble());
             if (replace < nbSamples) {
@@ -76,31 +93,4 @@ public class FastReservoirSampleCollector<T> implements Collector<T, List<T>, Li
 
     }
 
-    @Override
-    public Supplier<List<T>> supplier() {
-        return ArrayList::new;
-    }
-
-    @Override
-    public BiConsumer<List<T>, T> accumulator() {
-        return this::addIt;
-    }
-
-    @Override
-    public BinaryOperator<List<T>> combiner() {
-        return (left, right) -> {
-            left.addAll(right);
-            return left;
-        };
-    }
-
-    @Override
-    public Set<java.util.stream.Collector.Characteristics> characteristics() {
-        return EnumSet.of(Collector.Characteristics.UNORDERED, Collector.Characteristics.IDENTITY_FINISH);
-    }
-
-    @Override
-    public Function<List<T>, List<T>> finisher() {
-        return (i) -> i;
-    }
 }

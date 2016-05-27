@@ -1,71 +1,63 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
 package org.talend.dataquality.sampling.collectors;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collector;
 
-public class ReservoirSampleCollector<T> implements Collector<T, List<T>, List<T>> {
+/**
+ * Classic reservoir sampling implementation on Java Stream.
+ */
+public class ReservoirSampleCollector<T> extends AbstractReservoirSampleCollector<T> {
 
-    final Random rand;
+    private final Random rand;
 
-    final int sz;
+    private final int nbSamples;
 
-    int c = 0;
+    private int count = 0;
 
+    /**
+     * ReservoirSampleCollector constructor.
+     * 
+     * @param size
+     * @param seed
+     */
     public ReservoirSampleCollector(int size, long seed) {
-        this.sz = size;
-        rand = new Random(seed);
+        this.nbSamples = size;
+        this.rand = new Random(seed);
     }
 
+    /**
+     * ReservoirSampleCollector constructor.
+     * 
+     * @param size
+     */
     public ReservoirSampleCollector(int size) {
-        this.sz = size;
-        rand = new SecureRandom();
+        this.nbSamples = size;
+        this.rand = new SecureRandom();
     }
 
-    private void addIt(final List<T> in, T s) {
-        if (in.size() < sz) {
+    @Override
+    protected void addIt(final List<T> in, T s) {
+        if (in.size() < nbSamples) {
             in.add(s);
         } else {
-            int replaceInIndex = (int) (rand.nextDouble() * (sz + (c++) + 1));
-            if (replaceInIndex < sz) {
+            int replaceInIndex = (int) (rand.nextDouble() * (nbSamples + (count++) + 1));
+            if (replaceInIndex < nbSamples) {
                 in.set(replaceInIndex, s);
             }
         }
     }
 
-    @Override
-    public Supplier<List<T>> supplier() {
-        return ArrayList::new;
-    }
-
-    @Override
-    public BiConsumer<List<T>, T> accumulator() {
-        return this::addIt;
-    }
-
-    @Override
-    public BinaryOperator<List<T>> combiner() {
-        return (left, right) -> {
-            left.addAll(right);
-            return left;
-        };
-    }
-
-    @Override
-    public Set<java.util.stream.Collector.Characteristics> characteristics() {
-        return EnumSet.of(Collector.Characteristics.UNORDERED, Collector.Characteristics.IDENTITY_FINISH);
-    }
-
-    @Override
-    public Function<List<T>, List<T>> finisher() {
-        return (i) -> i;
-    }
 }

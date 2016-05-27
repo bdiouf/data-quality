@@ -1,3 +1,15 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
 package org.talend.dataquality.sampling.collectors;
 
 import static org.junit.Assert.assertEquals;
@@ -19,9 +31,9 @@ public class ReservoirSampleCollectorTest {
 
     @Test
     public void testSample() {
-        Stream<Integer> stream = IntStream.range(0, ORIGINAL_COUNT).boxed();
+        final Stream<Integer> stream = IntStream.range(0, ORIGINAL_COUNT).boxed();
 
-        List<Integer> sampleList = stream
+        final List<Integer> sampleList = stream
                 .collect(new ReservoirSampleCollector<>(SAMPLE_SIZE, AllDataqualitySamplingTests.RANDOM_SEED));
 
         assertEquals("Unexpected sample size!", EXPECTED_SAMPLES.length, sampleList.size());
