@@ -15,17 +15,9 @@ import org.junit.Test;
 
 public class ShuffleColumnTest {
 
-    private String file = "Shuffling_test_data.csv";
-
     private String file5000 = "Shuffling_test_data_5000.csv";
 
-    private String file10000 = "Shuffling_test_data_10000.csv";
-
     private String file50000 = "Shuffling_test_data_50000.csv";
-
-    private String file100000 = "Shuffling_test_data_100000.csv";
-
-    private String file1000000 = "Shuffling_test_data_1000000.csv";
 
     private static List<Integer> data = new ArrayList<Integer>();
 
@@ -67,8 +59,8 @@ public class ShuffleColumnTest {
 
     @Test
     public void testOneColumnBigInteger() {
-        int partition = 100000;
-        int size = 10000000;
+        int partition = 10000;
+        int size = 1000000;
 
         List<List<String>> id = new ArrayList<List<String>>();
         List<String> idc = new ArrayList<String>();
@@ -160,7 +152,7 @@ public class ShuffleColumnTest {
         service.setShufflingHandler(handler);
         service.setSeperationSize(100000);
 
-        List<List<Object>> fileData = generation.getTableValue(file);
+        List<List<Object>> fileData = generation.getTableValue(GenerateData.SHUFFLING_DATA_PATH);
         long time1 = System.currentTimeMillis();
         service.setRows(fileData);
         Thread.sleep(1000);
@@ -327,94 +319,6 @@ public class ShuffleColumnTest {
     }
 
     @Test
-    public void testshuffleColumnsData10000() {
-        Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
-
-        ShufflingService service = new ShufflingService(columns, allColumns);
-
-        ShufflingHandler handler = new ShufflingHandler(service, result);
-        service.setShufflingHandler(handler);
-        service.setSeperationSize(100000);
-
-        List<List<Object>> fileData = generation.getTableValue(file10000);
-        long time1 = System.currentTimeMillis();
-        service.setRows(fileData);
-        long time2 = System.currentTimeMillis();
-        service.setHasFinished(true);
-        System.out.println("10000 line generation time " + (time2 - time1));
-
-        Assert.assertEquals(1, result.size());
-
-        List<Object> idColumnSL = new ArrayList<Object>();
-        List<Object> firstNameColumnSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> zipSL = new ArrayList<Object>();
-
-        List<Object> idColumnL = new ArrayList<Object>();
-        List<Object> firstNameColumnL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> zipL = new ArrayList<Object>();
-        // Initialize the shuffled data
-        for (int group = 0; group < result.size(); group++) {
-            List<List<Object>> rows = result.poll();
-            for (List<Object> row : rows) {
-                Object idS = row.get(0);
-                Object firstNameS = row.get(1);
-                Object emailS = row.get(3);
-                Object cityS = row.get(6);
-                Object zipS = row.get(7);
-
-                idColumnSL.add(idS);
-                firstNameColumnSL.add(firstNameS);
-                emailSL.add(emailS);
-                citySL.add(cityS);
-                zipSL.add(zipS);
-            }
-        }
-
-        // Initialize the original data set
-        for (int i = 0; i < fileData.size(); i++) {
-            Object id = fileData.get(i).get(0);
-            Object firstName = fileData.get(i).get(1);
-            Object email = fileData.get(i).get(3);
-            Object city = fileData.get(i).get(6);
-            Object zip = fileData.get(i).get(7);
-
-            idColumnL.add(id);
-            firstNameColumnL.add(firstName);
-            emailL.add(email);
-            cityL.add(city);
-            zipL.add(zip);
-
-        }
-
-        for (int i = 0; i < fileData.size(); i++) {
-            // test whether all email address retain
-            Assert.assertTrue(emailSL.contains(emailL.get(i)));
-            // test whether all name retain
-            Assert.assertTrue(firstNameColumnSL.contains(firstNameColumnSL.get(i)));
-
-            Object oid = idColumnL.get(i);
-            Object nid = idColumnSL.get(i);
-
-            Object oemail = emailL.get(i);
-            Object nemail = emailSL.get(i);
-            Object oName = firstNameColumnL.get(i);
-            // test whether email and id information have all changed
-            Assert.assertTrue(!oid.equals(nid) || !oemail.equals(nemail));
-
-            // test whether the id and first name's relation retains
-            int sIdIndex = idColumnSL.indexOf(oid);
-            Object sFirstName = firstNameColumnSL.get(sIdIndex);
-            Assert.assertTrue(oName.equals(sFirstName));
-
-        }
-
-    }
-
-    @Test
     @Ignore
     public void testshuffleColumnsData50000() {
 
@@ -504,195 +408,6 @@ public class ShuffleColumnTest {
         }
         long time4 = System.currentTimeMillis();
         System.out.println("50000 line generation time " + (time4 - time3));
-
-    }
-
-    @Test
-    @Ignore
-    public void testshuffleColumnsData100000() {
-        Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
-
-        ShufflingService service = new ShufflingService(columns, allColumns);
-
-        ShufflingHandler handler = new ShufflingHandler(service, result);
-        service.setShufflingHandler(handler);
-        service.setSeperationSize(100000);
-
-        List<List<Object>> fileData = generation.getTableValue(file100000);
-        long time1 = System.currentTimeMillis();
-        service.setRows(fileData);
-        long time2 = System.currentTimeMillis();
-        service.setHasFinished(true);
-        System.out.println("100000 line generation time " + (time2 - time1));
-
-        Assert.assertEquals(1, result.size());
-        System.out.println("result size " + result.size());
-
-        long time3 = System.currentTimeMillis();
-        List<Object> idColumnSL = new ArrayList<Object>();
-        List<Object> firstNameColumnSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> zipSL = new ArrayList<Object>();
-
-        List<Object> idColumnL = new ArrayList<Object>();
-        List<Object> firstNameColumnL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> zipL = new ArrayList<Object>();
-        // Initialize the shuffled data
-        for (int group = 0; group < result.size(); group++) {
-            List<List<Object>> rows = result.poll();
-            for (List<Object> row : rows) {
-                Object idS = row.get(0);
-                Object firstNameS = row.get(1);
-                Object emailS = row.get(3);
-                Object cityS = row.get(6);
-                Object zipS = row.get(7);
-
-                idColumnSL.add(idS);
-                firstNameColumnSL.add(firstNameS);
-                emailSL.add(emailS);
-                citySL.add(cityS);
-                zipSL.add(zipS);
-            }
-        }
-
-        // Initialize the original data set
-        for (int i = 0; i < fileData.size(); i++) {
-            Object id = fileData.get(i).get(0);
-            Object firstName = fileData.get(i).get(1);
-            Object email = fileData.get(i).get(3);
-            Object city = fileData.get(i).get(6);
-            Object zip = fileData.get(i).get(7);
-
-            idColumnL.add(id);
-            firstNameColumnL.add(firstName);
-            emailL.add(email);
-            cityL.add(city);
-            zipL.add(zip);
-
-        }
-        for (int i = 0; i < fileData.size(); i++) {
-            if (i % 20000 == 0)
-                System.out.println(i);
-            // test whether all email address retain
-            Assert.assertTrue(emailSL.contains(emailL.get(i)));
-            // test whether all name retain
-            Assert.assertTrue(firstNameColumnSL.contains(firstNameColumnSL.get(i)));
-
-            Object oid = idColumnL.get(i);
-            Object nid = idColumnSL.get(i);
-
-            Object oemail = emailL.get(i);
-            Object nemail = emailSL.get(i);
-            Object oName = firstNameColumnL.get(i);
-            // test whether email and id information have all changed
-            Assert.assertTrue(!oid.equals(nid) || !oemail.equals(nemail));
-
-            // test whether the id and first name's relation retains
-            int sIdIndex = idColumnSL.indexOf(oid);
-            Object sFirstName = firstNameColumnSL.get(sIdIndex);
-            Assert.assertTrue(oName.equals(sFirstName));
-
-        }
-        long time4 = System.currentTimeMillis();
-        System.out.println("100000 line generation time " + (time4 - time3));
-
-    }
-
-    @Test
-    @Ignore
-    public void testshuffleColumnsData1000000() {
-        int partition = 100000;
-        Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
-
-        ShufflingService service = new ShufflingService(columns, allColumns);
-
-        ShufflingHandler handler = new ShufflingHandler(service, result);
-        service.setShufflingHandler(handler);
-        service.setSeperationSize(partition);
-
-        List<List<Object>> fileData = generation.getTableValue(file1000000);
-        long time1 = System.currentTimeMillis();
-        service.setRows(fileData);
-        long time2 = System.currentTimeMillis();
-        service.setHasFinished(true);
-        System.out.println("100000 line generation time " + (time2 - time1));
-
-        Assert.assertEquals(10, result.size());
-        System.out.println("result size " + result.size());
-
-        long time3 = System.currentTimeMillis();
-        List<Object> idColumnSL = new ArrayList<Object>();
-        List<Object> firstNameColumnSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> zipSL = new ArrayList<Object>();
-
-        List<Object> idColumnL = new ArrayList<Object>();
-        List<Object> firstNameColumnL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> zipL = new ArrayList<Object>();
-        // Initialize the shuffled data
-        for (int group = 0; group < result.size(); group++) {
-            List<List<Object>> rows = result.poll();
-            for (int i = 0; i < rows.size(); i++) {
-                Object idS = rows.get(i).get(0);
-                Object firstNameS = rows.get(i).get(1);
-                Object emailS = rows.get(i).get(3);
-                Object cityS = rows.get(i).get(6);
-                Object zipS = rows.get(i).get(7);
-
-                idColumnSL.add(idS);
-                firstNameColumnSL.add(firstNameS);
-                emailSL.add(emailS);
-                citySL.add(cityS);
-                zipSL.add(zipS);
-                // Initialize the original data set
-                Object id = fileData.get(i + partition * group).get(0);
-                Object firstName = fileData.get(i + partition * group).get(1);
-                Object email = fileData.get(i + partition * group).get(3);
-                Object city = fileData.get(i + partition * group).get(6);
-                Object zip = fileData.get(i + partition * group).get(7);
-
-                idColumnL.add(id);
-                firstNameColumnL.add(firstName);
-                emailL.add(email);
-                cityL.add(city);
-                zipL.add(zip);
-            }
-
-            // compare under the group
-            for (int i = 0; i < rows.size(); i++) {
-                if (i % 20000 == 0)
-                    System.out.println(i);
-                // test whether all email address retain
-                Assert.assertTrue(emailSL.contains(emailL.get(i)));
-                // test whether all name retain
-                Assert.assertTrue(firstNameColumnSL.contains(firstNameColumnSL.get(i)));
-
-                Object oid = idColumnL.get(i);
-                Object nid = idColumnSL.get(i);
-
-                Object oemail = emailL.get(i);
-                Object nemail = emailSL.get(i);
-                Object oName = firstNameColumnL.get(i);
-                // test whether email and id information have all changed
-                Assert.assertTrue(!oid.equals(nid) || !oemail.equals(nemail));
-
-                // test whether the id and first name's relation retains
-                int sIdIndex = idColumnSL.indexOf(oid);
-                Object sFirstName = firstNameColumnSL.get(sIdIndex);
-                Assert.assertTrue(oName.equals(sFirstName));
-
-            }
-
-        }
-
-        long time4 = System.currentTimeMillis();
-        System.out.println("100000 line generation time " + (time4 - time3));
 
     }
 

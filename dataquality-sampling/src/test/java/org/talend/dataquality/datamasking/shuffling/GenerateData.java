@@ -12,7 +12,8 @@ import java.util.List;
 
 public class GenerateData {
 
-    // "Shuffling_test_data.csv"
+    public static final String SHUFFLING_DATA_PATH = "Shuffling_test_data_1000.csv";
+
     protected List<List<Object>> getTableValue(String file) {
 
         String pathString = "";
@@ -92,7 +93,7 @@ public class GenerateData {
     protected int getColumnIndex(String column) {
         String pathString = "";
         try {
-            pathString = GenerateData.class.getResource("Shuffling_test_data.csv").toURI().getPath();
+            pathString = GenerateData.class.getResource(SHUFFLING_DATA_PATH).toURI().getPath();
         } catch (URISyntaxException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
