@@ -162,6 +162,10 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("Ville-Lumière", true));
                     add(ImmutablePair.of("巴黎", true));
                     add(ImmutablePair.of("パリ", true));
+                    add(ImmutablePair.of("Mancos", true));
+                    add(ImmutablePair.of("Kadoka", true));
+                    add(ImmutablePair.of("Caraway", true));
+                    add(ImmutablePair.of("Geraldine", true));
                 }
             });
 
@@ -458,8 +462,10 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("Orange", true));
                     add(ImmutablePair.of("Suresnes", true));
 
-                    add(ImmutablePair.of("ABERGEMENT-CLEMENCIAT", true));
-                    add(ImmutablePair.of("Abergement-Clémenciat", true));
+                    add(ImmutablePair.of("ABERGEMENT-CLEMENCIAT", false));
+                    add(ImmutablePair.of("Abergement-Clémenciat", false));
+                    add(ImmutablePair.of("L'ABERGEMENT-CLEMENCIAT", true));
+                    add(ImmutablePair.of("L'Abergement-Clémenciat", true));
                 }
             });
 
@@ -574,6 +580,17 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("+33 6 23 45 67 89", true));
                     add(ImmutablePair.of("07.23.45.67.89", true));
                     add(ImmutablePair.of("08 76 54 32 10", true));
+                }
+            });
+
+            put(SemanticCategoryEnum.LAST_NAME.getId(), new ArrayList<Pair<String, Boolean>>() {
+
+                private static final long serialVersionUID = -4060170781621972544L;
+
+                {
+                    add(ImmutablePair.of("CORREIA", true));
+                    add(ImmutablePair.of("DESCHAMPS", true));
+                    add(ImmutablePair.of("PIETROWSKI", true));
                 }
             });
         }

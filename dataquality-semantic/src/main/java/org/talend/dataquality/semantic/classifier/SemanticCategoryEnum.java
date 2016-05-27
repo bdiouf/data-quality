@@ -38,6 +38,7 @@ public enum SemanticCategoryEnum {
     CURRENCY_CODE("Currency Code", "Currency alphabetic code", RecognizerType.CLOSED_INDEX),
     HR_DEPARTMENT("HR Department", "Department or service name in company", RecognizerType.OPEN_INDEX),
     FIRST_NAME("First Name", "First name", RecognizerType.OPEN_INDEX),
+    LAST_NAME("Last Name", "Last name", RecognizerType.OPEN_INDEX),
     GENDER("Gender", "Gender (Multilingual)", RecognizerType.CLOSED_INDEX),
     JOB_TITLE("Job Title", "Job Title (EN)", RecognizerType.OPEN_INDEX),
     MONTH("Month", "Month (Multilingual)", RecognizerType.CLOSED_INDEX),
