@@ -46,9 +46,9 @@ class SemanticStatisticsTestBase {
 
         {
             add(new String[] { //
-            "", //
+                    "", //
                     SemanticCategoryEnum.FIRST_NAME.getId(), //
-                    SemanticCategoryEnum.US_COUNTY.getId(), //
+                    SemanticCategoryEnum.LAST_NAME.getId(), //
                     SemanticCategoryEnum.US_STATE_CODE.getId(), //
                     "", //
                     SemanticCategoryEnum.CITY.getId(), //
@@ -57,19 +57,19 @@ class SemanticStatisticsTestBase {
                     "" //
             });
             add(new String[] { //
-            "", //
-                    SemanticCategoryEnum.FIRST_NAME.getId(), //
-                    SemanticCategoryEnum.US_COUNTY.getId(), //
+                    "", //
+                    SemanticCategoryEnum.LAST_NAME.getId(), //
+                    SemanticCategoryEnum.CITY.getId(), //
                     "", //
                     SemanticCategoryEnum.CITY.getId() //
             });
             add(new String[] { //
-            SemanticCategoryEnum.FIRST_NAME.getId(), //
+                    SemanticCategoryEnum.LAST_NAME.getId(), //
                     "", //
                     SemanticCategoryEnum.GENDER.getId() //
             });
             add(new String[] { //
-            SemanticCategoryEnum.FIRST_NAME.getId(), //
+                    SemanticCategoryEnum.LAST_NAME.getId(), //
                     ""//
             });
         }
