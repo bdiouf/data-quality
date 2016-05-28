@@ -80,7 +80,7 @@ public class SemanticDictionaryGenerator {
         }
 
         for (String syn : synonymSet) {
-            writer.addDocument(generateDocument(spec.name(), Collections.singleton(syn)));
+            writer.addDocument(generateDocument(spec.getCategoryName(), Collections.singleton(syn)));
         }
         System.out.println("Total document count: " + synonymSet.size() + "\n");
 

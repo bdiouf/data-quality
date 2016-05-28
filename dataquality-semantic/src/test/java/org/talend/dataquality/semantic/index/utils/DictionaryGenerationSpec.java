@@ -39,6 +39,9 @@ public enum DictionaryGenerationSpec {
 
     CITY("city_cleaned_without_pinyin.csv", new CsvReaderConfig(CsvConstants.COMMA, false), new int[] {}),
 
+    // CITY_COMPLEMENTED("city_complemented.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 2 }, null,
+    // "CITY"),
+
     CIVILITY("civility_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
 
     CONTINENT("continent_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0, 1, 2, 3, 4, 5 }),
@@ -59,7 +62,7 @@ public enum DictionaryGenerationSpec {
 
     FIRST_NAME("firstname_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0 }),
 
-    // LAST_NAME("lastNames.txt", new CsvReaderConfig(CsvConstants.TAB, true), new int[] { 0 }),
+    LAST_NAME("lastname25k.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 0 }),
 
     GENDER("gender_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
 
@@ -121,28 +124,28 @@ public enum DictionaryGenerationSpec {
 
     private CategoryOptimizer optimizer;
 
-    /**
-     * SemanticCategoryEnum constructor.
-     * 
-     * @param displayName the category shown in Semantic Discovery wizard
-     * @param description the description of the category
-     */
+    private String categoryName;
+
     private DictionaryGenerationSpec(String sourceFile, CsvReaderConfig csvConfig, int[] columnsToIndex) {
-        this(sourceFile, csvConfig, columnsToIndex, null);
+        this(sourceFile, csvConfig, columnsToIndex, null, null);
     }
 
-    /**
-     * SemanticCategoryEnum constructor.
-     * 
-     * @param displayName the category shown in Semantic Discovery wizard
-     * @param description the description of the category
-     */
     private DictionaryGenerationSpec(String sourceFile, CsvReaderConfig csvConfig, int[] columnsToIndex,
             CategoryOptimizer optimizer) {
+        this(sourceFile, csvConfig, columnsToIndex, optimizer, null);
+    }
+
+    private DictionaryGenerationSpec(String sourceFile, CsvReaderConfig csvConfig, int[] columnsToIndex,
+            CategoryOptimizer optimizer, String categoryName) {
         this.sourceFile = sourceFile;
         this.csvConfig = csvConfig;
         this.columnsToIndex = columnsToIndex;
         this.optimizer = optimizer;
+        if (categoryName == null) {
+            this.categoryName = this.name();
+        } else {
+            this.categoryName = categoryName;
+        }
     }
 
     public String getSourceFile() {
@@ -163,6 +166,10 @@ public enum DictionaryGenerationSpec {
 
     public CategoryOptimizer getOptimizer() {
         return optimizer;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
     }
 
 }

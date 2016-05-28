@@ -18,6 +18,7 @@ import static org.junit.Assert.fail;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.junit.Before;
 import org.junit.Test;
@@ -86,15 +88,15 @@ public class ConcurrentDictionaryAccessTest {
         }
     }
 
-    private static final Map<String, String> EXPECTED_CATEGORY = new HashMap<String, String>() {
+    private static final Map<String, List<String>> EXPECTED_CATEGORY = new HashMap<String, List<String>>() {
 
         private static final long serialVersionUID = 3771932655942133797L;
 
         {
-            put("Paris", "CITY");
-            put("Talend", "COMPANY");
-            put("CDG", "AIRPORT_CODE");
-            put("French", "LANGUAGE");
+            put("Paris", Arrays.asList(new String[] { "CITY", "FIRST_NAME", "LAST_NAME", "FR_COMMUNE", "FR_DEPARTEMENT" }));
+            put("Talend", Arrays.asList(new String[] { "COMPANY" }));
+            put("CDG", Arrays.asList(new String[] { "AIRPORT_CODE" }));
+            put("French", Arrays.asList(new String[] { "LANGUAGE", "LAST_NAME" }));
 
         }
     };
@@ -123,16 +125,19 @@ public class ConcurrentDictionaryAccessTest {
         try {
 
             final TopDocs docs = searcher.searchDocumentBySynonym(input);
-            final Document doc = searcher.getDocument(docs.scoreDocs[0].doc);
 
-            final String cat = doc.getField("word").stringValue();
-
-            if (!EXPECTED_CATEGORY.get(input).equals(cat)) {
-                errorOccurred.set(true);
-                if (isLogEnabled) {
-                    log.error(input + " is expected to be a " + EXPECTED_CATEGORY.get(input) + " but actually " + cat);
+            ScoreDoc[] scoreDocs = docs.scoreDocs;
+            for (ScoreDoc sd : scoreDocs) {
+                final Document doc = searcher.getDocument(sd.doc);
+                final String cat = doc.getField("word").stringValue();
+                if (!EXPECTED_CATEGORY.get(input).contains(cat)) {
+                    errorOccurred.set(true);
+                    if (isLogEnabled) {
+                        log.error(input + " is expected to be a " + cat + " but actually not");
+                    }
                 }
             }
+
             searcher.close();
         } catch (Exception e) {
             errorOccurred.set(true);
