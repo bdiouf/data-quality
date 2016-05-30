@@ -62,7 +62,7 @@ public enum DictionaryGenerationSpec {
 
     FIRST_NAME("firstname_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0 }),
 
-    LAST_NAME("lastname25k.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 0 }),
+    LAST_NAME("lastname12k.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 0 }),
 
     GENDER("gender_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
 

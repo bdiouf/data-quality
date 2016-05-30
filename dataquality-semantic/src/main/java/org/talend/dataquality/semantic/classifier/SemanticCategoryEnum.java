@@ -62,7 +62,10 @@ public enum SemanticCategoryEnum {
     LANGUAGE_CODE_ISO2("Language Code ISO2", "Language Code of ISO639-1 Alpha-2", RecognizerType.CLOSED_INDEX),
     LANGUAGE_CODE_ISO3("Language Code ISO3", "Language Code of ISO639-2 Alpha-3 (B/T)", RecognizerType.CLOSED_INDEX),
     CA_PROVINCE_TERRITORY("CA Province Territory", "Provinces and Territories of Canada", RecognizerType.CLOSED_INDEX),
-    CA_PROVINCE_TERRITORY_CODE("CA Province Territory Code", "Canada Provinces and Territories Code", RecognizerType.CLOSED_INDEX),
+    CA_PROVINCE_TERRITORY_CODE(
+            "CA Province Territory Code",
+            "Canada Provinces and Territories Code",
+            RecognizerType.CLOSED_INDEX),
     MX_ESTADO("MX Estado", "Federated States and Federal District of Mexico", RecognizerType.CLOSED_INDEX),
     MX_ESTADO_CODE("MX Estado Code", "Mexico States Code", RecognizerType.CLOSED_INDEX),
 
@@ -108,9 +111,9 @@ public enum SemanticCategoryEnum {
     ISBN_13("ISBN-13", "International Standard Book Number 13 digits.", RecognizerType.REGEX),
     LOCALIZATION("Localization", "Longitude or latitude coordinates with at least meter precision", RecognizerType.REGEX),
     LOCATION_COORDINATE(
-                        "Location Coordinate",
-                        "Latitude and longitude coordinates separated by a comma in the form: N 0:59:59.99,E 0:59:59.99",
-                        RecognizerType.REGEX),
+            "Location Coordinate",
+            "Latitude and longitude coordinates separated by a comma in the form: N 0:59:59.99,E 0:59:59.99",
+            RecognizerType.REGEX),
     MAC_ADDRESS("MAC Address", "MAC Address.", RecognizerType.REGEX),
     MASTERCARD("Mastercard", "MasterCard Credit card", RecognizerType.REGEX),
     VISACARD("Visa Card", "Visa Credit card", RecognizerType.REGEX),
@@ -123,9 +126,9 @@ public enum SemanticCategoryEnum {
     UK_PHONE("UK Phone", "UK phone number", RecognizerType.REGEX),
     UK_POSTAL_CODE("UK Postal Code", "UK postal code", RecognizerType.REGEX),
     UK_SSN(
-           "UK Social Security Number",
-           "national identification number, national identity number, or national insurance number generally called an NI Number (NINO)",
-           RecognizerType.REGEX),
+            "UK Social Security Number",
+            "national identification number, national identity number, or national insurance number generally called an NI Number (NINO)",
+            RecognizerType.REGEX),
 
     // US
     US_CREDIT_CARD("AmEx Credit Card", "US American Express Credit card", RecognizerType.REGEX),
