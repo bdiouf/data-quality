@@ -15,6 +15,7 @@ package org.talend.dataquality.semantic.statistics;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryFrequency;
 
 /**
@@ -38,10 +39,19 @@ public class SemanticType {
     public String getSuggestedCategory() {
         long max = 0;
         String electedCategory = "UNKNOWN"; // Unknown by default
+        int categoryOrdinal = Integer.MAX_VALUE;
         for (Map.Entry<CategoryFrequency, Long> entry : categoryToCount.entrySet()) {
             if (entry.getValue() > max) {
                 max = entry.getValue();
                 electedCategory = entry.getKey().getCategoryId();
+                categoryOrdinal = SemanticCategoryEnum.getCategoryById(electedCategory).ordinal();
+            } else if (entry.getValue() == max) {
+                final String currentCat = entry.getKey().getCategoryId();
+                final int currentOrdinal = SemanticCategoryEnum.getCategoryById(currentCat).ordinal();
+                if (currentOrdinal < categoryOrdinal) {
+                    electedCategory = currentCat;
+                    categoryOrdinal = currentOrdinal;
+                }
             }
         }
         return electedCategory;

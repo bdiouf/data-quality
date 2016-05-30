@@ -45,12 +45,12 @@ public class CategoryRecognizerTest {
         private static final long serialVersionUID = -5067273062214728849L;
 
         {
-            put("LAST_NAME", 12.9F);
             put("FIRST_NAME", 9.67F);
             put("MONTH", 9.67F);
             put("AIRPORT_CODE", 6.45F);
             put("CITY", 6.45F);
             put("FR_COMMUNE", 6.45F);
+            put("LAST_NAME", 6.45F);
             put("EMAIL", 6.45F);
             put("US_POSTAL_CODE", 6.45F);
             put("ADDRESS_LINE", 6.45F);
@@ -106,12 +106,10 @@ public class CategoryRecognizerTest {
                     SemanticCategoryEnum.LANGUAGE_CODE_ISO3.getId() });
             put("2012-02-03 7:08PM", new String[] {});
             put("1/2/2012", new String[] {});
-            put("january",
-                    new String[] { SemanticCategoryEnum.MONTH.getId(), //
-                            SemanticCategoryEnum.LAST_NAME.getId(), //
-                            SemanticCategoryEnum.EN_MONTH.getId() });
+            put("january", new String[] { SemanticCategoryEnum.MONTH.getId(), //
+                    SemanticCategoryEnum.EN_MONTH.getId() });
             put("januar", new String[] { SemanticCategoryEnum.MONTH.getId() });
-            put("janvier", new String[] { SemanticCategoryEnum.MONTH.getId(), SemanticCategoryEnum.LAST_NAME.getId() });
+            put("janvier", new String[] { SemanticCategoryEnum.MONTH.getId() });
             put("christophe", new String[] { SemanticCategoryEnum.FIRST_NAME.getId() });
             put("sda@talend.com", new String[] { SemanticCategoryEnum.EMAIL.getId() });
             put("abc@gmail.com", new String[] { SemanticCategoryEnum.EMAIL.getId() });
@@ -164,14 +162,11 @@ public class CategoryRecognizerTest {
                     SemanticCategoryEnum.LANGUAGE_CODE_ISO3.getDisplayName() });
             put("2012-02-03 7:08PM", new String[] {});
             put("1/2/2012", new String[] {});
-            put("january",
-                    new String[] { SemanticCategoryEnum.MONTH.getDisplayName(), //
-                            SemanticCategoryEnum.LAST_NAME.getId(), //
-                            SemanticCategoryEnum.EN_MONTH.getDisplayName() });
+            put("january", new String[] { SemanticCategoryEnum.MONTH.getDisplayName(), //
+                    SemanticCategoryEnum.EN_MONTH.getDisplayName() });
             put("januar", new String[] { SemanticCategoryEnum.MONTH.getDisplayName() });
-            put("janvier", new String[] { SemanticCategoryEnum.MONTH.getDisplayName(),
-                    SemanticCategoryEnum.LAST_NAME.getDisplayName() });
-            put("christophe", new String[] { SemanticCategoryEnum.FIRST_NAME.getDisplayName(), });
+            put("janvier", new String[] { SemanticCategoryEnum.MONTH.getDisplayName() });
+            put("christophe", new String[] { SemanticCategoryEnum.FIRST_NAME.getDisplayName() });
             put("sda@talend.com", new String[] { SemanticCategoryEnum.EMAIL.getDisplayName() });
             put("abc@gmail.com", new String[] { SemanticCategoryEnum.EMAIL.getDisplayName() });
             put("12345",
@@ -210,11 +205,11 @@ public class CategoryRecognizerTest {
             put("Bruxelles(Jette)", new String[] { SemanticCategoryEnum.CITY.getId() });
 
             put("technical support", new String[] {});
-            put("Software Engineer", new String[] {});
+            put("Software Engineer", new String[] { SemanticCategoryEnum.JOB_TITLE.getId() });
             put("ABDUL-AZIZ", new String[] { SemanticCategoryEnum.FIRST_NAME.getId() });
             put("Rue de la Cité d'Antin", new String[] { SemanticCategoryEnum.ADDRESS_LINE.getId() });
 
-            put("BEL", new String[] { SemanticCategoryEnum.CITY.getId(), SemanticCategoryEnum.COUNTRY_CODE_ISO3.getId(),
+            put("BEL", new String[] { SemanticCategoryEnum.COUNTRY_CODE_ISO3.getId(),
                     SemanticCategoryEnum.LANGUAGE_CODE_ISO3.getId(), SemanticCategoryEnum.AIRPORT_CODE.getId(), });
             put("AND",
                     new String[] { SemanticCategoryEnum.COUNTRY_CODE_ISO3.getId(), SemanticCategoryEnum.AIRPORT_CODE.getId() });
@@ -296,7 +291,7 @@ public class CategoryRecognizerTest {
             log.debug("frequencyTableItem = " + tableItem.getCategoryId() + " / " + tableItem.getCount() + " / "
                     + tableItem.getFrequency() + " %");
 
-            System.out.println("put(\"" + tableItem.getCategoryId() + "\", " + tableItem.getFrequency() + "F);");
+            // System.out.println("put(\"" + tableItem.getCategoryId() + "\", " + tableItem.getFrequency() + "F);");
             assertEquals(EXPECTED_FREQUECY_TABLE.get(tableItem.getCategoryId()), tableItem.getFrequency(), 0.001);
         }
 

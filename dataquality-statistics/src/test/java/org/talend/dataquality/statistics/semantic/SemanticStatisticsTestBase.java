@@ -45,10 +45,10 @@ class SemanticStatisticsTestBase {
         private static final long serialVersionUID = 1L;
 
         {
-            add(new String[] { //
+            add(new String[] { // dataset[0]
                     "", //
                     SemanticCategoryEnum.FIRST_NAME.getId(), //
-                    SemanticCategoryEnum.LAST_NAME.getId(), //
+                    SemanticCategoryEnum.CITY.getId(), //
                     SemanticCategoryEnum.US_STATE_CODE.getId(), //
                     "", //
                     SemanticCategoryEnum.CITY.getId(), //
@@ -56,20 +56,20 @@ class SemanticStatisticsTestBase {
                     "", //
                     "" //
             });
-            add(new String[] { //
+            add(new String[] { // dataset[1]
                     "", //
+                    SemanticCategoryEnum.FIRST_NAME.getId(), //
                     SemanticCategoryEnum.LAST_NAME.getId(), //
-                    SemanticCategoryEnum.CITY.getId(), //
                     "", //
                     SemanticCategoryEnum.CITY.getId() //
             });
-            add(new String[] { //
-                    SemanticCategoryEnum.LAST_NAME.getId(), //
+            add(new String[] { // dataset[2]
+                    SemanticCategoryEnum.FIRST_NAME.getId(), //
                     "", //
                     SemanticCategoryEnum.GENDER.getId() //
             });
-            add(new String[] { //
-                    SemanticCategoryEnum.LAST_NAME.getId(), //
+            add(new String[] { // dataset[3]
+                    SemanticCategoryEnum.FIRST_NAME.getId(), //
                     ""//
             });
         }

@@ -18,7 +18,6 @@ package org.talend.dataquality.semantic.classifier;
  * In most cases, the keys of the categories should not be changed.
  */
 public enum SemanticCategoryEnum {
-    UNKNOWN("", "Blank, Null and those who have no other semantic category", RecognizerType.OTHER),
 
     /**
      * the categories defined in Data Dictionary index
@@ -27,7 +26,6 @@ public enum SemanticCategoryEnum {
     ANSWER("Answer", "Yes/No (in EN, FR, DE and ES)", RecognizerType.OPEN_INDEX),
     AIRPORT("Airport", "Airport name", RecognizerType.OPEN_INDEX),
     AIRPORT_CODE("Airport Code", "Airport name", RecognizerType.CLOSED_INDEX),
-    CITY("City", "City name (multilingual)", RecognizerType.OPEN_INDEX),
     CIVILITY("Civility", "Civility (multilingual)", RecognizerType.CLOSED_INDEX),
     CONTINENT("Continent", "Continent name (multilingual)", RecognizerType.CLOSED_INDEX),
     CONTINENT_CODE("Continent Code", "Continent code", RecognizerType.CLOSED_INDEX),
@@ -37,8 +35,11 @@ public enum SemanticCategoryEnum {
     CURRENCY_NAME("Currency Name", "Currency name (EN)", RecognizerType.CLOSED_INDEX),
     CURRENCY_CODE("Currency Code", "Currency alphabetic code", RecognizerType.CLOSED_INDEX),
     HR_DEPARTMENT("HR Department", "Department or service name in company", RecognizerType.OPEN_INDEX),
+
     FIRST_NAME("First Name", "First name", RecognizerType.OPEN_INDEX),
     LAST_NAME("Last Name", "Last name", RecognizerType.OPEN_INDEX),
+    CITY("City", "City name (multilingual)", RecognizerType.OPEN_INDEX),
+
     GENDER("Gender", "Gender (Multilingual)", RecognizerType.CLOSED_INDEX),
     JOB_TITLE("Job Title", "Job Title (EN)", RecognizerType.OPEN_INDEX),
     MONTH("Month", "Month (Multilingual)", RecognizerType.CLOSED_INDEX),
@@ -83,11 +84,6 @@ public enum SemanticCategoryEnum {
     BE_POSTAL_CODE("BE Postal Code", "Belgium postal code", RecognizerType.REGEX),
     BG_VAT_NUMBER("BG VAT Number", "Bulgaria VAT number", RecognizerType.REGEX),
     COLOR_HEX_CODE("Color Hex Code", "Color hexadecimal code", RecognizerType.REGEX),
-
-    // DE
-    DE_PHONE("DE Phone", "German phone number", RecognizerType.REGEX),
-    DE_POSTAL_CODE("DE Postal Code", "German postal code", RecognizerType.REGEX),
-
     EMAIL("Email", "email", RecognizerType.REGEX),
 
     // EN
@@ -98,11 +94,31 @@ public enum SemanticCategoryEnum {
 
     // FR
     FR_MONEY_AMOUNT("Money Amount (FR)", "Amount of money in French format", RecognizerType.REGEX),
-    FR_CODE_COMMUNE_INSEE("FR Insee Code", "French Insee code of cities with Corsica and colonies", RecognizerType.REGEX),
     FR_PHONE("FR Phone", "French Phone Number", RecognizerType.REGEX),
     FR_POSTAL_CODE("FR Postal Code", "French postal code", RecognizerType.REGEX),
+    FR_CODE_COMMUNE_INSEE("FR Insee Code", "French Insee code of cities with Corsica and colonies", RecognizerType.REGEX),
     FR_SSN("FR Social Security Number", "French Social Security Number", RecognizerType.REGEX),
     FR_VAT_NUMBER("FR VAT Number", "French VAT number", RecognizerType.REGEX),
+
+    // US
+    US_CREDIT_CARD("AmEx Credit Card", "US American Express Credit card", RecognizerType.REGEX),
+    US_PHONE("US Phone", "US Phone Number", RecognizerType.REGEX),
+    US_POSTAL_CODE("US Postal Code", "US postal code", RecognizerType.REGEX),
+    US_SSN("US Social Security Number", "US Social Security number", RecognizerType.REGEX),
+    US_STATE("US State", "US states", RecognizerType.REGEX),
+    US_STATE_CODE("US State Code", "US State code", RecognizerType.REGEX),
+
+    // DE
+    DE_PHONE("DE Phone", "German phone number", RecognizerType.REGEX),
+    DE_POSTAL_CODE("DE Postal Code", "German postal code", RecognizerType.REGEX),
+
+    // UK
+    UK_PHONE("UK Phone", "UK phone number", RecognizerType.REGEX),
+    UK_POSTAL_CODE("UK Postal Code", "UK postal code", RecognizerType.REGEX),
+    UK_SSN(
+            "UK Social Security Number",
+            "national identification number, national identity number, or national insurance number generally called an NI Number (NINO)",
+            RecognizerType.REGEX),
 
     GPS_COORDINATE("GPS Coordinate", "Google Maps style GPS Decimal format", RecognizerType.REGEX),
     IPv4_ADDRESS("IPv4 Address", "IPv4 address", RecognizerType.REGEX),
@@ -121,24 +137,9 @@ public enum SemanticCategoryEnum {
     SEDOL("SEDOL", "Stock Exchange Daily Official List", RecognizerType.REGEX),
     SE_SSN("SE Social Security Number", "Swedish person number", RecognizerType.REGEX),
     URL("Web URL", "Web site URL", RecognizerType.REGEX),
-
-    // UK
-    UK_PHONE("UK Phone", "UK phone number", RecognizerType.REGEX),
-    UK_POSTAL_CODE("UK Postal Code", "UK postal code", RecognizerType.REGEX),
-    UK_SSN(
-            "UK Social Security Number",
-            "national identification number, national identity number, or national insurance number generally called an NI Number (NINO)",
-            RecognizerType.REGEX),
-
-    // US
-    US_CREDIT_CARD("AmEx Credit Card", "US American Express Credit card", RecognizerType.REGEX),
-    US_PHONE("US Phone", "US Phone Number", RecognizerType.REGEX),
-    US_POSTAL_CODE("US Postal Code", "US postal code", RecognizerType.REGEX),
-    US_SSN("US Social Security Number", "US Social Security number", RecognizerType.REGEX),
-    US_STATE("US State", "US states", RecognizerType.REGEX),
-    US_STATE_CODE("US State Code", "US State code", RecognizerType.REGEX),
-
     WEB_DOMAIN("Web Domain", "Web site domain", RecognizerType.REGEX),
+
+    UNKNOWN("", "Blank, Null and those who have no other semantic category", RecognizerType.OTHER),
 
     /**
      * the categories with specific implementations
@@ -187,6 +188,9 @@ public enum SemanticCategoryEnum {
     }
 
     public static SemanticCategoryEnum getCategoryById(String catId) {
+        if ("".equals(catId)) {
+            return UNKNOWN;
+        }
         try {
             return valueOf(catId);
         } catch (IllegalArgumentException e) {
