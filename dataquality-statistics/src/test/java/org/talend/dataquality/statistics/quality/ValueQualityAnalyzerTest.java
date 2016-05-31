@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.talend.dataquality.common.inference.ValueQualityStatistics;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
+import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum.RecognizerType;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.statistics.SemanticQualityAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
@@ -179,13 +180,17 @@ public class ValueQualityAnalyzerTest {
             }
         };
 
-        DataTypeQualityAnalyzer dataTypeQualityAnalyzer = new DataTypeQualityAnalyzer(
+        final DataTypeQualityAnalyzer dataTypeQualityAnalyzer = new DataTypeQualityAnalyzer(
                 new DataTypeEnum[] { DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.STRING });
-        SemanticQualityAnalyzer semanticQualityAnalyzer = new SemanticQualityAnalyzer(createCategoryRecognizerBuilder(),
-                new String[] { SemanticCategoryEnum.UNKNOWN.name(), SemanticCategoryEnum.US_STATE_CODE.name(),
-                        SemanticCategoryEnum.CITY.name() });
 
-        ValueQualityAnalyzer valueQualityAnalyzer = new ValueQualityAnalyzer(dataTypeQualityAnalyzer, semanticQualityAnalyzer);
+        final String[] semanticTypes = new String[] { SemanticCategoryEnum.UNKNOWN.name(),
+                SemanticCategoryEnum.US_STATE_CODE.name(), SemanticCategoryEnum.CITY.name() };
+
+        final SemanticQualityAnalyzer semanticQualityAnalyzer = new SemanticQualityAnalyzer(createCategoryRecognizerBuilder(),
+                semanticTypes);
+
+        final ValueQualityAnalyzer valueQualityAnalyzer = new ValueQualityAnalyzer(dataTypeQualityAnalyzer,
+                semanticQualityAnalyzer);
         valueQualityAnalyzer.init();
 
         for (String[] record : records) {
@@ -193,15 +198,20 @@ public class ValueQualityAnalyzerTest {
         }
 
         for (int i = 0; i < EXPECTED_INVALID_VALUES.size(); i++) {
-            ValueQualityStatistics aggregatedResult = valueQualityAnalyzer.getResult().get(i);
-            assertEquals("unexpected ValidCount on Column " + i, EXPECTED_VALID_COUNT[i], aggregatedResult.getValidCount());
-            assertEquals("unexpected EmptyCount on Column " + i, EXPECTED_EMPTY_COUNT[i], aggregatedResult.getEmptyCount());
-            assertEquals("unexpected InvalidCount on Column " + i, EXPECTED_INVALID_COUNT[i], aggregatedResult.getInvalidCount());
-            assertEquals("unexpected InvalidValues on Column " + i, EXPECTED_INVALID_VALUES.get(i),
-                    aggregatedResult.getInvalidValues());
-            assertEquals("unexpected UnknownCount on Column " + i, EXPECTED_UNKNOWN_COUNT[i], aggregatedResult.getUnknownCount());
-            assertEquals("unexpected UnknownValues on Column " + i, EXPECTED_UNKNOWN_VALUES.get(i),
-                    aggregatedResult.getUnknownValues());
+            final SemanticCategoryEnum cat = SemanticCategoryEnum.getCategoryById(semanticTypes[i]);
+            if (cat.getRecognizerType() == RecognizerType.CLOSED_INDEX || cat.getRecognizerType() == RecognizerType.REGEX) {
+                ValueQualityStatistics aggregatedResult = valueQualityAnalyzer.getResult().get(i);
+                assertEquals("unexpected ValidCount on Column " + i, EXPECTED_VALID_COUNT[i], aggregatedResult.getValidCount());
+                assertEquals("unexpected EmptyCount on Column " + i, EXPECTED_EMPTY_COUNT[i], aggregatedResult.getEmptyCount());
+                assertEquals("unexpected InvalidCount on Column " + i, EXPECTED_INVALID_COUNT[i],
+                        aggregatedResult.getInvalidCount());
+                assertEquals("unexpected InvalidValues on Column " + i, EXPECTED_INVALID_VALUES.get(i),
+                        aggregatedResult.getInvalidValues());
+                assertEquals("unexpected UnknownCount on Column " + i, EXPECTED_UNKNOWN_COUNT[i],
+                        aggregatedResult.getUnknownCount());
+                assertEquals("unexpected UnknownValues on Column " + i, EXPECTED_UNKNOWN_VALUES.get(i),
+                        aggregatedResult.getUnknownValues());
+            }
         }
 
         try {

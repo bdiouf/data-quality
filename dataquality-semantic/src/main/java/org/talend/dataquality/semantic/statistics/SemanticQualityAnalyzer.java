@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.common.inference.Analyzer;
+import org.talend.dataquality.common.inference.QualityAnalyzer;
+import org.talend.dataquality.common.inference.ResizableList;
+import org.talend.dataquality.common.inference.ValueQualityStatistics;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum.RecognizerType;
 import org.talend.dataquality.semantic.classifier.custom.UDCategorySerDeser;
@@ -26,10 +30,6 @@ import org.talend.dataquality.semantic.index.LuceneIndex;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder.Mode;
 import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
-import org.talend.dataquality.common.inference.Analyzer;
-import org.talend.dataquality.common.inference.QualityAnalyzer;
-import org.talend.dataquality.common.inference.ResizableList;
-import org.talend.dataquality.common.inference.ValueQualityStatistics;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -147,13 +147,19 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
             }
             break;
         case OPEN_INDEX:
-            catIds = dataDictClassifier.classify(value);
-            if (catIds.contains(semanticType)) {
-                valueQuality.incrementValid();
-            } else {
-                valueQuality.incrementUnknown();
-                processUnknownValue(valueQuality, value);
-            }
+            /**
+             * Do not calculate value validity for OPEN_INDEX as it is not used by dataprep for the moment.
+             * 
+             * <pre>
+             * catIds = dataDictClassifier.classify(value);
+             * if (catIds.contains(semanticType)) {
+             *     valueQuality.incrementValid();
+             * } else {
+             *     valueQuality.incrementUnknown();
+             *     processUnknownValue(valueQuality, value);
+             * }
+             * </pre>
+             */
             break;
         default:
             break;
