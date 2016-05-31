@@ -29,7 +29,6 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.talend.dataquality.common.inference.ValueQualityStatistics;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
-import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum.RecognizerType;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 import org.talend.dataquality.semantic.statistics.SemanticQualityAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
@@ -139,10 +138,10 @@ public class ValueQualityAnalyzerTest {
             }
         };
 
-        final int[] EXPECTED_VALID_COUNT = { 8, 4, 5 };
+        final int[] EXPECTED_VALID_COUNT = { 8, 4, 7 };
         final int[] EXPECTED_EMPTY_COUNT = { 0, 2, 1 };
         final int[] EXPECTED_INVALID_COUNT = { 0, 2, 0 };
-        final int[] EXPECTED_UNKNOWN_COUNT = { 0, 0, 2 };
+        final int[] EXPECTED_UNKNOWN_COUNT = { 0, 0, 0 };
         final List<Set<String>> EXPECTED_INVALID_VALUES = new ArrayList<Set<String>>() {
 
             private static final long serialVersionUID = 1L;
@@ -168,15 +167,7 @@ public class ValueQualityAnalyzerTest {
             {
                 add(new HashSet<String>());
                 add(new HashSet<String>());
-                add(new HashSet<String>() {
-
-                    private static final long serialVersionUID = 1L;
-
-                    {
-                        add("CityA");
-                        add("CityB");
-                    }
-                });
+                add(new HashSet<String>());
             }
         };
 
@@ -198,20 +189,15 @@ public class ValueQualityAnalyzerTest {
         }
 
         for (int i = 0; i < EXPECTED_INVALID_VALUES.size(); i++) {
-            final SemanticCategoryEnum cat = SemanticCategoryEnum.getCategoryById(semanticTypes[i]);
-            if (cat.getRecognizerType() == RecognizerType.CLOSED_INDEX || cat.getRecognizerType() == RecognizerType.REGEX) {
-                ValueQualityStatistics aggregatedResult = valueQualityAnalyzer.getResult().get(i);
-                assertEquals("unexpected ValidCount on Column " + i, EXPECTED_VALID_COUNT[i], aggregatedResult.getValidCount());
-                assertEquals("unexpected EmptyCount on Column " + i, EXPECTED_EMPTY_COUNT[i], aggregatedResult.getEmptyCount());
-                assertEquals("unexpected InvalidCount on Column " + i, EXPECTED_INVALID_COUNT[i],
-                        aggregatedResult.getInvalidCount());
-                assertEquals("unexpected InvalidValues on Column " + i, EXPECTED_INVALID_VALUES.get(i),
-                        aggregatedResult.getInvalidValues());
-                assertEquals("unexpected UnknownCount on Column " + i, EXPECTED_UNKNOWN_COUNT[i],
-                        aggregatedResult.getUnknownCount());
-                assertEquals("unexpected UnknownValues on Column " + i, EXPECTED_UNKNOWN_VALUES.get(i),
-                        aggregatedResult.getUnknownValues());
-            }
+            ValueQualityStatistics aggregatedResult = valueQualityAnalyzer.getResult().get(i);
+            assertEquals("unexpected ValidCount on Column " + i, EXPECTED_VALID_COUNT[i], aggregatedResult.getValidCount());
+            assertEquals("unexpected EmptyCount on Column " + i, EXPECTED_EMPTY_COUNT[i], aggregatedResult.getEmptyCount());
+            assertEquals("unexpected InvalidCount on Column " + i, EXPECTED_INVALID_COUNT[i], aggregatedResult.getInvalidCount());
+            assertEquals("unexpected InvalidValues on Column " + i, EXPECTED_INVALID_VALUES.get(i),
+                    aggregatedResult.getInvalidValues());
+            assertEquals("unexpected UnknownCount on Column " + i, EXPECTED_UNKNOWN_COUNT[i], aggregatedResult.getUnknownCount());
+            assertEquals("unexpected UnknownValues on Column " + i, EXPECTED_UNKNOWN_VALUES.get(i),
+                    aggregatedResult.getUnknownValues());
         }
 
         try {

@@ -127,6 +127,7 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
         Set<String> catIds = null;
         switch (recognizerType) {
         case OTHER:
+            valueQuality.incrementValid();
             break;
         case REGEX:
             catIds = regexClassifier.classify(value);
@@ -160,6 +161,7 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
              * }
              * </pre>
              */
+            valueQuality.incrementValid();
             break;
         default:
             break;
