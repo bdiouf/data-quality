@@ -29,7 +29,7 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
 
     private static final long serialVersionUID = 3837984827035744721L;
 
-    protected static final Pattern EMAIL_REGEX = Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$");
+    protected static final Pattern EMAIL_REGEX = Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w-]+\\.)+[\\w-]+[\\w-]$");
 
     protected List<String> replacements = new ArrayList<String>();
 

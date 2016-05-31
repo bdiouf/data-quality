@@ -16,7 +16,6 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.talend.dataquality.datamasking.functions.MaskFullEmailDomainByX;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -28,6 +27,10 @@ public class MaskFullEmailDomainByXTest {
     private String output;
 
     private String mail = "hehe.hehe@uestc.edu.cn";
+
+    private String spemail = "hehe@telecom-bretagne.eu";
+
+    private String spemails = "hehe@tel-ecom-bretagne.hy-p-en.eu";
 
     private MaskFullEmailDomainByX maskEmailDomainByX = new MaskFullEmailDomainByX();
 
@@ -43,6 +46,22 @@ public class MaskFullEmailDomainByXTest {
         maskEmailDomainByX.parse("", true, new RandomWrapper(Long.valueOf(12345678)));
         output = maskEmailDomainByX.generateMaskedRow("dewitt.julio@hotmail.com");
         Assert.assertEquals("dewitt.julio@XXXXXXX.XXX", output);
+
+    }
+
+    @Test
+    public void testSpecialEmail() {
+        maskEmailDomainByX.parse("", true, new RandomWrapper(Long.valueOf(12345678)));
+        output = maskEmailDomainByX.generateMaskedRow(spemail);
+        Assert.assertEquals("hehe@XXXXXXXXXXXXXXXX.XX", output);
+
+    }
+
+    @Test
+    public void testSpecialEmails() {
+        maskEmailDomainByX.parse("", true, new RandomWrapper(Long.valueOf(12345678)));
+        output = maskEmailDomainByX.generateMaskedRow(spemails);
+        Assert.assertEquals("hehe@XXXXXXXXXXXXXXXXX.XXXXXXX.XX", output);
 
     }
 
