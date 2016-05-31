@@ -17,8 +17,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.talend.dataquality.datamasking.functions.DateVariance;
 import org.talend.dataquality.datamasking.functions.Function;
-import org.talend.dataquality.datamasking.functions.NumericVarianceInteger;
-import org.talend.dataquality.datamasking.functions.NumericVarianceString;
 
 public class SemanticMaskerFunctionFactory {
 
@@ -51,12 +49,10 @@ public class SemanticMaskerFunctionFactory {
             switch (dataType) {
             case "numeric":
             case "integer":
-                NumericVarianceInteger nvi = new NumericVarianceInteger();
-                nvi.parse("10", true, null);
-                function = new IntegerFunctionAdapter(nvi);
-                break;
+            case "float":
+            case "double":
             case "decimal":
-                function = new NumericVarianceString();
+                function = new FluctuateNumericString();
                 function.parse("10", true, null);
                 break;
             case "date":

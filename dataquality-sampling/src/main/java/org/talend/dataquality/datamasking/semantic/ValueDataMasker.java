@@ -23,6 +23,10 @@ public class ValueDataMasker implements Serializable {
 
     private Function<String> function;
 
+    Function<String> getFunction() {
+        return function;
+    }
+
     public ValueDataMasker(String semanticCategory, String dataType) {
         function = SemanticMaskerFunctionFactory.createMaskerFunctionForSemanticCategory(semanticCategory, dataType);
     }

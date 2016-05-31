@@ -26,17 +26,6 @@
 		<dependency>
 			<groupId>org.talend.daikon</groupId>
 			<artifactId>daikon</artifactId>
-			<version>${org.talend.daikon.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-annotations</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>

@@ -12,13 +12,14 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.semantic;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
+import java.util.Random;
 
 import org.junit.Test;
+import org.talend.dataquality.duplicating.AllDataqualitySamplingTests;
 
 public class ValueDataMaskerTest {
 
@@ -27,76 +28,77 @@ public class ValueDataMaskerTest {
         private static final long serialVersionUID = 1L;
 
         {
-
             // 0. UNKNOWN
             put(new String[] { " ", "UNKNOWN", "string" }, " ");
-            put(new String[] { "91000", "UNKNOWN", "integer" }, "\\d{5,6}");
-            put(new String[] { "92000", "UNKNOWN", "decimal" }, "\\d{5,6}.0");
-            put(new String[] { "93000", "UNKNOWN", "numeric" }, "\\d{5,6}");
-            put(new String[] { "2023-06-07", "UNKNOWN", "date" }, ".*");
-            put(new String[] { "sdkjs@talend.com", "UNKNOWN", "string" }, ".*");
+            put(new String[] { "91000", "UNKNOWN", "integer" }, "86622");
+            put(new String[] { "92000", "UNKNOWN", "decimal" }, "87574");
+            put(new String[] { "93000", "UNKNOWN", "numeric" }, "88526");
+            put(new String[] { "2023-06-07", "UNKNOWN", "date" }, "");
+            put(new String[] { "sdkjs@talend.com", "UNKNOWN", "string" }, "vkfzz@psbbqg.aqa");
 
             // 1. FIRST_NAME
             put(new String[] { "", MaskableCategoryEnum.FIRST_NAME.name(), "string" }, "");
-            put(new String[] { "John", MaskableCategoryEnum.FIRST_NAME.name(), "string" }, ".*");
+            put(new String[] { "John", MaskableCategoryEnum.FIRST_NAME.name(), "string" }, "Josiah");
 
             // 2. LAST_NAME
-            put(new String[] { "Dupont", MaskableCategoryEnum.LAST_NAME.name(), "string" }, ".*");
+            put(new String[] { "Dupont", MaskableCategoryEnum.LAST_NAME.name(), "string" }, "Robbins");
 
             // 3. EMAIL
-            put(new String[] { "sdkjs@talend.com", MaskableCategoryEnum.EMAIL.name(), "String" }, ".*@talend.com");
+            put(new String[] { "sdkjs@talend.com", MaskableCategoryEnum.EMAIL.name(), "String" }, "XXXXX@talend.com");
             put(new String[] { "\t", MaskableCategoryEnum.FIRST_NAME.name(), "string" }, "\t");
 
             // 4. PHONE
-            put(new String[] { "0123456789", MaskableCategoryEnum.US_PHONE.name(), "String" }, ".*");
-            put(new String[] { "321938", MaskableCategoryEnum.FR_PHONE.name(), "String" }, ".*");
-            put(new String[] { "4444444", MaskableCategoryEnum.DE_PHONE.name(), "String" }, ".*");
-            put(new String[] { "666666666", MaskableCategoryEnum.UK_PHONE.name(), "String" }, ".*");
+            put(new String[] { "0123456789", MaskableCategoryEnum.US_PHONE.name(), "String" }, "728-938-8880");
+            put(new String[] { "321938", MaskableCategoryEnum.FR_PHONE.name(), "String" }, "+33 628738888");
+            put(new String[] { "4444444", MaskableCategoryEnum.DE_PHONE.name(), "String" }, "069 28738888");
+            put(new String[] { "666666666", MaskableCategoryEnum.UK_PHONE.name(), "String" }, "020 3528 7388");
 
             // 5. JOB_TITLE
-            put(new String[] { "CEO", MaskableCategoryEnum.JOB_TITLE.name(), "String" }, ".*");
+            put(new String[] { "CEO", MaskableCategoryEnum.JOB_TITLE.name(), "String" }, "Psychiatric Aide");
 
             // 6. ADDRESS_LINE
-            put(new String[] { "9 Rue Pagès", MaskableCategoryEnum.ADDRESS_LINE.name(), "String" }, ".*");
+            put(new String[] { "9 Rue Pagès", MaskableCategoryEnum.ADDRESS_LINE.name(), "String" }, "6 Rue XXXXX");
 
             // 7 POSTAL_CODE
-            put(new String[] { "37218-1324", MaskableCategoryEnum.US_POSTAL_CODE.name(), "String" }, ".*");
-            put(new String[] { "92150", MaskableCategoryEnum.FR_POSTAL_CODE.name(), "String" }, ".*");
-            put(new String[] { "63274", MaskableCategoryEnum.DE_POSTAL_CODE.name(), "String" }, ".*");
-            put(new String[] { "AT1 3BW", MaskableCategoryEnum.UK_POSTAL_CODE.name(), "String" }, ".*");
+            put(new String[] { "37218-1324", MaskableCategoryEnum.US_POSTAL_CODE.name(), "String" }, "32515-1655");
+            put(new String[] { "92150", MaskableCategoryEnum.FR_POSTAL_CODE.name(), "String" }, "32515");
+            put(new String[] { "63274", MaskableCategoryEnum.DE_POSTAL_CODE.name(), "String" }, "32515");
+            put(new String[] { "AT1 3BW", MaskableCategoryEnum.UK_POSTAL_CODE.name(), "String" }, "VK5 1ZP");
 
             // 8 ORGANIZATION
 
             // 9 COMPANY
 
             // 10 CREDIT_CARD
-            put(new String[] { "5300 1232 8732 8318", MaskableCategoryEnum.US_CREDIT_CARD.name(), "String" }, ".*");
-            put(new String[] { "5300 1232 8732 8318", MaskableCategoryEnum.MASTERCARD.name(), "String" }, ".*");
-            put(new String[] { "4300 1232 8732 8318", MaskableCategoryEnum.VISACARD.name(), "String" }, ".*");
+            put(new String[] { "5300 1232 8732 8318", MaskableCategoryEnum.US_CREDIT_CARD.name(), "String" }, "5332515165500021");
+            put(new String[] { "5300 1232 8732 8318", MaskableCategoryEnum.MASTERCARD.name(), "String" }, "5332515165500021");
+            put(new String[] { "4300 1232 8732 8318", MaskableCategoryEnum.VISACARD.name(), "String" }, "4325151655000249");
 
             // 11 SSN
-            put(new String[] { "728931789", MaskableCategoryEnum.US_SSN.name(), "String" }, ".*");
-            put(new String[] { "17612 38293 28232", MaskableCategoryEnum.FR_SSN.name(), "String" }, ".*");
-            put(new String[] { "634217823", MaskableCategoryEnum.UK_SSN.name(), "String" }, ".*");
+            put(new String[] { "728931789", MaskableCategoryEnum.US_SSN.name(), "String" }, "528-73-8888");
+            put(new String[] { "17612 38293 28232", MaskableCategoryEnum.FR_SSN.name(), "String" }, "2210622388880 15");
+            put(new String[] { "634217823", MaskableCategoryEnum.UK_SSN.name(), "String" }, "RB 87 38 88 D");
 
             // Company
-            put(new String[] { "Talend", MaskableCategoryEnum.COMPANY.name(), "String" }, ".*");
-            // First Name
-            put(new String[] { "John", MaskableCategoryEnum.FIRST_NAME.name(), "String" }, ".*");
-            // Last Name
-            put(new String[] { "Dupont", MaskableCategoryEnum.LAST_NAME.name(), "String" }, ".*");
+            put(new String[] { "Talend", MaskableCategoryEnum.COMPANY.name(), "String" }, "Gilead Sciences");
             // FR Commune
-            put(new String[] { "Amancey", MaskableCategoryEnum.FR_COMMUNE.name(), "String" }, ".*");
-            // Job Title
-            put(new String[] { "developer", MaskableCategoryEnum.JOB_TITLE.name(), "String" }, ".*");
+            put(new String[] { "Amancey", MaskableCategoryEnum.FR_COMMUNE.name(), "String" }, "Dieppe");
             // Organization
-            put(new String[] { "Kiva", MaskableCategoryEnum.ORGANIZATION.name(), "String" }, ".*");
+            put(new String[] { "Kiva", MaskableCategoryEnum.ORGANIZATION.name(), "String" }, "Environmental Defense");
 
-            // OTHERS
+            // EMPTY
             put(new String[] { " ", "UNKNOWN", "integer" }, " ");
             put(new String[] { " ", "UNKNOWN", "numeric" }, " ");
             put(new String[] { " ", "UNKNOWN", "decimal" }, " ");
             put(new String[] { " ", "UNKNOWN", "date" }, " ");
+
+            // NUMERIC
+            put(new String[] { "111", "UNKNOWN", "integer" }, "106");
+            put(new String[] { "-222.2", "UNKNOWN", "integer" }, "-211.5");
+            put(new String[] { "333", "UNKNOWN", "numeric" }, "317");
+            put(new String[] { "444,44", "UNKNOWN", "numeric" }, "423.06");
+            put(new String[] { "555", "UNKNOWN", "float" }, "528");
+            put(new String[] { "666.666", "UNKNOWN", "float" }, "634.595");
         }
     };
 
@@ -116,10 +118,10 @@ public class ValueDataMaskerTest {
 
             System.out.print("[" + semanticCategory + "]\n\t" + inputValue + " => ");
             final ValueDataMasker masker = new ValueDataMasker(semanticCategory, dataType);
-
-            Pattern pattern = Pattern.compile(EXPECTED_MASKED_VALUES.get(input));
-            System.out.println(masker.maskValue(inputValue));
-            assertTrue("Test faild on [" + inputValue + "]", pattern.matcher(masker.maskValue(inputValue)).matches());
+            masker.getFunction().setRandomWrapper(new Random(AllDataqualitySamplingTests.RANDOM_SEED));
+            String maskedValue = masker.maskValue(inputValue);
+            System.out.println(maskedValue);
+            assertEquals("Test faild on [" + inputValue + "]", EXPECTED_MASKED_VALUES.get(input), maskedValue);
 
         }
 

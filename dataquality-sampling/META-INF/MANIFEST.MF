@@ -17,4 +17,5 @@ Export-Package: org.talend.dataquality.datamasking,
 Bundle-ClassPath: .
 Import-Package: org.apache.commons.codec.language,
  org.apache.commons.lang3.tuple,
- org.apache.commons.math3.distribution
+ org.apache.commons.math3.distribution,
+ org.talend.daikon.number

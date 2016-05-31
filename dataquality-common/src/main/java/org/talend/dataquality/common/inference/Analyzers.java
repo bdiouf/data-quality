@@ -81,9 +81,7 @@ public class Analyzers implements Analyzer<Analyzers.Result> {
     }
 
     /**
-     * <<<<<<< HEAD A generic composite result which aggregates several analyzer's results. ======= Composite result
-     * aggregates several analyzer's result together. >>>>>>> workitem/TDQ-10955_remove_analyzeArray_method
-     *
+     * A generic composite result which aggregates several analyzer's results.
      */
     public static class Result {
 
