@@ -13,6 +13,7 @@
 package org.talend.dataquality.datamasking.semantic;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.talend.dataquality.datamasking.functions.Function;
 
@@ -24,6 +25,10 @@ public class ValueDataMasker implements Serializable {
 
     public ValueDataMasker(String semanticCategory, String dataType) {
         function = SemanticMaskerFunctionFactory.createMaskerFunctionForSemanticCategory(semanticCategory, dataType);
+    }
+
+    public ValueDataMasker(String semanticCategory, String dataType, List<String> params) {
+        function = SemanticMaskerFunctionFactory.createMaskerFunctionForSemanticCategory(semanticCategory, dataType, params);
     }
 
     public String maskValue(String v) {

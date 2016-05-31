@@ -1,4 +1,18 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
 package org.talend.dataquality.datamasking.semantic;
+
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.talend.dataquality.datamasking.functions.DateVariance;
@@ -10,8 +24,13 @@ public class SemanticMaskerFunctionFactory {
 
     private static final Logger LOGGER = Logger.getLogger(SemanticMaskerFunctionFactory.class);
 
-    @SuppressWarnings("unchecked")
     public static Function<String> createMaskerFunctionForSemanticCategory(String semanticCategory, String dataType) {
+        return createMaskerFunctionForSemanticCategory(semanticCategory, dataType, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Function<String> createMaskerFunctionForSemanticCategory(String semanticCategory, String dataType,
+            List<String> params) {
         Function<String> function = null;
         final MaskableCategoryEnum cat = MaskableCategoryEnum.getCategoryById(semanticCategory);
         if (cat != null) {
@@ -43,7 +62,7 @@ public class SemanticMaskerFunctionFactory {
             case "date":
                 DateVariance df = new DateVariance();
                 df.parse("61", true, null);
-                function = new DateFunctionAdapter(df, "M/d/yyyy");
+                function = new DateFunctionAdapter(df, params);
                 break;
             case "string":
                 function = new ReplaceCharactersWithGeneration();
