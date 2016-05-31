@@ -131,7 +131,7 @@ public class UserDefinedClassifierTest {
             put("AB 12 34 56 C", new String[] { "UK_SSN" });//$NON-NLS-1$ //$NON-NLS-2$
             put("TN 31 12 58 F", new String[] { "UK_SSN" });//$NON-NLS-1$ //$NON-NLS-2$
             put("20120101-3842", new String[] { "SE_SSN" });//$NON-NLS-1$ //$NON-NLS-2$
-            put("120101-3842", new String[] {});//$NON-NLS-1$ 
+            put("120101-3842", new String[] {});//$NON-NLS-1$
 
             put("christophe", new String[] {});//$NON-NLS-1$
             put("sda@talend.com", new String[] { "EMAIL" });//$NON-NLS-1$ //$NON-NLS-2$
@@ -140,53 +140,58 @@ public class UserDefinedClassifierTest {
             put("abc@gmail.com ", new String[] { "EMAIL" }); //$NON-NLS-1$ //$NON-NLS-2$
             put(" abc@gmail.com", new String[] { "EMAIL" }); //$NON-NLS-1$ //$NON-NLS-2$
             put("abc@gmail", new String[] {}); //$NON-NLS-1$
-            put("12345", new String[] { "FR_CODE_COMMUNE_INSEE", "FR_POSTAL_CODE", "DE_POSTAL_CODE", "US_POSTAL_CODE" }); //$NON-NLS-1$  //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-            put("2A345", new String[] { "FR_CODE_COMMUNE_INSEE" }); //$NON-NLS-1$  //$NON-NLS-2$
-            put("12345-6789", new String[] { "US_POSTAL_CODE" }); //$NON-NLS-1$  //$NON-NLS-2$  //$NON-NLS-3$
+            put("12345", new String[] { "FR_CODE_COMMUNE_INSEE", "FR_POSTAL_CODE", "DE_POSTAL_CODE", "US_POSTAL_CODE" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            put("2A345", new String[] { "FR_CODE_COMMUNE_INSEE" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("12345-6789", new String[] { "US_POSTAL_CODE" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             put("Talend", new String[] {}); //$NON-NLS-1$
             put("9 rue pages, 92150 suresnes", new String[] {}); //$NON-NLS-1$
             put("avenue des champs elysees", new String[] {}); //$NON-NLS-1$
-            put("MA", new String[] { "US_STATE_CODE" }); //$NON-NLS-1$  //$NON-NLS-2$
-            put("FL", new String[] { "US_STATE_CODE" }); //$NON-NLS-1$  //$NON-NLS-2$
-            put("FLorIda", new String[] { "US_STATE" }); //$NON-NLS-1$  //$NON-NLS-2$
-            put("FLORIDA", new String[] { "US_STATE" }); //$NON-NLS-1$  //$NON-NLS-2$
+            put("MA", new String[] { "US_STATE_CODE" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("FL", new String[] { "US_STATE_CODE" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("FLorIda", new String[] { "US_STATE" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("FLORIDA", new String[] { "US_STATE" }); //$NON-NLS-1$ //$NON-NLS-2$
             put("New Hampshire", new String[] { "US_STATE" });//$NON-NLS-1$ //$NON-NLS-2$
             put("Arizona", new String[] { "US_STATE" });//$NON-NLS-1$ //$NON-NLS-2$
-            put("Alabama", new String[] { "US_STATE" });//$NON-NLS-1$  //$NON-NLS-2$
-            put("F", new String[] {});//$NON-NLS-1$  //$NON-NLS-2$
-            put("M", new String[] {});//$NON-NLS-1$  //$NON-NLS-2$
-            put("Male", new String[] {});//$NON-NLS-1$  //$NON-NLS-2$
-            put("female", new String[] {});//$NON-NLS-1$  //$NON-NLS-2$
+            put("Alabama", new String[] { "US_STATE" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("F", new String[] {});//$NON-NLS-1$ //$NON-NLS-2$
+            put("M", new String[] {});//$NON-NLS-1$ //$NON-NLS-2$
+            put("Male", new String[] {});//$NON-NLS-1$ //$NON-NLS-2$
+            put("female", new String[] {});//$NON-NLS-1$ //$NON-NLS-2$
 
-            put("http://www.talend.com", new String[] { "URL" });//$NON-NLS-1$  //$NON-NLS-2$
-            put("www.talend.com", new String[] { "WEB_DOMAIN" });//$NON-NLS-1$  //$NON-NLS-2$ //$NON-NLS-3$
-            put("talend.com", new String[] { "WEB_DOMAIN" });//$NON-NLS-1$  //$NON-NLS-2$ 
+            put("http://www.talend.com", new String[] { "URL" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("www.talend.com", new String[] { "WEB_DOMAIN" });//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            put("talend.com", new String[] { "WEB_DOMAIN" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("talend.com", new String[] { "WEB_DOMAIN" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("talend.veryLongTDL", new String[] { "WEB_DOMAIN" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("talend.TDLlongerThan25Characters", new String[] {});//$NON-NLS-1$ //$NON-NLS-2$
+            put("talendSmallerThan63Charactersxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.com", new String[] { "WEB_DOMAIN" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("talendLongerThan63Charactersxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.com", new String[] {});//$NON-NLS-1$ //$NON-NLS-2$
 
-            put("1 81 04 95 201 569 62", new String[] { "FR_SSN" });//$NON-NLS-1$  //$NON-NLS-2$
-            put("1810495201569", new String[] { "FR_SSN" });//$NON-NLS-1$  //$NON-NLS-2$
-            put("123-45-6789", new String[] { "US_SSN" });//$NON-NLS-1$  //$NON-NLS-2$
-            put("azjfnskjqnfoajr", new String[] {});//$NON-NLS-1$  
+            put("1 81 04 95 201 569 62", new String[] { "FR_SSN" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("1810495201569", new String[] { "FR_SSN" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("123-45-6789", new String[] { "US_SSN" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("azjfnskjqnfoajr", new String[] {});//$NON-NLS-1$
             put("ISBN 9-787-11107-5", new String[] { "ISBN_10" });//$NON-NLS-1$ //$NON-NLS-2$
-            put("SINB 9-787-11107-5", new String[] {});//$NON-NLS-1$ 
+            put("SINB 9-787-11107-5", new String[] {});//$NON-NLS-1$
             put("ISBN 2-711-79141-6", new String[] { "ISBN_10" });//$NON-NLS-1$ //$NON-NLS-2$
             put("ISBN-13: 978-2711791415", new String[] { "ISBN_13" });//$NON-NLS-1$ //$NON-NLS-2$
             put("ISBN: 978-2711791415", new String[] { "ISBN_13" });//$NON-NLS-1$ //$NON-NLS-2$
             put("ISBN 978-2711791415", new String[] { "ISBN_13" });//$NON-NLS-1$ //$NON-NLS-2$
 
             put("A4:4E:31:B9:C5:B4", new String[] { "MAC_ADDRESS" });//$NON-NLS-1$ //$NON-NLS-2$
-            put("A4:4E:31:B9:C5:B4:B4", new String[] {});//$NON-NLS-1$ 
-            put("A4-4E-31-B9-C5-B4", new String[] {});//$NON-NLS-1$ 
+            put("A4:4E:31:B9:C5:B4:B4", new String[] {});//$NON-NLS-1$
+            put("A4-4E-31-B9-C5-B4", new String[] {});//$NON-NLS-1$
 
             put("$3,000", new String[] { "EN_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
             put("$3000", new String[] { "EN_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
-            put("$ 3000", new String[] {});//$NON-NLS-1$ 
-            put("CA$3000", new String[] { "EN_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$ 
+            put("$ 3000", new String[] {});//$NON-NLS-1$
+            put("CA$3000", new String[] { "EN_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
             put("€3000", new String[] { "EN_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
             put("3000 €", new String[] { "FR_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
             put("345,56 €", new String[] { "FR_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
             put("35 k€", new String[] { "FR_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
-            put("35 054 T€", new String[] { "FR_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$ 
-            put("35 456 544 k£", new String[] { "FR_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$ 
+            put("35 054 T€", new String[] { "FR_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("35 456 544 k£", new String[] { "FR_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
 
             put("00493-1234567891", new String[] { "DE_PHONE" });//$NON-NLS-1$ //$NON-NLS-2$
             put("00338.01345678", new String[] { "FR_PHONE" });//$NON-NLS-1$ //$NON-NLS-2$
@@ -328,13 +333,15 @@ public class UserDefinedClassifierTest {
         sizeAfter = userDefinedClassifier.getClassifiers().size();
         assertEquals(
                 "Expect to have a different size because we add a category that does not exist in the list of categories. Size=" //$NON-NLS-1$
-                        + userDefinedClassifier.getClassifiers().size(), sizeBefore + 1, sizeAfter);
+                        + userDefinedClassifier.getClassifiers().size(),
+                sizeBefore + 1, sizeAfter);
 
         userDefinedClassifier.addSubCategory(cat);
         sizeAfter = userDefinedClassifier.getClassifiers().size();
         assertEquals(
                 "Expect to have only one more element than the original size because the category now exists in the list of categories. Size=" //$NON-NLS-1$
-                        + userDefinedClassifier.getClassifiers().size(), sizeBefore + 1, sizeAfter);
+                        + userDefinedClassifier.getClassifiers().size(),
+                sizeBefore + 1, sizeAfter);
 
         userDefinedClassifier.removeSubCategory(cat);
         sizeAfter = userDefinedClassifier.getClassifiers().size();
@@ -351,13 +358,15 @@ public class UserDefinedClassifierTest {
         sizeAfter = userDefinedClassifier.getClassifiers().size();
         assertEquals(
                 "Expect to have a different size because we add a category that does not exist in the list of categories. Size=" //$NON-NLS-1$
-                        + userDefinedClassifier.getClassifiers().size(), sizeBefore + 1, sizeAfter);
+                        + userDefinedClassifier.getClassifiers().size(),
+                sizeBefore + 1, sizeAfter);
 
         assertFalse(userDefinedClassifier.addSubCategory(cat));
         sizeAfter = userDefinedClassifier.getClassifiers().size();
         assertEquals(
                 "Expect to have a still have the same size because we add a category that already exists in the list of categories. Size=" //$NON-NLS-1$
-                        + userDefinedClassifier.getClassifiers().size(), sizeBefore + 1, sizeAfter);
+                        + userDefinedClassifier.getClassifiers().size(),
+                sizeBefore + 1, sizeAfter);
 
         UserDefinedCategory cat2 = new UserDefinedCategory(id);
         cat2.setName("my name"); //$NON-NLS-1$
@@ -365,7 +374,8 @@ public class UserDefinedClassifierTest {
         sizeAfter = userDefinedClassifier.getClassifiers().size();
         assertEquals(
                 "Expect to have a still have the same size because we add a category that already exists in the list of categories. Size=" //$NON-NLS-1$
-                        + userDefinedClassifier.getClassifiers().size(), sizeBefore + 1, sizeAfter);
+                        + userDefinedClassifier.getClassifiers().size(),
+                sizeBefore + 1, sizeAfter);
 
     }
 }

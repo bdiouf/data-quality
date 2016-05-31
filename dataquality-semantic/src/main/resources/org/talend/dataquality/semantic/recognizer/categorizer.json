@@ -77,7 +77,7 @@
         "id" : "WEB_DOMAIN",
         "mainCategory" : "AlphaNumeric",
         "name" : "Web Domain",
-        "validator" : { "patternString" : "^([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}$" }
+        "validator" : { "patternString" : "^([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,24}$" }
       },
       { "description" : "UK phone number",
         "id" : "UK_PHONE",
