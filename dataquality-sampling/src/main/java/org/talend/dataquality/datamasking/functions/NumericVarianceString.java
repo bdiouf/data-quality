@@ -18,10 +18,10 @@ public class NumericVarianceString extends NumericVariance<String> {
 
     @Override
     protected String doGenerateMaskedField(String input) {
-        if (input == null) {
-            return "0";
+        if (input == null || EMPTY_STRING.equals(input.trim())) {
+            return input;
         } else {
-            super.init();
+            init();
             final Double value = Double.valueOf(input) * ((double) rate + 100) / 100;
             return value.toString();
         }

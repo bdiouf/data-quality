@@ -14,9 +14,16 @@ public class IntegerFunctionAdapter extends Function<String> {
 
     @Override
     protected String doGenerateMaskedField(String input) {
-        final Integer inputInt = Integer.parseInt(input);
-        final Integer result = function.generateMaskedRow(inputInt);
-        return String.valueOf(result);
+        if (input == null || EMPTY_STRING.equals(input.trim())) {
+            return input;
+        }
+        try {
+            final Integer inputInt = Integer.parseInt(input);
+            final Integer result = function.generateMaskedRow(inputInt);
+            return String.valueOf(result);
+        } catch (NumberFormatException nfe) {
+            return input;
+        }
     }
 
 }

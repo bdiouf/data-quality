@@ -29,6 +29,7 @@ public class ValueDataMaskerTest {
         {
 
             // 0. UNKNOWN
+            put(new String[] { " ", "UNKNOWN", "string" }, " ");
             put(new String[] { "91000", "UNKNOWN", "integer" }, "\\d{5,6}");
             put(new String[] { "92000", "UNKNOWN", "decimal" }, "\\d{5,6}.0");
             put(new String[] { "93000", "UNKNOWN", "numeric" }, "\\d{5,6}");
@@ -36,6 +37,7 @@ public class ValueDataMaskerTest {
             put(new String[] { "sdkjs@talend.com", "UNKNOWN", "string" }, ".*");
 
             // 1. FIRST_NAME
+            put(new String[] { "", MaskableCategoryEnum.FIRST_NAME.name(), "string" }, "");
             put(new String[] { "John", MaskableCategoryEnum.FIRST_NAME.name(), "string" }, ".*");
 
             // 2. LAST_NAME
@@ -43,6 +45,7 @@ public class ValueDataMaskerTest {
 
             // 3. EMAIL
             put(new String[] { "sdkjs@talend.com", MaskableCategoryEnum.EMAIL.name(), "String" }, ".*@talend.com");
+            put(new String[] { "\t", MaskableCategoryEnum.FIRST_NAME.name(), "string" }, "\t");
 
             // 4. PHONE
             put(new String[] { "0123456789", MaskableCategoryEnum.US_PHONE.name(), "String" }, ".*");
@@ -88,6 +91,12 @@ public class ValueDataMaskerTest {
             put(new String[] { "developer", MaskableCategoryEnum.JOB_TITLE.name(), "String" }, ".*");
             // Organization
             put(new String[] { "Kiva", MaskableCategoryEnum.ORGANIZATION.name(), "String" }, ".*");
+
+            // OTHERS
+            put(new String[] { " ", "UNKNOWN", "integer" }, " ");
+            put(new String[] { " ", "UNKNOWN", "numeric" }, " ");
+            put(new String[] { " ", "UNKNOWN", "decimal" }, " ");
+            put(new String[] { " ", "UNKNOWN", "date" }, " ");
         }
     };
 
