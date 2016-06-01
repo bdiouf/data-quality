@@ -33,20 +33,46 @@ public class FluctuateNumericString extends NumericVariance<String> {
             init();
             double rateToApply = rnd.nextDouble() * rate;
             if (patternInteger.matcher(input).matches()) {
-                final long result = Math.round(Integer.valueOf(input) * (rateToApply + 100) / 100);
-                return String.valueOf(result);
+                BigDecimal bigDecimal = new BigDecimal(input);
+                if (bigDecimal.abs().compareTo(new BigDecimal(Long.MAX_VALUE)) > 0) {
+                    final BigDecimal result = bigDecimal.multiply(new BigDecimal(rateToApply + 100)).divide(new BigDecimal(100));
+                    return result.setScale(0, RoundingMode.HALF_UP).toString();
+                } else {
+                    final long result = Math.round(Long.valueOf(input) * (rateToApply + 100) / 100);
+                    return String.valueOf(result);
+                }
             } else {
-                try {
-                    final double doubleValue = BigDecimalParser.toBigDecimal(input).doubleValue();
-                    final String doubleStr = String.valueOf(doubleValue);
-                    final int decimalLength = doubleStr.substring(doubleStr.lastIndexOf(".")).length() - 1;
-                    final Double result = doubleValue * (rateToApply + 100) / 100;
-                    final BigDecimal bigDecimal = new BigDecimal(result).setScale(decimalLength, RoundingMode.HALF_UP);
-                    return bigDecimal.toString();
-                } catch (NumberFormatException e) {
-                    return EMPTY_STRING;
+                BigDecimal bigDecimal = BigDecimalParser.toBigDecimal(input);
+                final int decimalLength = getDecimalPrecision(input);
+                if (bigDecimal.abs().compareTo(new BigDecimal(Long.MAX_VALUE)) > 0) {
+                    final BigDecimal result = bigDecimal.multiply(new BigDecimal(rateToApply + 100)).divide(new BigDecimal(100));
+                    if (input.contains("e") || input.contains("E")) {
+                        return String.valueOf(result.setScale(decimalLength, RoundingMode.HALF_UP).doubleValue());
+                    } else {
+                        return result.setScale(decimalLength, RoundingMode.HALF_UP).toString();
+                    }
+                } else {
+                    final Double doubleValue = bigDecimal.doubleValue() * (rateToApply + 100) / 100;
+                    final BigDecimal result = new BigDecimal(doubleValue);
+                    return String.valueOf(result.setScale(decimalLength, RoundingMode.HALF_UP).doubleValue());
                 }
             }
+        }
+    }
+
+    private int getDecimalPrecision(final String input) {
+        String inputWithoutScientificPart = input;
+        if (input.contains("e")) {
+            inputWithoutScientificPart = input.substring(0, input.lastIndexOf("e"));
+        } else if (input.contains("E")) {
+            inputWithoutScientificPart = input.substring(0, input.lastIndexOf("E"));
+        }
+        String bigDecimalString = BigDecimalParser.toBigDecimal(inputWithoutScientificPart).toString();
+        int idx = bigDecimalString.lastIndexOf(".");
+        if (idx < 1) {
+            return 0;
+        } else {
+            return inputWithoutScientificPart.length() - bigDecimalString.lastIndexOf(".") - 1;
         }
     }
 }

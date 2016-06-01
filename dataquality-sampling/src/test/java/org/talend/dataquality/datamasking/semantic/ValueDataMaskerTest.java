@@ -99,6 +99,16 @@ public class ValueDataMaskerTest {
             put(new String[] { "444,44", "UNKNOWN", "numeric" }, "423.06");
             put(new String[] { "555", "UNKNOWN", "float" }, "528");
             put(new String[] { "666.666", "UNKNOWN", "float" }, "634.595");
+
+            // BIG NUMERIC
+            put(new String[] { "7777777777777777777777777777777777777", "UNKNOWN", "double" },
+                    "7403611837072084098407584759924146863");
+            put(new String[] { "7777777777777777777777777777777777777.7777", "UNKNOWN", "double" },
+                    "7403611837072084098407584759924146864.1492");
+
+            // ENGINEERING FORMAT
+            put(new String[] { "8e28", "UNKNOWN", "double" }, "7.615143603845572E28");
+            put(new String[] { "-9.999E29", "UNKNOWN", "double" }, "-9.517977611856485E29");
         }
     };
 
