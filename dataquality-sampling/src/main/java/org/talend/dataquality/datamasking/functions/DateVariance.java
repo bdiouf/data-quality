@@ -29,17 +29,17 @@ public class DateVariance extends Function<Date> implements Serializable {
     @Override
     protected Date doGenerateMaskedField(Date date) {
         if (date != null) {
-            int variation = 0;
+            long variation = 0;
             if (integerParam < 0) {
                 integerParam *= -1;
             } else if (integerParam == 0) {
                 integerParam = 31;
             }
             do {
-                variation = rnd.nextInt(2 * integerParam) - integerParam;
+                variation = Math.round((rnd.nextDouble() * 2 - 1) * integerParam * nb_ms_per_day);
             } while (variation == 0);
             Long originalDate = date.getTime();
-            Date newDate = new Date(originalDate + variation * nb_ms_per_day);
+            Date newDate = new Date(originalDate + variation);
             return newDate;
         } else {
             return new Date(System.currentTimeMillis());

@@ -28,7 +28,8 @@ public class DateFunctionAdapterTest {
     public void testGenerateMaskedRow() {
         final DateVariance dv = new DateVariance();
         dv.parse("61", true, new Random(AllDataqualitySamplingTests.RANDOM_SEED));
-        final List<String> patternList = Arrays.asList(new String[] { "yyyy/MM/dd", "yyyy-MM-dd", "AA9999" });
+        final List<String> patternList = Arrays
+                .asList(new String[] { "yyyy/MM/dd", "yyyy-MM-dd", "yyyy/MM/dd H:mm:ss", "AA9999" });
         final DateFunctionAdapter function = new DateFunctionAdapter(dv, patternList);
 
         assertEquals(null, function.generateMaskedRow(null)); // return null when input is null
@@ -36,9 +37,12 @@ public class DateFunctionAdapterTest {
         assertEquals("  \t", function.generateMaskedRow("  \t")); // return original value when input contains only whitespaces
         assertEquals("", function.generateMaskedRow("Vkfz-Zps-550")); // return empty when no date pattern is applicable
 
-        assertEquals("2015-12-19", function.generateMaskedRow("2015-11-15")); // should mask
-        assertEquals("2015/11/08", function.generateMaskedRow("2015/11/15")); // should mask
+        assertEquals("2015-12-09", function.generateMaskedRow("2015-11-15")); // should mask
+        assertEquals("2016/01/03", function.generateMaskedRow("2015/11/15")); // should mask
         assertEquals("", function.generateMaskedRow("2015*11*15")); // return empty when no date pattern is applicable
+
+        assertEquals("2015/10/23 23:25:11", function.generateMaskedRow("2015/11/15 10:00:00")); // return empty when no date
+                                                                                                // pattern is applicable
     }
 
 }

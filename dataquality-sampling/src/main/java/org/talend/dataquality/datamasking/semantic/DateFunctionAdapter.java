@@ -48,6 +48,9 @@ public class DateFunctionAdapter extends Function<String> {
         }
         for (SimpleDateFormat sdf : dataFormatList) {
             try {
+                if (!sdf.toPattern().contains("H") && input.contains(":")) {
+                    continue;
+                }
                 final Date inputDate = sdf.parse(input);
                 final Date result = function.generateMaskedRow(inputDate);
                 return sdf.format(result);
