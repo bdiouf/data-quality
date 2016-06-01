@@ -33,7 +33,7 @@ public class MatchResult {
     public static class Score {
 
         public final String[] ids = new String[2];
-        
+
         public final String[] values = new String[2];
 
         public AttributeMatcherType algorithm;

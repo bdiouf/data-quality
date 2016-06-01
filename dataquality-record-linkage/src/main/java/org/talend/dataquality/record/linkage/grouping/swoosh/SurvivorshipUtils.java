@@ -68,14 +68,15 @@ public class SurvivorshipUtils {
                             Integer.parseInt(columnWithIndex.get(columnName)), columnName, defSurvDef.get("PARAMETER"),
                             defSurvDef.get("SURVIVORSHIP_FUNCTION"));
                     break;
-                } else if (StringUtils.equalsIgnoreCase(defSurvDef.get("DATA_TYPE"), "Number") && ArrayUtils.contains(NUMBERS, dataTypeName)) { //$NON-NLS-1$
+                } else if (StringUtils.equalsIgnoreCase(defSurvDef.get("DATA_TYPE"), "Number") //$NON-NLS-1$
+                        && ArrayUtils.contains(NUMBERS, dataTypeName)) {
                     putNewSurvFunc(survivorShipAlgorithmParams, defaultSurvRules,
                             Integer.parseInt(columnWithIndex.get(columnName)), columnName, defSurvDef.get("PARAMETER"),
                             defSurvDef.get("SURVIVORSHIP_FUNCTION"));
                     break;
                 }
-            }// End for: if no func defined, then the value will be taken from one of the records in a group (1st
-             // one ).
+            } // End for: if no func defined, then the value will be taken from one of the records in a group (1st
+              // one ).
         }
 
         survivorShipAlgorithmParams.setDefaultSurviorshipRules(defaultSurvRules);

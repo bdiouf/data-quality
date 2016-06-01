@@ -47,8 +47,9 @@ public class DoubleMetaphoneMatcherTest {
         a = "JohnFit";
         b = "JohnFitzgeraldKennedy";
         matchingWeight = doubleMetaphoneMatcher.getMatchingWeight(a, b);
-        Assert.assertTrue("input strings are not the same but DoubleMetaphone should not be able to distinguish between " + a
-                + " and " + b, 1.0d == matchingWeight);
+        Assert.assertTrue(
+                "input strings are not the same but DoubleMetaphone should not be able to distinguish between " + a + " and " + b,
+                1.0d == matchingWeight);
 
         a = "\n";
         b = "Hulme";

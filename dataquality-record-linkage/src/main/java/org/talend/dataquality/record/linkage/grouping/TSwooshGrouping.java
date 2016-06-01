@@ -363,8 +363,8 @@ public class TSwooshGrouping<TYPE> {
         // add the not masters again
         List<Record> result = algorithm.getResult();
         for (Record master : result) {
-            String groupId = StringUtils.isBlank(master.getGroupId()) ? ((RichRecord) master).getOriginRow().get(indexGID)
-                    .getValue() : master.getGroupId();
+            String groupId = StringUtils.isBlank(master.getGroupId())
+                    ? ((RichRecord) master).getOriginRow().get(indexGID).getValue() : master.getGroupId();
             List<List<DQAttribute<?>>> list = groupRows.get(groupId);
 
             int groupSize = list == null ? 0 : list.size();

@@ -29,5 +29,5 @@ public interface IRecordMerger {
      * @throws java.lang.IllegalArgumentException if any of the parameter is <code>null</code>.
      */
     Record merge(Record record1, Record record2);
-    
+
 }

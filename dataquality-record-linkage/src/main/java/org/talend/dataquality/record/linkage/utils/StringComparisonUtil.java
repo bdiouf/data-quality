@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.utils;
 
-
 /**
  * @author scorreia
  * 
@@ -24,7 +23,6 @@ public final class StringComparisonUtil {
      * maximum prefix length to use.
      */
     private static final int MINPREFIXTESTLENGTH = 6;
-
 
     /**
      * StringComparisonUtil constructor.

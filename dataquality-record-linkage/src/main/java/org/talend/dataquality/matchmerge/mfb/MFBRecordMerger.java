@@ -42,8 +42,8 @@ public class MFBRecordMerger implements IRecordMerger {
         List<Attribute> r1 = record1.getAttributes();
         List<Attribute> r2 = record2.getAttributes();
         // Takes most recent as timestamp for the merged record.
-        long mergedRecordTimestamp = record1.getTimestamp() > record2.getTimestamp() ? record1.getTimestamp() : record2
-                .getTimestamp();
+        long mergedRecordTimestamp = record1.getTimestamp() > record2.getTimestamp() ? record1.getTimestamp()
+                : record2.getTimestamp();
         Record mergedRecord = createNewRecord(record1, record2, mergedRecordTimestamp);
         for (int k = 0; k < r1.size(); k++) {
             Attribute a = new Attribute(r1.get(k).getLabel(), r1.get(k).getColumnIndex());

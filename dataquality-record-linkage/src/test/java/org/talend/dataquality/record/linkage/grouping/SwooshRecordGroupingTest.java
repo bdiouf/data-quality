@@ -391,8 +391,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -602,8 +602,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -819,8 +819,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_3groups() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_3groups()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1040,8 +1040,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_withNoNewMasterIn2ndPass() throws IOException, InterruptedException,
-            InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_withNoNewMasterIn2ndPass()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1387,8 +1387,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_withBlocks() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_withBlocks()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1607,8 +1607,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_withoutBlocks() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_withoutBlocks()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1936,8 +1936,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_oneRecord() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_oneRecord()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -2153,8 +2153,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_differentRecord() throws IOException, InterruptedException,
-            InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_differentRecord()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -2369,8 +2369,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_score() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_score()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -2586,8 +2586,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_multipleRules() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_multipleRules()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -2867,8 +2867,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_withCustomMatcher() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_withCustomMatcher()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -2886,9 +2886,8 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         tmpMap_tMatchGroup_1.put("CUSTOMER_MATCH_CLASS", "org.talend.dataquality.record.linkage.grouping.MyDistance" + "");
-        tmpMap_tMatchGroup_1
-                .put("JAR_PATH",
-                        "/home/runtime/TDQ_EE_NEW2/LOCAL_PROJECT/TDQ_Libraries/Indicators/User Defined Indicators/lib/test.mydistance.jar");
+        tmpMap_tMatchGroup_1.put("JAR_PATH",
+                "/home/runtime/TDQ_EE_NEW2/LOCAL_PROJECT/TDQ_Libraries/Indicators/User Defined Indicators/lib/test.mydistance.jar");
 
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
@@ -3073,8 +3072,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_withDisplayAttLabels() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_withDisplayAttLabels()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -3285,8 +3284,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_withOutputDD() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_withOutputDD()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -3512,8 +3511,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_tdq11599Smallelst() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_tdq11599Smallelst()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -3715,8 +3714,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_tdq11599Largest() throws IOException, InterruptedException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_tdq11599Largest()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;

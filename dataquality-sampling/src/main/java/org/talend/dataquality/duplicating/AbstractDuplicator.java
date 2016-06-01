@@ -55,7 +55,8 @@ public abstract class AbstractDuplicator<TIn, TOut> {
             rnd = new RandomWrapper();
             distribution.reseedRandomGenerator(rnd.getSeed());
             if (log.isInfoEnabled()) {
-                log.info("A seed is generated for Random generator. If a fixed seed is needed, set it in the advanced parameters of the tDuplicateRow component"); //$NON-NLS-1$
+                log.info(
+                        "A seed is generated for Random generator. If a fixed seed is needed, set it in the advanced parameters of the tDuplicateRow component"); //$NON-NLS-1$
             }
         }
         return rnd;

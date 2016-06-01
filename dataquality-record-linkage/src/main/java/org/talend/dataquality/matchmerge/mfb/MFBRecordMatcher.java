@@ -96,11 +96,13 @@ public class MFBRecordMatcher extends AbstractRecordMatcher {
             return score;
         }
         // 2- Compare using values that build attribute value (if any)
-        Iterator<String> leftValues = new IteratorChain(Collections.singleton(left).iterator(), leftAttribute.getValues().iterator());
+        Iterator<String> leftValues = new IteratorChain(Collections.singleton(left).iterator(),
+                leftAttribute.getValues().iterator());
         double maxScore = 0;
         while (leftValues.hasNext()) {
             String leftValue = leftValues.next();
-            Iterator<String> rightValues = new IteratorChain(Collections.singleton(right).iterator(), rightAttribute.getValues().iterator());
+            Iterator<String> rightValues = new IteratorChain(Collections.singleton(right).iterator(),
+                    rightAttribute.getValues().iterator());
             while (rightValues.hasNext()) {
                 String rightValue = rightValues.next();
                 score = matcher.getMatchingWeight(leftValue, rightValue);

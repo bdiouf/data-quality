@@ -64,8 +64,8 @@ public class JaroMatcher extends AbstractAttributeMatcher {
         transpositions /= 2.0f;
 
         // calculate jaro metric
-        return (common1.length() / ((float) string1.length()) + common2.length() / ((float) string2.length()) + (common1.length() - transpositions)
-                / ((float) common1.length())) / 3.0f;
+        return (common1.length() / ((float) string1.length()) + common2.length() / ((float) string2.length())
+                + (common1.length() - transpositions) / ((float) common1.length())) / 3.0f;
     }
 
 }

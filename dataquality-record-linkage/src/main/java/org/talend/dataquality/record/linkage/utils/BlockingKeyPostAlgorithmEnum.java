@@ -37,7 +37,8 @@ public enum BlockingKeyPostAlgorithmEnum {
 
     private String defaultValue;
 
-    BlockingKeyPostAlgorithmEnum(int index, String value, String componentValueName, boolean isTakeParameter, String defaultValue) {
+    BlockingKeyPostAlgorithmEnum(int index, String value, String componentValueName, boolean isTakeParameter,
+            String defaultValue) {
         this.index = index;
         this.value = value;
         this.componentValueName = componentValueName;

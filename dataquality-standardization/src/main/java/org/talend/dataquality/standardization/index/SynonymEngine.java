@@ -18,5 +18,6 @@ import java.io.IOException;
  * DOC scorreia class global comment. Detailled comment
  */
 public interface SynonymEngine {
-  String[] getSynonyms(String s) throws IOException;
+
+    String[] getSynonyms(String s) throws IOException;
 }

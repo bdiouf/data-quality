@@ -158,10 +158,12 @@ public class IndexBuilder {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    private CSVReader createCSVReader(String csvFileToIndex, char seperator) throws UnsupportedEncodingException,
-            FileNotFoundException, IOException {
-        CSVReader csvReader = new CSVReader(new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(
-                csvFileToIndex.toString()), "windows-1252")), seperator);//$NON-NLS-1$
+    private CSVReader createCSVReader(String csvFileToIndex, char seperator)
+            throws UnsupportedEncodingException, FileNotFoundException, IOException {
+        CSVReader csvReader = new CSVReader(
+                new java.io.BufferedReader(
+                        new java.io.InputStreamReader(new java.io.FileInputStream(csvFileToIndex.toString()), "windows-1252")), //$NON-NLS-1$
+                seperator);
         csvReader.setQuoteChar('\"');
 
         csvReader.readNext();// skip header

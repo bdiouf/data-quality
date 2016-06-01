@@ -40,17 +40,11 @@ public class CombinedQueryTest {
             { "Paris 2eme", "Paris 02 Bourse|Paris 2|75002" },
             { "Paris", "巴黎|Paryz|Parizh|Parizs|Paras|Pariz|Parigi|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T" },
             //
-            { "222", "" },
-            { "", "222" },
+            { "222", "" }, { "", "222" },
             //
-            { "111", "AA BB CC" },
-            { "222", "AA|BB CC|333" },
-            { "333", "AA BB|CC|DD|222" },
+            { "111", "AA BB CC" }, { "222", "AA|BB CC|333" }, { "333", "AA BB|CC|DD|222" },
             //
-            { "222 333", "XXX|YYY|ZZZ" },
-            { "222 444", "XXX|YYY|ZZZ|WWW" },
-            { "YYY", "222 333" },
-            { "YYY", "222 444 | ZZZ" },
+            { "222 333", "XXX|YYY|ZZZ" }, { "222 444", "XXX|YYY|ZZZ|WWW" }, { "YYY", "222 333" }, { "YYY", "222 444 | ZZZ" },
             //
             { "XXX", "AA2|AA3|AA4|AA5|YYY" }, { "A YYY ZZZ", "ZZZ|WWW" }, { "XXX", "AA2|AA3|AA4|AA5|YYY" },
             { "A YYY ZZZ", "ZZZ|WWW" }, { "XXX", "AA2|AA3|AA4|AA5|YYY" }, { "A YYY ZZZ", "ZZZ|WWW" },

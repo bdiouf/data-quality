@@ -98,10 +98,10 @@ public class DataTypeOccurences implements Serializable {
         if (count > 0) {
             final long mostFrequentTypeOccurrence = sortedTypeOccurrences.get(0).getValue();
 
-            final long doubleOccurrences = typeOccurences.containsKey(DataTypeEnum.DOUBLE) ? typeOccurences
-                    .get(DataTypeEnum.DOUBLE) : 0;
-            final long integerOccurrences = typeOccurences.containsKey(DataTypeEnum.INTEGER) ? typeOccurences
-                    .get(DataTypeEnum.INTEGER) : 0;
+            final long doubleOccurrences = typeOccurences.containsKey(DataTypeEnum.DOUBLE)
+                    ? typeOccurences.get(DataTypeEnum.DOUBLE) : 0;
+            final long integerOccurrences = typeOccurences.containsKey(DataTypeEnum.INTEGER)
+                    ? typeOccurences.get(DataTypeEnum.INTEGER) : 0;
 
             final long numericalOccurrences = doubleOccurrences + integerOccurrences;
 
@@ -113,8 +113,8 @@ public class DataTypeOccurences implements Serializable {
                     return DataTypeEnum.DOUBLE;
                 }
             } else { // otherwise
-                final long secondMostFrequentTypeOccurrence = sortedTypeOccurrences.size() > 1 ? sortedTypeOccurrences.get(1)
-                        .getValue() : 0;
+                final long secondMostFrequentTypeOccurrence = sortedTypeOccurrences.size() > 1
+                        ? sortedTypeOccurrences.get(1).getValue() : 0;
                 // return the most frequent type if it reaches the threshold and has strictly more occurrences than the
                 // second most frequent types
                 if (mostFrequentTypeOccurrence >= occurrenceThreshold

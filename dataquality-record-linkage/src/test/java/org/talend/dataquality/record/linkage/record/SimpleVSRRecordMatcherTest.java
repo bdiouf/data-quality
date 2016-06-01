@@ -74,10 +74,8 @@ public class SimpleVSRRecordMatcherTest {
         IRecordMatcher match = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher);
         for (double[] attributeWeights : ALLATTRIBUTEWEIGHTS) {
             match.setRecordSize(3);
-            Assert.assertEquals(
-                    true,
-                    match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(), new JaroWinklerMatcher(),
-                            new ExactIgnoreCaseMatcher() }));
+            Assert.assertEquals(true, match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(),
+                    new JaroWinklerMatcher(), new ExactIgnoreCaseMatcher() }));
 
             if (!areValidAttributeWeitghts(match, attributeWeights)) {
                 // don't continue the program
@@ -292,10 +290,8 @@ public class SimpleVSRRecordMatcherTest {
         // prepare matcher
 
         match.setRecordSize(3);
-        Assert.assertEquals(
-                true,
-                match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(), new JaroWinklerMatcher(),
-                        new ExactIgnoreCaseMatcher() }));
+        Assert.assertEquals(true, match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(),
+                new JaroWinklerMatcher(), new ExactIgnoreCaseMatcher() }));
         if (!areValidAttributeWeitghts(match, attributeWeights)) {
             // break here
             return;
@@ -340,10 +336,8 @@ public class SimpleVSRRecordMatcherTest {
     public void testSetAttributeMatchers() {
         IRecordMatcher match = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher);
         match.setRecordSize(3);
-        Assert.assertEquals(
-                true,
-                match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(), new JaroWinklerMatcher(),
-                        new ExactIgnoreCaseMatcher() }));
+        Assert.assertEquals(true, match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(),
+                new JaroWinklerMatcher(), new ExactIgnoreCaseMatcher() }));
     }
 
     /**
@@ -387,8 +381,8 @@ public class SimpleVSRRecordMatcherTest {
 
     // The matcing probilities weight with
 
-    private static double[] MATCH_PROBS_WITH_DISTINCE = new double[] { 0.9583333333333333, 0.0, 0.9047619047619047, 0.0, 1.0,
-            0.0, 0.0, 1.0 };
+    private static double[] MATCH_PROBS_WITH_DISTINCE = new double[] { 0.9583333333333333, 0.0, 0.9047619047619047, 0.0, 1.0, 0.0,
+            0.0, 1.0 };
 
     // The matching probabilities weights.
     private static double[][] MATCH_PROBS = new double[][] {
@@ -399,12 +393,10 @@ public class SimpleVSRRecordMatcherTest {
             { 0.5, 0.5, 0.5, 0.0, 1.0, 0.0, 0.0, 1.0 },
             { 0.47499998807907107, 0.9611110925674439, 0.47499998807907107, 0.46111109256744387, 1.0, 0.42000000476837157,
                     0.42000000476837157, 1.0 },
-            { 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0 },
-            { 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0 },
+            { 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0 }, { 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0 },
             { 0.9499999761581421, 0.9222221851348877, 0.9499999761581421, 0.9222221851348877, 1.0, 0.8400000095367431,
                     0.8400000095367431, 1.0 },
-            { 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0 },
-            { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
+            { 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0 }, { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
             { 0.36874999701976774, 0.7402777731418609, 0.36874999701976774, 0.11527777314186097, 1.0, 0.10500000119209289,
                     0.10500000119209289, 1.0 },
             { 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0 },

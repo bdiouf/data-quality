@@ -36,6 +36,7 @@ public class HistogramStatistics {
     private BigDecimal binSize;
 
     int scale = 1000;
+
     /**
      * Set the parameters of the statistics <br>
      * Note that max must be greater than min

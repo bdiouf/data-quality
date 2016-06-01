@@ -15,12 +15,11 @@ package org.talend.dataquality.record.linkage.attribute;
 import org.apache.commons.lang.StringUtils;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
 
-
 /**
- * DOC scorreia  class global comment. Detailled comment
+ * DOC scorreia class global comment. Detailled comment
  */
 public class ExactMatcher extends AbstractAttributeMatcher {
-    
+
     /*
      * (non-Javadoc)
      * 

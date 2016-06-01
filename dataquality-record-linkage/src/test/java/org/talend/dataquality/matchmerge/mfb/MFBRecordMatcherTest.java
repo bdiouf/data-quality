@@ -54,8 +54,8 @@ public class MFBRecordMatcherTest {
         record2.getAttributes().add(attribute);
 
         // init Attribute matcher
-        IAttributeMatcher[] attributeMatchers = new IAttributeMatcher[] { MFBAttributeMatcher.wrap(new JaroMatcher(), 1.0, 0.8,
-                SubString.NO_SUBSTRING) };
+        IAttributeMatcher[] attributeMatchers = new IAttributeMatcher[] {
+                MFBAttributeMatcher.wrap(new JaroMatcher(), 1.0, 0.8, SubString.NO_SUBSTRING) };
 
         MFBRecordMatcher mfbRecordMatcher = new MFBRecordMatcher(0.85d);
         mfbRecordMatcher.setRecordSize(1);
@@ -84,8 +84,8 @@ public class MFBRecordMatcherTest {
         record2.getAttributes().add(attribute);
 
         // init Attribute matcher
-        IAttributeMatcher[] attributeMatchers = new IAttributeMatcher[] { MFBAttributeMatcher.wrap(new JaroMatcher(), 1.0, 0.8,
-                SubString.NO_SUBSTRING) };
+        IAttributeMatcher[] attributeMatchers = new IAttributeMatcher[] {
+                MFBAttributeMatcher.wrap(new JaroMatcher(), 1.0, 0.8, SubString.NO_SUBSTRING) };
 
         MFBRecordMatcher mfbRecordMatcher = new MFBRecordMatcher(0.85d);
         mfbRecordMatcher.setRecordSize(1);
@@ -112,8 +112,8 @@ public class MFBRecordMatcherTest {
         record2.getAttributes().add(attribute);
 
         // init Attribute matcher
-        IAttributeMatcher[] attributeMatchers = new IAttributeMatcher[] { MFBAttributeMatcher.wrap(new JaroMatcher(), 1.0, 1.0,
-                SubString.NO_SUBSTRING) };
+        IAttributeMatcher[] attributeMatchers = new IAttributeMatcher[] {
+                MFBAttributeMatcher.wrap(new JaroMatcher(), 1.0, 1.0, SubString.NO_SUBSTRING) };
 
         MFBRecordMatcher mfbRecordMatcher = new MFBRecordMatcher(0.85d);
         mfbRecordMatcher.setRecordSize(1);
@@ -146,8 +146,8 @@ public class MFBRecordMatcherTest {
         record2.getAttributes().add(attribute);
 
         // init Attribute matcher
-        IAttributeMatcher[] attributeMatchers = new IAttributeMatcher[] { MFBAttributeMatcher.wrap(new JaroMatcher(), 1.0, 1.0,
-                SubString.NO_SUBSTRING) };
+        IAttributeMatcher[] attributeMatchers = new IAttributeMatcher[] {
+                MFBAttributeMatcher.wrap(new JaroMatcher(), 1.0, 1.0, SubString.NO_SUBSTRING) };
 
         MFBRecordMatcher mfbRecordMatcher = new MFBRecordMatcher(0.85d);
         mfbRecordMatcher.setRecordSize(1);

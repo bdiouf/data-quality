@@ -14,29 +14,31 @@ package org.talend.dataquality.standardization.index;
 
 /**
  * record the error information
+ * 
  * @author tychu
  *
  */
 public class Error {
-	private boolean status = true;
+
+    private boolean status = true;
 
     private String message = "";//$NON-NLS-1$
-	
-	public void set(boolean status, String message) {
-		this.status = status;
-		this.message = message;
-	}
-	
-	public void reset() {
-		this.status = true;
+
+    public void set(boolean status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public void reset() {
+        this.status = true;
         this.message = "";//$NON-NLS-1$
-	}
-	
-	public boolean getStatus() {
-		return status;
-	}
-	
-	public String getMessage() {
-		return message;
-	}
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

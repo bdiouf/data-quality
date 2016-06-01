@@ -155,9 +155,8 @@ public class CompositePatternFrequencyAnalyzerTest {
     public void testCustomDatePatternAnalyzer() {
         DateTimePatternRecognizer datetimePatternAnalyzer = new DateTimePatternRecognizer();
         final String[] data = new String[] { "11/19/07 2:54", "7/6/09 16:46", "2015-08-20", "2012-02-12", "2/8/15 15:57",
-                "4/15/11 4:24", "2001年" }; // TODO add a date in a strange format that we are sure
-                                           // we won't add to the list of date patterns that we
-                                           // have. e.g. , "12:00.000000 1?1?7"
+                "4/15/11 4:24", "2001年" }; // TODO add a date in a strange format that we are sure we won't add to the list of
+                                           // date patterns that we have. e.g. , "12:00.000000 1?1?7"
 
         // Set customized pattern and analyze again
         // TODO: Replace Map<String, String> parameters by class PatternAnalyzerConfig

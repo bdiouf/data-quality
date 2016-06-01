@@ -336,7 +336,7 @@ public class JARDirectory extends Directory {
                         final int toRead = Math.min(CHUNK_SIZE, len - total);
                         final int i = file.read(b, offset + total, toRead);
                         if (i < 0) { // be defensive here, even though we checked before hand, something could have
-                                     // changed
+                                         // changed
                             throw new EOFException("read past EOF: " + this + " off: " + offset + " len: " + len + " total: "
                                     + total + " chunkLen: " + toRead + " end: " + end);
                         }

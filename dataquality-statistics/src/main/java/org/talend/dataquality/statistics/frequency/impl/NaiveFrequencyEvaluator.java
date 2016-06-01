@@ -22,7 +22,8 @@ import java.util.stream.Collectors;
 
 /**
  * Frequency statistics evaluator with keep a internal map to track with the frequency table.<br>
- * This is a "naive" way to compute the frequency table by maintaining a Map tracking the frequency table.</br> Note
+ * This is a "naive" way to compute the frequency table by maintaining a Map tracking the frequency table.</br>
+ * Note
  * that in case of large size data being analyzed, this analyzer may bring memory issue, use
  * {@link SSFrequencyEvaluator} instead.
  * 

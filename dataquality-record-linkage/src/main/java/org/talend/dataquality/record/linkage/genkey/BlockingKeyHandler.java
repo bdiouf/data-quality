@@ -61,12 +61,13 @@ public class BlockingKeyHandler {
             process(inputObject);
         }
     }
+
     /**
      * 
      * @param inputObject
      * @return generation key of this input
      */
-    public String process(Object[] inputObject){
+    public String process(Object[] inputObject) {
         String[] inputString = new String[inputObject.length];
         int index = 0;
         for (Object obj : inputObject) {
@@ -78,7 +79,7 @@ public class BlockingKeyHandler {
         }
         String genKey = generateKeyAPI.getGenKey(blockKeyDefinitions, ColumnValueMap);
         generateKeyAPI.appendGenKeyResult(inputString, genKey);
-        return genKey ;
+        return genKey;
     }
 
     /**
@@ -86,7 +87,7 @@ public class BlockingKeyHandler {
      * @param blockingKey
      * @return size of the block.
      */
-    public int getBlockSize(String blockingKey){
+    public int getBlockSize(String blockingKey) {
         return generateKeyAPI.getResultList().get(blockingKey).size();
     }
 

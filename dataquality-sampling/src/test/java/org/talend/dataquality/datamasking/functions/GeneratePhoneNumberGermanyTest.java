@@ -47,8 +47,7 @@ public class GeneratePhoneNumberGermanyTest {
         for (int i = 0; i < 10; ++i) {
             String tmp = gpng.generateMaskedRow(null);
             res = (tmp.substring(0, 3).equals("030") || tmp.substring(0, 3).equals("040") || tmp.substring(0, 3).equals("069") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                    || tmp
-                            .substring(0, 3).equals("089")); //$NON-NLS-1$
+                    || tmp.substring(0, 3).equals("089")); //$NON-NLS-1$
             assertEquals("invalid pĥone number " + tmp, res, true); //$NON-NLS-1$
         }
     }

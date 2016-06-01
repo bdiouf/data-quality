@@ -17,7 +17,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class SedolValidatorTest {
 
     @Before
@@ -34,7 +33,7 @@ public class SedolValidatorTest {
         Assert.assertTrue(validator.isValid("B0YBKL9"));
         Assert.assertTrue(validator.isValid("B000300"));
         Assert.assertTrue(validator.isValid("5852842"));
-        
+
         Assert.assertFalse(validator.isValid("5752842"));
         Assert.assertFalse(validator.isValid("57.2842"));
         Assert.assertFalse(validator.isValid("*&JHE"));

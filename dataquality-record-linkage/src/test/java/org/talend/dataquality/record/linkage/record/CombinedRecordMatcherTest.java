@@ -83,8 +83,8 @@ public class CombinedRecordMatcherTest {
         Assert.assertNotSame("The two matchers should not have the same match count", nbMatch1, nbMatch2); //$NON-NLS-1$
 
         // create a third simple matcher and do the same
-        IRecordMatcher recMatcher3 = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher, new String[] {
-                "DUMMY", "DUMMY", "DUMMY", "EXACT" }, new double[] { 0, 0, 0, 1 }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        IRecordMatcher recMatcher3 = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher,
+                new String[] { "DUMMY", "DUMMY", "DUMMY", "EXACT" }, new double[] { 0, 0, 0, 1 }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         recMatcher3.setRecordMatchThreshold(MATCH_THRESHOLD);
         matcherWeigths = computeWeights(recMatcher3);
 

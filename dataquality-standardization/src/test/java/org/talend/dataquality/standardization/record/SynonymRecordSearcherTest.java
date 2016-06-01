@@ -45,8 +45,8 @@ public class SynonymRecordSearcherTest {
     private static final Logger log = Logger.getLogger(SynonymRecordSearcherTest.class);
 
     private static final String[][][] WORDRESULTS = { //
-    { { "11", "12", "13", "14", "15" }, { "21", "22", "23" }, { "31", "32", "33" }, { "41" } } // always at least one
-                                                                                               // match
+            { { "11", "12", "13", "14", "15" }, { "21", "22", "23" }, { "31", "32", "33" }, { "41" } } // always at least one
+                                                                                                       // match
             , { { "11", "12" }, { "21", "22" }, { "31", "32" } } // several matches
             , { {}, { "21", "22" }, { "31", "32" } } // first search does not match anything
             , { { "11", "12" }, {}, { "31", "32" } } // second search does not match anything

@@ -19,18 +19,17 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 /**
- * DOC scorreia  class global comment. Detailled comment
+ * DOC scorreia class global comment. Detailled comment
  */
 public class QGramTokenizerTest {
 
     private static final String INPUT = "DOC scorreia  class global comment. Detailled comment";
 
-    private static final String expected[] = { "##D", "#DO", "DOC", "OC ", "C s", " sc", "sco", "cor", "orr", "rre", "rei",
-            "eia", "ia ", "a  ", "  c", " cl", "cla", "las", "ass", "ss ", "s g", " gl", "glo", "lob", "oba", "bal", "al ",
-            "l c", " co", "com", "omm", "mme", "men", "ent", "nt.", "t. ", ". D", " De", "Det", "eta", "tai", "ail", "ill",
-            "lle", "led", "ed ", "d c", " co", "com", "omm", "mme", "men", "ent", "nt#", "t##" };
+    private static final String expected[] = { "##D", "#DO", "DOC", "OC ", "C s", " sc", "sco", "cor", "orr", "rre", "rei", "eia",
+            "ia ", "a  ", "  c", " cl", "cla", "las", "ass", "ss ", "s g", " gl", "glo", "lob", "oba", "bal", "al ", "l c", " co",
+            "com", "omm", "mme", "men", "ent", "nt.", "t. ", ". D", " De", "Det", "eta", "tai", "ail", "ill", "lle", "led", "ed ",
+            "d c", " co", "com", "omm", "mme", "men", "ent", "nt#", "t##" };
 
     /**
      * Test method for {@link org.talend.dataquality.record.linkage.utils.QGramTokenizer#tokenizeToArrayList(java.lang.String, int)}.

@@ -53,9 +53,9 @@ public class AttributeValues<T extends Comparable<T>> implements Iterable<T> {
         if (values.isEmpty()) {
             return null;
         }
-        Entry<T> mostCommon =  values.first();
-        for(Entry<T> entry:values){
-            if(entry.getOccurrence()>mostCommon.getOccurrence()){
+        Entry<T> mostCommon = values.first();
+        for (Entry<T> entry : values) {
+            if (entry.getOccurrence() > mostCommon.getOccurrence()) {
                 mostCommon = entry;
             }
         }

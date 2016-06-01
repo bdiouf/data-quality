@@ -63,8 +63,8 @@ public class SparkSamplingUtilTest implements Serializable {
         List<ImmutablePair<Double, TestRowStruct>> topPairs = sampler.getSamplePairList(rdd, SAMPLE_SIZE);
 
         for (int i = 0; i < topPairs.size(); i++) {
-            assertTrue("The ID " + topPairs.get(i).getRight().getId() + " is expected", Arrays.asList(EXPECTED_SAMPLES_LIST)
-                    .contains(topPairs.get(i).getRight().getId()));
+            assertTrue("The ID " + topPairs.get(i).getRight().getId() + " is expected",
+                    Arrays.asList(EXPECTED_SAMPLES_LIST).contains(topPairs.get(i).getRight().getId()));
         }
     }
 

@@ -17,6 +17,9 @@ import java.util.List;
 
 import org.talend.dataquality.datamasking.functions.Function;
 
+/**
+ * API of data masking action using semantic domain information.
+ */
 public class ValueDataMasker implements Serializable {
 
     private static final long serialVersionUID = 7071792900542293289L;
@@ -27,16 +30,35 @@ public class ValueDataMasker implements Serializable {
         return function;
     }
 
+    /**
+     * ValueDataMasker constructor.
+     * 
+     * @param semanticCategory the semantic domain information
+     * @param dataType the data type information
+     */
     public ValueDataMasker(String semanticCategory, String dataType) {
-        function = SemanticMaskerFunctionFactory.createMaskerFunctionForSemanticCategory(semanticCategory, dataType);
+        this(semanticCategory, dataType, null);
     }
 
+    /**
+     * ValueDataMasker constructor.
+     * 
+     * @param semanticCategory the semantic domain information
+     * @param dataType the data type information
+     * @param params extra parameters such as date time pattern list
+     */
     public ValueDataMasker(String semanticCategory, String dataType, List<String> params) {
         function = SemanticMaskerFunctionFactory.createMaskerFunctionForSemanticCategory(semanticCategory, dataType, params);
     }
 
-    public String maskValue(String v) {
-        return function.generateMaskedRow(v);
+    /**
+     * mask the input value.
+     * 
+     * @param input
+     * @return the masked value
+     */
+    public String maskValue(String input) {
+        return function.generateMaskedRow(input);
     }
 
 }

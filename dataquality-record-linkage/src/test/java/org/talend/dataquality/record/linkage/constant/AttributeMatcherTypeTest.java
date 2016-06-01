@@ -32,11 +32,11 @@ public class AttributeMatcherTypeTest {
             AttributeMatcherType attributeMatcherTypeByName = AttributeMatcherType.get(type.name());
             AttributeMatcherType attributeMatcherTypeByComponentValue = AttributeMatcherType.get(type.getComponentValue());
             AttributeMatcherType attributeMatcherTypeByLName = AttributeMatcherType.get(type.name().toLowerCase());
-            AttributeMatcherType attributeMatcherTypeByLComponentValue = AttributeMatcherType.get(type.getComponentValue()
-                    .toLowerCase());
+            AttributeMatcherType attributeMatcherTypeByLComponentValue = AttributeMatcherType
+                    .get(type.getComponentValue().toLowerCase());
             AttributeMatcherType attributeMatcherTypeByUName = AttributeMatcherType.get(type.name().toUpperCase());
-            AttributeMatcherType attributeMatcherTypeByUComponentValue = AttributeMatcherType.get(type.getComponentValue()
-                    .toUpperCase());
+            AttributeMatcherType attributeMatcherTypeByUComponentValue = AttributeMatcherType
+                    .get(type.getComponentValue().toUpperCase());
             // Assert no one is null
             Assert.assertNotNull(attributeMatcherTypeByName);
             Assert.assertNotNull(attributeMatcherTypeByComponentValue);

@@ -25,8 +25,7 @@ public class NGramFingerprintKeyerTest {
     @SuppressWarnings("nls")
     private static final String[][] testStr = { { "Acorn", "accoorrn" }, { "Aret Big Cust", "arbicuetgcigresttbus" },
             { "Big Arêt Cust", "arbicugaigresttcuset" }, { "Cust Aret Big ", "arbicuetigresttatbus" },
-            { "Cust-Aret Big ", "arbicuetigresttatbus" },
-            { "Big Data for big business", "afatbibudaesfogbgdiginneorrbsisstaus" },
+            { "Cust-Aret Big ", "arbicuetigresttatbus" }, { "Big Data for big business", "afatbibudaesfogbgdiginneorrbsisstaus" },
             { "Data for big business", "afatbibudaesfogbiginneorrbsisstaus" }, { "A A A", "aa" }, { "I.BM.", "bmib" },
             { "I.B.M.", "bmib" }, { "IBM", "bmib" }, { "Bird Conservation Region", "atbicodcegergiioirnrnsonrdrervsetiva" },
             { "Bird bird Conservation Region", "atbicodbdcegergiioirnrnsonrdrervsetiva" }, { "15", "15" }, { "PT-r2", "ptr2tr" },

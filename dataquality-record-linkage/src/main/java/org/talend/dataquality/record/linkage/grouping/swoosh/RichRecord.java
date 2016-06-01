@@ -226,7 +226,7 @@ public class RichRecord extends Record {
                     setOtherAttributeForMerge(finalGID);
                 }
             } else {// Unique records
-                    // GID
+                        // GID
                 addRandomGIDAndOthers();
             }
 
@@ -367,8 +367,8 @@ public class RichRecord extends Record {
                 originRow.set((originRow.size() - extSize), new DQAttribute<>(SwooshConstants.GID, originRow.size(), finalGID));
                 extSize--;
                 // group size
-                originRow.set(originRow.size() - extSize, new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(),
-                        getGrpSize()));
+                originRow.set(originRow.size() - extSize,
+                        new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), getGrpSize()));
                 extSize--;
                 // is master
                 originRow.set(originRow.size() - extSize, new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), true));
@@ -377,8 +377,8 @@ public class RichRecord extends Record {
                 originRow.set(originRow.size() - extSize, new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), 1.0));
                 extSize--;
                 // group quality
-                originRow.set(originRow.size() - extSize, new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(),
-                        String.valueOf(1.0)));
+                originRow.set(originRow.size() - extSize,
+                        new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), String.valueOf(1.0)));
                 //
             }
         } else {
@@ -406,8 +406,8 @@ public class RichRecord extends Record {
                 if (groupQuality2 == 0.0) {
                     groupQuality2 = getOriginalValue(originalInputColumnSize + 4);
                 }
-                originRow.set(originRow.size() - extSize, new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(),
-                        String.valueOf(groupQuality2)));
+                originRow.set(originRow.size() - extSize,
+                        new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), String.valueOf(groupQuality2)));
                 // TDQ-11630: when multipass & output details, set the value when the detail is not empty.
                 if (withDetails && StringUtils.isNotBlank(getLabeledAttributeScores())) {
                     extSize--;

@@ -72,7 +72,7 @@ public class MFBTest extends TestCase {
             assertEquals(Math.round(totalCount / constantNumber), mergedRecord.getRelatedIds().size());
         }
     }
-    
+
     private static void testConcatenateParameter(final int constantNumber, int totalCount, AttributeMatcherType matchAlgorithm,
             String separator) {
         Map<String, ValueGenerator> generators = new HashMap<String, ValueGenerator>();
@@ -166,8 +166,7 @@ public class MFBTest extends TestCase {
         recordGenerator.setMatchKeyMap(generators);
         Iterator<Record> iterator = new RecordIterator(totalCount, recordGenerator);
         MatchMergeAlgorithm algorithm = MFB.build(new AttributeMatcherType[] { matchAlgorithm }, new String[] { "" },
-                new float[] { 1 }, 0, new SurvivorShipAlgorithmEnum[] { SurvivorShipAlgorithmEnum.LONGEST },
-                new String[] { "" },
+                new float[] { 1 }, 0, new SurvivorShipAlgorithmEnum[] { SurvivorShipAlgorithmEnum.LONGEST }, new String[] { "" },
                 new double[] { 1 }, // Mark rule with a weight of 1.
                 new IAttributeMatcher.NullOption[] { IAttributeMatcher.NullOption.nullMatchAll },
                 new SubString[] { SubString.NO_SUBSTRING }, "MFB");
@@ -181,10 +180,8 @@ public class MFBTest extends TestCase {
         // Runs a second match with a weight 4
         iterator = new RecordIterator(totalCount, recordGenerator);
         algorithm = MFB.build(new AttributeMatcherType[] { matchAlgorithm }, new String[] { "" }, new float[] { 1 }, 0,
-                new SurvivorShipAlgorithmEnum[] { SurvivorShipAlgorithmEnum.LONGEST },
-                new String[] { "" },
-                new double[] { 4 }, // Mark rule with a weight of 4 -> should not affect overall score since score is
-                                    // normalized.
+                new SurvivorShipAlgorithmEnum[] { SurvivorShipAlgorithmEnum.LONGEST }, new String[] { "" }, new double[] { 4 }, // Mark rule with a weight of 4 -> should not affect overall score since score is
+                // normalized.
                 new IAttributeMatcher.NullOption[] { IAttributeMatcher.NullOption.nullMatchAll },
                 new SubString[] { SubString.NO_SUBSTRING }, "MFB");
         mergedRecords = algorithm.execute(iterator);
@@ -237,7 +234,7 @@ public class MFBTest extends TestCase {
             testConstant(8, COUNT, matchAlgorithm);
         }
     }
-    
+
     public void testConcatenateParameter() throws Exception {
         for (AttributeMatcherType matchAlgorithm : TESTS_MATCH) {
             testConcatenateParameter(1, COUNT, matchAlgorithm, null); // Argument test

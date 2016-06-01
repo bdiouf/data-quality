@@ -114,7 +114,6 @@ public class SynonymTest extends TestCase {
 
     }
 
-
     static Analyzer createAnalyzer() {
         return new StandardAnalyzer();
     }
