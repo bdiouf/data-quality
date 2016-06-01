@@ -41,8 +41,8 @@ public class DateFunctionAdapterTest {
         assertEquals("2016/01/03", function.generateMaskedRow("2015/11/15")); // should mask
         assertEquals("", function.generateMaskedRow("2015*11*15")); // return empty when no date pattern is applicable
 
-        assertEquals("2015/10/23 23:25:11", function.generateMaskedRow("2015/11/15 10:00:00")); // return empty when no date
-                                                                                                // pattern is applicable
+        assertEquals("2015/05/23 22:25:11", function.generateMaskedRow("2015/6/15 10:00:00")); // return empty when no date
+                                                                                               // pattern is applicable
     }
 
 }
