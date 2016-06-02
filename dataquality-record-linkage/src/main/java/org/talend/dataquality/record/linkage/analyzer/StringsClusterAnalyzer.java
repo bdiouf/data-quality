@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.datascience.common.recordlinkage;
+package org.talend.dataquality.record.linkage.analyzer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.common.inference.Analyzer;
 import org.talend.dataquality.matchmerge.Attribute;
 import org.talend.dataquality.matchmerge.AttributeValues;
 import org.talend.dataquality.matchmerge.MatchMergeAlgorithm;
@@ -34,7 +35,6 @@ import org.talend.dataquality.record.linkage.genkey.BlockingKeyHandler;
 import org.talend.dataquality.record.linkage.utils.BlockingKeyAlgorithmEnum;
 import org.talend.dataquality.record.linkage.utils.MatchAnalysisConstant;
 import org.talend.dataquality.record.linkage.utils.SurvivorShipAlgorithmEnum;
-import org.talend.dataquality.common.inference.Analyzer;
 
 /**
  * String clustering analyzer.

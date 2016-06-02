@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.datascience.common.recordlinkage;
+package org.talend.dataquality.record.linkage.analyzer;
 
 import java.util.HashSet;
 import java.util.Iterator;
