@@ -67,7 +67,10 @@ public class GenerateUniqueSsnFr extends AbstractGenerateUniqueSsn {
         }
         int controlKey = 97 - (int) (Long.valueOf(keyResult.toString()) % MOD97);
 
-        return String.valueOf(controlKey);
+        StringBuilder res = new StringBuilder();
+        if (controlKey < 10)
+            res.append("0");
+        return res.append(controlKey).toString();
     }
 
     /**

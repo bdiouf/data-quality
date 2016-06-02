@@ -75,6 +75,13 @@ public class GenerateUniqueSsnFrTest {
     }
 
     @Test
+    public void testGood4() {
+        // with a control key less than 10
+        output = gnf.generateMaskedRow("1960159794247 60");
+        assertEquals("2761158866619 03", output);
+    }
+
+    @Test
     public void testWrongSsnFieldNumber() {
         gnf.setKeepInvalidPattern(false);
         // without a number
