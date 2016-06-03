@@ -73,8 +73,10 @@ public class Analyzers implements Analyzer<Analyzers.Result> {
     public List<Result> getResult() {
         for (Analyzer<?> analyzer : analyzers) {
             final List<?> analysis = analyzer.getResult();
-            for (int j = 0; j < analysis.size(); j++) {
-                results.get(j).add(analysis.get(j));
+            if (analysis != null) {
+                for (int j = 0; j < analysis.size(); j++) {
+                    results.get(j).add(analysis.get(j));
+                }
             }
         }
         return results;
