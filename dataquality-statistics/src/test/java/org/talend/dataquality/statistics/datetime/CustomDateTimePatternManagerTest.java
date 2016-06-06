@@ -46,6 +46,14 @@ public class CustomDateTimePatternManagerTest {
         assertTrue(SystemDateTimePatternManager.isDate("01/26/15 18:03")); // TDQ-11833
     }
 
+    @Test
+    public void testNewPatterns_TDP1318() {
+        assertTrue(SystemDateTimePatternManager.isDate("2-19-1981 4:12")); // TDP-1318
+        assertTrue(SystemDateTimePatternManager.isDate("1-25-71")); // TDP-1318
+        assertTrue(SystemDateTimePatternManager.isDate("02-18-63")); // TDP-1318
+        assertTrue(SystemDateTimePatternManager.isDate("6-17-1977 15:15:46")); // TDP-1318
+    }
+
     private List<String> readLineContentsFromFile(String path) throws IOException {
         InputStream dateInputStream = SystemDateTimePatternManager.class.getResourceAsStream(path);
         List<String> contents = new ArrayList<String>();

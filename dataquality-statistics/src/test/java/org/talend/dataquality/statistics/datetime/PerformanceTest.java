@@ -30,7 +30,7 @@ public class PerformanceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PerformanceTest.class);
 
-    private static final int REPLICATE = 333;
+    private static final int REPLICATE = 3333;
 
     @Test
     public void testIsDate() throws IOException {
@@ -43,13 +43,18 @@ public class PerformanceTest {
         final ThreadMXBean mxBean = ManagementFactory.getThreadMXBean();
         final long cpuBefore = mxBean.getCurrentThreadCpuTime();
 
-        for (int i = 1; i < lines.size(); i++) {
-            for (int n = 0; n < REPLICATE; n++) {
+        int count = 0;
+        loop: for (int n = 0; n < REPLICATE; n++) {
+            for (int i = 1; i < lines.size(); i++) {
                 final String line = lines.get(i);
                 if (!"".equals(line.trim())) {
                     final String[] sampleLine = line.trim().split("\t");
                     final String sample = sampleLine[0];
                     CustomDateTimePatternManager.isDate(sample, Collections.emptyList());
+                    count++;
+                    if (count > 100000) {
+                        break loop;
+                    }
                 }
             }
         }
@@ -57,7 +62,7 @@ public class PerformanceTest {
         final long cpuAfter = mxBean.getCurrentThreadCpuTime();
 
         final long difference = cpuAfter - cpuBefore;
-        assertTrue("The method isDate() is slower than expected. Actual CPU time spent: " + difference, difference < 1.3e9);
+        assertTrue("The method isDate() is slower than expected. Actual CPU time spent: " + difference, difference < 20e8);
     }
 
     @Test
@@ -71,13 +76,18 @@ public class PerformanceTest {
         final ThreadMXBean mxBean = ManagementFactory.getThreadMXBean();
         final long cpuBefore = mxBean.getCurrentThreadCpuTime();
 
-        for (int i = 1; i < lines.size(); i++) {
-            for (int n = 0; n < REPLICATE; n++) {
+        int count = 0;
+        loop: for (int n = 0; n < REPLICATE; n++) {
+            for (int i = 1; i < lines.size(); i++) {
                 final String line = lines.get(i);
                 if (!"".equals(line.trim())) {
                     final String[] sampleLine = line.trim().split("\t");
                     final String sample = sampleLine[0];
                     SystemDateTimePatternManager.datePatternReplace(sample);
+                    count++;
+                    if (count > 100000) {
+                        break loop;
+                    }
                 }
             }
         }
@@ -85,7 +95,7 @@ public class PerformanceTest {
         final long cpuAfter = mxBean.getCurrentThreadCpuTime();
 
         final long difference = cpuAfter - cpuBefore;
-        assertTrue("The method getPatterns() is slower than expected. Actual CPU time spent: " + difference, difference < 1.4e9);
+        assertTrue("The method getPatterns() is slower than expected. Actual CPU time spent: " + difference, difference < 25e8);
     }
 
 }

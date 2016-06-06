@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -32,9 +33,9 @@ import org.talend.dataquality.statistics.datetime.SystemDateTimePatternManager;
 
 public class PatternListGenerator {
 
-    private static List<LocaledPattern> knownLocaledPatternList = new ArrayList<LocaledPattern>();
+    private static Set<LocaledPattern> knownLocaledPatternList = new LinkedHashSet<LocaledPattern>();
 
-    private static List<String> knownPatternList = new ArrayList<String>();
+    private static Set<String> knownPatternList = new LinkedHashSet<String>();
 
     private final static ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.of(2222, 3, 11, 5, 6, 7, 888, ZoneId.of("Europe/Paris"));
 
@@ -77,14 +78,18 @@ public class PatternListGenerator {
         private static final long serialVersionUID = 1L;
         // NOTE: do not use patterns containing only one "y" for year part.
         {
-            add(new LocaledPattern("d/M/yyyy", Locale.US, "OTHER", false));
             add(new LocaledPattern("dd/MM/yyyy", Locale.US, "OTHER", false));
+            add(new LocaledPattern("d/M/yyyy", Locale.US, "OTHER", false));
             add(new LocaledPattern("MM/dd/yyyy", Locale.US, "OTHER", false));
             add(new LocaledPattern("M/d/yyyy", Locale.US, "OTHER", false));
-            add(new LocaledPattern("MM-dd-yyyy", Locale.US, "OTHER", false));
-            add(new LocaledPattern("yyyy-MM-dd", Locale.US, "OTHER", false));
+            // add(new LocaledPattern("MM-dd-yy", Locale.US, "OTHER", false));
+            add(new LocaledPattern("M-d-yy", Locale.US, "OTHER", false));
+            // add(new LocaledPattern("MM-dd-yyyy", Locale.US, "OTHER", false));
+            add(new LocaledPattern("M-d-yyyy", Locale.US, "OTHER", false));
+            // add(new LocaledPattern("yyyy-MM-dd", Locale.US, "OTHER", false));
+            add(new LocaledPattern("yyyy-M-d", Locale.US, "OTHER", false));
+            // add(new LocaledPattern("MM/dd/yy", Locale.US, "OTHER", false));
             add(new LocaledPattern("M/d/yy", Locale.US, "OTHER", false));
-            add(new LocaledPattern("MM/dd/yy", Locale.US, "OTHER", false));
         }
     };
 
