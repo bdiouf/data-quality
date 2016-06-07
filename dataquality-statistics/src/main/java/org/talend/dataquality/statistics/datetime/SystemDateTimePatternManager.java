@@ -174,12 +174,8 @@ public class SystemDateTimePatternManager {
         HashSet<String> resultSet = new HashSet<String>();
         for (Map<Pattern, String> patternMap : patternGroupList) {
             for (Pattern parser : patternMap.keySet()) {
-                try {
-                    if (parser.matcher(value).find()) {
-                        resultSet.add(patternMap.get(parser));
-                    }
-                } catch (Exception e) {
-                    // Ignore
+                if (parser.matcher(value).find()) {
+                    resultSet.add(patternMap.get(parser));
                 }
             }
             if (resultSet.size() > 0) {

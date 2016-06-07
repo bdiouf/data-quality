@@ -18,6 +18,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.talend.dataquality.common.regex.ChainResponsibilityHandler;
 import org.talend.dataquality.common.regex.HandlerFactory;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
 
 /**
  * * Recognize East Asia characters given predefined list of characters and its pattern mappings.
@@ -30,7 +31,7 @@ public class EastAsianCharPatternRecognizer extends AbstractPatternRecognizer {
     private final ChainResponsibilityHandler createEastAsiaPatternHandler = HandlerFactory.createEastAsiaPatternHandler();
 
     @Override
-    public RecognitionResult recognize(String stringToRecognize) {
+    public RecognitionResult recognize(String stringToRecognize, DataTypeEnum type) {
         RecognitionResult result = new RecognitionResult();
         if (StringUtils.isEmpty(stringToRecognize)) {
             result.setResult(Collections.singleton(stringToRecognize), false);

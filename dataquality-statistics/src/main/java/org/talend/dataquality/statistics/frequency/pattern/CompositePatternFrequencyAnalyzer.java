@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.talend.dataquality.common.inference.ResizableList;
 import org.talend.dataquality.statistics.frequency.AbstractFrequencyAnalyzer;
 import org.talend.dataquality.statistics.frequency.AbstractFrequencyStatistics;
 import org.talend.dataquality.statistics.frequency.recognition.AbstractPatternRecognizer;
@@ -24,7 +25,7 @@ import org.talend.dataquality.statistics.frequency.recognition.DateTimePatternRe
 import org.talend.dataquality.statistics.frequency.recognition.EmptyPatternRecognizer;
 import org.talend.dataquality.statistics.frequency.recognition.LatinExtendedCharPatternRecognizer;
 import org.talend.dataquality.statistics.frequency.recognition.RecognitionResult;
-import org.talend.dataquality.common.inference.ResizableList;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
 
 /**
  * Compute the pattern frequency tables.<br>
@@ -40,16 +41,52 @@ public class CompositePatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer
 
     private List<AbstractPatternRecognizer> patternFreqRecognizers = new ArrayList<AbstractPatternRecognizer>();
 
+    private DataTypeEnum[] types; // types of columns
+
     public CompositePatternFrequencyAnalyzer() {
-        // Initialize the built-in string pattern recognitions.
+        this(new DataTypeEnum[] {});
+    }
+
+    public CompositePatternFrequencyAnalyzer(DataTypeEnum[] types) {
         patternFreqRecognizers.add(new EmptyPatternRecognizer());
         patternFreqRecognizers.add(new DateTimePatternRecognizer());
         patternFreqRecognizers.add(new LatinExtendedCharPatternRecognizer());
-
+        this.types = types;
     }
 
     public CompositePatternFrequencyAnalyzer(List<AbstractPatternRecognizer> analyzerList) {
+        this(analyzerList, new DataTypeEnum[] {});
+    }
+
+    public CompositePatternFrequencyAnalyzer(List<AbstractPatternRecognizer> analyzerList, DataTypeEnum[] types) {
         patternFreqRecognizers.addAll(analyzerList);
+        this.types = types;
+    }
+
+    @Override
+    public boolean analyze(String... record) {
+        if (record == null) {
+            return true;
+        }
+        if (freqTableStatistics == null || freqTableStatistics.size() == 0) {
+            initFreqTableList(record.length);
+        }
+        for (int i = 0; i < record.length; i++) {
+            AbstractFrequencyStatistics freqStats = freqTableStatistics.get(i);
+
+            if (types.length > 0) {
+                analyzeField(record[i], freqStats, types[i]);
+            } else {
+                analyzeField(record[i], freqStats, null);
+            }
+        }
+        return true;
+    }
+
+    protected void analyzeField(String field, AbstractFrequencyStatistics freqStats, DataTypeEnum type) {
+        for (String pattern : getValuePatternSet(field, type)) {
+            freqStats.add(pattern);
+        }
     }
 
     @Override
@@ -67,10 +104,22 @@ public class CompositePatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer
      * @return the recognition result bean.
      */
     Set<String> getValuePatternSet(String originalValue) {
+        return getValuePatternSet(originalValue, null);
+    }
+
+    /**
+     * Recognize the string and return the pattern of the string with a boolean indicating the pattern replacement is
+     * complete if true ,false otherwise.
+     * 
+     * @param originalValue the string to be replaced by its pattern string
+     * @param type the data type
+     * @return the recognition result bean.
+     */
+    Set<String> getValuePatternSet(String originalValue, DataTypeEnum type) {
         Set<String> resultSet = new HashSet<String>();
         String patternString = originalValue;
         for (AbstractPatternRecognizer recognizer : patternFreqRecognizers) {
-            RecognitionResult result = recognizer.recognize(patternString);
+            RecognitionResult result = recognizer.recognize(patternString, type);
             resultSet = result.getPatternStringSet();
             if (result.isComplete()) {
                 break;

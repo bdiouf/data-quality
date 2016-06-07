@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
 
 /**
  * * Recognize ascii characters given predefined list of Ascii characters and its pattern mappings.
@@ -33,7 +34,7 @@ public class LatinExtendedCharPatternRecognizer extends AbstractPatternRecognize
     private Pattern charsPattern = Pattern.compile("[a-z|A-Z|à-ÿ|À-ß]");
 
     @Override
-    public RecognitionResult recognize(String stringToRecognize) {
+    public RecognitionResult recognize(String stringToRecognize, DataTypeEnum type) {
         RecognitionResult result = new RecognitionResult();
         if (StringUtils.isEmpty(stringToRecognize)) {
             result.setResult(Collections.singleton(stringToRecognize), false);

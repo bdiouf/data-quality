@@ -16,11 +16,12 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
 
 public class EmptyPatternRecognizer extends AbstractPatternRecognizer {
 
     @Override
-    public RecognitionResult recognize(String stringToRecognize) {
+    public RecognitionResult recognize(String stringToRecognize, DataTypeEnum type) {
         RecognitionResult result = new RecognitionResult();
         if (stringToRecognize == null) {
             result.setResult(Collections.emptySet(), true);

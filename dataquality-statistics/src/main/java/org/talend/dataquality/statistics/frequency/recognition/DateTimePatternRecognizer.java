@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.talend.dataquality.statistics.datetime.CustomDateTimePatternManager;
+import org.talend.dataquality.statistics.type.DataTypeEnum;
 
 /**
  * Recognize date types given the predefined date regex pattern.
@@ -43,14 +44,25 @@ public class DateTimePatternRecognizer extends AbstractPatternRecognizer {
 
     @Override
     public RecognitionResult recognize(String stringToRecognize) {
+        return recognize(stringToRecognize, DataTypeEnum.DATE);
+    }
+
+    @Override
+    public RecognitionResult recognize(String stringToRecognize, DataTypeEnum type) {
         RecognitionResult result = new RecognitionResult();
-        Set<String> datePatternAfterReplace = CustomDateTimePatternManager.replaceByDateTimePattern(stringToRecognize,
-                customDateTimePatterns);
-        if (datePatternAfterReplace.isEmpty()) {
-            // Did not recognized.
+        if (type != null && !DataTypeEnum.DATE.equals(type)) {
             result.setResult(Collections.singleton(stringToRecognize), false);
-        } else {
-            result.setResult(datePatternAfterReplace, true);
+            return result;
+        }
+        if (stringToRecognize != null && stringToRecognize.length() > 6) {
+            final Set<String> datePatternAfterReplace = CustomDateTimePatternManager.replaceByDateTimePattern(stringToRecognize,
+                    customDateTimePatterns);
+            if (datePatternAfterReplace.isEmpty()) {
+                // Did not recognized.
+                result.setResult(Collections.singleton(stringToRecognize), false);
+            } else {
+                result.setResult(datePatternAfterReplace, true);
+            }
         }
         return result;
     }
