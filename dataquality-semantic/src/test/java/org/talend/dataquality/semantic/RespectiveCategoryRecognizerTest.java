@@ -591,6 +591,8 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("CORREIA", true));
                     add(ImmutablePair.of("DESCHAMPS", false));
                     add(ImmutablePair.of("PIETROWSKI", false));
+                    add(ImmutablePair.of("NULL", false));
+                    add(ImmutablePair.of("TRUE", false));
                 }
             });
         }

@@ -46,7 +46,7 @@ public class SemanticDictionaryGenerator {
     private SynonymIndexBuilder builder = new SynonymIndexBuilder();
 
     private static Set<String> STOP_WORDS = new HashSet<String>(
-            Arrays.asList("yes", "no", "y", "o", "n", "oui", "non", "true", "false", "vrai", "faux"));
+            Arrays.asList("yes", "no", "y", "o", "n", "oui", "non", "true", "false", "vrai", "faux", "null"));
 
     private void generateDictionaryForSpec(DictionaryGenerationSpec spec, IndexWriter writer) throws IOException {
 

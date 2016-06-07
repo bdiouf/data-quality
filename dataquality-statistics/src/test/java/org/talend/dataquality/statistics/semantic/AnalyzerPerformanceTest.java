@@ -2,10 +2,13 @@ package org.talend.dataquality.statistics.semantic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ import org.talend.dataquality.statistics.frequency.DataTypeFrequencyAnalyzer;
 import org.talend.dataquality.statistics.frequency.pattern.CompositePatternFrequencyAnalyzer;
 import org.talend.dataquality.statistics.numeric.quantile.QuantileAnalyzer;
 import org.talend.dataquality.statistics.numeric.summary.SummaryAnalyzer;
+import org.talend.dataquality.statistics.quality.DataTypeQualityAnalyzer;
 import org.talend.dataquality.statistics.text.TextLengthAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeAnalyzer;
 import org.talend.dataquality.statistics.type.DataTypeEnum;
@@ -36,13 +40,14 @@ public class AnalyzerPerformanceTest {
 
     private static CategoryRecognizerBuilder builder;
 
-    private static List<String[]> records;
+    private static final List<String[]> records_card_exceptions = getRecords("Card_Exceptions_Preparation.csv");
 
-    private final DataTypeEnum[] types = new DataTypeEnum[] { DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.STRING,
-            DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.INTEGER,
-            DataTypeEnum.INTEGER, DataTypeEnum.TIME, DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.STRING,
-            DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.DATE,
-            DataTypeEnum.DATE, DataTypeEnum.STRING, };
+    private final DataTypeEnum[] types_card_exceptions = new DataTypeEnum[] { //
+            DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.STRING, //
+            DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.INTEGER, DataTypeEnum.INTEGER, DataTypeEnum.TIME, //
+            DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.STRING, DataTypeEnum.STRING, //
+            DataTypeEnum.INTEGER, DataTypeEnum.STRING, DataTypeEnum.DATE, DataTypeEnum.DATE, DataTypeEnum.STRING,//
+    };
 
     @BeforeClass
     public static void setupBuilder() throws URISyntaxException {
@@ -52,13 +57,13 @@ public class AnalyzerPerformanceTest {
                 .ddPath(ddPath) //
                 .kwPath(kwPath) //
                 .lucene();
-        records = getRecords("Card_Exceptions_Preparation.csv");
     }
 
-    private Analyzer<Result> setupBaselineAnalyzers() {
+    private Analyzer<Result> setupBaselineAnalyzers(DataTypeEnum[] types) {
         // Analysis.QUALITY, Analysis.CARDINALITY, Analysis.TYPE, Analysis.FREQUENCY, Analysis.PATTERNS,
         // Analysis.SEMANTIC
         return Analyzers.with(//
+                new DataTypeQualityAnalyzer(types), //
                 new CardinalityAnalyzer(), //
                 new DataTypeAnalyzer(), //
                 new DataTypeFrequencyAnalyzer(), //
@@ -71,27 +76,28 @@ public class AnalyzerPerformanceTest {
         // Analysis.LENGTH, Analysis.QUANTILES, Analysis.SUMMARY, Analysis.HISTOGRAM
         return Analyzers.with(//
                 new TextLengthAnalyzer(), //
-                new QuantileAnalyzer(types), //
-                new SummaryAnalyzer(types) //
+                new QuantileAnalyzer(types_card_exceptions), //
+                new SummaryAnalyzer(types_card_exceptions) //
         );
     }
 
     @Test
     public void testBaselineAnalysis() {
+        Analyzer<Result> analyzers = setupBaselineAnalyzers(types_card_exceptions);
 
-        Analyzer<Result> analyzers = setupBaselineAnalyzers();
-
-        String[] firstRecord = records.get(0);
+        String[] firstRecord = records_card_exceptions.get(0);
         analyzers.analyze(firstRecord);
-        long begin = System.currentTimeMillis();
-        for (String[] record : records) {
+        final ThreadMXBean mxBean = ManagementFactory.getThreadMXBean();
+        final long cpuBefore = mxBean.getCurrentThreadCpuTime();
+        for (String[] record : records_card_exceptions) {
             analyzers.analyze(record);
         }
         final List<Analyzers.Result> result = analyzers.getResult();
-        long end = System.currentTimeMillis();
-        System.out.println("baseline analysis took " + (end - begin) + " ms.");
+        final long cpuAfter = mxBean.getCurrentThreadCpuTime();
+        assertTrue("baseline analysis took " + (cpuAfter - cpuBefore) + " CPU time, which is slower than expected.",
+                (cpuAfter - cpuBefore) < 5e9);
 
-        assertEquals(20, result.size());
+        assertEquals(types_card_exceptions.length, result.size());
 
         // Composite result assertions (there should be a DataType and a SemanticType)
         for (Analyzers.Result columnResult : result) {
@@ -99,26 +105,11 @@ public class AnalyzerPerformanceTest {
             assertNotNull(columnResult.get(SemanticType.class));
         }
         // Data type assertions
-        assertEquals(DataTypeEnum.INTEGER, result.get(0).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(1).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(2).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(3).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(4).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.INTEGER, result.get(5).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(6).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.INTEGER, result.get(7).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.INTEGER, result.get(8).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.TIME, result.get(9).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.INTEGER, result.get(10).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(11).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(12).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(13).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(14).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.INTEGER, result.get(15).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(16).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.DATE, result.get(17).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.DATE, result.get(18).get(DataTypeOccurences.class).getSuggestedType());
-        assertEquals(DataTypeEnum.STRING, result.get(19).get(DataTypeOccurences.class).getSuggestedType());
+        for (int i = 0; i < types_card_exceptions.length; i++) {
+            assertEquals("Unexpected DataType on column " + i, types_card_exceptions[i],
+                    result.get(i).get(DataTypeOccurences.class).getSuggestedType());
+        }
+
         // Semantic types assertions
         String[] expectedCategories = new String[] { "", //
                 SemanticCategoryEnum.US_STATE_CODE.getId(), //
@@ -136,13 +127,14 @@ public class AnalyzerPerformanceTest {
                 "", //
                 "", //
                 "", //
-                SemanticCategoryEnum.LAST_NAME.getId(), //
+                "", //
                 "", //
                 "", //
                 "" //
         };
         for (int i = 0; i < expectedCategories.length; i++) {
-            assertEquals(expectedCategories[i], result.get(i).get(SemanticType.class).getSuggestedCategory());
+            assertEquals("Unexpected SemanticType on column " + i, expectedCategories[i],
+                    result.get(i).get(SemanticType.class).getSuggestedCategory());
         }
     }
 
@@ -151,13 +143,15 @@ public class AnalyzerPerformanceTest {
 
         Analyzer<Result> analyzers = setupAdvancedAnalyzers();
 
-        long begin = System.currentTimeMillis();
-        for (String[] record : records) {
+        final ThreadMXBean mxBean = ManagementFactory.getThreadMXBean();
+        final long cpuBefore = mxBean.getCurrentThreadCpuTime();
+        for (String[] record : records_card_exceptions) {
             analyzers.analyze(record);
         }
         final List<Analyzers.Result> result = analyzers.getResult();
-        long end = System.currentTimeMillis();
-        System.out.println("advanced analysis took " + (end - begin) + " ms.");
+        final long cpuAfter = mxBean.getCurrentThreadCpuTime();
+        assertTrue("advanced analysis took " + (cpuAfter - cpuBefore) + " CPU time, which is slower than expected.",
+                (cpuAfter - cpuBefore) < 7e8);
     }
 
     private static List<String[]> getRecords(String path) {
