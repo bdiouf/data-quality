@@ -12,9 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * created by jgonzalez on 24 juin 2015. See GgenerateFromFileHash.
  *
@@ -23,27 +20,21 @@ public class GenerateFromFileHashInteger extends GenerateFromFileHash<Integer> {
 
     private static final long serialVersionUID = 4299740430046381222L;
 
-    private List<Integer> IntegerTokens = new ArrayList<>();
-
     @Override
-    protected Integer doGenerateMaskedField(Integer i) {
-        for (int j = 0; j < substituteList.size(); ++j) {
+    protected void init() {
+        super.init();
+        for (int i = 0; i < StringTokens.size(); ++i) {
             int tmp = 0;
             try {
-                tmp = Integer.parseInt(substituteList.get(j));
+                tmp = Integer.parseInt(StringTokens.get(i));
+                genericTokens.add(tmp);
             } catch (NumberFormatException e) {
-                // Do Nothing
             }
-            IntegerTokens.add(tmp);
         }
-        if (IntegerTokens.size() > 0) {
-            if (i == null) {
-                return IntegerTokens.get(rnd.nextInt(IntegerTokens.size()));
-            } else {
-                return IntegerTokens.get(Math.abs(i.hashCode() % IntegerTokens.size()));
-            }
-        } else {
-            return 0;
-        }
+    }
+
+    @Override
+    protected Integer getDefaultOutput() {
+        return 0;
     }
 }

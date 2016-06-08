@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.Random;
 
 /**
  * created by jgonzalez on 24 juin 2015. See GenerateFromList.
@@ -23,17 +22,14 @@ public class GenerateFromListString extends GenerateFromList<String> {
     private static final long serialVersionUID = 5737608518316422798L;
 
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.init();
+    protected void init() {
+        for (String tmp : parameters) {
+            genericTokens.add(tmp.trim());
+        }
     }
 
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (substituteList.size() > 0) {
-            return substituteList.get(rnd.nextInt(substituteList.size()));
-        } else {
-            return EMPTY_STRING;
-        }
+    protected String getDefaultOutput() {
+        return EMPTY_STRING;
     }
 }

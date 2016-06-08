@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * created by jgonzalez on 19 juin 2015. See GenerateFromFile.
@@ -23,23 +21,21 @@ public class GenerateFromFileLong extends GenerateFromFile<Long> {
 
     private static final long serialVersionUID = -2510960686417569211L;
 
-    private List<Long> LongTokens = new ArrayList<>();
-
     @Override
-    protected Long doGenerateMaskedField(Long l) {
+    protected void init() {
+        super.init();
         for (int i = 0; i < substituteList.size(); ++i) {
             long tmp = 0L;
             try {
                 tmp = Long.parseLong(substituteList.get(i));
-                LongTokens.add(tmp);
+                genericTokens.add(tmp);
             } catch (NumberFormatException e) {
-                LongTokens.add(0L);
             }
         }
-        if (LongTokens.size() > 0) {
-            return LongTokens.get(rnd.nextInt(LongTokens.size()));
-        } else {
-            return 0L;
-        }
+    }
+
+    @Override
+    protected Long getDefaultOutput() {
+        return 0L;
     }
 }

@@ -21,15 +21,13 @@ public class GenerateFromFileHashString extends GenerateFromFileHash<String> {
     private static final long serialVersionUID = -7769720419054349753L;
 
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (substituteList.size() > 0) {
-            if (str == null || EMPTY_STRING.equals(str)) {
-                return substituteList.get(rnd.nextInt(substituteList.size()));
-            } else {
-                return substituteList.get(Math.abs(str.hashCode()) % substituteList.size());
-            }
-        } else {
-            return EMPTY_STRING;
-        }
+    protected void init() {
+        super.init();
+        genericTokens = StringTokens;
+    }
+
+    @Override
+    protected String getDefaultOutput() {
+        return EMPTY_STRING;
     }
 }

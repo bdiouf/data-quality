@@ -15,18 +15,19 @@ package org.talend.dataquality.datamasking.functions;
 /**
  * created by jgonzalez on 19 juin 2015. See GenerateFromFile.
  *
- */
-
+*/
 public class GenerateFromFileString extends GenerateFromFile<String> {
 
     private static final long serialVersionUID = 6360879458690229195L;
 
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (substituteList.size() > 0) {
-            return substituteList.get(rnd.nextInt(substituteList.size()));
-        } else {
-            return EMPTY_STRING;
-        }
+    protected void init() {
+        super.init();
+        genericTokens = substituteList;
+    }
+
+    @Override
+    protected String getDefaultOutput() {
+        return EMPTY_STRING;
     }
 }

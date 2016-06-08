@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.Random;
-
 /**
  * created by jgonzalez on 24 juin 2015. See GenerateFromListHash.
  *
@@ -23,21 +21,14 @@ public class GenerateFromListHashString extends GenerateFromListHash<String> {
     private static final long serialVersionUID = -6003768593059919308L;
 
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.init();
+    protected void init() {
+        for (String tmp : parameters) {
+            genericTokens.add(tmp.trim());
+        }
     }
 
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (StringTokens.size() > 0) {
-            if (str == null || EMPTY_STRING.equals(str)) {
-                return StringTokens.get(rnd.nextInt(StringTokens.size()));
-            } else {
-                return StringTokens.get(Math.abs(str.hashCode()) % StringTokens.size());
-            }
-        } else {
-            return EMPTY_STRING;
-        }
+    protected String getDefaultOutput() {
+        return EMPTY_STRING;
     }
 }

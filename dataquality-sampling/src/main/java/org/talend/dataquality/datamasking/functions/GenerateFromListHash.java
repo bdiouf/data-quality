@@ -14,6 +14,8 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 
 /**
  * created by jgonzalez on 24 juin 2015. This function works like GenerateFromList, the only difference is that it will
@@ -21,16 +23,32 @@ import java.util.List;
  * modulo according to the number of elements in the list.
  *
  */
-public abstract class GenerateFromListHash<T2> extends Function<T2> {
+public abstract class GenerateFromListHash<T> extends Function<T> {
 
     private static final long serialVersionUID = 8813074434737742166L;
 
-    protected List<String> StringTokens = new ArrayList<>();
+    protected List<T> genericTokens = new ArrayList<T>();
 
-    protected void init() {
-        StringTokens.clear();
-        for (String tmp : parameters) {
-            StringTokens.add(tmp.trim());
+    protected abstract void init();
+
+    protected abstract T getDefaultOutput();
+
+    @Override
+    protected T doGenerateMaskedField(T i) {
+        if (genericTokens.size() > 0) {
+            if (i == null) {
+                return genericTokens.get(rnd.nextInt(genericTokens.size()));
+            } else {
+                return genericTokens.get(Math.abs(i.hashCode() % genericTokens.size()));
+            }
+        } else {
+            return getDefaultOutput();
         }
+    }
+
+    @Override
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        this.init();
     }
 }

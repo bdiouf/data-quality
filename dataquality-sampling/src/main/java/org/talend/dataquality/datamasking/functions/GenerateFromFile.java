@@ -22,17 +22,13 @@ import java.util.Random;
  * is now a String holding the path to a file in the user’s computer.
  *
  */
-public abstract class GenerateFromFile<T2> extends Function<T2> {
+public abstract class GenerateFromFile<T> extends Function<T> {
 
     private static final long serialVersionUID = 1556057898878709265L;
 
     protected List<String> substituteList = new ArrayList<>();
 
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        init();
-    }
+    protected List<T> genericTokens = new ArrayList<T>();
 
     protected void init() {
         try {
@@ -43,5 +39,19 @@ public abstract class GenerateFromFile<T2> extends Function<T2> {
     }
 
     @Override
-    protected abstract T2 doGenerateMaskedField(T2 t);
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        init();
+    }
+
+    @Override
+    protected T doGenerateMaskedField(T t) {
+        if (genericTokens.size() > 0) {
+            return genericTokens.get(rnd.nextInt(genericTokens.size()));
+        } else {
+            return getDefaultOutput();
+        }
+    }
+
+    protected abstract T getDefaultOutput();
 }

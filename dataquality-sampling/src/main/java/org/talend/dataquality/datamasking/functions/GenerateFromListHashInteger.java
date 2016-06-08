@@ -12,9 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * created by jgonzalez on 24 juin 2015. See GenerateFromListHash.
@@ -24,33 +21,21 @@ public class GenerateFromListHashInteger extends GenerateFromListHash<Integer> {
 
     private static final long serialVersionUID = 196366420689702606L;
 
-    private List<Integer> IntegerTokens = new ArrayList<>();
-
     @Override
-    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        super.init();
-    }
-
-    @Override
-    protected Integer doGenerateMaskedField(Integer i) {
-        for (int j = 0; j < StringTokens.size(); ++j) {
-            int tmp = 0;
+    protected void init() {
+        for (String tmp : parameters) {
+            int intTmp = 0;
             try {
-                tmp = Integer.parseInt(StringTokens.get(j));
+                intTmp = Integer.parseInt(tmp.trim());
+                genericTokens.add(intTmp);
             } catch (NumberFormatException e) {
                 // Do Nothing
             }
-            IntegerTokens.add(tmp);
         }
-        if (IntegerTokens.size() > 0) {
-            if (i == null) {
-                return IntegerTokens.get(rnd.nextInt(IntegerTokens.size()));
-            } else {
-                return IntegerTokens.get(Math.abs(i.hashCode() % IntegerTokens.size()));
-            }
-        } else {
-            return 0;
-        }
+    }
+
+    @Override
+    protected Integer getDefaultOutput() {
+        return 0;
     }
 }

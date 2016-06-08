@@ -206,4 +206,9 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
         return address.substring(0, count + 1) + replacement;
     }
 
+    @Override
+    protected String getDefaultOutput() {
+        return EMPTY_STRING;
+    }
+
 }
