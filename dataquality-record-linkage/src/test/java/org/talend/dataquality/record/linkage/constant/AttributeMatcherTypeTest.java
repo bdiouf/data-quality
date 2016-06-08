@@ -12,7 +12,9 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.constant;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -38,18 +40,18 @@ public class AttributeMatcherTypeTest {
             AttributeMatcherType attributeMatcherTypeByUComponentValue = AttributeMatcherType
                     .get(type.getComponentValue().toUpperCase());
             // Assert no one is null
-            Assert.assertNotNull(attributeMatcherTypeByName);
-            Assert.assertNotNull(attributeMatcherTypeByComponentValue);
-            Assert.assertNotNull(attributeMatcherTypeByLName);
-            Assert.assertNotNull(attributeMatcherTypeByLComponentValue);
-            Assert.assertNotNull(attributeMatcherTypeByUName);
-            Assert.assertNotNull(attributeMatcherTypeByUComponentValue);
+            assertNotNull(attributeMatcherTypeByName);
+            assertNotNull(attributeMatcherTypeByComponentValue);
+            assertNotNull(attributeMatcherTypeByLName);
+            assertNotNull(attributeMatcherTypeByLComponentValue);
+            assertNotNull(attributeMatcherTypeByUName);
+            assertNotNull(attributeMatcherTypeByUComponentValue);
             // all of return type is same
-            Assert.assertTrue(attributeMatcherTypeByName == attributeMatcherTypeByComponentValue);
-            Assert.assertTrue(attributeMatcherTypeByLName == attributeMatcherTypeByLComponentValue);
-            Assert.assertTrue(attributeMatcherTypeByUName == attributeMatcherTypeByUComponentValue);
-            Assert.assertTrue(attributeMatcherTypeByUName == attributeMatcherTypeByName);
-            Assert.assertTrue(attributeMatcherTypeByUName == attributeMatcherTypeByLName);
+            assertTrue(attributeMatcherTypeByName == attributeMatcherTypeByComponentValue);
+            assertTrue(attributeMatcherTypeByLName == attributeMatcherTypeByLComponentValue);
+            assertTrue(attributeMatcherTypeByUName == attributeMatcherTypeByUComponentValue);
+            assertTrue(attributeMatcherTypeByUName == attributeMatcherTypeByName);
+            assertTrue(attributeMatcherTypeByUName == attributeMatcherTypeByLName);
         }
     }
 
@@ -60,9 +62,9 @@ public class AttributeMatcherTypeTest {
     @Test
     public void testGetCase2() {
         AttributeMatcherType attributeMatcherTypeByNull = AttributeMatcherType.get(null);
-        Assert.assertNull(attributeMatcherTypeByNull);
+        assertNull(attributeMatcherTypeByNull);
         AttributeMatcherType attributeMatcherTypeByEmpty = AttributeMatcherType.get(""); //$NON-NLS-1$
-        Assert.assertNull(attributeMatcherTypeByEmpty);
+        assertNull(attributeMatcherTypeByEmpty);
 
     }
 

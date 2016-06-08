@@ -12,7 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.attribute;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
@@ -23,6 +24,8 @@ import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
  */
 @SuppressWarnings("nls")
 public class SoundexMatcherTest {
+
+    private static final double EPSILON = 0.000001;
 
     /**
      * Test method for
@@ -35,12 +38,12 @@ public class SoundexMatcherTest {
         String a = "John"; //$NON-NLS-1$
         String b = "Jon"; //$NON-NLS-1$
         double matchingWeight = soundexMatcher.getMatchingWeight(a, b);
-        Assert.assertEquals(1.0d, matchingWeight);
+        assertEquals(1.0d, matchingWeight, EPSILON);
 
         a = "\n";
         b = "Hulme";
         matchingWeight = soundexMatcher.getMatchingWeight(a, b);
-        Assert.assertTrue("input strings are not the same " + a + " and " + b, 0.0d == matchingWeight);
+        assertTrue("input strings are not the same " + a + " and " + b, 0.0d == matchingWeight);
 
     }
 
@@ -49,10 +52,10 @@ public class SoundexMatcherTest {
      */
     @Test
     public void testGetMatchType() {
-        Assert.assertEquals(AttributeMatcherType.SOUNDEX, new SoundexMatcher().getMatchType());
-        Assert.assertEquals("SOUNDEX", new SoundexMatcher().getMatchType().name()); //$NON-NLS-1$
-        Assert.assertEquals("Soundex", new SoundexMatcher().getMatchType().getLabel()); //$NON-NLS-1$
-        Assert.assertEquals("SOUNDEX", new SoundexMatcher().getMatchType().toString()); //$NON-NLS-1$
+        assertEquals(AttributeMatcherType.SOUNDEX, new SoundexMatcher().getMatchType());
+        assertEquals("SOUNDEX", new SoundexMatcher().getMatchType().name()); //$NON-NLS-1$
+        assertEquals("Soundex", new SoundexMatcher().getMatchType().getLabel()); //$NON-NLS-1$
+        assertEquals("SOUNDEX", new SoundexMatcher().getMatchType().toString()); //$NON-NLS-1$
     }
 
 }

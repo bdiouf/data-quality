@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.attribute;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -39,8 +39,8 @@ public class LevenshteinMatcherTest {
             for (String lookupElt : LOOKUP) {
                 double matchingWeight = m.getMatchingWeight(elt, lookupElt);
                 System.out.println("Match[" + elt + "," + lookupElt + "]=" + matchingWeight); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                Assert.assertFalse(matchingWeight > 1);
-                Assert.assertFalse(matchingWeight < 0);
+                assertFalse(matchingWeight > 1);
+                assertFalse(matchingWeight < 0);
             }
         }
 

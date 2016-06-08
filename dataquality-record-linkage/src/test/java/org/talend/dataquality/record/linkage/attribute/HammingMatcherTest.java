@@ -12,15 +12,18 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.attribute;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
-
-import junit.framework.Assert;
 
 /**
  * DOC jteuladedenantes // Your Name class global comment. Detailled comment
  */
 public class HammingMatcherTest {
+
+    private static final double EPSILON = 0.000001;
 
     /**
      * Test method for
@@ -33,25 +36,22 @@ public class HammingMatcherTest {
         HammingMatcher hammingMatcher = new HammingMatcher();
         String a = "malequa"; //$NON-NLS-1$
         double matchingWeight1 = hammingMatcher.getMatchingWeight(a, a);
-        Assert.assertEquals("input strings are the same => result should be 1.", 1.0d, matchingWeight1);
+        assertEquals("input strings are the same => result should be 1.", 1.0d, matchingWeight1, EPSILON);
         String b = "malequz"; //$NON-NLS-1$
         matchingWeight1 = hammingMatcher.getMatchingWeight(a, b);
-        Assert.assertTrue("input strings are different => result should be between 0 and 1.",
+        assertTrue("input strings are different => result should be between 0 and 1.",
                 matchingWeight1 < 1 && matchingWeight1 > 0);
 
         b = "molequz";
         double matchingWeight2 = hammingMatcher.getMatchingWeight(a, b);
-        Assert.assertTrue("input strings are the same => result should be between 0 and 1.",
-                matchingWeight2 < 1 && matchingWeight2 > 0);
+        assertTrue("input strings are the same => result should be between 0 and 1.", matchingWeight2 < 1 && matchingWeight2 > 0);
 
-        Assert.assertTrue(
-                "from ('molequz', 'malequz'), 'malequz' is more similar to 'malequa'  => matchingWeight2 < matchingWeight1.",
+        assertTrue("from ('molequz', 'malequz'), 'malequz' is more similar to 'malequa'  => matchingWeight2 < matchingWeight1.",
                 matchingWeight2 < matchingWeight1);
 
         b = "molequ";
         matchingWeight1 = hammingMatcher.getMatchingWeight(a, b);
-        Assert.assertTrue("strings " + a + " and " + b + " have not the same length => result should be 0.",
-                0.0d == matchingWeight1);
+        assertTrue("strings " + a + " and " + b + " have not the same length => result should be 0.", 0.0d == matchingWeight1);
 
     }
 
@@ -61,10 +61,10 @@ public class HammingMatcherTest {
     @Test
     public void testGetMatchType() {
 
-        Assert.assertEquals(AttributeMatcherType.HAMMING, new HammingMatcher().getMatchType());
-        Assert.assertEquals("HAMMING", new HammingMatcher().getMatchType().name()); //$NON-NLS-1$
-        Assert.assertEquals("Hamming", new HammingMatcher().getMatchType().getLabel()); //$NON-NLS-1$
-        Assert.assertEquals("HAMMING", new HammingMatcher().getMatchType().toString()); //$NON-NLS-1$
+        assertEquals(AttributeMatcherType.HAMMING, new HammingMatcher().getMatchType());
+        assertEquals("HAMMING", new HammingMatcher().getMatchType().name()); //$NON-NLS-1$
+        assertEquals("Hamming", new HammingMatcher().getMatchType().getLabel()); //$NON-NLS-1$
+        assertEquals("HAMMING", new HammingMatcher().getMatchType().toString()); //$NON-NLS-1$
     }
 
 }

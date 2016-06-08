@@ -253,10 +253,6 @@ public class SwooshRecordGroupingTest {
              */
             @Override
             protected void outputRow(String[] row) {
-                for (String c : row) {
-                    // System.out.print(c + ",");
-                }
-                // System.out.println();
                 groupingRecords.add(row);
             }
 
@@ -428,8 +424,6 @@ public class SwooshRecordGroupingTest {
             @Override
             protected void outputRow(Object[] row) {
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -506,7 +500,6 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -607,7 +600,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
@@ -623,11 +615,6 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
-        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
-
-        row2Struct masterRow_tMatchGroup_1 = null; // a master-row in a
-                                                   // group
-        row2Struct subRow_tMatchGroup_1 = null; // a sub-row in a group.
         // master rows in a group
         final java.util.List<row2Struct> masterRows_tMatchGroup_1 = new java.util.ArrayList<row2Struct>();
         // all rows in a group
@@ -636,7 +623,7 @@ public class SwooshRecordGroupingTest {
         // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
         // MASTER and only in case of separate output.
         final java.util.Map<String, Integer> indexMap_tMatchGroup_1 = new java.util.HashMap<String, Integer>();
-        final double CONFIDENCE_THRESHOLD_tMatchGroup_1 = Double.valueOf(0.9);
+        Double.valueOf(0.9);
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
@@ -649,8 +636,6 @@ public class SwooshRecordGroupingTest {
                 // }
                 // System.err.println(";");
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -734,7 +719,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -803,8 +788,6 @@ public class SwooshRecordGroupingTest {
             }
         });
 
-        // assert
-        int n = 0;
         for (row2Struct one : groupRows_tMatchGroup_1) {
             // // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" +
             // one.GRP_SIZE
@@ -813,7 +796,6 @@ public class SwooshRecordGroupingTest {
                 Assert.assertTrue(StringUtils.equals("BB", one.country) || StringUtils.equals("FFF", one.country));
                 Assert.assertTrue(StringUtils.equals("YY", one.city) || StringUtils.equals("G", one.city));
             }
-            n++;
         }
 
     }
@@ -824,7 +806,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
@@ -840,11 +821,6 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
-        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
-
-        row2Struct masterRow_tMatchGroup_1 = null; // a master-row in a
-                                                   // group
-        row2Struct subRow_tMatchGroup_1 = null; // a sub-row in a group.
         // master rows in a group
         final java.util.List<row2Struct> masterRows_tMatchGroup_1 = new java.util.ArrayList<row2Struct>();
         // all rows in a group
@@ -853,7 +829,7 @@ public class SwooshRecordGroupingTest {
         // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
         // MASTER and only in case of separate output.
         final java.util.Map<String, Integer> indexMap_tMatchGroup_1 = new java.util.HashMap<String, Integer>();
-        final double CONFIDENCE_THRESHOLD_tMatchGroup_1 = Double.valueOf(0.9);
+        Double.valueOf(0.9);
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
@@ -866,8 +842,6 @@ public class SwooshRecordGroupingTest {
                 // }
                 // System.err.println(";");
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -951,7 +925,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -1021,8 +995,6 @@ public class SwooshRecordGroupingTest {
             }
         });
 
-        // assert
-        int n = 0;
         // System.out.println("swoosh with multipass of 3 groups");
         for (row2Struct one : groupRows_tMatchGroup_1) {
             // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" +
@@ -1033,7 +1005,6 @@ public class SwooshRecordGroupingTest {
                 Assert.assertTrue(StringUtils.equals("G", one.city) || StringUtils.equals("AAA", one.city));
 
             }
-            n++;
         }
         // System.out.println("");
 
@@ -1045,7 +1016,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
@@ -1061,11 +1031,6 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
-        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
-
-        row2Struct masterRow_tMatchGroup_1 = null; // a master-row in a
-                                                   // group
-        row2Struct subRow_tMatchGroup_1 = null; // a sub-row in a group.
         // master rows in a group
         final java.util.List<row2Struct> masterRows_tMatchGroup_1 = new java.util.ArrayList<row2Struct>();
         // all rows in a group
@@ -1074,7 +1039,7 @@ public class SwooshRecordGroupingTest {
         // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
         // MASTER and only in case of separate output.
         final java.util.Map<String, Integer> indexMap_tMatchGroup_1 = new java.util.HashMap<String, Integer>();
-        final double CONFIDENCE_THRESHOLD_tMatchGroup_1 = Double.valueOf(0.9);
+        Double.valueOf(0.9);
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
@@ -1087,8 +1052,6 @@ public class SwooshRecordGroupingTest {
                 // }
                 // System.err.println(";");
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -1172,7 +1135,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -1242,8 +1205,6 @@ public class SwooshRecordGroupingTest {
             }
         });
 
-        // assert
-        int n = 0;
         // System.out.println("swoosh with multipass without new masters in 2nd pass");
         for (row2Struct one : groupRows_tMatchGroup_1) {
             // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" +
@@ -1253,7 +1214,6 @@ public class SwooshRecordGroupingTest {
                 Assert.assertTrue(StringUtils.equals("B", one.country) || StringUtils.equals("F", one.country));
                 Assert.assertTrue(StringUtils.equals("YY", one.city) || StringUtils.equals("WW", one.city));
             }
-            n++;
         }
         // System.out.println("");
 
@@ -1392,7 +1352,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
@@ -1408,11 +1367,6 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
-        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
-
-        row2Struct masterRow_tMatchGroup_1 = null; // a master-row in a
-                                                   // group
-        row2Struct subRow_tMatchGroup_1 = null; // a sub-row in a group.
         // master rows in a group
         final java.util.List<row2Struct> masterRows_tMatchGroup_1 = new java.util.ArrayList<row2Struct>();
         // all rows in a group
@@ -1421,7 +1375,7 @@ public class SwooshRecordGroupingTest {
         // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
         // MASTER and only in case of separate output.
         final java.util.Map<String, Integer> indexMap_tMatchGroup_1 = new java.util.HashMap<String, Integer>();
-        final double CONFIDENCE_THRESHOLD_tMatchGroup_1 = Double.valueOf(0.9);
+        Double.valueOf(0.9);
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
@@ -1430,8 +1384,6 @@ public class SwooshRecordGroupingTest {
             @Override
             protected void outputRow(Object[] row) {
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -1508,7 +1460,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -1583,27 +1535,6 @@ public class SwooshRecordGroupingTest {
                 }
             }
         });
-
-        // assert
-        int n = 0;
-        // System.out.println("swoosh in tmatchgroup with blocks...");
-
-        for (row2Struct one : groupRows_tMatchGroup_1) {
-            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" +
-            // one.GRP_SIZE
-            // + "--" + one.MASTER);
-            // if (one.GRP_SIZE == 7) {
-            // Assert.assertEquals("USAUSAUSAUSAUSAUSAUSA", one.country);
-            //
-            // for (int i = n + 1; i < n + 8; i++) {
-            // Assert.assertEquals("USA", groupRows_tMatchGroup_1.get(i).country);
-            // }
-            // break;
-            // }
-            n++;
-        }
-        // System.out.println("");
-
     }
 
     @Test
@@ -1612,7 +1543,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
@@ -1628,11 +1558,6 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
-        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
-
-        row2Struct masterRow_tMatchGroup_1 = null; // a master-row in a
-                                                   // group
-        row2Struct subRow_tMatchGroup_1 = null; // a sub-row in a group.
         // master rows in a group
         final java.util.List<row2Struct> masterRows_tMatchGroup_1 = new java.util.ArrayList<row2Struct>();
         // all rows in a group
@@ -1641,7 +1566,7 @@ public class SwooshRecordGroupingTest {
         // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
         // MASTER and only in case of separate output.
         final java.util.Map<String, Integer> indexMap_tMatchGroup_1 = new java.util.HashMap<String, Integer>();
-        final double CONFIDENCE_THRESHOLD_tMatchGroup_1 = Double.valueOf(0.9);
+        Double.valueOf(0.9);
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
@@ -1650,8 +1575,6 @@ public class SwooshRecordGroupingTest {
             @Override
             protected void outputRow(Object[] row) {
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -1728,7 +1651,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -1792,26 +1715,6 @@ public class SwooshRecordGroupingTest {
                 }
             }
         });
-
-        // assert
-        int n = 0;
-        // System.out.println("swoosh in tmatchgroup without groups");
-        for (row2Struct one : groupRows_tMatchGroup_1) {
-            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" +
-            // one.GRP_SIZE
-            // + "--" + one.MASTER);
-            // if (one.GRP_SIZE == 7) {
-            // Assert.assertEquals("USAUSAUSAUSAUSAUSAUSA", one.country);
-            //
-            // for (int i = n + 1; i < n + 8; i++) {
-            // Assert.assertEquals("USA", groupRows_tMatchGroup_1.get(i).country);
-            // }
-            // break;
-            // }
-            n++;
-        }
-        // System.out.println("");
-
     }
 
     @Test
@@ -1837,7 +1740,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
         tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "MostCommon");
@@ -1853,7 +1755,7 @@ public class SwooshRecordGroupingTest {
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.Map<String, String> columnWithIndex_tMatchGroup_1 = new java.util.HashMap<String, String>();
 
         columnWithType_tMatchGroup_1.put("id", "id_Integer");
@@ -1941,7 +1843,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
@@ -1957,11 +1858,6 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
-        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
-
-        row2Struct masterRow_tMatchGroup_1 = null; // a master-row in a
-                                                   // group
-        row2Struct subRow_tMatchGroup_1 = null; // a sub-row in a group.
         // master rows in a group
         final java.util.List<row2Struct> masterRows_tMatchGroup_1 = new java.util.ArrayList<row2Struct>();
         // all rows in a group
@@ -1970,7 +1866,7 @@ public class SwooshRecordGroupingTest {
         // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
         // MASTER and only in case of separate output.
         final java.util.Map<String, Integer> indexMap_tMatchGroup_1 = new java.util.HashMap<String, Integer>();
-        final double CONFIDENCE_THRESHOLD_tMatchGroup_1 = Double.valueOf(0.9);
+        Double.valueOf(0.9);
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
@@ -1983,8 +1879,6 @@ public class SwooshRecordGroupingTest {
                 // }
                 // System.err.println(";");
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -2068,7 +1962,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -2138,8 +2032,6 @@ public class SwooshRecordGroupingTest {
             }
         });
 
-        // assert
-        int n = 0;
         // System.out.println("swoosh with multipass :only one record");
         for (row2Struct one : groupRows_tMatchGroup_1) {
             // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" +
@@ -2158,7 +2050,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
@@ -2174,11 +2065,6 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
-        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
-
-        row2Struct masterRow_tMatchGroup_1 = null; // a master-row in a
-                                                   // group
-        row2Struct subRow_tMatchGroup_1 = null; // a sub-row in a group.
         // master rows in a group
         final java.util.List<row2Struct> masterRows_tMatchGroup_1 = new java.util.ArrayList<row2Struct>();
         // all rows in a group
@@ -2187,7 +2073,7 @@ public class SwooshRecordGroupingTest {
         // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
         // MASTER and only in case of separate output.
         final java.util.Map<String, Integer> indexMap_tMatchGroup_1 = new java.util.HashMap<String, Integer>();
-        final double CONFIDENCE_THRESHOLD_tMatchGroup_1 = Double.valueOf(0.9);
+        Double.valueOf(0.9);
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
@@ -2200,8 +2086,6 @@ public class SwooshRecordGroupingTest {
                 // }
                 // System.err.println(";");
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -2285,7 +2169,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -2354,8 +2238,6 @@ public class SwooshRecordGroupingTest {
             }
         });
 
-        // assert
-        int n = 0;
         System.out.println("swoosh with multipass :lost some record");
         for (row2Struct one : groupRows_tMatchGroup_1) {
             System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
@@ -2374,7 +2256,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
@@ -2390,11 +2271,6 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
-        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
-
-        row2Struct masterRow_tMatchGroup_1 = null; // a master-row in a
-                                                   // group
-        row2Struct subRow_tMatchGroup_1 = null; // a sub-row in a group.
         // master rows in a group
         final java.util.List<row2Struct> masterRows_tMatchGroup_1 = new java.util.ArrayList<row2Struct>();
         // all rows in a group
@@ -2403,7 +2279,7 @@ public class SwooshRecordGroupingTest {
         // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
         // MASTER and only in case of separate output.
         final java.util.Map<String, Integer> indexMap_tMatchGroup_1 = new java.util.HashMap<String, Integer>();
-        final double CONFIDENCE_THRESHOLD_tMatchGroup_1 = Double.valueOf(0.9);
+        Double.valueOf(0.9);
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
@@ -2416,8 +2292,6 @@ public class SwooshRecordGroupingTest {
                 // }
                 // System.err.println(";");
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -2501,7 +2375,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -2571,8 +2445,6 @@ public class SwooshRecordGroupingTest {
             }
         });
 
-        // assert
-        int n = 0;
         // System.out.println("swoosh with multipass :score not correct");
         for (row2Struct one : groupRows_tMatchGroup_1) {
             // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" +
@@ -2690,8 +2562,6 @@ public class SwooshRecordGroupingTest {
             @Override
             protected void outputRow(Object[] row) {
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -2768,7 +2638,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -2908,8 +2778,6 @@ public class SwooshRecordGroupingTest {
             @Override
             protected void outputRow(Object[] row) {
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -2986,7 +2854,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -3109,8 +2977,6 @@ public class SwooshRecordGroupingTest {
             @Override
             protected void outputRow(Object[] row) {
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -3190,7 +3056,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -3289,7 +3155,6 @@ public class SwooshRecordGroupingTest {
         java.util.List<java.util.List<java.util.Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
         java.util.List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = null;
         java.util.Map<String, String> tmpMap_tMatchGroup_1 = null;
-        java.util.Map<String, String> paramMapTmp_tMatchGroup_1 = null;
         java.util.List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         matcherList_tMatchGroup_1 = new java.util.ArrayList<java.util.Map<String, String>>();
         tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
@@ -3305,11 +3170,6 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
-        java.util.Map<String, String> realSurShipMap_tMatchGroup_1 = null;
-
-        row2Struct masterRow_tMatchGroup_1 = null; // a master-row in a
-                                                   // group
-        row2Struct subRow_tMatchGroup_1 = null; // a sub-row in a group.
         // master rows in a group
         final java.util.List<row2Struct> masterRows_tMatchGroup_1 = new java.util.ArrayList<row2Struct>();
         // all rows in a group
@@ -3318,7 +3178,7 @@ public class SwooshRecordGroupingTest {
         // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
         // MASTER and only in case of separate output.
         final java.util.Map<String, Integer> indexMap_tMatchGroup_1 = new java.util.HashMap<String, Integer>();
-        final double CONFIDENCE_THRESHOLD_tMatchGroup_1 = Double.valueOf(0.9);
+        Double.valueOf(0.9);
 
         // TDQ-9172 reuse JAVA API at here.
         org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1;
@@ -3331,8 +3191,6 @@ public class SwooshRecordGroupingTest {
                 // }
                 // System.err.println(";");
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -3419,7 +3277,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_String");
@@ -3556,8 +3414,6 @@ public class SwooshRecordGroupingTest {
             @Override
             protected void outputRow(Object[] row) {
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -3634,7 +3490,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_Integer");
@@ -3700,15 +3556,12 @@ public class SwooshRecordGroupingTest {
             }
         });
 
-        // assert
-        int n = 0;
         for (row2Struct one : groupRows_tMatchGroup_1) {
             if (one.getMASTER()) {
                 Assert.assertEquals("1", one.city);
 
                 break;
             }
-            n++;
         }
 
     }
@@ -3759,8 +3612,6 @@ public class SwooshRecordGroupingTest {
             @Override
             protected void outputRow(Object[] row) {
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
-                boolean isMaster = false;
-
                 if (0 < row.length) {
 
                     try {
@@ -3837,7 +3688,7 @@ public class SwooshRecordGroupingTest {
         recordGroupImp_tMatchGroup_1.initialize();
         // init the parameters of the tswoosh algorithm
         java.util.Map<String, String> columnWithType_tMatchGroup_1 = new java.util.HashMap<String, String>();
-        java.util.List<java.util.List<java.util.Map<String, String>>> allRules_tMatchGroup_1 = new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
+        new java.util.ArrayList<java.util.List<java.util.Map<String, String>>>();
 
         columnWithType_tMatchGroup_1.put("customer_id", "id_Integer");
         columnWithType_tMatchGroup_1.put("city", "id_Integer");
@@ -3903,15 +3754,12 @@ public class SwooshRecordGroupingTest {
             }
         });
 
-        // assert
-        int n = 0;
         for (row2Struct one : groupRows_tMatchGroup_1) {
             if (one.getMASTER()) {
                 Assert.assertEquals("12", one.city);
 
                 break;
             }
-            n++;
         }
 
     }

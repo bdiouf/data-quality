@@ -12,7 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.attribute;
 
-import junit.framework.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -26,6 +27,8 @@ public class QGramsMatcherTest {
     private static final String[] MAININPUT = { "joão" }; //$NON-NLS-1$
 
     private static final String[] POSSIBLE_MATCHES = { "john doe", "John Doe", "Doe John", "Doe john", "jon doe" };
+
+    private static final double EPSILON = 0.000001;
 
     /**
      * Test method for
@@ -41,8 +44,8 @@ public class QGramsMatcherTest {
             for (String lookupElt : LOOKUP) {
                 double matchingWeight = m.getMatchingWeight(elt, lookupElt);
                 System.out.println("Match[" + elt + "," + lookupElt + "]=" + matchingWeight); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                Assert.assertFalse(matchingWeight > 1);
-                Assert.assertFalse(matchingWeight < 0);
+                assertFalse(matchingWeight > 1);
+                assertFalse(matchingWeight < 0);
             }
         }
 
@@ -50,10 +53,10 @@ public class QGramsMatcherTest {
             for (String name2 : POSSIBLE_MATCHES) {
                 double matchingWeight = m.getMatchingWeight(name1, name2);
                 if (name1.equals(name2)) {
-                    Assert.assertEquals("weight(" + name1 + "," + name2 + ")=" + matchingWeight, 1.0, matchingWeight);
+                    assertEquals("weight(" + name1 + "," + name2 + ")=" + matchingWeight, 1.0, matchingWeight, EPSILON);
                 } else {
-                    Assert.assertFalse("weight(" + name1 + "," + name2 + ")=" + matchingWeight, matchingWeight > 1);
-                    Assert.assertFalse("weight(" + name1 + "," + name2 + ")=" + matchingWeight, matchingWeight < 0);
+                    assertFalse("weight(" + name1 + "," + name2 + ")=" + matchingWeight, matchingWeight > 1);
+                    assertFalse("weight(" + name1 + "," + name2 + ")=" + matchingWeight, matchingWeight < 0);
                 }
             }
         }

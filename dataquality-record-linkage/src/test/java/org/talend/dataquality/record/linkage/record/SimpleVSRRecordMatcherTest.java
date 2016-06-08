@@ -12,13 +12,15 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.record;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import junit.framework.Assert;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
@@ -33,6 +35,8 @@ import org.talend.dataquality.record.linkage.constant.RecordMatcherType;
  * DOC scorreia class global comment. Detailled comment
  */
 public class SimpleVSRRecordMatcherTest {
+
+    private static final double EPSILON = 0.000001;
 
     public static final String[][] RECORDS1 = { { "seb", "talend", "suresnes" }, { "seb", "talend", "suresns" }, //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
             { "seb", "tlend", "sursnes" }, { "sebas", "taland", "suresnes" } }; //$NON-NLS-2$//$NON-NLS-3$
@@ -74,7 +78,7 @@ public class SimpleVSRRecordMatcherTest {
         IRecordMatcher match = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher);
         for (double[] attributeWeights : ALLATTRIBUTEWEIGHTS) {
             match.setRecordSize(3);
-            Assert.assertEquals(true, match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(),
+            assertEquals(true, match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(),
                     new JaroWinklerMatcher(), new ExactIgnoreCaseMatcher() }));
 
             if (!areValidAttributeWeitghts(match, attributeWeights)) {
@@ -89,13 +93,13 @@ public class SimpleVSRRecordMatcherTest {
                     double matchingProba = 0d;
                     try {
                         matchingProba = match.getMatchingWeight(record1, record2);
-                        Assert.assertEquals(MATCH_PROBS[weightIdx][matchIdx], matchingProba);
+                        assertEquals(MATCH_PROBS[weightIdx][matchIdx], matchingProba, EPSILON);
                         System.out.println("P(" + printRecord(record1) + " = " + printRecord(record2) + ") =" + matchingProba);
                     } catch (ArrayIndexOutOfBoundsException idxOutExc) {
                         // When record size is less than the expected (set in the parameter setup), the index out of
                         // bounds exception is expected. It means that the client must handle this exception
                         // additionaly.
-                        Assert.assertEquals(0d, matchingProba);
+                        assertEquals(0d, matchingProba, EPSILON);
                     }
                     matchIdx++;
                 }
@@ -140,7 +144,7 @@ public class SimpleVSRRecordMatcherTest {
         recordMatcher.setAttributeMatchers(attributeMatchers);
 
         // set the weights chosen by the user
-        Assert.assertTrue(recordMatcher.setAttributeWeights(ATTRIBUTEWEIGHTS));
+        assertTrue(recordMatcher.setAttributeWeights(ATTRIBUTEWEIGHTS));
 
         // initialize the blocking variables
         // (we use the column which are in exact match as blocking variables but we could change this in the future)
@@ -164,7 +168,7 @@ public class SimpleVSRRecordMatcherTest {
         for (String[] record1 : MAINRECORDS) {
             for (String[] record2 : LOOKUPRECORDS) {
                 final double matchingProba = recordMatcher.getMatchingWeight(record1, record2);
-                Assert.assertEquals(MATCH_PROBS_WITH_DISTINCE[idx], matchingProba);
+                assertEquals(MATCH_PROBS_WITH_DISTINCE[idx], matchingProba, EPSILON);
                 idx++;
                 if (matchingProba >= ACCEPTABLE_THRESHOLD) {
                     // put this record in the "matches" flow
@@ -208,13 +212,12 @@ public class SimpleVSRRecordMatcherTest {
 
         double[] attributeWeight = { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
         // set the weights chosen by the user
-        Assert.assertTrue(recordMatcher.setAttributeWeights(attributeWeight));
+        assertTrue(recordMatcher.setAttributeWeights(attributeWeight));
 
         String[] record1 = { "aTO1mK", "dXatJF", "6vVVQl", "5ILPaE", "cwBh91", "WEWkkS" };
         String[] record2 = { "ThSymJ", "ymLm1u", "ZM7ilc", "0nCUz8", "SOPHs7", "boqY3Y" };
 
         // /////////// MAIN LOOP now /////////////// compute proba
-        int idx = 0;
         final double matchingProba = recordMatcher.getMatchingWeight(record1, record1);
         assertTrue(matchingProba >= 1.0);
         final double matchingProbb = recordMatcher.getMatchingWeight(record2, record2);
@@ -245,7 +248,7 @@ public class SimpleVSRRecordMatcherTest {
         double[] attributeWeight = { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
                 1.0 };
         // set the weights chosen by the user
-        Assert.assertTrue(recordMatcher.setAttributeWeights(attributeWeight));
+        assertTrue(recordMatcher.setAttributeWeights(attributeWeight));
 
         String[] record1 = { "aTO1mK", "dXatJF", "6vVVQl", "5ILPaE", "cwBh91", "WEWkkS", "cIWupW", "2fj8BW", "melpcx", "8MOIxp",
                 "NrJKCh", "XgFwsN", "f8OXQS", "iSJjtn", "Nflx4L", "lEEXi8", "mLi1Fy", "JiQvqQ", "onvRDZ", "JiQvqQ", "onvRDZ" };
@@ -253,7 +256,6 @@ public class SimpleVSRRecordMatcherTest {
                 "j8Ekqm", "8q9Jcr", "sSKY7P", "SQxLve", "vQRPJd", "gqvZeq", "ENchvh", "YKHGxQ", "xgkjjf", "JiQvqQ", "onvRDZ" };
 
         // /////////// MAIN LOOP now /////////////// compute proba
-        int idx = 0;
         final double matchingProba = recordMatcher.getMatchingWeight(record1, record1);
         assertTrue(matchingProba >= 1.0);
         final double matchingProbb = recordMatcher.getMatchingWeight(record2, record2);
@@ -290,20 +292,20 @@ public class SimpleVSRRecordMatcherTest {
         // prepare matcher
 
         match.setRecordSize(3);
-        Assert.assertEquals(true, match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(),
+        assertEquals(true, match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(),
                 new JaroWinklerMatcher(), new ExactIgnoreCaseMatcher() }));
         if (!areValidAttributeWeitghts(match, attributeWeights)) {
             // break here
             return;
         }
-        Assert.assertEquals(true, match.setAttributeWeights(attributeWeights));
+        assertEquals(true, match.setAttributeWeights(attributeWeights));
 
         // compute proba
         int matchIdx = 0;
         for (String[] record1 : RECORDS1) {
             for (String[] record2 : RECORDS2) {
                 final double matchingProba = match.getMatchingWeight(record1, record2);
-                Assert.assertEquals(MATCH_PROBS[weightIdxOut][matchIdx], matchingProba);
+                assertEquals(MATCH_PROBS[weightIdxOut][matchIdx], matchingProba, EPSILON);
                 matchIdx++;
                 System.out.println("P(" + printRecord(record1) + " = " + printRecord(record2) + ") =" + matchingProba);
             }
@@ -336,7 +338,7 @@ public class SimpleVSRRecordMatcherTest {
     public void testSetAttributeMatchers() {
         IRecordMatcher match = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher);
         match.setRecordSize(3);
-        Assert.assertEquals(true, match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(),
+        assertEquals(true, match.setAttributeMatchers(new IAttributeMatcher[] { new ExactIgnoreCaseMatcher(),
                 new JaroWinklerMatcher(), new ExactIgnoreCaseMatcher() }));
     }
 
@@ -349,24 +351,24 @@ public class SimpleVSRRecordMatcherTest {
         // recordSize must be same to weights.length
         IRecordMatcher match = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher);
         match.setRecordSize(2);
-        Assert.assertFalse(match.setAttributeWeights(ALLATTRIBUTEWEIGHTS[0]));
+        assertFalse(match.setAttributeWeights(ALLATTRIBUTEWEIGHTS[0]));
 
         match.setRecordSize(3);
         // Assert values of zeros
         try {
             match.setAttributeWeights(new double[] { 0.0, 0.0, 0.0 });
-            Assert.fail("we should not arrive here. ");
+            fail("we should not arrive here. ");
         } catch (Exception e) {
-            Assert.assertTrue(e != null && e instanceof IllegalArgumentException);
+            assertTrue(e != null && e instanceof IllegalArgumentException);
         }
         assertNotNull(((SimpleVSRRecordMatcher) match).attributeWeights);
 
         // Assert the minus values
         try {
             match.setAttributeWeights(new double[] { -1, -1, 2 });
-            Assert.fail("we should not arrive here. ");
+            fail("we should not arrive here. ");
         } catch (Exception e) {
-            Assert.assertTrue(e != null && e instanceof IllegalArgumentException);
+            assertTrue(e != null && e instanceof IllegalArgumentException);
         }
     }
 
@@ -433,16 +435,16 @@ public class SimpleVSRRecordMatcherTest {
         IAttributeMatcher[] allAttMatchers = new IAttributeMatcher[] { attMatcher };
         IRecordMatcher matcher = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher);
         matcher.setRecordSize(1);
-        Assert.assertTrue(matcher.setAttributeMatchers(allAttMatchers));
+        assertTrue(matcher.setAttributeMatchers(allAttMatchers));
 
         // test getLabeledAttributeMatchWeights (check that it gives expected results)
         matcher.setDisplayLabels(Boolean.TRUE);
         String labeledAttributeMatchWeights = matcher.getLabeledAttributeMatchWeights();
-        Assert.assertEquals("no computation done. Result should be 0", "EMAIL: 0.0", labeledAttributeMatchWeights);
+        assertEquals("no computation done. Result should be 0", "EMAIL: 0.0", labeledAttributeMatchWeights);
 
-        Assert.assertEquals(1.0d, matcher.getMatchingWeight(RECORDS1[1], RECORDS1[1]));
+        assertEquals(1.0d, matcher.getMatchingWeight(RECORDS1[1], RECORDS1[1]), EPSILON);
         labeledAttributeMatchWeights = matcher.getLabeledAttributeMatchWeights();
-        Assert.assertEquals("Computation done and exact match. Result should be 1", "EMAIL: 1.0", labeledAttributeMatchWeights);
+        assertEquals("Computation done and exact match. Result should be 1", "EMAIL: 1.0", labeledAttributeMatchWeights);
 
     }
 }
