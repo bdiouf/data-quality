@@ -43,9 +43,9 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
     private final CategoryRecognizerBuilder builder;
 
     // Threshold of handle to be run. since the semantic inferring will require
-    // more time than expected, we only want to run the handle method on a
-    // sample with small size.
-    private int limit = 100;
+    // more time than expected, we may only want to run the handle method on a
+    // sample with small size. Default value is 10000.
+    private int limit = 10000;
 
     private int currentCount = 0;
 
