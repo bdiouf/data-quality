@@ -107,22 +107,4 @@ public class QGramsMatcher extends AbstractAttributeMatcher {
     public void setQ(int q) {
         this.q = q;
     }
-
-    public static void main(String[] args) {
-
-        QGramsMatcher qg = new QGramsMatcher();
-        String[] listWords1 = { "les", "chaussettes", "de", "l'archiduchesse", "sont", "sèches" };
-        // String[] listWords1 = { "les chaussettes de l'archiduchesse sont sèches" };
-        // String[] listWords1 = { "John", "Doe" };
-        // String[] listWords1 = { "John Doe" };
-        String[] listWords2 = { "chaussette", "de", "l'archiduchesse", "est", "sèche" };
-        // String[] listWords2 = { "chaussette de l'archiduchesse est sèche" };
-        // String[] listWords2 = { "Doe", "John" };
-        // String[] listWords2 = { "Doe John" };
-        for (String word1 : listWords1)
-            for (String word2 : listWords2)
-                System.out.println("weight[" + word1 + "," + word2 + "]=" + qg.getWeight(word1, word2));
-
-    }
-
 }
