@@ -51,24 +51,29 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
         this.isStoreInvalidValues = isStoreInvalidValues;
         this.builder = builder;
         this.types = types;
+        init();
     }
 
     public SemanticQualityAnalyzer(CategoryRecognizerBuilder builder, String... types) {
-        this.types = types;
-        this.builder = builder;
+        this(builder, types, false);
     }
 
     @Override
     public void init() {
         try {
-            regexClassifier = new UDCategorySerDeser().readJsonFile();
-            if (Mode.LUCENE.equals(builder.getMode())) {
-                LuceneIndex dict = new LuceneIndex(builder.getDDPath(),
-                        SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_DICTIONARY);
-                LuceneIndex keyword = new LuceneIndex(builder.getKWPath(),
-                        SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_KEYWORD);
-                dataDictClassifier = new DataDictFieldClassifier(dict, keyword);
+            if (regexClassifier == null) {
+                regexClassifier = new UDCategorySerDeser().readJsonFile();
             }
+            if (dataDictClassifier == null) {
+                if (Mode.LUCENE.equals(builder.getMode())) {
+                    LuceneIndex dict = new LuceneIndex(builder.getDDPath(),
+                            SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_DICTIONARY);
+                    LuceneIndex keyword = new LuceneIndex(builder.getKWPath(),
+                            SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_KEYWORD);
+                    dataDictClassifier = new DataDictFieldClassifier(dict, keyword);
+                }
+            }
+            results.clear();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -106,10 +111,6 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
         results.resize(record.length);
         for (int i = 0; i < record.length; i++) {
             String semanticType = types[i];
-            if (SemanticCategoryEnum.UNKNOWN.name().equals(semanticType)) {
-                continue;
-            }
-
             final String value = record[i];
             final ValueQualityStatistics valueQuality = results.get(i);
             if (value == null || value.trim().length() == 0) {
@@ -122,7 +123,11 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
     }
 
     private void analyzeValue(String semanticType, String value, ValueQualityStatistics valueQuality) {
-        SemanticCategoryEnum cat = SemanticCategoryEnum.valueOf(semanticType);
+        SemanticCategoryEnum cat = SemanticCategoryEnum.getCategoryById(semanticType);
+        if (cat == null) {
+            valueQuality.incrementValid();
+            return;
+        }
         RecognizerType recognizerType = cat.getRecognizerType();
         Set<String> catIds = null;
         switch (recognizerType) {

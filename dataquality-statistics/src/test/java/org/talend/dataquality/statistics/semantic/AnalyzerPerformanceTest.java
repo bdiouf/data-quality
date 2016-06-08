@@ -18,6 +18,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.talend.dataquality.common.inference.Analyzer;
 import org.talend.dataquality.common.inference.Analyzers;
 import org.talend.dataquality.common.inference.Analyzers.Result;
@@ -37,6 +39,8 @@ import org.talend.dataquality.statistics.type.DataTypeEnum;
 import org.talend.dataquality.statistics.type.DataTypeOccurences;
 
 public class AnalyzerPerformanceTest {
+
+    private static Logger log = LoggerFactory.getLogger(AnalyzerPerformanceTest.class);
 
     private static CategoryRecognizerBuilder builder;
 
@@ -94,8 +98,9 @@ public class AnalyzerPerformanceTest {
         }
         final List<Analyzers.Result> result = analyzers.getResult();
         final long cpuAfter = mxBean.getCurrentThreadCpuTime();
+        log.info("baseline analysis took " + (cpuAfter - cpuBefore) + " CPU time.");
         assertTrue("baseline analysis took " + (cpuAfter - cpuBefore) + " CPU time, which is slower than expected.",
-                (cpuAfter - cpuBefore) < 5e9);
+                (cpuAfter - cpuBefore) < 1.5e10);
 
         assertEquals(types_card_exceptions.length, result.size());
 
@@ -150,6 +155,7 @@ public class AnalyzerPerformanceTest {
         }
         final List<Analyzers.Result> result = analyzers.getResult();
         final long cpuAfter = mxBean.getCurrentThreadCpuTime();
+        log.info("advanced analysis took " + (cpuAfter - cpuBefore) + " CPU time.");
         assertTrue("advanced analysis took " + (cpuAfter - cpuBefore) + " CPU time, which is slower than expected.",
                 (cpuAfter - cpuBefore) < 7e8);
     }

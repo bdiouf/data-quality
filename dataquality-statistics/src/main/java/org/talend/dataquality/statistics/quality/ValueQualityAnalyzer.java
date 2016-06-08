@@ -78,9 +78,9 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
     @Override
     public void init() {
         dataTypeQualityAnalyzer.init();
-        if (semanticQualityAnalyzer != null)
+        if (semanticQualityAnalyzer != null) {
             semanticQualityAnalyzer.init();
-
+        }
     }
 
     /**
