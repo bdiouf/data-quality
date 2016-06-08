@@ -12,9 +12,9 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.attribute;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
 import org.talend.dataquality.record.linkage.utils.QGramTokenizer;
@@ -74,29 +74,29 @@ public class QGramsMatcher extends AbstractAttributeMatcher {
      */
     private float getUnNormalisedSimilarity(final List<String> str1Tokens, final List<String> str2Tokens) {
 
-        final Set<String> allTokens = new HashSet<String>();
-        allTokens.addAll(str1Tokens);
-        allTokens.addAll(str2Tokens);
+        List<String> sorted1 = new ArrayList<String>();
+        sorted1.addAll(str1Tokens);
+        Collections.sort(sorted1);
+        List<String> sorted2 = new ArrayList<String>();
+        sorted2.addAll(str2Tokens);
+        Collections.sort(sorted2);
 
         int difference = 0;
-        for (String token : allTokens) {
-            int matchingQGrams1 = 0;
-            for (String str1Token : str1Tokens) {
-                if (str1Token.equals(token)) {
-                    matchingQGrams1++;
-                }
+        while (sorted1.size() != 0 && sorted2.size() != 0) {
+            int comp = (sorted1.get(0)).compareTo(sorted2.get(0));
+            if (comp > 0) {
+                sorted2.remove(0);
+                difference++;
+            } else if (comp < 0) {
+                sorted1.remove(0);
+                difference++;
+            } else {
+                sorted1.remove(0);
+                sorted2.remove(0);
             }
-            int matchingQGrams2 = 0;
-            for (String str2Token : str2Tokens) {
-                if (str2Token.equals(token)) {
-                    matchingQGrams2++;
-                }
-            }
-            difference += Math.abs(matchingQGrams1 - matchingQGrams2);
         }
-
         // return
-        return difference;
+        return difference + sorted1.size() + sorted2.size();
     }
 
     /**
@@ -106,6 +106,23 @@ public class QGramsMatcher extends AbstractAttributeMatcher {
      */
     public void setQ(int q) {
         this.q = q;
+    }
+
+    public static void main(String[] args) {
+
+        QGramsMatcher qg = new QGramsMatcher();
+        String[] listWords1 = { "les", "chaussettes", "de", "l'archiduchesse", "sont", "sèches" };
+        // String[] listWords1 = { "les chaussettes de l'archiduchesse sont sèches" };
+        // String[] listWords1 = { "John", "Doe" };
+        // String[] listWords1 = { "John Doe" };
+        String[] listWords2 = { "chaussette", "de", "l'archiduchesse", "est", "sèche" };
+        // String[] listWords2 = { "chaussette de l'archiduchesse est sèche" };
+        // String[] listWords2 = { "Doe", "John" };
+        // String[] listWords2 = { "Doe John" };
+        for (String word1 : listWords1)
+            for (String word2 : listWords2)
+                System.out.println("weight[" + word1 + "," + word2 + "]=" + qg.getWeight(word1, word2));
+
     }
 
 }
