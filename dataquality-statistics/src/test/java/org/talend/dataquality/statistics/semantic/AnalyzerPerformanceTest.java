@@ -17,6 +17,7 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,6 +87,7 @@ public class AnalyzerPerformanceTest {
     }
 
     @Test
+    @Ignore
     public void testBaselineAnalysis() {
         Analyzer<Result> analyzers = setupBaselineAnalyzers(types_card_exceptions);
 
@@ -144,6 +146,7 @@ public class AnalyzerPerformanceTest {
     }
 
     @Test
+    @Ignore
     public void testAdvancedAnalysis() {
 
         Analyzer<Result> analyzers = setupAdvancedAnalyzers();
