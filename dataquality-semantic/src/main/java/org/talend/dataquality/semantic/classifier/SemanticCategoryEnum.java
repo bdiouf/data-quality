@@ -139,6 +139,11 @@ public enum SemanticCategoryEnum {
     URL("Web URL", "Web site URL", RecognizerType.REGEX),
     WEB_DOMAIN("Web Domain", "Web site domain", RecognizerType.REGEX),
 
+    HDFS_URL("HDFS URL", "HDFS URL", RecognizerType.REGEX),
+    FILE_URL("File URL", "File URL", RecognizerType.REGEX),
+    MAIL_TO("Mail to", "Mail To", RecognizerType.REGEX),
+    DATA("Data", "Data", RecognizerType.REGEX),
+    
     UNKNOWN("", "Blank, Null and those who have no other semantic category", RecognizerType.OTHER),
 
     /**

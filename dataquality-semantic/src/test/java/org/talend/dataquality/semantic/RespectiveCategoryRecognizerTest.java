@@ -619,6 +619,47 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("TRUE", false));
                 }
             });
+            
+            put(SemanticCategoryEnum.HDFS_URL.getId(), new ArrayList<Pair<String, Boolean>>() {
+				private static final long serialVersionUID = -1241357834655337919L;
+
+				{
+                    add(ImmutablePair.of("hdfs://127.0.0.1/user/luis/sample.txt", true));
+                    add(ImmutablePair.of("hdfs://toto.com/user/luis/sample.txt", true));
+                    add(ImmutablePair.of("PIETROWSKI", false));
+                }
+            });
+            
+            put(SemanticCategoryEnum.FILE_URL.getId(), new ArrayList<Pair<String, Boolean>>() {
+				private static final long serialVersionUID = -1241357834655337919L;
+
+				{
+                    add(ImmutablePair.of("file://localhost/c/WINDOWS/clock.avi", true));
+                    add(ImmutablePair.of("file:///C:/WORKSPACE/reports.html", true));
+                    add(ImmutablePair.of("PIETROWSKI", false));
+                }
+            });
+            
+            put(SemanticCategoryEnum.MAIL_TO.getId(), new ArrayList<Pair<String, Boolean>>() {
+				private static final long serialVersionUID = -1241357834655337919L;
+
+				{
+                    add(ImmutablePair.of("mailto:?to=&subject=mailto%20with%20examples&body=http://en.wikipedia.org/wiki/Mailto", true));
+                    add(ImmutablePair.of("mailto:p.dupond@example.com?subject=Sujet%20du%20courrier&cc=pierre@example.org&cc=jacques@example.net&body=Bonjour", true));
+                    add(ImmutablePair.of("PIETROWSKI", false));
+                }
+            });
+            
+            put(SemanticCategoryEnum.DATA.getId(), new ArrayList<Pair<String, Boolean>>() {
+				private static final long serialVersionUID = -1241357834655337919L;
+
+				{
+                    add(ImmutablePair.of("data:text/html;charset=US-ASCII,%3Ch1%3EHello!%3C%2Fh1%3E", true));
+                    add(ImmutablePair.of("data:text/html;charset=,%3Ch1%3EHello!%3C%2Fh1%3E", true));
+                    add(ImmutablePair.of("PIETROWSKI", false));
+                }
+            });
+
         }
     };
 
