@@ -87,7 +87,6 @@ public class AnalyzerPerformanceTest {
     }
 
     @Test
-    @Ignore
     public void testBaselineAnalysis() {
         Analyzer<Result> analyzers = setupBaselineAnalyzers(types_card_exceptions);
 

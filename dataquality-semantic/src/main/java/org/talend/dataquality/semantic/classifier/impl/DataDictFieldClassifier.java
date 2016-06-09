@@ -16,10 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.talend.dataquality.semantic.classifier.ISubCategory;
 import org.talend.dataquality.semantic.classifier.ISubCategoryClassifier;
-import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
-import org.talend.dataquality.semantic.classifier.custom.UserDefinedCategory;
 import org.talend.dataquality.semantic.index.Index;
 
 /**
@@ -52,22 +49,6 @@ public class DataDictFieldClassifier implements ISubCategoryClassifier {
         }
 
         return result;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.dataquality.semantic.classifier.ISubCategoryClassifier#classifyIntoCategories(java.lang.String)
-     */
-    @Deprecated
-    @Override
-    public Set<ISubCategory> classifyIntoCategories(String data) {
-        Set<ISubCategory> categories = new HashSet<>();
-        for (String id : classify(data)) {
-            categories.add(new UserDefinedCategory(id, SemanticCategoryEnum.valueOf(id)));
-        }
-
-        return categories;
     }
 
     public void closeIndex() {

@@ -68,26 +68,36 @@ public class UserDefinedClassifier extends AbstractSubCategoryClassifier {
         return potentialSubCategories.remove(category);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * classify data into Semantic Category IDs
      * 
-     * @see
-     * org.talend.dataquality.semantic.classifier.impl.AbstractSubCategoryClassifier#classifyIntoCategories(java.lang
-     * .String)
+     * @see org.talend.dataquality.semantic.classifier.impl.AbstractSubCategoryClassifier#classify(java.lang.String)
      */
-    @Deprecated
     @Override
-    public Set<ISubCategory> classifyIntoCategories(String str) {
+    public Set<String> classify(String str) {
         MainCategory mainCategory = MainCategory.getMainCategory(str);
-        return classifyIntoCategories(str, mainCategory);
+        return classify(str, mainCategory);
     }
 
-    @Deprecated
-    public Set<ISubCategory> classifyIntoCategories(String str, MainCategory mainCategory) {
-        Set<ISubCategory> catSet = new HashSet<>();
+    /**
+     * TODO check javadoc
+     * 
+     * classify data into Semantic Category IDs
+     * <p/>
+     * Validate this input data to adapt which customized rules.
+     * <p/>
+     * Actually, the main category can be calculated based on the input string, but this method has better performance
+     * in case the mainCategory is already calculated previously.
+     * 
+     * @param str is input data
+     * @param mainCategory: the MainCategory is computed by the input data
+     * @return
+     */
+    public Set<String> classify(String str, MainCategory mainCategory) {
+        Set<String> catSet = new HashSet<>();
         if (mainCategory == MainCategory.UNKNOWN || mainCategory == MainCategory.NULL || mainCategory == MainCategory.BLANK) {
             // FIXME return UNKNOWN instead of EMPTY as the category ID, require synchronization with dataprep team
-            catSet.add(new UserDefinedCategory("", SemanticCategoryEnum.UNKNOWN));
+            catSet.add(SemanticCategoryEnum.UNKNOWN.getId());
             return catSet;
         }
 
@@ -119,46 +129,9 @@ public class UserDefinedClassifier extends AbstractSubCategoryClassifier {
             }
             ISemanticValidator validator = classifier.getValidator();
             if (validator != null && validator.isValid(str)) {
-                catSet.add(classifier);
+                catSet.add(classifier.getId());
             }
         }
-
-        return catSet;
-
-    }
-
-    /**
-     * classify data into Semantic Category IDs
-     * 
-     * @see org.talend.dataquality.semantic.classifier.impl.AbstractSubCategoryClassifier#classify(java.lang.String)
-     */
-    @Override
-    public Set<String> classify(String str) {
-        MainCategory mainCategory = MainCategory.getMainCategory(str);
-        return classify(str, mainCategory);
-    }
-
-    /**
-     * TODO check javadoc
-     * 
-     * classify data into Semantic Category IDs
-     * <p/>
-     * Validate this input data to adapt which customized rules.
-     * <p/>
-     * Actually, the main category can be calculated based on the input string, but this method has better performance
-     * in case the mainCategory is already calculated previously.
-     * 
-     * @param str is input data
-     * @param mainCategory: the MainCategory is computed by the input data
-     * @return
-     */
-    public Set<String> classify(String str, MainCategory mainCategory) {
-        Set<ISubCategory> categories = classifyIntoCategories(str, mainCategory);
-        Set<String> catSet = new HashSet<>();
-        for (ISubCategory iSubCategory : categories) {
-            catSet.add(iSubCategory.getId());
-        }
-
         return catSet;
     }
 }

@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.dataquality.semantic.classifier.ISubCategory;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.classifier.custom.UDCategorySerDeser;
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedCategory;
@@ -56,34 +55,9 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
     }
 
     /**
-     * @deprecated use {@link #getSubCategoriesSet(String)} instead.
-     * @param data
-     * @return
+     * @param data the input value
+     * @return the set of its semantic categories
      */
-    @Deprecated
-    public Set<ISubCategory> getSubCategories(String data) {
-        MainCategory mainCategory = MainCategory.getMainCategory(data);
-        Set<ISubCategory> subCategorySet = new HashSet<>();
-
-        switch (mainCategory) {
-        case Alpha:
-        case AlphaNumeric:
-            subCategorySet.addAll(dataDictFieldClassifier.classifyIntoCategories(data));
-        case Numeric:
-            if (userDefineClassifier != null) {
-                subCategorySet.addAll(userDefineClassifier.classifyIntoCategories(data, mainCategory));
-            }
-            break;
-
-        case NULL:
-        case BLANK:
-        case UNKNOWN:
-            break;
-        }
-        return subCategorySet;
-
-    }
-
     public Set<String> getSubCategorySet(String data) {
 
         MainCategory mainCategory = MainCategory.getMainCategory(data);
@@ -139,26 +113,6 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
         }
         total++;
         return categories.toArray(new String[categories.size()]);
-    }
-
-    /**
-     * @deprecated use {@link #process(String)} instead.
-     * 
-     * @see org.talend.dataquality.semantic.recognizer.CategoryRecognizer#process(java.lang.String)
-     */
-    @Deprecated
-    @Override
-    public ISubCategory[] processCategories(String data) {
-        Set<ISubCategory> categories = getSubCategories(data);
-        if (categories.size() > 0) {
-            for (ISubCategory cat : categories) {
-                incrementCategory(cat.getId(), cat.getName());
-            }
-        } else {
-            incrementCategory(StringUtils.EMPTY);
-        }
-        total++;
-        return categories.toArray(new ISubCategory[categories.size()]);
     }
 
     private void incrementCategory(String catId) {

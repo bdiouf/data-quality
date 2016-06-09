@@ -27,13 +27,4 @@ public interface ISubCategoryClassifier {
      */
     public Set<String> classify(String str);
 
-    /**
-     * @deprecated Use {@link #classify(String)} instead
-     * 
-     * @param str the string that helps to classify
-     * @return the categories found for this string
-     */
-    @Deprecated
-    public Set<ISubCategory> classifyIntoCategories(String str);
-
 }

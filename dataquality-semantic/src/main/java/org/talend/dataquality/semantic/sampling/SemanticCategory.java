@@ -25,19 +25,6 @@ public class SemanticCategory {
     // TODO private CategoryFrequency categoryFrequency;
 
     /**
-     * SemanticCategory constructor.
-     * 
-     * @deprecated use {@link SemanticCategory} instead
-     * 
-     * @param categoryId the category id
-     * @param count the number of time this id appears
-     * @param freq the frequency
-     */
-    public SemanticCategory(String categoryId, long count, double freq) {
-        this(categoryId, categoryId, count, freq);
-    }
-
-    /**
      * 
      * SemanticCategory constructor comment.
      * 
@@ -137,9 +124,9 @@ public class SemanticCategory {
             }
             if (frequency >= 1) {
                 strBuf.append((int) Math.floor(this.frequency));
-                strBuf.append("%"); //$NON-NLS-1$            
+                strBuf.append("%"); //$NON-NLS-1$
             } else {
-                strBuf.append("<1%");//$NON-NLS-1$    
+                strBuf.append("<1%");//$NON-NLS-1$
             }
         }
 
