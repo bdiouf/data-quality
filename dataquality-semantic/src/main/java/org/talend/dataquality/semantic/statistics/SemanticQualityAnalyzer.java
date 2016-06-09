@@ -21,9 +21,9 @@ import org.talend.dataquality.common.inference.Analyzer;
 import org.talend.dataquality.common.inference.QualityAnalyzer;
 import org.talend.dataquality.common.inference.ResizableList;
 import org.talend.dataquality.common.inference.ValueQualityStatistics;
+import org.talend.dataquality.semantic.classifier.ISubCategoryClassifier;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum.RecognizerType;
-import org.talend.dataquality.semantic.classifier.custom.UserDefinedClassifier;
 import org.talend.dataquality.semantic.classifier.impl.DataDictFieldClassifier;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizer;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
@@ -38,9 +38,9 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     private final ResizableList<ValueQualityStatistics> results = new ResizableList<>(ValueQualityStatistics.class);
 
-    private UserDefinedClassifier regexClassifier;
+    private ISubCategoryClassifier regexClassifier;
 
-    private DataDictFieldClassifier dataDictClassifier;
+    private ISubCategoryClassifier dataDictClassifier;
 
     private final CategoryRecognizerBuilder builder;
 
@@ -251,6 +251,6 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     @Override
     public void close() throws Exception {
-        dataDictClassifier.closeIndex();
+        ((DataDictFieldClassifier) dataDictClassifier).closeIndex();
     }
 }
