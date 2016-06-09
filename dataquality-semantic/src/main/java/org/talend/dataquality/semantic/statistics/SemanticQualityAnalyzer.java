@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.semantic.statistics;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -60,23 +59,19 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     @Override
     public void init() {
-        try {
-            if (regexClassifier == null) {
-                regexClassifier = new UDCategorySerDeser().readJsonFile();
-            }
-            if (dataDictClassifier == null) {
-                if (Mode.LUCENE.equals(builder.getMode())) {
-                    LuceneIndex dict = new LuceneIndex(builder.getDDPath(),
-                            SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_DICTIONARY);
-                    LuceneIndex keyword = new LuceneIndex(builder.getKWPath(),
-                            SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_KEYWORD);
-                    dataDictClassifier = new DataDictFieldClassifier(dict, keyword);
-                }
-            }
-            results.clear();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (regexClassifier == null) {
+            regexClassifier = UDCategorySerDeser.getRegexClassifier();
         }
+        if (dataDictClassifier == null) {
+            if (Mode.LUCENE.equals(builder.getMode())) {
+                LuceneIndex dict = new LuceneIndex(builder.getDDPath(),
+                        SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_DICTIONARY);
+                LuceneIndex keyword = new LuceneIndex(builder.getKWPath(),
+                        SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_KEYWORD);
+                dataDictClassifier = new DataDictFieldClassifier(dict, keyword);
+            }
+        }
+        results.clear();
     }
 
     @Override

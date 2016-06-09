@@ -12,7 +12,9 @@
 // ============================================================================
 package org.talend.dataquality.semantic.classifier.custom;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,8 +51,7 @@ public class UDCategorySerDeserTest {
      */
     @Test
     public void testReadJsonFile() throws IOException {
-        UDCategorySerDeser helper = new UDCategorySerDeser();
-        UserDefinedClassifier userDefinedClassifier = helper.readJsonFile();
+        UserDefinedClassifier userDefinedClassifier = UDCategorySerDeser.readJsonFile();
         assertNotNull(userDefinedClassifier);
         int nbCat = userDefinedClassifier.getClassifiers().size();
         assertTrue("Expected to read at least 10 category but only get " + nbCat, nbCat > 9); //$NON-NLS-1$
@@ -92,11 +93,11 @@ public class UDCategorySerDeserTest {
         }
         FileOutputStream fos = new FileOutputStream(file);
         helper.writeToJsonFile(fc, fos);
-        //System.out.println("Categories written in " + file.getAbsolutePath()); //$NON-NLS-1$
+        // System.out.println("Categories written in " + file.getAbsolutePath()); //$NON-NLS-1$
         assertTrue(file.exists());
 
         // then read this file again
-        UserDefinedClassifier userDefinedClassifier = helper.readJsonFile(new FileInputStream(file));
+        UserDefinedClassifier userDefinedClassifier = UDCategorySerDeser.readJsonFile(new FileInputStream(file));
         assertNotNull(userDefinedClassifier);
         int nbCat = userDefinedClassifier.getClassifiers().size();
         assertEquals("Expected " + CATEGORIES.length + "categories but get " + nbCat, CATEGORIES.length, nbCat); //$NON-NLS-1$ //$NON-NLS-2$

@@ -44,7 +44,7 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
     private final DataDictFieldClassifier dataDictFieldClassifier;
 
-    private UserDefinedClassifier userDefineClassifier;
+    private final UserDefinedClassifier userDefineClassifier;
 
     private long emptyCount = 0;
 
@@ -52,8 +52,7 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
     public DefaultCategoryRecognizer(Index dictionary, Index keyword) throws IOException {
         dataDictFieldClassifier = new DataDictFieldClassifier(dictionary, keyword);
-
-        userDefineClassifier = new UDCategorySerDeser().readJsonFile();
+        userDefineClassifier = UDCategorySerDeser.getRegexClassifier();
     }
 
     /**

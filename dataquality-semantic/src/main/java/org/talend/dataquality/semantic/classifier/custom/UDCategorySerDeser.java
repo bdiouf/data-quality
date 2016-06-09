@@ -30,6 +30,15 @@ public class UDCategorySerDeser {
 
     private static final String FILE_NAME = "categorizer.json"; //$NON-NLS-1$
 
+    private static UserDefinedClassifier udc;
+
+    public static UserDefinedClassifier getRegexClassifier() {
+        if (udc == null) {
+            udc = readJsonFile();
+        }
+        return udc;
+    }
+
     /**
      * 
      * Read json file and get the Object UserDefinedClassifier.
@@ -39,28 +48,28 @@ public class UDCategorySerDeser {
      * @throws JsonMappingException
      * @throws JsonParseException
      */
-    public UserDefinedClassifier readJsonFile() throws IOException {
+    static UserDefinedClassifier readJsonFile() {
         UserDefinedClassifier udc = null;
-        ObjectMapper m = new ObjectMapper();
-        InputStream inputStream = null;
-
+        InputStream inputStream = UDCategorySerDeser.class
+                .getResourceAsStream("/org/talend/dataquality/semantic/recognizer/" + FILE_NAME);
         try {
-            URL url = new URL("platform:/plugin/" + BUNDLE_NAME //$NON-NLS-1$
-                    + "/org/talend/dataquality/semantic/recognizer/" + FILE_NAME); //$NON-NLS-1$
-            inputStream = url.openConnection().getInputStream();
             udc = readJsonFile(inputStream);
         } catch (IOException e) {
-            inputStream = this.getClass().getResourceAsStream("/org/talend/dataquality/semantic/recognizer/" + FILE_NAME);
-            udc = m.readValue(inputStream, UserDefinedClassifier.class);
+            URL url;
+            try {
+                url = new URL("platform:/plugin/" + BUNDLE_NAME //$NON-NLS-1$
+                        + "/org/talend/dataquality/semantic/recognizer/" + FILE_NAME);
+                inputStream = url.openConnection().getInputStream();
+                udc = readJsonFile(inputStream);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
         return udc;
     }
 
-    public UserDefinedClassifier readJsonFile(InputStream inputStream) throws IOException {
-        UserDefinedClassifier udc = null;
-        ObjectMapper m = new ObjectMapper();
-        udc = m.readValue(inputStream, UserDefinedClassifier.class);
-        return udc;
+    static UserDefinedClassifier readJsonFile(InputStream inputStream) throws IOException {
+        return new ObjectMapper().readValue(inputStream, UserDefinedClassifier.class);
     }
 
     /**
