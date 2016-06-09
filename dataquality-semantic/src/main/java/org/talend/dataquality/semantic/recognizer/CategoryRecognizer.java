@@ -14,6 +14,9 @@ package org.talend.dataquality.semantic.recognizer;
 
 import java.util.Collection;
 
+import org.talend.dataquality.semantic.classifier.custom.UserDefinedClassifier;
+import org.talend.dataquality.semantic.classifier.impl.DataDictFieldClassifier;
+
 /**
  * created by talend on 2015-07-28 Detailled comment.
  * 
@@ -25,6 +28,10 @@ public interface CategoryRecognizer {
     void reset();
 
     String[] process(String data);
+
+    DataDictFieldClassifier getDataDictFieldClassifier();
+
+    UserDefinedClassifier getUserDefineClassifier();
 
     Collection<CategoryFrequency> getResult();
 

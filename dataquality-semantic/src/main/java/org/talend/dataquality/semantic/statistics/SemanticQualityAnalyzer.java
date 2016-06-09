@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.semantic.statistics;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -22,13 +23,10 @@ import org.talend.dataquality.common.inference.ResizableList;
 import org.talend.dataquality.common.inference.ValueQualityStatistics;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum.RecognizerType;
-import org.talend.dataquality.semantic.classifier.custom.UDCategorySerDeser;
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedClassifier;
 import org.talend.dataquality.semantic.classifier.impl.DataDictFieldClassifier;
-import org.talend.dataquality.semantic.index.LuceneIndex;
+import org.talend.dataquality.semantic.recognizer.CategoryRecognizer;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
-import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder.Mode;
-import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -59,17 +57,12 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     @Override
     public void init() {
-        if (regexClassifier == null) {
-            regexClassifier = UDCategorySerDeser.getRegexClassifier();
-        }
-        if (dataDictClassifier == null) {
-            if (Mode.LUCENE.equals(builder.getMode())) {
-                LuceneIndex dict = new LuceneIndex(builder.getDDPath(),
-                        SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_DICTIONARY);
-                LuceneIndex keyword = new LuceneIndex(builder.getKWPath(),
-                        SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_KEYWORD);
-                dataDictClassifier = new DataDictFieldClassifier(dict, keyword);
-            }
+        try {
+            final CategoryRecognizer categoryRecognizer = builder.build();
+            regexClassifier = categoryRecognizer.getUserDefineClassifier();
+            dataDictClassifier = categoryRecognizer.getDataDictFieldClassifier();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         results.clear();
     }

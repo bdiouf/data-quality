@@ -54,6 +54,16 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
         userDefineClassifier = UDCategorySerDeser.getRegexClassifier();
     }
 
+    @Override
+    public DataDictFieldClassifier getDataDictFieldClassifier() {
+        return dataDictFieldClassifier;
+    }
+
+    @Override
+    public UserDefinedClassifier getUserDefineClassifier() {
+        return userDefineClassifier;
+    }
+
     /**
      * @param data the input value
      * @return the set of its semantic categories
