@@ -620,7 +620,7 @@ public class RespectiveCategoryRecognizerTest {
                 }
             });
             
-            put(SemanticCategoryEnum.HDFS_URL.getId(), new ArrayList<Pair<String, Boolean>>() {
+            put(SemanticCategoryEnum.HDFS_URI.getId(), new ArrayList<Pair<String, Boolean>>() {
 				private static final long serialVersionUID = -1241357834655337919L;
 
 				{
@@ -630,7 +630,7 @@ public class RespectiveCategoryRecognizerTest {
                 }
             });
             
-            put(SemanticCategoryEnum.FILE_URL.getId(), new ArrayList<Pair<String, Boolean>>() {
+            put(SemanticCategoryEnum.FILE_URI.getId(), new ArrayList<Pair<String, Boolean>>() {
 				private static final long serialVersionUID = -1241357834655337919L;
 
 				{
@@ -640,7 +640,7 @@ public class RespectiveCategoryRecognizerTest {
                 }
             });
             
-            put(SemanticCategoryEnum.MAIL_TO.getId(), new ArrayList<Pair<String, Boolean>>() {
+            put(SemanticCategoryEnum.MAILTO_URI.getId(), new ArrayList<Pair<String, Boolean>>() {
 				private static final long serialVersionUID = -1241357834655337919L;
 
 				{
@@ -650,7 +650,7 @@ public class RespectiveCategoryRecognizerTest {
                 }
             });
             
-            put(SemanticCategoryEnum.DATA.getId(), new ArrayList<Pair<String, Boolean>>() {
+            put(SemanticCategoryEnum.DATA_URI.getId(), new ArrayList<Pair<String, Boolean>>() {
 				private static final long serialVersionUID = -1241357834655337919L;
 
 				{
