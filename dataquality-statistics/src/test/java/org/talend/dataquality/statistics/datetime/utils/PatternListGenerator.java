@@ -37,7 +37,7 @@ public class PatternListGenerator {
 
     private static Set<String> knownPatternList = new LinkedHashSet<String>();
 
-    private final static ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.of(2222, 3, 11, 5, 6, 7, 888, ZoneId.of("Europe/Paris"));
+    private final static ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.of(1999, 3, 22, 5, 6, 7, 888, ZoneId.of("Europe/Paris"));
 
     private final static FormatStyle[] FORMAT_STYLES = new FormatStyle[] { FormatStyle.SHORT, FormatStyle.MEDIUM,
             FormatStyle.LONG, FormatStyle.FULL };
