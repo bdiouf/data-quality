@@ -14,6 +14,8 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.net.URISyntaxException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.duplicating.RandomWrapper;
@@ -38,6 +40,15 @@ public class MaskAddressTest {
         String input = "5 rue de l'oise"; //$NON-NLS-1$
         output = ma.generateMaskedRow(input);
         assertEquals("6 rue XX XXXXXX", output); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testWithFile() throws URISyntaxException {
+        String path = this.getClass().getResource("data/top-domain.txt").toURI().getPath(); //$NON-NLS-1$
+        ma.parse(path, false, new RandomWrapper(42));
+        String input = "5 rue de l'oise et facebook"; //$NON-NLS-1$
+        output = ma.generateMaskedRow(input);
+        assertEquals("6 rue XX XXXXXX XX facebook", output); //$NON-NLS-1$
     }
 
     @Test
