@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -27,17 +26,9 @@ public abstract class GenerateFromFileHash<T> extends Function<T> {
 
     private static final long serialVersionUID = -4616169672287269594L;
 
-    protected List<String> StringTokens = new ArrayList<>();
-
     protected List<T> genericTokens = new ArrayList<T>();
 
-    protected void init() {
-        try {
-            StringTokens = KeysLoader.loadKeys(parameters[0]);
-        } catch (IOException | NullPointerException e) {
-            // We do nothing here because in is already set.
-        }
-    }
+    protected abstract void init();
 
     @Override
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {

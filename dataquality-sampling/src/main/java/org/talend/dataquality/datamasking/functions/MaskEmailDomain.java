@@ -12,10 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.regex.Pattern;
 
 /**
@@ -44,29 +42,6 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
      */
     protected boolean isValidEmailAddress(String email) {
         return EMAIL_REGEX.matcher(email).matches();
-    }
-
-    private void addReplacement(String[] para) {
-        if (para.length > 0) {
-            try {
-                replacements = KeysLoader.loadKeys(para[0]);
-            } catch (IOException | NullPointerException e) {
-                for (String element : para) {
-                    replacements.add(element.trim());
-                }
-            } finally {
-                if (replacements.size() != 1) {
-                    replacements.remove("");
-                    replacements.remove(null);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        addReplacement(parameters);
     }
 
     /**
@@ -209,6 +184,17 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
     @Override
     protected String getDefaultOutput() {
         return EMPTY_STRING;
+    }
+
+    @Override
+    protected void init() {
+        for (String element : parameters) {
+            replacements.add(element.trim());
+        }
+        if (replacements.size() != 1) {
+            replacements.remove("");
+            replacements.remove(null);
+        }
     }
 
 }

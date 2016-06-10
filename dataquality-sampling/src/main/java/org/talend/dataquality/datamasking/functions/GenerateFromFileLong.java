@@ -22,11 +22,10 @@ public class GenerateFromFileLong extends GenerateFromFile<Long> {
 
     @Override
     protected void init() {
-        super.init();
-        for (int i = 0; i < substituteList.size(); ++i) {
+        for (int i = 0; i < parameters.length; ++i) {
             long tmp = 0L;
             try {
-                tmp = Long.parseLong(substituteList.get(i));
+                tmp = Long.parseLong(parameters[i]);
                 genericTokens.add(tmp);
             } catch (NumberFormatException e) {
             }

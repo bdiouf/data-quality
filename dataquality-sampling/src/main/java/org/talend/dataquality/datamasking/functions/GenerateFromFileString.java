@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import java.util.Arrays;
+
 /**
  * created by jgonzalez on 19 juin 2015. See GenerateFromFile.
  *
@@ -22,8 +24,7 @@ public class GenerateFromFileString extends GenerateFromFile<String> {
 
     @Override
     protected void init() {
-        super.init();
-        genericTokens = substituteList;
+        genericTokens = Arrays.asList(parameters);
     }
 
     @Override

@@ -12,10 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * created by jgonzalez on 19 juin 2015. This function will look for a ’@’ and replace all characters before by ’X’ and
@@ -27,24 +25,6 @@ public class MaskEmail extends GenerateFromFile<String> {
     private static final long serialVersionUID = 3520390903566492525L;
 
     List<String> keys = new ArrayList<>();
-
-    private void addKeys(String[] para) {
-        if (para.length > 0) {
-            try {
-                keys = KeysLoader.loadKeys(para[0]);
-            } catch (IOException | NullPointerException e) {
-                for (String element : para) {
-                    keys.add(element.trim());
-                }
-            }
-        }
-    }
-
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        addKeys(parameters);
-    }
 
     @Override
     protected String doGenerateMaskedField(String str) {
@@ -75,5 +55,13 @@ public class MaskEmail extends GenerateFromFile<String> {
     @Override
     protected String getDefaultOutput() {
         return EMPTY_STRING;
+    }
+
+    @Override
+    protected void init() {
+        for (String element : parameters) {
+            keys.add(element.trim());
+        }
+
     }
 }

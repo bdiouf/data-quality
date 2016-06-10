@@ -22,11 +22,10 @@ public class GenerateFromFileHashLong extends GenerateFromFileHash<Long> {
 
     @Override
     protected void init() {
-        super.init();
-        for (int i = 0; i < StringTokens.size(); ++i) {
+        for (int i = 0; i < parameters.length; ++i) {
             long tmp = 0L;
             try {
-                tmp = Long.parseLong(StringTokens.get(i));
+                tmp = Long.parseLong(parameters[i]);
                 genericTokens.add(tmp);
             } catch (NumberFormatException e) {
             }

@@ -21,11 +21,10 @@ public class GenerateFromFileInteger extends GenerateFromFile<Integer> {
     private static final long serialVersionUID = 1896675901231975008L;
 
     protected void init() {
-        super.init();
-        for (int i = 0; i < substituteList.size(); ++i) {
+        for (int i = 0; i < parameters.length; ++i) {
             int tmp = 0;
             try {
-                tmp = Integer.parseInt(substituteList.get(i));
+                tmp = Integer.parseInt(parameters[i]);
                 genericTokens.add(tmp);
             } catch (NumberFormatException e) {
             }

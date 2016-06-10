@@ -12,7 +12,9 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -96,11 +98,18 @@ public abstract class Function<T> implements Serializable {
      */
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         if (extraParameter != null) {
-            try {
-                parameters = extraParameter.split(","); //$NON-NLS-1$
-                integerParam = parameters.length == 1 ? Integer.parseInt(parameters[0]) : 0;
-            } catch (NumberFormatException e) {
-                // We do nothing here because parameters[] is already set.
+            parameters = extraParameter.split(","); //$NON-NLS-1$
+            if (parameters.length == 1) {
+                try {
+                    integerParam = Integer.parseInt(parameters[0]);
+                } catch (NumberFormatException e) {
+                    try {
+                        List<String> aux = KeysLoader.loadKeys(parameters[0]);
+                        parameters = aux.toArray(new String[aux.size()]);
+                    } catch (IOException | NullPointerException e2) {
+                        // We do nothing here because in is already set.
+                    }
+                }
             }
         }
         setKeepNull(keepNullValues);
