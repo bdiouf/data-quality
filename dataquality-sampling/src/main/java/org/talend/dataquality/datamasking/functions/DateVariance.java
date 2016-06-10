@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -20,7 +19,7 @@ import java.util.Date;
  * days lower than the parameter.
  *
  */
-public class DateVariance extends Function<Date> implements Serializable {
+public class DateVariance extends Function<Date> {
 
     private static final long serialVersionUID = 7723968828358381315L;
 
