@@ -54,7 +54,7 @@ public class ValueDataMaskerTest {
             put(new String[] { "666666666", MaskableCategoryEnum.UK_PHONE.name(), "String" }, "020 3528 7388");
 
             // 5. JOB_TITLE
-            put(new String[] { "CEO", MaskableCategoryEnum.JOB_TITLE.name(), "String" }, "Psychiatric Aide");
+            put(new String[] { "CEO", MaskableCategoryEnum.JOB_TITLE.name(), "String" }, "Cafeteria Cook");
 
             // 6. ADDRESS_LINE
             put(new String[] { "9 Rue Pagès", MaskableCategoryEnum.ADDRESS_LINE.name(), "String" }, "6 Rue XXXXX");

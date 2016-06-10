@@ -4,11 +4,11 @@ Accountant
 Actor
 Actuary
 Adjustment Clerk
-Admin
 Administrative Law Judge
 Administrative Services Manager
 Administrative Support Supervisors
-Advertising Manager OR Promotions Manager
+Advertising Manager
+Promotions Manager
 Advertising Sales Agent
 Aerospace Engineer
 Agricultural Crop Farm Manager
@@ -32,12 +32,15 @@ Aircraft Cargo Handling Supervisor
 Aircraft Engine Specialist
 Aircraft Launch and Recovery Officer
 Aircraft Launch Specialist
-Aircraft Mechanics OR Aircraft Service Technician
+Aircraft Mechanic
+Aircraft Service Technician
 Aircraft Rigging Assembler
 Aircraft Structure Assemblers
 Airfield Operations Specialist
 Airframe Mechanic
-Airline Pilot OR Copilot OR Flight Engineer
+Airline Pilot
+Airline Copilot
+Flight Engineer
 Algorithm Developer
 Alteration Tailor
 Ambulance Driver
@@ -53,14 +56,14 @@ Annealing Machine Operator
 Announcer
 Answering Service
 Anthropologist
-Anthropologist OR Archeologist
+Archeologist
 Anthropology Teacher
 Appliance Repairer
 Arbitrator
 Archeologist
 Architect
 Architectural Drafter
-Architectural Drafter OR Civil Drafter
+Civil Drafter
 Architecture Teacher
 Archivist
 Armored Assault Vehicle Crew Member
@@ -73,7 +76,8 @@ Artist
 Assembler
 Assessor
 Astronomer
-Athletes and Sports Competitor
+Athlete
+Sports Competitor
 Athletic Trainer
 Atmospheric and Space Scientist
 Audio and Video Equipment Technician
@@ -104,7 +108,7 @@ Bill and Account Collector
 Bindery Machine Operator
 Bindery Worker
 Biochemist
-Biochemist or Biophysicist
+Biophysicist
 Biological Science Teacher
 Biological Scientist
 Biological Technician
@@ -122,7 +126,8 @@ Brattice Builder
 Brazer
 Brazing Machine Operator
 Brickmason
-Bridge Tender OR Lock Tender
+Bridge Tender
+Lock Tender
 Broadcast News Analyst
 Broadcast Technician
 Brokerage Clerk
@@ -140,15 +145,16 @@ Butcher
 Buyer
 Cabinetmaker
 Cafeteria Cook
-Calibration Technician OR Instrumentation Technician
+Calibration Technician
+Instrumentation Technician
 Camera Operator
 Camera Repairer
 Captain
 Caption Writer
 Cardiovascular Technologist
 Career Counselor
-Carpenter
-Carpenter Assembler and Repairer
+Carpenter Assembler
+Carpenter Repairer
 Carpet Installer
 Cartographer
 Cartoonist
@@ -158,8 +164,6 @@ Casting Machine Operator
 Casting Machine Set-Up Operator
 Ceiling Tile Installer
 Cement Mason and Concrete Finisher
-Central Office
-Central Office and PBX Installers
 Central Office Operator
 CEO
 CFO
@@ -176,7 +180,6 @@ Child Care
 Child Care Worker
 Chiropractor
 Choreographer
-City
 City Planning Aide
 Civil Drafter
 Civil Engineer
@@ -190,7 +193,8 @@ Clerk
 Clinical Laboratory Technician
 Clinical Psychologist
 Clinical School Psychologist
-Coaches and Scout
+Coach
+Scout
 Coating Machine Operator
 Coil Winders
 Command Control Center Officer
@@ -207,7 +211,6 @@ Compacting Machine Operator
 Compensation and Benefits Manager
 Compliance Officers
 Composer
-Computer
 Computer Hardware Engineer
 Computer Operator
 Computer Programmer
@@ -309,7 +312,8 @@ Economist
 Editor
 Education Administrator
 Education Teacher
-Educational Counselor OR Vocationall Counselor
+Educational Counselor
+Vocationall Counselor
 Educational Psychologist
 Electric Meter Installer
 Electric Motor Repairer
@@ -332,24 +336,26 @@ Electronic Masking System Operator
 Electronics Engineer
 Electronics Engineering Technician
 Electrotyper
-Elementary and Secondary School Administrators
+Elementary School Administrator
+Secondary School Administrator
 Elementary School Teacher
 Elevator Installer and Repairer
 Eligibility Interviewer
 Embalmer
 Embossing Machine Operator
 Emergency Management Specialist
-Emergency Medical Technician and Paramedic
+Emergency Medical Technician
+Paramedic
 Employment Interviewer
 Engine Assembler
 Engineer
-Engineering
 Engineering Manager
 Engineering Teacher
 Engineering Technician
 English Language Teacher
 Engraver
-Entertainer and Performer
+Entertainer
+Performer
 Entertainment Attendant
 Environmental Compliance Inspector
 Environmental Engineer
@@ -360,7 +366,7 @@ Environmental Scientist
 Epidemiologist
 Equal Opportunity Representative
 Etcher
-Etcher and Engraver
+Engraver
 Event Planner
 Excavating Machine Operator
 Executive Secretary
@@ -393,11 +399,11 @@ Fire Fighter
 Fire Inspector
 Fire Investigator
 Fire-Prevention Engineer
-First-Line Supervisor-Manager of Landscaping, Lawn Service, and Groundskeeping Worker
 Fish Game Warden
 Fish Hatchery Manager
 Fishery Worker
-Fishing OR Forestry Supervisor
+Fishing Supervisor
+Forestry Supervisor
 Fitness Trainer
 Fitter
 Flight Attendant
@@ -410,7 +416,8 @@ Food Preparation
 Food Preparation and Serving Worker
 Food Preparation Worker
 Food Science Technician
-Food Scientists and Technologist
+Food Scientist
+Food Technologist
 Food Servers
 Food Service Manager
 Food Tobacco Roasting
@@ -441,14 +448,12 @@ Gaming Manager
 Gaming Service Worker
 Gaming Supervisor
 Gaming Surveillance Officer
-Garment
 Gas Appliance Repairer
 Gas Compressor Operator
 Gas Distribution Plant Operator
 Gas Plant Operator
 Gas Processing Plant Operator
 Gas Pumping Station Operator
-Gauger
 GED Teacher
 General Farmworker
 General Manager
@@ -468,11 +473,13 @@ Government Property Inspector
 Government Service Executive
 Graduate Teaching Assistant
 Graphic Designer
-Grinder OR Polisher
+Grinder
+Polisher
 Grinding Machine Operator
 Grips
 Grounds Maintenance Worker
-Hairdresser OR Cosmetologist
+Hairdresser
+Cosmetologist
 Hand Trimmer
 Hand Presser
 Hand Sewer
@@ -483,11 +490,9 @@ Health Practitioner
 Health Services Manager
 Health Specialties Teacher
 Health Technologist
-Healthcare
 Healthcare Practitioner
 Healthcare Support Worker
 Heat Treating Equipment Operator
-Heaters
 Heating and Air Conditioning Mechanic
 Heating Equipment Operator
 Heavy Equipment Mechanic
@@ -496,7 +501,6 @@ Highway Patrol Pilot
 Historian
 History Teacher
 Hoist and Winch Operator
-Home
 Home Appliance Installer
 Home Appliance Repairer
 Home Economics Teacher
@@ -520,7 +524,8 @@ Hunter and Trapper
 HVAC Mechanic
 Hydrologist
 Illustrator
-Immigration Inspector OR Customs Inspector
+Immigration Inspector
+Customs Inspector
 Industrial Engineer
 Industrial Engineering Technician
 Industrial Equipment Maintenance
@@ -528,7 +533,6 @@ Industrial Machinery Mechanic
 Industrial Production Manager
 Industrial Safety Engineer
 Industrial-Organizational Psychologist
-Infantry
 Infantry Officer
 Information Systems Manager
 Inspector
@@ -546,13 +550,15 @@ Insurance Underwriter
 Interaction Designer
 Interior Designer
 Internist
-Interpreter OR Translator
+Interpreter
+Translator
 Interviewer
 Irradiated-Fuel Handler
 Janitor
 Janitorial Supervisor
 Jeweler
-Jewelry Model OR Mold Makers
+Jewelry Model
+Mold Maker
 Job Printer
 Judge
 Keyboard Instrument Repairer and Tuner
@@ -560,9 +566,9 @@ Kindergarten Teacher
 Landscape Architect
 Landscape Artist
 Landscaper
-Landscaping
 Lathe Operator
-Laundry OR Dry-Cleaning Worker
+Laundry Worker
+Dry-Cleaning Worker
 Law Clerk
 Law Enforcement Teacher
 Law Teacher
@@ -664,7 +670,8 @@ Medical Secretary
 Medical Technician
 Medical Transcriptionist
 Mental Health Counselor
-Merchandise Displayer OR Window Trimmer
+Merchandise Displayer
+Window Trimmer
 Metal Fabricator
 Metal Molding Operator
 Metal Pourer and Caster
@@ -677,7 +684,8 @@ Military Officer
 Milling Machine Operator
 Millwright
 Mine Cutting Machine Operator
-Mining Engineer OR Geological Engineer
+Mining Engineer
+Geological Engineer
 Mining Machine Operator
 Mixing and Blending Machine Operator
 Model Maker
@@ -692,7 +700,8 @@ Motorboat Mechanic
 Motorboat Operator
 Motorcycle Mechanic
 Movers
-Movie Director oR Theatre Director
+Movie Director
+Theatre Director
 Multi-Media Artist
 Multiple Machine Tool Setter
 Municipal Clerk
@@ -705,10 +714,10 @@ Music Composer
 Music Director
 Musical Instrument Tuner
 Musician
-Musician OR Singer
 Natural Sciences Manager
 Naval Architects
-Network Admin OR Computer Systems Administrator
+Network Admin
+Computer Systems Administrator
 Network Systems Analyst
 New Accounts Clerk
 Night Security Guard
@@ -721,7 +730,8 @@ Nuclear Monitoring Technician
 Nuclear Power Reactor Operator
 Nuclear Technician
 Numerical Control Machine Tool Operator
-Numerical Tool Programmer OR Process Control Programmer
+Numerical Tool Programmer
+Process Control Programmer
 Nursery Manager
 Nursery Worker
 Nursing Aide
@@ -750,15 +760,17 @@ Optometrist
 Oral Surgeon
 Order Clerk
 Order Filler
-Order Filler OR Stock Clerk
+Order Filler
+Stock Clerk
 Organizational Development Manager
 Orthodontist
-Orthotist OR Prosthetist
+Orthotist
+Prosthetist
 Outdoor Power Equipment Mechanic
 Packaging Machine Operator
 Packer and Packager
 Painter
-Painter and Illustrator
+Illustrator
 Painting Machine Operator
 Pantograph Engraver
 Paper Goods Machine Operator
@@ -817,20 +829,25 @@ Pipelayer
 Pipelaying Fitter
 Plant and System Operator
 Plant Scientist
-Plasterer OR Stucco Mason
+Plasterer
+Stucco Mason
 Plastic Molding Machine Operator
 Plate Finisher
 Platemaker
 Plating Machine Operator
 Plating Operator
-Plating Operator OR Coating Machine Operator
+Plating Operator
+Coating Machine Operator
 Plumber
-Plumber OR Pipefitter OR Steamfitter
+Pipefitter
+Steamfitter
 Podiatrist
-Poet OR Lyricist
+Poet
+Lyricist
 Police and Sheriffs Patrol Officer
 Police Detective
-Police Identification OR Records Officer
+Police Identification
+Records Officer
 Political Science Teacher
 Political Scientist
 Portable Power Tool Repairer
@@ -843,7 +860,8 @@ Postsecondary Education Administrators
 Postsecondary Teacher
 Potter
 Poultry Cutter
-Power Distributors OR Dispatcher
+Power Distributors
+Power Dispatcher
 Power Generating Plant Operator
 Power Plant Operator
 PR Manager
@@ -853,12 +871,13 @@ Precision Devices Inspector
 Precision Dyer
 Precision Etcher and Engraver
 Precision Instrument Repairer
-Precision Lens Grinders and Polisher
+Precision Lens Grinder
+Precision Lens Polisher
 Precision Mold and Pattern Caster
 Precision Pattern and Die Caster
 Precision Printing Worker
 Prepress Technician
-Preschool Education Administrators
+Preschool Education Administrator
 Preschool Teacher
 Press Machine Setter, Operator
 Pressing Machine Operator
@@ -868,10 +887,11 @@ Printing Press Machine Operator
 Private Detective and Investigator
 Private Household Cook
 Private Sector Executive
-Probation Officers and Correctional Treatment Specialist
+Probation Officers 
+Correctional Treatment Specialist
 Procurement Clerk
 Producer
-Producers and Director
+Director
 Product Management Leader
 Product Promoter
 Product Safety Engineer
@@ -888,7 +908,8 @@ Professional Photographer
 Professor
 Program Director
 Project Manager
-Proofreaders and Copy Marker
+Proofreader
+Copy Marker
 Prosthodontist
 Protective Service Worker
 Psychiatric Aide
@@ -940,8 +961,10 @@ Registered Nurse
 Rehabilitation Counselor
 Religious Worker
 Rental Clerk
-Reporters OR Correspondent
-Reservation Agent OR Transportation Ticket Agent
+Reporters
+Correspondent
+Reservation Agent
+Transportation Ticket Agent
 Residential Advisor
 Respiratory Therapist
 Respiratory Therapy Technician
@@ -949,7 +972,6 @@ Restaurant Cook
 Retail Sales person
 Retail Salesperson
 Rigger
-RN
 Rock Splitter
 Rolling Machine Setter
 Roof Bolters Mining
@@ -959,7 +981,6 @@ Rough Carpenter
 Roustabouts
 Safety Engineer
 Sailor
-Sales and Related Workers
 Sales Engineer
 Sales Manager
 Sales Person
@@ -977,7 +998,8 @@ Secondary School Teacher
 Secretary
 Securities Sales Agent
 Security Guard
-Security Systems Installer OR Fire Alarm Systems Installer
+Security Systems Installer
+Fire Alarm Systems Installer
 Segmental Paver
 Self-Enrichment Education Teacher
 Semiconductor Processor
@@ -1001,7 +1023,8 @@ Shoe and Leather Repairer
 Shoe Machine Operators
 Short Order Cook
 Shuttle Car Operator
-Signal Repairer OR Track Switch Repairer
+Signal Repairer
+Track Switch Repairer
 Silversmith
 Singer
 Sketch Artist
@@ -1020,7 +1043,8 @@ Sociology Teacher
 Software Engineer
 Soil Conservationist
 Soil Scientist
-Soil Scientist OR Plant Scientist
+Soil Scientist
+Plant Scientist
 Solderer
 Soldering Machine Setter
 Sound Engineering Technician
@@ -1033,10 +1057,9 @@ Sports Book Writer
 Spotters
 Spraying Machine Operator
 Staff Psychologist
-State
 Statement Clerk
 Stationary Engineer
-Stationary Engineer OR Boiler Operator
+Boiler Operator
 Statistical Assistant
 Statistician
 Steel Worker
@@ -1046,7 +1069,8 @@ Stock Clerk
 Stone Cutter
 Stone Sawyer
 Stonemason
-Storage Manager OR Distribution Manager
+Storage Manager
+Distribution Manager
 Streetcar Operator
 Stringed Instrument Repairer and Tuner
 Stripper
@@ -1074,7 +1098,8 @@ Tank Car
 Taper
 Tax Examiner
 Tax Preparer
-Taxi Drivers and Chauffeur
+Taxi Driver
+Chauffeur
 Teacher
 Teacher Assistant
 Team Assembler
@@ -1089,7 +1114,7 @@ Telemarketer
 Telephone Operator
 Telephone Station Installer and Repairer
 Teller
-Terrazzo Workes and Finisher
+Terrazzo Worker
 Textile Cutting Machine Operator
 Textile Dyeing Machine Operator
 Textile Knitting Machine Operator
@@ -1097,7 +1122,8 @@ Textile Machine Operator
 Textile Worker
 Therapist
 Ticket Agent
-Tile Setter OR Marble Setter
+Tile Setter
+Marble Setter
 Timing Device Assemblers
 Tire Builder
 Tire Changer
@@ -1113,10 +1139,11 @@ Tractor-Trailer Truck Driver
 Traffic Technician
 Train Crew
 Trainer
-Training Manager OR Development Manager
+Training Manager
+Development Manager
 Transformer Repairer
-Transit Police OR Railroad Police
-Transportation and Material-Moving
+Transit Police
+Railroad Police
 Transportation Attendant
 Transportation Equipment Maintenance
 Transportation Equipment Painters
@@ -1128,22 +1155,21 @@ Travel Clerk
 Travel Guide
 Tree Trimmer
 Truck Driver
-TSA
 Typesetter
 Typesetting Machine Operator
-Umpire and Referee
-Underground Mining
-University
+Umpire
+Referee
 Upholsterer
 Urban Planner
 User Experience Manager
 User Experience Researcher
-Usher
 Utility Meter Reader
-Valve Repairer OR Regulator Repairer
+Valve Repairer
+Regulator Repairer
 Vending Machine Servicer
 Veterinarian
-Veterinary Assistant OR Laboratory Animal Caretaker
+Veterinary Assistant
+Laboratory Animal Caretaker
 Veterinary Technician
 Vice President Of Human Resources
 Vice President Of Marketing
@@ -1173,6 +1199,9 @@ Wind Instrument Repairer
 Woodworker
 Woodworking Machine Operator
 Woodworking Machine Setter
-Word Processors and Typist
-Writer OR Author
-Zoologists OR Wildlife Biologist
+Word Processor
+Typist
+Writer
+Author
+Zoologists
+Wildlife Biologist
