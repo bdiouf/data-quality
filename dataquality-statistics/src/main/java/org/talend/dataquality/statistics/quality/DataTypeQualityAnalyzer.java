@@ -60,9 +60,6 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
         results.clear();
     }
 
-    // TODO private List listQualityAnalyzer
-    // add method...
-
     @Override
     public boolean analyze(String... record) {
         if (record == null) {
@@ -90,11 +87,6 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
         }
         return true;
     }
-
-    // TODO: create class CustomDatePatternAnalyzer:
-    // - CustomDatePatternAnalyzer(pattern)
-    // - method analyze() {try { DateTimeFormatter.valueOf(date, pattern) } catch {...}}
-    // - method DataType execute()
 
     private void processInvalidValue(ValueQualityStatistics valueQuality, String invalidValue) {
         if (isStoreInvalidValues) {

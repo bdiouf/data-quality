@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-
 /**
  * created by jgonzalez on 24 juin 2015. See GenerateFromList.
  *

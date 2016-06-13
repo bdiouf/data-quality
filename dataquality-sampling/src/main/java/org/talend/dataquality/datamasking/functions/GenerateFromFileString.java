@@ -15,7 +15,7 @@ package org.talend.dataquality.datamasking.functions;
 /**
  * created by jgonzalez on 19 juin 2015. See GenerateFromFile.
  *
-*/
+ */
 public class GenerateFromFileString extends GenerateFromFile<String> {
 
     private static final long serialVersionUID = 6360879458690229195L;

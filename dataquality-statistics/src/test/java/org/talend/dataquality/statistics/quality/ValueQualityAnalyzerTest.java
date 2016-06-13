@@ -27,6 +27,8 @@ import java.util.Set;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.talend.dataquality.common.inference.ValueQualityStatistics;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
@@ -38,6 +40,8 @@ import org.talend.dataquality.statistics.type.DataTypeEnum;
  *
  */
 public class ValueQualityAnalyzerTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ValueQualityAnalyzerTest.class);
 
     public static List<String[]> getRecords(InputStream inputStream, String separator) {
         if (inputStream == null) {
@@ -114,8 +118,7 @@ public class ValueQualityAnalyzerTest {
         try {
             valueQualityAnalyzer.close();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

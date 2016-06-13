@@ -117,8 +117,6 @@ public class DataTypeAnalyzerTest extends DataTypeStatiticsTestBase {
         assertEquals(DataTypeEnum.STRING, analyzer.getResult().get(0).getSuggestedType());
     }
 
-    // TODO All other data types
-
     @Test
     public void testBoolean() throws Exception {
         DataTypeAnalyzer analyzer = createDataTypeanalyzer();
