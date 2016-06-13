@@ -111,9 +111,9 @@ public class TypeInferenceUtilsTest {
 
     @Test
     public void testIsDouble() throws Exception {
-        String[] validEnDoubleValues = { "0.8", "1.2", "100", "100.0", "-2.0", "1.0e-04", "1.0e+4", "1E-4" };
+        String[] validEnDoubleValues = { "0.8", "1.2", "100", "100.0", "-2.0", "1.0e-04", "1.0e+4", "1E-4", "1.0 e-4", "1 E+12" };
         String[] validFrDoubleValues = { "0,9", "1,0e-4" };
-        String[] invalidDoubleValues = { "NaN", "3.4d", "123L", "123l", " 0.8", "0.8 ", "0. 8", "1.0 e-4", "1. 0e-4", "1.0e -4" };
+        String[] invalidDoubleValues = { "NaN", "3.4d", "123L", "123l", " 0.8", "0.8 ", "0. 8", "1. 0e-4", "1.0e -4" };
 
         for (String value : (String[]) ArrayUtils.addAll(validEnDoubleValues, validFrDoubleValues)) {
             Assert.assertTrue(value + " is expected to be a valid decimal value but actually not.",
