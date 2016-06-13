@@ -1,8 +1,19 @@
+V1.5.1 (in developement)
+	- TDQ-11437 fix the regex for FR_PHONE recognition
+	- TDQ-12055 correctly pick category in semantic discovery analysis
+	- TDQ-11962 add LAST_NAME index
+	- TDQ-12046 add more cities into CITY index for GB_DE_FI_AU_BE_BR_CA_DK_CH_LU_NL_NO_US countries
+	- TDQ-12041 fixed le/la/les bug in FR_COMMUNE index
+	- TDQ-12047 add about 500 common french firstnames
+	- TDQ-12047 optimize category suggestion by prioritizing with ordinal information
+	- TDQ-11678 optimize REGEX categorizer loading speed
+	- TDQ-12169 Fix for file leak issues in SemanticQualityAnalyzer
+
 V1.5.0 2016-05-10
 	- rename artifact ID to dataquality-semantic
 	- TDQ-11437 fix regex for FR_PHONE recognition
 	
-V1.4.4 2016-04-27
+V1.4.4 2016-04-27 (for Studio 6.2.0)
 	- TDQ-11701 remove dependency on sampling library
 
 V1.4.3 2016-03-25

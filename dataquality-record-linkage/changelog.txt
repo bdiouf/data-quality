@@ -1,12 +1,21 @@
+V3.2.1 (in development) (with DQ library release 1.5.1)
+	- TDQ-12038 rename datascience.common package to dataquality.common
+	- TDQ-12031 improve speed of q-Gram metric
+
 V3.2.0 2016-05-10
 	- rename artifact ID to dataquality-record-linkage
 
-V3.1.1 (in development)
+V3.1.2 2016-05-04 (for Studio 6.2.0)
+    - TDQ-11779 fixed t-swoosh algorithm in the tMatchgroup components with multi-pass mode can not get correctly group quality value
+    - TDQ-11949 for the match rule which use the custom type algorithm, we will use the threshold and weight from UI; and deprecated IAttributeMatcher.isDummyMatcher
+
+V3.1.1 2016-04-27
     - TDQ-11666 Integrate the t-swoosh algorithm in the tMatchgroup components (step 3),extract a sub class for : AnalysisSwooshMatchRecordGrouping, to used by the component
     - TDQ-11536 move TalendURLClassLoader class from record-linkage library to dataquality.common
     - TDQ-11779 fixed t-swoosh algorithm in the tMatchgroup components with mutipass mode can not get correctly group quality value
     - TDQ-11949 for the match rule which use the custom type algorithm, we will use the threshold and weight from UI and add test; and deprecated IAttributeMatcher.isDummyMatcher
     - TDQ-11599 return null if the number is null, then the smallest will be 2 in (2,5,null)
+
 V3.1.0 2016-02-16
     - TDQ-11599 add catch NumberFormatException, return 0 when catch exception.
     - TDQ-11627 change the field in AbstractRecordGrouping.java:RecordMatcherType matchAlgo, from private to protected

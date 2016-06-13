@@ -1,7 +1,10 @@
+V1.5.1 (in developement)
+	- TDQ-12047 optimize category suggestion by prioritizing with ordinal information
+
 V1.5.0 2016-05-10
 	- rename artifact ID to dataquality-statistics
 
-V1.4.4 2016-04-27
+V1.4.4 2016-04-27 (for Studio 6.2.0)
 	- TDQ-11763 support numbers with non-breaking spaces
 	- TDQ-11833 support more date patterns
 
