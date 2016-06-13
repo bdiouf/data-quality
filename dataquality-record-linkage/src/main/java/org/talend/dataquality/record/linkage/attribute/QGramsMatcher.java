@@ -53,8 +53,8 @@ public class QGramsMatcher extends AbstractAttributeMatcher {
      */
     @Override
     public double getWeight(String string1, String string2) {
-        final List<String> str1Tokens = tokenizer.tokenizeToArrayList(string1, q);
-        final List<String> str2Tokens = tokenizer.tokenizeToArrayList(string2, q);
+        final List<String> str1Tokens = tokenizer.tokenizeToArrayList(string1, q, !tokenize);
+        final List<String> str2Tokens = tokenizer.tokenizeToArrayList(string2, q, !tokenize);
 
         final int maxQGramsMatching = str1Tokens.size() + str2Tokens.size();
 

@@ -63,16 +63,16 @@ public class MyDistance extends AbstractAttributeMatcher {
 
     // This method is only for testing the class. It's not required when developping a new distance.
     // Delete it if you reuse this code to build your own library.
-    public static void main(String[] args) {
-        MyDistance dist = new MyDistance();
-        String[] strings = { "testlong", "testlon", "bad", "testlong", "test", "te", "te", "mad" };
-        for (String a : strings) {
-            for (String b : strings) {
-                System.out.println("Dist(" + a + "," + b + ")= " + dist.getWeight(a, b));
-            }
-        }
-
-    }
+    // public static void main(String[] args) {
+    // MyDistance dist = new MyDistance();
+    // String[] strings = { "testlong", "testlon", "bad", "testlong", "test", "te", "te", "mad" };
+    // for (String a : strings) {
+    // for (String b : strings) {
+    // System.out.println("Dist(" + a + "," + b + ")= " + dist.getWeight(a, b));
+    // }
+    // }
+    //
+    // }
 
     /*
      * (non-Javadoc)

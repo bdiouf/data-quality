@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.attribute;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
@@ -20,6 +21,8 @@ import org.junit.Test;
  * DOC scorreia class global comment. Detailled comment
  */
 public class LevenshteinMatcherTest {
+
+    private static final double EPSILON = 0.000001;
 
     private static final String[] LOOKUP = { "joão", "joão silva", "joão pé de feijão" }; //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
 
@@ -44,6 +47,23 @@ public class LevenshteinMatcherTest {
             }
         }
 
+    }
+
+    @Test
+    public void tokenizeNoRegex() {
+        String str1 = "John Doe";
+        String str2 = "Doe John";
+
+        LevenshteinMatcher LevenshteinToken = new LevenshteinMatcher();
+        LevenshteinToken.setTokenize(true);
+        LevenshteinToken.setRegexTokenize("titi");
+        double wToken = LevenshteinToken.getMatchingWeight(str1, str2);
+
+        LevenshteinMatcher LevenshteinNoToken = new LevenshteinMatcher();
+        LevenshteinNoToken.setTokenize(false);
+        double wNoToken = LevenshteinNoToken.getMatchingWeight(str1, str2);
+
+        assertEquals(wNoToken, wToken, EPSILON);
     }
 
 }

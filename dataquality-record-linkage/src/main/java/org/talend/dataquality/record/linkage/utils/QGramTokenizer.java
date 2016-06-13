@@ -38,15 +38,22 @@ public class QGramTokenizer implements Serializable {
      * @param q the length of each token
      * @return the list of tokens (never null)
      */
-    public final List<String> tokenizeToArrayList(final String input, int q) {
+    public final List<String> tokenizeToArrayList(final String input, int q, boolean padding) {
         if (input == null) {
             return new ArrayList<String>();
         }
-        String toTokenize = pad(input, q);
+        String toTokenize = null;
+        if (padding)
+            toTokenize = pad(input, q);
+        else
+            toTokenize = input;
         List<String> tokens = new ArrayList<String>();
         for (int i = 0; i < toTokenize.length() - q + 1; i++) {
             tokens.add(toTokenize.substring(i, i + q));
         }
+        // --- If the string is too short (only if no padding), return it
+        if (toTokenize.length() < q)
+            tokens.add(toTokenize);
         return tokens;
     }
 

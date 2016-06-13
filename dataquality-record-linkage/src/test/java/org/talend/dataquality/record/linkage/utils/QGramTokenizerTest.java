@@ -32,14 +32,15 @@ public class QGramTokenizerTest {
             "d c", " co", "com", "omm", "mme", "men", "ent", "nt#", "t##" };
 
     /**
-     * Test method for {@link org.talend.dataquality.record.linkage.utils.QGramTokenizer#tokenizeToArrayList(java.lang.String, int)}.
+     * Test method for
+     * {@link org.talend.dataquality.record.linkage.utils.QGramTokenizer#tokenizeToArrayList(java.lang.String, int)}.
      */
     @Test
     public void testTokenizeToArrayList() {
         HashSet<String> expect = new HashSet<String>();
         expect.addAll(Arrays.asList(expected));
         QGramTokenizer tokenizer = new QGramTokenizer();
-        List<String> tokenized = tokenizer.tokenizeToArrayList(INPUT, 3);
+        List<String> tokenized = tokenizer.tokenizeToArrayList(INPUT, 3, true);
         // StringBuffer buf = new StringBuffer();
         for (String token : tokenized) {
             // buf.append("\"").append(token).append("\",");

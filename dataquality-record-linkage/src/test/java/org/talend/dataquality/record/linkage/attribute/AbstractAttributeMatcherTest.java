@@ -13,13 +13,18 @@
 package org.talend.dataquality.record.linkage.attribute;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.talend.dataquality.record.linkage.attribute.IAttributeMatcher.NullOption;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 
 /**
  * Unit tests for attribute matchers
@@ -113,7 +118,10 @@ public class AbstractAttributeMatcherTest {
     @Test
     public void testGetMatchingWeight() {
         for (String[] str : testcase) {
-            IAttributeMatcher matcher = AttributeMatcherFactory.createMatcher(str[0]);
+            AbstractAttributeMatcher matcher = (AbstractAttributeMatcher) AttributeMatcherFactory.createMatcher(str[0]);
+            matcher.setTokenize(false);
+            matcher.setInitialComparison(false);
+            matcher.setFingerPrintApply(false);
             assertEquals("The score of test case is unexpected.\n" + Arrays.asList(str), Double.valueOf(str[3]),
                     matcher.getMatchingWeight(str[1], str[2]), 0.01);
         }
@@ -154,6 +162,110 @@ public class AbstractAttributeMatcherTest {
 
         }
 
+    }
+
+    @Test
+    public void tokenizePerfectAnyOrder() {
+        String str1 = "John Doe";
+        String str2 = "Doe John";
+
+        List<AbstractAttributeMatcher> listMeasure = new ArrayList<AbstractAttributeMatcher>();
+        for (AttributeMatcherType type : AttributeMatcherType.values()) {
+            if (type != AttributeMatcherType.CUSTOM && type != AttributeMatcherType.DUMMY)
+                listMeasure.add((AbstractAttributeMatcher) AttributeMatcherFactory.createMatcher(type));
+        }
+
+        for (AbstractAttributeMatcher measure : listMeasure) {
+
+            measure.setTokenize(true);
+            measure.setTokenMethod(TokenizedResolutionMethod.ANYORDER);
+            measure.setRegexTokenize(" ");
+            double w = measure.getMatchingWeight(str1, str2);
+            assertEquals(1.0, w, 0);
+        }
+    }
+
+    @Test
+    public void tokenizeSameOrder() {
+        String str1 = "John Doe";
+        String str2 = "John F. Patrick Doe";
+        String str3 = "John Patrick Doe Jones";
+
+        List<AbstractAttributeMatcher> listMeasure = new ArrayList<AbstractAttributeMatcher>();
+        for (AttributeMatcherType type : AttributeMatcherType.values()) {
+            if (type != AttributeMatcherType.CUSTOM && type != AttributeMatcherType.DUMMY)
+                listMeasure.add((AbstractAttributeMatcher) AttributeMatcherFactory.createMatcher(type));
+        }
+
+        List<Boolean> listInitials = new ArrayList<Boolean>();
+        listInitials.add(true);
+        listInitials.add(false);
+
+        for (Boolean ini : listInitials)
+            for (AbstractAttributeMatcher measure : listMeasure) {
+                measure.setInitialComparison(ini);
+                measure.setTokenize(true);
+                measure.setTokenMethod(TokenizedResolutionMethod.SAMEORDER);
+                measure.setRegexTokenize(" ");
+
+                double w12 = measure.getMatchingWeight(str1, str2);
+                assertTrue(w12 >= 0.5);
+
+                double w13 = measure.getMatchingWeight(str1, str3);
+                assertTrue(w13 >= 0.5);
+            }
+
+    }
+
+    @Test
+    public void tokenizeSamePlace() {
+        String str1 = "John Doe";
+        String str2 = "John D. Doe";
+
+        List<AbstractAttributeMatcher> listMeasure = new ArrayList<AbstractAttributeMatcher>();
+        for (AttributeMatcherType type : AttributeMatcherType.values()) {
+            if (type != AttributeMatcherType.CUSTOM && type != AttributeMatcherType.DUMMY)
+                listMeasure.add((AbstractAttributeMatcher) AttributeMatcherFactory.createMatcher(type));
+        }
+
+        List<Boolean> listInitials = new ArrayList<Boolean>();
+        listInitials.add(true);
+        listInitials.add(false);
+
+        for (Boolean ini : listInitials)
+            for (AbstractAttributeMatcher measure : listMeasure) {
+                measure.setInitialComparison(ini);
+                measure.setTokenize(true);
+                measure.setTokenMethod(TokenizedResolutionMethod.SAMEPLACE);
+                measure.setRegexTokenize(" ");
+                double w = measure.getMatchingWeight(str1, str2);
+                assertTrue(w < 0.67);
+            }
+    }
+
+    @Test
+    public void tokenizeInitial() {
+        String str1 = "John Doe";
+        String str2 = "J. D";
+
+        List<AbstractAttributeMatcher> listMeasure = new ArrayList<AbstractAttributeMatcher>();
+        for (AttributeMatcherType type : AttributeMatcherType.values()) {
+            if (type != AttributeMatcherType.CUSTOM && type != AttributeMatcherType.DUMMY)
+                listMeasure.add((AbstractAttributeMatcher) AttributeMatcherFactory.createMatcher(type));
+        }
+
+        for (AbstractAttributeMatcher measure : listMeasure) {
+            measure.setInitialComparison(true);
+            measure.setTokenize(true);
+            measure.setTokenMethod(TokenizedResolutionMethod.SAMEPLACE);
+            measure.setRegexTokenize(" ");
+            double w = measure.getMatchingWeight(str1, str2);
+            assertEquals(1.0, w, 0);
+
+            measure.setInitialComparison(false);
+            w = measure.getMatchingWeight(str1, str2);
+            assertNotEquals(1.0, w);
+        }
     }
 
 }

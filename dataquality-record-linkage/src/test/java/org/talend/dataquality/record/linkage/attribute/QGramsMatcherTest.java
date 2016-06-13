@@ -38,12 +38,16 @@ public class QGramsMatcherTest {
     @Test
     public void testGetMatchingWeight() {
         QGramsMatcher m = new QGramsMatcher();
+        m.setTokenize(false);
+        m.setInitialComparison(false);
+        m.setFingerPrintApply(false);
 
         for (String elt : MAININPUT) {
 
             for (String lookupElt : LOOKUP) {
                 double matchingWeight = m.getMatchingWeight(elt, lookupElt);
-                System.out.println("Match[" + elt + "," + lookupElt + "]=" + matchingWeight); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                // System.out.println("Match[" + elt + "," + lookupElt + "]=" + matchingWeight); //$NON-NLS-1$ //$NON-NLS-2$
+                // //$NON-NLS-3$
                 assertFalse(matchingWeight > 1);
                 assertFalse(matchingWeight < 0);
             }
@@ -61,4 +65,5 @@ public class QGramsMatcherTest {
             }
         }
     }
+
 }
