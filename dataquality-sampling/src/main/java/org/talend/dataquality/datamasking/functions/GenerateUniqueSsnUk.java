@@ -30,24 +30,24 @@ public class GenerateUniqueSsnUk extends AbstractGenerateUniqueSsn {
 
     @Override
     protected List<AbstractField> createFieldsListFromPattern() {
-        List<Character> forbiddenLetters = new ArrayList<Character>(Arrays.asList('D', 'F', 'I', 'Q', 'U', 'V'));
+        List<Character> forbiddenLetters = new ArrayList<>(Arrays.asList('D', 'F', 'I', 'Q', 'U', 'V'));
 
-        List<AbstractField> fields = new ArrayList<AbstractField>();
+        List<AbstractField> fields = new ArrayList<>();
 
-        List<String> firstField = new ArrayList<String>();
+        List<String> firstField = new ArrayList<>();
         for (char firstLetter = 'A'; firstLetter <= 'Z'; firstLetter++)
             if (!forbiddenLetters.contains(firstLetter))
                 for (char secondLetter = 'A'; secondLetter <= 'Z'; secondLetter++)
                     if (!forbiddenLetters.contains(secondLetter) && secondLetter != 'O') {
                         String twoLetters = new StringBuilder().append(firstLetter).append(secondLetter).toString();
-                        if (!(twoLetters.equals("BG") || twoLetters.equals("GB") || twoLetters.equals("NK")
-                                || twoLetters.equals("KN") || twoLetters.equals("TN") || twoLetters.equals("NT")
-                                || twoLetters.equals("ZZ")))
+                        if (!("BG".equals(twoLetters) || "GB".equals(twoLetters) || "NK".equals(twoLetters)
+                                || "KN".equals(twoLetters) || "TN".equals(twoLetters) || "NT".equals(twoLetters)
+                                || "ZZ".equals(twoLetters)))
                             firstField.add(twoLetters);
                     }
         fields.add(new FieldEnum(firstField, 2));
         fields.add(new FieldInterval(0, 999999));
-        List<String> thirdField = new ArrayList<String>();
+        List<String> thirdField = new ArrayList<>();
         for (char letter = 'A'; letter <= 'D'; letter++)
             thirdField.add(String.valueOf(letter));
         fields.add(new FieldEnum(thirdField, 1));
@@ -58,7 +58,7 @@ public class GenerateUniqueSsnUk extends AbstractGenerateUniqueSsn {
     @Override
     protected StringBuilder doValidGenerateMaskedField(String str) {
         // read the input strWithoutSpaces
-        List<String> strs = new ArrayList<String>();
+        List<String> strs = new ArrayList<>();
         strs.add(str.substring(0, 2));
         strs.add(str.substring(2, 8));
         strs.add(str.substring(8, 9));

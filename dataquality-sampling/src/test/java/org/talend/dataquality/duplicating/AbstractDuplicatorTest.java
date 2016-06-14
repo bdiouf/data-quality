@@ -89,7 +89,7 @@ public class AbstractDuplicatorTest {
         int dupCount = 0;
         int dupCountSum = 0;
 
-        List<row2Struct> duplicateResult = new ArrayList<row2Struct>();
+        List<row2Struct> duplicateResult = new ArrayList<>();
         for (row1Struct tester : testers) {
             List<row2Struct> res = duplicator.process(tester);
             duplicateResult.addAll(res);

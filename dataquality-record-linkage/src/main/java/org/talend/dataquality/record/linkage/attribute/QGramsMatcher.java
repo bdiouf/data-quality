@@ -74,15 +74,15 @@ public class QGramsMatcher extends AbstractAttributeMatcher {
      */
     private float getUnNormalisedSimilarity(final List<String> str1Tokens, final List<String> str2Tokens) {
 
-        List<String> sorted1 = new ArrayList<String>();
+        List<String> sorted1 = new ArrayList<>();
         sorted1.addAll(str1Tokens);
         Collections.sort(sorted1);
-        List<String> sorted2 = new ArrayList<String>();
+        List<String> sorted2 = new ArrayList<>();
         sorted2.addAll(str2Tokens);
         Collections.sort(sorted2);
 
         int difference = 0;
-        while (sorted1.size() != 0 && sorted2.size() != 0) {
+        while (!sorted1.isEmpty() && !sorted2.isEmpty()) {
             int comp = (sorted1.get(0)).compareTo(sorted2.get(0));
             if (comp > 0) {
                 sorted2.remove(0);
@@ -96,7 +96,7 @@ public class QGramsMatcher extends AbstractAttributeMatcher {
             }
         }
         // return
-        return difference + sorted1.size() + sorted2.size();
+        return (float) difference + sorted1.size() + sorted2.size();
     }
 
     /**

@@ -41,7 +41,7 @@ public class FieldDate extends AbstractField {
 
     private int lastYear;
 
-    private List<Integer> numberDaysPerYear = new ArrayList<Integer>();
+    private List<Integer> numberDaysPerYear = new ArrayList<>();
 
     /**
      * 
@@ -107,9 +107,9 @@ public class FieldDate extends AbstractField {
 
         Long dayNumber = 0L;
         try {
-            int year = Integer.valueOf(str.substring(0, 4));
-            int month = Integer.valueOf(str.substring(4, 6));
-            int day = Integer.valueOf(str.substring(6, 8));
+            int year = Integer.parseInt(str.substring(0, 4));
+            int month = Integer.parseInt(str.substring(4, 6));
+            int day = Integer.parseInt(str.substring(6, 8));
 
             // Check if the date exists
             if (year < this.firstYear || year >= this.lastYear)
@@ -144,7 +144,8 @@ public class FieldDate extends AbstractField {
 
         int year = findNearest(number, numberDaysPerYear);
         long remainingDays = number - numberDaysPerYear.get(year);
-        int month = -1, days = -1;
+        int month;
+        int days;
         if (isLeapYear(year + firstYear)) {
             month = findNearest(remainingDays, cumulativeMonthSizeLeapYear);
             days = (int) (remainingDays - cumulativeMonthSizeLeapYear.get(month));

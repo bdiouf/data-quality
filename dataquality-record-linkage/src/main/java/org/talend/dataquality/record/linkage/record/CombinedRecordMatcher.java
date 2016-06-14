@@ -31,7 +31,7 @@ import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
  */
 public class CombinedRecordMatcher extends AbstractRecordMatcher {
 
-    private final List<IRecordMatcher> matchers = new ArrayList<IRecordMatcher>();
+    private final List<IRecordMatcher> matchers = new ArrayList<>();
 
     private IRecordMatcher lastPositiveMatcher;
 

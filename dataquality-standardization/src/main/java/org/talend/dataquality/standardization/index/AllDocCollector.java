@@ -27,7 +27,7 @@ import org.apache.lucene.search.Scorer;
  */
 public class AllDocCollector extends Collector {
 
-    List<ScoreDoc> docs = new ArrayList<ScoreDoc>();
+    List<ScoreDoc> docs = new ArrayList<>();
 
     private Scorer scorer;
 

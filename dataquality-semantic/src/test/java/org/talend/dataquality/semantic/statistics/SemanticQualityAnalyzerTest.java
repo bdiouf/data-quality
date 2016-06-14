@@ -126,7 +126,7 @@ public class SemanticQualityAnalyzerTest {
     }
 
     private static List<String[]> getRecords(String path) {
-        List<String[]> records = new ArrayList<String[]>();
+        List<String[]> records = new ArrayList<>();
         try {
             Reader reader = new FileReader(SemanticQualityAnalyzerTest.class.getResource(path).getPath());
             CSVFormat csvFormat = CSVFormat.DEFAULT.withDelimiter(';').withFirstRecordAsHeader();

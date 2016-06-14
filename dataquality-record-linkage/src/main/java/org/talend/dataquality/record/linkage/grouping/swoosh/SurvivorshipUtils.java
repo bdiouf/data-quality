@@ -43,7 +43,7 @@ public class SurvivorshipUtils {
         SurvivorShipAlgorithmParams survivorShipAlgorithmParams = new SurvivorShipAlgorithmParams();
 
         // Survivorship functions.
-        List<SurvivorshipFunction> survFunctions = new ArrayList<SurvivorshipFunction>();
+        List<SurvivorshipFunction> survFunctions = new ArrayList<>();
         for (List<Map<String, String>> survivorshipKeyDefs : joinKeyRules) {
             for (Map<String, String> survDef : survivorshipKeyDefs) {
                 SurvivorshipFunction func = createSurvivorshipFunction(survivorShipAlgorithmParams, survDef);

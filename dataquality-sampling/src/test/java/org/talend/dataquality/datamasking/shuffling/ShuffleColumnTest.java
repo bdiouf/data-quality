@@ -19,11 +19,11 @@ public class ShuffleColumnTest {
 
     private String file50000 = "Shuffling_test_data_50000.csv";
 
-    private static List<Integer> data = new ArrayList<Integer>();
+    private static List<Integer> data = new ArrayList<>();
 
     private static GenerateData generation = new GenerateData();
 
-    private static List<List<String>> columns = new ArrayList<List<String>>();
+    private static List<List<String>> columns = new ArrayList<>();
 
     private static List<String> allColumns = Arrays
             .asList(new String[] { "id", "first_name", "last_name", "email", "gender", "birth", "city", "zip_code", "country" });
@@ -62,8 +62,8 @@ public class ShuffleColumnTest {
         int partition = 10000;
         int size = 1000000;
 
-        List<List<String>> id = new ArrayList<List<String>>();
-        List<String> idc = new ArrayList<String>();
+        List<List<String>> id = new ArrayList<>();
+        List<String> idc = new ArrayList<>();
         idc.add("id");
         id.add(idc);
 
@@ -101,8 +101,8 @@ public class ShuffleColumnTest {
         int partition = 100000;
         int size = 10000999;
 
-        List<List<String>> id = new ArrayList<List<String>>();
-        List<String> idc = new ArrayList<String>();
+        List<List<String>> id = new ArrayList<>();
+        List<String> idc = new ArrayList<>();
         idc.add("id");
         id.add(idc);
 
@@ -162,17 +162,17 @@ public class ShuffleColumnTest {
 
         Assert.assertEquals(1, result.size());
 
-        List<Object> idColumnSL = new ArrayList<Object>();
-        List<Object> firstNameColumnSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> zipSL = new ArrayList<Object>();
+        List<Object> idColumnSL = new ArrayList<>();
+        List<Object> firstNameColumnSL = new ArrayList<>();
+        List<Object> emailSL = new ArrayList<>();
+        List<Object> citySL = new ArrayList<>();
+        List<Object> zipSL = new ArrayList<>();
 
-        List<Object> idColumnL = new ArrayList<Object>();
-        List<Object> firstNameColumnL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> zipL = new ArrayList<Object>();
+        List<Object> idColumnL = new ArrayList<>();
+        List<Object> firstNameColumnL = new ArrayList<>();
+        List<Object> emailL = new ArrayList<>();
+        List<Object> cityL = new ArrayList<>();
+        List<Object> zipL = new ArrayList<>();
         // Initialize the shuffled data
         for (int group = 0; group < result.size(); group++) {
             List<List<Object>> rows = result.poll();
@@ -249,17 +249,17 @@ public class ShuffleColumnTest {
 
         Assert.assertEquals(1, result.size());
 
-        List<Object> idColumnSL = new ArrayList<Object>();
-        List<Object> firstNameColumnSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> zipSL = new ArrayList<Object>();
+        List<Object> idColumnSL = new ArrayList<>();
+        List<Object> firstNameColumnSL = new ArrayList<>();
+        List<Object> emailSL = new ArrayList<>();
+        List<Object> citySL = new ArrayList<>();
+        List<Object> zipSL = new ArrayList<>();
 
-        List<Object> idColumnL = new ArrayList<Object>();
-        List<Object> firstNameColumnL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> zipL = new ArrayList<Object>();
+        List<Object> idColumnL = new ArrayList<>();
+        List<Object> firstNameColumnL = new ArrayList<>();
+        List<Object> emailL = new ArrayList<>();
+        List<Object> cityL = new ArrayList<>();
+        List<Object> zipL = new ArrayList<>();
         // Initialize the shuffled data
         for (int group = 0; group < result.size(); group++) {
             List<List<Object>> rows = result.poll();
@@ -340,17 +340,17 @@ public class ShuffleColumnTest {
         Assert.assertEquals(1, result.size());
         System.out.println("result size " + result.size());
         long time3 = System.currentTimeMillis();
-        List<Object> idColumnSL = new ArrayList<Object>();
-        List<Object> firstNameColumnSL = new ArrayList<Object>();
-        List<Object> emailSL = new ArrayList<Object>();
-        List<Object> citySL = new ArrayList<Object>();
-        List<Object> zipSL = new ArrayList<Object>();
+        List<Object> idColumnSL = new ArrayList<>();
+        List<Object> firstNameColumnSL = new ArrayList<>();
+        List<Object> emailSL = new ArrayList<>();
+        List<Object> citySL = new ArrayList<>();
+        List<Object> zipSL = new ArrayList<>();
 
-        List<Object> idColumnL = new ArrayList<Object>();
-        List<Object> firstNameColumnL = new ArrayList<Object>();
-        List<Object> emailL = new ArrayList<Object>();
-        List<Object> cityL = new ArrayList<Object>();
-        List<Object> zipL = new ArrayList<Object>();
+        List<Object> idColumnL = new ArrayList<>();
+        List<Object> firstNameColumnL = new ArrayList<>();
+        List<Object> emailL = new ArrayList<>();
+        List<Object> cityL = new ArrayList<>();
+        List<Object> zipL = new ArrayList<>();
         // Initialize the shuffled data
         for (int group = 0; group < result.size(); group++) {
             List<List<Object>> rows = result.poll();

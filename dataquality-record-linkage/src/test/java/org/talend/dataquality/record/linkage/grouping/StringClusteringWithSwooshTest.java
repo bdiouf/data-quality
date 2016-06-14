@@ -52,7 +52,7 @@ public class StringClusteringWithSwooshTest {
 
     private static final String columnDelimiter = "|"; //$NON-NLS-1$
 
-    private List<Object[]> groupingRecords = new ArrayList<Object[]>();
+    private List<Object[]> groupingRecords = new ArrayList<>();
 
     @Before
     public void setUp() throws Exception {
@@ -66,14 +66,14 @@ public class StringClusteringWithSwooshTest {
         InputStream in = this.getClass().getResourceAsStream("incoming_customers_swoosh_fingerprintkey.txt"); //$NON-NLS-1$
         BufferedReader bfr = new BufferedReader(new InputStreamReader(in));
         List<String> listOfLines = IOUtils.readLines(bfr);
-        inputList = new ArrayList<Object[]>();
+        inputList = new ArrayList<>();
         for (String line : listOfLines) {
             String[] fields = StringUtils.splitPreserveAllTokens(line, columnDelimiter);
             inputList.add(new Object[] { fields[1] });
         }
         String columnName = "NAME";
         // Blocking the data given fingerprint key
-        List<Map<String, String>> blockKeySchema = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> blockKeySchema = new ArrayList<>();
         Map<String, String> blockKeyDefMap = new HashMap<String, String>();
 
         blockKeyDefMap.put(MatchAnalysisConstant.PRECOLUMN, columnName);
@@ -168,7 +168,7 @@ public class StringClusteringWithSwooshTest {
 
         // recordGroup.setColumnDelimiter(columnDelimiter);
         recordGroup.setIsLinkToPrevious(Boolean.FALSE);
-        List<Map<String, String>> matchingRule = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> matchingRule = new ArrayList<>();
 
         Map<String, String> lnameRecords = new HashMap<String, String>();
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(0));

@@ -69,7 +69,7 @@ public enum AttributeMatcherType {
      * @return all Attribute Matcher Types except the internal DUMMY algorithm.
      */
     public static String[] getAllTypes() {
-        List<String> types = new ArrayList<String>();
+        List<String> types = new ArrayList<>();
         for (int i = 0; i < AttributeMatcherType.values().length; i++) {
             if (i != DUMMY.ordinal()) {
                 types.add(AttributeMatcherType.values()[i].getLabel());

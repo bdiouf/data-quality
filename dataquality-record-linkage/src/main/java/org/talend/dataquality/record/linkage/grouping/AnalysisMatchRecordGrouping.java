@@ -37,13 +37,13 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
 
     private static Logger log = Logger.getLogger(AnalysisMatchRecordGrouping.class);
 
-    private List<String[]> resultStrList = new ArrayList<String[]>();
+    private List<String[]> resultStrList = new ArrayList<>();
 
-    List<Object[]> inputList = new ArrayList<Object[]>();
+    List<Object[]> inputList = new ArrayList<>();
 
     // Temporarily store the match result so that it can be iterated to be handled later after all of the records are
     // computed.
-    protected List<RichRecord> tmpMatchResult = new ArrayList<RichRecord>();
+    protected List<RichRecord> tmpMatchResult = new ArrayList<>();
 
     private MatchGroupResultConsumer matchResultConsumer = null;
 

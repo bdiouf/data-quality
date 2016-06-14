@@ -148,7 +148,7 @@ public class SimpleVSRRecordMatcherTest {
 
         // initialize the blocking variables
         // (we use the column which are in exact match as blocking variables but we could change this in the future)
-        List<Integer> listIndices = new ArrayList<Integer>();
+        List<Integer> listIndices = new ArrayList<>();
         for (int i = 0; i < attributeMatchers.length; i++) {
             AttributeMatcherType matchType = attributeMatchers[i].getMatchType();
             if (AttributeMatcherType.EXACT.equals(matchType) || AttributeMatcherType.EXACT_IGNORE_CASE.equals(matchType)) {

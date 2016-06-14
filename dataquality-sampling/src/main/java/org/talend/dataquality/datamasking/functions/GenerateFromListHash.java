@@ -26,7 +26,7 @@ public abstract class GenerateFromListHash<T> extends Function<T> {
 
     private static final long serialVersionUID = 8813074434737742166L;
 
-    protected List<T> genericTokens = new ArrayList<T>();
+    protected List<T> genericTokens = new ArrayList<>();
 
     protected abstract void init();
 

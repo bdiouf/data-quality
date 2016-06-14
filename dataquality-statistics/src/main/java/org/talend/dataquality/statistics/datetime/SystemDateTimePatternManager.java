@@ -37,9 +37,9 @@ public class SystemDateTimePatternManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SystemDateTimePatternManager.class);
 
-    private static List<Map<Pattern, String>> DATE_PATTERN_GROUP_LIST = new ArrayList<Map<Pattern, String>>();
+    private static List<Map<Pattern, String>> DATE_PATTERN_GROUP_LIST = new ArrayList<>();
 
-    private static List<Map<Pattern, String>> TIME_PATTERN_GROUP_LIST = new ArrayList<Map<Pattern, String>>();
+    private static List<Map<Pattern, String>> TIME_PATTERN_GROUP_LIST = new ArrayList<>();
 
     static {
         try {

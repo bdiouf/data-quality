@@ -28,13 +28,13 @@ public class GenerateData {
         String line = "";
         String cvsSplitBy = ",";
 
-        List<List<Object>> result = new ArrayList<List<Object>>();
+        List<List<Object>> result = new ArrayList<>();
 
         try {
             br = new BufferedReader(new FileReader(pathString));
             line = br.readLine(); // read the column title
             while ((line = br.readLine()) != null) {
-                List<Object> row = new ArrayList<Object>();
+                List<Object> row = new ArrayList<>();
                 Object[] items = line.split(cvsSplitBy);
                 for (Object item : items) {
                     row.add(item);
@@ -66,13 +66,13 @@ public class GenerateData {
         String line = "";
         String cvsSplitBy = ";";
 
-        List<List<Object>> result = new ArrayList<List<Object>>();
+        List<List<Object>> result = new ArrayList<>();
 
         try {
             br = new BufferedReader(new FileReader(pathString));
             line = br.readLine(); // read the column title
             while ((line = br.readLine()) != null) {
-                List<Object> row = new ArrayList<Object>();
+                List<Object> row = new ArrayList<>();
                 Object[] items = line.split(cvsSplitBy);
                 for (Object item : items) {
                     row.add(item);
@@ -154,7 +154,7 @@ public class GenerateData {
     }
 
     protected List<List<String>> getMultipleData(String file, String[] columns) throws URISyntaxException {
-        List<List<String>> result = new ArrayList<List<String>>();
+        List<List<String>> result = new ArrayList<>();
         for (String column : columns) {
             result.add(getData(file, column));
         }

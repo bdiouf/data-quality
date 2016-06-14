@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,7 +43,7 @@ public class HandleLuceneImpl implements HandleLucene {
 
     private Map<String, String[]> hits = new HashMap<String, String[]>();
 
-    private ArrayList<String> soreDoc = null;
+    private List<String> soreDoc = null;
 
     /**
      * Input filename to be indexed once for all and indexfolder to store the files of indexing.
@@ -138,7 +139,7 @@ public class HandleLuceneImpl implements HandleLucene {
     }
 
     private void treatSearchResult(IndexSearcher searcher, String inputName, ScoreDoc[] docs) {
-        soreDoc = new ArrayList<String>();
+        soreDoc = new ArrayList<>();
         for (int i = 0; i < docs.length; ++i) {
             int docId = docs[i].doc;
             Document d = null;

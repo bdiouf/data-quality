@@ -70,7 +70,7 @@ public class FieldModifier {
             for (int i = 0; i < soundexMap.length; i++) {
                 List<Character> charSet = inverseSoundexMap.get(soundexMap[i]);
                 if (charSet == null) {
-                    charSet = new ArrayList<Character>();
+                    charSet = new ArrayList<>();
                     inverseSoundexMap.put(soundexMap[i], charSet);
                 }
                 charSet.add((char) ('A' + i));
@@ -178,7 +178,7 @@ public class FieldModifier {
             break;
         case SOUNDEX_REPLACE:
             if (sb.length() > 0) {
-                List<Character> charSet = new ArrayList<Character>();
+                List<Character> charSet = new ArrayList<>();
                 for (int i = 0; i < modifCount; i++) {
                     int pos = random.nextInt(sb.length());
                     char charToReplace = sb.charAt(pos);

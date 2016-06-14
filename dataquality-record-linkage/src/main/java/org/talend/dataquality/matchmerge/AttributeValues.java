@@ -111,7 +111,7 @@ public class AttributeValues<T extends Comparable<T>> implements Iterable<T> {
     }
 
     public List<T> asList() {
-        List<T> list = new ArrayList<T>(size);
+        List<T> list = new ArrayList<>(size);
         for (Entry<T> value : values) {
             for (int i = 0; i < value.occurrence; i++) {
                 list.add(value.value);

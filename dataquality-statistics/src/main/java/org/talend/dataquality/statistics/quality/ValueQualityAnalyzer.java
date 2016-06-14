@@ -113,7 +113,7 @@ public class ValueQualityAnalyzer implements Analyzer<ValueQualityStatistics> {
         if (semanticQualityAnalyzer == null) {
             return dataTypeQualityAnalyzer.getResult();
         } else {
-            List<ValueQualityStatistics> aggregatedResult = new ArrayList<ValueQualityStatistics>();
+            List<ValueQualityStatistics> aggregatedResult = new ArrayList<>();
             List<ValueQualityStatistics> dataTypeQualityResult = dataTypeQualityAnalyzer.getResult();
             List<ValueQualityStatistics> semanticQualityResult = semanticQualityAnalyzer.getResult();
 

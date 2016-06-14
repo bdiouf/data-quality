@@ -19,7 +19,7 @@ public class DataSamplingBridgeTest {
     @Test
     public void testGetRecord() throws Exception {
         // // 1. Create a data source from csv file.
-        // List<String> columnNames = new ArrayList<String>();
+        // List<String> columnNames = new ArrayList<>();
         // SamplingDataSource<DelimitedFileConnection> fileDatasource = new FileSamplingDataSource(columnNames);
         // // fileDatasource.setDataSource(new File(getClass().getClassLoader()
         //        //                        .getResource("org/talend/dataquality/sampling/simple_data.csv").getFile())); //$NON-NLS-1$

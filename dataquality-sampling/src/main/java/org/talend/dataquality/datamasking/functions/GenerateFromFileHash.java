@@ -29,7 +29,7 @@ public abstract class GenerateFromFileHash<T> extends Function<T> {
 
     protected List<String> StringTokens = new ArrayList<>();
 
-    protected List<T> genericTokens = new ArrayList<T>();
+    protected List<T> genericTokens = new ArrayList<>();
 
     protected void init() {
         try {

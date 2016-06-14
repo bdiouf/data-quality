@@ -154,7 +154,7 @@ public class QuantileAnalyzerTest {
         tanalyzer.init();
         analyzer.init();
         summaryAnalyzer.init();
-        List<Analyzer<?>> analyzers = new ArrayList<Analyzer<?>>();
+        List<Analyzer<?>> analyzers = new ArrayList<>();
         analyzers.add(summaryAnalyzer);
         analyzers.add(tanalyzer);
         analyzers.add(analyzer);

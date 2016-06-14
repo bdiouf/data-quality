@@ -49,7 +49,7 @@ public enum DefaultSurvivorShipDataTypeEnum {
     }
 
     public static String[] getAllTypes() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         for (DefaultSurvivorShipDataTypeEnum theType : values()) {
             list.add(theType.getValue());
         }

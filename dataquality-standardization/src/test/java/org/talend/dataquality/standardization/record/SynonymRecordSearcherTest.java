@@ -73,9 +73,9 @@ public class SynonymRecordSearcherTest {
         int nbDuplicateFound = 0;
 
         // prepare wordresults
-        List<List<WordResult>> wordResults = new ArrayList<List<WordResult>>();
+        List<List<WordResult>> wordResults = new ArrayList<>();
         for (String[] elts : wordresults) {
-            List<WordResult> wrs = new ArrayList<WordResult>();
+            List<WordResult> wrs = new ArrayList<>();
             for (String elt : elts) {
                 WordResult wr = new WordResult();
                 wr.input = "input " + elt;
@@ -92,7 +92,7 @@ public class SynonymRecordSearcherTest {
         recRes.wordResults.addAll(wordResults);
 
         List<OutputRecord> expectedOutputRows = null;
-        expectedOutputRows = new ArrayList<OutputRecord>();
+        expectedOutputRows = new ArrayList<>();
         SynonymRecordSearcher.RecordResult.computeOutputRows(wordresults.length, new ArrayList<WordResult>(), recRes.wordResults,
                 expectedOutputRows);
         for (OutputRecord outputRecord : expectedOutputRows) {

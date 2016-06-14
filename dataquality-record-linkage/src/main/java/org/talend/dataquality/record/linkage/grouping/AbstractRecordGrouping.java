@@ -42,7 +42,7 @@ import org.talend.utils.classloader.TalendURLClassLoader;
  */
 public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TYPE> {
 
-    protected List<TYPE[]> masterRecords = new ArrayList<TYPE[]>();
+    protected List<TYPE[]> masterRecords = new ArrayList<>();
 
     public static final float DEFAULT_THRESHOLD = 0.95f;
 
@@ -57,9 +57,9 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
      * @deprecated use {{@link #multiMatchRules}
      */
     @Deprecated
-    private List<Map<String, String>> matchingColumns = new ArrayList<Map<String, String>>();
+    private List<Map<String, String>> matchingColumns = new ArrayList<>();
 
-    protected List<List<Map<String, String>>> multiMatchRules = new ArrayList<List<Map<String, String>>>();
+    protected List<List<Map<String, String>>> multiMatchRules = new ArrayList<>();
 
     protected SurvivorShipAlgorithmParams survivorShipAlgorithmParams = null;
 

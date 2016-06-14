@@ -57,7 +57,7 @@ public enum SurvivorShipAlgorithmEnum {
     }
 
     public static String[] getAllTypes() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         for (SurvivorShipAlgorithmEnum theType : values()) {
             list.add(theType.getValue());
         }

@@ -31,7 +31,7 @@ public class AnalyzerTestBase {
             throw new IllegalArgumentException("Input stream cannot be null.");
         }
         try {
-            List<String[]> records = new ArrayList<String[]>();
+            List<String[]> records = new ArrayList<>();
             final List<String> lines = IOUtils.readLines(inputStream);
             for (String line : lines) {
                 String[] record = StringUtils.splitByWholeSeparatorPreserveAllTokens(line, ";");

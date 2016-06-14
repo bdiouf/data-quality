@@ -29,6 +29,7 @@ public class GenerateSsnFr extends Function<String> {
     @Override
     protected String doGenerateMaskedField(String str) {
         StringBuilder result = new StringBuilder(EMPTY_STRING);
+
         result.append(rnd.nextInt(2) + 1);
         int yy = rnd.nextInt(99) + 1;
         if (yy < 10) {

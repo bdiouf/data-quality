@@ -46,7 +46,7 @@ public abstract class AbstractGenerateUniqueSsn extends Function<String> {
         } else {
             rnd = rand;
         }
-        ssnPattern.setKey(rand.nextInt() % 10000 + 1000);
+        ssnPattern.setKey(rnd.nextInt() % 10000 + 1000);
     }
 
     @Override

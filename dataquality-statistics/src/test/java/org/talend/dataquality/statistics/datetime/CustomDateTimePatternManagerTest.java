@@ -56,7 +56,7 @@ public class CustomDateTimePatternManagerTest {
 
     private List<String> readLineContentsFromFile(String path) throws IOException {
         InputStream dateInputStream = SystemDateTimePatternManager.class.getResourceAsStream(path);
-        List<String> contents = new ArrayList<String>();
+        List<String> contents = new ArrayList<>();
 
         List<String> lines = IOUtils.readLines(dateInputStream);
         for (String line : lines) {

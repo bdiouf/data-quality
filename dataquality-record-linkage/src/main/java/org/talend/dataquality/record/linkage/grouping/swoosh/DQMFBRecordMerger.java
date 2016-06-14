@@ -142,7 +142,7 @@ public class DQMFBRecordMerger extends MFBRecordMerger {
              */
 
         }
-        List<DQAttribute<?>> originalRowList = new ArrayList<DQAttribute<?>>();
+        List<DQAttribute<?>> originalRowList = new ArrayList<>();
         CollectionUtils.addAll(originalRowList, mergedRows);
         mergedRecord.setOriginRow(originalRowList);
         mergedRecord.setRecordSize(richRecord1.getRecordSize());

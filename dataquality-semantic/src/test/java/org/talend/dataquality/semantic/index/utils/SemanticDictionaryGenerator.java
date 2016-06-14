@@ -79,7 +79,7 @@ public class SemanticDictionaryGenerator {
     }
 
     private List<Set<String>> getDictinaryForCategory(Iterable<CSVRecord> records, DictionaryGenerationSpec spec) {
-        List<Set<String>> results = new ArrayList<Set<String>>();
+        List<Set<String>> results = new ArrayList<>();
         final int[] columnsToIndex = spec.getColumnsToIndex();
         final CategoryOptimizer optimizer = spec.getOptimizer();
         Set<String> existingValuesOfCategory = new HashSet<String>();
@@ -87,7 +87,7 @@ public class SemanticDictionaryGenerator {
 
         for (CSVRecord record : records) {
 
-            List<String> allInputColumns = new ArrayList<String>();
+            List<String> allInputColumns = new ArrayList<>();
             if (DictionaryGenerationSpec.CITY.equals(spec)) { // For CITY index, take all columns
                 for (int col = 0; col < record.size(); col++) {
                     final String colValue = record.get(col);
@@ -113,7 +113,7 @@ public class SemanticDictionaryGenerator {
             }
 
             if (optimizer != null) {
-                allInputColumns = new ArrayList<String>(optimizer.optimize(allInputColumns.toArray(new String[0])));
+                allInputColumns = new ArrayList<>(optimizer.optimize(allInputColumns.toArray(new String[0])));
             }
 
             Set<String> synonymsInRecord = new HashSet<String>();

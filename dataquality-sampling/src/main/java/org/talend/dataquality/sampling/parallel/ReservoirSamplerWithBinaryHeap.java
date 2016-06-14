@@ -97,7 +97,7 @@ public class ReservoirSamplerWithBinaryHeap<T> {
 
     public List<T> sample() {
         Iterator<ImmutablePair<Double, T>> it = buffer.iterator();
-        List<T> samples = new ArrayList<T>();
+        List<T> samples = new ArrayList<>();
         while (it.hasNext()) {
             ImmutablePair<Double, T> pair = it.next();
             samples.add(pair.getRight());

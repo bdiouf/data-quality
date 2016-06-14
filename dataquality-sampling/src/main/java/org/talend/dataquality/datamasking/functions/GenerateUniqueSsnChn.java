@@ -35,27 +35,27 @@ public class GenerateUniqueSsnChn extends AbstractGenerateUniqueSsn {
 
     private static final Logger LOGGER = Logger.getLogger(GenerateUniqueSsnChn.class);
 
-    private static final List<Integer> keyWeight = Collections
+    private static final List<Integer> KEYWEIGHT = Collections
             .unmodifiableList(Arrays.asList(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2));
 
-    private static final int KeyMod = 11; // $NON-NLS-1$
+    private static final int KEYMOD = 11; // $NON-NLS-1$
 
-    private static final List<String> keyString = Collections
+    private static final List<String> KEYSTRING = Collections
             .unmodifiableList(Arrays.asList("1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"));
 
     private String computeChineseKey(String ssnNumber) {
         int key = 0;
         for (int i = 0; i < 17; i++) {
-            key += Character.getNumericValue(ssnNumber.charAt(i)) * keyWeight.get(i);
+            key += Character.getNumericValue(ssnNumber.charAt(i)) * KEYWEIGHT.get(i);
         }
-        key = key % KeyMod;
-        return keyString.get(key);
+        key = key % KEYMOD;
+        return KEYSTRING.get(key);
     }
 
     @Override
     protected StringBuilder doValidGenerateMaskedField(String str) {
         // read the input strWithoutSpaces
-        List<String> strs = new ArrayList<String>();
+        List<String> strs = new ArrayList<>();
         strs.add(str.substring(0, 6));
         strs.add(str.substring(6, 14));
         strs.add(str.substring(14, 17));
@@ -74,7 +74,7 @@ public class GenerateUniqueSsnChn extends AbstractGenerateUniqueSsn {
 
     @Override
     protected List<AbstractField> createFieldsListFromPattern() {
-        List<AbstractField> fields = new ArrayList<AbstractField>();
+        List<AbstractField> fields = new ArrayList<>();
 
         InputStream is = GenerateUniqueSsnChn.class.getResourceAsStream("RegionListChina.txt");
         try {

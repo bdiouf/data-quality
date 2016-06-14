@@ -63,7 +63,7 @@ public abstract class AbstractDuplicator<TIn, TOut> {
     }
 
     public List<TOut> process(TIn v) {
-        List<TOut> result = new ArrayList<TOut>();
+        List<TOut> result = new ArrayList<>();
         int grpSize = getRandomGroupSize();
         for (int i = 0; i < grpSize; i++) {
             result.add(generateOutput(v, i == 0));

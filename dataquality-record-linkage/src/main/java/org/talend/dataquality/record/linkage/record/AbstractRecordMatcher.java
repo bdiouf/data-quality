@@ -162,7 +162,7 @@ public abstract class AbstractRecordMatcher implements IRecordMatcher {
     }
 
     private double[] normalize(double[] weights) {
-        List<Integer> indices = new ArrayList<Integer>();
+        List<Integer> indices = new ArrayList<>();
         double total = 0;
         for (int i = 0; i < recordSize; i++) {
             final double w = weights[i];
@@ -230,7 +230,7 @@ public abstract class AbstractRecordMatcher implements IRecordMatcher {
 
     protected int[] getUsedIndicesNotblocked() {
         if (usedIndicesNotblocked == null && usedIndices != null) {
-            List<Integer> indices = new ArrayList<Integer>();
+            List<Integer> indices = new ArrayList<>();
             for (int usedIdx : usedIndices) {
                 boolean isBlocked = false;
                 if (blockedIndices != null) {
