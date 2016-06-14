@@ -45,6 +45,8 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
     private final UserDefinedClassifier userDefineClassifier;
 
+    private final LRUCache<String, Set<String>> knownCategoryCache = new LRUCache<String, Set<String>>(50);
+
     private long emptyCount = 0;
 
     private long total = 0;
@@ -69,6 +71,14 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
      * @return the set of its semantic categories
      */
     public Set<String> getSubCategorySet(String data) {
+        if (data == null || StringUtils.EMPTY.equals(data.trim())) {
+            emptyCount++;
+            return new HashSet<>();
+        }
+        final Set<String> knownCategory = knownCategoryCache.get(data);
+        if (knownCategory != null) {
+            return knownCategory;
+        }
 
         MainCategory mainCategory = MainCategory.getMainCategory(data);
         Set<String> subCategorySet = new HashSet<>();
@@ -81,6 +91,7 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
             if (userDefineClassifier != null) {
                 subCategorySet.addAll(userDefineClassifier.classify(data, mainCategory));
             }
+            knownCategoryCache.put(data, subCategorySet);
             break;
 
         case NULL:
