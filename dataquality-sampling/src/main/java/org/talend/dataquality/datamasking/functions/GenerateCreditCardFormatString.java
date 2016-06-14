@@ -24,23 +24,26 @@ public class GenerateCreditCardFormatString extends GenerateCreditCardFormat<Str
 
     @Override
     protected String doGenerateMaskedField(String str) {
+        String strWithoutSpaces = super.replaceSpacesInString(str);
         CreditCardType cct_format = null;
-        if (str == null || EMPTY_STRING.equals(str)) {
-            cct_format = chooseCreditCardType();
-            return generateCreditCard(cct_format).toString();
+        String res;
+        if (strWithoutSpaces == null || EMPTY_STRING.equals(strWithoutSpaces)) {
+            cct_format = super.chooseCreditCardType();
+            res = super.generateCreditCard(cct_format).toString();
         } else {
             try {
-                cct_format = getCreditCardType(Long.parseLong(replaceSpacesInString(str))); // $NON-NLS-1$
+                cct_format = super.getCreditCardType(Long.parseLong(replaceSpacesInString(strWithoutSpaces))); // $NON-NLS-1$
             } catch (NumberFormatException e) {
-                cct_format = chooseCreditCardType();
-                return generateCreditCard(cct_format).toString();
+                cct_format = super.chooseCreditCardType();
+                res = super.generateCreditCard(cct_format).toString();
             }
             if (cct_format != null) {
-                return generateCreditCardFormat(cct_format, str, keepFormat);
+                res = super.generateCreditCardFormat(cct_format, strWithoutSpaces, keepFormat);
             } else {
-                cct_format = chooseCreditCardType();
-                return generateCreditCard(cct_format).toString();
+                cct_format = super.chooseCreditCardType();
+                res = super.generateCreditCard(cct_format).toString();
             }
         }
+        return super.insertSpacesInString(str, res);
     }
 }

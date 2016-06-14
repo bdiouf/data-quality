@@ -30,24 +30,19 @@ public class GenerateAccountNumberFormatTest {
 
     @Before
     public void setUp() throws Exception {
+        ganf.parse("true", true, null);
         ganf.setRandomWrapper(new RandomWrapper(42));
     }
 
     @Test
     public void testGood() {
-        output = ganf.generateMaskedRow("NO1234567891234"); //$NON-NLS-1$
-        assertEquals(output, "NO72 0384 0558 932"); //$NON-NLS-1$
-    }
-
-    @Test
-    public void testGood1() {
-        output = ganf.generateMaskedRow("DK0125634987589632"); //$NON-NLS-1$
-        assertEquals(output, "DK49 0384 0558 9322 62"); //$NON-NLS-1$
+        output = ganf.generateMaskedRow("DK49 038 4 0 5 5 8   93  22 62"); //$NON-NLS-1$
+        assertEquals("DK49 038 4 0 5 5 8   93  22 62", output); //$NON-NLS-1$
     }
 
     @Test
     public void testBad() {
         output = ganf.generateMaskedRow("not an iban"); //$NON-NLS-1$
-        assertEquals(output, "FR54 0384 0558 93A2 20ZR 3V86 K48"); //$NON-NLS-1$
+        assertEquals("FR54 0384 0558 93A2 20ZR 3V86 K48", output); //$NON-NLS-1$
     }
 }

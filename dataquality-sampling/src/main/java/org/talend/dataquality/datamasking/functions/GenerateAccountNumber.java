@@ -191,11 +191,7 @@ public abstract class GenerateAccountNumber extends Function<String> {
         sb.setCharAt(3, Character.forDigit(check_digits % 10, 10));
 
         if (keep) {
-            for (int i = 0; i < number.length(); ++i) {
-                if (String.valueOf(" ").equals(number.charAt(i))) { //$NON-NLS-1$
-                    sb.insert(i, ' ');
-                }
-            }
+            return super.insertSpacesInString(number, sb.toString());
         } else {
             for (int i = 4; i < sb.length(); i += 5) {
                 sb.insert(i, ' ');

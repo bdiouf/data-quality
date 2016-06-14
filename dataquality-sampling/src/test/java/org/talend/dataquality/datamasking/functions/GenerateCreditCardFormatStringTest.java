@@ -16,8 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.GenerateCreditCard;
-import org.talend.dataquality.datamasking.functions.GenerateCreditCardFormatString;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -40,6 +38,13 @@ public class GenerateCreditCardFormatStringTest {
         String input = "4120356987563"; //$NON-NLS-1$
         output = gccfs.generateMaskedRow(input).toString();
         assertEquals(output, String.valueOf(4038405589322L));
+    }
+
+    @Test
+    public void testSpaces() {
+        String input = "41 2 0356  9875 63"; //$NON-NLS-1$
+        output = gccfs.generateMaskedRow(input).toString();
+        assertEquals(output, "40 3 8405  5893 22");
     }
 
     @Test

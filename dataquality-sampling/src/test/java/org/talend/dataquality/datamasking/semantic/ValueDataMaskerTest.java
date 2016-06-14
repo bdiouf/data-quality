@@ -70,9 +70,9 @@ public class ValueDataMaskerTest {
             // 9 COMPANY
 
             // 10 CREDIT_CARD
-            put(new String[] { "5300 1232 8732 8318", MaskableCategoryEnum.US_CREDIT_CARD.name(), "String" }, "5332515165500021");
-            put(new String[] { "5300 1232 8732 8318", MaskableCategoryEnum.MASTERCARD.name(), "String" }, "5332515165500021");
-            put(new String[] { "4300 1232 8732 8318", MaskableCategoryEnum.VISACARD.name(), "String" }, "4325151655000249");
+            put(new String[] { "5300 1232 8732 8318", MaskableCategoryEnum.US_CREDIT_CARD.name(), "String" }, "5332 5151 6550 0021");
+            put(new String[] { "5300123287328318", MaskableCategoryEnum.MASTERCARD.name(), "String" }, "5332515165500021");
+            put(new String[] { "4300 1232 8732 8318", MaskableCategoryEnum.VISACARD.name(), "String" }, "4325 1516 5500 0249");
 
             // 11 SSN
             put(new String[] { "728931789", MaskableCategoryEnum.US_SSN.name(), "String" }, "528-73-8888");

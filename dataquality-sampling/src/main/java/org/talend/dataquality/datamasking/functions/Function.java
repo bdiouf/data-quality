@@ -122,12 +122,32 @@ public abstract class Function<T> implements Serializable {
     }
 
     /**
+     * @param strWithSpaces, resWithoutSpaces
+     * @return the res with spaces
+     */
+    protected String insertSpacesInString(String strWithSpaces, String resWithoutSpaces) {
+        if (strWithSpaces == null || resWithoutSpaces == null)
+            return resWithoutSpaces;
+        StringBuilder res = new StringBuilder();
+        int j = 0;
+        for (int i = 0; i < strWithSpaces.length(); i++)
+            if (strWithSpaces.charAt(i) == ' ')
+                res.append(' ');
+            else
+                res.append(resWithoutSpaces.charAt(j++));
+        return res.toString();
+    }
+
+    /**
      * Replaces all the spaces in the input string
      * 
      * @param input
      * @return
      */
     protected String replaceSpacesInString(String input) {
+        if (input == null) {
+            return null;
+        }
         return patternSpace.matcher(input).replaceAll("");
     }
 

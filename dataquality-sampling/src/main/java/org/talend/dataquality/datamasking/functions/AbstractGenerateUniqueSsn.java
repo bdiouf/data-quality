@@ -54,7 +54,7 @@ public abstract class AbstractGenerateUniqueSsn extends Function<String> {
         if (str == null)
             return null;
 
-        String strWithoutSpaces = str.replace(" ", "");
+        String strWithoutSpaces = super.replaceSpacesInString(str);
         // check if the pattern is valid
         if (strWithoutSpaces.isEmpty() || strWithoutSpaces.length() != ssnPattern.getFieldsCharsLength() + checkSumSize) {
             if (keepInvalidPattern)
@@ -70,11 +70,7 @@ public abstract class AbstractGenerateUniqueSsn extends Function<String> {
             else
                 return null;
         }
-
-        for (int i = 0; i < str.length(); i++)
-            if (str.charAt(i) == ' ')
-                result.insert(i, ' ');
-        return result.toString();
+        return super.insertSpacesInString(str, result.toString());
     }
 
     /**
