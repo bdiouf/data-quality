@@ -50,7 +50,12 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
     private int currentCount = 0;
 
     public SemanticAnalyzer(CategoryRecognizerBuilder builder) {
+        this(builder, 10000);
+    }
+
+    public SemanticAnalyzer(CategoryRecognizerBuilder builder, int limit) {
         this.builder = builder;
+        this.limit = limit;
     }
 
     /**

@@ -45,7 +45,7 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
     private final UserDefinedClassifier userDefineClassifier;
 
-    private final LRUCache<String, Set<String>> knownCategoryCache = new LRUCache<String, Set<String>>(50);
+    private final LFUCache<String, Set<String>> knownCategoryCache = new LFUCache<String, Set<String>>(10, 1000, 0.01f);
 
     private long emptyCount = 0;
 
@@ -115,6 +115,7 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
         categoryToFrequency.clear();
         total = 0;
         emptyCount = 0;
+        knownCategoryCache.clear();
     }
 
     /*
@@ -183,5 +184,6 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
     @Override
     public void end() {
         dataDictFieldClassifier.closeIndex();
+        knownCategoryCache.clear();
     }
 }
