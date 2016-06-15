@@ -11,7 +11,7 @@
 	<version>${dataquality.record.linkage.snapshot.version}</version>
 	<packaging>bundle</packaging>
 	<name>dataquality-record-linkage</name>
-	<description>Record Matching algorithms, blocking key calculationn and T-Swoosh</description>
+	<description>Record Matching algorithms, blocking key calculation and T-Swoosh</description>
 
 	<build>
 		<resources>
