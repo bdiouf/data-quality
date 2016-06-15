@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -2534,7 +2535,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
-        matcherList_tMatchGroup_1.sort(new Comparator<java.util.Map<String, String>>() {
+        Collections.sort(matcherList_tMatchGroup_1, new Comparator<java.util.Map<String, String>>() {
 
             @Override
             public int compare(Map<String, String> map1, Map<String, String> map2) {

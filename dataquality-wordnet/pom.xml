@@ -14,6 +14,8 @@
     <description>Content validation API based on WordNet dictionary</description>
     
     <properties>
+    	<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
         <!-- This is used to generate README.md file -->
         <commons.componentid>org.talend.dataquality.standardization</commons.componentid>
         <commons.release.version>${dataquality.libraries.released.version}</commons.release.version>
@@ -39,18 +41,6 @@
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>
