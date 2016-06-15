@@ -38,7 +38,7 @@ public class CustomDateTimePatternRecognizerTest {
     @Test
     public void testRecognize() {
 
-        ArrayList<AbstractPatternRecognizer> recognizers = new ArrayList<>();
+        ArrayList<AbstractPatternRecognizer> recognizers = new ArrayList<AbstractPatternRecognizer>();
         recognizers.add(new EmptyPatternRecognizer());
         DateTimePatternRecognizer recognizer = new DateTimePatternRecognizer();
         recognizer.addCustomDateTimePattern("=d/M/yy=");

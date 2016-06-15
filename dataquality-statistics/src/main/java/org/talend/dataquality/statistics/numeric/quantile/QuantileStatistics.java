@@ -25,7 +25,7 @@ import org.apache.commons.math3.stat.descriptive.rank.Median;
  */
 public class QuantileStatistics {
 
-    private List<Double> data = new ArrayList<>();
+    private List<Double> data = new ArrayList<Double>();
 
     Median median = new Median();
 

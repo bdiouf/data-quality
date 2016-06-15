@@ -49,7 +49,7 @@ public class SynonymReplaceAction implements ITalendStrConversionAction {
                 TopDocs docs = searcher.searchDocumentBySynonym(str);
                 if (docs.totalHits > 0) {
                     Document doc = searcher.getDocument(docs.scoreDocs[0].doc);
-                    List<String> replaceList = new ArrayList<>();
+                    List<String> replaceList = new ArrayList<String>();
                     String word = doc.getValues(SynonymIndexSearcher.F_WORD)[0];
                     if (!word.equalsIgnoreCase(str)) {
                         replaceList.add(word);

@@ -119,7 +119,7 @@ public class FormatGroupGenerator {
                 formatRegexMap.put(format, regex);
             }
         }
-        List<DateTimeFormatCode> formatCodes = new ArrayList<>();
+        List<DateTimeFormatCode> formatCodes = new ArrayList<DateTimeFormatCode>();
         for (String format : formatRegexMap.keySet()) {
             formatCodes.add(calculateFormatCode(format, formatRegexMap.get(format)));
         }
@@ -131,7 +131,7 @@ public class FormatGroupGenerator {
             String aggreratedCode = fc.dateSeparator + fc.timeSeparator + fc.code;
             List<DateTimeFormatCode> formatCodeSet = formatGroupMap.get(aggreratedCode);
             if (formatCodeSet == null) {
-                formatCodeSet = new ArrayList<>();
+                formatCodeSet = new ArrayList<DateTimeFormatCode>();
             }
             formatCodeSet.add(fc);
             formatGroupMap.put(aggreratedCode, formatCodeSet);
@@ -139,7 +139,7 @@ public class FormatGroupGenerator {
 
         StringBuilder sb = new StringBuilder();
         int groupNo = 0;
-        List<DateTimeFormatCode> patternsFromSmallGroups = new ArrayList<>();
+        List<DateTimeFormatCode> patternsFromSmallGroups = new ArrayList<DateTimeFormatCode>();
         for (String key : formatGroupMap.keySet()) {
             List<DateTimeFormatCode> formatCodeSet = formatGroupMap.get(key);
             if (formatCodeSet.size() < 1) {

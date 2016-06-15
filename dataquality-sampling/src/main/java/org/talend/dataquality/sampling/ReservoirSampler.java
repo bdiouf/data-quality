@@ -40,7 +40,7 @@ public class ReservoirSampler<T> {
 
     public ReservoirSampler(int samples, long seed) {
         this.samples = samples;
-        this.candidates = new ArrayList<>(samples);
+        this.candidates = new ArrayList<T>(samples);
         this.rand = new Random(seed);
     }
 

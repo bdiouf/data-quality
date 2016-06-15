@@ -37,10 +37,10 @@ public class QGramTokenizer {
      */
     public final List<String> tokenizeToArrayList(final String input, int q) {
         if (input == null) {
-            return new ArrayList<>();
+            return new ArrayList<String>();
         }
         String toTokenize = pad(input, q);
-        List<String> tokens = new ArrayList<>();
+        List<String> tokens = new ArrayList<String>();
         for (int i = 0; i < toTokenize.length() - q + 1; i++) {
             tokens.add(toTokenize.substring(i, i + q));
         }

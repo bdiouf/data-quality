@@ -46,7 +46,7 @@ public enum HandleNullEnum {
     }
 
     public static String[] getAllTypes() {
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<String>();
         for (HandleNullEnum theType : values()) {
             list.add(theType.getLabel());
         }

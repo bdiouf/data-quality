@@ -79,7 +79,7 @@ public abstract class NumericalStatisticsAnalyzer<T> implements Analyzer<T> {
     }
 
     private void setStatColIdx() {
-        List<Integer> statIdxList = new ArrayList<>();
+        List<Integer> statIdxList = new ArrayList<Integer>();
         for (int idCol = 0; idCol < types.length; idCol++) {
             if (types[idCol].equals(DataTypeEnum.INTEGER) || types[idCol].equals(DataTypeEnum.DOUBLE)) {
                 statIdxList.add(idCol);

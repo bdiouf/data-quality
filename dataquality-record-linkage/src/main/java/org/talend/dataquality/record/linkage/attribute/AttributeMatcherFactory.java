@@ -27,7 +27,7 @@ public final class AttributeMatcherFactory {
 
     private static Logger log = Logger.getLogger(AttributeMatcherFactory.class);
 
-    private static List<String> labels = new ArrayList<>();
+    private static List<String> labels = new ArrayList<String>();
 
     /**
      * private constructor.

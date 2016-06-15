@@ -27,9 +27,9 @@ public class ShuffleColumnWithPartitionTest {
 
     private String file1000000 = "Shuffling_test_data_1000000.csv";
 
-    private static List<String> group = new ArrayList<>();
+    private static List<String> group = new ArrayList<String>();
 
-    private static List<List<String>> numColumn = new ArrayList<>();
+    private static List<List<String>> numColumn = new ArrayList<List<String>>();
 
     private static List<String> allColumns = Arrays
             .asList(new String[] { "id", "first_name", "last_name", "email", "gender", "birth", "city", "zip_code", "country" });
@@ -101,16 +101,16 @@ public class ShuffleColumnWithPartitionTest {
         Assert.assertEquals(fileData.size() / partition, result.size());
 
         for (int i = 0; i < fileData.size() / partition; i++) {
-            List<String> emailsO = new ArrayList<>();
-            List<String> fnsO = new ArrayList<>();
-            List<String> citisO = new ArrayList<>();
-            List<String> statesO = new ArrayList<>();
+            List<String> emailsO = new ArrayList<String>();
+            List<String> fnsO = new ArrayList<String>();
+            List<String> citisO = new ArrayList<String>();
+            List<String> statesO = new ArrayList<String>();
 
-            List<String> emailsS = new ArrayList<>();
-            List<String> fnsS = new ArrayList<>();
-            List<Integer> idsS = new ArrayList<>();
-            List<String> citisS = new ArrayList<>();
-            List<String> statesS = new ArrayList<>();
+            List<String> emailsS = new ArrayList<String>();
+            List<String> fnsS = new ArrayList<String>();
+            List<Integer> idsS = new ArrayList<Integer>();
+            List<String> citisS = new ArrayList<String>();
+            List<String> statesS = new ArrayList<String>();
 
             List<List<Object>> subRows = result.poll();
             Assert.assertEquals(partition, subRows.size());

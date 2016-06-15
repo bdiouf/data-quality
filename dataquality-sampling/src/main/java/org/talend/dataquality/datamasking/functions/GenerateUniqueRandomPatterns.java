@@ -64,7 +64,7 @@ public class GenerateUniqueRandomPatterns implements Serializable {
         LOGGER.debug("longestWidth = " + longestWidth);
 
         // basedWidthsList init
-        this.basedWidthsList = new ArrayList<>();
+        this.basedWidthsList = new ArrayList<Long>();
         this.basedWidthsList.add(1L);
         for (int i = this.getFieldsNumber() - 2; i >= 0; i--)
             this.basedWidthsList.add(0, this.fields.get(i + 1).getWidth() * this.basedWidthsList.get(0));
@@ -97,7 +97,7 @@ public class GenerateUniqueRandomPatterns implements Serializable {
             return null;
 
         // encode the fields
-        List<Long> listToMask = new ArrayList<>();
+        List<Long> listToMask = new ArrayList<Long>();
         long encodeNumber;
         for (int i = 0; i < this.getFieldsNumber(); i++) {
             encodeNumber = this.fields.get(i).encode(strs.get(i));
@@ -138,7 +138,7 @@ public class GenerateUniqueRandomPatterns implements Serializable {
         LOGGER.debug("uniqueMaskedNumber = " + uniqueMaskedNumber);
 
         // uniqueMaskedNumberList is the unique list created from uniqueMaskedNumber
-        List<Long> uniqueMaskedNumberList = new ArrayList<>();
+        List<Long> uniqueMaskedNumberList = new ArrayList<Long>();
         for (int i = 0; i < this.getFieldsNumber(); i++) {
             // baseRandomNumber is the quotient of the Euclidean division between uniqueMaskedNumber and
             // basedWidthsList.get(i)

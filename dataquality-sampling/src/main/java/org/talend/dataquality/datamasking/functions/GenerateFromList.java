@@ -25,7 +25,7 @@ public abstract class GenerateFromList<T> extends Function<T> {
 
     private static final long serialVersionUID = 8936060786451303843L;
 
-    protected List<T> genericTokens = new ArrayList<>();
+    protected List<T> genericTokens = new ArrayList<T>();
 
     protected abstract void init();
 

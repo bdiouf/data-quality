@@ -33,7 +33,7 @@ public class DQMFB extends MFB {
 
     private Queue<Record> queue;
 
-    private List<Record> mergedRecords = new ArrayList<>();
+    private List<Record> mergedRecords = new ArrayList<Record>();
 
     /**
      * DOC zhao DQMFB constructor comment.

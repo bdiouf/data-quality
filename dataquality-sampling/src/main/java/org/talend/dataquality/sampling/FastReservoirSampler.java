@@ -24,7 +24,7 @@ public class FastReservoirSampler<T> {
     public FastReservoirSampler(int nbSamples, long seed) {
         this.nbSamples = nbSamples;
         this.threshold = 4 * nbSamples;
-        this.candidates = new ArrayList<>(nbSamples);
+        this.candidates = new ArrayList<T>(nbSamples);
         this.rand = new Random(seed);
     }
 

@@ -26,7 +26,7 @@ public class RecordIterator implements Iterator<Record> {
 
     private final int size;
 
-    private List<RecordGenerator> rcdGenerators = new ArrayList<>();
+    private List<RecordGenerator> rcdGenerators = new ArrayList<RecordGenerator>();
 
     protected int currentIndex = 0;
 

@@ -101,7 +101,7 @@ public enum BlockingKeyPostAlgorithmEnum {
     }
 
     public static String[] getAllTypes() {
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<String>();
         for (BlockingKeyPostAlgorithmEnum theType : values()) {
             list.add(theType.getValue());
         }

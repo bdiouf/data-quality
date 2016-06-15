@@ -42,7 +42,7 @@ public class AbstractRecordGroupingTest {
 
     private static final String columnDelimiter = "|"; //$NON-NLS-1$
 
-    private List<String[]> groupingRecords = new ArrayList<>();
+    private List<String[]> groupingRecords = new ArrayList<String[]>();
 
     @Before
     public void setUp() throws Exception {
@@ -52,7 +52,7 @@ public class AbstractRecordGroupingTest {
         InputStream in = this.getClass().getResourceAsStream("incoming_customers.txt"); //$NON-NLS-1$
         BufferedReader bfr = new BufferedReader(new InputStreamReader(in));
         List<String> listOfLines = IOUtils.readLines(bfr);
-        inputList = new ArrayList<>();
+        inputList = new ArrayList<String[]>();
         for (String line : listOfLines) {
             String[] fields = StringUtils.splitPreserveAllTokens(line, columnDelimiter);
             inputList.add(fields);
@@ -109,7 +109,7 @@ public class AbstractRecordGroupingTest {
         };
         recordGroup.setColumnDelimiter(columnDelimiter);
         recordGroup.setIsLinkToPrevious(Boolean.FALSE);
-        List<Map<String, String>> matchingRule = new ArrayList<>();
+        List<Map<String, String>> matchingRule = new ArrayList<Map<String, String>>();
 
         Map<String, String> lnameRecords = new HashMap<String, String>();
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(1));
@@ -296,7 +296,7 @@ public class AbstractRecordGroupingTest {
         };
         recordGroup.setColumnDelimiter(columnDelimiter);
         recordGroup.setIsLinkToPrevious(Boolean.FALSE);
-        matchingRule = new ArrayList<>();
+        matchingRule = new ArrayList<Map<String, String>>();
 
         lnameRecords = new HashMap<String, String>();
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(1));
@@ -432,7 +432,7 @@ public class AbstractRecordGroupingTest {
         };
         recordGroup.setColumnDelimiter(columnDelimiter);
         recordGroup.setIsLinkToPrevious(Boolean.FALSE);
-        matchingRule = new ArrayList<>();
+        matchingRule = new ArrayList<Map<String, String>>();
 
         lnameRecords = new HashMap<String, String>();
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(1));

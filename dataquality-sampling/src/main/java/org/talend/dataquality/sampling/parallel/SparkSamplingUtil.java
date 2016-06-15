@@ -61,7 +61,7 @@ public class SparkSamplingUtil<T> implements Serializable {
      */
     public List<T> getSampleList(JavaRDD<T> rdd, int nbSamples) {
         List<ImmutablePair<Double, T>> topPairs = getSamplePairList(rdd, nbSamples);
-        List<T> result = new ArrayList<>();
+        List<T> result = new ArrayList<T>();
         for (ImmutablePair<Double, T> pair : topPairs) {
             result.add(pair.getRight());
         }

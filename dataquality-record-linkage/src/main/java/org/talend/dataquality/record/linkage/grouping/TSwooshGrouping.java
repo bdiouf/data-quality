@@ -46,7 +46,7 @@ import org.talend.utils.collections.BidiMultiMap;
  */
 public class TSwooshGrouping<TYPE> {
 
-    List<RecordGenerator> rcdsGenerators = new ArrayList<>();
+    List<RecordGenerator> rcdsGenerators = new ArrayList<RecordGenerator>();
 
     int totalCount = 0;
 
@@ -107,7 +107,7 @@ public class TSwooshGrouping<TYPE> {
         }
         RecordGenerator rcdGen = new RecordGenerator();
         rcdGen.setMatchKeyMap(rcdMap);
-        List<DQAttribute<?>> rowList = new ArrayList<>();
+        List<DQAttribute<?>> rowList = new ArrayList<DQAttribute<?>>();
         int colIdx = 0;
         for (TYPE attribute : inputRow) {
             DQAttribute<TYPE> attri = new DQAttribute<TYPE>(StringUtils.EMPTY, colIdx, attribute);
@@ -333,13 +333,13 @@ public class TSwooshGrouping<TYPE> {
             SurvivorShipAlgorithmParams survivorShipAlgorithmParams, int indexGID) {
         groupRows = new HashMap<String, List<List<DQAttribute<?>>>>();
         // key:GID, value: list of rows in this group which are not master.
-        List<RecordGenerator> notMasterRecords = new ArrayList<>();
+        List<RecordGenerator> notMasterRecords = new ArrayList<RecordGenerator>();
         for (RecordGenerator record : rcdsGenerators) {
             List<DQAttribute<?>> originalRow = record.getOriginalRow();
             if (!StringUtils.equalsIgnoreCase("true", StringUtils.normalizeSpace(originalRow.get(indexGID + 2).getValue()))) {
                 List<List<DQAttribute<?>>> list = groupRows.get(originalRow.get(indexGID).getValue());
                 if (list == null) {
-                    list = new ArrayList<>();
+                    list = new ArrayList<List<DQAttribute<?>>>();
                     list.add(originalRow);
                     groupRows.put(originalRow.get(indexGID).getValue(), list);
                 } else {
@@ -431,7 +431,7 @@ public class TSwooshGrouping<TYPE> {
     }
 
     private RichRecord createRecord(List<DQAttribute<?>> originalRow, String groupID) {
-        List<Attribute> rowList = new ArrayList<>();
+        List<Attribute> rowList = new ArrayList<Attribute>();
         for (DQAttribute<?> attr : originalRow) {
             rowList.add(attr);
         }

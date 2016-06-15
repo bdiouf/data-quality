@@ -60,7 +60,7 @@ public class Record {
         this.id = id;
         this.timestamp = timestamp;
         this.source = source;
-        this.attributes = new ArrayList<>();
+        this.attributes = new ArrayList<Attribute>();
     }
 
     /**

@@ -30,7 +30,7 @@ public final class RecordMatcherFactory {
 
     private static Logger log = Logger.getLogger(RecordMatcherFactory.class);
 
-    private static List<String> labels = new ArrayList<>();
+    private static List<String> labels = new ArrayList<String>();
 
     /**
      * private RecordMatcherFactory constructor.

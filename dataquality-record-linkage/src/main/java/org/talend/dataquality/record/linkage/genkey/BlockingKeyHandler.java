@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class BlockingKeyHandler {
 
-    private List<Object[]> inputData = new ArrayList<>();
+    private List<Object[]> inputData = new ArrayList<Object[]>();
 
     private AbstractGenerateKey generateKeyAPI = new AbstractGenerateKey();
 
@@ -115,7 +115,7 @@ public class BlockingKeyHandler {
      * @return
      */
     public List<Object[]> getResultDataList() {
-        List<Object[]> returnList = new ArrayList<>();
+        List<Object[]> returnList = new ArrayList<Object[]>();
         for (String genKey : generateKeyAPI.getResultList().keySet()) {
             List<String[]> resultDatalistForGenKey = generateKeyAPI.getResultList().get(genKey);
             if (resultDatalistForGenKey != null) {

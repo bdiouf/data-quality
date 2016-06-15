@@ -26,7 +26,7 @@ public class DateFunctionAdapter extends Function<String> {
 
     private Function<Date> function;
 
-    private List<SimpleDateFormat> dataFormatList = new ArrayList<>();
+    private List<SimpleDateFormat> dataFormatList = new ArrayList<SimpleDateFormat>();
 
     public DateFunctionAdapter(Function<Date> functionToAdapt, List<String> datePatternList) {
         function = functionToAdapt;

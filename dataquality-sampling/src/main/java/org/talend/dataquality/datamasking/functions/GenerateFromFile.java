@@ -28,7 +28,7 @@ public abstract class GenerateFromFile<T> extends Function<T> {
 
     protected List<String> substituteList = new ArrayList<>();
 
-    protected List<T> genericTokens = new ArrayList<>();
+    protected List<T> genericTokens = new ArrayList<T>();
 
     protected void init() {
         try {

@@ -33,7 +33,7 @@ public class DataSamplingBridge {
 
     private ReservoirSampler<Object[]> reservoirSampler;
 
-    private List<Object[]> reservoirSamplingData = new ArrayList<>();
+    private List<Object[]> reservoirSamplingData = new ArrayList<Object[]>();
 
     private int sampleSize = 1000;
 
@@ -100,7 +100,7 @@ public class DataSamplingBridge {
             break;
         case Reservoir:
             dataSourceCursor = 0;
-            reservoirSamplingData = new ArrayList<>();
+            reservoirSamplingData = new ArrayList<Object[]>();
             reservoirSampler = new ReservoirSampler<Object[]>(sampleSize, randomSeed);
             reservoirSampler.clear();
             while (!stopRequested && dataSource.hasNext()) {

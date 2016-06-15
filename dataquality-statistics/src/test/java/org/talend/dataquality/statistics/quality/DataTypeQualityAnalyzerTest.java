@@ -371,7 +371,7 @@ public class DataTypeQualityAnalyzerTest {
             throw new IllegalArgumentException("Input stream cannot be null.");
         }
         try {
-            List<String[]> records = new ArrayList<>();
+            List<String[]> records = new ArrayList<String[]>();
             final List<String> lines = IOUtils.readLines(inputStream);
             for (String line : lines) {
                 String[] record = StringUtils.splitByWholeSeparatorPreserveAllTokens(line, separator);

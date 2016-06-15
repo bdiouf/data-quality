@@ -82,7 +82,7 @@ public class ResultSetIterator implements Iterator<Record> {
      */
     @Override
     public Record next() {
-        List<Attribute> attributes = new ArrayList<>();
+        List<Attribute> attributes = new ArrayList<Attribute>();
         try {
             ResultSetMetaData metaData = resultSet.getMetaData();
             if (metaData.getColumnCount() == 0) {

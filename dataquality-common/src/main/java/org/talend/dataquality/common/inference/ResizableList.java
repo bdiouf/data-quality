@@ -47,7 +47,7 @@ public class ResizableList<T> implements List<T>, Serializable {
             throw new IllegalArgumentException("Item class must have a zero arg constructor.");
         }
         this.itemClass = itemClass;
-        this.innerList = new ArrayList<>();
+        this.innerList = new ArrayList<T>();
     }
 
     /**

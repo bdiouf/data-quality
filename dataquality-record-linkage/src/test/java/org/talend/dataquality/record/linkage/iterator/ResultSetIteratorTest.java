@@ -58,7 +58,7 @@ import org.talend.dataquality.matchmerge.Record;
  */
 public class ResultSetIteratorTest extends TestCase {
 
-    List<String> elementNames = new ArrayList<>();
+    List<String> elementNames = new ArrayList<String>();
 
     @Override
     @Before
@@ -72,7 +72,7 @@ public class ResultSetIteratorTest extends TestCase {
     // Test zeroDate like as "0000-00-00 00:00:". it will get a SQLException and set current date to null and continue.
     public void testNext() throws SQLException {
 
-        List<Object> dataObjects = new ArrayList<>();
+        List<Object> dataObjects = new ArrayList<Object>();
         dataObjects.add(1);
         dataObjects.add("Lily"); //$NON-NLS-1$
         dataObjects.add("2015-6-25"); //$NON-NLS-1$
@@ -97,7 +97,7 @@ public class ResultSetIteratorTest extends TestCase {
     @Test
     // Test zeroDate like as "0000-00-00 00:00:". it will get a SQLException and set current date to null and continue.
     public void testNext_zerodDate() throws SQLException {
-        List<Object> dataObjects = new ArrayList<>();
+        List<Object> dataObjects = new ArrayList<Object>();
         dataObjects.add(2);
         dataObjects.add("Lily"); //$NON-NLS-1$
         dataObjects.add("0000-00-00 00:00:00"); //$NON-NLS-1$

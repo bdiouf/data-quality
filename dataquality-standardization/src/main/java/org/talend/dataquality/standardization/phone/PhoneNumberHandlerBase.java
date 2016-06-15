@@ -326,7 +326,7 @@ public class PhoneNumberHandlerBase {
     public List<String> getTimeZonesForNumber(Object data, String regionCode) {
         PhoneNumber number = parseToPhoneNumber(data, regionCode);
         if (number == null) {
-            List<String> UNKNOWN_TIME_ZONE_LIST = new ArrayList<>(1);
+            List<String> UNKNOWN_TIME_ZONE_LIST = new ArrayList<String>(1);
             UNKNOWN_TIME_ZONE_LIST.add(PhoneNumberToTimeZonesMapper.getUnknownTimeZone());
             return UNKNOWN_TIME_ZONE_LIST;
         }

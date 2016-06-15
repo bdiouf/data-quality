@@ -115,7 +115,7 @@ public class MFB implements MatchMergeAlgorithm {
         if (callback == null) {
             throw new IllegalArgumentException("Callback cannot be null."); //$NON-NLS-1$
         }
-        List<Record> mergedRecords = new ArrayList<>();
+        List<Record> mergedRecords = new ArrayList<Record>();
         int index = 0;
         // Read source record per record
         Queue<Record> queue = new ProcessQueue<Record>(sourceRecords);

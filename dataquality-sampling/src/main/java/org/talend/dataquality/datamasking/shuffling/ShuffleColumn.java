@@ -22,11 +22,11 @@ public class ShuffleColumn {
             811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967,
             971, 977, 983, 991, 997, 1009, 1013, 1019, 1021, 1031, 1033, 1039, 1049, 1051, 1061, 1063, 1069 };
 
-    private List<List<Integer>> numColumns = new ArrayList<>();
+    private List<List<Integer>> numColumns = new ArrayList<List<Integer>>();
 
-    private List<Integer> partitionColumns = new ArrayList<>();
+    private List<Integer> partitionColumns = new ArrayList<Integer>();
 
-    private List<String> allInputColumns = new ArrayList<>();
+    private List<String> allInputColumns = new ArrayList<String>();
 
     private RandomWrapper randomWrapper = new RandomWrapper();
 
@@ -60,7 +60,7 @@ public class ShuffleColumn {
     private List<List<Integer>> getNumColumn(List<List<String>> shuffledColumns) {
 
         for (List<String> subList : shuffledColumns) {
-            List<Integer> indexes = new ArrayList<>();
+            List<Integer> indexes = new ArrayList<Integer>();
             for (int i = 0; i < subList.size(); i++) {
                 int index = allInputColumns.indexOf(subList.get(i));
                 if (index != -1) {
@@ -76,7 +76,7 @@ public class ShuffleColumn {
     }
 
     private List<Integer> getPartitionIndex(List<String> partitionColumns) {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<Integer>();
         for (int i = 0; i < partitionColumns.size(); i++) {
             if (allInputColumns.contains(partitionColumns.get(i))) {
                 list.add(allInputColumns.indexOf(partitionColumns.get(i)));
@@ -106,7 +106,7 @@ public class ShuffleColumn {
 
     private void processShuffleTable(List<List<Object>> rowList, List<Row> rows, List<List<Integer>> numColumn) {
         List<Integer> replacements = calculateReplacementInteger(rows.size(), gerPrimeNumber());
-        List<Integer> shifts = new ArrayList<>();
+        List<Integer> shifts = new ArrayList<Integer>();
 
         if (numColumn.size() == 1) {
             adjustReplacements(replacements);
@@ -218,7 +218,7 @@ public class ShuffleColumn {
      * @return a list of separated list
      */
     private List<List<Row>> seperateRowsByGroup(List<Row> rows) {
-        List<List<Row>> subRows = new ArrayList<>();
+        List<List<Row>> subRows = new ArrayList<List<Row>>();
         int i = 0;
         int j = 1;
         do {
@@ -283,7 +283,7 @@ public class ShuffleColumn {
      * @return
      */
     protected List<Integer> calculateReplacementInteger(int size, int prime) {
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<Integer>();
         for (long i = 0; i < size; i++) {
             list.add((int) (((i + 1) * prime) % size));
         }
@@ -298,11 +298,11 @@ public class ShuffleColumn {
      * @return a list of Row object
      */
     protected List<Row> generateRows(List<List<Object>> input, List<Integer> columnsGroup) {
-        List<Row> rows = new ArrayList<>();
+        List<Row> rows = new ArrayList<Row>();
         int rIndex = 0;
 
         for (List<Object> subInput : input) {
-            List<Object> partition = new ArrayList<>();
+            List<Object> partition = new ArrayList<Object>();
             if (columnsGroup != null) {
                 for (int cIndex : columnsGroup) {
                     partition.add(subInput.get(cIndex));
@@ -323,9 +323,9 @@ public class ShuffleColumn {
 
         int rIndex;
 
-        List<Object> rGroup = new ArrayList<>();
+        List<Object> rGroup = new ArrayList<Object>();
 
-        List<Object> rItems = new ArrayList<>();
+        List<Object> rItems = new ArrayList<Object>();
 
         public Row(int rIndex, List<Object> rItems, List<Object> rGroup) {
             super();

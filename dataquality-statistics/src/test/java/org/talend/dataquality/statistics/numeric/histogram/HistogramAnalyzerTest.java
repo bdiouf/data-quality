@@ -294,7 +294,7 @@ public class HistogramAnalyzerTest {
         double max = ThreadLocalRandom.current().nextDouble(maxMinValue + 1, maxValue);
         double step = (max - min) / numBins;
         // value list
-        List<Double> values = new ArrayList<>();
+        List<Double> values = new ArrayList<Double>();
         // histograms
         Map<Range, Long> histograms = new TreeMap<Range, Long>();
         double current = min;

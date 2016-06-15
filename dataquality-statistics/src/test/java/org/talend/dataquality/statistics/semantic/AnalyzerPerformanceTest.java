@@ -163,7 +163,7 @@ public class AnalyzerPerformanceTest {
     }
 
     private static List<String[]> getRecords(String path) {
-        List<String[]> records = new ArrayList<>();
+        List<String[]> records = new ArrayList<String[]>();
         try {
             Reader reader = new FileReader(AnalyzerPerformanceTest.class.getResource(path).getPath());
             CSVFormat csvFormat = CSVFormat.DEFAULT.withDelimiter(';').withFirstRecordAsHeader();

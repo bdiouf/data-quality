@@ -36,7 +36,7 @@ public class GenerateUniqueSsnFr extends AbstractGenerateUniqueSsn {
     @Override
     protected StringBuilder doValidGenerateMaskedField(String str) {
         // read the input str
-        List<String> strs = new ArrayList<>();
+        List<String> strs = new ArrayList<String>();
         strs.add(str.substring(0, 1));
         strs.add(str.substring(1, 3));
         strs.add(str.substring(3, 5));
@@ -79,13 +79,13 @@ public class GenerateUniqueSsnFr extends AbstractGenerateUniqueSsn {
      */
     @Override
     protected List<AbstractField> createFieldsListFromPattern() {
-        List<AbstractField> fields = new ArrayList<>();
+        List<AbstractField> fields = new ArrayList<AbstractField>();
 
         fields.add(new FieldInterval(1, 2));
         fields.add(new FieldInterval(0, 99));
         fields.add(new FieldInterval(1, 12));
 
-        List<String> departments = new ArrayList<>();
+        List<String> departments = new ArrayList<String>();
         for (int department = 1; department <= 99; department++) {
             if (department < 10)
                 departments.add("0" + String.valueOf(department));

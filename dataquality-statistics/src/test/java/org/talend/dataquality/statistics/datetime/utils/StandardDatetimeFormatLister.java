@@ -31,7 +31,7 @@ public class StandardDatetimeFormatLister {
             FormatStyle.LONG, FormatStyle.FULL };
 
     private List<LocaledPattern> processBaseDateTimePatternsByLocales() {
-        List<LocaledPattern> dateTimePatterns = new ArrayList<>();
+        List<LocaledPattern> dateTimePatterns = new ArrayList<LocaledPattern>();
 
         for (FormatStyle style : FORMAT_STYLES) {
             if (PRINT_DETAILED_RESULTS) {

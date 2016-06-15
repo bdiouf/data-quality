@@ -105,7 +105,7 @@ public enum BlockingKeyPreAlgorithmEnum {
     }
 
     public static String[] getAllTypes() {
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<String>();
         for (BlockingKeyPreAlgorithmEnum theType : values()) {
             list.add(theType.getValue());
         }

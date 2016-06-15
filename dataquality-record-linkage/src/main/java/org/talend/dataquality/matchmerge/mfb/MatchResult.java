@@ -26,8 +26,8 @@ public class MatchResult {
     private double normalizedConfidence;
 
     public MatchResult(int size) {
-        scores = new ArrayList<>(size + 1);
-        thresholds = new ArrayList<>(size + 1);
+        scores = new ArrayList<Score>(size + 1);
+        thresholds = new ArrayList<Float>(size + 1);
     }
 
     public static class Score {

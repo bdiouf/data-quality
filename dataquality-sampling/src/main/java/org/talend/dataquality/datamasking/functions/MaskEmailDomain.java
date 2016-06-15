@@ -31,7 +31,7 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
 
     protected static final Pattern EMAIL_REGEX = Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w-]+\\.)+[\\w-]+[\\w-]$");
 
-    protected List<String> replacements = new ArrayList<>();
+    protected List<String> replacements = new ArrayList<String>();
 
     protected boolean maskByX = false;
 
@@ -102,7 +102,7 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
     protected String maskTopLevelDomainByX(String address) {
         StringBuilder sb = new StringBuilder(address);
         int splitAddress = address.indexOf('@');
-        List<Integer> indexes = getPointPostions(address, splitAddress);
+        ArrayList<Integer> indexes = getPointPostions(address, splitAddress);
 
         Character maskingCrct = getMaskingCharacter();
 

@@ -98,7 +98,7 @@ public class SynonymRecordSearcher {
         /**
          * The results of a search.
          */
-        final List<List<WordResult>> wordResults = new ArrayList<>();
+        final List<List<WordResult>> wordResults = new ArrayList<List<WordResult>>();
 
         /**
          * Method "computeOutputRows" computes the output rows
@@ -143,13 +143,13 @@ public class SynonymRecordSearcher {
                 // this is mainly for robustness and for tests as the search method of SynonymRecordSearcher already
                 // handles this case
                 if (firstWR.isEmpty()) {
-                    List<WordResult> wr = new ArrayList<>(foundWords);
+                    List<WordResult> wr = new ArrayList<WordResult>(foundWords);
                     wr.add(createEmptyWordResult(""));//$NON-NLS-1$
                     computeOutputRows(recordLength, wr, sublist, outputRows);
                 }
                 // handle case when at least one synonym reference has been found (usual case)
                 for (WordResult wordResult : firstWR) {
-                    List<WordResult> wr = new ArrayList<>(foundWords);
+                    List<WordResult> wr = new ArrayList<WordResult>(foundWords);
                     wr.add(wordResult);
                     computeOutputRows(recordLength, wr, sublist, outputRows);
                 }
@@ -187,12 +187,12 @@ public class SynonymRecordSearcher {
     public List<OutputRecord> search(int maxNbOutputResults, String[] record) throws IOException {
         assert record != null;
 
-        // List<RecordResult> recResults = new ArrayList<>();
+        // List<RecordResult> recResults = new ArrayList<SynonymRecordSearcher.RecordResult>();
         RecordResult recRes = new RecordResult();
 
         // search each field in the appropriate index
         for (int i = 0; i < record.length; i++) {
-            List<WordResult> wResults = new ArrayList<>();
+            List<WordResult> wResults = new ArrayList<WordResult>();
             String field = record[i];
 
             // if input value is empty, create an empty record

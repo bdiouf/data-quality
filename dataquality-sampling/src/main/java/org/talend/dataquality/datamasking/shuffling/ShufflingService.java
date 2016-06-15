@@ -22,7 +22,7 @@ public class ShufflingService {
 
     protected ExecutorService executor;
 
-    private List<List<Object>> rows = new ArrayList<>();
+    private List<List<Object>> rows = new ArrayList<List<Object>>();
 
     private int seperationSize = Integer.MAX_VALUE;
 
@@ -110,9 +110,9 @@ public class ShufflingService {
     }
 
     private synchronized List<List<Object>> deepCopyListTo(List<List<Object>> rows) {
-        List<List<Object>> copyRows = new ArrayList<>();
+        List<List<Object>> copyRows = new ArrayList<List<Object>>();
         for (List<Object> row : rows) {
-            List<Object> copyRow = new ArrayList<>();
+            List<Object> copyRow = new ArrayList<Object>();
             for (Object o : row) {
                 copyRow.add(o);
             }

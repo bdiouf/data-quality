@@ -39,7 +39,7 @@ public class CompositePatternFrequencyAnalyzer extends AbstractFrequencyAnalyzer
 
     private static final long serialVersionUID = -4658709249927616622L;
 
-    private List<AbstractPatternRecognizer> patternFreqRecognizers = new ArrayList<>();
+    private List<AbstractPatternRecognizer> patternFreqRecognizers = new ArrayList<AbstractPatternRecognizer>();
 
     private DataTypeEnum[] types; // types of columns
 

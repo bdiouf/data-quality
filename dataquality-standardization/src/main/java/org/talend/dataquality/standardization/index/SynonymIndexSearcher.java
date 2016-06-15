@@ -612,7 +612,7 @@ public class SynonymIndexSearcher {
         CharTermAttribute charTermAttribute = result.addAttribute(CharTermAttribute.class);
 
         tokenStream.reset();
-        List<String> termList = new ArrayList<>();
+        List<String> termList = new ArrayList<String>();
         while (result.incrementToken()) {
             String term = charTermAttribute.toString();
             termList.add(term);

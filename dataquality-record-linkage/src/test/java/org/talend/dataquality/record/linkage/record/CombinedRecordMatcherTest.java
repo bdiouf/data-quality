@@ -206,9 +206,9 @@ public class CombinedRecordMatcherTest {
 
     private List<List<Double>> computeWeights(IRecordMatcher combMatcher) {
         // compare all records together
-        List<List<Double>> allWeights = new ArrayList<>();
+        List<List<Double>> allWeights = new ArrayList<List<Double>>();
         for (String[] record1 : MAINRECORDS) {
-            List<Double> allWeightInRow = new ArrayList<>();
+            List<Double> allWeightInRow = new ArrayList<Double>();
             for (String[] record2 : MAINRECORDS) {
                 double matchingWeight = combMatcher.getMatchingWeight(record1, record2);
                 // add the matching weight into the matrix when it's a match

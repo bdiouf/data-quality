@@ -66,7 +66,7 @@ public class AbstractGenerateKey {
             resultInBlock.add(resultArray);
         } else {
             // Put the result which has same generating key in one block
-            List<String[]> resultInNewBlock = new ArrayList<>();
+            List<String[]> resultInNewBlock = new ArrayList<String[]>();
             resultInNewBlock.add(resultArray);
             genKeyToBlockResult.put(genKey, resultInNewBlock);
         }

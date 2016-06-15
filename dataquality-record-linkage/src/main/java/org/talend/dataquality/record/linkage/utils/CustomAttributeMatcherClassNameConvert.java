@@ -87,7 +87,7 @@ public class CustomAttributeMatcherClassNameConvert {
     public static URL[] changeJarPathToURLArray(String concatenatedPaths) {
 
         String[] allElements = concatenatedPaths.split(CustomAttributeMatcherClassNameConvert.REGEXKEY);
-        List<URL> jarURLs = new ArrayList<>();
+        List<URL> jarURLs = new ArrayList<URL>();
         for (String allElement : allElements) {
             try {
                 jarURLs.add((new File(allElement)).toURI().toURL());
