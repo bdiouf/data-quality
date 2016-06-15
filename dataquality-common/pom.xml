@@ -1,59 +1,49 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.talend.dataquality</groupId>
-        <artifactId>dataquality-libraries</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
-        <relativePath>../dataquality-libraries</relativePath>
-    </parent>
-    <artifactId>dataquality-common</artifactId>
-    <version>${dataquality.libraries.snapshot.version}</version>
-    <packaging>bundle</packaging>
-    <name>dataquality-common</name>
-    <description>Data Quality Common Library is the low level library containing interfaces and common utility classes.</description>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.talend.dataquality</groupId>
+		<artifactId>dataquality-libraries</artifactId>
+		<version>1.5.1-SNAPSHOT</version>
+		<relativePath>../dataquality-libraries</relativePath>
+	</parent>
+	<artifactId>dataquality-common</artifactId>
+	<version>${dataquality.libraries.snapshot.version}</version>
+	<packaging>bundle</packaging>
+	<name>dataquality-common</name>
+	<description>Data Quality Common Library is the low level library containing interfaces and common utility classes.</description>
 
-    <properties>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+	<dependencies>
+		<!-- apache commons -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>1.6</version>
+		</dependency>
 
-        <!-- This is used to generate README.md file -->
-        <commons.componentid>org.talend.dataquality.common</commons.componentid>
-        <commons.release.version>${dataquality.libraries.released.version}</commons.release.version>
-    </properties>
+		<!-- json parser -->
+		<dependency>
+			<groupId>com.clearspring.analytics</groupId>
+			<artifactId>stream</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 
-
-    <dependencies>
-        <!-- apache commons -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-        </dependency>
-	<dependency>
-             <groupId>commons-pool</groupId>
-	     <artifactId>commons-pool</artifactId>
-	     <version>1.6</version>
-	</dependency>
-
-        <!-- json parser -->
-        <dependency>
-            <groupId>com.clearspring.analytics</groupId>
-            <artifactId>stream</artifactId>
-            <version>2.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+	</dependencies>
 </project>

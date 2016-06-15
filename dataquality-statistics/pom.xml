@@ -16,10 +16,6 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-
-		<!-- This is used to generate README.md file -->
-		<commons.componentid>org.talend.dataquality.standardization</commons.componentid>
-		<commons.release.version>${dataquality.libraries.released.version}</commons.release.version>
 	</properties>
 
 	<dependencies>

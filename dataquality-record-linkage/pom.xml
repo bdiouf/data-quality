@@ -1,104 +1,94 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.talend.dataquality</groupId>
-        <artifactId>dataquality-libraries</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
-        <relativePath>../dataquality-libraries</relativePath>
-    </parent>
-    <artifactId>dataquality-record-linkage</artifactId>
-    <version>${dataquality.record.linkage.snapshot.version}</version>
-    <packaging>bundle</packaging>
-    <name>dataquality-record-linkage</name>
-    <description>Record Matching algorithms, blocking key calculationn and T-Swoosh</description>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.talend.dataquality</groupId>
+		<artifactId>dataquality-libraries</artifactId>
+		<version>1.5.1-SNAPSHOT</version>
+		<relativePath>../dataquality-libraries</relativePath>
+	</parent>
+	<artifactId>dataquality-record-linkage</artifactId>
+	<version>${dataquality.record.linkage.snapshot.version}</version>
+	<packaging>bundle</packaging>
+	<name>dataquality-record-linkage</name>
+	<description>Record Matching algorithms, blocking key calculationn and T-Swoosh</description>
 
-    <properties>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
 
-        <!-- This is used to generate README.md file -->
-        <commons.componentid>org.talend.dataquality.record.linkage</commons.componentid>
-        <commons.release.version>${dataquality.record.linkage.released.version}</commons.release.version>
-    </properties>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Include-Resource>{maven-resources},changelog.txt,src/main/java/messages.properties</Include-Resource>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.talend</groupId>
+			<artifactId>org.talend.utils</artifactId>
+			<version>${org.talend.utils.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.talend.daikon</groupId>
+					<artifactId>daikon</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-        </resources>
+		<dependency>
+			<groupId>org.talend.dataquality</groupId>
+			<artifactId>dataquality-common</artifactId>
+			<version>${dataquality.libraries.snapshot.version}</version>
+		</dependency>
 
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Include-Resource>{maven-resources},changelog.txt,src/main/java/messages.properties</Include-Resource>
-                    </instructions>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.talend</groupId>
-            <artifactId>org.talend.utils</artifactId>
-            <version>${org.talend.utils.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.talend.daikon</groupId>
-                    <artifactId>daikon</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.talend.dataquality</groupId>
-            <artifactId>dataquality-common</artifactId>
-            <version>${dataquality.libraries.snapshot.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
+	</dependencies>
 </project>

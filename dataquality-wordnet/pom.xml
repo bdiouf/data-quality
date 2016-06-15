@@ -1,58 +1,50 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.talend.dataquality</groupId>
-        <artifactId>dataquality-libraries</artifactId>
-        <version>1.5.1-SNAPSHOT</version>
-        <relativePath>../dataquality-libraries</relativePath>
-    </parent>
-    <artifactId>dataquality-wordnet</artifactId>
-    <version>${dataquality.wordnet.snapshot.version}</version>
-    <packaging>bundle</packaging>
-    <name>dataquality-wordnet</name>
-    <description>Content validation API based on WordNet dictionary</description>
-    
-    <properties>
-    	<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-        <!-- This is used to generate README.md file -->
-        <commons.componentid>org.talend.dataquality.standardization</commons.componentid>
-        <commons.release.version>${dataquality.libraries.released.version}</commons.release.version>
-    </properties>
-    
-    <dependencies>
-        <dependency>
-            <groupId>edu.mit</groupId>
-            <artifactId>jwi</artifactId>
-            <version>2.2.3</version>
-        </dependency>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.talend.dataquality</groupId>
+		<artifactId>dataquality-libraries</artifactId>
+		<version>1.5.1-SNAPSHOT</version>
+		<relativePath>../dataquality-libraries</relativePath>
+	</parent>
+	<artifactId>dataquality-wordnet</artifactId>
+	<version>${dataquality.wordnet.snapshot.version}</version>
+	<packaging>bundle</packaging>
+	<name>dataquality-wordnet</name>
+	<description>Content validation API based on WordNet dictionary</description>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>edu.mit</groupId>
+			<artifactId>jwi</artifactId>
+			<version>2.2.3</version>
+		</dependency>
 
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Include-Resource>{maven-resources},lib=lib,licenses=licenses</Include-Resource>
-                    </instructions>
-                </configuration>
-            </plugin>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+	</dependencies>
 
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Include-Resource>{maven-resources},lib=lib,licenses=licenses</Include-Resource>
+					</instructions>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
 </project>
