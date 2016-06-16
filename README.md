@@ -9,7 +9,7 @@ This repository contains the source files of Talend Data Quality libraries.
 |:----------------------------------------------------------|----------------------------------------------------------------------|
 | [dataquality-common](dataquality-common)                  | *Abstractions of data analysis, and low-level utilities such as East Asian text pattern recognition* |
 | [dataquality-libraries](dataquality-libraries)            | *Parent pom aggregating other library projects, devops tools*        |
-| [dataquality-record-linkage](dataquality-record-linkage)  | *Record Matching algorithms, blocking key calculationn and T-Swoosh* |
+| [dataquality-record-linkage](dataquality-record-linkage)  | *Record Matching algorithms, blocking key calculation and T-Swoosh* |
 | [dataquality-sampling](dataquality-sampling)              | *Reservoir sampling, data masking, data duplication*                 |
 | [dataquality-semantic](dataquality-semantic)              | *API for semantic category analysis*                                 |
 | [dataquality-standardization](dataquality-standardization)| *Standardization library based on Apache Lucene*                     |
