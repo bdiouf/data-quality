@@ -33,7 +33,7 @@ public class ValueDataMaskerTest {
             put(new String[] { "91000", "UNKNOWN", "integer" }, "86622");
             put(new String[] { "92000", "UNKNOWN", "decimal" }, "87574");
             put(new String[] { "93000", "UNKNOWN", "numeric" }, "88526");
-            put(new String[] { "2023-06-07", "UNKNOWN", "date" }, "");
+            put(new String[] { "2023-06-07", "UNKNOWN", "date" }, "2023-07-01");
             put(new String[] { "sdkjs@talend.com", "UNKNOWN", "string" }, "vkfzz@psbbqg.aqa");
 
             // 1. FIRST_NAME

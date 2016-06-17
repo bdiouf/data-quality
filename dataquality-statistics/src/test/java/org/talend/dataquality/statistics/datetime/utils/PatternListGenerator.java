@@ -223,7 +223,7 @@ public class PatternListGenerator {
         patternList.add(new LocaledPattern("yyyyMMddZ", Locale.US, "BASIC_ISO_DATE", false));
         patternList.add(new LocaledPattern("yyyyMMdd", Locale.US, "BASIC_ISO_DATE", false));
         // 2. ISO_DATE
-        patternList.add(new LocaledPattern("yyyy-MM-ddZZZZZ", Locale.US, "ISO_DATE", false));
+        patternList.add(new LocaledPattern("yyyy-MM-ddXXX", Locale.US, "ISO_DATE", false));
         patternList.add(new LocaledPattern("yyyy-MM-dd", Locale.US, "ISO_DATE", false));
         // 3. ISO_DATE_TIME
         patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'['VV']'", Locale.US, "ISO_DATE_TIME", true));
@@ -237,17 +237,17 @@ public class PatternListGenerator {
         patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US, "ISO_LOCAL_DATE_TIME", true));
         patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss", Locale.US, "ISO_LOCAL_DATE_TIME", true));// 1970-01-01T00:32:43
         // 7. ISO_OFFSET_DATE
-        patternList.add(new LocaledPattern("yyyy-MM-ddZZZZZ", Locale.US, "ISO_OFFSET_DATE", false));
+        patternList.add(new LocaledPattern("yyyy-MM-ddXXX", Locale.US, "ISO_OFFSET_DATE", false));
         // 8. ISO_OFFSET_DATE_TIME
-        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", Locale.US, "ISO_OFFSET_DATE_TIME", true));
-        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US, "ISO_OFFSET_DATE_TIME", true));
+        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.US, "ISO_OFFSET_DATE_TIME", true));
+        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.US, "ISO_OFFSET_DATE_TIME", true));
         // 9. ISO_ORDINAL_DATE
-        patternList.add(new LocaledPattern("yyyy-DZZZZZ", Locale.US, "ISO", false));
+        patternList.add(new LocaledPattern("yyyy-DXXX", Locale.US, "ISO", false));
         // 10. ISO_WEEK_DATE
-        patternList.add(new LocaledPattern("yyyy-'W'w-WZZZZZ", Locale.US, "ISO", false));
+        patternList.add(new LocaledPattern("yyyy-'W'w-WXXX", Locale.US, "ISO", false));
         // 11. ISO_ZONED_DATE_TIME
-        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ'['VV']'", Locale.US, "ISO_ZONED_DATE_TIME", true));
-        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ssZZZZZ'['VV']'", Locale.US, "ISO_ZONED_DATE_TIME", true));
+        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'", Locale.US, "ISO_ZONED_DATE_TIME", true));
+        patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ssXXX'['VV']'", Locale.US, "ISO_ZONED_DATE_TIME", true));
         // 12. RFC_1123_DATE_TIME
         patternList.add(new LocaledPattern("EEE, d MMM yyyy HH:mm:ss Z", Locale.US, "RFC1123_WITH_DAY", true));
         patternList.add(new LocaledPattern("d MMM yyyy HH:mm:ss Z", Locale.US, "RFC1123", true));

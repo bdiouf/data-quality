@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.talend.dataquality.datamasking.functions.Function;
 
@@ -27,6 +28,12 @@ public class DateFunctionAdapter extends Function<String> {
     private Function<Date> function;
 
     private List<SimpleDateFormat> dataFormatList = new ArrayList<SimpleDateFormat>();
+
+    @Override
+    public void setRandomWrapper(Random rand) {
+        super.setRandomWrapper(rand);
+        function.setRandomWrapper(rand);
+    }
 
     public DateFunctionAdapter(Function<Date> functionToAdapt, List<String> datePatternList) {
         function = functionToAdapt;
@@ -51,6 +58,18 @@ public class DateFunctionAdapter extends Function<String> {
                 if (!sdf.toPattern().contains("H") && input.contains(":")) {
                     continue;
                 }
+                final Date inputDate = sdf.parse(input);
+                final Date result = function.generateMaskedRow(inputDate);
+                return sdf.format(result);
+            } catch (ParseException e) {
+                // do nothing, continue to try other patterns;
+            }
+        }
+        // no pattern from column metadata is applicable to the input, continue to guess and parse
+        final String guess = DatePatternHelper.guessDatePattern(input);
+        if (!EMPTY_STRING.equals(guess)) {
+            final SimpleDateFormat sdf = new SimpleDateFormat(guess);
+            try {
                 final Date inputDate = sdf.parse(input);
                 final Date result = function.generateMaskedRow(inputDate);
                 return sdf.format(result);

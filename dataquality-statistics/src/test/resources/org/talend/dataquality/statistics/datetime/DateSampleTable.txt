@@ -130,17 +130,17 @@ March 22 1999	MMMM d yyyy	en_US	OTHER	false
 22-Mar-99 05.06.07.000000888 AM	dd-MMM-yy hh.mm.ss.nnnnnnnnn a	en_GB	OTHER	true
 19990322+0100	yyyyMMddZ	en_US	BASIC_ISO_DATE	false
 19990322	yyyyMMdd	en_US	BASIC_ISO_DATE	false
-1999-03-22+01:00	yyyy-MM-ddZZZZZ	en_US	ISO_DATE	false
+1999-03-22+01:00	yyyy-MM-ddXXX	en_US	ISO_DATE	false
 1999-03-22T05:06:07.000[Europe/Paris]	yyyy-MM-dd'T'HH:mm:ss.SSS'['VV']'	en_US	ISO_DATE_TIME	true
 1999-03-22T05:06:07.000	yyyy-MM-dd'T'HH:mm:ss.SSS	en_US	ISO_DATE_TIME	true
 1999-03-22T05:06:07	yyyy-MM-dd'T'HH:mm:ss	en_US	ISO_DATE_TIME	true
 1999-03-22T05:06:07.000Z	yyyy-MM-dd'T'HH:mm:ss.SSS'Z'	en_US	ISO_INSTANT	true
-1999-03-22T05:06:07.000+01:00	yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ	en_US	ISO_OFFSET_DATE_TIME	true
-1999-03-22T05:06:07+01:00	yyyy-MM-dd'T'HH:mm:ssZZZZZ	en_US	ISO_OFFSET_DATE_TIME	true
-1999-81+01:00	yyyy-DZZZZZ	en_US	ISO	false
-1999-W13-4+01:00	yyyy-'W'w-WZZZZZ	en_US	ISO	false
-1999-03-22T05:06:07.000+01:00[Europe/Paris]	yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ'['VV']'	en_US	ISO_ZONED_DATE_TIME	true
-1999-03-22T05:06:07+01:00[Europe/Paris]	yyyy-MM-dd'T'HH:mm:ssZZZZZ'['VV']'	en_US	ISO_ZONED_DATE_TIME	true
+1999-03-22T05:06:07.000+01:00	yyyy-MM-dd'T'HH:mm:ss.SSSXXX	en_US	ISO_OFFSET_DATE_TIME	true
+1999-03-22T05:06:07+01:00	yyyy-MM-dd'T'HH:mm:ssXXX	en_US	ISO_OFFSET_DATE_TIME	true
+1999-81+01:00	yyyy-DXXX	en_US	ISO	false
+1999-W13-4+01:00	yyyy-'W'w-WXXX	en_US	ISO	false
+1999-03-22T05:06:07.000+01:00[Europe/Paris]	yyyy-MM-dd'T'HH:mm:ss.SSSXXX'['VV']'	en_US	ISO_ZONED_DATE_TIME	true
+1999-03-22T05:06:07+01:00[Europe/Paris]	yyyy-MM-dd'T'HH:mm:ssXXX'['VV']'	en_US	ISO_ZONED_DATE_TIME	true
 Mon, 22 Mar 1999 05:06:07 +0100	EEE, d MMM yyyy HH:mm:ss Z	en_US	RFC1123_WITH_DAY	true
 22 Mar 1999 05:06:07 +0100	d MMM yyyy HH:mm:ss Z	en_US	RFC1123	true
 22.3.99	d.M.yy	be	SHORT	false
