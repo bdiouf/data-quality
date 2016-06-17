@@ -242,7 +242,7 @@ public class PatternListGenerator {
         patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.US, "ISO_OFFSET_DATE_TIME", true));
         patternList.add(new LocaledPattern("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.US, "ISO_OFFSET_DATE_TIME", true));
         // 9. ISO_ORDINAL_DATE
-        patternList.add(new LocaledPattern("yyyy-DXXX", Locale.US, "ISO", false));
+        patternList.add(new LocaledPattern("yyyy-DDDXXX", Locale.US, "ISO", false));
         // 10. ISO_WEEK_DATE
         patternList.add(new LocaledPattern("yyyy-'W'w-WXXX", Locale.US, "ISO", false));
         // 11. ISO_ZONED_DATE_TIME

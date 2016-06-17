@@ -15,7 +15,6 @@ package org.talend.dataquality.datamasking.semantic;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +48,7 @@ class DatePatternHelper {
             for (String line : lines) {
                 if (!"".equals(line.trim())) { // Not empty
                     if (line.startsWith("--")) { // group separator
-                        currentGroupMap = new HashMap<Pattern, String>();
+                        currentGroupMap = new LinkedHashMap<Pattern, String>();
                         patternParsers.add(currentGroupMap);
                     } else {
                         String[] lineArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(line, "\t");

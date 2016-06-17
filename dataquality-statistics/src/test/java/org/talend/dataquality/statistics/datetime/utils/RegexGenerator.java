@@ -34,7 +34,7 @@ public class RegexGenerator {
             put("z", "[A-Z]{2,5}");
             put("W", "[1-7]");
             put("w", "([1-4]?[0-9]|5[0-2])");
-            put("D", "[1-3]?[0-9]?[0-9]");
+            put("DDD", "[0-9]{1,3}");
 
             put("HH", "(0[0-9]|1[0-9]|2[0-3])");
             put("H", "(0?[0-9]|1[0-9]|2[0-3])");
@@ -54,7 +54,7 @@ public class RegexGenerator {
             put("yyyy", "[0-9]{4}");
             put("yy", "[0-9]{2}");
             put("y", "[0-9]{2,4}"); // TO CHECK
-            put("MMMM", "(\\p{L}{2}(\\p{L}{1,10})?)");
+            put("MMMM", "(\\p{L}{3,10})");
             put("MMM", "(([A-Z]\\p{L}{2})|([a-z]\\p{L}{2,3}\\.?))");// this line must be after the replacement of 'a'
             put("MM", "(0[1-9]|1[0-2])");
             put("M", "(0?[1-9]|1[0-2])");
