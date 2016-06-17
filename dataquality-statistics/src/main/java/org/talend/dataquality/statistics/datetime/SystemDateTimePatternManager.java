@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -57,12 +57,12 @@ public class SystemDateTimePatternManager {
         InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream(patternFileName);
         try {
             List<String> lines = IOUtils.readLines(stream, "UTF-8");
-            Map<Pattern, String> currentGroupMap = new HashMap<Pattern, String>();
+            Map<Pattern, String> currentGroupMap = new LinkedHashMap<Pattern, String>();
             patternParsers.add(currentGroupMap);
             for (String line : lines) {
                 if (!"".equals(line.trim())) { // Not empty
                     if (line.startsWith("--")) { // group separator
-                        currentGroupMap = new HashMap<Pattern, String>();
+                        currentGroupMap = new LinkedHashMap<Pattern, String>();
                         patternParsers.add(currentGroupMap);
                     } else {
                         String[] lineArray = StringUtils.splitByWholeSeparatorPreserveAllTokens(line, "\t");
