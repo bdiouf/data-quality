@@ -13,18 +13,6 @@ import org.junit.Test;
 
 public class ShuffleColumnWithPartitionTest {
 
-    private String file = "Shuffling_test_data.csv";
-
-    private String file5000 = "Shuffling_test_data_5000.csv";
-
-    private String file10000 = "Shuffling_test_data_10000.csv";
-
-    private String file20000 = "Shuffling_test_data_20000.csv";
-
-    private String file50000 = "Shuffling_test_data_50000.csv";
-
-    private String file100000 = "Shuffling_test_data_100000.csv";
-
     private String file1000000 = "Shuffling_test_data_1000000.csv";
 
     private static List<String> group = new ArrayList<String>();
@@ -93,7 +81,7 @@ public class ShuffleColumnWithPartitionTest {
 
         long time1 = System.currentTimeMillis();
         service.setRows(fileData);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         long time2 = System.currentTimeMillis();
         service.setHasFinished(true);
         System.out.println("one million line generation time " + (time2 - time1));
@@ -105,6 +93,7 @@ public class ShuffleColumnWithPartitionTest {
             List<String> fnsO = new ArrayList<String>();
             List<String> citisO = new ArrayList<String>();
             List<String> statesO = new ArrayList<String>();
+            List<Integer> idsO = new ArrayList<Integer>();
 
             List<String> emailsS = new ArrayList<String>();
             List<String> fnsS = new ArrayList<String>();
@@ -125,6 +114,7 @@ public class ShuffleColumnWithPartitionTest {
                 fnsO.add(fileData.get(row + partition * i).get(1).toString());
                 citisO.add(fileData.get(row + partition * i).get(6).toString());
                 statesO.add(fileData.get(row + partition * i).get(7).toString());
+                idsO.add(Integer.parseInt(fileData.get(row + partition * i).get(0).toString()));
 
                 idsS.add(idS);
                 fnsS.add(subRows.get(row).get(1).toString());
@@ -132,6 +122,7 @@ public class ShuffleColumnWithPartitionTest {
                 citisS.add(subRows.get(row).get(6).toString());
                 statesS.add(subRows.get(row).get(7).toString());
             }
+            Thread.sleep(1000);
 
             for (int row = 0; row < subRows.size(); row++) {
                 if (row % 50000 == 0)
@@ -161,7 +152,7 @@ public class ShuffleColumnWithPartitionTest {
                 // original position
                 String emailS = emailsS.get(row);
                 String emailO = emailsO.get(row);
-                Assert.assertTrue(ids != (row + 1 + partition * i) || !emailS.equals(emailO));
+                Assert.assertTrue(ids != idO || !emailS.equals(emailO));
             }
 
         }

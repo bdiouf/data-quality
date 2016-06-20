@@ -80,7 +80,6 @@ public class ShuffleColumnTest {
 
         service.setHasFinished(true);
         Assert.assertEquals(size / partition, result.size());
-        System.out.println(">>>>>>> " + result.size());
         for (int i = 0; i < result.size(); i++) {
             List<List<Object>> rows = result.poll();
             for (int position = 0; position < rows.size(); position++) {
@@ -155,9 +154,9 @@ public class ShuffleColumnTest {
         List<List<Object>> fileData = generation.getTableValue(GenerateData.SHUFFLING_DATA_PATH);
         long time1 = System.currentTimeMillis();
         service.setRows(fileData);
-        Thread.sleep(1000);
         long time2 = System.currentTimeMillis();
         service.setHasFinished(true);
+        Thread.sleep(100);
         System.out.println("1000 line generation time " + (time2 - time1));
 
         Assert.assertEquals(1, result.size());
@@ -231,7 +230,7 @@ public class ShuffleColumnTest {
     }
 
     @Test
-    public void testshuffleColumnsData5000() {
+    public void testshuffleColumnsData5000() throws InterruptedException {
         Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
 
         ShufflingService service = new ShufflingService(columns, allColumns);
@@ -245,6 +244,7 @@ public class ShuffleColumnTest {
         service.setRows(fileData);
         long time2 = System.currentTimeMillis();
         service.setHasFinished(true);
+        Thread.sleep(100);
         System.out.println("5000 line generation time " + (time2 - time1));
 
         Assert.assertEquals(1, result.size());
