@@ -32,7 +32,7 @@ public class UDCategorySerDeser {
 
     private static UserDefinedClassifier udc;
 
-    public static UserDefinedClassifier getRegexClassifier() {
+    public static UserDefinedClassifier getRegexClassifier() throws IOException {
         if (udc == null) {
             udc = readJsonFile();
         }
@@ -48,24 +48,17 @@ public class UDCategorySerDeser {
      * @throws JsonMappingException
      * @throws JsonParseException
      */
-    static UserDefinedClassifier readJsonFile() {
-        UserDefinedClassifier udc = null;
-        InputStream inputStream = UDCategorySerDeser.class
-                .getResourceAsStream("/org/talend/dataquality/semantic/recognizer/" + FILE_NAME);
+    static UserDefinedClassifier readJsonFile() throws IOException {
         try {
-            udc = readJsonFile(inputStream);
+            InputStream inputStream = UDCategorySerDeser.class
+                    .getResourceAsStream("/org/talend/dataquality/semantic/recognizer/" + FILE_NAME);
+            return readJsonFile(inputStream);
         } catch (IOException e) {
-            URL url;
-            try {
-                url = new URL("platform:/plugin/" + BUNDLE_NAME //$NON-NLS-1$
-                        + "/org/talend/dataquality/semantic/recognizer/" + FILE_NAME);
-                inputStream = url.openConnection().getInputStream();
-                udc = readJsonFile(inputStream);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            URL url = new URL("platform:/plugin/" + BUNDLE_NAME //$NON-NLS-1$
+                    + "/org/talend/dataquality/semantic/recognizer/" + FILE_NAME); //$NON-NLS-1$
+            InputStream inputStream = url.openConnection().getInputStream();
+            return readJsonFile(inputStream);
         }
-        return udc;
     }
 
     static UserDefinedClassifier readJsonFile(InputStream inputStream) throws IOException {

@@ -47,22 +47,28 @@ public class RespectiveCategoryRecognizerTest {
         private static final long serialVersionUID = -7775617050399019496L;
 
         {
-            put(SemanticCategoryEnum.ANSWER.getId(), new ArrayList<Pair<String, Boolean>>() {
+            // categories with regex patterns
+            put(SemanticCategoryEnum.EMAIL.getId(), new ArrayList<Pair<String, Boolean>>() {
 
                 private static final long serialVersionUID = 7983289992158907116L;
 
                 {
-                    add(ImmutablePair.of("YES", true));
-                    add(ImmutablePair.of("NO", true));
-                    add(ImmutablePair.of("Oui", true));
-                    add(ImmutablePair.of("Non", true));
-                    add(ImmutablePair.of("ja", true));
-                    add(ImmutablePair.of("nein", true));
-                    add(ImmutablePair.of("Sí", true));
-                    add(ImmutablePair.of("Si", true));
-
+                    add(ImmutablePair.of("fïrst.name+lâst_name-@talend.com", true));
+                    add(ImmutablePair.of("sliu", false)); // must contains "@" symbol
+                    add(ImmutablePair.of("sliu@.com.my", false)); // tld can not start with dot "."
+                    add(ImmutablePair.of("sliu123@talend.a", false)); // last tld must contains at least two characters
+                    add(ImmutablePair.of("sliu123@.talend.com", false)); // tld can not start with dot "."
+                    add(ImmutablePair.of(".sliu@sliu.com", false)); // first character can not be dot "."
+                    add(ImmutablePair.of("sliu()*@talend.com", false)); // only allow character, digit, underscore and dash
+                    add(ImmutablePair.of("sliu@%*.com", false)); // tld is only allow character and digit
+                    add(ImmutablePair.of("sliu.@talend.com", false)); // last character of local part can not be dot "."
+                    add(ImmutablePair.of("sliu..2002@talend.com", false)); // double dots "." are not allowed in local part
+                    add(ImmutablePair.of("sliu.2002@talend..com", false)); // double dots "." are not allowed in domain part
+                    add(ImmutablePair.of("sliu@sliu@talend.com", false)); // double "@" are not allowed
+                    add(ImmutablePair.of("sliu@talend.com.1a", false)); // tld which has two characters can not contains digit
                 }
             });
+
             put(SemanticCategoryEnum.URL.getId(), new ArrayList<Pair<String, Boolean>>() {
 
                 private static final long serialVersionUID = 7983289992158907116L;
@@ -96,6 +102,24 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("1234567", false));
                     add(ImmutablePair.of("41-754-3010", false));
                     add(ImmutablePair.of("12341-754-3010", false));
+                }
+            });
+
+            // categories with dictionary
+            put(SemanticCategoryEnum.ANSWER.getId(), new ArrayList<Pair<String, Boolean>>() {
+
+                private static final long serialVersionUID = 7983289992158907116L;
+
+                {
+                    add(ImmutablePair.of("YES", true));
+                    add(ImmutablePair.of("NO", true));
+                    add(ImmutablePair.of("Oui", true));
+                    add(ImmutablePair.of("Non", true));
+                    add(ImmutablePair.of("ja", true));
+                    add(ImmutablePair.of("nein", true));
+                    add(ImmutablePair.of("Sí", true));
+                    add(ImmutablePair.of("Si", true));
+
                 }
             });
 
