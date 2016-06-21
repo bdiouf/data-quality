@@ -105,7 +105,7 @@ public class PatternListGenerator {
             add(new LocaledPattern("d/MMM/yyyy H:mm:ss Z", Locale.US, "OTHER", true));// 14/Feb/2013 13:40:51 +0100
             add(new LocaledPattern("dd-MMM-yy hh.mm.ss.nnnnnnnnn a", //
                     Locale.UK, "OTHER", true));// 18-Nov-86 01.00.00.000000000 AM
-
+            add(new LocaledPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.US, "OTHER", true));// default format of java.util.Date
         }
     };
 

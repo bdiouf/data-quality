@@ -73,7 +73,7 @@ public class SampleTest {
             put("22.03.99 05:06", new HashSet<String>(Arrays.asList(new String[] //
             { "d.M.yy H:mm", "d.M.yy HH:mm", "dd.MM.yy HH:mm", "dd.MM.yy H:mm", "d.MM.yy H:mm" })));
             put("22.03.1999 05:06:07", new HashSet<String>(Arrays.asList(new String[] //
-            { "dd.MM.yyyy H:mm:ss", "d.M.yyyy HH:mm:ss", "d.M.yyyy H:mm:ss", "d.MM.yyyy H:mm:ss", "dd.MM.yyyy HH:mm:ss" })));
+            { "dd.MM.yyyy H:mm:ss", "d.M.yyyy HH:mm:ss", "d.M.yyyy H:mm:ss", "dd.MM.yyyy HH:mm:ss", "d.MM.yyyy H:mm:ss" })));
             put("1999-03-22 05:06:07", new HashSet<String>(Arrays.asList(new String[] //
             { "yyyy-MM-dd HH:mm:ss", "yyyy-M-d HH:mm:ss", "yyyy-M-d H:mm:ss" })));
             put("22 mars 1999 05:06:07 CET", new HashSet<String>(Arrays.asList(new String[] //
