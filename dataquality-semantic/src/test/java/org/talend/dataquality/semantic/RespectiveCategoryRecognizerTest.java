@@ -53,7 +53,8 @@ public class RespectiveCategoryRecognizerTest {
                 private static final long serialVersionUID = 7983289992158907116L;
 
                 {
-                    add(ImmutablePair.of("fïrst.name+lâst_name-@talend.com", true));
+                    add(ImmutablePair.of("first.name+last_name-@talend.com", true));
+                    add(ImmutablePair.of("fïrst.name+lâst_name-@talend.com", false)); // no accent is allowed
                     add(ImmutablePair.of("sliu", false)); // must contains "@" symbol
                     add(ImmutablePair.of("sliu@.com.my", false)); // tld can not start with dot "."
                     add(ImmutablePair.of("sliu123@talend.a", false)); // last tld must contains at least two characters
@@ -66,6 +67,7 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("sliu.2002@talend..com", false)); // double dots "." are not allowed in domain part
                     add(ImmutablePair.of("sliu@sliu@talend.com", false)); // double "@" are not allowed
                     add(ImmutablePair.of("sliu@talend.com.1a", false)); // tld which has two characters can not contains digit
+                    add(ImmutablePair.of("marius.reidy@lmb.liebMr..com", false));
                 }
             });
 

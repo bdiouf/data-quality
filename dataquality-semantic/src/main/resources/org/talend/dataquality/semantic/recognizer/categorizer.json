@@ -11,7 +11,7 @@
         "id" : "EMAIL",
         "mainCategory" : "AlphaNumeric",
         "name" : "Email",
-        "validator" : { "patternString" : "^[_\\p{L}0-9-\\+]+(\\.[_\\p{L}0-9-\\+]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$" }
+        "validator" : { "patternString" : "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-\\+]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$" }
       },
       { "description" : "US Phone Number",
         "id" : "US_PHONE",
