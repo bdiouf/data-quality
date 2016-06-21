@@ -27,6 +27,7 @@ public class RegexGenerator {
             put("]", "\\]");
             put("-", "\\-");
             put(".", "\\.");
+            put("/", "\\/");
 
             // regex with numbers
             put("XXX", "[+-](0[0-9]|1[0-2]):00");
@@ -65,7 +66,7 @@ public class RegexGenerator {
             put("EEEE", "(\\p{L}{3,10})");// TO CHECK
             put("EEE", "(\\p{L}{3,5})");
 
-            put("VV", "\\p{L}{4,10}/\\p{L}{4,15}");
+            put("VV", "\\p{L}{4,10}\\/\\p{L}{4,15}");
 
             put("'", "");
         }
