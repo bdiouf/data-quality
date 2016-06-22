@@ -6,9 +6,9 @@ public abstract class KeepLastChars<T> extends CharactersOperation<T> {
 
     @Override
     protected void initAttributes() {
-        super.endNumberToKeep = Integer.parseInt(parameters[0]);
+        endNumberToKeep = Integer.parseInt(parameters[0]);
         if (parameters.length == 2)
-            super.charToReplace = parameters[1].charAt(0);
+            charToReplace = parameters[1].charAt(0);
     }
 
 }

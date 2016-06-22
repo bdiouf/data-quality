@@ -24,9 +24,9 @@ public class BetweenIndexesRemove extends BetweenIndexes {
 
     @Override
     protected void initAttributes() {
-        super.beginIndex = Integer.valueOf(parameters[0]) - 1;
-        super.endIndex = Integer.valueOf(parameters[1]);
-        super.toRemove = true;
+        beginIndex = Integer.valueOf(parameters[0]) - 1;
+        endIndex = Integer.valueOf(parameters[1]);
+        toRemove = true;
 
     }
 

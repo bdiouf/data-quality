@@ -21,13 +21,15 @@ import java.util.List;
  */
 public class FieldEnum extends AbstractField {
 
+    private static final long serialVersionUID = 4434958606928963578L;
+
     /**
      * The exhaustive list of values
      */
     private List<String> enumValues;
 
     public FieldEnum(List<String> enumValues, int length) {
-        super.length = length;
+        this.length = length;
         for (String value : enumValues)
             if (value.length() != length) {
                 // TODO
@@ -39,18 +41,18 @@ public class FieldEnum extends AbstractField {
 
     @Override
     public long getWidth() {
-        return this.enumValues.size();
+        return enumValues.size();
     }
 
     @Override
     public Long encode(String str) {
-        return (long) this.enumValues.indexOf(str);
+        return (long) enumValues.indexOf(str);
     }
 
     @Override
     public String decode(long number) {
-        if (number >= this.getWidth())
+        if (number >= getWidth())
             return "";
-        return this.enumValues.get((int) number);
+        return enumValues.get((int) number);
     }
 }

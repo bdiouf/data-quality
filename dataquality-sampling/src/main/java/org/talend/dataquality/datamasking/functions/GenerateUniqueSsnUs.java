@@ -18,10 +18,7 @@ import java.util.List;
 /**
  * @author jteuladedenantes
  * 
- * US pattern: aaa-bb-cccc
- * aaa: 001 -> 665 ; 667 -> 899
- * bb: 01 -> 99
- * cccc: 0001->9999
+ * US pattern: aaa-bb-cccc aaa: 001 -> 665 ; 667 -> 899 bb: 01 -> 99 cccc: 0001->9999
  */
 public class GenerateUniqueSsnUs extends AbstractGenerateUniqueSsn {
 
@@ -53,7 +50,7 @@ public class GenerateUniqueSsnUs extends AbstractGenerateUniqueSsn {
         strs.add(str.substring(3, 5));
         strs.add(str.substring(5, 9));
 
-        return super.ssnPattern.generateUniqueString(strs);
+        return ssnPattern.generateUniqueString(strs);
     }
 
 }

@@ -25,7 +25,7 @@ public class NumericVarianceFloat extends NumericVariance<Float> {
         if (f == null) {
             return 0.0f;
         } else {
-            super.init();
+            init();
             float value = f * ((float) rate + 100) / 100;
             return value;
         }

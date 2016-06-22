@@ -26,20 +26,20 @@ public class GenerateCreditCardFormatString extends GenerateCreditCardFormat<Str
     protected String doGenerateMaskedField(String str) {
         CreditCardType cct_format = null;
         if (str == null || EMPTY_STRING.equals(str)) {
-            cct_format = super.chooseCreditCardType();
-            return super.generateCreditCard(cct_format).toString();
+            cct_format = chooseCreditCardType();
+            return generateCreditCard(cct_format).toString();
         } else {
             try {
-                cct_format = super.getCreditCardType(Long.parseLong(replaceSpacesInString(str))); // $NON-NLS-1$
+                cct_format = getCreditCardType(Long.parseLong(replaceSpacesInString(str))); // $NON-NLS-1$
             } catch (NumberFormatException e) {
-                cct_format = super.chooseCreditCardType();
-                return super.generateCreditCard(cct_format).toString();
+                cct_format = chooseCreditCardType();
+                return generateCreditCard(cct_format).toString();
             }
             if (cct_format != null) {
-                return super.generateCreditCardFormat(cct_format, str, keepFormat);
+                return generateCreditCardFormat(cct_format, str, keepFormat);
             } else {
-                cct_format = super.chooseCreditCardType();
-                return super.generateCreditCard(cct_format).toString();
+                cct_format = chooseCreditCardType();
+                return generateCreditCard(cct_format).toString();
             }
         }
     }

@@ -27,12 +27,12 @@ public class GenerateAccountNumberFormat extends GenerateAccountNumber {
         String accountNumberFormat = EMPTY_STRING;
         if (str != null && str.length() > 9 && !EMPTY_STRING.equals(str)) {
             try {
-                accountNumberFormat = super.generateIban(str, keepFormat);
+                accountNumberFormat = generateIban(str, keepFormat);
             } catch (NumberFormatException e) {
-                accountNumberFormat = super.generateIban();
+                accountNumberFormat = generateIban();
             }
         } else {
-            accountNumberFormat = super.generateIban();
+            accountNumberFormat = generateIban();
         }
         return accountNumberFormat;
 

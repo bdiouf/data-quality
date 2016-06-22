@@ -22,8 +22,8 @@ public abstract class RemoveFirstChars<T2> extends CharactersOperation<T2> {
 
     @Override
     protected void initAttributes() {
-        super.endIndex = Integer.parseInt(parameters[0]);
-        super.toRemove = true;
+        endIndex = Integer.parseInt(parameters[0]);
+        toRemove = true;
     }
 
     @Override

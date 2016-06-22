@@ -19,10 +19,8 @@ import java.util.List;
 /**
  * @author jteuladedenantes
  * 
- * UK pattern: aa-bbbbbb-c
- * aa: all the letters except D,F,I,Q,U,V for both, O for the second letter or BG,GB,NK,KN,TN,NT,ZZ
- * bbbbbb: 000000 -> 999999
- * c: A, B, C ou D
+ * UK pattern: aa-bbbbbb-c aa: all the letters except D,F,I,Q,U,V for both, O for the second letter or
+ * BG,GB,NK,KN,TN,NT,ZZ bbbbbb: 000000 -> 999999 c: A, B, C ou D
  */
 public class GenerateUniqueSsnUk extends AbstractGenerateUniqueSsn {
 
@@ -63,7 +61,7 @@ public class GenerateUniqueSsnUk extends AbstractGenerateUniqueSsn {
         strs.add(str.substring(2, 8));
         strs.add(str.substring(8, 9));
 
-        return super.ssnPattern.generateUniqueString(strs);
+        return ssnPattern.generateUniqueString(strs);
     }
 
 }

@@ -20,13 +20,15 @@ package org.talend.dataquality.datamasking.functions;
  */
 public class FieldInterval extends AbstractField {
 
+    private static final long serialVersionUID = 4713567446010547849L;
+
     private long minInterval;
 
     private long maxInterval;
 
     public FieldInterval(long minInterval, long maxInterval) {
         super();
-        super.length = String.valueOf(maxInterval).length();
+        length = String.valueOf(maxInterval).length();
         this.minInterval = minInterval;
         this.maxInterval = maxInterval;
     }
@@ -41,21 +43,21 @@ public class FieldInterval extends AbstractField {
         Long longStr;
         try {
             longStr = Long.valueOf(str);
-            if (longStr < this.minInterval || longStr > this.maxInterval)
+            if (longStr < minInterval || longStr > maxInterval)
                 return -1L;
         } catch (NumberFormatException e) {
             return -1L;
         }
-        return longStr - this.minInterval;
+        return longStr - minInterval;
     }
 
     @Override
     public String decode(long number) {
-        if (number >= this.getWidth())
+        if (number >= getWidth())
             return "";
-        String res = String.valueOf(number + this.minInterval);
+        String res = String.valueOf(number + minInterval);
         // we add the potential missing zeros
-        while (res.length() < super.length)
+        while (res.length() < length)
             res = "0" + res;
         return res;
     }

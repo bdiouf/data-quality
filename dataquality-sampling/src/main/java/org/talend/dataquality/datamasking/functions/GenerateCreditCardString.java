@@ -22,7 +22,7 @@ public class GenerateCreditCardString extends GenerateCreditCardSimple<String> {
 
     @Override
     protected String doGenerateMaskedField(String str) {
-        super.generateCreditCard();
+        generateCreditCard();
         return String.valueOf(number);
     }
 

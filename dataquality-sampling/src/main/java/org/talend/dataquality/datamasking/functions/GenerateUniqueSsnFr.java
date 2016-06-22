@@ -19,12 +19,7 @@ import java.util.List;
  * 
  * @author jteuladedenantes
  * 
- * French patter: a-bb-cc-dd-eee-fff
- * a: 1 -> 2
- * bb: 1 -> 99
- * cc: 1 -> 12
- * dd: 1 -> 19 ; (2A, 2B) ; 20 -> 99
- * eee: 1 -> 990
+ * French patter: a-bb-cc-dd-eee-fff a: 1 -> 2 bb: 1 -> 99 cc: 1 -> 12 dd: 1 -> 19 ; (2A, 2B) ; 20 -> 99 eee: 1 -> 990
  * fff: 1 -> 999
  */
 public class GenerateUniqueSsnFr extends AbstractGenerateUniqueSsn {
@@ -100,7 +95,7 @@ public class GenerateUniqueSsnFr extends AbstractGenerateUniqueSsn {
         fields.add(new FieldInterval(1, 990));
         fields.add(new FieldInterval(1, 999));
 
-        super.checkSumSize = 2;
+        checkSumSize = 2;
         return fields;
     }
 

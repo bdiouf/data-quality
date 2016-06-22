@@ -33,7 +33,7 @@ public class ReplaceNumericString extends ReplaceNumeric<String> {
     @Override
     protected char replaceChar(char c) {
         if (Character.isDigit(c))
-            return super.charToReplace;
+            return charToReplace;
         return c;
 
     }

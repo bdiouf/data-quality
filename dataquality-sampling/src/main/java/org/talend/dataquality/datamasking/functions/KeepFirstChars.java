@@ -23,8 +23,8 @@ public abstract class KeepFirstChars<T2> extends CharactersOperation<T2> {
 
     @Override
     protected void initAttributes() {
-        super.beginIndex = Integer.parseInt(parameters[0]);
+        beginIndex = Integer.parseInt(parameters[0]);
         if (parameters.length == 2)
-            super.charToReplace = parameters[1].charAt(0);
+            charToReplace = parameters[1].charAt(0);
     }
 }

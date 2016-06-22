@@ -18,8 +18,7 @@ import java.util.List;
 /**
  * @author jteuladedenantes class global comment. Detailled comment
  * 
- * Japan pattern: aaaaaaaaaaaa
- * aaaaaaaaaaaa: 1 -> 1000000000000 - 1
+ * Japan pattern: aaaaaaaaaaaa aaaaaaaaaaaa: 1 -> 1000000000000 - 1
  */
 
 public class GenerateUniqueSsnJapan extends AbstractGenerateUniqueSsn {
@@ -39,11 +38,11 @@ public class GenerateUniqueSsnJapan extends AbstractGenerateUniqueSsn {
         List<String> strs = new ArrayList<String>();
         strs.add(str.substring(0, 12));
 
-        if (super.ssnPattern == null) {
+        if (ssnPattern == null) {
             List<AbstractField> fields = createFieldsListFromPattern();
-            super.ssnPattern = new GenerateUniqueRandomPatterns(fields);
+            ssnPattern = new GenerateUniqueRandomPatterns(fields);
         }
 
-        return super.ssnPattern.generateUniqueString(strs);
+        return ssnPattern.generateUniqueString(strs);
     }
 }

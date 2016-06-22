@@ -23,7 +23,7 @@ public class ReplaceCharacters extends ReplaceAll {
     @Override
     protected char replaceChar(char c) {
         if (Character.isLetter(c))
-            return super.charToReplace;
+            return charToReplace;
         return c;
 
     }

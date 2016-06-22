@@ -19,10 +19,7 @@ import java.util.List;
  * 
  * @author dprot
  * 
- * Indian pattern: abbbbbbbbbbc
- * a: 1 -> 9
- * b: 0 -> 9
- * c: checksum with Verhoeff' algorithm
+ * Indian pattern: abbbbbbbbbbc a: 1 -> 9 b: 0 -> 9 c: checksum with Verhoeff' algorithm
  */
 public class GenerateUniqueSsnIndia extends AbstractGenerateUniqueSsn {
 
@@ -72,7 +69,7 @@ public class GenerateUniqueSsnIndia extends AbstractGenerateUniqueSsn {
         fields.add(new FieldInterval(1, 9));
         fields.add(new FieldInterval(0, 9999999999L));
 
-        super.checkSumSize = 1;
+        checkSumSize = 1;
         return fields;
     }
 

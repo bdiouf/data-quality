@@ -23,10 +23,10 @@ public class BetweenIndexesReplace extends BetweenIndexes {
 
     @Override
     protected void initAttributes() {
-        super.beginIndex = Integer.valueOf(parameters[0]) - 1;
-        super.endIndex = Integer.valueOf(parameters[1]);
+        beginIndex = Integer.valueOf(parameters[0]) - 1;
+        endIndex = Integer.valueOf(parameters[1]);
         if (parameters.length == 3) {
-            super.charToReplace = parameters[2].charAt(0);
+            charToReplace = parameters[2].charAt(0);
         }
 
     }

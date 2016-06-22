@@ -33,7 +33,7 @@ public class ReplaceAll extends CharactersOperation<String> {
     @Override
     protected void initAttributes() {
         if (parameters.length > 0)
-            super.charToReplace = parameters[0].charAt(0);
+            charToReplace = parameters[0].charAt(0);
     }
 
     @Override

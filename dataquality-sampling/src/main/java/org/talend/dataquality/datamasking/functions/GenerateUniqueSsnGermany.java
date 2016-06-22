@@ -18,8 +18,7 @@ import java.util.List;
 /**
  * @author dprot class global comment. Detailled comment
  * 
- * German pattern: aaaaaaaaaaaa
- * aaaaaaaaaaaa: 1 -> 100000000000 - 1
+ * German pattern: aaaaaaaaaaaa aaaaaaaaaaaa: 1 -> 100000000000 - 1
  */
 
 public class GenerateUniqueSsnGermany extends AbstractGenerateUniqueSsn {
@@ -39,11 +38,11 @@ public class GenerateUniqueSsnGermany extends AbstractGenerateUniqueSsn {
         List<String> strs = new ArrayList<String>();
         strs.add(str.substring(0, 11));
 
-        if (super.ssnPattern == null) {
+        if (ssnPattern == null) {
             List<AbstractField> fields = createFieldsListFromPattern();
-            super.ssnPattern = new GenerateUniqueRandomPatterns(fields);
+            ssnPattern = new GenerateUniqueRandomPatterns(fields);
         }
 
-        return super.ssnPattern.generateUniqueString(strs);
+        return ssnPattern.generateUniqueString(strs);
     }
 }

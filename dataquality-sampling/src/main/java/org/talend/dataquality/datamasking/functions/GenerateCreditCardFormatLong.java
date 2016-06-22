@@ -24,15 +24,15 @@ public class GenerateCreditCardFormatLong extends GenerateCreditCardFormat<Long>
     protected Long doGenerateMaskedField(Long l) {
         CreditCardType cct_format = null;
         if (l == null) {
-            cct_format = super.chooseCreditCardType();
-            return super.generateCreditCard(cct_format);
+            cct_format = chooseCreditCardType();
+            return generateCreditCard(cct_format);
         } else {
-            cct_format = super.getCreditCardType(l);
+            cct_format = getCreditCardType(l);
             if (cct_format != null) {
-                return super.generateCreditCardFormat(cct_format, l);
+                return generateCreditCardFormat(cct_format, l);
             } else {
-                cct_format = super.chooseCreditCardType();
-                return super.generateCreditCard(cct_format);
+                cct_format = chooseCreditCardType();
+                return generateCreditCard(cct_format);
             }
         }
     }

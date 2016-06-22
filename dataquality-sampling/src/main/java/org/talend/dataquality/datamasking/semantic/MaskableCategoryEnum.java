@@ -104,7 +104,7 @@ public enum MaskableCategoryEnum {
      * @return the parameter
      */
     public String getParameter() {
-        return this.parameter;
+        return parameter;
     }
 
     public static MaskableCategoryEnum getCategoryById(String catId) {

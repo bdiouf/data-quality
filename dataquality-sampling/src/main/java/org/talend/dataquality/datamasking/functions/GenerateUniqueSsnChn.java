@@ -87,7 +87,7 @@ public class GenerateUniqueSsnChn extends AbstractGenerateUniqueSsn {
         }
         fields.add(new FieldDate());
         fields.add(new FieldInterval(0, 999));
-        super.checkSumSize = 1;
+        checkSumSize = 1;
         return fields;
     }
 

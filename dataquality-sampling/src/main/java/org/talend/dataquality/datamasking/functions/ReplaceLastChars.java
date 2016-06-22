@@ -22,8 +22,8 @@ public abstract class ReplaceLastChars<T2> extends CharactersOperation<T2> {
 
     @Override
     protected void initAttributes() {
-        super.endNumberToReplace = Integer.parseInt(parameters[0]);
+        endNumberToReplace = Integer.parseInt(parameters[0]);
         if (parameters.length == 2)
-            super.charToReplace = parameters[1].charAt(0);
+            charToReplace = parameters[1].charAt(0);
     }
 }

@@ -25,6 +25,8 @@ import java.util.List;
 
 public class FieldDate extends AbstractField {
 
+    private static final long serialVersionUID = -4061095254204934437L;
+
     public static final List<Integer> cumulativeMonthSize = Collections
             .unmodifiableList(Arrays.asList(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334));
 
@@ -59,10 +61,9 @@ public class FieldDate extends AbstractField {
      */
     public FieldDate(int firstYear, int lastYear) {
         super();
-        super.length = 8;
+        length = 8;
         this.firstYear = firstYear;
         this.lastYear = lastYear;
-
         computeDaysPerYear();
     }
 
@@ -112,7 +113,7 @@ public class FieldDate extends AbstractField {
             int day = Integer.valueOf(str.substring(6, 8));
 
             // Check if the date exists
-            if (year < this.firstYear || year >= this.lastYear)
+            if (year < firstYear || year >= lastYear)
                 return -1L;
             if (month < 1 || month > 12)
                 return -1L;
@@ -124,7 +125,7 @@ public class FieldDate extends AbstractField {
                     return -1L;
             }
 
-            dayNumber = (long) numberDaysPerYear.get(year - this.firstYear);
+            dayNumber = (long) numberDaysPerYear.get(year - firstYear);
             dayNumber += cumulativeMonthSize.get(month - 1);
             dayNumber += (day - 1);
             if (isLeapYear(year))
@@ -139,7 +140,7 @@ public class FieldDate extends AbstractField {
 
     @Override
     public String decode(long number) {
-        if (number >= this.getWidth() || number < 0)
+        if (number >= getWidth() || number < 0)
             return "";
 
         int year = findNearest(number, numberDaysPerYear);

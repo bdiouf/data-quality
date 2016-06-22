@@ -56,19 +56,19 @@ public class GenerateUniqueRandomPatterns implements Serializable {
         this.fields = fields;
 
         // longestWidth init
-        this.longestWidth = 1L;
-        for (int i = 0; i < this.getFieldsNumber(); i++) {
+        longestWidth = 1L;
+        for (int i = 0; i < getFieldsNumber(); i++) {
             long width = this.fields.get(i).getWidth();
-            this.longestWidth *= width;
+            longestWidth *= width;
         }
         LOGGER.debug("longestWidth = " + longestWidth);
 
         // basedWidthsList init
-        this.basedWidthsList = new ArrayList<Long>();
-        this.basedWidthsList.add(1L);
-        for (int i = this.getFieldsNumber() - 2; i >= 0; i--)
-            this.basedWidthsList.add(0, this.fields.get(i + 1).getWidth() * this.basedWidthsList.get(0));
-        LOGGER.debug("basedWidthsList = " + this.basedWidthsList);
+        basedWidthsList = new ArrayList<Long>();
+        basedWidthsList.add(1L);
+        for (int i = getFieldsNumber() - 2; i >= 0; i--)
+            basedWidthsList.add(0, this.fields.get(i + 1).getWidth() * this.basedWidthsList.get(0));
+        LOGGER.debug("basedWidthsList = " + basedWidthsList);
     }
 
     public List<AbstractField> getFields() {
@@ -93,14 +93,14 @@ public class GenerateUniqueRandomPatterns implements Serializable {
      */
     public StringBuilder generateUniqueString(List<String> strs) {
         // check inputs
-        if (strs.size() != this.getFieldsNumber())
+        if (strs.size() != getFieldsNumber())
             return null;
 
         // encode the fields
         List<Long> listToMask = new ArrayList<Long>();
         long encodeNumber;
-        for (int i = 0; i < this.getFieldsNumber(); i++) {
-            encodeNumber = this.fields.get(i).encode(strs.get(i));
+        for (int i = 0; i < getFieldsNumber(); i++) {
+            encodeNumber = fields.get(i).encode(strs.get(i));
             if (encodeNumber == -1) {
                 return null;
             }
@@ -108,12 +108,12 @@ public class GenerateUniqueRandomPatterns implements Serializable {
         }
 
         // generate the unique random number from the old one
-        List<Long> uniqueMaskedNumberList = this.getUniqueRandomNumber(listToMask);
+        List<Long> uniqueMaskedNumberList = getUniqueRandomNumber(listToMask);
 
         // decode the fields
         StringBuilder result = new StringBuilder("");
-        for (int i = 0; i < this.getFieldsNumber(); i++) {
-            result.append(this.fields.get(i).decode(uniqueMaskedNumberList.get(i)));
+        for (int i = 0; i < getFieldsNumber(); i++) {
+            result.append(fields.get(i).decode(uniqueMaskedNumberList.get(i)));
         }
         return result;
     }
@@ -126,26 +126,26 @@ public class GenerateUniqueRandomPatterns implements Serializable {
 
         // numberToMask is the number to masked created from listToMask
         long numberToMask = 0L;
-        for (int i = 0; i < this.getFieldsNumber(); i++)
-            numberToMask += listToMask.get(i) * this.basedWidthsList.get(i);
+        for (int i = 0; i < getFieldsNumber(); i++)
+            numberToMask += listToMask.get(i) * basedWidthsList.get(i);
         LOGGER.debug("numberToMask = " + numberToMask);
 
-        if (this.key == null)
-            this.setKey((new Random()).nextInt() % 10000 + 1000);
-        long coprimeNumber = findLargestCoprime(Math.abs(this.key));
+        if (key == null)
+            setKey((new Random()).nextInt() % 10000 + 1000);
+        long coprimeNumber = findLargestCoprime(Math.abs(key));
         // uniqueMaskedNumber is the number we masked
-        long uniqueMaskedNumber = (numberToMask * coprimeNumber) % this.longestWidth;
+        long uniqueMaskedNumber = (numberToMask * coprimeNumber) % longestWidth;
         LOGGER.debug("uniqueMaskedNumber = " + uniqueMaskedNumber);
 
         // uniqueMaskedNumberList is the unique list created from uniqueMaskedNumber
         List<Long> uniqueMaskedNumberList = new ArrayList<Long>();
-        for (int i = 0; i < this.getFieldsNumber(); i++) {
+        for (int i = 0; i < getFieldsNumber(); i++) {
             // baseRandomNumber is the quotient of the Euclidean division between uniqueMaskedNumber and
             // basedWidthsList.get(i)
-            long baseRandomNumber = uniqueMaskedNumber / this.basedWidthsList.get(i);
+            long baseRandomNumber = uniqueMaskedNumber / basedWidthsList.get(i);
             uniqueMaskedNumberList.add(baseRandomNumber);
             // we reiterate with the remainder of the Euclidean division
-            uniqueMaskedNumber %= this.basedWidthsList.get(i);
+            uniqueMaskedNumber %= basedWidthsList.get(i);
         }
 
         return uniqueMaskedNumberList;
@@ -157,7 +157,7 @@ public class GenerateUniqueRandomPatterns implements Serializable {
      * @return the largest coprime number with longestWidth less than key
      */
     private long findLargestCoprime(long key) {
-        if (pgcdModulo(key, this.longestWidth) == 1) {
+        if (pgcdModulo(key, longestWidth) == 1) {
             return key;
         } else {
             return findLargestCoprime(key - 1);

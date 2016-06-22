@@ -24,9 +24,9 @@ public abstract class GenerateCreditCardSimple<T2> extends GenerateCreditCard<T2
     protected Long number = null;
 
     protected void generateCreditCard() {
-        CreditCardType cct = super.chooseCreditCardType();
-        Long card = super.generateCreditCard(cct);
-        this.number = card;
+        CreditCardType cct = chooseCreditCardType();
+        Long card = generateCreditCard(cct);
+        number = card;
     }
 
     @Override

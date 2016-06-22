@@ -25,7 +25,7 @@ public class NumericVarianceDouble extends NumericVariance<Double> {
         if (d == null) {
             return 0.0;
         } else {
-            super.init();
+            init();
             double value = d * ((double) rate + 100) / 100;
             return value;
         }

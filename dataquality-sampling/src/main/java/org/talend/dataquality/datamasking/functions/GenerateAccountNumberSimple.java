@@ -22,7 +22,7 @@ public class GenerateAccountNumberSimple extends GenerateAccountNumber {
 
     @Override
     protected String doGenerateMaskedField(String str) {
-        String accountNumber = super.generateIban();
+        String accountNumber = generateIban();
         StringBuilder sb = new StringBuilder(accountNumber);
         return sb.toString();
     }

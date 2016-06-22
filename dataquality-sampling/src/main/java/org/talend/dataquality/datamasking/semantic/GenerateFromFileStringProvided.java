@@ -29,7 +29,7 @@ public class GenerateFromFileStringProvided extends GenerateFromFileString {
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
         try {
-            genericTokens = KeysLoader.loadKeys(this.getClass().getResourceAsStream(parameters[0]));
+            genericTokens = KeysLoader.loadKeys(getClass().getResourceAsStream(parameters[0]));
         } catch (IOException | NullPointerException e) {
             log.error(e.getMessage(), e);
         }

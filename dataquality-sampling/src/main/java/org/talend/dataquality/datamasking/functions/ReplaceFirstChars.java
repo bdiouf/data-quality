@@ -22,8 +22,8 @@ public abstract class ReplaceFirstChars<T2> extends CharactersOperation<T2> {
 
     @Override
     protected void initAttributes() {
-        super.endIndex = Integer.parseInt(parameters[0]);
+        endIndex = Integer.parseInt(parameters[0]);
         if (parameters.length == 2)
-            super.charToReplace = parameters[1].charAt(0);
+            charToReplace = parameters[1].charAt(0);
     }
 }

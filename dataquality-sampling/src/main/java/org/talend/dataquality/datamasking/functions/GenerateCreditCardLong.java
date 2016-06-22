@@ -22,7 +22,7 @@ public class GenerateCreditCardLong extends GenerateCreditCardSimple<Long> {
 
     @Override
     protected Long doGenerateMaskedField(Long l) {
-        super.generateCreditCard();
+        generateCreditCard();
         return number;
     }
 }

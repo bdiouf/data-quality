@@ -23,8 +23,8 @@ public class BetweenIndexesKeep extends BetweenIndexes {
 
     @Override
     protected void initAttributes() {
-        super.endIndex = Integer.valueOf(parameters[0]) - 1;
-        super.toRemove = true;
+        endIndex = Integer.valueOf(parameters[0]) - 1;
+        toRemove = true;
     }
 
     @Override
@@ -32,8 +32,8 @@ public class BetweenIndexesKeep extends BetweenIndexes {
         String tAux = super.doGenerateMaskedField(str);
         if (tAux == EMPTY_STRING)
             return EMPTY_STRING;
-        super.beginIndex = Integer.valueOf(parameters[1]) - 1;
-        super.endIndex = Integer.MAX_VALUE;
+        beginIndex = Integer.valueOf(parameters[1]) - 1;
+        endIndex = Integer.MAX_VALUE;
         return super.doGenerateMaskedField(tAux);
     }
 
