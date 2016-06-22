@@ -52,12 +52,12 @@ import org.talend.dataquality.datamasking.functions.GenerateSsnGermanyTest;
 import org.talend.dataquality.datamasking.functions.GenerateSsnJapanTest;
 import org.talend.dataquality.datamasking.functions.GenerateSsnUkTest;
 import org.talend.dataquality.datamasking.functions.GenerateSsnUsTest;
-import org.talend.dataquality.datamasking.functions.KeepFirstAndGenerateIntegerTest;
-import org.talend.dataquality.datamasking.functions.KeepFirstAndGenerateLongTest;
-import org.talend.dataquality.datamasking.functions.KeepFirstAndGenerateStringTest;
-import org.talend.dataquality.datamasking.functions.KeepLastAndGenerateIntegerTest;
-import org.talend.dataquality.datamasking.functions.KeepLastAndGenerateLongTest;
-import org.talend.dataquality.datamasking.functions.KeepLastAndGenerateStringTest;
+import org.talend.dataquality.datamasking.functions.KeepFirstCharsIntegerTest;
+import org.talend.dataquality.datamasking.functions.KeepFirstCharsLongTest;
+import org.talend.dataquality.datamasking.functions.KeepFirstCharsStringTest;
+import org.talend.dataquality.datamasking.functions.KeepLastCharsIntegerTest;
+import org.talend.dataquality.datamasking.functions.KeepLastCharsLongTest;
+import org.talend.dataquality.datamasking.functions.KeepLastCharsStringTest;
 import org.talend.dataquality.datamasking.functions.KeepYearTest;
 import org.talend.dataquality.datamasking.functions.MaskAddressTest;
 import org.talend.dataquality.datamasking.functions.MaskEmailTest;
@@ -99,15 +99,15 @@ import org.talend.dataquality.datamasking.functions.SetToNullTest;
         GeneratePhoneNumberFrenchTest.class, GeneratePhoneNumberGermanyTest.class, GeneratePhoneNumberJapanTest.class,
         GeneratePhoneNumberUkTest.class, GeneratePhoneNumberUsTest.class, GenerateSsnFrenchTest.class,
         GenerateSsnGermanyTest.class, GenerateSsnJapanTest.class, GenerateSsnUkTest.class, GenerateSsnUsTest.class,
-        KeepFirstAndGenerateIntegerTest.class, KeepFirstAndGenerateLongTest.class, KeepFirstAndGenerateStringTest.class,
-        KeepLastAndGenerateIntegerTest.class, KeepLastAndGenerateLongTest.class, KeepLastAndGenerateStringTest.class,
-        KeepYearTest.class, MaskAddressTest.class, MaskEmailTest.class, NumericVarianceIntegerTest.class,
-        NumericVarianceLongTest.class, RemoveFirstCharsIntegerTest.class, RemoveFirstCharsLongTest.class,
-        RemoveFirstCharsStringTest.class, RemoveLastCharsIntegerTest.class, RemoveLastCharsLongTest.class,
-        RemoveLastCharsStringTest.class, ReplaceAllTest.class, ReplaceCharactersTest.class, ReplaceFirstCharsIntegerTest.class,
-        ReplaceFirstCharsLongTest.class, ReplaceFirstCharsStringTest.class, ReplaceLastCharsIntegerTest.class,
-        ReplaceLastCharsLongTest.class, ReplaceLastCharsStringTest.class, ReplaceNumericIntegerTest.class,
-        ReplaceNumericLongTest.class, ReplaceNumericStringTest.class, SetToNullTest.class })
+        KeepFirstCharsIntegerTest.class, KeepFirstCharsLongTest.class, KeepFirstCharsStringTest.class,
+        KeepLastCharsIntegerTest.class, KeepLastCharsLongTest.class, KeepLastCharsStringTest.class, KeepYearTest.class,
+        MaskAddressTest.class, MaskEmailTest.class, NumericVarianceIntegerTest.class, NumericVarianceLongTest.class,
+        RemoveFirstCharsIntegerTest.class, RemoveFirstCharsLongTest.class, RemoveFirstCharsStringTest.class,
+        RemoveLastCharsIntegerTest.class, RemoveLastCharsLongTest.class, RemoveLastCharsStringTest.class, ReplaceAllTest.class,
+        ReplaceCharactersTest.class, ReplaceFirstCharsIntegerTest.class, ReplaceFirstCharsLongTest.class,
+        ReplaceFirstCharsStringTest.class, ReplaceLastCharsIntegerTest.class, ReplaceLastCharsLongTest.class,
+        ReplaceLastCharsStringTest.class, ReplaceNumericIntegerTest.class, ReplaceNumericLongTest.class,
+        ReplaceNumericStringTest.class, SetToNullTest.class })
 public class AllTests {
     /*
      * Bloc intentionnaly left empty

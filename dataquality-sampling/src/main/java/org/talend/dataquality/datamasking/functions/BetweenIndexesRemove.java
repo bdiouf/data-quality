@@ -23,12 +23,16 @@ public class BetweenIndexesRemove extends BetweenIndexes {
     private static final long serialVersionUID = -198474878692287672L;
 
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (super.check(str, 2)) {
-            super.setBounds(str);
-            return str.substring(0, begin - 1) + str.substring(end, str.length());
-        } else {
-            return EMPTY_STRING;
-        }
+    protected void initAttributes() {
+        super.beginIndex = Integer.valueOf(parameters[0]) - 1;
+        super.endIndex = Integer.valueOf(parameters[1]);
+        super.toRemove = true;
+
+    }
+
+    @Override
+    protected boolean validParameters() {
+        return parameters.length == 2 && patternNumber.matcher(parameters[0]).matches()
+                && patternNumber.matcher(parameters[1]).matches();
     }
 }

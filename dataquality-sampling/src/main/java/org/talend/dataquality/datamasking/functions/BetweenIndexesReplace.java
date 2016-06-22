@@ -21,50 +21,20 @@ public class BetweenIndexesReplace extends BetweenIndexes {
 
     private static final long serialVersionUID = 1440323544625986870L;
 
-    private String s = EMPTY_STRING;
-
-    private String replace(String str, boolean isThird) {
-        char ch = ' ';
-        StringBuilder sb = new StringBuilder(str);
-        if (!isThird) {
-            for (int i = begin - 1; i < end; ++i) {
-                if (Character.isDigit(str.charAt(i))) {
-                    sb.setCharAt(i, Character.forDigit(rnd.nextInt(9), 10));
-                } else if (Character.isUpperCase(str.charAt(i))) {
-                    sb.setCharAt(i, UPPER.charAt(rnd.nextInt(26)));
-                } else if (Character.isLowerCase(str.charAt(i))) {
-                    sb.setCharAt(i, LOWER.charAt(rnd.nextInt(26)));
-                } else {
-                    sb.setCharAt(i, str.charAt(i));
-                }
-            }
-        } else {
-            ch = s.toCharArray()[0];
-            for (int i = begin - 1; i < end; ++i) {
-                sb.setCharAt(i, ch);
-            }
+    @Override
+    protected void initAttributes() {
+        super.beginIndex = Integer.valueOf(parameters[0]) - 1;
+        super.endIndex = Integer.valueOf(parameters[1]);
+        if (parameters.length == 3) {
+            super.charToReplace = parameters[2].charAt(0);
         }
-        return sb.toString();
+
     }
 
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (super.check(str, 2) || super.check(str, 3)) {
-            boolean isThird = true;
-            try {
-                s = parameters[2].trim();
-                if (!patternLetterOrDigit.matcher(s).matches()) { // $NON-NLS-1$
-                    isThird = false;
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                isThird = false;
-            }
-            super.setBounds(str);
-            s = replace(str, isThird);
-        } else {
-            return EMPTY_STRING;
-        }
-        return s;
+    protected boolean validParameters() {
+        return (parameters.length == 2 || (parameters.length == 3 && patternCharacter.matcher(parameters[2]).matches()))
+                && patternNumber.matcher(parameters[0]).matches() && patternNumber.matcher(parameters[1]).matches();
     }
 
 }

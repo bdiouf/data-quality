@@ -13,6 +13,7 @@
 package org.talend.dataquality.datamasking.functions;
 
 import java.util.Date;
+import java.util.Random;
 
 /**
  * created by jgonzalez on 18 juin 2015. This function will modify the input date by adding or retieving a number of
@@ -24,6 +25,17 @@ public class DateVariance extends Function<Date> {
     private static final long serialVersionUID = 7723968828358381315L;
 
     private static final Long nb_ms_per_day = 86400000L;
+
+    private int integerParam;
+
+    @Override
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        try {
+            integerParam = Integer.parseInt(parameters[0]);
+        } catch (Exception e) {
+        }
+    }
 
     @Override
     protected Date doGenerateMaskedField(Date date) {

@@ -14,40 +14,32 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.KeepFirstAndGenerateString;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
- * created by jgonzalez on 29 juin 2015 Detailled comment
+ * created by jgonzalez on 30 juin 2015 Detailled comment
  *
  */
-public class KeepFirstAndGenerateStringTest {
+public class KeepFirstCharsIntegerTest {
 
-    private String output;
+    private int output;
 
-    private String input = "a1b2c3d456"; //$NON-NLS-1$
+    private int input = 123456;
 
-    private KeepFirstAndGenerateString kfag = new KeepFirstAndGenerateString();
-
-    @Before
-    public void setUp() throws Exception {
-        kfag.setRandomWrapper(new RandomWrapper(42));
-    }
+    private KeepFirstCharsInteger kfag = new KeepFirstCharsInteger();
 
     @Test
     public void testGood() {
-        kfag.integerParam = 3;
+        kfag.parse("3", false, new RandomWrapper(42));
         output = kfag.generateMaskedRow(input);
-        assertEquals(output, "a1b2c3d830"); //$NON-NLS-1$
+        assertEquals(123830, output); // $NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        kfag.integerParam = 7;
+        kfag.parse("7", false, new RandomWrapper(42));
         output = kfag.generateMaskedRow(input);
-        assertEquals(output, input);
+        assertEquals(input, output);
     }
-
 }

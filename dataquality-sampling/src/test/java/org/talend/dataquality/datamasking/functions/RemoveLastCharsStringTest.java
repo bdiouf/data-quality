@@ -15,7 +15,7 @@ package org.talend.dataquality.datamasking.functions;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.RemoveLastCharsString;
+import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment
@@ -31,14 +31,15 @@ public class RemoveLastCharsStringTest {
 
     @Test
     public void test() {
-        rlcs.integerParam = 2;
+        rlcs.parse("2", false, new RandomWrapper(42));
+        ;
         output = rlcs.generateMaskedRow(input);
         assertEquals(output, "Ste"); //$NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        rlcs.integerParam = 10;
+        rlcs.parse("10", false, new RandomWrapper(42));
         output = rlcs.generateMaskedRow(input);
         assertEquals(output, ""); //$NON-NLS-1$
     }

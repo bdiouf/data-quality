@@ -13,10 +13,10 @@
 package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.ReplaceFirstCharsInteger;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -25,29 +25,43 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  */
 public class ReplaceFirstCharsIntegerTest {
 
-    private String output;
+    private int output;
 
-    private Integer input = 123456;
+    private int input = 123456;
 
     private ReplaceFirstCharsInteger rfci = new ReplaceFirstCharsInteger();
 
-    @Before
-    public void setUp() throws Exception {
-        rfci.setRandomWrapper(new RandomWrapper(42));
-    }
-
     @Test
     public void testGood() {
-        rfci.integerParam = 3;
-        output = rfci.generateMaskedRow(input).toString();
-        assertEquals(output, "830456"); //$NON-NLS-1$
+        rfci.parse("3", false, new RandomWrapper(42));
+        output = rfci.generateMaskedRow(input);
+        assertEquals(830456, output); // $NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        rfci.integerParam = 7;
-        output = rfci.generateMaskedRow(input).toString();
-        assertEquals(output, "830807"); //$NON-NLS-1$
+        rfci.parse("154", false, new RandomWrapper(42));
+        output = rfci.generateMaskedRow(input);
+        assertEquals(830807, output); // $NON-NLS-1$
+    }
+
+    @Test
+    public void testDummyGood2() {
+        rfci.parse("0", false, new RandomWrapper(42));
+        output = rfci.generateMaskedRow(input);
+        assertEquals(input, output); // $NON-NLS-1$
+    }
+
+    @Test
+    public void testWrongParameter() {
+        try {
+            rfci.parse("j", false, new RandomWrapper(42));
+            fail("should get exception with input " + rfci.parameters); //$NON-NLS-1$
+        } catch (Exception e) {
+            assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
+        }
+        output = rfci.generateMaskedRow(input);
+        assertEquals(0, output); // $NON-NLS-1$
     }
 
 }

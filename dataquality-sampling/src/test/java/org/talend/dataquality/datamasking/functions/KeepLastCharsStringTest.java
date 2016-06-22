@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,13 +22,13 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * created by jgonzalez on 29 juin 2015 Detailled comment
  *
  */
-public class KeepLastAndGenerateStringTest {
+public class KeepLastCharsStringTest {
 
     private String output;
 
     private String input = "123456"; //$NON-NLS-1$
 
-    private KeepLastAndGenerateString klads = new KeepLastAndGenerateString();
+    private KeepLastCharsString klads = new KeepLastCharsString();
 
     @Before
     public void setUp() throws Exception {
@@ -37,26 +37,32 @@ public class KeepLastAndGenerateStringTest {
 
     @Test
     public void testGood() {
-        klads.integerParam = 3;
+        klads.parse("3", false, new RandomWrapper(42));
         output = klads.generateMaskedRow(input);
-        assertEquals(output, "830456"); //$NON-NLS-1$
+        assertEquals("830456", output); //$NON-NLS-1$
 
         // add msjian test for bug TDQ-11339: fix a "String index out of range: -1" exception
         String inputa[] = new String[] { "test1234", "pp456", "wei@sina.com" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        String outputa[] = new String[] { "test8034", "pp756", "wei@sina.com" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        klads.integerParam = 2;
+        String outputa[] = new String[] { "ahwm0734", "nq756", "paa@igue.wom" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        klads.parse("2", false, new RandomWrapper(42));
         for (int i = 0; i < inputa.length; i++) {
             output = klads.generateMaskedRow(inputa[i]);
-            assertEquals(output, outputa[i]);
+            assertEquals(outputa[i], output);
         }
         // TDQ-11339~
     }
 
     @Test
     public void testDummyGood() {
-        klads.integerParam = 7;
+        klads.parse("7", false, new RandomWrapper(42));
         output = klads.generateMaskedRow(input);
-        assertEquals(output, input);
+        assertEquals(input, output);
     }
 
+    @Test
+    public void testParameter() {
+        klads.parse("3,i", false, new RandomWrapper(42));
+        output = klads.generateMaskedRow(input);
+        assertEquals("iii456", output);
+    }
 }

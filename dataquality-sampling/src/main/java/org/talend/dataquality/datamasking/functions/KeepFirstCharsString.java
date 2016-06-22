@@ -16,23 +16,23 @@ package org.talend.dataquality.datamasking.functions;
  * created by jgonzalez on 22 juin 2015. See KeepFirstAndGenerate.
  *
  */
-public class KeepFirstAndGenerateInteger extends KeepFirstAndGenerate<Integer> {
+public class KeepFirstCharsString extends KeepFirstChars<String> {
 
-    private static final long serialVersionUID = 2449634559175990103L;
+    private static final long serialVersionUID = -4560944452504153430L;
 
     @Override
-    protected Integer doGenerateMaskedField(Integer i) {
-        if (i != null && integerParam > 0) {
-            if ((int) Math.log10(i) + 1 < integerParam) {
-                return i;
-            }
-            StringBuilder sb = new StringBuilder(i.toString().substring(0, integerParam));
-            for (int j = integerParam; j < i.toString().length(); ++j) {
-                sb.append(rnd.nextInt(9));
-            }
-            return Integer.parseInt(sb.toString());
-        } else {
-            return 0;
-        }
+    protected String getDefaultOutput() {
+        return EMPTY_STRING;
+    }
+
+    @Override
+    protected String getOutput(String string) {
+        return string;
+    }
+
+    @Override
+    protected boolean validParameters() {
+        return (parameters.length == 1 || (parameters.length == 2 && patternCharacter.matcher(parameters[1]).matches()))
+                && patternNumber.matcher(parameters[0]).matches();
     }
 }

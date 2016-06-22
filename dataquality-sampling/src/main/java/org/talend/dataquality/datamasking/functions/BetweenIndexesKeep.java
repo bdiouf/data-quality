@@ -22,12 +22,24 @@ public class BetweenIndexesKeep extends BetweenIndexes {
     private static final long serialVersionUID = 1913164034646800125L;
 
     @Override
+    protected void initAttributes() {
+        super.endIndex = Integer.valueOf(parameters[0]) - 1;
+        super.toRemove = true;
+    }
+
+    @Override
     protected String doGenerateMaskedField(String str) {
-        if (super.check(str, 2)) {
-            super.setBounds(str);
-            return str.substring(begin - 1, end);
-        } else {
+        String tAux = super.doGenerateMaskedField(str);
+        if (tAux == EMPTY_STRING)
             return EMPTY_STRING;
-        }
+        super.beginIndex = Integer.valueOf(parameters[1]) - 1;
+        super.endIndex = Integer.MAX_VALUE;
+        return super.doGenerateMaskedField(tAux);
+    }
+
+    @Override
+    protected boolean validParameters() {
+        return parameters.length == 2 && patternNumber.matcher(parameters[0]).matches()
+                && patternNumber.matcher(parameters[1]).matches();
     }
 }

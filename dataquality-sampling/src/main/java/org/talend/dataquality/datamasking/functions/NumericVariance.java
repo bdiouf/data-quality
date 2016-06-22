@@ -24,6 +24,7 @@ public abstract class NumericVariance<T2> extends Function<T2> {
     protected int rate = 0;
 
     protected void init() {
+        int integerParam = Integer.parseInt(parameters[0]);
         if (integerParam == 0) {
             integerParam = 10;
         } else if (integerParam < 0) {

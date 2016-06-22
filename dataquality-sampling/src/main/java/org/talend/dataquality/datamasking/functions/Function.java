@@ -37,8 +37,6 @@ public abstract class Function<T> implements Serializable {
 
     protected Random rnd;
 
-    protected Integer integerParam = 0;
-
     protected String[] parameters = new String[1];
 
     protected boolean keepNull = false;
@@ -49,9 +47,11 @@ public abstract class Function<T> implements Serializable {
 
     protected static final Pattern patternLetter = Pattern.compile("[a-zA-Z]");
 
-    protected static final Pattern patternLetterOrDigit = Pattern.compile("[0-9a-zA-Z]");
+    protected static final Pattern patternNumber = Pattern.compile("[0-9]+");
 
-    protected static final Pattern patternSpaceOrLetterOrDigit = Pattern.compile("[0-9a-zA-Z ]");
+    protected static final Pattern patternCharacter = Pattern.compile(".");
+
+    protected static final Pattern patternDigit = Pattern.compile("[0-9]");
 
     /**
      * setter for random
@@ -99,17 +99,20 @@ public abstract class Function<T> implements Serializable {
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         if (extraParameter != null) {
             parameters = extraParameter.split(","); //$NON-NLS-1$
-            if (parameters.length == 1) {
+            if (parameters.length == 1) { // check if it's a path to a readable file
                 try {
-                    integerParam = Integer.parseInt(parameters[0]);
-                } catch (NumberFormatException e) {
-                    try {
-                        List<String> aux = KeysLoader.loadKeys(parameters[0]);
-                        parameters = aux.toArray(new String[aux.size()]);
-                    } catch (IOException | NullPointerException e2) {
-                        // We do nothing here because in is already set.
-                    }
+                    List<String> aux = KeysLoader.loadKeys(parameters[0].trim());
+                    parameters = new String[aux.size()];
+                    int i = 0;
+                    for (String str : aux)
+                        parameters[i++] = str.trim();
+                    // parameters = aux.toArray(new String[aux.size()]);
+                } catch (IOException | NullPointerException e2) { // otherwise, we just get the parameter
+                    parameters[0] = parameters[0].trim();
                 }
+            } else {
+                for (int i = 0; i < parameters.length; i++)
+                    parameters[i] = parameters[i].trim();
             }
         }
         setKeepNull(keepNullValues);

@@ -14,9 +14,7 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.ReplaceLastCharsInteger;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -31,21 +29,16 @@ public class ReplaceLastCharsIntegerTest {
 
     private ReplaceLastCharsInteger rlci = new ReplaceLastCharsInteger();
 
-    @Before
-    public void setUp() throws Exception {
-        rlci.setRandomWrapper(new RandomWrapper(42));
-    }
-
     @Test
     public void testGood() {
-        rlci.integerParam = 3;
+        rlci.parse("3", false, new RandomWrapper(42));
         output = rlci.generateMaskedRow(input).toString();
         assertEquals(output, "123830"); //$NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        rlci.integerParam = 7;
+        rlci.parse("7", false, new RandomWrapper(42));
         output = rlci.generateMaskedRow(input).toString();
         assertEquals(output, "830807"); //$NON-NLS-1$
     }

@@ -31,8 +31,8 @@ public class GenerateBetweenDate extends Function<Date> {
             Date minDate = null;
             Date maxDate = null;
             try {
-                minDate = df.parse(parameters[0].trim());
-                maxDate = df.parse(parameters[1].trim());
+                minDate = df.parse(parameters[0]);
+                maxDate = df.parse(parameters[1]);
             } catch (ParseException e) {
                 return new Date(System.currentTimeMillis());
             }

@@ -20,25 +20,19 @@ public class ReplaceFirstCharsLong extends ReplaceFirstChars<Long> {
 
     private static final long serialVersionUID = 4462142503829372818L;
 
-    private int parameter = 0;
+    @Override
+    protected Long getDefaultOutput() {
+        return 0L;
+    }
 
     @Override
-    protected Long doGenerateMaskedField(Long l) {
-        if (l != null && integerParam > 0) {
-            if (l == 0L) {
-                return (long) rnd.nextInt(9);
-            } else {
-                parameter = (int) Math.log10(l) + 1 <= integerParam ? (int) Math.log10(l) + 1 : integerParam;
-                StringBuilder sbu = new StringBuilder(l.toString());
-                StringBuilder remp = new StringBuilder(EMPTY_STRING);
-                for (int i = 0; i < parameter; ++i) {
-                    remp.append(rnd.nextInt(9));
-                }
-                sbu.replace(0, parameter, remp.toString());
-                return Long.parseLong(sbu.toString());
-            }
-        } else {
-            return 0L;
-        }
+    protected Long getOutput(String str) {
+        return Long.valueOf(str);
+    }
+
+    @Override
+    protected boolean validParameters() {
+        return (parameters.length == 1 || (parameters.length == 2 && patternDigit.matcher(parameters[1]).matches()))
+                && patternNumber.matcher(parameters[0]).matches();
     }
 }

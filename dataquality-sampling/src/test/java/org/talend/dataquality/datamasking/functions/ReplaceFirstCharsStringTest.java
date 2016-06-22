@@ -13,10 +13,10 @@
 package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.ReplaceFirstCharsString;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -31,23 +31,30 @@ public class ReplaceFirstCharsStringTest {
 
     private ReplaceFirstCharsString rfcs = new ReplaceFirstCharsString();
 
-    @Before
-    public void setUp() throws Exception {
-        rfcs.setRandomWrapper(new RandomWrapper(42));
-    }
-
     @Test
     public void testGood() {
-        rfcs.integerParam = 3;
+        rfcs.parse("3,y", false, new RandomWrapper(42));
         output = rfcs.generateMaskedRow(input);
-        assertEquals(output, "830456");
+        assertEquals("yyy456", output);
     }
 
     @Test
     public void testDummyGood() {
-        rfcs.integerParam = 7;
+        rfcs.parse("7", false, new RandomWrapper(42));
         output = rfcs.generateMaskedRow(input);
-        assertEquals(output, "830807");
+        assertEquals("830807", output);
+    }
+
+    @Test
+    public void testWrongParameters() {
+        try {
+            rfcs.parse("0,xs", false, new RandomWrapper(42));
+            fail("should get exception with input " + rfcs.parameters); //$NON-NLS-1$
+        } catch (Exception e) {
+            assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
+        }
+        output = rfcs.generateMaskedRow(input);
+        assertEquals("", output); // $NON-NLS-1$
     }
 
 }

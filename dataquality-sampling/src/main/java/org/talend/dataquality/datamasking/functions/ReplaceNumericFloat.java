@@ -21,17 +21,12 @@ public class ReplaceNumericFloat extends ReplaceNumeric<Float> {
     private static final long serialVersionUID = -2936953156402359732L;
 
     @Override
-    protected Float doGenerateMaskedField(Float f) {
-        if (f != null) {
-            String res = f.toString();
-            if (integerParam >= 0 && integerParam <= 9) {
-                res = replacePattern(res, String.valueOf(integerParam));
-            } else {
-                throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
-            }
-            return Float.valueOf(res);
-        } else {
-            return 0.0f;
-        }
+    protected Float getDefaultOutput() {
+        return 0f;
+    }
+
+    @Override
+    protected Float getOutput(String str) {
+        return Float.valueOf(str);
     }
 }

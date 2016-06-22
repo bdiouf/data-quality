@@ -13,9 +13,11 @@
 package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.ReplaceAll;
+import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment
@@ -31,15 +33,28 @@ public class ReplaceAllTest {
 
     @Test
     public void testGood() {
-        ra.parameters = "X".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        ra.parse("X", false, new RandomWrapper(42));
         output = ra.generateMaskedRow(input);
-        assertEquals(output, "XXXXXXXXXXX"); //$NON-NLS-1$
+        assertEquals("XXXXXXXXXXX", output); //$NON-NLS-1$
     }
 
     @Test
-    public void testBad() {
-        ra.parameters = "8X".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+    public void testCharacter() {
+        ra.parse("?", false, new RandomWrapper(42));
         output = ra.generateMaskedRow(input);
-        assertEquals(output, ""); //$NON-NLS-1$
+        assertEquals("???????????", output); //$NON-NLS-1$
     }
+
+    @Test
+    public void testWrongParameter() {
+        try {
+            ra.parse("zi", false, new RandomWrapper(42));
+            fail("should get exception with input " + ra.parameters); //$NON-NLS-1$
+        } catch (Exception e) {
+            assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
+        }
+        output = ra.generateMaskedRow(input);
+        assertEquals("", output); // $NON-NLS-1$
+    }
+
 }

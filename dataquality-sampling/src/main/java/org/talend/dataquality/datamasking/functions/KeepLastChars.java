@@ -1,0 +1,14 @@
+package org.talend.dataquality.datamasking.functions;
+
+public abstract class KeepLastChars<T> extends CharactersOperation<T> {
+
+    private static final long serialVersionUID = 4065232723157315230L;
+
+    @Override
+    protected void initAttributes() {
+        super.endNumberToKeep = Integer.parseInt(parameters[0]);
+        if (parameters.length == 2)
+            super.charToReplace = parameters[1].charAt(0);
+    }
+
+}

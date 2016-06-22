@@ -189,7 +189,7 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
     @Override
     protected void init() {
         for (String element : parameters) {
-            replacements.add(element.trim());
+            replacements.add(element);
         }
         if (replacements.size() != 1) {
             replacements.remove("");

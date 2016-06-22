@@ -21,17 +21,12 @@ public class ReplaceNumericLong extends ReplaceNumeric<Long> {
     private static final long serialVersionUID = -2539616719332426704L;
 
     @Override
-    protected Long doGenerateMaskedField(Long l) {
-        if (l != null) {
-            String res = l.toString();
-            if (integerParam >= 0 && integerParam <= 9) {
-                res = replacePattern(res, String.valueOf(integerParam));
-            } else {
-                throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
-            }
-            return Long.valueOf(res);
-        } else {
-            return 0L;
-        }
+    protected Long getDefaultOutput() {
+        return 0L;
+    }
+
+    @Override
+    protected Long getOutput(String str) {
+        return Long.valueOf(str);
     }
 }

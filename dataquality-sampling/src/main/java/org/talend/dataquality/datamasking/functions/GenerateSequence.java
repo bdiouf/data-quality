@@ -33,7 +33,7 @@ public abstract class GenerateSequence<T2> extends Function<T2> {
     public int setSeq(String s) {
         int i = 0;
         try {
-            i = Integer.parseInt(s.trim());
+            i = Integer.parseInt(s);
         } catch (NumberFormatException e) {
             // Do nothing
         }

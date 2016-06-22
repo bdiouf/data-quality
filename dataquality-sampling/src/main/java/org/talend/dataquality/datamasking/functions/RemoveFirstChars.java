@@ -16,11 +16,18 @@ package org.talend.dataquality.datamasking.functions;
  * created by jgonzalez on 22 juin 2015. This function will remove the n first chars of the input.
  *
  */
-public abstract class RemoveFirstChars<T2> extends Function<T2> {
+public abstract class RemoveFirstChars<T2> extends CharactersOperation<T2> {
 
     private static final long serialVersionUID = 767660772520822572L;
 
     @Override
-    protected abstract T2 doGenerateMaskedField(T2 t);
+    protected void initAttributes() {
+        super.endIndex = Integer.parseInt(parameters[0]);
+        super.toRemove = true;
+    }
 
+    @Override
+    protected boolean validParameters() {
+        return parameters.length == 1 && patternNumber.matcher(parameters[0]).matches();
+    }
 }

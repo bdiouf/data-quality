@@ -18,7 +18,7 @@ public class NumericVarianceString extends NumericVariance<String> {
 
     @Override
     protected String doGenerateMaskedField(String input) {
-        if (input == null || EMPTY_STRING.equals(input.trim())) {
+        if (input == null || EMPTY_STRING.equals(input)) {
             return input;
         } else {
             init();

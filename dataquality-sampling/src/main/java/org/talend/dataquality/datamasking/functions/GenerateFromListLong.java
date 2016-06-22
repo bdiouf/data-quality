@@ -25,7 +25,7 @@ public class GenerateFromListLong extends GenerateFromList<Long> {
         for (String tmp : parameters) {
             long longTmp = 0;
             try {
-                longTmp = Integer.parseInt(tmp.trim());
+                longTmp = Integer.parseInt(tmp);
                 genericTokens.add(longTmp);
             } catch (NumberFormatException e) {
                 // Do Nothing

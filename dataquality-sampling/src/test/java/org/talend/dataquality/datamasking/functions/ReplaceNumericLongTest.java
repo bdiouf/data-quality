@@ -17,7 +17,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.ReplaceNumericLong;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -34,19 +33,16 @@ public class ReplaceNumericLongTest {
 
     @Test
     public void testGood() {
-        rnl.parameters = "6".split(","); //$NON-NLS-1$ //$NON-NLS-2$
-        rnl.integerParam = 6;
+        rnl.parse("6", false, new RandomWrapper(42));
         output = rnl.generateMaskedRow(input);
         assertEquals(output, 666);
     }
 
     @Test
     public void testBad() {
-        rnl.integerParam = 10;
-        rnl.rnd = new RandomWrapper(42);
         try {
-            output = rnl.generateMaskedRow(input);
-            fail("should get exception with input " + rnl.integerParam); //$NON-NLS-1$
+            rnl.parse("10", false, new RandomWrapper(42));
+            fail("should get exception with input " + rnl.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
         }

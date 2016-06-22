@@ -19,7 +19,6 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.DateVariance;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -43,7 +42,6 @@ public class DateVarianceTest {
     }
 
     public void testGoodCase1() throws ParseException {
-        dv.parameters = "31".split(","); //$NON-NLS-1$ //$NON-NLS-2$
         dv.parse("31", false, rand); //$NON-NLS-1$
         for (int index = 0; index < 20; index++) {
             String output = sdf.format(dv.generateMaskedRow(input));
@@ -53,7 +51,6 @@ public class DateVarianceTest {
     }
 
     public void testGoodCase2() throws ParseException {
-        dv.parameters = "-31".split(","); //$NON-NLS-1$ //$NON-NLS-2$
         dv.parse("-31", false, rand); //$NON-NLS-1$
         for (int index = 0; index < 20; index++) {
             String output = sdf.format(dv.generateMaskedRow(input));
@@ -63,7 +60,6 @@ public class DateVarianceTest {
     }
 
     public void testGoodCase3() throws ParseException {
-        dv.parameters = "1".split(","); //$NON-NLS-1$ //$NON-NLS-2$
         dv.parse("1", false, rand); //$NON-NLS-1$
         for (int index = 0; index < 20; index++) {
             String output = sdf.format(dv.generateMaskedRow(input));
@@ -74,7 +70,6 @@ public class DateVarianceTest {
 
     @Test
     public void testGoodCase4() throws ParseException {
-        dv.parameters = "1,3".split(","); //$NON-NLS-1$ //$NON-NLS-2$
         dv.parse("1,3", false, rand); //$NON-NLS-1$
         for (int index = 0; index < 20; index++) {
             String output = sdf.format(dv.generateMaskedRow(input));
@@ -84,7 +79,6 @@ public class DateVarianceTest {
     }
 
     public void testDummyGood() throws ParseException {
-        dv.parameters = "0".split(","); //$NON-NLS-1$ //$NON-NLS-2$
         dv.parse("0", false, rand); //$NON-NLS-1$
         for (int index = 0; index < 20; index++) {
             String output = sdf.format(dv.generateMaskedRow(input));
@@ -95,7 +89,6 @@ public class DateVarianceTest {
 
     @Test
     public void testBad() throws ParseException {
-        dv.parameters = "j".split(","); //$NON-NLS-1$ //$NON-NLS-2$
         dv.parse("j", false, rand); //$NON-NLS-1$
         for (int index = 0; index < 20; index++) {
             String output = sdf.format(dv.generateMaskedRow(input));

@@ -21,11 +21,12 @@ public class RemoveFirstCharsLong extends RemoveFirstChars<Long> {
     private static final long serialVersionUID = -4656535468430704086L;
 
     @Override
-    protected Long doGenerateMaskedField(Long l) {
-        if (l != null && (int) Math.log10(l) + 1 > integerParam && integerParam > 0) {
-            return Long.parseLong(l.toString().substring(integerParam));
-        } else {
-            return 0L;
-        }
+    protected Long getDefaultOutput() {
+        return 0L;
+    }
+
+    @Override
+    protected Long getOutput(String str) {
+        return Long.valueOf(str);
     }
 }

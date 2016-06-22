@@ -21,17 +21,12 @@ public class ReplaceNumericDouble extends ReplaceNumeric<Double> {
     private static final long serialVersionUID = 2373577711682777009L;
 
     @Override
-    protected Double doGenerateMaskedField(Double d) {
-        if (d != null) {
-            String res = d.toString();
-            if (integerParam >= 0 && integerParam <= 9) {
-                res = replacePattern(res, String.valueOf(integerParam));
-            } else {
-                throw new IllegalArgumentException("The parameter for \"replace all digits\" function must be a digit"); //$NON-NLS-1$
-            }
-            return Double.valueOf(res);
-        } else {
-            return 0.0;
-        }
+    protected Double getDefaultOutput() {
+        return 0d;
+    }
+
+    @Override
+    protected Double getOutput(String str) {
+        return Double.valueOf(str);
     }
 }

@@ -13,12 +13,12 @@
 package org.talend.dataquality.datamasking.functions;
 
 /**
- * created by jgonzalez on 22 juin 2015. See RemoveFirstChars.
+ * created by jgonzalez on 22 juin 2015. See KeepLastAndGenerate.
  *
  */
-public class RemoveFirstCharsString extends RemoveFirstChars<String> {
+public class KeepLastCharsString extends KeepLastChars<String> {
 
-    private static final long serialVersionUID = 9025405180061771063L;
+    private static final long serialVersionUID = 5714789810163265429L;
 
     @Override
     protected String getDefaultOutput() {
@@ -26,7 +26,13 @@ public class RemoveFirstCharsString extends RemoveFirstChars<String> {
     }
 
     @Override
-    protected String getOutput(String str) {
-        return str;
+    protected String getOutput(String string) {
+        return string;
+    }
+
+    @Override
+    protected boolean validParameters() {
+        return (parameters.length == 1 || (parameters.length == 2 && patternCharacter.matcher(parameters[1]).matches()))
+                && patternNumber.matcher(parameters[0]).matches();
     }
 }

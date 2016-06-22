@@ -16,10 +16,14 @@ package org.talend.dataquality.datamasking.functions;
  * created by jgonzalez on 22 juin 2015. This function will replace the n last chars of the input.
  *
  */
-public abstract class ReplaceLastChars<T2> extends Function<T2> {
+public abstract class ReplaceLastChars<T2> extends CharactersOperation<T2> {
 
     private static final long serialVersionUID = -1353702928838732062L;
 
     @Override
-    protected abstract T2 doGenerateMaskedField(T2 t);
+    protected void initAttributes() {
+        super.endNumberToReplace = Integer.parseInt(parameters[0]);
+        if (parameters.length == 2)
+            super.charToReplace = parameters[1].charAt(0);
+    }
 }

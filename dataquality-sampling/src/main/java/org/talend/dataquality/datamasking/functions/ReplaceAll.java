@@ -12,24 +12,32 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.regex.Pattern;
-
 /**
  * created by jgonzalez on 22 juin 2015. This function will replace every character by the parameter.
  *
  */
-public class ReplaceAll extends Function<String> {
+public class ReplaceAll extends CharactersOperation<String> {
 
     private static final long serialVersionUID = -6755455022090241272L;
 
-    private Pattern pattern = Pattern.compile(".");
+    @Override
+    protected String getDefaultOutput() {
+        return EMPTY_STRING;
+    }
 
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (str != null && !EMPTY_STRING.equals(str) && patternLetterOrDigit.matcher(parameters[0]).matches()) { // $NON-NLS-1$
-            return pattern.matcher(str).replaceAll(parameters[0]);
-        } else {
-            return EMPTY_STRING;
-        }
+    protected String getOutput(String str) {
+        return str;
+    }
+
+    @Override
+    protected void initAttributes() {
+        if (parameters.length > 0)
+            super.charToReplace = parameters[0].charAt(0);
+    }
+
+    @Override
+    protected boolean validParameters() {
+        return parameters.length == 0 || (parameters.length == 1 && patternCharacter.matcher(parameters[0]).matches());
     }
 }

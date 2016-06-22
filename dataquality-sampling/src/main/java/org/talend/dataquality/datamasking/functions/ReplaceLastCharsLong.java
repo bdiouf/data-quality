@@ -20,25 +20,19 @@ public class ReplaceLastCharsLong extends ReplaceLastChars<Long> {
 
     private static final long serialVersionUID = -9172743551534233769L;
 
-    private int parameter = 0;
+    @Override
+    protected Long getDefaultOutput() {
+        return 0L;
+    }
 
     @Override
-    protected Long doGenerateMaskedField(Long l) {
-        if (l != null && integerParam > 0) {
-            if (l == 0L) {
-                return (long) rnd.nextInt(9);
-            } else {
-                parameter = (int) Math.log10(l) + 1 <= integerParam ? (int) Math.log10(l) + 1 : integerParam;
-                StringBuilder sbui = new StringBuilder(l.toString());
-                StringBuilder rempl = new StringBuilder(EMPTY_STRING);
-                for (int i = 0; i < parameter; ++i) {
-                    rempl.append(rnd.nextInt(9));
-                }
-                sbui.replace(sbui.length() - parameter, sbui.length(), rempl.toString());
-                return Long.parseLong(sbui.toString());
-            }
-        } else {
-            return 0L;
-        }
+    protected Long getOutput(String str) {
+        return Long.valueOf(str);
+    }
+
+    @Override
+    protected boolean validParameters() {
+        return (parameters.length == 1 || (parameters.length == 2 && patternDigit.matcher(parameters[1]).matches()))
+                && patternNumber.matcher(parameters[0]).matches();
     }
 }

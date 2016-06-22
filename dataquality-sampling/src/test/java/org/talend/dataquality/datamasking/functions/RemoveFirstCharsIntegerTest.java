@@ -15,7 +15,7 @@ package org.talend.dataquality.datamasking.functions;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.RemoveFirstCharsInteger;
+import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment
@@ -31,14 +31,15 @@ public class RemoveFirstCharsIntegerTest {
 
     @Test
     public void test() {
-        rfci.integerParam = 2;
+        rfci.parse("2", false, new RandomWrapper(42));
+        ;
         output = rfci.generateMaskedRow(input);
         assertEquals(output, 6);
     }
 
     @Test
     public void testDummyGood() {
-        rfci.integerParam = 10;
+        rfci.parse("10", false, new RandomWrapper(42));
         output = rfci.generateMaskedRow(input);
         assertEquals(output, 0);
     }

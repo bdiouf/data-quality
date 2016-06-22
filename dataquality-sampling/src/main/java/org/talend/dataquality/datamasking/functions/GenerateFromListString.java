@@ -23,7 +23,7 @@ public class GenerateFromListString extends GenerateFromList<String> {
     @Override
     protected void init() {
         for (String tmp : parameters) {
-            genericTokens.add(tmp.trim());
+            genericTokens.add(tmp);
         }
     }
 

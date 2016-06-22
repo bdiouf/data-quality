@@ -13,9 +13,11 @@
 package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.RemoveLastCharsLong;
+import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment
@@ -31,16 +33,35 @@ public class RemoveLastCharsLongTest {
 
     @Test
     public void test() {
-        rlci.integerParam = 2;
+        rlci.parse("2", false, new RandomWrapper(42));
         output = rlci.generateMaskedRow(input);
-        assertEquals(output, 6);
+        assertEquals(6, output);
     }
 
     @Test
     public void testDummyGood() {
-        rlci.integerParam = 10;
+        rlci.parse("10", false, new RandomWrapper(42));
         output = rlci.generateMaskedRow(input);
-        assertEquals(output, 0);
+        assertEquals(0, output);
+    }
+
+    @Test
+    public void testLimitCase() {
+        rlci.parse("0", false, new RandomWrapper(42));
+        output = rlci.generateMaskedRow(input);
+        assertEquals(666, output);
+    }
+
+    @Test
+    public void testWrongParameterCase() {
+        try {
+            rlci.parse("a", false, new RandomWrapper(42));
+            fail("should get exception with input " + rlci.parameters); //$NON-NLS-1$
+        } catch (Exception e) {
+            assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
+        }
+        output = rlci.generateMaskedRow(input);
+        assertEquals(0, output);
     }
 
 }

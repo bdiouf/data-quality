@@ -17,38 +17,17 @@ package org.talend.dataquality.datamasking.functions;
  * BetweenIndexesRemove or BetweenIndexesReplace. It will set the bounds of the indexes according to the input length.
  *
  */
-public abstract class BetweenIndexes extends Function<String> {
+public abstract class BetweenIndexes extends CharactersOperation<String> {
 
     private static final long serialVersionUID = 1114307514352123034L;
 
-    protected static int begin = 0;
-
-    protected static int end = 0;
-
-    protected boolean check(String str, int length) {
-        return (parameters.length == length && str != null && !EMPTY_STRING.equals(str));
-    }
-
-    protected void setBounds(String str) {
-        int a = 0, b = 0;
-        try {
-            a = Integer.valueOf(parameters[0].trim());
-            b = Integer.valueOf(parameters[1].trim());
-        } catch (NumberFormatException e) {
-            a = 0;
-            b = 0;
-        }
-        begin = (a < b) ? a : b;
-        end = (a > b) ? a : b;
-
-        if (begin < 1) {
-            begin = 1;
-        }
-        if (end > str.length()) {
-            end = str.length();
-        }
+    @Override
+    protected String getDefaultOutput() {
+        return EMPTY_STRING;
     }
 
     @Override
-    protected abstract String doGenerateMaskedField(String t);
+    protected String getOutput(String str) {
+        return str;
+    }
 }

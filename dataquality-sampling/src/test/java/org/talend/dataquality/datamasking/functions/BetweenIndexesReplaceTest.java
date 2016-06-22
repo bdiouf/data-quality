@@ -13,10 +13,11 @@
 package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.BetweenIndexesReplace;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -38,30 +39,40 @@ public class BetweenIndexesReplaceTest {
 
     @Test
     public void testGood() {
-        bir.parameters = "2, 4, X".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        bir.parse("2, 4, X", false, new RandomWrapper(42));
         output = bir.generateMaskedRow(input);
         assertEquals("SXXXe", output); //$NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        bir.parameters = "-2, 8".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        bir.parse("1, 8", false, new RandomWrapper(42));
         output = bir.generateMaskedRow(input);
         assertEquals("Ahwma", output); //$NON-NLS-1$
     }
 
     @Test
     public void testBad() {
-        bir.parameters = "1".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        try {
+            bir.parse("1", false, new RandomWrapper(42));
+            fail("should get exception with input " + bir.parameters); //$NON-NLS-1$
+        } catch (Exception e) {
+            assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
+        }
         output = bir.generateMaskedRow(input);
         assertEquals("", output); //$NON-NLS-1$
     }
 
     @Test
     public void testBad2() {
-        bir.parameters = "lk, df".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        try {
+            bir.parse("lk, df", false, new RandomWrapper(42));
+            fail("should get exception with input " + bir.parameters); //$NON-NLS-1$
+        } catch (Exception e) {
+            assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
+        }
         output = bir.generateMaskedRow(input);
-        assertEquals(input, output);
+        assertEquals("", output);
     }
 
 }

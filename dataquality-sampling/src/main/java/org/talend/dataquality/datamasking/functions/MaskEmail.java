@@ -60,7 +60,7 @@ public class MaskEmail extends GenerateFromFile<String> {
     @Override
     protected void init() {
         for (String element : parameters) {
-            keys.add(element.trim());
+            keys.add(element);
         }
 
     }

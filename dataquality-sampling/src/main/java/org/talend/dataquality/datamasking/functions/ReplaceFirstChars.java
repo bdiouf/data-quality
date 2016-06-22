@@ -16,11 +16,14 @@ package org.talend.dataquality.datamasking.functions;
  * created by jgonzalez on 22 juin 2015. This function will replace the n first chars of the input.
  *
  */
-public abstract class ReplaceFirstChars<T2> extends Function<T2> {
+public abstract class ReplaceFirstChars<T2> extends CharactersOperation<T2> {
 
     private static final long serialVersionUID = 2584207431532787461L;
 
     @Override
-    protected abstract T2 doGenerateMaskedField(T2 t);
-
+    protected void initAttributes() {
+        super.endIndex = Integer.parseInt(parameters[0]);
+        if (parameters.length == 2)
+            super.charToReplace = parameters[1].charAt(0);
+    }
 }

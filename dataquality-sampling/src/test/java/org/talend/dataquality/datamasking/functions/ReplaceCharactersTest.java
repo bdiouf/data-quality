@@ -13,8 +13,9 @@
 package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
@@ -26,27 +27,34 @@ public class ReplaceCharactersTest {
 
     private String output;
 
-    private String input = "input value"; //$NON-NLS-1$
+    private String input = "inp456ut value"; //$NON-NLS-1$
 
     private ReplaceCharacters rc = new ReplaceCharacters();
 
-    @Before
-    public void setUp() throws Exception {
-        rc.rnd = new RandomWrapper(42);
-    }
-
     @Test
     public void testGood() {
-        rc.parameters = "X".split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        rc.parse("X", false, new RandomWrapper(42));
         output = rc.generateMaskedRow(input);
-        assertEquals(output, "XXXXX XXXXX"); //$NON-NLS-1$
+        assertEquals("XXX456XX XXXXX", output); //$NON-NLS-1$
     }
 
     @Test
-    public void testBad() {
-        rc.parameters = Function.EMPTY_STRING.split(","); //$NON-NLS-1$
+    public void testParameter() {
+        rc.parse("5", false, new RandomWrapper(42));
         output = rc.generateMaskedRow(input);
-        assertEquals(output, "AAAAA AAAAA"); //$NON-NLS-1$
+        assertEquals("55545655 55555", output); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testWrongParameter() {
+        try {
+            rc.parse("12", false, new RandomWrapper(42));
+            fail("should get exception with input " + rc.parameters); //$NON-NLS-1$
+        } catch (Exception e) {
+            assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
+        }
+        output = rc.generateMaskedRow(input);
+        assertEquals("", output); //$NON-NLS-1$
     }
 
 }

@@ -17,10 +17,14 @@ package org.talend.dataquality.datamasking.functions;
  * the digits that come after by other digits. Anything that is not a digit will be kept.
  *
  */
-public abstract class KeepFirstAndGenerate<T2> extends Function<T2> {
+public abstract class KeepFirstChars<T2> extends CharactersOperation<T2> {
 
     private static final long serialVersionUID = 2523362343532887640L;
 
     @Override
-    protected abstract T2 doGenerateMaskedField(T2 t);
+    protected void initAttributes() {
+        super.beginIndex = Integer.parseInt(parameters[0]);
+        if (parameters.length == 2)
+            super.charToReplace = parameters[1].charAt(0);
+    }
 }

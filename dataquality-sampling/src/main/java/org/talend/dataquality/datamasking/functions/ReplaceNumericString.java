@@ -21,20 +21,20 @@ public class ReplaceNumericString extends ReplaceNumeric<String> {
     private static final long serialVersionUID = 8707035612963121276L;
 
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (str != null && !EMPTY_STRING.equals(str)) {
-            if (patternSpaceOrLetterOrDigit.matcher(parameters[0]).matches()) { // $NON-NLS-1$
-                if ((" ").equals(parameters[0])) { //$NON-NLS-1$
-                    return replaceSpacesInString(replacePattern(str, parameters[0]));
-                } else {
-                    return replacePattern(str, parameters[0]); // $NON-NLS-1$
-                }
-            } else {
-                throw new IllegalArgumentException(
-                        "The parameter for \"replace all digits\" function must be a digit or a letter"); //$NON-NLS-1$
-            }
-        } else {
-            return EMPTY_STRING;
-        }
+    protected String getDefaultOutput() {
+        return EMPTY_STRING;
+    }
+
+    @Override
+    protected String getOutput(String str) {
+        return str;
+    }
+
+    @Override
+    protected char replaceChar(char c) {
+        if (Character.isDigit(c))
+            return super.charToReplace;
+        return c;
+
     }
 }

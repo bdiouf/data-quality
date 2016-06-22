@@ -20,29 +20,19 @@ public class ReplaceFirstCharsString extends ReplaceFirstChars<String> {
 
     private static final long serialVersionUID = 7856254797887338192L;
 
-    private int parameter = 0;
+    @Override
+    protected String getDefaultOutput() {
+        return EMPTY_STRING;
+    }
 
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (str != null && !EMPTY_STRING.equals(str) && integerParam > 0) {
-            parameter = integerParam > str.length() ? str.length() : integerParam;
-            StringBuilder sb = new StringBuilder(str);
-            StringBuilder repl = new StringBuilder(EMPTY_STRING);
-            for (int i = 0; i < parameter; ++i) {
-                if (Character.isDigit(str.charAt(i))) {
-                    repl.append(rnd.nextInt(9));
-                } else if (Character.isUpperCase(str.charAt(i))) {
-                    repl.append(UPPER.charAt(rnd.nextInt(26)));
-                } else if (Character.isLowerCase(str.charAt(i))) {
-                    repl.append(LOWER.charAt(rnd.nextInt(26)));
-                } else {
-                    repl.append(str.charAt(i));
-                }
-            }
-            sb.replace(0, parameter, repl.toString());
-            return sb.toString();
-        } else {
-            return EMPTY_STRING;
-        }
+    protected String getOutput(String string) {
+        return string;
+    }
+
+    @Override
+    protected boolean validParameters() {
+        return (parameters.length == 1 || (parameters.length == 2 && patternCharacter.matcher(parameters[1]).matches()))
+                && patternNumber.matcher(parameters[0]).matches();
     }
 }

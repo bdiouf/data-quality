@@ -25,7 +25,7 @@ public class GenerateFromListHashInteger extends GenerateFromListHash<Integer> {
         for (String tmp : parameters) {
             int intTmp = 0;
             try {
-                intTmp = Integer.parseInt(tmp.trim());
+                intTmp = Integer.parseInt(tmp);
                 genericTokens.add(intTmp);
             } catch (NumberFormatException e) {
                 // Do Nothing

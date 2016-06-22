@@ -14,40 +14,40 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.KeepLastAndGenerateLong;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
- * created by jgonzalez on 30 juin 2015 Detailled comment
+ * created by jgonzalez on 29 juin 2015 Detailled comment
  *
  */
-public class KeepLastAndGenerateLongTest {
+public class KeepFirstCharsStringTest {
 
     private String output;
 
-    private Long input = 123456L;
+    private String input = "a1b2c3d456"; //$NON-NLS-1$
 
-    private KeepLastAndGenerateLong klag = new KeepLastAndGenerateLong();
-
-    @Before
-    public void setUp() throws Exception {
-        klag.setRandomWrapper(new RandomWrapper(42));
-    }
+    private KeepFirstCharsString kfag = new KeepFirstCharsString();
 
     @Test
     public void testGood() {
-        klag.integerParam = 3;
-        output = klag.generateMaskedRow(input).toString();
-        assertEquals(output, "830456"); //$NON-NLS-1$
+        kfag.parse("3", false, new RandomWrapper(42));
+        output = kfag.generateMaskedRow(input);
+        assertEquals("a1b8h0m075", output); //$NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        klag.integerParam = 7;
-        output = klag.generateMaskedRow(input).toString();
-        assertEquals(output, input.toString());
+        kfag.parse("15", false, new RandomWrapper(542));
+        output = kfag.generateMaskedRow(input);
+        assertEquals(input, output);
+    }
+
+    @Test
+    public void testParameters() {
+        kfag.parse("5,8", false, new RandomWrapper(542));
+        output = kfag.generateMaskedRow(input);
+        assertEquals("a1b2c88888", output);
     }
 
 }

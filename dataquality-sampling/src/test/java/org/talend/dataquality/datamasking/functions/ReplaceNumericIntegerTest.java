@@ -17,7 +17,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.ReplaceNumericInteger;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -34,22 +33,33 @@ public class ReplaceNumericIntegerTest {
 
     @Test
     public void testGood() {
-        rni.parameters = "6".split(","); //$NON-NLS-1$ //$NON-NLS-2$
-        rni.integerParam = 6;
+        rni.parse("6", false, new RandomWrapper(42));
         output = rni.generateMaskedRow(input);
-        assertEquals(output, 666);
+        assertEquals(666, output);
+    }
+
+    @Test
+    public void testWrongParameter() {
+        try {
+            rni.parse("r", false, new RandomWrapper(42));
+            fail("should get exception with input " + rni.parameters); //$NON-NLS-1$
+        } catch (Exception e) {
+            assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
+        }
+        output = rni.generateMaskedRow(input);
+        assertEquals(0, output);
     }
 
     @Test
     public void testBad() {
-        rni.integerParam = 10;
-        rni.rnd = new RandomWrapper(42);
         try {
-            output = rni.generateMaskedRow(input);
-            fail("should get exception with input " + rni.integerParam); //$NON-NLS-1$
+            rni.parse("10", false, new RandomWrapper(42));
+            fail("should get exception with input " + rni.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
         }
+        output = rni.generateMaskedRow(input);
+        assertEquals(0, output);
     }
 
 }

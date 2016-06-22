@@ -14,9 +14,7 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.NumericVarianceLong;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -31,21 +29,16 @@ public class NumericVarianceLongTest {
 
     private NumericVarianceLong nvl = new NumericVarianceLong();
 
-    @Before
-    public void setUp() throws Exception {
-        nvl.setRandomWrapper(new RandomWrapper(42));
-    }
-
     @Test
     public void testGood() {
-        nvl.integerParam = 10;
+        nvl.parse("10", false, new RandomWrapper(42));
         output = nvl.generateMaskedRow(input).toString();
         assertEquals(output, String.valueOf(114));
     }
 
     @Test
     public void testDummy() {
-        nvl.integerParam = -10;
+        nvl.parse("-10", false, new RandomWrapper(42));
         output = nvl.generateMaskedRow(input).toString();
         assertEquals(output, String.valueOf(114));
     }
