@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.Arrays;
-
 /**
  * created by jgonzalez on 24 juin 2015. See GgenerateFromFileHash.
  *
@@ -23,8 +21,8 @@ public class GenerateFromFileHashString extends GenerateFromFileHash<String> {
     private static final long serialVersionUID = -7769720419054349753L;
 
     @Override
-    protected void init() {
-        genericTokens = Arrays.asList(parameters);
+    protected String getOutput(String string) {
+        return string;
     }
 
     @Override

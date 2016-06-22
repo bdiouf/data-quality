@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.Arrays;
-
 /**
  * created by jgonzalez on 19 juin 2015. See GenerateFromFile.
  *
@@ -23,8 +21,8 @@ public class GenerateFromFileString extends GenerateFromFile<String> {
     private static final long serialVersionUID = 6360879458690229195L;
 
     @Override
-    protected void init() {
-        genericTokens = Arrays.asList(parameters);
+    protected String getOutput(String string) {
+        return string;
     }
 
     @Override

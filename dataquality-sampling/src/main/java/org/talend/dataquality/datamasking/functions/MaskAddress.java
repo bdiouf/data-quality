@@ -15,13 +15,14 @@ package org.talend.dataquality.datamasking.functions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * created by jgonzalez on 19 juin 2015. This function will replace digits by other digits and everithing else by ”x”.
  * Moreover, there is a list of key words that won’t be transformed.
  *
  */
-public class MaskAddress extends GenerateFromFile<String> {
+public class MaskAddress extends Function<String> {
 
     private static final long serialVersionUID = -4661073390672757141L;
 
@@ -66,12 +67,8 @@ public class MaskAddress extends GenerateFromFile<String> {
     }
 
     @Override
-    protected String getDefaultOutput() {
-        return EMPTY_STRING;
-    }
-
-    @Override
-    protected void init() {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
         for (String element : parameters) {
             keys.add(element);
         }

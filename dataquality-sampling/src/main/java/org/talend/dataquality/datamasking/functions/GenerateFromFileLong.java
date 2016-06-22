@@ -21,15 +21,8 @@ public class GenerateFromFileLong extends GenerateFromFile<Long> {
     private static final long serialVersionUID = -2510960686417569211L;
 
     @Override
-    protected void init() {
-        for (int i = 0; i < parameters.length; ++i) {
-            long tmp = 0L;
-            try {
-                tmp = Long.parseLong(parameters[i]);
-                genericTokens.add(tmp);
-            } catch (NumberFormatException e) {
-            }
-        }
+    protected Long getOutput(String string) {
+        return Long.valueOf(string);
     }
 
     @Override

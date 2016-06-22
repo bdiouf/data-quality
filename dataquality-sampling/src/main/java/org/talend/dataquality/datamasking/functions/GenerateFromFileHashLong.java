@@ -21,15 +21,8 @@ public class GenerateFromFileHashLong extends GenerateFromFileHash<Long> {
     private static final long serialVersionUID = 4065796998430769114L;
 
     @Override
-    protected void init() {
-        for (int i = 0; i < parameters.length; ++i) {
-            long tmp = 0L;
-            try {
-                tmp = Long.parseLong(parameters[i]);
-                genericTokens.add(tmp);
-            } catch (NumberFormatException e) {
-            }
-        }
+    protected Long getOutput(String string) {
+        return Long.valueOf(string);
     }
 
     @Override

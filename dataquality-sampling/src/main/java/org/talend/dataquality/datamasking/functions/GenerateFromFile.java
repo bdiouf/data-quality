@@ -26,14 +26,19 @@ public abstract class GenerateFromFile<T> extends Function<T> {
     private static final long serialVersionUID = 1556057898878709265L;
 
     protected List<T> genericTokens = new ArrayList<T>();
-
-    protected abstract void init();
-
+    
     @Override
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
-        init();
+        for (int i = 0; i < parameters.length; ++i) {
+            try {
+                genericTokens.add(getOutput(parameters[i]));
+            } catch (NumberFormatException e) {
+            }
+        }
     }
+
+    protected abstract T getOutput(String string);
 
     @Override
     protected T doGenerateMaskedField(T t) {

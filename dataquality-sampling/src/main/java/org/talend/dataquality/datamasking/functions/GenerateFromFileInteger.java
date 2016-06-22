@@ -20,15 +20,9 @@ public class GenerateFromFileInteger extends GenerateFromFile<Integer> {
 
     private static final long serialVersionUID = 1896675901231975008L;
 
-    protected void init() {
-        for (int i = 0; i < parameters.length; ++i) {
-            int tmp = 0;
-            try {
-                tmp = Integer.parseInt(parameters[i]);
-                genericTokens.add(tmp);
-            } catch (NumberFormatException e) {
-            }
-        }
+    @Override
+    protected Integer getOutput(String string) {
+        return Integer.valueOf(string);
     }
 
     @Override

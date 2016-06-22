@@ -13,6 +13,7 @@
 package org.talend.dataquality.datamasking.semantic;
 
 import java.io.IOException;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.talend.dataquality.datamasking.functions.GenerateFromFileString;
@@ -24,7 +25,9 @@ public class GenerateFromFileStringProvided extends GenerateFromFileString {
 
     private final static Logger log = Logger.getLogger(GenerateFromFileStringProvided.class);
 
-    protected void init() {
+    @Override
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
         try {
             genericTokens = KeysLoader.loadKeys(this.getClass().getResourceAsStream(parameters[0]));
         } catch (IOException | NullPointerException e) {

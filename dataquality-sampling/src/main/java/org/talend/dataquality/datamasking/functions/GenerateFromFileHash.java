@@ -28,12 +28,15 @@ public abstract class GenerateFromFileHash<T> extends Function<T> {
 
     protected List<T> genericTokens = new ArrayList<T>();
 
-    protected abstract void init();
-
     @Override
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
-        this.init();
+        for (int i = 0; i < parameters.length; ++i) {
+            try {
+                genericTokens.add(getOutput(parameters[i]));
+            } catch (NumberFormatException e) {
+            }
+        }
     }
 
     @Override
@@ -48,6 +51,8 @@ public abstract class GenerateFromFileHash<T> extends Function<T> {
             return getDefaultOutput();
         }
     }
+
+    protected abstract T getOutput(String string);
 
     protected abstract T getDefaultOutput();
 

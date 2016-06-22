@@ -14,13 +14,14 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * created by jgonzalez on 19 juin 2015. This function will look for a ’@’ and replace all characters before by ’X’ and
  * leave the rest unchanged. If there is no ’@’ in the input, the generated data will be a serie of ’X’.
  *
  */
-public class MaskEmail extends GenerateFromFile<String> {
+public class MaskEmail extends Function<String> {
 
     private static final long serialVersionUID = 3520390903566492525L;
 
@@ -53,12 +54,8 @@ public class MaskEmail extends GenerateFromFile<String> {
     }
 
     @Override
-    protected String getDefaultOutput() {
-        return EMPTY_STRING;
-    }
-
-    @Override
-    protected void init() {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
         for (String element : parameters) {
             keys.add(element);
         }

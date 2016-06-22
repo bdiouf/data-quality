@@ -14,6 +14,7 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 /**
@@ -23,7 +24,7 @@ import java.util.regex.Pattern;
  * email address and other auxiliary methods.<br>
  * 
  */
-public abstract class MaskEmailDomain extends GenerateFromFile<String> {
+public abstract class MaskEmailDomain extends Function<String> {
 
     private static final long serialVersionUID = 3837984827035744721L;
 
@@ -182,12 +183,8 @@ public abstract class MaskEmailDomain extends GenerateFromFile<String> {
     }
 
     @Override
-    protected String getDefaultOutput() {
-        return EMPTY_STRING;
-    }
-
-    @Override
-    protected void init() {
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
         for (String element : parameters) {
             replacements.add(element);
         }
