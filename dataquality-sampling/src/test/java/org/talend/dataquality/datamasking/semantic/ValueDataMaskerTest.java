@@ -99,6 +99,7 @@ public class ValueDataMaskerTest {
             put(new String[] { "444,44", "UNKNOWN", "numeric" }, "423.06");
             put(new String[] { "555", "UNKNOWN", "float" }, "528");
             put(new String[] { "666.666", "UNKNOWN", "float" }, "634.595");
+            put(new String[] { "Abc123", "UNKNOWN", "float" }, "Zzp655"); // not numeric, mask by char replacement
 
             // BIG NUMERIC
             put(new String[] { "7777777777777777777777777777777777777", "UNKNOWN", "double" },

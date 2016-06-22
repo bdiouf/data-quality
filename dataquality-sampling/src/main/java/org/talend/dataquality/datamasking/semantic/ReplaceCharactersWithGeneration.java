@@ -24,23 +24,7 @@ public class ReplaceCharactersWithGeneration extends Function<String> {
 
     @Override
     protected String doGenerateMaskedField(String input) {
-        if (input == null || EMPTY_STRING.equals(input.trim())) {
-            return input;
-        } else {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < input.length(); i++) {
-                char ch = input.charAt(i);
-                if (Character.isUpperCase(ch)) {
-                    sb.append(UPPER.charAt(rnd.nextInt(26)));
-                } else if (Character.isLowerCase(ch)) {
-                    sb.append(LOWER.charAt(rnd.nextInt(26)));
-                } else if (Character.isDigit(ch)) {
-                    sb.append(rnd.nextInt(10));
-                } else {
-                    sb.append(ch);
-                }
-            }
-            return sb.toString();
-        }
+        return ReplaceCharacterHelper.replaceCharacters(input, rnd);
     }
+
 }

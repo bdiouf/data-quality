@@ -29,9 +29,9 @@ public abstract class Function<T> implements Serializable {
 
     protected static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
-    protected static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //$NON-NLS-1$
+    public static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //$NON-NLS-1$
 
-    protected static final String LOWER = "abcdefghijklmnopqrstuvwxyz"; //$NON-NLS-1$
+    public static final String LOWER = "abcdefghijklmnopqrstuvwxyz"; //$NON-NLS-1$
 
     protected Random rnd;
 
@@ -52,8 +52,7 @@ public abstract class Function<T> implements Serializable {
     protected static final Pattern patternSpaceOrLetterOrDigit = Pattern.compile("[0-9a-zA-Z ]");
 
     /**
-     * DOC jgonzalez Comment method "setRandomWrapper". This method is used to set the RandomWrapper used by all
-     * functions.
+     * setter for random
      * 
      * @param rand The RandomWrapper.
      */
@@ -63,6 +62,15 @@ public abstract class Function<T> implements Serializable {
         } else {
             rnd = rand;
         }
+    }
+
+    /**
+     * getter for random
+     * 
+     * @return the random object
+     */
+    public Random getRandom() {
+        return rnd;
     }
 
     /**

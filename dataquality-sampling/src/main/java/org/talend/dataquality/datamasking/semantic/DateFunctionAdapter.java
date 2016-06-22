@@ -37,6 +37,7 @@ public class DateFunctionAdapter extends Function<String> {
 
     public DateFunctionAdapter(Function<Date> functionToAdapt, List<String> datePatternList) {
         function = functionToAdapt;
+        rnd = functionToAdapt.getRandom();
         if (datePatternList != null) {
             for (String pattern : datePatternList) {
                 try {
@@ -77,7 +78,7 @@ public class DateFunctionAdapter extends Function<String> {
                 // do nothing, continue to try other patterns;
             }
         }
-        return EMPTY_STRING;
+        return ReplaceCharacterHelper.replaceCharacters(input, rnd);
     }
 
 }

@@ -42,19 +42,24 @@ public class FluctuateNumericString extends NumericVariance<String> {
                     return String.valueOf(result);
                 }
             } else {
-                BigDecimal bigDecimal = BigDecimalParser.toBigDecimal(input);
-                final int decimalLength = getDecimalPrecision(input);
-                if (bigDecimal.abs().compareTo(new BigDecimal(Long.MAX_VALUE)) > 0) {
-                    final BigDecimal result = bigDecimal.multiply(new BigDecimal(rateToApply + 100)).divide(new BigDecimal(100));
-                    if (input.contains("e") || input.contains("E")) {
-                        return String.valueOf(result.setScale(decimalLength, RoundingMode.HALF_UP).doubleValue());
+                try {
+                    BigDecimal bigDecimal = BigDecimalParser.toBigDecimal(input);
+                    final int decimalLength = getDecimalPrecision(input);
+                    if (bigDecimal.abs().compareTo(new BigDecimal(Long.MAX_VALUE)) > 0) {
+                        final BigDecimal result = bigDecimal.multiply(new BigDecimal(rateToApply + 100))
+                                .divide(new BigDecimal(100));
+                        if (input.contains("e") || input.contains("E")) {
+                            return String.valueOf(result.setScale(decimalLength, RoundingMode.HALF_UP).doubleValue());
+                        } else {
+                            return result.setScale(decimalLength, RoundingMode.HALF_UP).toString();
+                        }
                     } else {
-                        return result.setScale(decimalLength, RoundingMode.HALF_UP).toString();
+                        final Double doubleValue = bigDecimal.doubleValue() * (rateToApply + 100) / 100;
+                        final BigDecimal result = new BigDecimal(doubleValue);
+                        return String.valueOf(result.setScale(decimalLength, RoundingMode.HALF_UP).doubleValue());
                     }
-                } else {
-                    final Double doubleValue = bigDecimal.doubleValue() * (rateToApply + 100) / 100;
-                    final BigDecimal result = new BigDecimal(doubleValue);
-                    return String.valueOf(result.setScale(decimalLength, RoundingMode.HALF_UP).doubleValue());
+                } catch (NumberFormatException e) {
+                    return ReplaceCharacterHelper.replaceCharacters(input, rnd);
                 }
             }
         }
