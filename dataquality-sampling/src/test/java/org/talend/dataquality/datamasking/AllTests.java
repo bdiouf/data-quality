@@ -35,12 +35,6 @@ import org.talend.dataquality.datamasking.functions.GenerateFromFileHashStringTe
 import org.talend.dataquality.datamasking.functions.GenerateFromFileIntegerTest;
 import org.talend.dataquality.datamasking.functions.GenerateFromFileLongTest;
 import org.talend.dataquality.datamasking.functions.GenerateFromFileStringTest;
-import org.talend.dataquality.datamasking.functions.GenerateFromListHashIntegerTest;
-import org.talend.dataquality.datamasking.functions.GenerateFromListHashLongTest;
-import org.talend.dataquality.datamasking.functions.GenerateFromListHashStringTest;
-import org.talend.dataquality.datamasking.functions.GenerateFromListIntegerTest;
-import org.talend.dataquality.datamasking.functions.GenerateFromListLongTest;
-import org.talend.dataquality.datamasking.functions.GenerateFromListStringTest;
 import org.talend.dataquality.datamasking.functions.GenerateFromPatternTest;
 import org.talend.dataquality.datamasking.functions.GeneratePhoneNumberFrenchTest;
 import org.talend.dataquality.datamasking.functions.GeneratePhoneNumberGermanyTest;
@@ -93,9 +87,7 @@ import org.talend.dataquality.datamasking.functions.SetToNullTest;
         GenerateBetweenStringTest.class, GenerateCreditCardFormatLongTest.class, GenerateCreditCardFormatStringTest.class,
         GenerateCreditCardLongTest.class, GenerateCreditCardStringTest.class, GenerateFromFileHashIntegerTest.class,
         GenerateFromFileHashLongTest.class, GenerateFromFileHashStringTest.class, GenerateFromFileIntegerTest.class,
-        GenerateFromFileLongTest.class, GenerateFromFileStringTest.class, GenerateFromListHashIntegerTest.class,
-        GenerateFromListHashLongTest.class, GenerateFromListHashStringTest.class, GenerateFromListIntegerTest.class,
-        GenerateFromListLongTest.class, GenerateFromListStringTest.class, GenerateFromPatternTest.class,
+        GenerateFromFileLongTest.class, GenerateFromFileStringTest.class, GenerateFromPatternTest.class,
         GeneratePhoneNumberFrenchTest.class, GeneratePhoneNumberGermanyTest.class, GeneratePhoneNumberJapanTest.class,
         GeneratePhoneNumberUkTest.class, GeneratePhoneNumberUsTest.class, GenerateSsnFrenchTest.class,
         GenerateSsnGermanyTest.class, GenerateSsnJapanTest.class, GenerateSsnUkTest.class, GenerateSsnUsTest.class,
