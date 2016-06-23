@@ -127,7 +127,7 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
      * @param str2
      * @return
      */
-    private double getInitialWeight(String str1, String str2) {
+    private double getInitialSimilarity(String str1, String str2) {
         String strShort = str1, strLong = str2;
         if (strShort.length() > strLong.length()) {
             strShort = str2;
@@ -159,9 +159,9 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
             for (int j = 0; j < m; j++) {
 
                 if (initialComparison) {
-                    double w = getInitialWeight(list1[i], list2[j]);
-                    if (w != -1)
-                        weights[i][j] = w;
+                    double simInitial = getInitialSimilarity(list1[i], list2[j]);
+                    if (simInitial != -1)
+                        weights[i][j] = 1 - simInitial;
                     else {
                         double similarityMeasure = getWeight(list1[i], list2[j]);
                         weights[i][j] = 1 - similarityMeasure;
@@ -202,7 +202,7 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
         double weight = 0;
         for (int i = 0; i < minDim; i++) {
             if (initialComparison) {
-                double w = getInitialWeight(list1[i], list2[i]);
+                double w = getInitialSimilarity(list1[i], list2[i]);
                 if (w != -1) {
                     weight += w;
                 } else {
@@ -252,7 +252,7 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
             double weight = 0;
             for (int i = 0; i < shortString.length; i++) {
                 if (initialComparison) {
-                    double w = getInitialWeight(result[i], shortString[i]);
+                    double w = getInitialSimilarity(result[i], shortString[i]);
                     if (w != -1) {
                         weight += w;
                     } else {
@@ -312,6 +312,24 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
         return attributeName;
     }
 
+    /**
+     * Getter for fingerPrintApply.
+     * 
+     * @return the fingerPrintApply
+     */
+    public boolean isFingerPrintApply() {
+        return fingerPrintApply;
+    }
+
+    /**
+     * Getter for tokenMethod.
+     * 
+     * @return the tokenMethod
+     */
+    public TokenizedResolutionMethod getTokenMethod() {
+        return tokenMethod;
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -327,6 +345,24 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
      */
     public void setTokenize(boolean tokenize) {
         this.tokenize = tokenize;
+    }
+
+    /**
+     * Getter for tokenize.
+     * 
+     * @return the tokenize
+     */
+    public boolean isTokenize() {
+        return tokenize;
+    }
+
+    /**
+     * Getter for initialComparison.
+     * 
+     * @return the initialComparison
+     */
+    public boolean isInitialComparison() {
+        return initialComparison;
     }
 
     /**
