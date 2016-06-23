@@ -32,7 +32,6 @@ public class ReplaceLastCharsString extends ReplaceLastChars<String> {
 
     @Override
     protected boolean validParameters() {
-        return (parameters.length == 1 || (parameters.length == 2 && patternCharacter.matcher(parameters[1]).matches()))
-                && patternNumber.matcher(parameters[0]).matches();
+        return CharactersOperationUtils.validParameters1Number1CharReplace(parameters);
     }
 }

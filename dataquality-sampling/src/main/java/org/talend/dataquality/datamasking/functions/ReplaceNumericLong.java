@@ -27,6 +27,6 @@ public class ReplaceNumericLong extends ReplaceNumeric<Long> {
 
     @Override
     protected Long getOutput(String str) {
-        return Long.valueOf(str);
+        return Long.parseLong(str);
     }
 }

@@ -28,6 +28,6 @@ public abstract class ReplaceNumeric<T2> extends CharactersOperation<T2> {
 
     @Override
     protected boolean validParameters() {
-        return parameters.length == 0 || (parameters.length == 1 && patternDigit.matcher(parameters[0]).matches());
+        return CharactersOperationUtils.validParameters1DigitReplace(parameters);
     }
 }

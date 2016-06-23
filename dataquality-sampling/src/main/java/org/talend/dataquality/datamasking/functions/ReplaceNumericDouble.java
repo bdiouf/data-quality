@@ -27,6 +27,6 @@ public class ReplaceNumericDouble extends ReplaceNumeric<Double> {
 
     @Override
     protected Double getOutput(String str) {
-        return Double.valueOf(str);
+        return Double.parseDouble(str);
     }
 }

@@ -27,6 +27,6 @@ public class ReplaceNumericFloat extends ReplaceNumeric<Float> {
 
     @Override
     protected Float getOutput(String str) {
-        return Float.valueOf(str);
+        return Float.parseFloat(str);
     }
 }

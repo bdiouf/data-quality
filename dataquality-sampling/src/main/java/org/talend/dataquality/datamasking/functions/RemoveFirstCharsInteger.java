@@ -27,6 +27,6 @@ public class RemoveFirstCharsInteger extends RemoveFirstChars<Integer> {
 
     @Override
     protected Integer getOutput(String str) {
-        return Integer.valueOf(str);
+        return Integer.parseInt(str);
     }
 }

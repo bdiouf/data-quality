@@ -45,14 +45,6 @@ public abstract class Function<T> implements Serializable {
 
     protected static final Pattern patternSpace = Pattern.compile("\\s+");
 
-    protected static final Pattern patternLetter = Pattern.compile("[a-zA-Z]");
-
-    protected static final Pattern patternNumber = Pattern.compile("[0-9]+");
-
-    protected static final Pattern patternCharacter = Pattern.compile(".");
-
-    protected static final Pattern patternDigit = Pattern.compile("[0-9]");
-
     /**
      * setter for random
      * 

@@ -22,7 +22,7 @@ public class GenerateFromFileHashInteger extends GenerateFromFileHash<Integer> {
 
     @Override
     protected Integer getOutput(String string) {
-        return Integer.valueOf(string);
+        return Integer.parseInt(string);
     }
 
     @Override

@@ -27,12 +27,11 @@ public class KeepFirstCharsLong extends KeepFirstChars<Long> {
 
     @Override
     protected Long getOutput(String string) {
-        return Long.valueOf(string);
+        return Long.parseLong(string);
     }
 
     @Override
     protected boolean validParameters() {
-        return (parameters.length == 1 || (parameters.length == 2 && patternDigit.matcher(parameters[1]).matches()))
-                && patternNumber.matcher(parameters[0]).matches();
+        return CharactersOperationUtils.validParameters1Number1DigitReplace(parameters);
     }
 }

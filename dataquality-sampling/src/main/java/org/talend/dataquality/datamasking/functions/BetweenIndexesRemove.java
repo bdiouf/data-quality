@@ -24,15 +24,14 @@ public class BetweenIndexesRemove extends BetweenIndexes {
 
     @Override
     protected void initAttributes() {
-        beginIndex = Integer.valueOf(parameters[0]) - 1;
-        endIndex = Integer.valueOf(parameters[1]);
+        beginIndex = Integer.parseInt(parameters[0]) - 1;
+        endIndex = Integer.parseInt(parameters[1]);
         toRemove = true;
 
     }
 
     @Override
     protected boolean validParameters() {
-        return parameters.length == 2 && patternNumber.matcher(parameters[0]).matches()
-                && patternNumber.matcher(parameters[1]).matches();
+        return CharactersOperationUtils.validParameters2Indexes(parameters);
     }
 }

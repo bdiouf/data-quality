@@ -27,12 +27,11 @@ public class KeepFirstCharsInteger extends KeepFirstChars<Integer> {
 
     @Override
     protected Integer getOutput(String string) {
-        return Integer.valueOf(string);
+        return Integer.parseInt(string);
     }
 
     @Override
     protected boolean validParameters() {
-        return (parameters.length == 1 || (parameters.length == 2 && patternDigit.matcher(parameters[1]).matches()))
-                && patternNumber.matcher(parameters[0]).matches();
+        return CharactersOperationUtils.validParameters1Number1DigitReplace(parameters);
     }
 }

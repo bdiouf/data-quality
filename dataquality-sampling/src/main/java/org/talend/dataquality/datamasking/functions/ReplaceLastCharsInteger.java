@@ -27,12 +27,11 @@ public class ReplaceLastCharsInteger extends ReplaceLastChars<Integer> {
 
     @Override
     protected Integer getOutput(String str) {
-        return Integer.valueOf(str);
+        return Integer.parseInt(str);
     }
 
     @Override
     protected boolean validParameters() {
-        return (parameters.length == 1 || (parameters.length == 2 && patternDigit.matcher(parameters[1]).matches()))
-                && patternNumber.matcher(parameters[0]).matches();
+        return CharactersOperationUtils.validParameters1Number1DigitReplace(parameters);
     }
 }

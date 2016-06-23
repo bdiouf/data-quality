@@ -28,6 +28,6 @@ public abstract class RemoveFirstChars<T2> extends CharactersOperation<T2> {
 
     @Override
     protected boolean validParameters() {
-        return parameters.length == 1 && patternNumber.matcher(parameters[0]).matches();
+        return CharactersOperationUtils.validParameters1Number(parameters);
     }
 }

@@ -38,6 +38,6 @@ public class ReplaceAll extends CharactersOperation<String> {
 
     @Override
     protected boolean validParameters() {
-        return parameters.length == 0 || (parameters.length == 1 && patternCharacter.matcher(parameters[0]).matches());
+        return CharactersOperationUtils.validParameters1CharReplace(parameters);
     }
 }

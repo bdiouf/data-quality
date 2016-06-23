@@ -23,8 +23,8 @@ public class BetweenIndexesReplace extends BetweenIndexes {
 
     @Override
     protected void initAttributes() {
-        beginIndex = Integer.valueOf(parameters[0]) - 1;
-        endIndex = Integer.valueOf(parameters[1]);
+        beginIndex = Integer.parseInt(parameters[0]) - 1;
+        endIndex = Integer.parseInt(parameters[1]);
         if (parameters.length == 3) {
             charToReplace = parameters[2].charAt(0);
         }
@@ -33,8 +33,7 @@ public class BetweenIndexesReplace extends BetweenIndexes {
 
     @Override
     protected boolean validParameters() {
-        return (parameters.length == 2 || (parameters.length == 3 && patternCharacter.matcher(parameters[2]).matches()))
-                && patternNumber.matcher(parameters[0]).matches() && patternNumber.matcher(parameters[1]).matches();
+        return CharactersOperationUtils.validParameters2Indexes1CharReplace(parameters);
     }
 
 }

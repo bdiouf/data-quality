@@ -22,7 +22,7 @@ public class GenerateFromFileLong extends GenerateFromFile<Long> {
 
     @Override
     protected Long getOutput(String string) {
-        return Long.valueOf(string);
+        return Long.parseLong(string);
     }
 
     @Override
