@@ -193,7 +193,7 @@ public class UserDefinedClassifierTest {
             put("35 054 T€", new String[] { "FR_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
             put("35 456 544 k£", new String[] { "FR_MONEY_AMOUNT" });//$NON-NLS-1$ //$NON-NLS-2$
 
-            put("00493-1234567891", new String[] { "DE_PHONE" });//$NON-NLS-1$ //$NON-NLS-2$
+            put("00496-8738059275", new String[] { "DE_PHONE" });//$NON-NLS-1$ //$NON-NLS-2$
             put("00338.01345678", new String[] { "FR_PHONE" });//$NON-NLS-1$ //$NON-NLS-2$
 
             put("John Doe", new String[] {});//$NON-NLS-1$ //$NON-NLS-2$
@@ -239,7 +239,8 @@ public class UserDefinedClassifierTest {
             put("25:59", new String[] {}); // does not match TIME (as expected) //$NON-NLS-1$
 
             put("0067340", new String[] { "SEDOL" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("4155586", new String[] { "SEDOL", "US_PHONE" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("4155586", new String[] { "SEDOL" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("(541) 754-3010", new String[] { "US_PHONE" }); //$NON-NLS-1$ //$NON-NLS-2$
             put("B01HL06", new String[] { "SEDOL" }); //$NON-NLS-1$ //$NON-NLS-2$
 
             put("132.2356", new String[] {}); //$NON-NLS-1$

@@ -89,8 +89,6 @@ public class RespectiveCategoryRecognizerTest {
                 private static final long serialVersionUID = 7983289992158907116L;
 
                 {
-                    add(ImmutablePair.of("7543010", true));// Local
-                    add(ImmutablePair.of("754-3010", true));// Local
                     add(ImmutablePair.of("+1 (650) 539 3200", true));
                     add(ImmutablePair.of("15417543010", true));// Dialed in the US
                     add(ImmutablePair.of("(541)754-3010", true)); // Domestic w/o space
@@ -99,7 +97,6 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("1-541-754-3010", true));// Dialed in the US
                     add(ImmutablePair.of("1 541 754 3010", true));// Dialed in the US
                     add(ImmutablePair.of("1 541 754 3010 ext 23", true));// number with extension
-                    add(ImmutablePair.of("001-541-754-3010", true));// Dialed from other country
 
                     add(ImmutablePair.of("1234567", false));
                     add(ImmutablePair.of("41-754-3010", false));
@@ -604,8 +601,9 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("+33 243134818", true));
                     add(ImmutablePair.of("0033523456789", true));
                     add(ImmutablePair.of("+33 6 23 45 67 89", true));
-                    add(ImmutablePair.of("07.23.45.67.89", true));
-                    add(ImmutablePair.of("08 76 54 32 10", true));
+                    add(ImmutablePair.of("07.85.01.24.79", true));
+                    add(ImmutablePair.of("08 25 01 20 11", true));
+                    add(ImmutablePair.of("07 23 45 67 89", false));
                 }
             });
 

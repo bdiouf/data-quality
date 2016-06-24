@@ -129,7 +129,7 @@ public class CategoryRecognizerTest {
             put("123-45-6789", new String[] { SemanticCategoryEnum.US_SSN.getId() });
             put("azjfnskjqnfoajr", new String[] {});
             put("ISBN 9-787-11107-5", new String[] { SemanticCategoryEnum.ISBN_10.getId() });
-            put("00493-1234567891", new String[] { SemanticCategoryEnum.DE_PHONE.getId() });
+            put("00496-873805924", new String[] { SemanticCategoryEnum.DE_PHONE.getId() });
             put("00338.01345678", new String[] { SemanticCategoryEnum.FR_PHONE.getId() });
             put("132.2356", new String[] {});
             put("Mr. John Doe", new String[] { SemanticCategoryEnum.FULL_NAME.getId() });
@@ -185,7 +185,7 @@ public class CategoryRecognizerTest {
             put("123-45-6789", new String[] { SemanticCategoryEnum.US_SSN.getDisplayName() });
             put("azjfnskjqnfoajr", new String[] {});
             put("ISBN 9-787-11107-5", new String[] { SemanticCategoryEnum.ISBN_10.getDisplayName() });
-            put("00493-1234567891", new String[] { SemanticCategoryEnum.DE_PHONE.getDisplayName() });
+            put("00496-873805924", new String[] { SemanticCategoryEnum.DE_PHONE.getDisplayName() });
             put("00338.01345678", new String[] { SemanticCategoryEnum.FR_PHONE.getDisplayName() });
             put("132.2356", new String[] {});
             put("Mr. John Doe", new String[] { SemanticCategoryEnum.FULL_NAME.getDisplayName() });

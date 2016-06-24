@@ -17,7 +17,10 @@
         "id" : "US_PHONE",
         "mainCategory" : "AlphaNumeric",
         "name" : "US Phone",
-        "validator" : { "patternString" : "^(?:(?:(?:\\+|00)?1\\s*(?:[.-]\\s*)?)?(?:\\(\\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\\s*\\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\\s*(?:[.-]\\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\\s*(?:[.-]\\s*)?([0-9]{4})(?:\\s*(?:#|x\\.?|ext\\.?|extension)\\s*(\\d+))?$" }
+        "validator" : { 
+            "patternString" : "^(?:(?:(?:\\+|00)?1\\s*(?:[.-]\\s*)?)?(?:\\(\\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\\s*\\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\\s*(?:[.-]\\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\\s*(?:[.-]\\s*)?([0-9]{4})(?:\\s*(?:#|x\\.?|ext\\.?|extension)\\s*(\\d+))?$",
+            "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.USPhoneNumberValidator"
+         }
       },
       { "description" : "French postal code",
         "id" : "FR_POSTAL_CODE",
@@ -83,7 +86,10 @@
         "id" : "UK_PHONE",
         "mainCategory" : "Numeric",
         "name" : "UK Phone",
-        "validator" : { "patternString" : "^(\\+44[[:space:]]?7[[:digit:]]{3}|\\(?07[[:digit:]]{3}\\)?)[[:space:]]?[[:digit:]]{3}[[:space:]]?[[:digit:]]{3}$" }
+        "validator" : { 
+            "patternString" : "^(\\+44[[:space:]]?7[[:digit:]]{3}|\\(?07[[:digit:]]{3}\\)?)[[:space:]]?[[:digit:]]{3}[[:space:]]?[[:digit:]]{3}$",
+            "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.UKPhoneNumberValidator"
+        }
       },
       { "description" : "US Social Security number",
         "id" : "US_SSN",
@@ -107,7 +113,10 @@
         "id" : "DE_PHONE",
         "mainCategory" : "Numeric",
         "name" : "DE Phone",
-        "validator" : { "patternString" : "^(0049|\\+49|0)[2-9]([-. ]?[0-9]{2}){5}$" }
+        "validator" : { 
+            "patternString" : "^(0049|\\+49|0)[2-9]([-. ]?[0-9]{2}){4}([0-9]{1,2})?$",
+            "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.DEPhoneNumberValidator"
+        }
       },
       { "description" : "UK postal code",
         "id" : "UK_POSTAL_CODE",
@@ -170,7 +179,10 @@
         "id" : "FR_PHONE",
         "mainCategory" : "Numeric",
         "name" : "FR Phone",
-        "validator" : { "patternString" : "^(0033 ?|\\+33 ?|0)[1-9]([-. ]?[0-9]{2}){4}$" }
+        "validator" : { 
+            "patternString" : "^(0033 ?|\\+33 ?|0)[1-9]([-. ]?[0-9]{2}){4}$",
+            "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.FRPhoneNumberValidator"
+        }
       },
       { "description" : "US State code",
         "id" : "US_STATE_CODE",
