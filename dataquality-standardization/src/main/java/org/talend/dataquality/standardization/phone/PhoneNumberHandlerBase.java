@@ -75,8 +75,10 @@ public class PhoneNumberHandlerBase {
      * @return a boolean that indicates whether the number is of a valid pattern
      */
     public boolean isValidPhoneNumber(Object data, String regionCode) {
-        PhoneNumber phonenumber = parseToPhoneNumber(data, regionCode);
-        if (phonenumber == null) {
+        PhoneNumber phonenumber = null;
+        try {
+            phonenumber = phoneUtil.parse(data.toString(), regionCode);
+        } catch (Exception e) {
             return false;
         }
         return phoneUtil.isValidNumberForRegion(phonenumber, regionCode);
