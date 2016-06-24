@@ -14,13 +14,11 @@ package org.talend.dataquality.semantic.validator;
 
 import java.util.Locale;
 
-import org.talend.dataquality.standardization.phone.PhoneNumberHandler;
+import org.talend.dataquality.standardization.phone.PhoneNumberHandlerBase;
 
 public abstract class AbstractPhoneNumberValidator {
 
-    private static PhoneNumberHandler handler = new PhoneNumberHandler();
-
     protected boolean isValidPhoneNumber(String phoneNumber, Locale locale) {
-        return handler.isValidPhoneNumber(phoneNumber, locale.getCountry());
+        return PhoneNumberHandlerBase.isValidPhoneNumber(phoneNumber, locale.getCountry());
     }
 }

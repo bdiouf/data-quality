@@ -33,13 +33,9 @@ import com.google.i18n.phonenumbers.geocoding.PhoneNumberOfflineGeocoder;
  */
 public class PhoneNumberHandlerBase {
 
-    private static PhoneNumberUtil phoneUtil = null;
-
     private static final Logger log = Logger.getLogger(PhoneNumberHandlerBase.class);
 
-    public PhoneNumberHandlerBase() {
-        phoneUtil = PhoneNumberUtil.getInstance();
-    }
+    private static PhoneNumberUtil GOOGLE_PHONE_UTIL = PhoneNumberUtil.getInstance();
 
     /**
      * 
@@ -52,13 +48,13 @@ public class PhoneNumberHandlerBase {
      * then "ZZ" or null can be supplied. like as "+86 12345678912"
      * @return
      */
-    protected PhoneNumber parseToPhoneNumber(Object data, String regionCode) {
+    protected static PhoneNumber parseToPhoneNumber(Object data, String regionCode) {
         if (data == null || StringUtils.isBlank(data.toString())) {
             return null;
         }
         PhoneNumber phonenumber = null;
         try {
-            phonenumber = phoneUtil.parse(data.toString(), regionCode);
+            phonenumber = GOOGLE_PHONE_UTIL.parse(data.toString(), regionCode);
         } catch (Exception e) {
             log.error("Phone number parsing exception with " + data, e); //$NON-NLS-1$
             return null;
@@ -74,14 +70,14 @@ public class PhoneNumberHandlerBase {
      * @param regionCode the regionCode that we want to validate the phone number from
      * @return a boolean that indicates whether the number is of a valid pattern
      */
-    public boolean isValidPhoneNumber(Object data, String regionCode) {
+    public static boolean isValidPhoneNumber(Object data, String regionCode) {
         PhoneNumber phonenumber = null;
         try {
-            phonenumber = phoneUtil.parse(data.toString(), regionCode);
+            phonenumber = GOOGLE_PHONE_UTIL.parse(data.toString(), regionCode);
         } catch (Exception e) {
             return false;
         }
-        return phoneUtil.isValidNumberForRegion(phonenumber, regionCode);
+        return GOOGLE_PHONE_UTIL.isValidNumberForRegion(phonenumber, regionCode);
     }
 
     /**
@@ -93,11 +89,11 @@ public class PhoneNumberHandlerBase {
      * @param regionCode the regionCode that we are expecting the number to be dialed from.
      * @return
      */
-    public boolean isPossiblePhoneNumber(Object data, String regionCode) {
+    public static boolean isPossiblePhoneNumber(Object data, String regionCode) {
         if (data == null || StringUtils.isBlank(data.toString())) {
             return false;
         }
-        return phoneUtil.isPossibleNumber(data.toString(), regionCode);
+        return GOOGLE_PHONE_UTIL.isPossibleNumber(data.toString(), regionCode);
 
     }
 
@@ -109,12 +105,12 @@ public class PhoneNumberHandlerBase {
      * @param regionCode the regionCode that we are expecting the number to be dialed from
      * @return the formatted phone number like as "+12423651234"
      */
-    public String formatE164(Object data, String regionCode) {
+    public static String formatE164(Object data, String regionCode) {
         PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
         if (phonemuber == null) {
             return StringUtils.EMPTY;
         }
-        return phoneUtil.format(phonemuber, PhoneNumberFormat.E164);
+        return GOOGLE_PHONE_UTIL.format(phonemuber, PhoneNumberFormat.E164);
     }
 
     /**
@@ -125,12 +121,12 @@ public class PhoneNumberHandlerBase {
      * @param regionCode the regionCode that we are expecting the number to be dialed from
      * @return the formatted phone number like as "+1 242-365-1234"
      */
-    public String formatInternational(Object data, String regionCode) {
+    public static String formatInternational(Object data, String regionCode) {
         PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
         if (phonemuber == null) {
             return StringUtils.EMPTY;
         }
-        return phoneUtil.format(phonemuber, PhoneNumberFormat.INTERNATIONAL);
+        return GOOGLE_PHONE_UTIL.format(phonemuber, PhoneNumberFormat.INTERNATIONAL);
     }
 
     /**
@@ -141,12 +137,12 @@ public class PhoneNumberHandlerBase {
      * @param regionCode the regionCode that we are expecting the number to be dialed from
      * @return the formatted phone number like as "(242) 365-1234"
      */
-    public String formatNational(Object data, String regionCode) {
+    public static String formatNational(Object data, String regionCode) {
         PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
         if (phonemuber == null) {
             return StringUtils.EMPTY;
         }
-        return phoneUtil.format(phonemuber, PhoneNumberFormat.NATIONAL);
+        return GOOGLE_PHONE_UTIL.format(phonemuber, PhoneNumberFormat.NATIONAL);
     }
 
     /**
@@ -157,12 +153,12 @@ public class PhoneNumberHandlerBase {
      * @param regionCode the regionCode that we are expecting the number to be dialed from
      * @return the formatted phone number like as "tel:+1-242-365-1234"
      */
-    public String formatRFC396(Object data, String regionCode) {
+    public static String formatRFC396(Object data, String regionCode) {
         PhoneNumber phonemuber = parseToPhoneNumber(data, regionCode);
         if (phonemuber == null) {
             return StringUtils.EMPTY;
         }
-        return phoneUtil.format(phonemuber, PhoneNumberFormat.RFC3966);
+        return GOOGLE_PHONE_UTIL.format(phonemuber, PhoneNumberFormat.RFC3966);
     }
 
     /**
@@ -171,8 +167,8 @@ public class PhoneNumberHandlerBase {
      * 
      * @return
      */
-    public Set<String> getSupportedRegions() {
-        return phoneUtil.getSupportedRegions();
+    public static Set<String> getSupportedRegions() {
+        return GOOGLE_PHONE_UTIL.getSupportedRegions();
     }
 
     /**
@@ -182,8 +178,8 @@ public class PhoneNumberHandlerBase {
      * @param regionCode
      * @return
      */
-    public int getCountryCodeForRegion(String regionCode) {
-        return phoneUtil.getCountryCodeForRegion(regionCode);
+    public static int getCountryCodeForRegion(String regionCode) {
+        return GOOGLE_PHONE_UTIL.getCountryCodeForRegion(regionCode);
     }
 
     /**
@@ -194,10 +190,10 @@ public class PhoneNumberHandlerBase {
      * @param regionCode
      * @return
      */
-    public PhoneNumberTypeEnum getPhoneNumberType(Object data, String regionCode) {
+    public static PhoneNumberTypeEnum getPhoneNumberType(Object data, String regionCode) {
         PhoneNumber number = parseToPhoneNumber(data, regionCode);
         if (number != null) {
-            PhoneNumberType numberType = phoneUtil.getNumberType(number);
+            PhoneNumberType numberType = GOOGLE_PHONE_UTIL.getNumberType(number);
             switch (numberType) {
             case FIXED_LINE:
                 return PhoneNumberTypeEnum.FIXED_LINE;
@@ -236,7 +232,7 @@ public class PhoneNumberHandlerBase {
      * the country calling code. like as "+1 242-365-1234" or "+12423651234"
      * @return
      */
-    public boolean containsValidRegionCode(Object data) {
+    public static boolean containsValidRegionCode(Object data) {
         String regionCode = extractRegionCode(data);
         return regionCode != null && getSupportedRegions().contains(regionCode);
     }
@@ -249,10 +245,10 @@ public class PhoneNumberHandlerBase {
      * by the country calling code. like as "+1 242-365-1234" or "+12423651234"
      * @return
      */
-    public String extractRegionCode(Object phoneData) {
+    public static String extractRegionCode(Object phoneData) {
         PhoneNumber phoneNumber = parseToPhoneNumber(phoneData, null);
         if (phoneNumber != null) {
-            return phoneUtil.getRegionCodeForNumber(phoneNumber);
+            return GOOGLE_PHONE_UTIL.getRegionCodeForNumber(phoneNumber);
         }
         return StringUtils.EMPTY;
     }
@@ -265,7 +261,7 @@ public class PhoneNumberHandlerBase {
      * by the country calling code. like as "+1 242-365-1234" or "+12423651234"
      * @return
      */
-    public int extractCountrycode(Object phoneData) {
+    public static int extractCountrycode(Object phoneData) {
         PhoneNumber phoneNumber = parseToPhoneNumber(phoneData, null);
         if (phoneNumber != null) {
             return phoneNumber.getCountryCode();
@@ -285,12 +281,11 @@ public class PhoneNumberHandlerBase {
      * most commonly used
      * @return
      */
-    public String getGeocoderDescriptionForNumber(Object data, String regionCode, Locale languageCode) {
+    public static String getGeocoderDescriptionForNumber(Object data, String regionCode, Locale languageCode) {
         PhoneNumber number = parseToPhoneNumber(data, regionCode);
         if (number != null) {
             return PhoneNumberOfflineGeocoder.getInstance().getDescriptionForNumber(number, languageCode);
         }
-
         return StringUtils.EMPTY;
     }
 
@@ -306,13 +301,12 @@ public class PhoneNumberHandlerBase {
      * most commonly used
      * @return
      */
-    public String getCarrierNameForNumber(Object data, String regionCode, Locale languageCode) {
+    public static String getCarrierNameForNumber(Object data, String regionCode, Locale languageCode) {
         PhoneNumber number = parseToPhoneNumber(data, regionCode);
         if (number == null) {
             return StringUtils.EMPTY;
         }
         return PhoneNumberToCarrierMapper.getInstance().getNameForNumber(number, languageCode);
-
     }
 
     /**
@@ -325,7 +319,7 @@ public class PhoneNumberHandlerBase {
      * @param regionCode
      * @return
      */
-    public List<String> getTimeZonesForNumber(Object data, String regionCode) {
+    public static List<String> getTimeZonesForNumber(Object data, String regionCode) {
         PhoneNumber number = parseToPhoneNumber(data, regionCode);
         if (number == null) {
             List<String> UNKNOWN_TIME_ZONE_LIST = new ArrayList<String>(1);

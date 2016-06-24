@@ -18,7 +18,7 @@ import java.util.Locale;
 /**
  * As per {@link #PhoneNumberHandlerBase} ,but use the default region code and default Local language in this class.
  */
-public class PhoneNumberHandler extends PhoneNumberHandlerBase {
+public class PhoneNumberHandler {
 
     private String defaultRegion = Locale.getDefault().getCountry();
 
@@ -32,7 +32,7 @@ public class PhoneNumberHandler extends PhoneNumberHandlerBase {
      * @return
      */
     public boolean isValidPhoneNumber(Object data) {
-        return super.isValidPhoneNumber(data, defaultRegion);
+        return PhoneNumberHandlerBase.isValidPhoneNumber(data, defaultRegion);
     }
 
     /**
@@ -43,7 +43,7 @@ public class PhoneNumberHandler extends PhoneNumberHandlerBase {
      * @return
      */
     public boolean isPossiblePhoneNumber(Object data) {
-        return super.isPossiblePhoneNumber(data, defaultRegion);
+        return PhoneNumberHandlerBase.isPossiblePhoneNumber(data, defaultRegion);
 
     }
 
@@ -55,7 +55,7 @@ public class PhoneNumberHandler extends PhoneNumberHandlerBase {
      * @return
      */
     public String formatE164(Object data) {
-        return super.formatE164(data, defaultRegion);
+        return PhoneNumberHandlerBase.formatE164(data, defaultRegion);
     }
 
     /**
@@ -66,7 +66,7 @@ public class PhoneNumberHandler extends PhoneNumberHandlerBase {
      * @return return a formated number like as "+1 242-365-1234".
      */
     public String formatInternational(Object data) {
-        return super.formatInternational(data, defaultRegion);
+        return PhoneNumberHandlerBase.formatInternational(data, defaultRegion);
     }
 
     /**
@@ -77,7 +77,7 @@ public class PhoneNumberHandler extends PhoneNumberHandlerBase {
      * @return the formatted phone number like as "(242) 365-1234"
      */
     public String formatNational(Object data) {
-        return super.formatNational(data, defaultRegion);
+        return PhoneNumberHandlerBase.formatNational(data, defaultRegion);
     }
 
     /**
@@ -88,7 +88,7 @@ public class PhoneNumberHandler extends PhoneNumberHandlerBase {
      * @return the formatted phone number like as "tel:+1-242-365-1234"
      */
     public String formatRFC396(Object data) {
-        return super.formatRFC396(data, defaultRegion);
+        return PhoneNumberHandlerBase.formatRFC396(data, defaultRegion);
     }
 
     /**
@@ -99,7 +99,7 @@ public class PhoneNumberHandler extends PhoneNumberHandlerBase {
      * @return
      */
     public PhoneNumberTypeEnum getPhoneNumberType(Object data) {
-        return super.getPhoneNumberType(data, defaultRegion);
+        return PhoneNumberHandlerBase.getPhoneNumberType(data, defaultRegion);
     }
 
     /**
@@ -110,7 +110,7 @@ public class PhoneNumberHandler extends PhoneNumberHandlerBase {
      * @return
      */
     public List<String> getTimeZonesForNumber(Object data) {
-        return super.getTimeZonesForNumber(data, defaultRegion);
+        return PhoneNumberHandlerBase.getTimeZonesForNumber(data, defaultRegion);
     }
 
     /**
@@ -121,7 +121,7 @@ public class PhoneNumberHandler extends PhoneNumberHandlerBase {
      * @return
      */
     public String getGeocoderDescriptionForNumber(Object data) {
-        return super.getGeocoderDescriptionForNumber(data, defaultRegion, defaultLocale);
+        return PhoneNumberHandlerBase.getGeocoderDescriptionForNumber(data, defaultRegion, defaultLocale);
     }
 
     /**
@@ -132,7 +132,7 @@ public class PhoneNumberHandler extends PhoneNumberHandlerBase {
      * @return
      */
     public String getCarrierNameForNumber(Object data) {
-        return super.getCarrierNameForNumber(data, defaultRegion, defaultLocale);
+        return PhoneNumberHandlerBase.getCarrierNameForNumber(data, defaultRegion, defaultLocale);
     }
 
     public Locale getDefaultLocale() {
