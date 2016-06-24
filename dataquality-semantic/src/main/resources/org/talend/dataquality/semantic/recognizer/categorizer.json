@@ -268,28 +268,28 @@
         "name" : "EN Month",
         "validator" : { "patternString" : "^(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)$" }
       },
-      { "description" : "HDFS URI",
-        "id" : "HDFS_URI",
+      { "description" : "HDFS URL",
+        "id" : "HDFS_URL",
         "mainCategory" : "AlphaNumeric",
-        "name" : "HDFS_URI",
+        "name" : "HDFS_URL",
         "validator" : { "patternString" : "^(?:hdfs)\\:\\/\\/((?:[a-zA-Z0-9\\-\\._]+(?:\\.[a-zA-Z0-9\\-\\._]+)+)|localhost)\\/([a-zA-Z0-9\\-\\.\\/\\+\\&\\%\\$_\\\\]*)?([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\#\\~]*)$" }
       },
-      { "description" : "FILE URI",
-        "id" : "FILE_URI",
+      { "description" : "FILE URL",
+        "id" : "FILE_URL",
         "mainCategory" : "AlphaNumeric",
-        "name" : "FILE_URI",
+        "name" : "FILE_URL",
         "validator" : { "patternString" : "^(?:file)\\:(?:\\/){2,3}((?:[a-zA-Z0-9\\-\\._]+(?:[a-zA-Z0-9\\-\\.\\:\\|_]+)+)|localhost)\\/([a-zA-Z0-9\\-\\.\\/\\+\\&\\%\\$_\\|\\:]*)?$" }
       },
-      { "description" : "MAIL TO Uri",
-        "id" : "MAILTO_URI",
+      { "description" : "MAIL TO URL",
+        "id" : "MAILTO_URL",
         "mainCategory" : "AlphaNumeric",
-        "name" : "MAILTO_URI",
+        "name" : "MAILTO_URL",
         "validator" : { "patternString" : "^(?:mailto)\\:([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}(,)?)*((?:\\?)((subject|to|body|cc)=(([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})|([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\?\\:\\\"\\'\\,\\|\\~\\;#\\\\])*)+(\\&)?)*)*$" }
       },
-      { "description" : "DATA URI",
-        "id" : "DATA_URI",
+      { "description" : "DATA URL",
+        "id" : "DATA_URL",
         "mainCategory" : "AlphaNumeric",
-        "name" : "DATA_URI",
+        "name" : "DATA_URL",
         "validator" : { "patternString" : "^(?:data)\\:([a-z]+\\/[a-z]+)?(;charset=([\\w-])*)?(;base64)?,([\\w\\!\\$\\&\\'\\,\\(\\)\\*\\+\\,\\;\\=\\-\\.\\_\\~\\:\\@\\/\\?\\%\\s]+)$" }
       }
       
