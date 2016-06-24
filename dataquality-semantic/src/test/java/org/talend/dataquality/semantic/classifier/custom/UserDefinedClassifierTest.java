@@ -246,22 +246,25 @@ public class UserDefinedClassifierTest {
             put("132.2356", new String[] {}); //$NON-NLS-1$
             put("R&D", new String[] {}); //$NON-NLS-1$
 
-            put("hdfs://127.0.0.1/user/luis/sample.txt", new String[] {"HDFS_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            put("hdfs://toto.com/user/luis/sample.txt", new String[] {"HDFS_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            
-            put("file://localhost/c/WINDOWS/clock.avi", new String[] {"FILE_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            put("file://localhost/c|/WINDOWS/clock.avi", new String[] {"FILE_URI"}); //$NON-NLS-1$ //$NON-NLS-2$"
-            put("file://localhost/c:/WINDOWS/clock.avi", new String[] {"FILE_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            put("file:///C:/WORKSPACE/reports.html", new String[] {"FILE_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            
-            put("mailto:?to=&subject=mailto%20with%20examples&body=http://en.wikipedia.org/wiki/Mailto", new String[] {"MAILTO_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            put("mailto:someone@example.com?subject=This%20is%20the%20subject", new String[] {"MAILTO_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            put("mailto:p.dupond@example.com?subject=Sujet%20du%20courrier&cc=pierre@example.org&cc=jacques@example.net&body=Bonjour", new String[] {"MAILTO_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            
-            put("data:text/html;charset=US-ASCII,%3Ch1%3EHello!%3C%2Fh1%3E", new String[] {"DATA_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            put("data:text/html;charset=,%3Ch1%3EHello!%3C%2Fh1%3E", new String[] {"DATA_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            put("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD///+l2Z/dAAAA", new String[] {"DATA_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
-            put("data:,Hello World!", new String[] {"DATA_URI"}); //$NON-NLS-1$ //$NON-NLS-2$
+            put("hdfs://127.0.0.1/user/luis/sample.txt", new String[] { "HDFS_URI" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("hdfs://toto.com/user/luis/sample.txt", new String[] { "HDFS_URI" }); //$NON-NLS-1$ //$NON-NLS-2$
+
+            put("file://localhost/c/WINDOWS/clock.avi", new String[] { "FILE_URI" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("file://localhost/c|/WINDOWS/clock.avi", new String[] { "FILE_URI" }); //$NON-NLS-1$ //$NON-NLS-2$"
+            put("file://localhost/c:/WINDOWS/clock.avi", new String[] { "FILE_URI" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("file:///C:/WORKSPACE/reports.html", new String[] { "FILE_URI" }); //$NON-NLS-1$ //$NON-NLS-2$
+
+            put("mailto:?to=&subject=mailto%20with%20examples&body=http://en.wikipedia.org/wiki/Mailto", //$NON-NLS-1$
+                    new String[] { "MAILTO_URI" }); //$NON-NLS-1$
+            put("mailto:someone@example.com?subject=This%20is%20the%20subject", new String[] { "MAILTO_URI" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("mailto:p.dupond@example.com?subject=Sujet%20du%20courrier&cc=pierre@example.org&cc=jacques@example.net&body=Bonjour", //$NON-NLS-1$
+                    new String[] { "MAILTO_URI" }); //$NON-NLS-1$
+
+            put("data:text/html;charset=US-ASCII,%3Ch1%3EHello!%3C%2Fh1%3E", new String[] { "DATA_URI" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("data:text/html;charset=,%3Ch1%3EHello!%3C%2Fh1%3E", new String[] { "DATA_URI" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD///+l2Z/dAAAA", //$NON-NLS-1$
+                    new String[] { "DATA_URI" }); //$NON-NLS-1$
+            put("data:,Hello World!", new String[] { "DATA_URI" }); //$NON-NLS-1$ //$NON-NLS-2$
         }
     };
 
