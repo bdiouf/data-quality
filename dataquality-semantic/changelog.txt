@@ -1,4 +1,4 @@
-V1.5.1 (in developement)
+V1.5.1 2016-06-27
 	- TDQ-11437 fix the regex for FR_PHONE recognition
 	- TDQ-12055 correctly pick category in semantic discovery analysis
 	- TDQ-11962 add LAST_NAME index
@@ -8,6 +8,9 @@ V1.5.1 (in developement)
 	- TDQ-12047 optimize category suggestion by prioritizing with ordinal information
 	- TDQ-11678 optimize REGEX categorizer loading speed
 	- TDQ-12169 Fix for file leak issues in SemanticQualityAnalyzer
+	- TDQ-12222 improve regex pattern for EMAIL category
+	- TDQ-12244 add validators with google phone library for US, UK, FR and DE phone number
+	- TDQ-11569 add 4 URL schemes: file, hdfs, mailto, data
 
 V1.5.0 2016-05-10
 	- rename artifact ID to dataquality-semantic

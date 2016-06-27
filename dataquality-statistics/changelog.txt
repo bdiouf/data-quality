@@ -1,5 +1,15 @@
-V1.5.1 (in developement)
+V1.5.1 2016-06-27
 	- TDQ-12047 optimize category suggestion by prioritizing with ordinal information
+	- TDQ-11678 Improve analysis performance:
+	     * improve SemanticQualityAnalyzer performance by skipping validity calculation on categories of OPEN_INDEX type
+	     * remove NULL from the LAST_NAME dictionary
+	     * improve performance by using a LRU cache for category recognition results
+	- TDQ-12016 TDQ-12122 fix numeric column masking issue
+	- TDQ-11557 add more date time patterns
+	- TDQ-12016 be able to mask dates outside the top 15 date patterns
+	- TDQ-11557 support the default output format of java.util.Date
+	- TDQ-11557 fix datetime regex generation issue with slashes
+	- TDQ-11817 add space in bigdecimal notation
 
 V1.5.0 2016-05-10
 	- rename artifact ID to dataquality-statistics

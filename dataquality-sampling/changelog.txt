@@ -1,4 +1,4 @@
-V2.3.1 (in development) (with DQ library release 1.5.1)
+V2.3.1 2016-06-27 (with DQ library release 1.5.1)
     - TDQ-11437 fix FR_PHONE generation function of data masking
     - TDQ-11293 rename Function package to lowercase
     - TDQ-11437 avoid generating 0 as street number

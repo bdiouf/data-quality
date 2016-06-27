@@ -1,4 +1,4 @@
-V3.2.1 (in developement) (with DQ library release 1.5.1)
+V3.2.1 2016-06-27 (with DQ library release 1.5.1)
 	(no change in this version)
 
 V3.2.0 2016-05-10
