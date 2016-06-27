@@ -44,10 +44,10 @@ public class UpdateComponentDefinition {
         private static final long serialVersionUID = 1L;
 
         {
-            put("org.talend.dataquality.common", "1.4.4");
-            put("org.talend.dataquality.record.linkage", "3.1.2");
-            put("org.talend.dataquality.sampling", "2.3.1");
-            put("org.talend.dataquality.standardization", "3.1.0");
+            put("org.talend.dataquality.common", "1.5.2");
+            put("org.talend.dataquality.record.linkage", "3.2.2");
+            put("org.talend.dataquality.sampling", "2.3.2");
+            put("org.talend.dataquality.standardization", "3.2.2");
         }
     };
 
