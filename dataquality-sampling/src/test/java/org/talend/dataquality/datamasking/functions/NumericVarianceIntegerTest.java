@@ -64,23 +64,23 @@ public class NumericVarianceIntegerTest {
         // over flow case for -237*99999999
         nvi.parse("3000", false, new RandomWrapper(42));
         output = nvi.generateMaskedRow(99999999).toString();
-        assertEquals(-237, nvi.rate);
+        assertEquals(-1870, nvi.rate);
         assertEquals(String.valueOf(79000000), output);
         // over flow case for 1248*99999999
         nvi.parse("30000", false, new RandomWrapper(42));
         output = nvi.generateMaskedRow(99999999).toString();
-        assertEquals(1248, nvi.rate);
+        assertEquals(1130, nvi.rate);
         assertEquals(String.valueOf(120999998), output);
         // over flow case for 18884*-99999999
         nvi.parse("30000", false, new RandomWrapper(42));
         output = nvi.generateMaskedRow(-99999999).toString();
-        assertEquals(18884, nvi.rate);
+        assertEquals(1130, nvi.rate);
         assertEquals(String.valueOf(-120999998), output);
         // over flow case for -2030*-99999999
         nvi.parse("-4000", false, new RandomWrapper(42));
         output = nvi.generateMaskedRow(-99999999).toString();
-        assertEquals(-2030, nvi.rate);
-        assertEquals(String.valueOf(-79000000), output);
+        assertEquals(3130, nvi.rate);
+        assertEquals(String.valueOf(-120999998), output);
     }
 
     /**

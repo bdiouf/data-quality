@@ -26,7 +26,7 @@ public abstract class GenerateFromFile<T> extends Function<T> {
     private static final long serialVersionUID = 1556057898878709265L;
 
     protected List<T> genericTokens = new ArrayList<T>();
-    
+
     @Override
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
