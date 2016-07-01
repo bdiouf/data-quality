@@ -364,7 +364,7 @@ public class UserDefinedClassifierTest {
 			while ((line = reader.readLine()) != null) {
 				int length = line.trim().length();
 			    if(!line.startsWith("#") && length > 0) { //the comments don't count
-			    	assertTrue(length <= MAX_TLD_LENGTH);
+			    	assertTrue("Expected MAX_LENGTH of web domain is " + String.valueOf(MAX_TLD_LENGTH), length <= MAX_TLD_LENGTH);
 			    }
 			}	
 		} catch (IOException e) {
