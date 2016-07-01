@@ -1,18 +1,18 @@
 Dictionary index
 ----------------------
 
-| ID | Index NAME    | Create Date   | Update Date | Source File |
+| ID | Index NAME    | Creation Date   | Last Update | Source File |
 |----|---------------|:-------------:|:-----------:|:-----------:|
 |1   |`ANIMAL`|Jul. 2015|Jul. 2015|animal_cleaned.csv|
 |2   |`AIRPORT_CODE`|Jul. 2015|Oct. 2015|airport-code-wiki.csv|
 |3   |`AIRPORT`|Jul. 2015|Dec. 2015|airport-name-wiki.csv|
 |4   |`BEVERAGE`|Oct. 2015|Oct. 2015|wordnet_beverages_yago2.csv|
-|5   |`CITY`|Jul. 2015|Oct. 2015|city_cleaned_without_pinyin.csv|
+|5   |`CITY`|Jul. 2015|Jun. 2016|city_cleaned_without_pinyin.csv|
 |6   |`CIVILITY`|Jul. 2015|Oct. 2015|civility_cleaned.csv|
-|7   |`COMPANY`|Oct. 2015|Oct. 2015|wordnet_companies_yago2.csv|
+|7   |`COMPANY`|Oct. 2015|Oct. 2015|wordnet_companies_yago2_optimized.csv|
 |8   |`CONTINENT`|Jul. 2015|Nov. 2015|continent_cleaned.csv|
 |9   |`CONTINENT_CODE`|Jul. 2015|Jul. 2015|continent_cleaned.csv|
-|10  |`COUNTRY`|Jul. 2015|Nov. 2015|country-codes.csv|
+|10  |`COUNTRY`|Jul. 2015|Jun. 2016|country-codes.csv|
 |11  |`COUNTRY_CODE_ISO2`|Jul. 2015|Jul. 2015|country-codes.csv|
 |12  |`COUNTRY_CODE_ISO3`|Jul. 2015|Jul. 2015|country-codes.csv|
 |13  |`CURRENCY_CODE`|Jul. 2015|Jul. 2015|country-codes.csv|
@@ -22,7 +22,7 @@ Dictionary index
 |17  |`HR_DEPARTMENT`|Jul. 2015|Jul. 2015|department_cleaned.csv|
 |18  |`INDUSTRY`|Oct. 2015|Oct. 2015|industry_GICS_simplified.csv|
 |19  |`INDUSTRY_GROUP`|Oct. 2015|Oct. 2015|industry_GICS_simplified.csv|
-|20  |`JOB_TITLE`|Jul. 2015|Jul. 2015|jobTitle_cleaned.csv|
+|20  |`JOB_TITLE`|Jul. 2015|Jun. 2016|jobTitle_cleaned.csv|
 |21  |`MONTH`|Jul. 2015|Oct. 2015|months_cleaned.csv|
 |22  |`MUSEUM`|Oct. 2015|Oct. 2015|wordnet_museums_yago2.csv|
 |23  |`ORGANIZATION`|Oct. 2015|Oct. 2015|wordnet_organizations_yago2.csv|
@@ -31,9 +31,9 @@ Dictionary index
 |26  |`MEASURE_UNIT`|Oct. 2015|Oct. 2015|unitOfMeasurement_cleaned.csv|
 |27  |`US_COUNTY`|Oct. 2015|Oct. 2015|us_counties.csv|
 |28  |`WEEKDAY`|Jul. 2015|Oct. 2015|days_cleaned.csv|
-|29  |`FR_COMMUNE`|Nov. 2015|Nov. 2015|comisimp2015.csv|
-|30  |`FR_DEPARTEMENT`|Nov. 2015|Nov. 2015|depts2015.csv|
-|31  |`FR_REGION`|Nov. 2015|Nov. 2015|reg2015.csv|
+|29  |`FR_COMMUNE`|Nov. 2015|Jun. 2016|fr_comisimp2015.csv|
+|30  |`FR_DEPARTEMENT`|Nov. 2015|Nov. 2015|fr_depts2015.csv|
+|31  |`FR_REGION`|Nov. 2015|Nov. 2015|fr_reg2015.csv|
 |32  |`LANGUAGE`|Nov. 2015|Nov. 2015|languages_code_name.csv|
 |33  |`LANGUAGE_CODE_ISO2`|Nov. 2015|Nov. 2015|languages_code_name.csv|
 |34  |`LANGUAGE_CODE_ISO3`|Nov. 2015|Nov. 2015|languages_code_name.csv|
@@ -41,7 +41,8 @@ Dictionary index
 |36  |`CA_PROVINCE_TERRITORY_CODE`|Nov. 2015|Nov. 2015|ca_province_territory.csv|
 |37  |`MX_ESTADO`|Nov. 2015|Nov. 2015|mx_estado.csv|
 |38  |`MX_ESTADO_CODE`|Nov. 2015|Nov. 2015|mx_estado.csv|
-|39  |`ANSWER`|Feb. 2016|Feb. 2016|N/A|
+|39  |`ANSWER`|Feb. 2016|Jun. 2016|N/A|
+|40  |`LAST_NAME`|Jun. 2016|Jun. 2016|lastname12k.csv|
 
 
 Keyword index
