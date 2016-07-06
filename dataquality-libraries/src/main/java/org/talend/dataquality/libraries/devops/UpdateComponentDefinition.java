@@ -24,7 +24,8 @@ import org.apache.commons.io.IOUtils;
 
 public class UpdateComponentDefinition {
 
-    private static final String GIT_REPO_ROOT = "/home/qzhao/talend_code_repo"; // the location of local git repo
+    // the location of local git repo, supposing the data-quality repo is cloned in the same folder of tdq-studio-ee
+    private static final String GIT_REPO_ROOT = "../..";
 
     private static final String TDQ_STUDIO_EE_ROOT = GIT_REPO_ROOT + "/tdq-studio-ee";
 
@@ -95,7 +96,7 @@ public class UpdateComponentDefinition {
 
         for (String provider : PROVIDERS) {
             String componentRootPath = TDQ_STUDIO_EE_ROOT + MAIN_PLUGINS_FOLDER + provider + COMPONENTS_FOLDER;
-
+            System.out.println(new File(componentRootPath).getAbsolutePath());
             File componentRoot = new File(componentRootPath);
             if (componentRoot.isDirectory()) {
                 File[] files = componentRoot.listFiles();
