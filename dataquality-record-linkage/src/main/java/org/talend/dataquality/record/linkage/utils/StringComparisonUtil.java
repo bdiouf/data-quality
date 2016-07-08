@@ -12,12 +12,16 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.utils;
 
+import java.io.Serializable;
+
 /**
  * @author scorreia
  * 
  * 
  */
-public final class StringComparisonUtil {
+public final class StringComparisonUtil implements Serializable {
+
+    private static final long serialVersionUID = 8786564034104314360L;
 
     /**
      * maximum prefix length to use.

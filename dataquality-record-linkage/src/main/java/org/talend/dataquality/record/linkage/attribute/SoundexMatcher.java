@@ -23,7 +23,7 @@ public class SoundexMatcher extends AbstractAttributeMatcher {
 
     private static final long serialVersionUID = 5208397253497469289L;
 
-    private final Soundex soundex = new Soundex();
+    private static final Soundex soundex = new Soundex();
 
     /**
      * soundex returns 4 when strings are similar.

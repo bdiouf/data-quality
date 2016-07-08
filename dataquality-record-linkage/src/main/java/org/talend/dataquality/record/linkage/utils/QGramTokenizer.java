@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,9 @@ import java.util.List;
  * 
  * A tokenizer which extracts the q-grams.
  */
-public class QGramTokenizer {
+public class QGramTokenizer implements Serializable {
+
+    private static final long serialVersionUID = -1099452033117058336L;
 
     private static final String TWO_CHARS = "##"; //$NON-NLS-1$
 

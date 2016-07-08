@@ -24,7 +24,7 @@ public class DoubleMetaphoneMatcher extends AbstractAttributeMatcher {
 
     private static final long serialVersionUID = 136740746713796676L;
 
-    private final DoubleMetaphone algorithm = new DoubleMetaphone();
+    private static final DoubleMetaphone algorithm = new DoubleMetaphone();
 
     /*
      * (non-Javadoc)
