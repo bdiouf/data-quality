@@ -21,6 +21,8 @@ import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
  */
 public class SoundexMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = 5208397253497469289L;
+
     private final Soundex soundex = new Soundex();
 
     /**

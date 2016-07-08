@@ -23,6 +23,8 @@ import org.talend.dataquality.record.linkage.utils.StringComparisonUtil;
  */
 public class SoundexFRMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = 8766998374223515281L;
+
     private final SoundexFR algorithm = new SoundexFR();
 
     /**

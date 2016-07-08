@@ -20,6 +20,8 @@ import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
  */
 public class ExactIgnoreCaseMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = 211871905383055923L;
+
     /*
      * (non-Javadoc)
      * 

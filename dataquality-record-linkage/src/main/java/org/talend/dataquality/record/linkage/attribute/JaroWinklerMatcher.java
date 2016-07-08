@@ -20,6 +20,8 @@ import org.talend.dataquality.record.linkage.utils.StringComparisonUtil;
  */
 public class JaroWinklerMatcher extends JaroMatcher {
 
+    private static final long serialVersionUID = -7506812158596592655L;
+
     /**
      * prefix adjustment scale.
      */

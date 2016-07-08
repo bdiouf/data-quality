@@ -22,6 +22,8 @@ import org.talend.windowkey.FingerprintKeyer;
  */
 public class FingerprintkeyMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = 1742388611163764334L;
+
     FingerprintKeyer keyer = new FingerprintKeyer();
 
     /*

@@ -12,12 +12,16 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.attribute;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.NotImplementedException;
 
 /**
  * Abstract matcher class for shared operations like blank string checking.
  */
-public abstract class AbstractAttributeMatcher implements IAttributeMatcher {
+public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Serializable {
+
+    private static final long serialVersionUID = -21096755142812677L;
 
     private NullOption nullOption = NullOption.nullMatchNull;
 
@@ -81,7 +85,7 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher {
     }
 
     private boolean isNullOrEmpty(String str) {
-        return str == null || "".equals(str); //$NON-NLS-1$ 
+        return str == null || "".equals(str); //$NON-NLS-1$
     }
 
     /**

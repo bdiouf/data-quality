@@ -20,6 +20,8 @@ import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
  */
 public class LevenshteinMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = -6555766042386408458L;
+
     /*
      * (non-Javadoc)
      * 

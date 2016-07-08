@@ -25,6 +25,8 @@ import org.talend.dataquality.record.linkage.utils.StringComparisonUtil;
  */
 public class MetaphoneMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = -4798688850696166056L;
+
     private final Metaphone algorithm = new Metaphone();
 
     /*

@@ -22,6 +22,8 @@ import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
  */
 public class HammingMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = 9059579472242450392L;
+
     /*
      * (non-Javadoc)
      * 

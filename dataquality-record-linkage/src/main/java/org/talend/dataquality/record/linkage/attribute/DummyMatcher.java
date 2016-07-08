@@ -22,6 +22,8 @@ import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
  */
 public class DummyMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = 2975823304104186028L;
+
     /*
      * (non-Javadoc)
      * 

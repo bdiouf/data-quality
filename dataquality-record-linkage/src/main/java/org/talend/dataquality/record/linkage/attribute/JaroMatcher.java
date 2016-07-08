@@ -20,6 +20,8 @@ import org.talend.dataquality.record.linkage.utils.StringComparisonUtil;
  */
 public class JaroMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = 3894610803291924363L;
+
     /*
      * (non-Javadoc)
      * 

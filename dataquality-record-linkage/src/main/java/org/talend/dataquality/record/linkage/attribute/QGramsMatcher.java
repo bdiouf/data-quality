@@ -27,6 +27,8 @@ import org.talend.dataquality.record.linkage.utils.QGramTokenizer;
 // This code has been inspired by SimMetrics.
 public class QGramsMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = 5526107192050192051L;
+
     private QGramTokenizer tokenizer = new QGramTokenizer();
 
     /**

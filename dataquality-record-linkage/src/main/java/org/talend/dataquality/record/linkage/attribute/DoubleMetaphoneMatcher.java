@@ -22,6 +22,8 @@ import org.talend.dataquality.record.linkage.utils.StringComparisonUtil;
  */
 public class DoubleMetaphoneMatcher extends AbstractAttributeMatcher {
 
+    private static final long serialVersionUID = 136740746713796676L;
+
     private final DoubleMetaphone algorithm = new DoubleMetaphone();
 
     /*
