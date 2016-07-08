@@ -191,22 +191,6 @@ public class ShuffleColumn {
             int subRowSize = subRow.size();
             if (subRowSize != 1) {
                 processShuffleTable(rowList, subRow, numColumn);
-                // int shift = numColumn.size() == 1 ? 0 : 1;
-                // List<Integer> replacements = calculateReplacementInteger(subRowSize, primeNumber);
-                // if (numColumn.size() == 1) {
-                // checkReplacementsList(replacements);
-                // }
-                // for (int group = 0; group < numColumn.size(); group++) {
-                //
-                // for (int row = 0; row < subRowSize; row++) {
-                // int replacement = replacements.get((row + shift * (group + 1)) % subRowSize);
-                //
-                // for (int column : numColumn.get(group)) {
-                // rowList.get(subRow.get(row).rIndex).set(column, subRow.get(replacement).rItems.get(column));
-                // }
-                // }
-                // }
-
             }
         }
     }

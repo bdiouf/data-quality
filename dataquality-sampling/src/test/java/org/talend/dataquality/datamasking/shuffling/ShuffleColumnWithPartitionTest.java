@@ -15,6 +15,8 @@ public class ShuffleColumnWithPartitionTest {
 
     private String file1000000 = "Shuffling_test_data_1000000.csv";
 
+    private String file = "/home/qzhao/talend_data_anony/TDQ-11904-shuffling/data/Shuffling_test_data_100000000.csv";
+
     private static List<String> group = new ArrayList<String>();
 
     private static List<List<String>> numColumn = new ArrayList<List<String>>();
@@ -63,6 +65,7 @@ public class ShuffleColumnWithPartitionTest {
      * </li>
      * 
      * </ul>
+     * (otyiuo *
      * 
      * @throws InterruptedException
      */
@@ -72,16 +75,12 @@ public class ShuffleColumnWithPartitionTest {
         List<List<Object>> fileData = generator.getTableValue(file1000000);
         int partition = 100000;
         Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
-
         ShufflingService service = new ShufflingService(numColumn, allColumns, group);
-
         ShufflingHandler handler = new ShufflingHandler(service, result);
         service.setShufflingHandler(handler);
         service.setSeperationSize(partition);
-
         long time1 = System.currentTimeMillis();
         service.setRows(fileData);
-        Thread.sleep(2000);
         long time2 = System.currentTimeMillis();
         service.setHasFinished(true);
         System.out.println("one million line generation time " + (time2 - time1));
@@ -122,7 +121,6 @@ public class ShuffleColumnWithPartitionTest {
                 citisS.add(subRows.get(row).get(6).toString());
                 statesS.add(subRows.get(row).get(7).toString());
             }
-            Thread.sleep(1000);
 
             for (int row = 0; row < subRows.size(); row++) {
                 if (row % 50000 == 0)
@@ -154,7 +152,6 @@ public class ShuffleColumnWithPartitionTest {
                 String emailO = emailsO.get(row);
                 Assert.assertTrue(ids != idO || !emailS.equals(emailO));
             }
-
         }
     }
 

@@ -18,6 +18,10 @@ public class ShufflingHandler {
 
     protected Queue<List<List<Object>>> resultQueue;
 
+    protected boolean hasExecuted = false;
+
+    protected Thread t = null;
+
     public ShufflingHandler(ShufflingService shufflingService, Queue<List<List<Object>>> resultQueue) {
         super();
         this.shufflingService = shufflingService;
@@ -31,7 +35,6 @@ public class ShufflingHandler {
             try {
                 ConcurrentLinkedQueue<Future<List<List<Object>>>> queue = shufflingService.getConcurrentQueue();
                 while (!shufflingService.hasFinished() || !queue.isEmpty()) {
-                    // System.out.println(">>>> run in handler " + shufflingService.hasFinished() + " " + queue.size());
                     if (queue.isEmpty()) {
                         Thread.sleep(100);
                         continue;
@@ -39,7 +42,6 @@ public class ShufflingHandler {
                     Future<List<List<Object>>> future = queue.poll();
                     List<List<Object>> rows = future.get();
                     resultQueue.add(rows);
-
                 }
             } catch (InterruptedException e) {
                 shufflingService.shutDown();
@@ -55,8 +57,16 @@ public class ShufflingHandler {
         if (runnable == null) {
             runnable = new AsynchronizedOutputRunnable();
         }
-        Thread t = new Thread(runnable);
+        t = new Thread(runnable);
         t.start();
+    }
+
+    public void join() {
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 

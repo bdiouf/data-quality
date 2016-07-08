@@ -69,7 +69,6 @@ public class ShufflingService {
      */
     protected synchronized void execute(List<Object> row) {
         launcheHandler();
-
         if (hasSubmitted) {
             if (!rows.isEmpty()) {
                 executeFutureCall();
@@ -159,12 +158,8 @@ public class ShufflingService {
     public void setHasFinished(boolean hasFinished) {
         this.hasSubmitted = hasFinished;
         execute(null);
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         this.hasFinished = hasFinished;
+        shufflingHandler.join();
     }
 
     /**
@@ -185,6 +180,7 @@ public class ShufflingService {
         for (List<Object> row : rows) {
             execute(row);
         }
+
     }
 
     /**
