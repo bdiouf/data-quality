@@ -13,6 +13,10 @@
 package org.talend.dataquality.datamasking.functions;
 
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * created by jgonzalez on 24 juin 2015. This class holds all the functions required by GenerateAccountNumberFormat and
@@ -25,6 +29,59 @@ public abstract class GenerateAccountNumber extends Function<String> {
 
     private static final BigInteger MOD97 = new BigInteger("97"); //$NON-NLS-1$
 
+    private static final Map<Integer, Country> decryptionCode = new HashMap<Integer, Country>();
+    {
+        decryptionCode.put(15, Country.CODE_15);
+        decryptionCode.put(18, Country.CODE_18);
+        decryptionCode.put(19, Country.CODE_19);
+        decryptionCode.put(20, Country.CODE_20);
+        decryptionCode.put(21, Country.CODE_21);
+        decryptionCode.put(22, Country.CODE_22);
+        decryptionCode.put(23, Country.CODE_23);
+        decryptionCode.put(24, Country.CODE_24);
+        decryptionCode.put(25, Country.CODE_25);
+        decryptionCode.put(26, Country.CODE_26);
+        decryptionCode.put(27, Country.CODE_27);
+        decryptionCode.put(28, Country.CODE_28);
+        decryptionCode.put(29, Country.CODE_29);
+        decryptionCode.put(30, Country.CODE_30);
+        decryptionCode.put(31, Country.CODE_31);
+    }
+
+    enum Country {
+        CODE_15(Arrays.asList("NO")),
+        CODE_16(Arrays.asList("BE", "BI")),
+        CODE_18(Arrays.asList("DK", "FO", "FI", "GL", "NL")),
+        CODE_19(Arrays.asList("MK", "SI")),
+        CODE_20(Arrays.asList("AT", "BA", "EE", "KZ", "XK", "LT", "LU")),
+        CODE_21(Arrays.asList("CR", "HR", "LV", "LI", "CH")),
+        CODE_22(Arrays.asList("BH", "BG", "GE", "DE", "IE", "ME", "RS", "GB")),
+        CODE_23(Arrays.asList("GI", "IL", "AE")),
+        CODE_24(Arrays.asList("AD", "CZ", "MD", "PK", "RO", "SA", "SK", "ES", "SE", "DZ")),
+        CODE_25(Arrays.asList("PT", "AO", "CV", "MZ")),
+        CODE_26(Arrays.asList("IS", "TR", "IR")),
+        CODE_27(Arrays.asList("FR", "GR", "IT", "MR", "MC", "SM", "CM", "MG", "BF")),
+        CODE_28(Arrays.asList("AL", "AZ", "CY", "DO", "GT", "HU", "LB", "PL", "BJ", "CI", "ML", "SN")),
+        CODE_29(Arrays.asList("BR", "PS", "QA", "UA")),
+        CODE_30(Arrays.asList("JO", "KW", "MU")),
+        CODE_31(Arrays.asList("MT"));
+
+        private final List<String> countries;
+
+        Country(List<String> list) {
+            this.countries = list;
+        }
+
+        List<String> getCountries() {
+            return countries;
+        }
+
+        boolean containCountryCode(String country) {
+            return getCountries().contains(country);
+        }
+
+    }
+
     /**
      * This functions checks if the account number (ie, FR043568953359583693) is correct according to its size and
      * country.
@@ -33,59 +90,12 @@ public abstract class GenerateAccountNumber extends Function<String> {
      * @return A boolean holding if the account number is correct or not.
      */
     private static boolean sizeOk(String accountNumber) {
-        int length = accountNumber.length();
-        String country = accountNumber.substring(0, 2);
-
-        switch (length) {
-        case 15:
-            return (country.equals("NO")); //$NON-NLS-1$
-        case 16:
-            return (country.equals("BE") || country.equals("BI")); //$NON-NLS-1$ //$NON-NLS-2$
-        case 18:
-            return (country.equals("DK") || country.equals("FO") || country.equals("FI") || country.equals("GL") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                    || country.equals("NL")); //$NON-NLS-1$
-        case 19:
-            return (country.equals("MK") || country.equals("SI")); //$NON-NLS-1$ //$NON-NLS-2$
-        case 20:
-            return (country.equals("AT") || country.equals("BA") || country.equals("EE") || country.equals("KZ") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                    || country.equals("XK") || country.equals("LT") //$NON-NLS-1$ //$NON-NLS-2$
-                    || country.equals("LU")); //$NON-NLS-1$
-        case 21:
-            return (country.equals("CR") || country.equals("HR") || country.equals("LV") || country.equals("LI") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                    || country.equals("CH")); //$NON-NLS-1$
-        case 22:
-            return (country.equals("BH") || country.equals("BG") || country.equals("GE") || country.equals("DE") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                    || country.equals("IE") || country.equals("ME") //$NON-NLS-1$ //$NON-NLS-2$
-                    || country.equals("RS") || country.equals("GB")); //$NON-NLS-1$ //$NON-NLS-2$
-        case 23:
-            return (country.equals("GI") || country.equals("IL") || country.equals("AE")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        case 24:
-            return (country.equals("AD") || country.equals("CZ") || country.equals("CZ") || country.equals("MD") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                    || country.equals("PK") || country.equals("RO") //$NON-NLS-1$ //$NON-NLS-2$
-                    || country.equals("SA") || country.equals("SK") || country.equals("ES") || country.equals("SE") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                    || country.equals("TN") || country.equals("VG") //$NON-NLS-1$ //$NON-NLS-2$
-                    || country.equals("DZ")); //$NON-NLS-1$
-        case 25:
-            return (country.equals("PT") || country.equals("AO") || country.equals("CV") || country.equals("MZ")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        case 26:
-            return (country.equals("IS") || country.equals("TR") || country.equals("IR")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        case 27:
-            return (country.equals("FR") || country.equals("GR") || country.equals("IT") || country.equals("MR") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                    || country.equals("MC") || country.equals("SM") //$NON-NLS-1$ //$NON-NLS-2$
-                    || country.equals("CM") || country.equals("MG") || country.equals("BF")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        case 28:
-            return (country.equals("AL") || country.equals("AZ") || country.equals("CY") || country.equals("DO") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                    || country.equals("GT") || country.equals("HU") //$NON-NLS-1$ //$NON-NLS-2$
-                    || country.equals("LB") || country.equals("PL") || country.equals("BJ") || country.equals("CI") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                    || country.equals("ML") || country.equals("SN")); //$NON-NLS-1$ //$NON-NLS-2$
-        case 29:
-            return (country.equals("BR") || country.equals("PS") || country.equals("QA") || country.equals("UA")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        case 30:
-            return (country.equals("JO") || country.equals("KW") || country.equals("MU")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        case 31:
-            return (country.equals("MT")); //$NON-NLS-1$
-        }
-        return false;
+        String str = accountNumber.substring(0, 2);
+        Country code = decryptionCode.get(accountNumber.length());
+        if (code == null)
+            return false;
+        else
+            return code.containCountryCode(str);
     }
 
     /**

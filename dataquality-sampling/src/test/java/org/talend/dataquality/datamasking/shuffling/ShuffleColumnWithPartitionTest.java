@@ -15,8 +15,6 @@ public class ShuffleColumnWithPartitionTest {
 
     private String file1000000 = "Shuffling_test_data_1000000.csv";
 
-    private String file = "/home/qzhao/talend_data_anony/TDQ-11904-shuffling/data/Shuffling_test_data_100000000.csv";
-
     private static List<String> group = new ArrayList<String>();
 
     private static List<List<String>> numColumn = new ArrayList<List<String>>();
@@ -37,6 +35,24 @@ public class ShuffleColumnWithPartitionTest {
         numColumn.add(column1);
         numColumn.add(column2);
 
+    }
+
+    @Test
+    public void testPartitionOneMillionPartitionGood() throws InterruptedException {
+        List<List<Object>> fileData = generator.getTableValue(file1000000);
+        int partition = 20000;
+        Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
+        ShufflingService service = new ShufflingService(numColumn, allColumns, group);
+        ShufflingHandler handler = new ShufflingHandler(service, result);
+        service.setShufflingHandler(handler);
+        service.setSeperationSize(partition);
+        long time1 = System.currentTimeMillis();
+        service.setRows(fileData);
+        long time2 = System.currentTimeMillis();
+        service.setHasFinished(true);
+        System.out.println("one million line generation time " + (time2 - time1));
+
+        Assert.assertEquals(fileData.size() / partition, result.size());
     }
 
     /**
@@ -73,7 +89,7 @@ public class ShuffleColumnWithPartitionTest {
     @Ignore
     public void testPartitionOneMillion() throws InterruptedException {
         List<List<Object>> fileData = generator.getTableValue(file1000000);
-        int partition = 100000;
+        int partition = 20000;
         Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
         ShufflingService service = new ShufflingService(numColumn, allColumns, group);
         ShufflingHandler handler = new ShufflingHandler(service, result);

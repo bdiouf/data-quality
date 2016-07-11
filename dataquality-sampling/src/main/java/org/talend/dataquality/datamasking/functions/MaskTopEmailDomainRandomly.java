@@ -40,12 +40,12 @@ public class MaskTopEmailDomainRandomly extends MaskEmailDomain {
             return EMPTY_STRING;
         }
         if (isValidEmailAddress(str)) {
-            int splitAddress = str.indexOf('@');
-            int splitDomain = str.lastIndexOf('.');
+            final int splitAddress = str.indexOf('@');
+            final int splitDomain = str.lastIndexOf('.');
 
             if (replacements.size() == 1) {
                 if (replacements.get(0).isEmpty())
-                    return maskTopLevelDomainByX(str, splitAddress, splitDomain);
+                    return maskTopLevelDomainByX(str, splitAddress);
                 else
                     return maskTopLevelDomainRandomly(str, replacements.get(0), splitAddress, splitDomain);
             } else {

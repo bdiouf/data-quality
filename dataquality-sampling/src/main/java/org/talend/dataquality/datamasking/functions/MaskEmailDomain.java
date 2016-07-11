@@ -30,7 +30,7 @@ public abstract class MaskEmailDomain extends Function<String> {
 
     protected static final Pattern EMAIL_REGEX = Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w-]+\\.)+[\\w-]+[\\w-]$");
 
-    protected List<String> replacements = new ArrayList<String>();
+    protected final transient List<String> replacements = new ArrayList<String>();
 
     protected boolean maskByX = false;
 
@@ -55,10 +55,11 @@ public abstract class MaskEmailDomain extends Function<String> {
      */
     protected ArrayList<Integer> getPointPostions(String address, int count) {
         ArrayList<Integer> list = new ArrayList<Integer>();
+        int c = count;
         while (true) {
-            count = address.indexOf('.', count);
-            if (count > 0) {
-                list.add(count++);
+            c = address.indexOf('.', c);
+            if (c > 0) {
+                list.add(c++);
             } else {
                 break;
             }
@@ -101,15 +102,15 @@ public abstract class MaskEmailDomain extends Function<String> {
      * @param splitDomain
      * @return masked address
      */
-    protected String maskTopLevelDomainByX(String address, int splitAddress, int splitDomain) {
+    protected String maskTopLevelDomainByX(String address, int splitAddress) {
         StringBuilder sb = new StringBuilder(address);
 
         ArrayList<Integer> indexes = getPointPostions(address, splitAddress);
-
+        int seperation = splitAddress;
         for (Integer index : indexes) {
-            for (int i = splitAddress + 1; i < index; i++)
+            for (int i = seperation + 1; i < index; i++)
                 sb.setCharAt(i, 'X');
-            splitAddress = index;
+            seperation = index;
         }
         return sb.toString();
     }
@@ -148,23 +149,22 @@ public abstract class MaskEmailDomain extends Function<String> {
         StringBuilder sb = new StringBuilder(str);
         ArrayList<Integer> pointsPosition = getPointPostions(str, count);
         pointsPosition.add(str.length());
-
         Character maskingCrct = getMaskingCharacter();
+        int c = count;
 
         for (Integer position : pointsPosition) {
-            for (int i = count + 1; i < position; i++) {
+            for (int i = c + 1; i < position; i++) {
                 sb.setCharAt(i, maskingCrct);
             }
-            count = position;
+            c = position;
         }
         return sb.toString();
     }
 
     private Character getMaskingCharacter() {
         String replacement = (replacements.size() == 1) ? replacements.get(0) : null;
-        Character maskingCrct = (replacement != null && replacement.length() == 1 && Character.isLetter(replacement.charAt(0)))
+        return (replacement != null && replacement.length() == 1 && Character.isLetter(replacement.charAt(0)))
                 ? replacement.charAt(0) : 'X';
-        return maskingCrct;
     }
 
     /**

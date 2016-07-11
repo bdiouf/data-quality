@@ -45,7 +45,7 @@ public class MaskFullEmailDomainRandomly extends MaskEmailDomain {
 
         if (isValidEmailAddress(str)) {
             rnd = new RandomWrapper();
-            int splitAddress = str.indexOf('@');
+            final int splitAddress = str.indexOf('@');
             int domainIndex = 0;
             if (replacements.size() == 1) {
                 if (replacements.get(0).isEmpty())

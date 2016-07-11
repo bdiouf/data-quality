@@ -47,7 +47,7 @@ public class MaskFullEmailDomainByX extends MaskEmailDomain {
         }
 
         if (isValidEmailAddress(str)) {
-            int count = str.indexOf('@');
+            final int count = str.indexOf('@');
             return maskFullDomainByX(str, count);
         }
 

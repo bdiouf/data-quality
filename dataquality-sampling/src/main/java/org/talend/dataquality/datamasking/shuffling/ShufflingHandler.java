@@ -6,19 +6,21 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.apache.log4j.Logger;
+
 /**
  * This class is a handler of {@link ShuffleColumn} who has an internal class implemented runnable to call the shuffle
  * method in the {@link ShuffledColumn} DOC qzhao class global comment.
  */
 public class ShufflingHandler {
 
+    private final static Logger logger = Logger.getLogger(ShufflingHandler.class);
+
     protected ShufflingService shufflingService;
 
     protected AsynchronizedOutputRunnable runnable = null;
 
     protected Queue<List<List<Object>>> resultQueue;
-
-    protected boolean hasExecuted = false;
 
     protected Thread t = null;
 
@@ -44,8 +46,10 @@ public class ShufflingHandler {
                     resultQueue.add(rows);
                 }
             } catch (InterruptedException e) {
+                logger.error(e.getMessage(), e);
                 shufflingService.shutDown();
             } catch (ExecutionException e) {
+                logger.error(e.getMessage(), e);
                 shufflingService.shutDown();
             }
 

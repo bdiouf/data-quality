@@ -9,11 +9,11 @@ import org.talend.dataquality.duplicating.RandomWrapper;
 /**
  * The class ShuffleColumn defines the basic common methods used in the "shuffling" functions. As with shuffling, this
  * technique is effective only on a large data set.<br>
- * DOC qzhao class global comment. Detailled comment
+ * DOC qzhao class global comment.
  */
 public class ShuffleColumn {
 
-    protected static final int[] PRIME_NUMBERS = { 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
+    private static final int[] PRIME_NUMBERS = { 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
             97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223,
             227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353,
             359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491,
@@ -37,13 +37,12 @@ public class ShuffleColumn {
      * @param allInputColumns the list of all input columns name
      * @throws IllegalArgumentException when the some columns in the shuffledColumns do not exist in the allInputColumns
      */
-    public ShuffleColumn(List<List<String>> shuffledColumns, List<String> allInputColumns) throws IllegalArgumentException {
+    public ShuffleColumn(List<List<String>> shuffledColumns, List<String> allInputColumns) {
         this.allInputColumns = allInputColumns;
         this.numColumns = getNumColumn(shuffledColumns);
     }
 
-    public ShuffleColumn(List<List<String>> shuffledColumns, List<String> allInputColumns, List<String> partitionColumns)
-            throws IllegalArgumentException {
+    public ShuffleColumn(List<List<String>> shuffledColumns, List<String> allInputColumns, List<String> partitionColumns) {
         this.allInputColumns = allInputColumns;
         this.numColumns = getNumColumn(shuffledColumns);
         this.partitionColumns = partitionColumns == null ? null : getPartitionIndex(partitionColumns);
@@ -126,7 +125,6 @@ public class ShuffleColumn {
                     int replacement = replacements.get(replacementIndex) % rows.size();
 
                     for (int column : numColumn.get(group)) {
-                        // rowList.get(row).set(column, rows.get(replacement).rItems.get(column));
                         rowList.get(rows.get(row).rIndex).set(column, rows.get(replacement).rItems.get(column));
                     }
                 }
@@ -184,8 +182,6 @@ public class ShuffleColumn {
         List<Row> rows = generateRows(rowList, partition);
         Collections.sort(rows);
         List<List<Row>> subRows = seperateRowsByGroup(rows);
-
-        // int primeNumber = gerPrimeNumber();
 
         for (List<Row> subRow : subRows) {
             int subRowSize = subRow.size();
@@ -334,6 +330,17 @@ public class ShuffleColumn {
         }
 
         @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + getOuterType().hashCode();
+            result = prime * result + ((rGroup == null) ? 0 : rGroup.hashCode());
+            result = prime * result + rIndex;
+            result = prime * result + ((rItems == null) ? 0 : rItems.hashCode());
+            return result;
+        }
+
+        @Override
         public boolean equals(Object o) {
             if (!(o instanceof Row)) {
                 return false;
@@ -348,7 +355,6 @@ public class ShuffleColumn {
                     equal = false;
                 }
             }
-
             return equal;
         }
 
@@ -368,6 +374,10 @@ public class ShuffleColumn {
 
         Object getItem(int index) {
             return rItems.get(index);
+        }
+
+        private ShuffleColumn getOuterType() {
+            return ShuffleColumn.this;
         }
 
     }

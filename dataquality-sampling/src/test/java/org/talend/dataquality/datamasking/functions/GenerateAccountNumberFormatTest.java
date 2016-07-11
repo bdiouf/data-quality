@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.GenerateAccountNumberFormat;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -36,6 +35,12 @@ public class GenerateAccountNumberFormatTest {
 
     @Test
     public void testGood() {
+        output = ganf.generateMaskedRow("NO1234567891234"); //$NON-NLS-1$
+        assertEquals(output, "NO72 0384 0558 932"); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testGood1() {
         output = ganf.generateMaskedRow("DK0125634987589632"); //$NON-NLS-1$
         assertEquals(output, "DK49 0384 0558 9322 62"); //$NON-NLS-1$
     }

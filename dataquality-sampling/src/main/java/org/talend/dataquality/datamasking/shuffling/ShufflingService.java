@@ -39,12 +39,11 @@ public class ShufflingService {
      * @param allInputColumns the list of all input columns name
      * @throws IllegalArgumentException when the some columns in the shuffledColumns do not exist in the allInputColumns
      */
-    public ShufflingService(List<List<String>> shuffledColumns, List<String> allInputColumns) throws IllegalArgumentException {
+    public ShufflingService(List<List<String>> shuffledColumns, List<String> allInputColumns) {
         this.shuffleColumn = new ShuffleColumn(shuffledColumns, allInputColumns);
     }
 
-    public ShufflingService(List<List<String>> shuffledColumns, List<String> allInputColumns, List<String> partitionColumns)
-            throws IllegalArgumentException {
+    public ShufflingService(List<List<String>> shuffledColumns, List<String> allInputColumns, List<String> partitionColumns) {
         this.shuffleColumn = new ShuffleColumn(shuffledColumns, allInputColumns, partitionColumns);
     }
 
@@ -187,21 +186,14 @@ public class ShufflingService {
      * Shuts down the shuffling execution
      */
     public void shutDown() {
-        System.out.println("-------- Shuffling service shutdown");
         if (executor != null) {
             try {
                 executor.shutdown();
-                // wait until all the address object in the linked queue are handled.
-                while (concurrentQueue.size() > 0) {
+                while (!concurrentQueue.isEmpty()) {
                     Thread.sleep(2000);
                 }
-                // Blocks until all tasks have completed execution after a shutdown request, or the timeout occurs, or
-                // the
-                // current thread is interrupted, whichever happens first.
                 executor.awaitTermination(5, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
         }
 
