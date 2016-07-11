@@ -39,6 +39,13 @@ public class BetweenIndexesKeepTest {
     }
 
     @Test
+    public void testGood2() {
+        bik.parse("1, 2", false, new RandomWrapper(42));
+        output = bik.generateMaskedRow(input);
+        assertEquals("St", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testWrongParameter() {
         try {
             bik.parse("0, 8", false, new RandomWrapper(42));

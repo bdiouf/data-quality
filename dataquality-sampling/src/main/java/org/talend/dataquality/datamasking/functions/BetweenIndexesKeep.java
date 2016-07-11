@@ -32,7 +32,7 @@ public class BetweenIndexesKeep extends BetweenIndexes {
         String tAux = super.doGenerateMaskedField(str);
         if (tAux == EMPTY_STRING)
             return EMPTY_STRING;
-        beginIndex = Integer.parseInt(parameters[1]) - 1;
+        beginIndex = Integer.parseInt(parameters[1]) - endIndex;
         endIndex = Integer.MAX_VALUE;
         return super.doGenerateMaskedField(tAux);
     }
