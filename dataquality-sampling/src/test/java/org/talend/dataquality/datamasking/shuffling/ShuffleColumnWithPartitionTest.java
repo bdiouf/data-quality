@@ -8,12 +8,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ShuffleColumnWithPartitionTest {
 
-    private String file1000000 = "Shuffling_test_data_1000000.csv";
+    private String file1000 = "Shuffling_test_data_1000.csv";
 
     private static List<String> group = new ArrayList<String>();
 
@@ -35,24 +34,6 @@ public class ShuffleColumnWithPartitionTest {
         numColumn.add(column1);
         numColumn.add(column2);
 
-    }
-
-    @Test
-    public void testPartitionOneMillionPartitionGood() throws InterruptedException {
-        List<List<Object>> fileData = generator.getTableValue(file1000000);
-        int partition = 20000;
-        Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
-        ShufflingService service = new ShufflingService(numColumn, allColumns, group);
-        ShufflingHandler handler = new ShufflingHandler(service, result);
-        service.setShufflingHandler(handler);
-        service.setSeperationSize(partition);
-        long time1 = System.currentTimeMillis();
-        service.setRows(fileData);
-        long time2 = System.currentTimeMillis();
-        service.setHasFinished(true);
-        System.out.println("one million line generation time " + (time2 - time1));
-
-        Assert.assertEquals(fileData.size() / partition, result.size());
     }
 
     /**
@@ -86,9 +67,8 @@ public class ShuffleColumnWithPartitionTest {
      * @throws InterruptedException
      */
     @Test
-    @Ignore
-    public void testPartitionOneMillion() throws InterruptedException {
-        List<List<Object>> fileData = generator.getTableValue(file1000000);
+    public void testPartition1000() throws InterruptedException {
+        List<List<Object>> fileData = generator.getTableValue(file1000);
         int partition = 20000;
         Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
         ShufflingService service = new ShufflingService(numColumn, allColumns, group);
@@ -99,9 +79,9 @@ public class ShuffleColumnWithPartitionTest {
         service.setRows(fileData);
         long time2 = System.currentTimeMillis();
         service.setHasFinished(true);
-        System.out.println("one million line generation time " + (time2 - time1));
+        System.out.println("1000 line generation time " + (time2 - time1));
 
-        Assert.assertEquals(fileData.size() / partition, result.size());
+        Assert.assertEquals(1, result.size());
 
         for (int i = 0; i < fileData.size() / partition; i++) {
             List<String> emailsO = new ArrayList<String>();
@@ -139,8 +119,6 @@ public class ShuffleColumnWithPartitionTest {
             }
 
             for (int row = 0; row < subRows.size(); row++) {
-                if (row % 50000 == 0)
-                    System.out.println("i " + i + " row " + row);
                 // Partition runs well: email's original index is in the range of partition && Integration of data :
                 // email exists in the list
                 Assert.assertTrue(emailsO.contains(emailsS.get(row)));
