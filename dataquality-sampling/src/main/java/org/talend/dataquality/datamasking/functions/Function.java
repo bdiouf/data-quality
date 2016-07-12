@@ -46,6 +46,8 @@ public abstract class Function<T> implements Serializable {
 
     protected boolean keepInvalidPattern = false;
 
+    protected boolean keepFormat = false;
+
     protected static final Pattern patternSpace = Pattern.compile("\\s+");
 
     /**
@@ -77,6 +79,10 @@ public abstract class Function<T> implements Serializable {
      */
     public void setKeepNull(boolean keep) {
         this.keepNull = keep;
+    }
+
+    public void setKeepFormat(boolean keep) {
+        this.keepFormat = keep;
     }
 
     public void setKeepInvalidPattern(boolean keepInvalidPattern) {
@@ -125,17 +131,14 @@ public abstract class Function<T> implements Serializable {
      * @param strWithSpaces, resWithoutSpaces
      * @return the res with spaces
      */
-    protected String insertSpacesInString(String strWithSpaces, String resWithoutSpaces) {
+    protected String insertSpacesInString(String strWithSpaces, StringBuilder resWithoutSpaces) {
         if (strWithSpaces == null || resWithoutSpaces == null)
-            return resWithoutSpaces;
-        StringBuilder res = new StringBuilder();
+            return strWithSpaces;
         int j = 0;
         for (int i = 0; i < strWithSpaces.length(); i++)
             if (strWithSpaces.charAt(i) == ' ')
-                res.append(' ');
-            else
-                res.append(resWithoutSpaces.charAt(j++));
-        return res.toString();
+                resWithoutSpaces.insert(i, ' ');
+        return resWithoutSpaces.toString();
     }
 
     /**

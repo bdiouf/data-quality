@@ -22,9 +22,11 @@ public class GenerateAccountNumberSimple extends GenerateAccountNumber {
 
     @Override
     protected String doGenerateMaskedField(String str) {
-        String accountNumber = generateIban();
-        StringBuilder sb = new StringBuilder(accountNumber);
-        return sb.toString();
+        StringBuilder accountNumber = generateIban();
+        for (int i = 4; i < accountNumber.length(); i += 5) {
+            accountNumber.insert(i, ' ');
+        }
+        return accountNumber.toString();
     }
 
 }

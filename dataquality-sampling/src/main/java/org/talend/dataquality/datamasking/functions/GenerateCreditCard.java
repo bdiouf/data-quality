@@ -87,9 +87,8 @@ public abstract class GenerateCreditCard<T2> extends Function<T2> {
         return result;
     }
 
-    public String generateCreditCardFormat(CreditCardType cct, String valueIn, boolean keep) {
+    public StringBuilder generateCreditCardFormat(CreditCardType cct, String str) {
         StringBuilder res = new StringBuilder(""); //$NON-NLS-1$
-        String str = replaceSpacesInString(valueIn); // $NON-NLS-1$ //$NON-NLS-2$
         String prefix = ""; //$NON-NLS-1$
         if (cct == CreditCardType.VISA) {
             prefix = str.substring(0, 1);
@@ -108,16 +107,7 @@ public abstract class GenerateCreditCard<T2> extends Function<T2> {
                 break;
             }
         }
-
-        if (keep) {
-            for (int i = 0; i < valueIn.length(); ++i) {
-                if (valueIn.charAt(i) == ' ') {
-                    res.insert(i, ' ');
-                }
-            }
-        }
-
-        return res.toString();
+        return res;
     }
 
     /**

@@ -70,7 +70,8 @@ public class ValueDataMaskerTest {
             // 9 COMPANY
 
             // 10 CREDIT_CARD
-            put(new String[] { "5300 1232 8732 8318", MaskableCategoryEnum.US_CREDIT_CARD.name(), "String" }, "5332 5151 6550 0021");
+            put(new String[] { "5300 1232 8732 8318", MaskableCategoryEnum.US_CREDIT_CARD.name(), "String" },
+                    "5332 5151 6550 0021");
             put(new String[] { "5300123287328318", MaskableCategoryEnum.MASTERCARD.name(), "String" }, "5332515165500021");
             put(new String[] { "4300 1232 8732 8318", MaskableCategoryEnum.VISACARD.name(), "String" }, "4325 1516 5500 0249");
 
@@ -129,6 +130,7 @@ public class ValueDataMaskerTest {
 
             System.out.print("[" + semanticCategory + "]\n\t" + inputValue + " => ");
             final ValueDataMasker masker = new ValueDataMasker(semanticCategory, dataType);
+            masker.getFunction().setKeepFormat(true);
             masker.getFunction().setRandomWrapper(new Random(AllDataqualitySamplingTests.RANDOM_SEED));
             String maskedValue = masker.maskValue(inputValue);
             System.out.println(maskedValue);

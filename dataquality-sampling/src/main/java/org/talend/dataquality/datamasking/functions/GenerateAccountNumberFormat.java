@@ -23,19 +23,35 @@ public class GenerateAccountNumberFormat extends GenerateAccountNumber {
 
     @Override
     protected String doGenerateMaskedField(String str) {
-        boolean keepFormat = ("true").equals(parameters[0]); //$NON-NLS-1$
-        String accountNumberFormat = EMPTY_STRING;
-        if (str != null && str.length() > 9 && !EMPTY_STRING.equals(str)) {
+        String accountNumber = replaceSpacesInString(str); // $NON-NLS-1$ //$NON-NLS-2$
+        StringBuilder accountNumberFormat = new StringBuilder();
+        boolean isAmerican = false;
+        if (accountNumber != null && accountNumber.length() > 9 && !EMPTY_STRING.equals(accountNumber)) {
             try {
-                accountNumberFormat = generateIban(str, keepFormat);
+                if (Character.isDigit(accountNumber.charAt(0)) && isAmericanAccount(accountNumber)) {
+                    accountNumberFormat = generateAmericanAccountNumber();
+                    isAmerican = true;
+                } else {
+                    accountNumberFormat = generateIban(accountNumber);
+                }
+                if (keepFormat)
+                    return insertSpacesInString(str, accountNumberFormat);
             } catch (NumberFormatException e) {
                 accountNumberFormat = generateIban();
             }
         } else {
             accountNumberFormat = generateIban();
         }
-        return accountNumberFormat;
 
+        if (isAmerican) {
+            accountNumberFormat.insert(9, ' ');
+        } else {
+            for (int i = 4; i < accountNumberFormat.length(); i += 5) {
+                accountNumberFormat.insert(i, ' ');
+            }
+        }
+
+        return accountNumberFormat.toString();
     }
 
 }

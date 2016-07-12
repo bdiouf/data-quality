@@ -36,14 +36,14 @@ public class GenerateAccountNumberSimpleTest {
     @Test
     public void testGood() {
         output = gans.generateMaskedRow(Function.EMPTY_STRING);
-        assertEquals(output, "FR54 0384 0558 93A2 20ZR 3V86 K48"); //$NON-NLS-1$
+        assertEquals("FR54 0384 0558 93A2 20ZR 3V86 K48", output); //$NON-NLS-1$
     }
 
     @Test
     public void testNull() {
         gans.keepNull = true;
         output = gans.generateMaskedRow(null);
-        assertEquals(output, null);
+        assertEquals(null, output);
     }
 
 }

@@ -20,30 +20,30 @@ public class GenerateCreditCardFormatString extends GenerateCreditCardFormat<Str
 
     private static final long serialVersionUID = 3682663337119470753L;
 
-    protected boolean keepFormat = ("true").equals(parameters[0]); //$NON-NLS-1$
-
     @Override
     protected String doGenerateMaskedField(String str) {
-        String strWithoutSpaces = super.replaceSpacesInString(str);
+        String strWithoutSpaces = replaceSpacesInString(str);
         CreditCardType cct_format = null;
-        String res;
+        StringBuilder res = new StringBuilder();
         if (strWithoutSpaces == null || EMPTY_STRING.equals(strWithoutSpaces)) {
-            cct_format = super.chooseCreditCardType();
-            res = super.generateCreditCard(cct_format).toString();
+            cct_format = chooseCreditCardType();
+            res.append(generateCreditCard(cct_format));
         } else {
             try {
-                cct_format = super.getCreditCardType(Long.parseLong(replaceSpacesInString(strWithoutSpaces))); // $NON-NLS-1$
+                cct_format = getCreditCardType(Long.parseLong(strWithoutSpaces)); // $NON-NLS-1$
             } catch (NumberFormatException e) {
-                cct_format = super.chooseCreditCardType();
-                res = super.generateCreditCard(cct_format).toString();
+                cct_format = chooseCreditCardType();
             }
             if (cct_format != null) {
-                res = super.generateCreditCardFormat(cct_format, strWithoutSpaces, keepFormat);
+                res.append(generateCreditCardFormat(cct_format, strWithoutSpaces));
             } else {
-                cct_format = super.chooseCreditCardType();
-                res = super.generateCreditCard(cct_format).toString();
+                cct_format = chooseCreditCardType();
+                res.append(generateCreditCard(cct_format));
             }
         }
-        return super.insertSpacesInString(str, res);
+        if (keepFormat)
+            return insertSpacesInString(str, res);
+        else
+            return res.toString();
     }
 }

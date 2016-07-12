@@ -30,19 +30,38 @@ public class GenerateAccountNumberFormatTest {
 
     @Before
     public void setUp() throws Exception {
-        ganf.parse("true", true, null);
-        ganf.setRandomWrapper(new RandomWrapper(42));
+        ganf.setRandomWrapper(new RandomWrapper(4245));
     }
 
     @Test
     public void testGood() {
+        ganf.setKeepFormat(true);
         output = ganf.generateMaskedRow("DK49 038 4 0 5 5 8   93  22 62"); //$NON-NLS-1$
-        assertEquals("DK49 038 4 0 5 5 8   93  22 62", output); //$NON-NLS-1$
+        assertEquals("DK82 765 7 2 0 9 5   51  85 63", output); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testGood2() {
+        output = ganf.generateMaskedRow("DK49 038 4 0 5 5 8   93  22 62"); //$NON-NLS-1$
+        assertEquals("DK82 7657 2095 5185 63", output); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testAmericanNumber() {
+        output = ganf.generateMaskedRow("453 654 94 87"); //$NON-NLS-1$
+        assertEquals("765720955 1", output); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testAmericanNumber2() {
+        ganf.setKeepFormat(true);
+        output = ganf.generateMaskedRow("453 654 94 87"); //$NON-NLS-1$
+        assertEquals("765 720 95 51", output); //$NON-NLS-1$
     }
 
     @Test
     public void testBad() {
         output = ganf.generateMaskedRow("not an iban"); //$NON-NLS-1$
-        assertEquals("FR54 0384 0558 93A2 20ZR 3V86 K48", output); //$NON-NLS-1$
+        assertEquals("FR33 7657 2095 51R3 4XZP 6F4O 058", output); //$NON-NLS-1$
     }
 }

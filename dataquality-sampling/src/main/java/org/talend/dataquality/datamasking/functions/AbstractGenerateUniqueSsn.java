@@ -29,8 +29,8 @@ public abstract class AbstractGenerateUniqueSsn extends Function<String> {
     protected GenerateUniqueRandomPatterns ssnPattern;
 
     /**
-     * Used in some countries to check the SSN number.
-     * The initialization can be done in createFieldsListFromPattern method if necessary.
+     * Used in some countries to check the SSN number. The initialization can be done in createFieldsListFromPattern
+     * method if necessary.
      */
     protected int checkSumSize = 0;
 
@@ -70,7 +70,7 @@ public abstract class AbstractGenerateUniqueSsn extends Function<String> {
             else
                 return null;
         }
-        return super.insertSpacesInString(str, result.toString());
+        return insertSpacesInString(str, result);
     }
 
     /**

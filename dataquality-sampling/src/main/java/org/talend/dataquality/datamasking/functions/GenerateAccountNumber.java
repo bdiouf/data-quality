@@ -105,22 +105,13 @@ public abstract class GenerateAccountNumber extends Function<String> {
      * @return An american account number, the nine first digits belonging to the original input and the others randomly
      * generated.
      */
-    private String generateAmericanAccountNumber(String accountNumber, boolean keep) {
-        StringBuilder sb = new StringBuilder(replaceSpacesInString(accountNumber).substring(0, 9)); // $NON-NLS-1$
-                                                                                                    // //$NON-NLS-2$
+    protected StringBuilder generateAmericanAccountNumber() {
+        StringBuilder sb = new StringBuilder(); // $NON-NLS-1$ //
+                                                // //$NON-NLS-2$
         for (int i = 0; i < 10; ++i) {
             sb.append(String.valueOf(rnd.nextInt(10)));
         }
-        if (keep) {
-            for (int i = 0; i < accountNumber.length(); ++i) {
-                if (String.valueOf(" ").equals(accountNumber.charAt(i))) { //$NON-NLS-1$
-                    sb.insert(i, ' ');
-                }
-            }
-        } else {
-            sb.insert(9, ' ');
-        }
-        return sb.toString();
+        return sb;
     }
 
     /**
@@ -129,23 +120,24 @@ public abstract class GenerateAccountNumber extends Function<String> {
      * @param accountNumber The account number given in input.
      * @return A boolean holding if the account number is correct or not.
      */
-    private boolean isAmericanAccount(String accountNumber) {
-        String rtn = replaceSpacesInString(accountNumber).substring(0, 9); // $NON-NLS-1$ //$NON-NLS-2$
-
-        char[] rtn_chars = rtn.toCharArray();
-        for (char c : rtn_chars) {
-            if (!Character.isDigit(c)) {
+    protected boolean isAmericanAccount(String number) {
+        StringBuilder accountNumber = new StringBuilder(number);
+        for (int i = 0; i < 9; i++) {
+            if (!Character.isDigit(accountNumber.charAt(i))) {
                 return false;
             }
         }
 
         return ((3
-                * (Integer.parseInt(String.valueOf(rtn.charAt(0))) + Integer.parseInt(String.valueOf(rtn.charAt(3)))
-                        + Integer.parseInt(String.valueOf(rtn.charAt(6))))
-                + 7 * (Integer.parseInt(String.valueOf(rtn.charAt(1))) + Integer.parseInt(String.valueOf(rtn.charAt(4)))
-                        + Integer.parseInt(String.valueOf(rtn.charAt(7))))
-                + (Integer.parseInt(String.valueOf(rtn.charAt(2))) + Integer.parseInt(String.valueOf(rtn.charAt(5)))
-                        + Integer.parseInt(String.valueOf(rtn.charAt(8)))))
+                * (Integer.parseInt(String.valueOf(accountNumber.charAt(0)))
+                        + Integer.parseInt(String.valueOf(accountNumber.charAt(3)))
+                        + Integer.parseInt(String.valueOf(accountNumber.charAt(6))))
+                + 7 * (Integer.parseInt(String.valueOf(accountNumber.charAt(1)))
+                        + Integer.parseInt(String.valueOf(accountNumber.charAt(4)))
+                        + Integer.parseInt(String.valueOf(accountNumber.charAt(7))))
+                + (Integer.parseInt(String.valueOf(accountNumber.charAt(2)))
+                        + Integer.parseInt(String.valueOf(accountNumber.charAt(5)))
+                        + Integer.parseInt(String.valueOf(accountNumber.charAt(8)))))
                 % 10 == 0);
     }
 
@@ -158,22 +150,15 @@ public abstract class GenerateAccountNumber extends Function<String> {
      * @param number The account number given in input.
      * @return A correct account number.
      */
-    public String generateIban(String number, boolean keep) {
-        if (Character.isDigit(number.charAt(0))) {
-            if (isAmericanAccount(number)) {
-                return generateAmericanAccountNumber(number, keep).toString();
-            }
-        }
-
-        String accountNumber = replaceSpacesInString(number); // $NON-NLS-1$ //$NON-NLS-2$
-        if (!sizeOk(accountNumber)) {
+    public StringBuilder generateIban(String number) {
+        if (!sizeOk(number)) {
             return generateIban();
         }
 
-        StringBuilder sb = new StringBuilder(accountNumber.substring(0, 2));
+        StringBuilder sb = new StringBuilder(number.substring(0, 2));
         sb.append("00"); //$NON-NLS-1$
-        for (int i = 0; i < accountNumber.length() - 4; ++i) {
-            sb.append(String.valueOf(rnd.nextInt(10)));
+        for (int i = 0; i < number.length() - 4; ++i) {
+            sb.append(rnd.nextInt(10));
         }
 
         String sb2 = new String(sb);
@@ -190,15 +175,7 @@ public abstract class GenerateAccountNumber extends Function<String> {
         sb.setCharAt(2, Character.forDigit(check_digits / 10, 10));
         sb.setCharAt(3, Character.forDigit(check_digits % 10, 10));
 
-        if (keep) {
-            return super.insertSpacesInString(number, sb.toString());
-        } else {
-            for (int i = 4; i < sb.length(); i += 5) {
-                sb.insert(i, ' ');
-            }
-        }
-
-        return sb.toString();
+        return sb;
     }
 
     /**
@@ -233,7 +210,7 @@ public abstract class GenerateAccountNumber extends Function<String> {
      * 
      * @return A string holding a correct French Iban number.
      */
-    public String generateIban() {
+    public StringBuilder generateIban() {
         StringBuilder sb = new StringBuilder("FR00"); //$NON-NLS-1$
         for (int i = 0; i < 10; ++i) {
             sb.append(String.valueOf(rnd.nextInt(10)));
@@ -264,12 +241,7 @@ public abstract class GenerateAccountNumber extends Function<String> {
 
         sb.setCharAt(2, Character.forDigit(check_digits / 10, 10));
         sb.setCharAt(3, Character.forDigit(check_digits % 10, 10));
-
-        for (int i = 4; i < sb.length(); i += 5) {
-            sb.insert(i, ' ');
-        }
-
-        return sb.toString();
+        return sb;
     }
 
 }

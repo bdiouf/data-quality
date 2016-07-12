@@ -31,6 +31,7 @@ public class GenerateCreditCardFormatStringTest {
     @Before
     public void setUp() throws Exception {
         gccfs.setRandomWrapper(new RandomWrapper(42));
+
     }
 
     @Test
@@ -42,9 +43,17 @@ public class GenerateCreditCardFormatStringTest {
 
     @Test
     public void testSpaces() {
+        gccfs.setKeepFormat(true);
         String input = "41 2 0356  9875 63"; //$NON-NLS-1$
         output = gccfs.generateMaskedRow(input).toString();
         assertEquals(output, "40 3 8405  5893 22");
+    }
+
+    @Test
+    public void testSpaces2() {
+        String input = "41 2 0356  9875 63"; //$NON-NLS-1$
+        output = gccfs.generateMaskedRow(input).toString();
+        assertEquals(output, "4038405589322");
     }
 
     @Test
