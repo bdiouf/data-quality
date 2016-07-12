@@ -62,7 +62,7 @@ public class QGramsMatcher extends AbstractAttributeMatcher {
         if (maxQGramsMatching == 0) {
             return 0.0f;
         } else {
-            return (maxQGramsMatching - getUnNormalisedSimilarity(str1Tokens, str2Tokens)) / maxQGramsMatching;
+            return (double) (maxQGramsMatching - getUnNormalisedSimilarity(str1Tokens, str2Tokens)) / maxQGramsMatching;
         }
     }
 
@@ -74,7 +74,7 @@ public class QGramsMatcher extends AbstractAttributeMatcher {
      * 
      * @return returns the score of the similarity measure (un-normalised)
      */
-    private float getUnNormalisedSimilarity(final List<String> str1Tokens, final List<String> str2Tokens) {
+    private int getUnNormalisedSimilarity(final List<String> str1Tokens, final List<String> str2Tokens) {
 
         List<String> sorted1 = new ArrayList<String>();
         sorted1.addAll(str1Tokens);
@@ -84,7 +84,7 @@ public class QGramsMatcher extends AbstractAttributeMatcher {
         Collections.sort(sorted2);
 
         int difference = 0;
-        while (sorted1.size() != 0 && sorted2.size() != 0) {
+        while (!sorted1.isEmpty() && !sorted2.isEmpty()) {
             int comp = (sorted1.get(0)).compareTo(sorted2.get(0));
             if (comp > 0) {
                 sorted2.remove(0);

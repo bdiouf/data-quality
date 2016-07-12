@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -28,6 +29,8 @@ import org.talend.dataquality.duplicating.RandomWrapper;
 public abstract class Function<T> implements Serializable {
 
     private static final long serialVersionUID = 6333987486134315822L;
+
+    protected static final Logger LOGGER = Logger.getLogger(Function.class);
 
     protected static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
@@ -98,8 +101,8 @@ public abstract class Function<T> implements Serializable {
                     int i = 0;
                     for (String str : aux)
                         parameters[i++] = str.trim();
-                    // parameters = aux.toArray(new String[aux.size()]);
                 } catch (IOException | NullPointerException e2) { // otherwise, we just get the parameter
+                    LOGGER.debug("The parameter is not a path to a file.");
                     parameters[0] = parameters[0].trim();
                 }
             } else {

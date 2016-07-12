@@ -38,9 +38,9 @@ public class GenerateUniqueSsnUk extends AbstractGenerateUniqueSsn {
                 for (char secondLetter = 'A'; secondLetter <= 'Z'; secondLetter++)
                     if (!forbiddenLetters.contains(secondLetter) && secondLetter != 'O') {
                         String twoLetters = new StringBuilder().append(firstLetter).append(secondLetter).toString();
-                        if (!(twoLetters.equals("BG") || twoLetters.equals("GB") || twoLetters.equals("NK")
-                                || twoLetters.equals("KN") || twoLetters.equals("TN") || twoLetters.equals("NT")
-                                || twoLetters.equals("ZZ")))
+                        if (!("BG".equals(twoLetters) || "GB".equals(twoLetters) || "NK".equals(twoLetters)
+                                || "KN".equals(twoLetters) || "TN".equals(twoLetters) || "NT".equals(twoLetters)
+                                || "ZZ".equals(twoLetters)))
                             firstField.add(twoLetters);
                     }
         fields.add(new FieldEnum(firstField, 2));

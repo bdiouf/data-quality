@@ -34,6 +34,7 @@ public class DateVariance extends Function<Date> {
         try {
             integerParam = Integer.parseInt(parameters[0]);
         } catch (Exception e) {
+            throw new IllegalArgumentException("The parameter " + parameters[0] + " is not an integer.");
         }
     }
 

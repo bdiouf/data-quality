@@ -61,7 +61,7 @@ public abstract class CharactersOperation<T> extends Function<T> {
         isValidParameters = validParameters();
         if (isValidParameters) {
             this.initAttributes();
-            isValidParameters = (beginIndex <= endIndex);
+            isValidParameters = beginIndex <= endIndex;
         }
         if (!isValidParameters)
             throw new IllegalArgumentException("The parameters are not valid");

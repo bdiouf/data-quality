@@ -16,7 +16,7 @@ package org.talend.dataquality.datamasking.functions;
  * created by jgonzalez on 22 juin 2015. This function will replace every digit by the parameter.
  *
  */
-public abstract class ReplaceNumeric<T2> extends CharactersOperation<T2> {
+public abstract class ReplaceNumeric<T> extends CharactersOperation<T> {
 
     private static final long serialVersionUID = -6892473143126922554L;
 

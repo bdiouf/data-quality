@@ -24,21 +24,12 @@ public class HammingMatcher extends AbstractAttributeMatcher {
 
     private static final long serialVersionUID = 9059579472242450392L;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.dataquality.record.linkage.attribute.IAttributeMatcher#getMatchType()
-     */
+    @Override
     public AttributeMatcherType getMatchType() {
         return AttributeMatcherType.HAMMING;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.dataquality.record.linkage.attribute.AbstractAttributeMatcher#getWeight(java.lang.String,
-     * java.lang.String)
-     */
+    @Override
     public double getWeight(String record1, String record2) {
         // Strings must have the same length
         if (record1.length() != record2.length()) {

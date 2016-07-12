@@ -16,7 +16,7 @@ package org.talend.dataquality.datamasking.functions;
  * created by jgonzalez on 22 juin 2015. This function will replace the n first chars of the input.
  *
  */
-public abstract class ReplaceFirstChars<T2> extends CharactersOperation<T2> {
+public abstract class ReplaceFirstChars<T> extends CharactersOperation<T> {
 
     private static final long serialVersionUID = 2584207431532787461L;
 

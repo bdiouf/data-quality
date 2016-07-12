@@ -68,7 +68,7 @@ public class GenerateSsnIndia extends Function<String> {
         int[] myArray = stringToReversedIntArray(string);
 
         for (int i = 0; i < myArray.length; i++) {
-            c = d[c][p[((i + 1) % 8)][myArray[i]]];
+            c = d[c][p[(i + 1) % 8][myArray[i]]];
         }
 
         return Integer.toString(inv[c]);

@@ -16,7 +16,7 @@ package org.talend.dataquality.datamasking.functions;
  * created by jgonzalez on 22 juin 2015. This function will remove the n last chars of the input.
  *
  */
-public abstract class RemoveLastChars<T2> extends CharactersOperation<T2> {
+public abstract class RemoveLastChars<T> extends CharactersOperation<T> {
 
     private static final long serialVersionUID = 2741426616834434367L;
 

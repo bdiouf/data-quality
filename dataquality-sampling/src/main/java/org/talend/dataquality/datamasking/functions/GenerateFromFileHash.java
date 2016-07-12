@@ -35,13 +35,14 @@ public abstract class GenerateFromFileHash<T> extends Function<T> {
             try {
                 genericTokens.add(getOutput(parameters[i]));
             } catch (NumberFormatException e) {
+                LOGGER.info("The parameter " + parameters[i] + " can't be parsed in the required type.");
             }
         }
     }
 
     @Override
     protected T doGenerateMaskedField(T t) {
-        if (genericTokens.size() > 0) {
+        if (!genericTokens.isEmpty()) {
             if (t == null) {
                 return genericTokens.get(rnd.nextInt(genericTokens.size()));
             } else {
