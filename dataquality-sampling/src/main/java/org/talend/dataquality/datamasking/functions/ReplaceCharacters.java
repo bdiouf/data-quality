@@ -25,6 +25,5 @@ public class ReplaceCharacters extends ReplaceAll {
         if (Character.isLetter(c))
             return charToReplace;
         return c;
-
     }
 }

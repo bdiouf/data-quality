@@ -19,6 +19,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
+import org.apache.commons.lang.StringUtils;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -142,16 +143,13 @@ public abstract class Function<T> implements Serializable {
     }
 
     /**
-     * Replaces all the spaces in the input string
+     * Remove all the spaces in the input string
      * 
      * @param input
      * @return
      */
-    protected String replaceSpacesInString(String input) {
-        if (input == null) {
-            return null;
-        }
-        return patternSpace.matcher(input).replaceAll("");
+    protected String removeSpacesInString(String input) {
+        return StringUtils.replace(input, " ", "");
     }
 
     /**

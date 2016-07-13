@@ -23,17 +23,19 @@ public class GenerateCreditCardFormatLong extends GenerateCreditCardFormat<Long>
     @Override
     protected Long doGenerateMaskedField(Long l) {
         CreditCardType cct_format = null;
+        Long res;
         if (l == null) {
             cct_format = chooseCreditCardType();
-            return generateCreditCard(cct_format);
+            res = generateCreditCard(cct_format);
         } else {
             cct_format = getCreditCardType(l);
             if (cct_format != null) {
-                return generateCreditCardFormat(cct_format, l);
+                res = generateCreditCardFormat(cct_format, l);
             } else {
                 cct_format = chooseCreditCardType();
-                return generateCreditCard(cct_format);
+                res = generateCreditCard(cct_format);
             }
         }
+        return res;
     }
 }

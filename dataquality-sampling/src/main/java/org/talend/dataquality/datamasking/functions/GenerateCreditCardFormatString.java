@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * created by jgonzalez on 19 juin 2015. See GenerateCreditCardFormat.
  *
@@ -22,10 +24,10 @@ public class GenerateCreditCardFormatString extends GenerateCreditCardFormat<Str
 
     @Override
     protected String doGenerateMaskedField(String str) {
-        String strWithoutSpaces = replaceSpacesInString(str);
+        String strWithoutSpaces = removeSpacesInString(str);
         CreditCardType cct_format = null;
         StringBuilder res = new StringBuilder();
-        if (strWithoutSpaces == null || EMPTY_STRING.equals(strWithoutSpaces)) {
+        if (StringUtils.isEmpty(strWithoutSpaces)) {
             cct_format = chooseCreditCardType();
             res.append(generateCreditCard(cct_format));
         } else {

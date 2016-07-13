@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * created by jgonzalez on 19 juin 2015. This function produces a correct account number and tries to keep the country
  * where it's from.
@@ -23,10 +25,10 @@ public class GenerateAccountNumberFormat extends GenerateAccountNumber {
 
     @Override
     protected String doGenerateMaskedField(String str) {
-        String accountNumber = replaceSpacesInString(str); // $NON-NLS-1$ //$NON-NLS-2$
+        String accountNumber = removeSpacesInString(str); // $NON-NLS-1$ //$NON-NLS-2$
         StringBuilder accountNumberFormat = new StringBuilder();
         boolean isAmerican = false;
-        if (accountNumber != null && accountNumber.length() > 9 && !EMPTY_STRING.equals(accountNumber)) {
+        if (!StringUtils.isEmpty(accountNumber) && accountNumber.length() > 9) {
             try {
                 if (Character.isDigit(accountNumber.charAt(0)) && isAmericanAccount(accountNumber)) {
                     accountNumberFormat = generateAmericanAccountNumber();
@@ -50,7 +52,6 @@ public class GenerateAccountNumberFormat extends GenerateAccountNumber {
                 accountNumberFormat.insert(i, ' ');
             }
         }
-
         return accountNumberFormat.toString();
     }
 

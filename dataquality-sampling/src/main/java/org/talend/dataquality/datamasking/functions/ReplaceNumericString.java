@@ -35,6 +35,5 @@ public class ReplaceNumericString extends ReplaceNumeric<String> {
         if (Character.isDigit(c))
             return charToReplace;
         return c;
-
     }
 }
