@@ -12,9 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.talend.dataquality.duplicating.RandomWrapper;
@@ -43,6 +41,15 @@ public class BetweenIndexesKeepTest {
         bik.parse("1, 2", false, new RandomWrapper(42));
         output = bik.generateMaskedRow(input);
         assertEquals("St", output); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testGoodForStringIndexOutOfBoundsException() {
+        bik.parse("1, 3", false, new RandomWrapper(42)); //$NON-NLS-1$
+        output = bik.generateMaskedRow("kent"); //$NON-NLS-1$
+        assertEquals("ken", output); //$NON-NLS-1$
+        output = bik.generateMaskedRow("kent"); //$NON-NLS-1$
+        assertEquals("ken", output); //$NON-NLS-1$
     }
 
     @Test

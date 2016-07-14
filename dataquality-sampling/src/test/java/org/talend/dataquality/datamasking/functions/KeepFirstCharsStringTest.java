@@ -12,8 +12,9 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
@@ -34,6 +35,17 @@ public class KeepFirstCharsStringTest {
         kfag.parse("3", false, new RandomWrapper(42));
         output = kfag.generateMaskedRow(input);
         assertEquals("a1b8h0m075", output); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testGoodForContainSpecailCharacter() {
+        kfag.parse("3", false, new RandomWrapper(42)); //$NON-NLS-1$
+        output = kfag.generateMaskedRow("+33123456"); //$NON-NLS-1$
+        Assert.assertTrue("The result should start with +331", output.startsWith("+331")); //$NON-NLS-1$
+        output = kfag.generateMaskedRow("(00)33456"); //$NON-NLS-1$
+        Assert.assertTrue("The result should start with (00)3", output.startsWith("(00)3")); //$NON-NLS-1$
+        output = kfag.generateMaskedRow("1-86-555-555"); //$NON-NLS-1$
+        Assert.assertTrue("The result should start with 1-86", output.startsWith("1-86")); //$NON-NLS-1$
     }
 
     @Test
