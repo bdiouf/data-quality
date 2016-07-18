@@ -18,9 +18,6 @@ package org.talend.dataquality.standardization.constant;
  */
 public final class PluginConstant {
 
-    private PluginConstant() {
-    }
-
     public static final String FIRST_NAME_STANDARDIZE_NAME = "name"; //$NON-NLS-1$
 
     public static final String FIRST_NAME_STANDARDIZE_NAMETERM = "nameterm"; //$NON-NLS-1$
@@ -32,5 +29,8 @@ public final class PluginConstant {
     public static final String FIRST_NAME_STANDARDIZE_COUNTRY = "country"; //$NON-NLS-1$
 
     public static final String FIRST_NAME_STANDARDIZE_GENDER = "gender"; //$NON-NLS-1$
+
+    private PluginConstant() {
+    }
 
 }

@@ -112,9 +112,9 @@ public class UserDefinedClassifierTest {
     }
 
     private final String TLD_NAME_URL = "http://data.iana.org/TLD/tlds-alpha-by-domain.txt";
-    private final int MAX_TLD_LENGTH = 24; 
-    
-    
+
+    private final int MAX_TLD_LENGTH = 24;
+
     public static Map<String, String[]> TEST_DATA = new LinkedHashMap<String, String[]>() {
 
         private static final long serialVersionUID = -5067273062214728849L;
@@ -354,50 +354,52 @@ public class UserDefinedClassifierTest {
 
     @Test
     public void checkLongestTLD() {
-    	String outputFilename = "TLD.txt";
+        String outputFilename = "TLD.txt";
 
-    	downloadFile(TLD_NAME_URL, outputFilename);
-    	File file = new File(outputFilename);
-    	
-		try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				int length = line.trim().length();
-			    if(!line.startsWith("#") && length > 0) { //the comments don't count
-			    	assertTrue("Expected MAX_LENGTH of web domain is " + String.valueOf(MAX_TLD_LENGTH), length <= MAX_TLD_LENGTH);
-			    }
-			}	
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		file.delete();
+        downloadFile(TLD_NAME_URL, outputFilename);
+        File file = new File(outputFilename);
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                int length = line.trim().length();
+                if (!line.startsWith("#") && length > 0) { // the comments don't count
+                    assertTrue("Expected MAX_LENGTH of web domain is " + String.valueOf(MAX_TLD_LENGTH),
+                            length <= MAX_TLD_LENGTH);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        file.delete();
     }
 
     /**
      * download a specified file
+     * 
      * @param urlFilename the url to access the file
      * @param outputFilename the complete path+filename for output
      */
-    private void downloadFile(String urlFilename, String outputFilename){
-    	FileOutputStream outputStream = null;
-		try {
-			URL url = new URL(urlFilename);
-			ReadableByteChannel bytes = Channels.newChannel(url.openStream());
-			outputStream = new FileOutputStream(outputFilename);
-			outputStream.getChannel().transferFrom(bytes, 0, Long.MAX_VALUE);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if(outputStream != null) {
-				try {
-					outputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+    private void downloadFile(String urlFilename, String outputFilename) {
+        FileOutputStream outputStream = null;
+        try {
+            URL url = new URL(urlFilename);
+            ReadableByteChannel bytes = Channels.newChannel(url.openStream());
+            outputStream = new FileOutputStream(outputFilename);
+            outputStream.getChannel().transferFrom(bytes, 0, Long.MAX_VALUE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
-    
+
     private void addAndRemoveCategories(UserDefinedClassifier userDefinedClassifier) {
         int sizeBefore = userDefinedClassifier.getClassifiers().size();
         String id = "this is the Id"; //$NON-NLS-1$
