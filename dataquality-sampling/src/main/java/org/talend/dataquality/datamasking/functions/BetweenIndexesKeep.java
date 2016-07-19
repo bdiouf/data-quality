@@ -23,18 +23,18 @@ public class BetweenIndexesKeep extends BetweenIndexes {
 
     @Override
     protected void initAttributes() {
-        endIndex = Integer.parseInt(parameters[0]) - 1;
+        beginIndex = Integer.parseInt(parameters[0]) - 1;
+        endIndex = Integer.parseInt(parameters[1]);
         toRemove = true;
     }
 
     @Override
     protected String doGenerateMaskedField(String str) {
-        String tAux = super.doGenerateMaskedField(str);
-        if (tAux == EMPTY_STRING)
-            return EMPTY_STRING;
-        beginIndex = Integer.parseInt(parameters[1]) - endIndex;
-        endIndex = Integer.MAX_VALUE;
-        return super.doGenerateMaskedField(tAux);
+        if (!isValidParameters || str == null)
+            return getDefaultOutput();
+        if (endIndex > str.length())
+            return getDefaultOutput();
+        return str.substring(beginIndex, endIndex);
     }
 
     @Override

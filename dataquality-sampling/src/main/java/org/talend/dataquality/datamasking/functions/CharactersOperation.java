@@ -53,7 +53,7 @@ public abstract class CharactersOperation<T> extends Function<T> {
      */
     protected boolean toRemove = false;
 
-    private boolean isValidParameters = false;
+    protected boolean isValidParameters = false;
 
     @Override
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
@@ -61,7 +61,7 @@ public abstract class CharactersOperation<T> extends Function<T> {
         isValidParameters = validParameters();
         if (isValidParameters) {
             this.initAttributes();
-            isValidParameters = beginIndex <= endIndex;
+            isValidParameters = beginIndex >= 0 && beginIndex <= endIndex;
         }
         if (!isValidParameters)
             throw new IllegalArgumentException("The parameters are not valid");
