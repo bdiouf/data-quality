@@ -31,7 +31,7 @@ public class GenerateAccountNumberFormat extends GenerateAccountNumber {
         if (!StringUtils.isEmpty(accountNumber) && accountNumber.length() > 9) {
             try {
                 if (Character.isDigit(accountNumber.charAt(0)) && isAmericanAccount(accountNumber)) {
-                    accountNumberFormat = generateAmericanAccountNumber();
+                    accountNumberFormat = generateAmericanAccountNumber(accountNumber);
                     isAmerican = true;
                 } else {
                     accountNumberFormat = generateIban(accountNumber);

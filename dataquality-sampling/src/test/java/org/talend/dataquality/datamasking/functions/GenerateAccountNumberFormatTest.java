@@ -48,15 +48,21 @@ public class GenerateAccountNumberFormatTest {
 
     @Test
     public void testAmericanNumber() {
-        output = ganf.generateMaskedRow("453 654 94 87"); //$NON-NLS-1$
-        assertEquals("765720955 1", output); //$NON-NLS-1$
+        output = ganf.generateMaskedRow("453 654 94 87 4684 687"); //$NON-NLS-1$
+        assertEquals("453654948 7657209551", output); //$NON-NLS-1$
     }
 
     @Test
     public void testAmericanNumber2() {
         ganf.setKeepFormat(true);
-        output = ganf.generateMaskedRow("453 654 94 87"); //$NON-NLS-1$
-        assertEquals("765 720 95 51", output); //$NON-NLS-1$
+        output = ganf.generateMaskedRow("453 654 94 87 58 425 6"); //$NON-NLS-1$
+        assertEquals("453 654 94 87 65 720 9551", output); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testIsNotAmericanNumber() {
+        output = ganf.generateMaskedRow("454344678 4536"); //$NON-NLS-1$
+        assertEquals("FR33 7657 2095 51R3 4XZP 6F4O 058", output); //$NON-NLS-1$
     }
 
     @Test

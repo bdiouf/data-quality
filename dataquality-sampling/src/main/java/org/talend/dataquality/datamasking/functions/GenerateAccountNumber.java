@@ -105,9 +105,9 @@ public abstract class GenerateAccountNumber extends Function<String> {
      * @return An american account number, the nine first digits belonging to the original input and the others randomly
      * generated.
      */
-    protected StringBuilder generateAmericanAccountNumber() {
-        StringBuilder sb = new StringBuilder(); // $NON-NLS-1$ //
-                                                // //$NON-NLS-2$
+    protected StringBuilder generateAmericanAccountNumber(String number) {
+        StringBuilder sb = new StringBuilder(number.substring(0, 9)); // $NON-NLS-1$ //
+        // //$NON-NLS-2$
         for (int i = 0; i < 10; ++i) {
             sb.append(String.valueOf(rnd.nextInt(10)));
         }
@@ -121,7 +121,7 @@ public abstract class GenerateAccountNumber extends Function<String> {
      * @return A boolean holding if the account number is correct or not.
      */
     protected boolean isAmericanAccount(String number) {
-        StringBuilder accountNumber = new StringBuilder(number);
+        StringBuilder accountNumber = new StringBuilder(number.substring(0, 9));
         for (int i = 0; i < 9; i++) {
             if (!Character.isDigit(accountNumber.charAt(i))) {
                 return false;
