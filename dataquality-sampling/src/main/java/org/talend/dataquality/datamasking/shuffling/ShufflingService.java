@@ -8,11 +8,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+
 /**
  * This class offers a shuffling service to manipulates the {@link ShuffleColumn} action and the
  * {@link ShufflingHandler} action together.
  */
 public class ShufflingService {
+
+    private static final Logger LOGGER = Logger.getLogger(ShufflingService.class);
 
     protected ShuffleColumn shuffleColumn;
 
@@ -108,9 +112,9 @@ public class ShufflingService {
     }
 
     private synchronized List<List<Object>> deepCopyListTo(List<List<Object>> rows) {
-        List<List<Object>> copyRows = new ArrayList<List<Object>>();
+        List<List<Object>> copyRows = new ArrayList<List<Object>>(rows.size());
         for (List<Object> row : rows) {
-            List<Object> copyRow = new ArrayList<Object>();
+            List<Object> copyRow = new ArrayList<Object>(row.size());
             for (Object o : row) {
                 copyRow.add(o);
             }
@@ -156,7 +160,7 @@ public class ShufflingService {
      */
     public void setHasFinished(boolean hasFinished) {
         this.hasSubmitted = hasFinished;
-        execute(null);
+        execute(new ArrayList<Object>());
         this.hasFinished = hasFinished;
         shufflingHandler.join();
     }
@@ -190,10 +194,11 @@ public class ShufflingService {
             try {
                 executor.shutdown();
                 while (!concurrentQueue.isEmpty()) {
-                    Thread.sleep(2000);
+                    Thread.sleep(200);
                 }
                 executor.awaitTermination(5, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
+                LOGGER.error(e.getMessage(), e);
             }
         }
 

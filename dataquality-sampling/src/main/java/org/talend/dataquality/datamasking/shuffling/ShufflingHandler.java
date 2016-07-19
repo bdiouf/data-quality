@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
  */
 public class ShufflingHandler {
 
-    private final static Logger logger = Logger.getLogger(ShufflingHandler.class);
+    private static final Logger LOGGER = Logger.getLogger(ShufflingHandler.class);
 
     protected ShufflingService shufflingService;
 
@@ -45,11 +45,8 @@ public class ShufflingHandler {
                     List<List<Object>> rows = future.get();
                     resultQueue.add(rows);
                 }
-            } catch (InterruptedException e) {
-                logger.error(e.getMessage(), e);
-                shufflingService.shutDown();
-            } catch (ExecutionException e) {
-                logger.error(e.getMessage(), e);
+            } catch (InterruptedException | ExecutionException | NullPointerException e) {
+                LOGGER.error(e.getMessage(), e);
                 shufflingService.shutDown();
             }
 
