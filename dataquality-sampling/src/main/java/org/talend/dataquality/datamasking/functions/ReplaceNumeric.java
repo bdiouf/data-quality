@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * created by jgonzalez on 22 juin 2015. This function will replace every digit by the parameter.
  *
@@ -22,7 +24,7 @@ public abstract class ReplaceNumeric<T> extends CharactersOperation<T> {
 
     @Override
     protected void initAttributes() {
-        if (parameters.length > 0)
+        if (parameters != null && parameters.length == 1 && !StringUtils.isEmpty(parameters[0]))
             charToReplace = parameters[0].charAt(0);
     }
 

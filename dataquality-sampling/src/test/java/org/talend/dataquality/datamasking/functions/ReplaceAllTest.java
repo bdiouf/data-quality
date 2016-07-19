@@ -27,7 +27,7 @@ public class ReplaceAllTest {
 
     private String output;
 
-    private String input = "input value"; //$NON-NLS-1$
+    private String input = "i86ut val 4"; //$NON-NLS-1$
 
     private ReplaceAll ra = new ReplaceAll();
 
@@ -55,6 +55,13 @@ public class ReplaceAllTest {
         }
         output = ra.generateMaskedRow(input);
         assertEquals("", output); // $NON-NLS-1$
+    }
+
+    @Test
+    public void testNoParameter() {
+        ra.parse("", false, new RandomWrapper(42));
+        output = ra.generateMaskedRow(input);
+        assertEquals("a30ma rnq 7", output); //$NON-NLS-1$
     }
 
 }
