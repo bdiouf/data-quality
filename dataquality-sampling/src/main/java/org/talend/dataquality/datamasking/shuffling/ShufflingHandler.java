@@ -66,7 +66,7 @@ public class ShufflingHandler {
         try {
             t.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
 
     }
