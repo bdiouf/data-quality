@@ -25,7 +25,7 @@ public class MaskEmail extends Function<String> {
 
     private static final long serialVersionUID = 3520390903566492525L;
 
-    List<String> keys = new ArrayList<>();
+    private List<String> keys = new ArrayList<>();
 
     @Override
     protected String doGenerateMaskedField(String str) {
@@ -35,7 +35,7 @@ public class MaskEmail extends Function<String> {
             if (count == -1) {
                 count = str.length();
             }
-            if (keys.size() == 1 && keys.get(0).equals(EMPTY_STRING) || keys.size() == 0) {
+            if (keys.size() == 1 && keys.get(0).equals(EMPTY_STRING) || keys.isEmpty()) {
                 for (int i = 0; i < count; ++i) {
                     sb.setCharAt(i, 'X');
                 }
