@@ -34,7 +34,15 @@ import org.talend.dataquality.record.linkage.utils.SurvivorShipAlgorithmEnum;
  */
 public class SurvivorshipUtils {
 
-    public static String DEFAULT_CONCATENATE_PARAMETER = ",";
+    private static final String NUMBER_ID = "id_"; //$NON-NLS-1$
+
+    public static String DEFAULT_CONCATENATE_PARAMETER = ","; //$NON-NLS-1$
+
+    private static final String SURVIVORSHIP_FUNCTION = "SURVIVORSHIP_FUNCTION"; //$NON-NLS-1$
+
+    private static final String PARAMETER = "PARAMETER"; //$NON-NLS-1$
+
+    private static final String DATA_TYPE = "DATA_TYPE"; //$NON-NLS-1$
 
     public static SurvivorShipAlgorithmParams createSurvivorShipAlgorithmParams(
             AnalysisMatchRecordGrouping analysisMatchRecordGrouping, List<List<Map<String, String>>> joinKeyRules,
@@ -63,16 +71,16 @@ public class SurvivorshipUtils {
             for (Map<String, String> defSurvDef : defaultSurvivorshipRules) {
                 // the column's data type start with id_, so need to add id_ ahead of the default survivorship's data
                 // type before judging if they are equal
-                if (StringUtils.equalsIgnoreCase(dataTypeName, "id_" + defSurvDef.get("DATA_TYPE"))) { //$NON-NLS-1$
+                if (StringUtils.equalsIgnoreCase(dataTypeName, NUMBER_ID + defSurvDef.get(DATA_TYPE))) {
                     putNewSurvFunc(survivorShipAlgorithmParams, defaultSurvRules,
-                            Integer.parseInt(columnWithIndex.get(columnName)), columnName, defSurvDef.get("PARAMETER"),
-                            defSurvDef.get("SURVIVORSHIP_FUNCTION"));
+                            Integer.parseInt(columnWithIndex.get(columnName)), columnName, defSurvDef.get(PARAMETER),
+                            defSurvDef.get(SURVIVORSHIP_FUNCTION));
                     break;
-                } else if (StringUtils.equalsIgnoreCase(defSurvDef.get("DATA_TYPE"), "Number") //$NON-NLS-1$
+                } else if (StringUtils.equalsIgnoreCase(defSurvDef.get(DATA_TYPE), "Number") //$NON-NLS-1$ 
                         && ArrayUtils.contains(NUMBERS, dataTypeName)) {
                     putNewSurvFunc(survivorShipAlgorithmParams, defaultSurvRules,
-                            Integer.parseInt(columnWithIndex.get(columnName)), columnName, defSurvDef.get("PARAMETER"),
-                            defSurvDef.get("SURVIVORSHIP_FUNCTION"));
+                            Integer.parseInt(columnWithIndex.get(columnName)), columnName, defSurvDef.get(PARAMETER),
+                            defSurvDef.get(SURVIVORSHIP_FUNCTION));
                     break;
                 }
             } // End for: if no func defined, then the value will be taken from one of the records in a group (1st
@@ -135,9 +143,9 @@ public class SurvivorshipUtils {
     protected static SurvivorshipFunction createSurvivorshipFunction(SurvivorShipAlgorithmParams survivorShipAlgorithmParams,
             Map<String, String> survDef) {
         SurvivorshipFunction func = survivorShipAlgorithmParams.new SurvivorshipFunction();
-        func.setSurvivorShipKey(survDef.get("ATTRIBUTE_NAME"));
-        func.setParameter(survDef.get("PARAMETER"));
-        String functionName = survDef.get("SURVIVORSHIP_FUNCTION"); //$NON-NLS-1$
+        func.setSurvivorShipKey(survDef.get("ATTRIBUTE_NAME")); //$NON-NLS-1$
+        func.setParameter(survDef.get(PARAMETER));
+        String functionName = survDef.get(SURVIVORSHIP_FUNCTION);
         SurvivorShipAlgorithmEnum surAlgo = SurvivorShipAlgorithmEnum.getTypeBySavedValue(functionName);
         if (surAlgo == null) {
             Integer typeIndex = 0;
@@ -160,9 +168,10 @@ public class SurvivorshipUtils {
         defaultSurvRules.put(columnIndex, survFunc);
     }
 
-    final static String[] NUMBERS = new String[] { "id_" + Integer.class.getSimpleName(), "id_" + Float.class.getSimpleName(),
-            "id_" + Double.class.getSimpleName(), "id_" + Long.class.getSimpleName(), "id_" + Short.class.getSimpleName(),
-            "id_" + BigDecimal.class.getSimpleName(), "id_" + Byte.class.getSimpleName() };
+    private final static String[] NUMBERS = new String[] { NUMBER_ID + Integer.class.getSimpleName(),
+            NUMBER_ID + Float.class.getSimpleName(), NUMBER_ID + Double.class.getSimpleName(),
+            NUMBER_ID + Long.class.getSimpleName(), NUMBER_ID + Short.class.getSimpleName(),
+            NUMBER_ID + BigDecimal.class.getSimpleName(), NUMBER_ID + Byte.class.getSimpleName() };
 
     // <nodeData xsi:type="tdqmatching:MatchingData">
     // <ruleMatchers>
