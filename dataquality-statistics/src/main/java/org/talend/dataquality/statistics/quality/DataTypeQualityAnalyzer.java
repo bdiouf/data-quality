@@ -36,7 +36,7 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     private final ResizableList<ValueQualityStatistics> results = new ResizableList<>(ValueQualityStatistics.class);
 
-    private static Logger log = LoggerFactory.getLogger(DataTypeQualityAnalyzer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DataTypeQualityAnalyzer.class);
 
     private List<String> customDateTimePatterns = new ArrayList<>();
 
@@ -108,7 +108,7 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
     public Analyzer<ValueQualityStatistics> merge(Analyzer<ValueQualityStatistics> another) {
 
         if (another == null) {
-            log.warn("Another analyzer is null, have nothing to merge!");
+            LOG.warn("Another analyzer is null, have nothing to merge!");
             return this;
         }
 

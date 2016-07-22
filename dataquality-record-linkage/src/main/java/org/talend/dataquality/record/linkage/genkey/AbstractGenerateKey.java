@@ -27,13 +27,13 @@ import org.talend.dataquality.record.linkage.utils.MatchAnalysisConstant;
  */
 public class AbstractGenerateKey {
 
-    public static String TGENKEY_ALL_COLUMN_NAMES = "tgenkey_all_column_names";//$NON-NLS-1$
+    public static final String TGENKEY_ALL_COLUMN_NAMES = "tgenkey_all_column_names";//$NON-NLS-1$
 
     public static final String ALGO_KEY_PREFIX = "algo";//$NON-NLS-1$
 
     private Map<String, List<String[]>> genKeyToBlockResult = new HashMap<String, List<String[]>>();
 
-    public static String[] parameters = { MatchAnalysisConstant.PRE_ALGO, MatchAnalysisConstant.PRE_VALUE,
+    public static final String[] parameters = { MatchAnalysisConstant.PRE_ALGO, MatchAnalysisConstant.PRE_VALUE,
             MatchAnalysisConstant.KEY_ALGO, MatchAnalysisConstant.KEY_VALUE, MatchAnalysisConstant.POST_ALGO,
             MatchAnalysisConstant.POST_VALUE };
 

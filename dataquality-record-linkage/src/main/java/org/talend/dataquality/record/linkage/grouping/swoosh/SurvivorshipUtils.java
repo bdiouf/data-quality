@@ -36,7 +36,7 @@ public class SurvivorshipUtils {
 
     private static final String NUMBER_ID = "id_"; //$NON-NLS-1$
 
-    public static String DEFAULT_CONCATENATE_PARAMETER = ","; //$NON-NLS-1$
+    public static final String DEFAULT_CONCATENATE_PARAMETER = ","; //$NON-NLS-1$
 
     private static final String SURVIVORSHIP_FUNCTION = "SURVIVORSHIP_FUNCTION"; //$NON-NLS-1$
 
