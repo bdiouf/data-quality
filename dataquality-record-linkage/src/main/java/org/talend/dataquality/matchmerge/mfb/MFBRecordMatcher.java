@@ -109,7 +109,7 @@ public class MFBRecordMatcher extends AbstractRecordMatcher {
                 if (score > maxScore) {
                     maxScore = score;
                 }
-                if (maxScore == MAX_SCORE) {
+                if (Double.compare(maxScore, MAX_SCORE) == 0) {
                     // Can't go higher, no need to perform other checks.
                     return maxScore;
                 }
