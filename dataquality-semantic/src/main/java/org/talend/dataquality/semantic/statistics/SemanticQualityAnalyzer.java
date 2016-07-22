@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.talend.dataquality.common.inference.Analyzer;
 import org.talend.dataquality.common.inference.QualityAnalyzer;
 import org.talend.dataquality.common.inference.ResizableList;
@@ -35,6 +35,8 @@ import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatistics, String[]> {
 
     private static final long serialVersionUID = -5951511723860660263L;
+
+    private static final Logger LOG = Logger.getLogger(SemanticQualityAnalyzer.class);
 
     private final ResizableList<ValueQualityStatistics> results = new ResizableList<>(ValueQualityStatistics.class);
 
@@ -62,7 +64,7 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
             regexClassifier = categoryRecognizer.getUserDefineClassifier();
             dataDictClassifier = categoryRecognizer.getDataDictFieldClassifier();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e, e);
         }
         results.clear();
     }
@@ -94,7 +96,8 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
     @Override
     public boolean analyze(String... record) {
         if (record == null) {
-            record = new String[] { StringUtils.EMPTY };
+            results.resize(0);
+            return true;
         }
         results.resize(record.length);
         for (int i = 0; i < record.length; i++) {
@@ -162,64 +165,15 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     }
 
-    private boolean isSemanticValid(String semanticType, String value) {
-
-        SemanticCategoryEnum cat = SemanticCategoryEnum.valueOf(semanticType);
-        RecognizerType recognizerType = cat.getRecognizerType();
-
-        switch (recognizerType) {
-        case OTHER:
-            break;
-        case REGEX:
-            Set<String> regexCatIds = regexClassifier.classify(value);
-            return regexCatIds.contains(semanticType);
-        case OPEN_INDEX:
-            break;
-        case CLOSED_INDEX:
-            Set<String> dictCatIds = dataDictClassifier.classify(value);
-            return dictCatIds.contains(semanticType);
-        default:
-            break;
-        }
-
-        return true;
-    }
-
-    private boolean isSemanticUnknown(String semanticType, String value) {
-        SemanticCategoryEnum cat = SemanticCategoryEnum.valueOf(semanticType);
-        RecognizerType recognizerType = cat.getRecognizerType();
-
-        switch (recognizerType) {
-        case OTHER:
-            break;
-        case REGEX:
-            break;
-        case OPEN_INDEX:
-            Set<String> dictCatIds = dataDictClassifier.classify(value);
-            return !dictCatIds.contains(semanticType);
-        case CLOSED_INDEX:
-            break;
-        default:
-            break;
-        }
-
-        return false;
-    }
-
     private void processInvalidValue(ValueQualityStatistics valueQuality, String invalidValue) {
         if (isStoreInvalidValues) {
             valueQuality.appendInvalidValue(invalidValue);
         }
     }
 
-    private void processUnknownValue(ValueQualityStatistics valueQuality, String unknownValue) {
-        if (isStoreInvalidValues) {
-            valueQuality.appendUnknownValue(unknownValue);
-        }
-    }
-
     @Override
     public void end() {
+        // do some finalized thing at here.
     }
 
     @Override

@@ -102,6 +102,5 @@ public class CategoryInferenceManager {
         // or get the ES index.
         // TODO use ES index for category inference
         // FIXME avoid instantiation of classifiers inside each categoryRecognizer for each column
-        // categoryRecognizer = b.es().host("localhost").port(9300).cluster("elasticsearch").build();
     }
 }

@@ -12,12 +12,13 @@
 // ============================================================================
 package org.talend.dataquality.semantic.classifier;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
  * Created by sizhaoliu on 16.03.15.
  */
-public interface ISubCategoryClassifier {
+public interface ISubCategoryClassifier extends Serializable {
 
     /**
      * Return a set of category IDs

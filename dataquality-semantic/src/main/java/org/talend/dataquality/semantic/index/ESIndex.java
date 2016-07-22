@@ -131,6 +131,7 @@ public class ESIndex implements Index {
         return newIndexInitialized;
     }
 
+    @Override
     public void initIndex() {
         initIndex(false);
     }
@@ -147,11 +148,6 @@ public class ESIndex implements Index {
     }
 
     private CreateIndexResponse createIndex() {
-        XContentBuilder typeMapping = buildJsonMappings();
-        return client.admin().indices().create(new CreateIndexRequest(indexName).mapping(typeName, typeMapping)).actionGet();
-    }
-
-    private CreateIndexResponse createIndex(String indexName, String typeName) {
         XContentBuilder typeMapping = buildJsonMappings();
         return client.admin().indices().create(new CreateIndexRequest(indexName).mapping(typeName, typeMapping)).actionGet();
     }
@@ -175,6 +171,7 @@ public class ESIndex implements Index {
         }
     }
 
+    @Override
     public Set<String> findCategories(String data) {
 
         Set<String> foundCategorySet = new HashSet<String>();

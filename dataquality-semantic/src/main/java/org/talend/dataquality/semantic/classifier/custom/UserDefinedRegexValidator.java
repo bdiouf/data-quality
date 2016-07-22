@@ -31,7 +31,7 @@ import org.talend.dataquality.semantic.validator.ISemanticValidator;
  */
 public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
 
-    private static Logger log = Logger.getLogger(UserDefinedRegexValidator.class);
+    private final static Logger LOG = Logger.getLogger(UserDefinedRegexValidator.class);
 
     private String patternString;
 
@@ -66,7 +66,7 @@ public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
     public void setSubValidatorClassName(String subValidatorClassName) {
         this.subValidatorClassName = subValidatorClassName;
         this.subValidator = createSubValidator(subValidatorClassName);
-        isSetSubValidator = (this.subValidator != null);
+        isSetSubValidator = this.subValidator != null;
     }
 
     boolean isSetSubValidator() {
@@ -124,14 +124,14 @@ public class UserDefinedRegexValidator extends AbstractRegexSemanticValidator {
     private ISemanticValidator createSubValidator(String validatorName) {
         if (validatorName != null && !validatorName.isEmpty()) {
             try {
-                Class<?> subValidator = Class.forName(validatorName);
-                return (ISemanticValidator) subValidator.newInstance();
+                Class<?> subSemanticValidator = Class.forName(validatorName);
+                return (ISemanticValidator) subSemanticValidator.newInstance();
             } catch (ClassNotFoundException e) {
-                log.error(e, e);
+                LOG.error(e, e);
             } catch (InstantiationException e) {
-                log.error(e, e);
+                LOG.error(e, e);
             } catch (IllegalAccessException e) {
-                log.error(e, e);
+                LOG.error(e, e);
             }
             // exception caught => default subValidator
             // remove any existing subvalidator

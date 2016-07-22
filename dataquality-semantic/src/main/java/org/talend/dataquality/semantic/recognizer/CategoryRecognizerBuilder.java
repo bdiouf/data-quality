@@ -13,6 +13,7 @@
 package org.talend.dataquality.semantic.recognizer;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URI;
 
 import org.elasticsearch.client.transport.TransportClient;
@@ -27,7 +28,9 @@ import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
  * created by talend on 2015-07-28 Detailled comment.
  *
  */
-public class CategoryRecognizerBuilder {
+public class CategoryRecognizerBuilder implements Serializable {
+
+    private static final long serialVersionUID = -4113525921010790756L;
 
     private static CategoryRecognizerBuilder INSTANCE;
 

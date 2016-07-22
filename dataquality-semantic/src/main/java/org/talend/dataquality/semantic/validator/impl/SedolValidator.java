@@ -24,6 +24,8 @@ import org.talend.dataquality.semantic.validator.ISemanticValidator;
  */
 public class SedolValidator implements ISemanticValidator {
 
+    private static final int[] mult = { 1, 3, 1, 7, 3, 9 };
+
     @Override
     public boolean isValid(String str) {
         if (str == null || str.length() != 7) {
@@ -43,15 +45,13 @@ public class SedolValidator implements ISemanticValidator {
     }
 
     public int getSedolCheckDigit(String str) {
-        str = str.toUpperCase();
+        String strUpper = str.toUpperCase();
         int total = 0;
         for (int i = 0; i < 6; i++) {
-            char s = str.charAt(i);
+            char s = strUpper.charAt(i);
             total += Character.digit(s, 36) * mult[i];
         }
         return (10 - (total % 10)) % 10;
     }
-
-    private static final int[] mult = { 1, 3, 1, 7, 3, 9 };
 
 }
