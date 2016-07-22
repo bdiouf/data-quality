@@ -47,4 +47,12 @@ public class Range implements Comparable<Range> {
         return 0;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Range) {
+            return compareTo((Range) obj) == 0;
+        }
+        return super.equals(obj);
+    }
+
 }
