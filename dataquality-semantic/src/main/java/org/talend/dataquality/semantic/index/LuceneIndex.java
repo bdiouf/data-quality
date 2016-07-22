@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
@@ -28,6 +29,8 @@ import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
  * Created by sizhaoliu on 03/04/15.
  */
 public class LuceneIndex implements Index {
+
+    private static Logger log = Logger.getLogger(LuceneIndex.class);
 
     private final SynonymIndexSearcher searcher;
 
@@ -79,7 +82,7 @@ public class LuceneIndex implements Index {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e, e);
         }
         return foundCategorySet;
     }
