@@ -44,15 +44,11 @@ public class SemanticCategory {
         this.semanticName = categoryName;
     }
 
-    // public SemanticCategory(CategoryFrequency frequency) {
-    //
-    // }
-
     private final String semanticCategoryId;
 
     private String semanticName;
 
-    private long count = 0l;
+    private long count = 0L;
 
     private double frequency = 0d;
 
@@ -114,9 +110,9 @@ public class SemanticCategory {
      * @return
      */
     private String formatStr() {
-        StringBuffer strBuf = new StringBuffer();
+        StringBuilder strBuf = new StringBuilder();
         strBuf.append(semanticName);
-        if (frequency == 0) {
+        if (Double.compare(frequency, 0.0D) == 0) {
             strBuf.append("                       (previous match)");
         } else {
             for (int index = strBuf.length(); index < Math.max(2, 50 - semanticName.length()); index++) {
