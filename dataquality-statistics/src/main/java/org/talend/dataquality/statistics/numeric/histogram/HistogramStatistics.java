@@ -67,7 +67,7 @@ public class HistogramStatistics {
         } else if (bin > numBins) { /* this data point is bigger than max */
             countAboveMax++;
         } else {
-            if (bin == numBins) {
+            if (Double.compare(bin, numBins) == 0) {
                 result[(int) bin - 1] += 1; // Include count of the upper boundary.
             } else {
                 result[(int) bin] += 1;

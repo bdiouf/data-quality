@@ -32,7 +32,7 @@ import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
  */
 public class SynonymRecordSearcher {
 
-    private static Logger log = Logger.getLogger(SynonymRecordSearcher.class);
+    private static final Logger LOG = Logger.getLogger(SynonymRecordSearcher.class);
 
     private SynonymIndexSearcher[] searchers;
 
@@ -156,8 +156,7 @@ public class SynonymRecordSearcher {
             }
         }
 
-        private static OutputRecord createOutputRecord(int recordLength, List<WordResult> foundWords,
-                WordResult currentWordResult) {
+        private static OutputRecord createOutputRecord(int recordLength, List<WordResult> foundWords, WordResult currentWordResult) {
             OutputRecord outputRec = new OutputRecord(recordLength);
             for (int i = 0; i < foundWords.size(); i++) {
                 updateOutputRec(outputRec, i, foundWords.get(i));
@@ -171,7 +170,7 @@ public class SynonymRecordSearcher {
             outputRec.record[idx] = wordResult.word;
             outputRec.score += wordResult.score; // TODO add multiplicative weight here if needed
             outputRec.scores += "|" + wordResult.score;//$NON-NLS-1$
-            if (wordResult.score != 0) {
+            if (Float.compare(wordResult.score, 0.0F) != 0) {
                 outputRec.nbMatch++;
             }
         }
@@ -187,7 +186,6 @@ public class SynonymRecordSearcher {
     public List<OutputRecord> search(int maxNbOutputResults, String[] record) throws IOException {
         assert record != null;
 
-        // List<RecordResult> recResults = new ArrayList<SynonymRecordSearcher.RecordResult>();
         RecordResult recRes = new RecordResult();
 
         // search each field in the appropriate index
@@ -219,7 +217,7 @@ public class SynonymRecordSearcher {
                     }
                 }
                 // handle case when nothing is found in the index
-                if (wResults.size() == 0) {
+                if (wResults.isEmpty()) {
                     WordResult wordRes = createEmptyWordResult(field);
                     wResults.add(wordRes);
                 }
@@ -244,7 +242,7 @@ public class SynonymRecordSearcher {
     public void addSearcher(SynonymIndexSearcher searcher, int columnIndex) {
         assert columnIndex < this.recordSize;
         if (searcher == null) {
-            log.error("SynonymRecordSearcher.tried" + columnIndex);
+            LOG.error("SynonymRecordSearcher.tried" + columnIndex);
         }
         searchers[columnIndex] = searcher;
     }
