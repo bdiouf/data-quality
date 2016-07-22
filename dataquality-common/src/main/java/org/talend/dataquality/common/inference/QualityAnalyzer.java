@@ -33,10 +33,8 @@ public abstract class QualityAnalyzer<T, QT> implements Analyzer<T> {
      * {@link Parameters.QualityParam#STORE_VALUE}
      * @param isStoreInvalidValues
      */
-    @Deprecated
     public void setStoreInvalidValues(boolean isStoreInvalidValues) {
         this.isStoreInvalidValues = isStoreInvalidValues;
     }
-
 
 }
