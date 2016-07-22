@@ -167,6 +167,11 @@ public class AttributeValues<T extends Comparable<T>> implements Iterable<T> {
             return ObjectUtils.equals(this, obj);
         }
 
+        @Override
+        public int hashCode() {
+            return occurrence * value.hashCode();
+        }
+
         public int getOccurrence() {
             return occurrence;
         }
