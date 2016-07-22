@@ -41,13 +41,7 @@ import org.talend.utils.string.AsciiUtils;
  * 
  * MOD scorreia 2010-02-18 replace str by trimmed str
  */
-public class SoundexFR implements java.io.Serializable {
-
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 3547140878285556319L;
+public class SoundexFR {
 
     /** Informative String about the encoding type this encoder does . * */
     public static final String ENCODING_TYPE = "SoundEx_FR"; //$NON-NLS-1$
