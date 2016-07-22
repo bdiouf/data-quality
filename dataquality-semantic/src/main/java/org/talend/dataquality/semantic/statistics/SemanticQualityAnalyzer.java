@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.talend.dataquality.common.inference.Analyzer;
 import org.talend.dataquality.common.inference.QualityAnalyzer;
 import org.talend.dataquality.common.inference.ResizableList;
@@ -35,6 +36,8 @@ import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatistics, String[]> {
 
     private static final long serialVersionUID = -5951511723860660263L;
+
+    private static final Logger LOG = Logger.getLogger(SemanticQualityAnalyzer.class);
 
     private final ResizableList<ValueQualityStatistics> results = new ResizableList<>(ValueQualityStatistics.class);
 
@@ -62,7 +65,7 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
             regexClassifier = categoryRecognizer.getUserDefineClassifier();
             dataDictClassifier = categoryRecognizer.getDataDictFieldClassifier();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e, e);
         }
         results.clear();
     }
