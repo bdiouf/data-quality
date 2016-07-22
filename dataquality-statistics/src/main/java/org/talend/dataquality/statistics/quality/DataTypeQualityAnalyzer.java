@@ -48,11 +48,11 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
 
     public DataTypeQualityAnalyzer(DataTypeEnum[] types, boolean isStoreInvalidValues) {
         this.isStoreInvalidValues = isStoreInvalidValues;
-        this.types = types;
+        setTypes(types);
     }
 
     public DataTypeQualityAnalyzer(DataTypeEnum... types) {
-        this.types = types;
+        setTypes(types);
     }
 
     @Override
@@ -71,11 +71,11 @@ public class DataTypeQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
             final ValueQualityStatistics valueQuality = results.get(i);
             if (TypeInferenceUtils.isEmpty(value)) {
                 valueQuality.incrementEmpty();
-            } else if (DataTypeEnum.DATE == types[i] && CustomDateTimePatternManager.isDate(value, customDateTimePatterns)) {
+            } else if (DataTypeEnum.DATE == getTypes()[i] && CustomDateTimePatternManager.isDate(value, customDateTimePatterns)) {
                 valueQuality.incrementValid();
-            } else if (DataTypeEnum.TIME == types[i] && CustomDateTimePatternManager.isTime(value, customDateTimePatterns)) {
+            } else if (DataTypeEnum.TIME == getTypes()[i] && CustomDateTimePatternManager.isTime(value, customDateTimePatterns)) {
                 valueQuality.incrementValid();
-            } else if (TypeInferenceUtils.isValid(types[i], value)) {
+            } else if (TypeInferenceUtils.isValid(getTypes()[i], value)) {
                 valueQuality.incrementValid();
             } else {
                 // while list analyzers

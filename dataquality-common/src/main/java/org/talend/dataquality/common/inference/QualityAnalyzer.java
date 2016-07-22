@@ -18,18 +18,25 @@ public abstract class QualityAnalyzer<T, QT> implements Analyzer<T> {
 
     protected boolean isStoreInvalidValues = true;
 
-    protected QT types;
+    private QT types;
+
+    public void setTypes(QT types) {
+        this.types = types;
+    }
+
+    public QT getTypes() {
+        return types;
+    }
 
     /**
      * @deprecated use {@link #addParameters(java.util.HashMap)} instead with
      * {@link Parameters.QualityParam#STORE_VALUE}
      * @param isStoreInvalidValues
      */
+    @Deprecated
     public void setStoreInvalidValues(boolean isStoreInvalidValues) {
         this.isStoreInvalidValues = isStoreInvalidValues;
     }
 
-    public QT getTypes() {
-        return types;
-    }
+
 }
