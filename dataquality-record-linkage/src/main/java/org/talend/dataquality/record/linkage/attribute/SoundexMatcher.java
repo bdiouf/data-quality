@@ -14,12 +14,16 @@ package org.talend.dataquality.record.linkage.attribute;
 
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.language.Soundex;
+import org.apache.log4j.Logger;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
+import org.talend.dataquality.record.linkage.record.AbstractRecordMatcher;
 
 /**
  * DOC scorreia class global comment. Detailled comment
  */
 public class SoundexMatcher extends AbstractAttributeMatcher {
+
+    private static final Logger LOG = Logger.getLogger(AbstractRecordMatcher.class);
 
     private static final long serialVersionUID = 5208397253497469289L;
 
@@ -36,12 +40,13 @@ public class SoundexMatcher extends AbstractAttributeMatcher {
      * @see org.talend.dataquality.record.linkage.attribute.AbstractAttributeMatcher#getWeight(java.lang.String,
      * java.lang.String)
      */
+    @Override
     public double getWeight(String str1, String str2) {
         try {
             int diff = soundex.difference(str1, str2);
             return diff / MAX;
         } catch (EncoderException e) {
-            e.printStackTrace();
+            LOG.error(e);
             return 0;
         }
     }
@@ -51,6 +56,7 @@ public class SoundexMatcher extends AbstractAttributeMatcher {
      * 
      * @see org.talend.dataquality.record.linkage.attribute.IAttributeMatcher#getMatchType()
      */
+    @Override
     public AttributeMatcherType getMatchType() {
         return AttributeMatcherType.SOUNDEX;
     }

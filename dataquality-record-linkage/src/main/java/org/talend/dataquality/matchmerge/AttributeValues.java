@@ -162,6 +162,11 @@ public class AttributeValues<T extends Comparable<T>> implements Iterable<T> {
             return ObjectUtils.compare(value, tEntry.value);
         }
 
+        @Override
+        public boolean equals(Object obj) {
+            return ObjectUtils.equals(this, obj);
+        }
+
         public int getOccurrence() {
             return occurrence;
         }
