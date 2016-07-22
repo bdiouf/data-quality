@@ -20,11 +20,15 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
+
 /**
  * created by talend on 2015-07-28 Detailled comment.
  *
  */
 public class PlatformPathUtil {
+
+    private static final Logger LOG = Logger.getLogger(SynonymIndexBuilder.class);
 
     public static InputStream getInputStreamByPlatformURL(String bundleName, String filePath) throws FileNotFoundException {
         try {
@@ -34,19 +38,19 @@ public class PlatformPathUtil {
             // if the platform protocol is unknown, try to create a FileInputStream with local path
             return new FileInputStream(filePath);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return null;
     }
 
     public static String getFilePathByPlatformURL(String bundleName, String filePath) {
         try {
-            URL url = new URL("platform:/plugin/" + bundleName + filePath); //$NON-NLS-1$ //$NON-NLS-2$
+            URL url = new URL("platform:/plugin/" + bundleName + filePath); //$NON-NLS-1$ 
             return getFilePathByPlatformURL(url);
         } catch (MalformedURLException e) {
             // if the platform protocol is unknown, return the input local path
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return filePath;
     }

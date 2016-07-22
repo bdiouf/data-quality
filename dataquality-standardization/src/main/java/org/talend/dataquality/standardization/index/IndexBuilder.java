@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -38,6 +39,8 @@ import com.talend.csv.CSVReader;
  */
 // TODO move the main method and related methods into the test project.
 public class IndexBuilder {
+
+    private static final Logger LOG = Logger.getLogger(SynonymIndexBuilder.class);
 
     private String directoryPath;
 
@@ -69,13 +72,11 @@ public class IndexBuilder {
         index = new MMapDirectory(new File(directoryPath));
         // The same analyzer should be used for indexing and searching
         Analyzer analyzer = new StandardAnalyzer();
-        // Analyzer analyzer = new StandardAnalyzer();
         // the boolean arg in the IndexWriter ctor means to
         // create a new index, overwriting any existing index
         IndexWriterConfig config = new IndexWriterConfig(Version.LATEST, analyzer);
         IndexWriter w = new IndexWriter(index, config);
-        // read the data (this will be the input data of a component called
-        // tFirstNameStandardize)
+        // read the data (this will be the input data of a component called tFirstNameStandardize)
         CSVReader csvReader = createCSVReader(csvFileToIndex, ',');
 
         while (csvReader.readNext()) {
@@ -93,7 +94,7 @@ public class IndexBuilder {
     }
 
     private static void addDoc(IndexWriter w, String name, String country, String gender, String count) throws IOException {
-        if (!country.equals("") && !gender.equals("")) {//$NON-NLS-1$ //$NON-NLS-2$
+        if (!"".equals(country) && !"".equals(gender)) {//$NON-NLS-1$ //$NON-NLS-2$
             Document doc = new Document();
             Field field = new Field("name", name, Field.Store.YES, Field.Index.ANALYZED, TermVector.YES);//$NON-NLS-1$
             doc.add(field);
@@ -114,7 +115,6 @@ public class IndexBuilder {
 
         // The same analyzer should be used for indexing and searching
         Analyzer analyzer = new StandardAnalyzer();
-        // Analyzer analyzer = new StandardAnalyzer();
         // the boolean arg in the IndexWriter ctor means to
         // create a new index, overwriting any existing index
         IndexWriterConfig config = new IndexWriterConfig(Version.LATEST, analyzer);
@@ -158,11 +158,10 @@ public class IndexBuilder {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    private CSVReader createCSVReader(String csvFileToIndex, char seperator)
-            throws UnsupportedEncodingException, FileNotFoundException, IOException {
-        CSVReader csvReader = new CSVReader(
-                new java.io.BufferedReader(
-                        new java.io.InputStreamReader(new java.io.FileInputStream(csvFileToIndex.toString()), "windows-1252")), //$NON-NLS-1$
+    private CSVReader createCSVReader(String csvFileToIndex, char seperator) throws UnsupportedEncodingException,
+            FileNotFoundException, IOException {
+        CSVReader csvReader = new CSVReader(new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(
+                csvFileToIndex.toString()), "windows-1252")), //$NON-NLS-1$
                 seperator);
         csvReader.setQuoteChar('\"');
 
@@ -181,7 +180,7 @@ public class IndexBuilder {
         try {
             ib.initializeSynonymIndex("data/indexes/" + sourceFile, columnsToIndex);//$NON-NLS-1$
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -196,7 +195,7 @@ public class IndexBuilder {
         try {
             ib.initializeSynonymIndex("data/indexes/" + sourceFile, columnsToIndex);//$NON-NLS-1$
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
