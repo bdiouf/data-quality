@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -37,6 +38,8 @@ import org.talend.dataquality.standardization.query.FirstNameStandardize;
  * DOC klliu class global comment.
  */
 public class HandleLuceneImpl implements HandleLucene {
+
+    private static final Logger LOG = Logger.getLogger(HandleLuceneImpl.class);
 
     private static final int HITS_PER_PAGE = 10;
 
@@ -58,8 +61,7 @@ public class HandleLuceneImpl implements HandleLucene {
         try {
             idxBuilder.initializeIndex(filename, columnsToBeIndexed);
         } catch (IOException e) {
-
-            e.printStackTrace();
+            LOG.error(e, e);
             return false;
         }
 
@@ -84,30 +86,19 @@ public class HandleLuceneImpl implements HandleLucene {
                     genderText = information2value.get(indexKind);
                 }
             }
-            if (countryText == null && genderText == null) {
-                try {
+
+            try {
+                if (countryText == null && genderText == null) {
                     result = stdname.replaceName(inputName, fuzzyQuery);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (countryText != null && genderText != null) {
-                try {
+                } else if (countryText != null && genderText != null) {
                     result = stdname.replaceNameWithCountryGenderInfo(inputName, countryText, genderText, fuzzyQuery);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (countryText != null && genderText == null) {
-                try {
+                } else if (countryText != null && genderText == null) {
                     result = stdname.replaceNameWithCountryInfo(inputName, countryText, fuzzyQuery);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (countryText == null && genderText != null) {
-                try {
+                } else if (countryText == null && genderText != null) {
                     result = stdname.replaceNameWithGenderInfo(inputName, genderText, fuzzyQuery);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                LOG.error(e, e);
             }
 
         }
@@ -129,7 +120,7 @@ public class HandleLuceneImpl implements HandleLucene {
             docs = stdname.standardize(inputName, information2value, fuzzyQuery);
             treatSearchResult(searcher, inputName, docs);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error(e, e);
         }
 
         searcher.getIndexReader().close();
@@ -139,18 +130,17 @@ public class HandleLuceneImpl implements HandleLucene {
 
     private void treatSearchResult(IndexSearcher searcher, String inputName, ScoreDoc[] docs) {
         soreDoc = new ArrayList<String>();
-        for (int i = 0; i < docs.length; ++i) {
-            int docId = docs[i].doc;
+        for (ScoreDoc doc : docs) {
+            int docId = doc.doc;
             Document d = null;
             try {
                 d = searcher.doc(docId);
                 String name = d.get("name");//$NON-NLS-1$
                 soreDoc.add(name);
             } catch (CorruptIndexException e) {
-                e.printStackTrace();
+                LOG.error(e, e);
             } catch (IOException e) {
-
-                e.printStackTrace();
+                LOG.error(e, e);
             }
         }
         String[] resultArray = new String[soreDoc.size()];
@@ -178,11 +168,9 @@ public class HandleLuceneImpl implements HandleLucene {
             IndexReader reader = DirectoryReader.open(dir);
             is = new IndexSearcher(reader);
         } catch (CorruptIndexException e) {
-
-            e.printStackTrace();
+            LOG.error(e, e);
         } catch (IOException e) {
-
-            e.printStackTrace();
+            LOG.error(e, e);
         }
         return is;
     }

@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.core.LowerCaseFilter;
@@ -48,13 +49,15 @@ import org.talend.dataquality.standardization.constant.PluginConstant;
  */
 public class FirstNameStandardize {
 
+    private static final Logger LOG = Logger.getLogger(FirstNameStandardize.class);
+
     /**
      * According to levenshtein algorithm, the following value means a distance of 1 is allowed to match a first name
      * containing 4 to 7 letters, while for those with 8 to 12 letters, 2 erroneous letters are allowed. a first name
      * between 12 and 15 letters, allows a distance of 3, and so on ...
      * <p>
-     * For the first names with minus sign inside, ex: Jean-Baptiste, the matching is done for Jean and Baptiste
-     * separately, and the number of tokens is also considered by Lucene.
+     * For the first names with minus sign inside, ex: Jean-Baptiste, the matching is done for Jean and Baptiste separately, and
+     * the number of tokens is also considered by Lucene.
      */
     @Deprecated
     private static final float MATCHING_SIMILARITY = 0.74f;
@@ -88,7 +91,7 @@ public class FirstNameStandardize {
             try {
                 matches = getFuzzySearch(input).scoreDocs;
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error(e, e);
             }
         } else {
             Query q = new QueryParser(PluginConstant.FIRST_NAME_STANDARDIZE_NAME, analyzer).parse(input);

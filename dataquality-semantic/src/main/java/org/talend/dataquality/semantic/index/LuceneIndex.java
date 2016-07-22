@@ -30,7 +30,7 @@ import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
  */
 public class LuceneIndex implements Index {
 
-    private static Logger log = Logger.getLogger(LuceneIndex.class);
+    private static final Logger LOG = Logger.getLogger(LuceneIndex.class);
 
     private final SynonymIndexSearcher searcher;
 
@@ -82,7 +82,7 @@ public class LuceneIndex implements Index {
                 }
             }
         } catch (IOException e) {
-            log.error(e, e);
+            LOG.error(e, e);
         }
         return foundCategorySet;
     }
