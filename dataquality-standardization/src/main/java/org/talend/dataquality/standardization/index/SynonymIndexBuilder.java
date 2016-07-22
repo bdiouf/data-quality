@@ -29,12 +29,9 @@ import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.CheckIndex;
 import org.apache.lucene.index.CheckIndex.Status;
 import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -46,7 +43,7 @@ import org.talend.dataquality.standardization.i18n.Messages;
  */
 public class SynonymIndexBuilder {
 
-    private static final Logger log = Logger.getLogger(SynonymIndexBuilder.class);
+    private static final Logger LOG = Logger.getLogger(SynonymIndexBuilder.class);
 
     private Directory indexDir;
 
@@ -206,7 +203,6 @@ public class SynonymIndexBuilder {
      */
     public void deleteAllDocuments() throws IOException {
         getWriter().deleteAll();
-        // getWriter().commit();
     }
 
     /**
@@ -243,11 +239,11 @@ public class SynonymIndexBuilder {
             Set<String> synonymList = new HashSet<String>();
 
             boolean synExists = false;
-            if (tempSynonym.toLowerCase().equals(word.toLowerCase())) {
+            if (tempSynonym.equalsIgnoreCase(word)) {
                 synExists = true;
             }
             for (String str : synonyms) {
-                if (str.toLowerCase().equals(tempSynonym.toLowerCase())) {
+                if (str.equalsIgnoreCase(tempSynonym)) {
                     synExists = true;
                 }
                 synonymList.add(str);
@@ -281,7 +277,7 @@ public class SynonymIndexBuilder {
             return 0;
         }
         String tempSynonymToDelete = synonymToDelete.trim();
-        if (tempSynonymToDelete.toLowerCase().equals(word.toLowerCase())) {
+        if (tempSynonymToDelete.equalsIgnoreCase(word)) {
             error.set(false, Messages.getString("SynonymIndexBuilder.synonymToDelete", tempSynonymToDelete, word));//$NON-NLS-1$
             return 0;
         }
@@ -304,7 +300,7 @@ public class SynonymIndexBuilder {
                 if (str.equals(word)) {
                     // do nothing. because the word will be added to the document
                     // automatically in the method generateDocument().
-                } else if (str.toLowerCase().equals(tempSynonymToDelete.toLowerCase())) {
+                } else if (str.equalsIgnoreCase(tempSynonymToDelete)) {
                     // we don't require the synonymToDelete to be case sensitive.
                     deleted++;
                 } else {
@@ -355,7 +351,7 @@ public class SynonymIndexBuilder {
                     CheckIndex check = new CheckIndex(directory);
                     status = check.checkIndex();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOG.error(e);
                 } finally {
                     if (directory != null) {
                         directory.close();
@@ -402,9 +398,9 @@ public class SynonymIndexBuilder {
         try {
             this.getWriter().close();
         } catch (CorruptIndexException e) {
-            e.printStackTrace();
+            LOG.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -416,10 +412,10 @@ public class SynonymIndexBuilder {
             this.getWriter().commit();
         } catch (CorruptIndexException e) {
             error.set(false, e.getMessage());
-            e.printStackTrace();
+            LOG.error(e);
         } catch (IOException e) {
             error.set(false, e.getMessage());
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -466,7 +462,7 @@ public class SynonymIndexBuilder {
         try {
             return this.getWriter().numDocs();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e);
             return -1;
         }
     }

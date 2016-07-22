@@ -104,8 +104,7 @@ public class DQMFBRecordMerger extends MFBRecordMerger {
 
                 // Get the merged value and update the merged row.
                 mergedRows[colIdx] = new DQAttribute(StringUtils.EMPTY, colIdx);// No label for the
-                // attributes which are not
-                // matching keys;
+                // attributes which are not matching keys;
 
                 // Keep values from original records (if any)
                 String leftValue = richRecord1.getOriginRow().get(colIdx).getValue();
@@ -150,7 +149,7 @@ public class DQMFBRecordMerger extends MFBRecordMerger {
         double gQuality1 = richRecord1.getGroupQuality();
         double gQuality2 = richRecord2.getGroupQuality();
         double minQuality = Math.min(gQuality1, gQuality2);
-        if (minQuality != 0) {
+        if (Double.compare(minQuality, 0.0) != 0) {
             mergedRecord.setGroupQuality(minQuality);
         }
         return mergedRecord;

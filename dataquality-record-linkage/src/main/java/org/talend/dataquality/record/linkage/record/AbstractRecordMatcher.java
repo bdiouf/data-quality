@@ -27,7 +27,7 @@ import org.talend.dataquality.record.linkage.attribute.IAttributeMatcher;
  */
 public abstract class AbstractRecordMatcher implements IRecordMatcher {
 
-    private static Logger log = Logger.getLogger(AbstractRecordMatcher.class);
+    private static final Logger LOG = Logger.getLogger(AbstractRecordMatcher.class);
 
     protected int recordSize = 0;
 
@@ -170,12 +170,12 @@ public abstract class AbstractRecordMatcher implements IRecordMatcher {
                 throw new IllegalArgumentException(Messages.getString("AbstractRecordMatcher.InvalideAttributeWeight", w)); //$NON-NLS-1$
             }
             total += w;
-            if (w != 0) {
+            if (Double.compare(w, 0.0) != 0) {
                 indices.add(i);
             }
         }
         // at least one weight must be non zero
-        if (total == 0.0d) {
+        if (Double.compare(total, 0.0d) == 0) {
             throw new IllegalArgumentException(Messages.getString("AbstractRecordMatcher.0")); //$NON-NLS-1$
         }
 
@@ -220,7 +220,7 @@ public abstract class AbstractRecordMatcher implements IRecordMatcher {
     public boolean setBlockingAttributeMatchers(int[] attrMatcherIndices) {
         for (int idx : attrMatcherIndices) {
             if (idx < 0 || idx >= recordSize) {
-                log.error("the index must be between 0 and the size of the records"); //$NON-NLS-1$
+                LOG.error("the index must be between 0 and the size of the records"); //$NON-NLS-1$
                 return false;
             }
         }
@@ -282,7 +282,7 @@ public abstract class AbstractRecordMatcher implements IRecordMatcher {
     @Override
     public String getLabeledAttributeMatchWeights() {
         final String separator = " | "; //$NON-NLS-1$
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         double[] currentAttributeMatchingWeights = this.getCurrentAttributeMatchingWeights();
         for (int i = 0; i < currentAttributeMatchingWeights.length; i++) {
             IAttributeMatcher attributeMatcher = this.attributeMatchers[i];
@@ -341,7 +341,7 @@ public abstract class AbstractRecordMatcher implements IRecordMatcher {
      */
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append(this.getClass().getSimpleName()).append(" Record size:"); //$NON-NLS-1$
         buf.append(this.recordSize).append("\n"); //$NON-NLS-1$
         for (int usedIndice : usedIndices) {

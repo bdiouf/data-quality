@@ -273,7 +273,7 @@ public class SynonymIndexSearcher {
             }
             mgr.release(searcher);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
         return -1;
     }
@@ -291,7 +291,7 @@ public class SynonymIndexSearcher {
             doc = searcher.doc(docNum);
             mgr.release(searcher);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
         return doc;
     }
@@ -421,10 +421,10 @@ public class SynonymIndexSearcher {
         wordQuery = new BooleanQuery();
         synQuery = new BooleanQuery();
         for (String token : tokens) {
-            ((BooleanQuery) wordQuery).add(getTermQuery(F_WORD, token, fuzzy),
-                    allMatch ? BooleanClause.Occur.MUST : BooleanClause.Occur.SHOULD);
-            ((BooleanQuery) synQuery).add(getTermQuery(F_SYN, token, fuzzy),
-                    allMatch ? BooleanClause.Occur.MUST : BooleanClause.Occur.SHOULD);
+            ((BooleanQuery) wordQuery).add(getTermQuery(F_WORD, token, fuzzy), allMatch ? BooleanClause.Occur.MUST
+                    : BooleanClause.Occur.SHOULD);
+            ((BooleanQuery) synQuery).add(getTermQuery(F_SYN, token, fuzzy), allMatch ? BooleanClause.Occur.MUST
+                    : BooleanClause.Occur.SHOULD);
         }
 
         // increase importance of the reference word
