@@ -421,10 +421,10 @@ public class SynonymIndexSearcher {
         wordQuery = new BooleanQuery();
         synQuery = new BooleanQuery();
         for (String token : tokens) {
-            ((BooleanQuery) wordQuery).add(getTermQuery(F_WORD, token, fuzzy), allMatch ? BooleanClause.Occur.MUST
-                    : BooleanClause.Occur.SHOULD);
-            ((BooleanQuery) synQuery).add(getTermQuery(F_SYN, token, fuzzy), allMatch ? BooleanClause.Occur.MUST
-                    : BooleanClause.Occur.SHOULD);
+            ((BooleanQuery) wordQuery).add(getTermQuery(F_WORD, token, fuzzy),
+                    allMatch ? BooleanClause.Occur.MUST : BooleanClause.Occur.SHOULD);
+            ((BooleanQuery) synQuery).add(getTermQuery(F_SYN, token, fuzzy),
+                    allMatch ? BooleanClause.Occur.MUST : BooleanClause.Occur.SHOULD);
         }
 
         // increase importance of the reference word

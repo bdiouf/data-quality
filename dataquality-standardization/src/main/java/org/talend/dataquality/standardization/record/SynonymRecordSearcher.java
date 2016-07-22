@@ -156,7 +156,8 @@ public class SynonymRecordSearcher {
             }
         }
 
-        private static OutputRecord createOutputRecord(int recordLength, List<WordResult> foundWords, WordResult currentWordResult) {
+        private static OutputRecord createOutputRecord(int recordLength, List<WordResult> foundWords,
+                WordResult currentWordResult) {
             OutputRecord outputRec = new OutputRecord(recordLength);
             for (int i = 0; i < foundWords.size(); i++) {
                 updateOutputRec(outputRec, i, foundWords.get(i));
