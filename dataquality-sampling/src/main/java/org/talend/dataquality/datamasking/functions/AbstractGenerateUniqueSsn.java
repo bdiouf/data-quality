@@ -70,7 +70,10 @@ public abstract class AbstractGenerateUniqueSsn extends Function<String> {
             else
                 return null;
         }
-        return insertSpacesInString(str, result);
+        if (keepFormat)
+            return insertSpacesInString(str, result);
+        else
+            return result.toString();
     }
 
     /**

@@ -30,6 +30,7 @@ public class GenerateUniqueSsnGermanTest {
     @Before
     public void setUp() throws Exception {
         gnj.setRandomWrapper(new RandomWrapper(42));
+        gnj.setKeepFormat(true);
     }
 
     @Test

@@ -30,6 +30,7 @@ public class GenerateUniqueSsnUsTest {
     @Before
     public void setUp() throws Exception {
         gnu.setRandomWrapper(new RandomWrapper(42));
+        gnu.setKeepFormat(true);
     }
 
     @Test

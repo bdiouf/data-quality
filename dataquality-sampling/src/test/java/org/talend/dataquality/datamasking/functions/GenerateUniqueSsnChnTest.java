@@ -30,6 +30,7 @@ public class GenerateUniqueSsnChnTest {
     @Before
     public void setUp() throws Exception {
         gnf.setRandomWrapper(new RandomWrapper(42));
+        gnf.setKeepFormat(true);
     }
 
     @Test

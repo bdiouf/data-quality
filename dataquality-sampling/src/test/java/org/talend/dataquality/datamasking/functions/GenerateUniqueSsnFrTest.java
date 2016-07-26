@@ -30,6 +30,7 @@ public class GenerateUniqueSsnFrTest {
     @Before
     public void setUp() throws Exception {
         gnf.setRandomWrapper(new RandomWrapper(42));
+        gnf.setKeepFormat(true);
     }
 
     @Test
@@ -62,23 +63,25 @@ public class GenerateUniqueSsnFrTest {
 
     @Test
     public void testGood2() {
+        gnf.setKeepFormat(false);
         // with spaces
         output = gnf.generateMaskedRow("2 12 12 15 953 006   88");
-        assertEquals("1 17 05 11 293 176   22", output);
+        assertEquals("117051129317622", output);
     }
 
     @Test
     public void testGood3() {
         // corse department
-        output = gnf.generateMaskedRow("10501 2B 532895 34");
-        assertEquals("12312 85 719322 48", output);
+        output = gnf.generateMaskedRow("10501  2B 532895 34");
+        assertEquals("12312  85 719322 48", output);
     }
 
     @Test
     public void testGood4() {
+        gnf.setKeepFormat(false);
         // with a control key less than 10
         output = gnf.generateMaskedRow("1960159794247 60");
-        assertEquals("2761158866619 03", output);
+        assertEquals("276115886661903", output);
     }
 
     @Test
