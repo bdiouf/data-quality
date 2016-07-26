@@ -41,8 +41,8 @@ public class SynonymRecordSearcherTest {
     private static final Logger log = Logger.getLogger(SynonymRecordSearcherTest.class);
 
     private static final String[][][] WORDRESULTS = { //
-    { { "11", "12", "13", "14", "15" }, { "21", "22", "23" }, { "31", "32", "33" }, { "41" } } // always at least one //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
-                                                                                               // match
+            { { "11", "12", "13", "14", "15" }, { "21", "22", "23" }, { "31", "32", "33" }, { "41" } } // always at least one //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+                                                                                                       // match
             , { { "11", "12" }, { "21", "22" }, { "31", "32" } } // several matches //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
             , { {}, { "21", "22" }, { "31", "32" } } // first search does not match anything //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             , { { "11", "12" }, {}, { "31", "32" } } // second search does not match anything //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
