@@ -12,11 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.standardization.record;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,15 +41,15 @@ public class SynonymRecordSearcherTest {
     private static final Logger log = Logger.getLogger(SynonymRecordSearcherTest.class);
 
     private static final String[][][] WORDRESULTS = { //
-            { { "11", "12", "13", "14", "15" }, { "21", "22", "23" }, { "31", "32", "33" }, { "41" } } // always at least one
-                                                                                                       // match
-            , { { "11", "12" }, { "21", "22" }, { "31", "32" } } // several matches
-            , { {}, { "21", "22" }, { "31", "32" } } // first search does not match anything
-            , { { "11", "12" }, {}, { "31", "32" } } // second search does not match anything
-            , { { "11", "12" }, { "21", "22" }, {} } // last search does not match anything
-            , { { "11", "12" }, {}, {} } // 2 searches did not match
+    { { "11", "12", "13", "14", "15" }, { "21", "22", "23" }, { "31", "32", "33" }, { "41" } } // always at least one //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+                                                                                               // match
+            , { { "11", "12" }, { "21", "22" }, { "31", "32" } } // several matches //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+            , { {}, { "21", "22" }, { "31", "32" } } // first search does not match anything //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            , { { "11", "12" }, {}, { "31", "32" } } // second search does not match anything //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            , { { "11", "12" }, { "21", "22" }, {} } // last search does not match anything //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            , { { "11", "12" }, {}, {} } // 2 searches did not match //$NON-NLS-1$ //$NON-NLS-2$
             , { {}, {}, {} } // nothing matched at all
-            , { { "11", "11" }, { "21", "21" } } // matched are duplicate
+            , { { "11", "11" }, { "21", "21" } } // matched are duplicate //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     };
 
     private static final boolean showInConsole = false;
@@ -62,11 +58,11 @@ public class SynonymRecordSearcherTest {
     public void testRecordResultCompute() {
         int nbDup = 0;
         for (String[][] wrs : WORDRESULTS) {
-            printLineToConsole(" ###    Testing #### ");
+            printLineToConsole(" ###    Testing #### "); //$NON-NLS-1$
 
             nbDup += testRecordResultCompute(wrs);
         }
-        assertEquals("last wordResult array should contain duplicates", 1, nbDup);
+        assertEquals("last wordResult array should contain duplicates", 1, nbDup); //$NON-NLS-1$
     }
 
     private int testRecordResultCompute(String[][] wordresults) {
@@ -78,8 +74,8 @@ public class SynonymRecordSearcherTest {
             List<WordResult> wrs = new ArrayList<WordResult>();
             for (String elt : elts) {
                 WordResult wr = new WordResult();
-                wr.input = "input " + elt;
-                wr.word = "word " + elt;
+                wr.input = "input " + elt; //$NON-NLS-1$
+                wr.word = "word " + elt; //$NON-NLS-1$
                 wr.score = Integer.valueOf(elt);
                 wrs.add(wr);
             }
@@ -128,7 +124,7 @@ public class SynonymRecordSearcherTest {
                     break;
                 }
             }
-            assertTrue("Record not found: " + outputRecord, found);
+            assertTrue("Record not found: " + outputRecord, found); //$NON-NLS-1$
         }
         return nbDuplicateFound;
     }
@@ -145,7 +141,7 @@ public class SynonymRecordSearcherTest {
         int i = 0;
         for (String[] wr : wordresults) {
             if (wr.length == 0) {
-                init[i] = "AAA";
+                init[i] = "AAA"; //$NON-NLS-1$
             } else {
                 init[i] = wr[rnd.nextInt(wr.length)];
             }
@@ -163,18 +159,18 @@ public class SynonymRecordSearcherTest {
                 builder.insertDocument(synonyms[0], synonyms[1]);
             } catch (IOException e) {
                 e.printStackTrace();
-                fail("should not get an exception here");
+                fail("should not get an exception here"); //$NON-NLS-1$
             }
         }
         builder.closeIndex();
     }
 
-    public void testSearch(String[] record, int topDocLimit, int resultLimit) {
+    public void testSearch(String[] record, int topDocLimit, int resultLimit, String fileIndex) {
         SynonymRecordSearcher recSearcher = new SynonymRecordSearcher(record.length);
         for (int i = 0; i < record.length; i++) {
-            initIdx(("data/idx") + (i + 1));
+            initIdx(("data/idx") + fileIndex + (i + 1));//$NON-NLS-1$
             final URI indexPath;
-            indexPath = new File("data/idx" + (i + 1)).toURI();
+            indexPath = new File("data/idx" + fileIndex + (i + 1)).toURI(); //$NON-NLS-1$
             SynonymIndexSearcher searcher = new SynonymIndexSearcher(indexPath);
             searcher.setTopDocLimit(topDocLimit);
             recSearcher.addSearcher(searcher, i);
@@ -196,7 +192,7 @@ public class SynonymRecordSearcherTest {
                 String[] resultingRecord = outputRecord.getRecord();
                 assertEquals(record.length, resultingRecord.length);
                 printLineToConsole(StringUtils.join(resultingRecord, '|'));
-                printLineToConsole("\t" + outputRecord.getScore());
+                printLineToConsole("\t" + outputRecord.getScore()); //$NON-NLS-1$
             }
             assertEquals(Math.min(hits, resultLimit), results.size());
 
@@ -205,29 +201,29 @@ public class SynonymRecordSearcherTest {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            fail("should not get an exception here");
+            fail("should not get an exception here"); //$NON-NLS-1$
         }
-        printLineToConsole("");
+        printLineToConsole(""); //$NON-NLS-1$
 
     }
 
     @Test
     public void testSearch1() {
-        String[] record = { "I.B.M." };
-        testSearch(record, 5, 15);
+        String[] record = { "I.B.M." }; //$NON-NLS-1$
+        testSearch(record, 5, 15, "test1"); //$NON-NLS-1$
     }
 
     @Test
     public void testSearch2() {
-        String[] record = { "IBM", "ANpe" };
-        testSearch(record, 5, 15);
+        String[] record = { "IBM", "ANpe" }; //$NON-NLS-1$ //$NON-NLS-2$
+        testSearch(record, 5, 15, "test2"); //$NON-NLS-1$
     }
 
     @Test
     public void testSearch3() {
-        String[] record = { "IBM", "ANPE", "International" };
-        testSearch(record, 5, 15);
-        testSearch(record, 5, 100);
+        String[] record = { "IBM", "ANPE", "International" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        testSearch(record, 5, 15, "test3"); //$NON-NLS-1$
+        testSearch(record, 5, 100, "test4"); //$NON-NLS-1$
     }
 
     /**
@@ -241,15 +237,15 @@ public class SynonymRecordSearcherTest {
         try {
             recSearcher.addSearcher(null, 0);
         } catch (Exception e) {
-            assertNotNull("we should get an exception here", e);
+            assertNotNull("we should get an exception here", e); //$NON-NLS-1$
         }
         try {
             recSearcher.addSearcher(new SynonymIndexSearcher(), 2);
-            fail("Index should be out of bounds here: trying to set a searcher at position in an empty array");
+            fail("Index should be out of bounds here: trying to set a searcher at position in an empty array"); //$NON-NLS-1$
         } catch (Exception e) {
-            assertNotNull("we should get an exception here", e);
+            assertNotNull("we should get an exception here", e); //$NON-NLS-1$
         } catch (AssertionError e) {
-            assertNotNull("we should get an assertion error here when -ea is added to the VM arguments", e);
+            assertNotNull("we should get an assertion error here when -ea is added to the VM arguments", e); //$NON-NLS-1$
         }
 
         try {
@@ -263,7 +259,7 @@ public class SynonymRecordSearcherTest {
             SynonymIndexSearcher searcher = new SynonymIndexSearcher();
             recSearcher.addSearcher(searcher, -1);
         } catch (Exception e) {
-            assertNotNull("we should get an exception here", e);
+            assertNotNull("we should get an exception here", e); //$NON-NLS-1$
         }
     }
 
