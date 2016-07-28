@@ -143,6 +143,11 @@ public class ShufflingService {
         return concurrentQueue;
     }
 
+    /**
+     * Gets the hasFinished.
+     * 
+     * @return hasFinished
+     */
     public boolean hasFinished() {
         return hasFinished;
     }

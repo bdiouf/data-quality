@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 /**
  * This class is a handler of {@link ShuffleColumn} who has an internal class implemented runnable to call the shuffle
- * method in the {@link ShuffledColumn} DOC qzhao class global comment.
+ * method in the {@link ShuffleColumn} DOC qzhao class global comment.
  */
 public class ShufflingHandler {
 
@@ -24,6 +24,12 @@ public class ShufflingHandler {
 
     protected Thread t = null;
 
+    /**
+     * Constructor
+     * 
+     * @param shufflingService ShufflingService object
+     * @param resultQueue a queue with separated table
+     */
     public ShufflingHandler(ShufflingService shufflingService, Queue<List<List<Object>>> resultQueue) {
         super();
         this.shufflingService = shufflingService;

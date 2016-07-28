@@ -69,7 +69,7 @@ public class ShuffleColumnWithPartitionTest {
     @Test
     public void testPartition1000() throws InterruptedException {
         List<List<Object>> fileData = generator.getTableValue(file1000);
-        int partition = 20000;
+        int partition = 1000;
         Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
         ShufflingService service = new ShufflingService(numColumn, allColumns, group);
         ShufflingHandler handler = new ShufflingHandler(service, result);
