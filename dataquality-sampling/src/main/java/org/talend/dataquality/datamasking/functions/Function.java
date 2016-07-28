@@ -100,7 +100,7 @@ public abstract class Function<T> implements Serializable {
      */
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         if (extraParameter != null) {
-            parameters = extraParameter.split(","); //$NON-NLS-1$
+            parameters = clean(extraParameter).split(","); //$NON-NLS-1$
             if (parameters.length == 1) { // check if it's a path to a readable file
                 try {
                     List<String> aux = KeysLoader.loadKeys(parameters[0].trim());
@@ -119,6 +119,15 @@ public abstract class Function<T> implements Serializable {
         }
         setKeepNull(keepNullValues);
         setRandomWrapper(rand);
+    }
+
+    private String clean(String extraParameter) {
+        StringBuilder res = new StringBuilder(extraParameter.trim());
+        while (res.length() > 0 && res.charAt(0) == ',')
+            res.deleteCharAt(0);
+        while (res.length() > 0 && res.charAt(res.length() - 1) == ',')
+            res.deleteCharAt(res.length() - 1);
+        return res.toString();
     }
 
     public T generateMaskedRow(T t) {

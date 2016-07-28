@@ -19,44 +19,18 @@ package org.talend.dataquality.datamasking.functions;
  * 
  * If a specified domain is provided, see the class {@link MaskSpecifiedEmailDomain}
  * 
- * <b>See also:</b> {@link MaskEmailDomain}
+ * <b>See also:</b> {@link MaskEmail}
  */
-public class MaskTopEmailDomainRandomly extends MaskEmailDomain {
+public class MaskTopEmailDomainRandomly extends MaskEmailRandomly {
 
     private static final long serialVersionUID = 4725759790417755993L;
 
-    /**
-     * Conditions in masking top-level email domain randomly:<br>
-     * <ul>
-     * <li>When user gives a space, masks the top-level domain with X</li>
-     * <li>When user gives a list of parameters, chooses from the list randomly</li>
-     * <li>When user gives a list of parameters with one or more space in the list, removes the spaces directly</li>
-     * <li>when user gives a local file, gets the choices from the file</li>
-     * </ul>
-     */
     @Override
-    protected String doGenerateMaskedField(String str) {
-        if (str == null || str.isEmpty()) {
-            return EMPTY_STRING;
-        }
-        if (isValidEmailAddress(str)) {
-            final int splitAddress = str.indexOf('@');
-            final int splitDomain = str.lastIndexOf('.');
-
-            if (replacements.size() == 1) {
-                if (replacements.get(0).isEmpty())
-                    return maskTopLevelDomainByX(str, splitAddress);
-                else
-                    return maskTopLevelDomainRandomly(str, replacements.get(0), splitAddress, splitDomain);
-            } else {
-                String originalDomain = str.substring(splitAddress + 1, splitDomain);
-                int domainIndex = chooseAppropriateDomainIndex(originalDomain);
-                return maskTopLevelDomainRandomly(str, replacements.get(domainIndex), splitAddress, splitDomain);
-            }
-
-        }
-
-        return str;
+    protected String maskEmailRandomly(String address, int splitAddress) {
+        int splitDomain = address.lastIndexOf('.');
+        return address.substring(0, splitAddress + 1)
+                + parameters[chooseAppropriateDomainIndex(address.substring(splitAddress + 1, splitDomain))]
+                + address.substring(splitDomain);
     }
 
 }

@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.Random;
+import java.util.ArrayList;
 
 /**
  * DOC qzhao class global comment. Detailled comment<br>
@@ -20,34 +20,32 @@ import java.util.Random;
  * This class masks the top-level domain name by the character X with the realistic format, for example, the email
  * address <i>"example@talend.com"</i> will be masked to <i>"example@XXXXXX.com"</i><br>
  */
-public class MaskTopEmailDomainByX extends MaskEmailDomain {
+public class MaskTopEmailDomainByX extends MaskEmailByX {
 
     private static final long serialVersionUID = -3171431436372092807L;
 
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-    }
-
     /**
-     * <ul>
-     * <li>if input is empty, masks the top-level email domain by X</li>
-     * <li>if input is a character, masks the top-level email domain by input character</li>
-     * <li>if input is something different, masks the top-level email domain by X</li>
-     * </ul>
+     * 
+     * DOC qzhao Comment method "maskTopLevelDomainByX".<br>
+     * 
+     * Masks the top-level domain name by X
+     * 
+     * @param address
+     * @return masked address
      */
     @Override
-    protected String doGenerateMaskedField(String str) {
+    protected String maskEmailByX(String address) {
+        StringBuilder sb = new StringBuilder(address);
+        int splitAddress = address.indexOf('@');
+        ArrayList<Integer> indexes = getPointPostions(address, splitAddress);
 
-        if (str == null || str.isEmpty()) {
-            return EMPTY_STRING;
+        Character maskingCrct = getMaskingCharacter();
+
+        for (Integer index : indexes) {
+            for (int i = splitAddress + 1; i < index; i++)
+                sb.setCharAt(i, maskingCrct);
+            splitAddress = index;
         }
-
-        if (isValidEmailAddress(str)) {
-            return maskTopLevelDomainByX(str);
-        }
-
-        return str;
+        return sb.toString();
     }
-
 }

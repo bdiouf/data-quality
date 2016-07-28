@@ -20,7 +20,6 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.talend.dataquality.datamasking.functions.MaskFullEmailDomainRandomly;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -48,7 +47,7 @@ public class MaskFullEmailDomainRandomlyTest {
     public void test1OneGoodInputWithSpace() {
         maskEmailDomainName.parse("", false, new RandomWrapper(42));
         output = maskEmailDomainName.generateMaskedRow(mail);
-        Assert.assertEquals(output, "jugonzalez@XXXXXX.XXX");
+        Assert.assertEquals(output, "jugonzalez@");
     }
 
     @Test

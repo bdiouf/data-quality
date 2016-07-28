@@ -54,7 +54,12 @@ import org.talend.dataquality.datamasking.functions.KeepLastCharsLongTest;
 import org.talend.dataquality.datamasking.functions.KeepLastCharsStringTest;
 import org.talend.dataquality.datamasking.functions.KeepYearTest;
 import org.talend.dataquality.datamasking.functions.MaskAddressTest;
-import org.talend.dataquality.datamasking.functions.MaskEmailTest;
+import org.talend.dataquality.datamasking.functions.MaskEmailLocalPartByXTest;
+import org.talend.dataquality.datamasking.functions.MaskEmailLocalPartRandomlyTest;
+import org.talend.dataquality.datamasking.functions.MaskFullEmailDomainByXTest;
+import org.talend.dataquality.datamasking.functions.MaskFullEmailDomainRandomlyTest;
+import org.talend.dataquality.datamasking.functions.MaskTopEmailDomainByXTest;
+import org.talend.dataquality.datamasking.functions.MaskTopEmailDomainRandomlyTest;
 import org.talend.dataquality.datamasking.functions.NumericVarianceIntegerTest;
 import org.talend.dataquality.datamasking.functions.NumericVarianceLongTest;
 import org.talend.dataquality.datamasking.functions.RemoveFirstCharsIntegerTest;
@@ -93,13 +98,14 @@ import org.talend.dataquality.datamasking.functions.SetToNullTest;
         GenerateSsnGermanyTest.class, GenerateSsnJapanTest.class, GenerateSsnUkTest.class, GenerateSsnUsTest.class,
         KeepFirstCharsIntegerTest.class, KeepFirstCharsLongTest.class, KeepFirstCharsStringTest.class,
         KeepLastCharsIntegerTest.class, KeepLastCharsLongTest.class, KeepLastCharsStringTest.class, KeepYearTest.class,
-        MaskAddressTest.class, MaskEmailTest.class, NumericVarianceIntegerTest.class, NumericVarianceLongTest.class,
-        RemoveFirstCharsIntegerTest.class, RemoveFirstCharsLongTest.class, RemoveFirstCharsStringTest.class,
-        RemoveLastCharsIntegerTest.class, RemoveLastCharsLongTest.class, RemoveLastCharsStringTest.class, ReplaceAllTest.class,
-        ReplaceCharactersTest.class, ReplaceFirstCharsIntegerTest.class, ReplaceFirstCharsLongTest.class,
-        ReplaceFirstCharsStringTest.class, ReplaceLastCharsIntegerTest.class, ReplaceLastCharsLongTest.class,
-        ReplaceLastCharsStringTest.class, ReplaceNumericIntegerTest.class, ReplaceNumericLongTest.class,
-        ReplaceNumericStringTest.class, SetToNullTest.class })
+        MaskAddressTest.class, NumericVarianceIntegerTest.class, NumericVarianceLongTest.class, RemoveFirstCharsIntegerTest.class,
+        RemoveFirstCharsLongTest.class, RemoveFirstCharsStringTest.class, RemoveLastCharsIntegerTest.class,
+        RemoveLastCharsLongTest.class, RemoveLastCharsStringTest.class, ReplaceAllTest.class, ReplaceCharactersTest.class,
+        ReplaceFirstCharsIntegerTest.class, ReplaceFirstCharsLongTest.class, ReplaceFirstCharsStringTest.class,
+        ReplaceLastCharsIntegerTest.class, ReplaceLastCharsLongTest.class, ReplaceLastCharsStringTest.class,
+        ReplaceNumericIntegerTest.class, ReplaceNumericLongTest.class, ReplaceNumericStringTest.class, SetToNullTest.class,
+        MaskEmailLocalPartByXTest.class, MaskEmailLocalPartRandomlyTest.class, MaskFullEmailDomainByXTest.class,
+        MaskFullEmailDomainRandomlyTest.class, MaskTopEmailDomainByXTest.class, MaskTopEmailDomainRandomlyTest.class })
 public class AllTests {
     /*
      * Bloc intentionnaly left empty

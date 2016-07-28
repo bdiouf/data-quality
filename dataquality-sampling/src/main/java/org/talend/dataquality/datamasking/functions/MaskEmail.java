@@ -13,52 +13,64 @@
 package org.talend.dataquality.datamasking.functions;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
- * created by jgonzalez on 19 juin 2015. This function will look for a ’@’ and replace all characters before by ’X’ and
- * leave the rest unchanged. If there is no ’@’ in the input, the generated data will be a serie of ’X’.
- *
+ * DOC qzhao class global comment. Detailled comment<br>
+ * 
+ * This MaskEmailDomain class extends {@link Function} class. It offers the methods to verify the validation of a given
+ * email address and other auxiliary methods.<br>
+ * 
  */
-public class MaskEmail extends Function<String> {
+public abstract class MaskEmail extends Function<String> {
 
-    private static final long serialVersionUID = 3520390903566492525L;
+    private static final long serialVersionUID = 3837984827035744721L;
 
-    private List<String> keys = new ArrayList<>();
+    protected static final Pattern EMAIL_REGEX = Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w-]+\\.)+[\\w-]+[\\w-]$");
 
-    @Override
-    protected String doGenerateMaskedField(String str) {
-        if (str != null && !EMPTY_STRING.equals(str)) {
-            StringBuilder sb = new StringBuilder(str);
-            int count = str.lastIndexOf('@');
-            if (count == -1) {
-                count = str.length();
-            }
-            if (keys.size() == 1 && keys.get(0).equals(EMPTY_STRING) || keys.isEmpty()) {
-                for (int i = 0; i < count; ++i) {
-                    sb.setCharAt(i, 'X');
-                }
-            } else if (keys.size() == 1 && keys.get(0).length() == 1) {
-                final char charReplace = keys.get(0).charAt(0);
-                for (int i = 0; i < count; ++i) {
-                    sb.setCharAt(i, charReplace);
-                }
+    /**
+     * DOC qzhao Comment method "isValidEmailAddress".<br>
+     * Verifies whether it is a valid email address
+     * 
+     * @param email email address
+     * @return true when the input is valid
+     */
+    protected boolean isValidEmailAddress(String email) {
+        return EMAIL_REGEX.matcher(email).matches();
+    }
+
+    /**
+     * DOC qzhao Comment method "getPointPostions".<br>
+     * Gets the points' postions in the email domain
+     * 
+     * @param address the original email address
+     * @param count @'s position
+     * @return a list of integer
+     */
+    protected ArrayList<Integer> getPointPostions(String address, int count) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int c = count;
+        while (true) {
+            c = address.indexOf('.', c);
+            if (c > 0) {
+                list.add(c++);
             } else {
-                sb.replace(0, count, keys.get(rnd.nextInt(keys.size())));
+                break;
             }
-            return sb.toString();
-        } else {
-            return EMPTY_STRING;
         }
+        return list;
     }
 
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-        for (String element : parameters) {
-            keys.add(element);
-        }
+    // @Override
+    // public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+    // super.parse(extraParameter, keepNullValues, rand);
+    // for (String element : parameters) {
+    // replacements.add(element);
+    // }
+    // if (replacements.size() != 1) {
+    // replacements.remove("");
+    // replacements.remove(null);
+    // }
+    // }
 
-    }
 }

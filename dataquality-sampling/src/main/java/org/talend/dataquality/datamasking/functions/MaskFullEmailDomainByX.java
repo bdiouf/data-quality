@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.Random;
+import java.util.ArrayList;
 
 /**
  * DOC qzhao class global comment. Detailled comment<br>
@@ -20,38 +20,38 @@ import java.util.Random;
  * This class masks the full domain name by the character X with the realistic format, for example, the email address
  * <i>"example@talend.com"</i> will be masked to <i>"example@XXXXXX.XXX"</i><br>
  * 
- * <b>See also:</b> {@link MaskEmailDomain}
+ * <b>See also:</b> {@link MaskEmail}
  */
-public class MaskFullEmailDomainByX extends MaskEmailDomain {
+public class MaskFullEmailDomainByX extends MaskEmailByX {
 
     private static final long serialVersionUID = 3570889674995454850L;
 
-    @Override
-    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
-        super.parse(extraParameter, keepNullValues, rand);
-    }
-
     /**
-     * Three conditions in masking-email domain by x<br>
-     * <ul>
-     * <li>if the user inputs nothing, the full email domain will be masked by character X</li>
-     * <li>if the user inputs a character, the full email domain will be masked by this character</li>
-     * <li>if the user's inputs something inappropriate, the full email domain will be masked by character X</li>
-     * </ul>
+     * DOC qzhao Comment method "replaceFullDomainByX".<br>
+     * 
+     * Replaces all the domains by X with the original points
+     * 
+     * @param str
+     * @param sb
+     * @param count
+     * @return masked full domain address
      */
     @Override
-    protected String doGenerateMaskedField(String str) {
+    protected String maskEmailByX(String str) {
+        StringBuilder sb = new StringBuilder(str);
+        int splitAddress = str.indexOf('@');
+        ArrayList<Integer> pointsPosition = getPointPostions(str, splitAddress);
+        pointsPosition.add(str.length());
+        Character maskingCrct = getMaskingCharacter();
+        int c = splitAddress;
 
-        if (str == null || str.isEmpty()) {
-            return EMPTY_STRING;
+        for (Integer position : pointsPosition) {
+            for (int i = c + 1; i < position; i++) {
+                sb.setCharAt(i, maskingCrct);
+            }
+            c = position;
         }
-
-        if (isValidEmailAddress(str)) {
-            final int count = str.indexOf('@');
-            return maskFullDomainByX(str, count);
-        }
-
-        return str;
+        return sb.toString();
     }
 
 }

@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
-
 /**
  * DOC qzhao class global comment. Detailled comment<br>
  * 
@@ -21,44 +19,26 @@ import org.talend.dataquality.duplicating.RandomWrapper;
  * 
  * If a specified domain is provided, see the class {@link MaskSpecifiedEmailDomain}
  * 
- * <b>See also:</b> {@link MaskEmailDomain}
+ * <b>See also:</b> {@link MaskEmail}
  */
-public class MaskFullEmailDomainRandomly extends MaskEmailDomain {
+public class MaskFullEmailDomainRandomly extends MaskEmailRandomly {
 
     private static final long serialVersionUID = -7030194827250476071L;
 
     /**
-     * Conditions in masking full email domain randomly:<br>
-     * <ul>
-     * <li>When user gives a space, masks the full domain with X</li>
-     * <li>When user gives a list of parameters, chooses from the list randomly</li>
-     * <li>When user gives a list of parameters with one or more space in the list, removes the spaces directly</li>
-     * <li>when user gives a local file, gets the choices from the file</li>
-     * </ul>
+     * 
+     * DOC qzhao Comment method "maskFullDomainRandomly".<br>
+     * 
+     * Replace full email domain by the given replacement
+     * 
+     * @param address
+     * @param replacement
+     * @param count
+     * @return
      */
     @Override
-    protected String doGenerateMaskedField(String str) {
-
-        if (str == null || str.isEmpty()) {
-            return EMPTY_STRING;
-        }
-
-        if (isValidEmailAddress(str)) {
-            rnd = new RandomWrapper();
-            final int splitAddress = str.indexOf('@');
-            int domainIndex = 0;
-            if (replacements.size() == 1) {
-                if (replacements.get(0).isEmpty())
-                    return maskFullDomainByX(str, splitAddress);
-            } else {
-                String originalDomain = str.substring(splitAddress);
-                domainIndex = chooseAppropriateDomainIndex(originalDomain);
-            }
-
-            return maskFullDomainRandomly(str, replacements.get(domainIndex), splitAddress);
-        }
-
-        return str;
+    protected String maskEmailRandomly(String address, int splitAddress) {
+        return address.substring(0, splitAddress + 1)
+                + parameters[chooseAppropriateDomainIndex(address.substring(splitAddress + 1))];
     }
-
 }

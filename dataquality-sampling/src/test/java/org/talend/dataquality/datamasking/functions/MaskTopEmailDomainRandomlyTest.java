@@ -20,7 +20,6 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.talend.dataquality.datamasking.functions.MaskTopEmailDomainRandomly;
 import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
@@ -39,7 +38,7 @@ public class MaskTopEmailDomainRandomlyTest {
 
     @Test
     public void testOneGoodStandard() {
-        maskTopEmailDomainRandomly.parse("test", false, new RandomWrapper(24));
+        maskTopEmailDomainRandomly.parse("gmail,test", false, new RandomWrapper(24));
         output = maskTopEmailDomainRandomly.generateMaskedRow(mailStandard);
         Assert.assertEquals("hehe@test.com", output);
     }
@@ -48,7 +47,7 @@ public class MaskTopEmailDomainRandomlyTest {
     public void testOneGoodStandardWithSpace() {
         maskTopEmailDomainRandomly.parse("", false, new RandomWrapper(24));
         output = maskTopEmailDomainRandomly.generateMaskedRow(mailStandard);
-        Assert.assertEquals("hehe@XXXXX.com", output);
+        Assert.assertEquals("hehe@.com", output);
     }
 
     @Test
