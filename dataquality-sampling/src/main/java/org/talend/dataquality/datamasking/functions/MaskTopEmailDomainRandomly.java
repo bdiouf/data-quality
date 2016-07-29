@@ -26,7 +26,8 @@ public class MaskTopEmailDomainRandomly extends MaskEmailRandomly {
     private static final long serialVersionUID = 4725759790417755993L;
 
     @Override
-    protected String maskEmailRandomly(String address, int splitAddress) {
+    protected String maskEmail(String address) {
+        int splitAddress = address.indexOf('@');
         int splitDomain = address.lastIndexOf('.');
         return address.substring(0, splitAddress + 1)
                 + parameters[chooseAppropriateDomainIndex(address.substring(splitAddress + 1, splitDomain))]

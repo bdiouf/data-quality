@@ -37,7 +37,7 @@ public class MaskFullEmailDomainByX extends MaskEmailByX {
      * @return masked full domain address
      */
     @Override
-    protected String maskEmailByX(String str) {
+    protected String maskEmail(String str) {
         StringBuilder sb = new StringBuilder(str);
         int splitAddress = str.indexOf('@');
         ArrayList<Integer> pointsPosition = getPointPostions(str, splitAddress);

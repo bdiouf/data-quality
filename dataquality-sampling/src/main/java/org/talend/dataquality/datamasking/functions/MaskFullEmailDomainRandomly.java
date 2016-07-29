@@ -37,7 +37,8 @@ public class MaskFullEmailDomainRandomly extends MaskEmailRandomly {
      * @return
      */
     @Override
-    protected String maskEmailRandomly(String address, int splitAddress) {
+    protected String maskEmail(String address) {
+        int splitAddress = address.indexOf('@');
         return address.substring(0, splitAddress + 1)
                 + parameters[chooseAppropriateDomainIndex(address.substring(splitAddress + 1))];
     }

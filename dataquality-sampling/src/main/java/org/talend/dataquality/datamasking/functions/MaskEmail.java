@@ -12,8 +12,9 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.ArrayList;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * DOC qzhao class global comment. Detailled comment<br>
@@ -35,42 +36,29 @@ public abstract class MaskEmail extends Function<String> {
      * @param email email address
      * @return true when the input is valid
      */
-    protected boolean isValidEmailAddress(String email) {
+    private boolean isValidEmailAddress(String email) {
         return EMAIL_REGEX.matcher(email).matches();
     }
 
     /**
-     * DOC qzhao Comment method "getPointPostions".<br>
-     * Gets the points' postions in the email domain
-     * 
-     * @param address the original email address
-     * @param count @'s position
-     * @return a list of integer
+     * Conditions in masking full email domain randomly:<br>
+     * <ul>
+     * <li>When user gives a space, masks the full domain with X</li>
+     * <li>When user gives a list of parameters, chooses from the list randomly</li>
+     * <li>When user gives a list of parameters with one or more space in the list, removes the spaces directly</li>
+     * <li>when user gives a local file, gets the choices from the file</li>
+     * </ul>
      */
-    protected ArrayList<Integer> getPointPostions(String address, int count) {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        int c = count;
-        while (true) {
-            c = address.indexOf('.', c);
-            if (c > 0) {
-                list.add(c++);
-            } else {
-                break;
-            }
+    @Override
+    protected String doGenerateMaskedField(String str) {
+        if (StringUtils.isEmpty(str)) {
+            return EMPTY_STRING;
         }
-        return list;
+        if (isValidEmailAddress(str)) {
+            return maskEmail(str);
+        }
+        return str;
     }
 
-    // @Override
-    // public void parse(String extraParameter, boolean keepNullValues, Random rand) {
-    // super.parse(extraParameter, keepNullValues, rand);
-    // for (String element : parameters) {
-    // replacements.add(element);
-    // }
-    // if (replacements.size() != 1) {
-    // replacements.remove("");
-    // replacements.remove(null);
-    // }
-    // }
-
+    protected abstract String maskEmail(String address);
 }

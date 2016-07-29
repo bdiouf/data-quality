@@ -34,7 +34,7 @@ public class MaskTopEmailDomainByX extends MaskEmailByX {
      * @return masked address
      */
     @Override
-    protected String maskEmailByX(String address) {
+    protected String maskEmail(String address) {
         StringBuilder sb = new StringBuilder(address);
         int splitAddress = address.indexOf('@');
         ArrayList<Integer> indexes = getPointPostions(address, splitAddress);

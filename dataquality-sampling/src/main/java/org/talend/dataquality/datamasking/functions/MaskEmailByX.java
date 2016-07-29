@@ -1,25 +1,27 @@
 package org.talend.dataquality.datamasking.functions;
 
+import java.util.ArrayList;
+
 public abstract class MaskEmailByX extends MaskEmail {
 
-    /**
-     * Three conditions in masking-email domain by x<br>
-     * <ul>
-     * <li>if the user inputs nothing, the full email domain will be masked by character X</li>
-     * <li>if the user inputs a character, the full email domain will be masked by this character</li>
-     * <li>if the user's inputs something inappropriate, the full email domain will be masked by character X</li>
-     * </ul>
-     */
-    @Override
-    protected String doGenerateMaskedField(String str) {
+    private static final long serialVersionUID = 6433172298783284738L;
 
-        if (str == null || str.isEmpty()) {
-            return EMPTY_STRING;
+    /**
+     * DOC qzhao Comment method "getPointPostions".<br>
+     * Gets the points' postions in the email domain
+     * 
+     * @param address the original email address
+     * @param count @'s position
+     * @return a list of integer
+     */
+    protected ArrayList<Integer> getPointPostions(String address, int count) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int c = address.indexOf('.', count);
+        while (c > 0) {
+            list.add(c++);
+            c = address.indexOf('.', c);
         }
-        if (isValidEmailAddress(str)) {
-            return maskEmailByX(str);
-        }
-        return str;
+        return list;
     }
 
     protected Character getMaskingCharacter() {
@@ -27,6 +29,4 @@ public abstract class MaskEmailByX extends MaskEmail {
         return (replacement != null && replacement.length() == 1 && Character.isLetter(replacement.charAt(0)))
                 ? replacement.charAt(0) : 'X';
     }
-
-    protected abstract String maskEmailByX(String str);
 }

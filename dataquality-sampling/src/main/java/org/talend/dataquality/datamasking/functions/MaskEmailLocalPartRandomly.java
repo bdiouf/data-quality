@@ -2,6 +2,8 @@ package org.talend.dataquality.datamasking.functions;
 
 public class MaskEmailLocalPartRandomly extends MaskEmailRandomly {
 
+    private static final long serialVersionUID = 7679998342343191644L;
+
     /**
      * Replace local part email by the given replacement
      * 
@@ -11,7 +13,8 @@ public class MaskEmailLocalPartRandomly extends MaskEmailRandomly {
      * @return
      */
     @Override
-    protected String maskEmailRandomly(String address, int splitAddress) {
+    protected String maskEmail(String address) {
+        int splitAddress = address.indexOf('@');
         return parameters[chooseAppropriateDomainIndex(address.substring(0, splitAddress))] + address.substring(splitAddress);
     }
 }

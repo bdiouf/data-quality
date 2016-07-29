@@ -12,7 +12,7 @@ public class MaskEmailLocalPartByX extends MaskEmailByX {
      * @return masked address
      */
     @Override
-    protected String maskEmailByX(String address) {
+    protected String maskEmail(String address) {
         StringBuilder sb = new StringBuilder(address);
         int splitAddress = address.indexOf('@');
         Character maskingCrct = getMaskingCharacter();
