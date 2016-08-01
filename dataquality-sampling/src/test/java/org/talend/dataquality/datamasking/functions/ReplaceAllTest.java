@@ -59,7 +59,7 @@ public class ReplaceAllTest {
 
     @Test
     public void testNoParameter() {
-        ra.parse("", false, new RandomWrapper(42));
+        ra.parse(" ", false, new RandomWrapper(42));
         output = ra.generateMaskedRow(input);
         assertEquals("a30ma rnq 7", output); //$NON-NLS-1$
     }

@@ -46,6 +46,13 @@ public class ReplaceCharactersTest {
     }
 
     @Test
+    public void testEmptyParameter() {
+        rc.parse(" ", false, new RandomWrapper(42));
+        output = rc.generateMaskedRow(input);
+        assertEquals("ahw456ma rnqdp", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testWrongParameter() {
         try {
             rc.parse("12", false, new RandomWrapper(42));

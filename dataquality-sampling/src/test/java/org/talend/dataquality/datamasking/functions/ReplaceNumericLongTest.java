@@ -39,6 +39,13 @@ public class ReplaceNumericLongTest {
     }
 
     @Test
+    public void testEmptyParameter() {
+        rnl.parse(" ", false, new RandomWrapper(42));
+        output = rnl.generateMaskedRow(input);
+        assertEquals(output, 830);
+    }
+
+    @Test
     public void testBad() {
         try {
             rnl.parse("10", false, new RandomWrapper(42));

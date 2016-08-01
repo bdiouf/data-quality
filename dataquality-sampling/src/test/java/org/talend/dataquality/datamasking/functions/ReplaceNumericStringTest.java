@@ -39,6 +39,13 @@ public class ReplaceNumericStringTest {
     }
 
     @Test
+    public void testEmptyParameter() {
+        rns.parse(" ", false, new RandomWrapper(42));
+        output = rns.generateMaskedRow(input);
+        assertEquals("abc830def", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testBad() {
         try {
             rns.parse("0X", false, new RandomWrapper(42));

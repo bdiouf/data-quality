@@ -21,9 +21,8 @@ public class ReplaceCharacters extends ReplaceAll {
     private static final long serialVersionUID = 368348491822287354L;
 
     @Override
-    protected char replaceChar(char c) {
-        if (Character.isLetter(c))
-            return charToReplace;
-        return c;
+    protected boolean isGoodType(char c) {
+        return Character.isLetter(c);
     }
+
 }

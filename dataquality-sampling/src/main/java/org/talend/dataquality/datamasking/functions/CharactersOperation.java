@@ -86,7 +86,9 @@ public abstract class CharactersOperation<T> extends Function<T> {
         return getOutput(sb.toString());
     }
 
-    protected char replaceChar(char c) {
+    private char replaceChar(char c) {
+        if (!isGoodType(c))
+            return c;
         if (charToReplace != null)
             return charToReplace;
         if (Character.isDigit(c))
@@ -97,6 +99,16 @@ public abstract class CharactersOperation<T> extends Function<T> {
             return LOWER.charAt(rnd.nextInt(26));
         return c;
 
+    }
+
+    /**
+     * This method allows to replace only some specific types
+     * 
+     * @param the character c to ckeck
+     * @return true if c type is ok
+     */
+    protected boolean isGoodType(char c) {
+        return true;
     }
 
     /**

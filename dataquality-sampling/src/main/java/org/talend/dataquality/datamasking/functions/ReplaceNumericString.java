@@ -31,9 +31,7 @@ public class ReplaceNumericString extends ReplaceNumeric<String> {
     }
 
     @Override
-    protected char replaceChar(char c) {
-        if (Character.isDigit(c))
-            return charToReplace;
-        return c;
+    protected boolean isGoodType(char c) {
+        return Character.isDigit(c);
     }
 }
