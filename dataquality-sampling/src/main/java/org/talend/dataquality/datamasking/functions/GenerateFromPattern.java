@@ -24,32 +24,33 @@ public class GenerateFromPattern extends Function<String> {
     protected String doGenerateMaskedField(String str) {
         StringBuilder result = new StringBuilder(EMPTY_STRING);
         int count = 0;
-        for (int i = 0; i < parameters[0].length(); ++i, ++count) {
-            if (count < parameters[0].length()) {
-                switch (parameters[0].charAt(count)) {
-                case 'A':
-                    result.append(UPPER.charAt(rnd.nextInt(26)));
-                    break;
-                case 'a':
-                    result.append(LOWER.charAt(rnd.nextInt(26)));
-                    break;
-                case '9':
-                    result.append(rnd.nextInt(9));
-                    break;
-                case '\\':
-                    if (parameters[0].charAt(count + 1) - 48 <= parameters.length) {
-                        result.append(parameters[parameters[0].charAt(count + 1) - 48].trim());
+        if (parameters != null)
+            for (int i = 0; i < parameters[0].length(); ++i, ++count) {
+                if (count < parameters[0].length()) {
+                    switch (parameters[0].charAt(count)) {
+                    case 'A':
+                        result.append(UPPER.charAt(rnd.nextInt(26)));
+                        break;
+                    case 'a':
+                        result.append(LOWER.charAt(rnd.nextInt(26)));
+                        break;
+                    case '9':
+                        result.append(rnd.nextInt(9));
+                        break;
+                    case '\\':
+                        if (parameters[0].charAt(count + 1) - 48 <= parameters.length) {
+                            result.append(parameters[parameters[0].charAt(count + 1) - 48].trim());
+                        }
+                        count++;
+                        break;
+                    default:
+                        if (!Character.isLetterOrDigit(parameters[0].charAt(count))) {
+                            result.append(parameters[0].charAt(count));
+                        }
+                        break;
                     }
-                    count++;
-                    break;
-                default:
-                    if (!Character.isLetterOrDigit(parameters[0].charAt(count))) {
-                        result.append(parameters[0].charAt(count));
-                    }
-                    break;
                 }
             }
-        }
         return result.toString();
     }
 }

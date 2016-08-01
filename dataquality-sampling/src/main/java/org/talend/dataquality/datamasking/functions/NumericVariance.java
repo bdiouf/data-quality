@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import java.util.Random;
+
 /**
  * created by jgonzalez on 19 juin 2015. This function will modify the input data by multiplying it by a number between
  * the parameter and its opposite.
@@ -23,13 +25,21 @@ public abstract class NumericVariance<T2> extends Function<T2> {
 
     protected int rate = 0;
 
-    protected void init() {
-        int integerParam = Integer.parseInt(parameters[0]);
+    private int integerParam = 10;
+
+    @Override
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        if (CharactersOperationUtils.validParameters1Number(parameters))
+            integerParam = Integer.parseInt(parameters[0]);
         if (integerParam == 0) {
             integerParam = 10;
         } else if (integerParam < 0) {
             integerParam *= -1;
         }
+    }
+
+    protected void init() {
         do {
             rate = rnd.nextInt(2 * integerParam) - integerParam;
         } while (rate == 0);

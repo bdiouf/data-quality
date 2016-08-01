@@ -60,4 +60,11 @@ public class GenerateBetweenIntegerTest {
         assertEquals(output, "0"); //$NON-NLS-1$
     }
 
+    @Test
+    public void testWrongParameter() {
+        gbi.parse(null, false, new RandomWrapper(42)); // $NON-NLS-1$
+        output = gbi.generateMaskedRow(null).toString();
+        assertEquals(output, "0"); //$NON-NLS-1$
+    }
+
 }

@@ -22,6 +22,13 @@ public class MaskEmailLocalPartByXTest {
     }
 
     @Test
+    public void testNullParameter() {
+        maskEmailLocalPartByX.parse(null, false, new RandomWrapper());
+        output = maskEmailLocalPartByX.generateMaskedRow(mail);
+        Assert.assertEquals("XXXXXXXXX@uestc.edu.cn", output);
+    }
+
+    @Test
     public void testSpecialEmail() {
         maskEmailLocalPartByX.parse("", true, new RandomWrapper(Long.valueOf(12345678)));
         output = maskEmailLocalPartByX.generateMaskedRow(spemail);

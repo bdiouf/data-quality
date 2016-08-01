@@ -41,7 +41,7 @@ public abstract class Function<T> implements Serializable {
 
     protected Random rnd;
 
-    protected String[] parameters = new String[1];
+    protected String[] parameters;
 
     protected boolean keepNull = false;
 

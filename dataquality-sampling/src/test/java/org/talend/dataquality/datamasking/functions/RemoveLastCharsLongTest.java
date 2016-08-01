@@ -39,6 +39,16 @@ public class RemoveLastCharsLongTest {
     }
 
     @Test
+    public void testNullParameter() {
+        try {
+            rlci.parse(null, false, new RandomWrapper(42));
+            fail("should get exception with input " + rlci.parameters); //$NON-NLS-1$
+        } catch (Exception e) {
+            assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
+        }
+    }
+
+    @Test
     public void testDummyGood() {
         rlci.parse("10", false, new RandomWrapper(42));
         output = rlci.generateMaskedRow(input);

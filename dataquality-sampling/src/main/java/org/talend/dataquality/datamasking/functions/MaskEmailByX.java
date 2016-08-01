@@ -1,6 +1,7 @@
 package org.talend.dataquality.datamasking.functions;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class MaskEmailByX extends MaskEmail {
 
@@ -24,9 +25,15 @@ public abstract class MaskEmailByX extends MaskEmail {
         return list;
     }
 
+    @Override
+    public void parse(String extraParameter, boolean keepNullValues, Random rand) {
+        super.parse(extraParameter, keepNullValues, rand);
+        if (parameters == null || parameters.length != 1 || parameters[0].length() != 1
+                || !Character.isLetter(parameters[0].charAt(0)))
+            parameters = new String[] { "X" };
+    }
+
     protected Character getMaskingCharacter() {
-        String replacement = (parameters.length == 1) ? parameters[0] : null;
-        return (replacement != null && replacement.length() == 1 && Character.isLetter(replacement.charAt(0)))
-                ? replacement.charAt(0) : 'X';
+        return parameters[0].charAt(0);
     }
 }

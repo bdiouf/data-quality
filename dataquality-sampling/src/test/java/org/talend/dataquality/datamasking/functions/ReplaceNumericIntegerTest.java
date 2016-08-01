@@ -39,6 +39,13 @@ public class ReplaceNumericIntegerTest {
     }
 
     @Test
+    public void testNullParameter() {
+        rni.parse(null, false, new RandomWrapper(42));
+        output = rni.generateMaskedRow(input);
+        assertEquals(830, output);
+    }
+
+    @Test
     public void testWrongParameter() {
         try {
             rni.parse("r", false, new RandomWrapper(42));

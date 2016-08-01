@@ -28,7 +28,7 @@ public abstract class GenerateBetween<T2> extends Function<T2> {
     protected int max = 0;
 
     protected void setBounds() {
-        if (parameters.length == 2) {
+        if (parameters != null && parameters.length == 2) {
             try {
                 min = Integer.parseInt(parameters[0]);
                 max = Integer.parseInt(parameters[1]);
