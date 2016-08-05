@@ -14,7 +14,7 @@ package org.talend.windowkey;
 
 import java.util.StringTokenizer;
 
-import org.talend.utils.string.AsciiUtils;
+import org.talend.dataquality.record.linkage.utils.AsciiUtils;
 
 /**
  * FIXME this class should not provide static utilities.

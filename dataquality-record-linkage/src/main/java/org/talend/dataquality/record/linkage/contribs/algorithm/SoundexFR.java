@@ -29,7 +29,7 @@
  */
 package org.talend.dataquality.record.linkage.contribs.algorithm;
 
-import org.talend.utils.string.AsciiUtils;
+import org.talend.dataquality.record.linkage.utils.AsciiUtils;
 
 /**
  * Encode a string using a version of French Soundex algorithm (Soundex2 by .

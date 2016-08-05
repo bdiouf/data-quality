@@ -37,8 +37,8 @@ import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorit
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams.SurvivorshipFunction;
 import org.talend.dataquality.record.linkage.record.CombinedRecordMatcher;
 import org.talend.dataquality.record.linkage.record.IRecordMatcher;
+import org.talend.dataquality.record.linkage.utils.BidiMultiMap;
 import org.talend.dataquality.record.linkage.utils.SurvivorShipAlgorithmEnum;
-import org.talend.utils.collections.BidiMultiMap;
 
 /**
  * Record grouping class with t-swoosh algorithm.
