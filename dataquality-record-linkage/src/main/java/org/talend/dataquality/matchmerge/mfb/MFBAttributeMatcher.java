@@ -37,17 +37,6 @@ public class MFBAttributeMatcher implements IAttributeMatcher {
         return new MFBAttributeMatcher(matcher, weight, threshold, subString);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.dataquality.record.linkage.attribute.IAttributeMatcher#isDummyMatcher()
-     */
-    @Deprecated
-    @Override
-    public boolean isDummyMatcher() {
-        return delegate.isDummyMatcher();
-    }
-
     @Override
     public double getMatchingWeight(String str1, String str2) {
         if (subString.needSubStringOperation()) {

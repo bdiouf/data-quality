@@ -44,13 +44,11 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
 
     @Override
     public float getThreshold() {
-        // TODO Default implementations
         throw new NotImplementedException();
     }
 
     @Override
     public double getWeight() {
-        // TODO Default implementations
         throw new NotImplementedException();
     }
 
@@ -61,26 +59,26 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
      * java.lang.String)
      */
     @Override
-    public double getMatchingWeight(String str1, String str2) {
+    public double getMatchingWeight(String string1, String string2) {
+        String str1 = string1, str2 = string2;
+        boolean str1IsNull = isNullOrEmpty(str1);
+        boolean str2IsNull = isNullOrEmpty(str2);
         switch (nullOption) {
         case nullMatchAll:
-            if (isNullOrEmpty(str1) || isNullOrEmpty(str2)) {
+            if (str1IsNull || str2IsNull) {
                 return 1.0;
             }
             break;
         case nullMatchNone:
-            if (isNullOrEmpty(str1) || isNullOrEmpty(str2)) {
+            if (str1IsNull || str2IsNull) {
                 return 0.0;
             }
             break;
         case nullMatchNull:
-            boolean str1IsNull = isNullOrEmpty(str1);
-            boolean str2IsNull = isNullOrEmpty(str2);
-            if (str1IsNull && str2IsNull) { // both null => match
+            if (str1IsNull && str2IsNull) // both null => match
                 return 1.0;
-            } else if (str1IsNull || str2IsNull) { // only one null => non-match
+            else if (str1IsNull || str2IsNull) // only one null => non-match
                 return 0.0;
-            }
             break;
         default:
             break;
@@ -89,32 +87,30 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
         assert !isNullOrEmpty(str1) : "string should not be null or empty here"; //$NON-NLS-1$
         assert !isNullOrEmpty(str2) : "string should not be null or empty here"; //$NON-NLS-1$
         // TDQ-10366 qiongli,catch the Exception.
-        try {
+        if (fingerPrintApply) {
+            FingerprintKeyer fg = new FingerprintKeyer();
+            str1 = fg.key(str1);
+            str2 = fg.key(str2);
+        }
 
-            if (fingerPrintApply) {
-                FingerprintKeyer fg = new FingerprintKeyer();
-                str1 = fg.key(str1);
-                str2 = fg.key(str2);
-            }
+        return weight(str1, str2);
 
-            if (!tokenize) {
-                return getWeight(str1, str2);
-            } else {
-                switch (tokenMethod) {
-                case ANYORDER:
-                    return computeWeightTokenHungarian(str1, str2);
-                case SAMEPLACE:
-                    return computeWeightTokenSamePlace(str1, str2);
-                case SAMEORDER:
-                    return computeWeightTokenSameOrder(str1, str2);
-                default:
-                    return 0;
-                }
+    }
+
+    private double weight(String str1, String str2) {
+        if (!tokenize) {
+            return getWeight(str1, str2);
+        } else {
+            switch (tokenMethod) {
+            case ANYORDER:
+                return computeWeightTokenHungarian(str1, str2);
+            case SAMEPLACE:
+                return computeWeightTokenSamePlace(str1, str2);
+            case SAMEORDER:
+                return computeWeightTokenSameOrder(str1, str2);
+            default:
+                return 0;
             }
-            // System.out.println("weight : " + weight);
-        } catch (Exception exc) {
-            // return 0 if it has exception.
-            return 0;
         }
     }
 
@@ -127,13 +123,13 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
      * @param str2
      * @return
      */
-    private double getInitialSimilarity(String str1, String str2) {
+    private int getInitialSimilarity(String str1, String str2) {
         String strShort = str1, strLong = str2;
         if (strShort.length() > strLong.length()) {
             strShort = str2;
             strLong = str1;
         }
-        if (strShort.length() == 1 || (strShort.length() == 2 && strShort.substring(1, 2).equals("."))) {
+        if (strShort.length() == 1 || (strShort.length() == 2 && ".".equals(strShort.substring(1, 2)))) {
             if (strShort.charAt(0) == strLong.charAt(0))
                 return 1;
             else
@@ -157,19 +153,7 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
             Arrays.fill(row, 0.0);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-
-                if (initialComparison) {
-                    double simInitial = getInitialSimilarity(list1[i], list2[j]);
-                    if (simInitial != -1)
-                        weights[i][j] = 1 - simInitial;
-                    else {
-                        double similarityMeasure = getWeight(list1[i], list2[j]);
-                        weights[i][j] = 1 - similarityMeasure;
-                    }
-                } else {
-                    double similarityMeasure = getWeight(list1[i], list2[j]);
-                    weights[i][j] = 1 - similarityMeasure;
-                }
+                fillWeight(weights, i, j, list1, list2);
             }
         }
 
@@ -180,12 +164,27 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
         double weight = 0;
         for (int i = 0; i < maxDim; i++) {
             if (i < n && match[i] < m) {
-                // System.out.println("match[" + list1[i] + "," + list2[match[i]] + "] = " + (1 - weights[i][match[i]]));
                 weight += (1 - weights[i][match[i]]);
             }
         }
         weight /= maxDim;
         return weight;
+    }
+
+    private void fillWeight(double[][] weights, int i, int j, String[] list1, String[] list2) {
+        if (initialComparison) {
+            int simInitial = getInitialSimilarity(list1[i], list2[j]);
+            if (simInitial != -1)
+                weights[i][j] = 1.0 - simInitial;
+            else {
+                double similarityMeasure = getWeight(list1[i], list2[j]);
+                weights[i][j] = 1 - similarityMeasure;
+            }
+        } else {
+            double similarityMeasure = getWeight(list1[i], list2[j]);
+            weights[i][j] = 1 - similarityMeasure;
+        }
+
     }
 
     private double computeWeightTokenSamePlace(String str1, String str2) {
@@ -202,7 +201,7 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
         double weight = 0;
         for (int i = 0; i < minDim; i++) {
             if (initialComparison) {
-                double w = getInitialSimilarity(list1[i], list2[i]);
+                int w = getInitialSimilarity(list1[i], list2[i]);
                 if (w != -1) {
                     weight += w;
                 } else {
@@ -216,7 +215,7 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
         return weight;
     }
 
-    // TODO Can we improve this method ? Especially the recursive call
+    // Can we improve this method ? Especially the recursive call
     private double computeWeightTokenSameOrder(String str1, String str2) {
         // --- Compute the lists of tokens
         String[] list1 = str1.split(regexTokenize);
@@ -249,19 +248,8 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
     private void combinations(String[] longString, int len, int startPosition, String[] result, String[] shortString) {
         if (len == 0) {
             // Compute weight:
-            double weight = 0;
-            for (int i = 0; i < shortString.length; i++) {
-                if (initialComparison) {
-                    double w = getInitialSimilarity(result[i], shortString[i]);
-                    if (w != -1) {
-                        weight += w;
-                    } else {
-                        weight += getWeight(result[i], shortString[i]);
-                    }
-                } else {
-                    weight += getWeight(result[i], shortString[i]);
-                }
-            }
+            double weight = computeWeight(shortString, result);
+
             if (bestWeightSameOrder < weight)
                 bestWeightSameOrder = weight;
             return;
@@ -270,6 +258,24 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
             result[result.length - len] = longString[i];
             combinations(longString, len - 1, i + 1, result, shortString);
         }
+    }
+
+    private double computeWeight(String[] shortString, String[] result) {
+        double weight = 0.0;
+        for (int i = 0; i < shortString.length; i++) {
+            if (initialComparison) {
+                int w = getInitialSimilarity(result[i], shortString[i]);
+                if (w != -1) {
+                    weight += w;
+                } else {
+                    weight += getWeight(result[i], shortString[i]);
+                }
+            } else {
+                weight += getWeight(result[i], shortString[i]);
+            }
+        }
+
+        return weight;
     }
 
     private boolean isNullOrEmpty(String str) {
@@ -417,17 +423,6 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
         } else {
             this.nullOption = IAttributeMatcher.NullOption.nullMatchNull;
         }
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.dataquality.record.linkage.attribute.IAttributeMatcher#isDummyMatcher()
-     */
-    @Deprecated
-    @Override
-    public boolean isDummyMatcher() {
-        return false;
     }
 
 }

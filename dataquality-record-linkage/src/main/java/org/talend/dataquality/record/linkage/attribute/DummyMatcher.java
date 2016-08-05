@@ -45,15 +45,4 @@ public class DummyMatcher extends AbstractAttributeMatcher {
         return AttributeMatcherType.DUMMY;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.dataquality.record.linkage.attribute.AbstractAttributeMatcher#isDummyMatcher()
-     */
-    @Deprecated
-    @Override
-    public boolean isDummyMatcher() {
-        return true;
-    }
-
 }

@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.attribute;
 
-import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.language.Soundex;
 import org.apache.log4j.Logger;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
@@ -45,7 +44,7 @@ public class SoundexMatcher extends AbstractAttributeMatcher {
         try {
             int diff = soundex.difference(str1, str2);
             return diff / MAX;
-        } catch (EncoderException e) {
+        } catch (Exception e) {
             LOG.error(e);
             return 0;
         }
