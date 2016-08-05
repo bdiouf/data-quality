@@ -87,16 +87,21 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
         case Alpha:
         case AlphaNumeric:
             subCategorySet.addAll(dataDictFieldClassifier.classify(data));
+            if (userDefineClassifier != null) {
+                subCategorySet.addAll(userDefineClassifier.classify(data, mainCategory));
+            }
+            knownCategoryCache.put(data, subCategorySet);
+            break;
         case Numeric:
             if (userDefineClassifier != null) {
                 subCategorySet.addAll(userDefineClassifier.classify(data, mainCategory));
             }
             knownCategoryCache.put(data, subCategorySet);
             break;
-
         case NULL:
         case BLANK:
             emptyCount++;
+            break;
         case UNKNOWN:
             break;
         }

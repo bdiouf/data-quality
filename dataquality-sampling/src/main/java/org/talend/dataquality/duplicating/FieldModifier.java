@@ -229,10 +229,6 @@ public class FieldModifier {
         return generateDuplicateString(originalStr, function, modifCount, extraParameter);
     }
 
-    @Override
-    public void finalize() {
-    }
-
     /**
      * Getter for random.
      * 

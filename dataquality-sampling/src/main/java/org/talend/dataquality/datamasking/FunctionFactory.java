@@ -25,223 +25,316 @@ public class FunctionFactory {
     }
 
     private Function<?> getFunction3(FunctionType type, int javaType) throws InstantiationException, IllegalAccessException {
+        Function<?> res;
         switch (type) {
         case REPLACE_LAST_CHARS:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.REPLACE_LAST_CHARS_INT.getClazz());
+                res = getFunction(FunctionType.REPLACE_LAST_CHARS_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.REPLACE_LAST_CHARS_LONG.getClazz());
+                res = getFunction(FunctionType.REPLACE_LAST_CHARS_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.REPLACE_LAST_CHARS_STRING.getClazz());
+                res = getFunction(FunctionType.REPLACE_LAST_CHARS_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case REPLACE_NUMERIC:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.REPLACE_NUMERIC_INT.getClazz());
+                res = getFunction(FunctionType.REPLACE_NUMERIC_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.REPLACE_NUMERIC_LONG.getClazz());
+                res = getFunction(FunctionType.REPLACE_NUMERIC_LONG.getClazz());
+                break;
             case 2:
-                return getFunction(FunctionType.REPLACE_NUMERIC_FLOAT.getClazz());
+                res = getFunction(FunctionType.REPLACE_NUMERIC_FLOAT.getClazz());
+                break;
             case 3:
-                return getFunction(FunctionType.REPLACE_NUMERIC_DOUBLE.getClazz());
+                res = getFunction(FunctionType.REPLACE_NUMERIC_DOUBLE.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.REPLACE_NUMERIC_STRING.getClazz());
+                res = getFunction(FunctionType.REPLACE_NUMERIC_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         default:
-            return getFunction(type.getClazz());
+            res = getFunction(type.getClazz());
+            break;
         }
+        return res;
     }
 
     private Function<?> getFunction2(FunctionType type, int javaType) throws InstantiationException, IllegalAccessException {
-
+        Function<?> res;
         switch (type) {
         case GENERATE_FROM_LIST_HASH:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.GENERATE_FROM_LIST_HASH_INT.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_LIST_HASH_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.GENERATE_FROM_LIST_HASH_LONG.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_LIST_HASH_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.GENERATE_FROM_LIST_HASH_STRING.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_LIST_HASH_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case GENERATE_FROM_FILE_HASH:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.GENERATE_FROM_FILE_HASH_INT.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_FILE_HASH_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.GENERATE_FROM_FILE_HASH_LONG.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_FILE_HASH_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.GENERATE_FROM_FILE_HASH_STRING.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_FILE_HASH_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case GENERATE_SEQUENCE:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.GENERATE_SEQUENCE_INT.getClazz());
+                res = getFunction(FunctionType.GENERATE_SEQUENCE_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.GENERATE_SEQUENCE_LONG.getClazz());
+                res = getFunction(FunctionType.GENERATE_SEQUENCE_LONG.getClazz());
+                break;
             case 2:
-                return getFunction(FunctionType.GENERATE_SEQUENCE_FLOAT.getClazz());
+                res = getFunction(FunctionType.GENERATE_SEQUENCE_FLOAT.getClazz());
+                break;
             case 3:
-                return getFunction(FunctionType.GENERATE_SEQUENCE_DOUBLE.getClazz());
+                res = getFunction(FunctionType.GENERATE_SEQUENCE_DOUBLE.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.GENERATE_SEQUENCE_STRING.getClazz());
+                res = getFunction(FunctionType.GENERATE_SEQUENCE_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case NUMERIC_VARIANCE:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.NUMERIC_VARIANCE_INT.getClazz());
+                res = getFunction(FunctionType.NUMERIC_VARIANCE_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.NUMERIC_VARIANCE_LONG.getClazz());
+                res = getFunction(FunctionType.NUMERIC_VARIANCE_LONG.getClazz());
+                break;
             case 2:
-                return getFunction(FunctionType.NUMERIC_VARIANCE_FlOAT.getClazz());
+                res = getFunction(FunctionType.NUMERIC_VARIANCE_FlOAT.getClazz());
+                break;
             case 3:
-                return getFunction(FunctionType.NUMERIC_VARIANCE_DOUBLE.getClazz());
+                res = getFunction(FunctionType.NUMERIC_VARIANCE_DOUBLE.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case REMOVE_FIRST_CHARS:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.REMOVE_FIRST_CHARS_INT.getClazz());
+                res = getFunction(FunctionType.REMOVE_FIRST_CHARS_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.REMOVE_FIRST_CHARS_LONG.getClazz());
+                res = getFunction(FunctionType.REMOVE_FIRST_CHARS_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.REMOVE_FIRST_CHARS_STRING.getClazz());
+                res = getFunction(FunctionType.REMOVE_FIRST_CHARS_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case REMOVE_LAST_CHARS:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.REMOVE_LAST_CHARS_INT.getClazz());
+                res = getFunction(FunctionType.REMOVE_LAST_CHARS_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.REMOVE_LAST_CHARS_LONG.getClazz());
+                res = getFunction(FunctionType.REMOVE_LAST_CHARS_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.REMOVE_LAST_CHARS_STRING.getClazz());
+                res = getFunction(FunctionType.REMOVE_LAST_CHARS_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case REPLACE_FIRST_CHARS:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.REPLACE_FIRST_CHARS_INT.getClazz());
+                res = getFunction(FunctionType.REPLACE_FIRST_CHARS_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.REPLACE_FIRST_CHARS_LONG.getClazz());
+                res = getFunction(FunctionType.REPLACE_FIRST_CHARS_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.REPLACE_FIRST_CHARS_STRING.getClazz());
+                res = getFunction(FunctionType.REPLACE_FIRST_CHARS_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         default:
-            return getFunction3(type, javaType);
+            res = getFunction3(type, javaType);
+            break;
         }
+        return res;
     }
 
     /**
-     * DOC jgonzalez Comment method "getFunction". This function is used to return the correct function according to the
+     * DOC jgonzalez Comment method "getFunction". This function is used to res = the correct function according to the
      * user choice.
      * 
      * @param type The function requested by the user.
      * @param javaType Some functions work and several type, this parameter represents the wanted type.
-     * @return A new function.
+     * @res = A new function.
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
     public Function<?> getFunction(FunctionType type, int javaType) throws InstantiationException, IllegalAccessException {
-
+        Function<?> res;
         switch (type) {
         case KEEP_FIRST_AND_GENERATE:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.KEEP_FIRST_AND_GENERATE_INT.getClazz());
+                res = getFunction(FunctionType.KEEP_FIRST_AND_GENERATE_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.KEEP_FIRST_AND_GENERATE_LONG.getClazz());
+                res = getFunction(FunctionType.KEEP_FIRST_AND_GENERATE_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.KEEP_FIRST_AND_GENERATE_STRING.getClazz());
+                res = getFunction(FunctionType.KEEP_FIRST_AND_GENERATE_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case KEEP_LAST_AND_GENERATE:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.KEEP_LAST_AND_GENERATE_INT.getClazz());
+                res = getFunction(FunctionType.KEEP_LAST_AND_GENERATE_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.KEEP_LAST_AND_GENERATE_LONG.getClazz());
+                res = getFunction(FunctionType.KEEP_LAST_AND_GENERATE_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.KEEP_LAST_AND_GENERATE_STRING.getClazz());
+                res = getFunction(FunctionType.KEEP_LAST_AND_GENERATE_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case GENERATE_BETWEEN:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.GENERATE_BETWEEN_INT.getClazz());
+                res = getFunction(FunctionType.GENERATE_BETWEEN_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.GENERATE_BETWEEN_LONG.getClazz());
+                res = getFunction(FunctionType.GENERATE_BETWEEN_LONG.getClazz());
+                break;
             case 2:
-                return getFunction(FunctionType.GENERATE_BETWEEN_FLOAT.getClazz());
+                res = getFunction(FunctionType.GENERATE_BETWEEN_FLOAT.getClazz());
+                break;
             case 3:
-                return getFunction(FunctionType.GENERATE_BETWEEN_DOUBLE.getClazz());
+                res = getFunction(FunctionType.GENERATE_BETWEEN_DOUBLE.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.GENERATE_BETWEEN_STRING.getClazz());
+                res = getFunction(FunctionType.GENERATE_BETWEEN_STRING.getClazz());
+                break;
             case 5:
-                return getFunction(FunctionType.GENERATE_BETWEEN_DATE.getClazz());
+                res = getFunction(FunctionType.GENERATE_BETWEEN_DATE.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case GENERATE_CREDIT_CARD_FORMAT:
             switch (javaType) {
             case 1:
-                return getFunction(FunctionType.GENERATE_CREDIT_CARD_FORMAT_LONG.getClazz());
+                res = getFunction(FunctionType.GENERATE_CREDIT_CARD_FORMAT_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.GENERATE_CREDIT_CARD_FORMAT_STRING.getClazz());
+                res = getFunction(FunctionType.GENERATE_CREDIT_CARD_FORMAT_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case GENERATE_CREDIT_CARD:
             switch (javaType) {
             case 1:
-                return getFunction(FunctionType.GENERATE_CREDIT_CARD_LONG.getClazz());
+                res = getFunction(FunctionType.GENERATE_CREDIT_CARD_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.GENERATE_CREDIT_CARD_STRING.getClazz());
+                res = getFunction(FunctionType.GENERATE_CREDIT_CARD_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case GENERATE_FROM_FILE:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.GENERATE_FROM_FILE_INT.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_FILE_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.GENERATE_FROM_FILE_LONG.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_FILE_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.GENERATE_FROM_FILE_STRING.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_FILE_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         case GENERATE_FROM_LIST:
             switch (javaType) {
             case 0:
-                return getFunction(FunctionType.GENERATE_FROM_LIST_INT.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_LIST_INT.getClazz());
+                break;
             case 1:
-                return getFunction(FunctionType.GENERATE_FROM_LIST_LONG.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_LIST_LONG.getClazz());
+                break;
             case 4:
-                return getFunction(FunctionType.GENERATE_FROM_LIST_STRING.getClazz());
+                res = getFunction(FunctionType.GENERATE_FROM_LIST_STRING.getClazz());
+                break;
             default:
-                return null;
+                res = null;
+                break;
             }
+            break;
         default:
-            return getFunction2(type, javaType);
+            res = getFunction2(type, javaType);
+            break;
         }
+        return res;
     }
 }

@@ -31,9 +31,11 @@ public abstract class AbstractDuplicator<TIn, TOut> {
 
     protected AbstractIntegerDistribution distribution;
 
+    private final double EPSILON = 1e-6;
+
     public AbstractDuplicator(double expectation, double duplicatesPercentage, String distributionName) {
         this.expectation = expectation;
-        if (duplicatesPercentage == 1) {
+        if (Math.abs(duplicatesPercentage - 1) < EPSILON) {
             uniquePercentageOfOriginal = 0;
         } else {
             uniquePercentageOfOriginal = expectation / (expectation - 1 + 1 / (1 - duplicatesPercentage));

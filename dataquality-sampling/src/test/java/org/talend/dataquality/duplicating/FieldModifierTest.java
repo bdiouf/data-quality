@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Date;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -144,8 +143,4 @@ public class FieldModifierTest {
         Assert.assertEquals(generateDuplicate, date);
     }
 
-    @AfterClass
-    public static void tearDown() {
-        dataModifier.finalize();
-    }
 }
