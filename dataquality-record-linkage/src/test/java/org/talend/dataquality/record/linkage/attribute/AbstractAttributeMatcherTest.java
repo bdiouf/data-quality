@@ -119,7 +119,7 @@ public class AbstractAttributeMatcherTest {
     public void testGetMatchingWeight() {
         for (String[] str : testcase) {
             AbstractAttributeMatcher matcher = (AbstractAttributeMatcher) AttributeMatcherFactory.createMatcher(str[0]);
-            matcher.setTokenize(false);
+            matcher.setTokenMethod(TokenizedResolutionMethod.NO);
             matcher.setInitialComparison(false);
             matcher.setFingerPrintApply(false);
             assertEquals("The score of test case is unexpected.\n" + Arrays.asList(str), Double.valueOf(str[3]),
@@ -177,7 +177,6 @@ public class AbstractAttributeMatcherTest {
 
         for (AbstractAttributeMatcher measure : listMeasure) {
 
-            measure.setTokenize(true);
             measure.setTokenMethod(TokenizedResolutionMethod.ANYORDER);
             measure.setRegexTokenize(" ");
             double w = measure.getMatchingWeight(str1, str2);
@@ -204,7 +203,6 @@ public class AbstractAttributeMatcherTest {
         for (Boolean ini : listInitials)
             for (AbstractAttributeMatcher measure : listMeasure) {
                 measure.setInitialComparison(ini);
-                measure.setTokenize(true);
                 measure.setTokenMethod(TokenizedResolutionMethod.SAMEORDER);
                 measure.setRegexTokenize(" ");
 
@@ -235,7 +233,6 @@ public class AbstractAttributeMatcherTest {
         for (Boolean ini : listInitials)
             for (AbstractAttributeMatcher measure : listMeasure) {
                 measure.setInitialComparison(ini);
-                measure.setTokenize(true);
                 measure.setTokenMethod(TokenizedResolutionMethod.SAMEPLACE);
                 measure.setRegexTokenize(" ");
                 double w = measure.getMatchingWeight(str1, str2);
@@ -256,7 +253,6 @@ public class AbstractAttributeMatcherTest {
 
         for (AbstractAttributeMatcher measure : listMeasure) {
             measure.setInitialComparison(true);
-            measure.setTokenize(true);
             measure.setTokenMethod(TokenizedResolutionMethod.SAMEPLACE);
             measure.setRegexTokenize(" ");
             double w = measure.getMatchingWeight(str1, str2);

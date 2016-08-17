@@ -16,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 
 /**
  * DOC scorreia class global comment. Detailled comment
@@ -55,12 +56,12 @@ public class LevenshteinMatcherTest {
         String str2 = "Doe John";
 
         LevenshteinMatcher LevenshteinToken = new LevenshteinMatcher();
-        LevenshteinToken.setTokenize(true);
+        LevenshteinToken.setTokenMethod(TokenizedResolutionMethod.SAMEPLACE);
         LevenshteinToken.setRegexTokenize("titi");
         double wToken = LevenshteinToken.getMatchingWeight(str1, str2);
 
         LevenshteinMatcher LevenshteinNoToken = new LevenshteinMatcher();
-        LevenshteinNoToken.setTokenize(false);
+        LevenshteinNoToken.setTokenMethod(TokenizedResolutionMethod.NO);
         double wNoToken = LevenshteinNoToken.getMatchingWeight(str1, str2);
 
         assertEquals(wNoToken, wToken, EPSILON);

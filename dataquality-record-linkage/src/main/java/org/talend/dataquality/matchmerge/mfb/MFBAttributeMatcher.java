@@ -15,6 +15,7 @@ package org.talend.dataquality.matchmerge.mfb;
 import org.talend.dataquality.matchmerge.SubString;
 import org.talend.dataquality.record.linkage.attribute.IAttributeMatcher;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 
 public class MFBAttributeMatcher implements IAttributeMatcher {
 
@@ -89,4 +90,10 @@ public class MFBAttributeMatcher implements IAttributeMatcher {
     public double getWeight() {
         return weight;
     }
+
+    @Override
+    public void setTokenMethod(TokenizedResolutionMethod tokenMethod) {
+        throw new UnsupportedOperationException();
+    }
+
 }

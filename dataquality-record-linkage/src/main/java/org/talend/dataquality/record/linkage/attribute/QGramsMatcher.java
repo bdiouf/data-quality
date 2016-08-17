@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 import org.talend.dataquality.record.linkage.utils.QGramTokenizer;
 
 /**
@@ -53,8 +54,9 @@ public class QGramsMatcher extends AbstractAttributeMatcher {
      */
     @Override
     public double getWeight(String string1, String string2) {
-        final List<String> str1Tokens = tokenizer.tokenizeToArrayList(string1, q, !tokenize);
-        final List<String> str2Tokens = tokenizer.tokenizeToArrayList(string2, q, !tokenize);
+        boolean notTokenized = tokenMethod.equals(TokenizedResolutionMethod.NO);
+        final List<String> str1Tokens = tokenizer.tokenizeToArrayList(string1, q, notTokenized);
+        final List<String> str2Tokens = tokenizer.tokenizeToArrayList(string2, q, notTokenized);
 
         final int maxQGramsMatching = str1Tokens.size() + str2Tokens.size();
 

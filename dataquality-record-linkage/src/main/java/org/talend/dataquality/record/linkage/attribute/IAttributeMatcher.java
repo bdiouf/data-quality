@@ -13,6 +13,7 @@
 package org.talend.dataquality.record.linkage.attribute;
 
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 
 /**
  * DOC scorreia class global comment. Detailled comment
@@ -93,5 +94,11 @@ public interface IAttributeMatcher {
      * importance in the final score of a 2-record match).
      */
     double getWeight();
+
+    /**
+     * @return set the type of tokenization when computing the measure
+     */
+
+    void setTokenMethod(TokenizedResolutionMethod tokenMethod);
 
 }

@@ -13,6 +13,7 @@
 package org.talend.dataquality.record.linkage.attribute;
 
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 
 /**
  * A {@link IAttributeMatcher} implementation decorator that performs {@link String#substring(int, int)} operations on
@@ -113,6 +114,11 @@ public class SubstringAttributeMatcher implements IAttributeMatcher {
     @Override
     public double getWeight() {
         return delegate.getWeight();
+    }
+
+    @Override
+    public void setTokenMethod(TokenizedResolutionMethod tokenMethod) {
+        throw new UnsupportedOperationException();
     }
 
 }

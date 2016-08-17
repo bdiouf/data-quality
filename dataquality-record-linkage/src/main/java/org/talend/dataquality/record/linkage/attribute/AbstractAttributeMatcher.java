@@ -30,9 +30,7 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
 
     private String attributeName = null;
 
-    protected boolean tokenize = false;
-
-    private TokenizedResolutionMethod tokenMethod = TokenizedResolutionMethod.SAMEPLACE;
+    protected TokenizedResolutionMethod tokenMethod = TokenizedResolutionMethod.NO;
 
     private double bestWeightSameOrder;
 
@@ -98,20 +96,24 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
     }
 
     private double weight(String str1, String str2) {
-        if (!tokenize) {
-            return getWeight(str1, str2);
-        } else {
-            switch (tokenMethod) {
-            case ANYORDER:
-                return computeWeightTokenHungarian(str1, str2);
-            case SAMEPLACE:
-                return computeWeightTokenSamePlace(str1, str2);
-            case SAMEORDER:
-                return computeWeightTokenSameOrder(str1, str2);
-            default:
-                return 0;
-            }
+        double w;
+        switch (tokenMethod) {
+        case NO:
+            w = getWeight(str1, str2);
+            break;
+        case ANYORDER:
+            w = computeWeightTokenHungarian(str1, str2);
+            break;
+        case SAMEPLACE:
+            w = computeWeightTokenSamePlace(str1, str2);
+            break;
+        case SAMEORDER:
+            w = computeWeightTokenSameOrder(str1, str2);
+            break;
+        default:
+            throw new UnsupportedOperationException();
         }
+        return w;
     }
 
     /**
@@ -344,22 +346,6 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
     @Override
     public void setAttributeName(String name) {
         this.attributeName = name;
-    }
-
-    /*
-     * (non-Javadoc)
-     */
-    public void setTokenize(boolean tokenize) {
-        this.tokenize = tokenize;
-    }
-
-    /**
-     * Getter for tokenize.
-     * 
-     * @return the tokenize
-     */
-    public boolean isTokenize() {
-        return tokenize;
     }
 
     /**

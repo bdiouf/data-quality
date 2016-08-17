@@ -16,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 
 /**
  * DOC scorreia class global comment. Detailled comment
@@ -38,7 +39,7 @@ public class QGramsMatcherTest {
     @Test
     public void testGetMatchingWeight() {
         QGramsMatcher m = new QGramsMatcher();
-        m.setTokenize(false);
+        m.setTokenMethod(TokenizedResolutionMethod.NO);
         m.setInitialComparison(false);
         m.setFingerPrintApply(false);
 
