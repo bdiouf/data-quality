@@ -27,6 +27,7 @@ import org.talend.dataquality.record.linkage.attribute.AttributeMatcherFactory;
 import org.talend.dataquality.record.linkage.attribute.IAttributeMatcher;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
 import org.talend.dataquality.record.linkage.constant.RecordMatcherType;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams;
 import org.talend.dataquality.record.linkage.record.CombinedRecordMatcher;
@@ -537,11 +538,13 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
         String[][] algorithmName = new String[recordSize][2];
         String[] arrMatchHandleNull = new String[recordSize];
         String[] customizedJarPath = new String[recordSize];
+        TokenizedResolutionMethod[] tokenMethod = new TokenizedResolutionMethod[recordSize];
         double recordMatchThreshold = acceptableThreshold;// keep compatibility to older version.
         boolean isSwoosh = matchAlgo == RecordMatcherType.T_SwooshAlgorithm;
         int keyIdx = 0;
         for (Map<String, String> recordMap : matchRule) {
             algorithmName[keyIdx][0] = recordMap.get(IRecordGrouping.MATCHING_TYPE);
+            tokenMethod[keyIdx] = TokenizedResolutionMethod.valueOf(recordMap.get(IRecordGrouping.TOKENIZATION_TYPE));
             if (StringUtils.equalsIgnoreCase(AttributeMatcherType.DUMMY.name(), algorithmName[keyIdx][0])) {
                 // Set confidence weight if exist
                 if (null != recordMap.get(IRecordGrouping.CONFIDENCE_WEIGHT)) {
@@ -587,6 +590,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
             } else {
                 // Use the default class loader to load the class.
                 attributeMatcher[indx] = AttributeMatcherFactory.createMatcher(attrMatcherType, algorithmName[indx][1]);
+                attributeMatcher[indx].setTokenMethod(tokenMethod[indx]);
             }
             // TDQ-11949 msjian : for the match rule which use the custom type algorithm, we will use the threshold
             // and weight from UI to match rule too

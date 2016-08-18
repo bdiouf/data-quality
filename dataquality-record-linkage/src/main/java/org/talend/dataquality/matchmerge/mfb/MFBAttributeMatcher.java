@@ -93,7 +93,7 @@ public class MFBAttributeMatcher implements IAttributeMatcher {
 
     @Override
     public void setTokenMethod(TokenizedResolutionMethod tokenMethod) {
-        throw new UnsupportedOperationException();
+        delegate.setTokenMethod(tokenMethod);
     }
 
 }

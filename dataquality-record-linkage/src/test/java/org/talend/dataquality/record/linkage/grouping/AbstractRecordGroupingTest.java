@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
 
 public class AbstractRecordGroupingTest {
@@ -114,6 +115,7 @@ public class AbstractRecordGroupingTest {
         Map<String, String> lnameRecords = new HashMap<String, String>();
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.MATCHING_TYPE, "JARO_WINKLER"); //$NON-NLS-1$
+        lnameRecords.put(IRecordGrouping.TOKENIZATION_TYPE, TokenizedResolutionMethod.NO.toString()); // $NON-NLS-1$
         lnameRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.ATTRIBUTE_THRESHOLD, String.valueOf(1));
         matchingRule.add(lnameRecords);
@@ -122,6 +124,7 @@ public class AbstractRecordGroupingTest {
         Map<String, String> accountRecords = new HashMap<String, String>();
         accountRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(6));
         accountRecords.put(IRecordGrouping.MATCHING_TYPE, "LEVENSHTEIN"); //$NON-NLS-1$
+        accountRecords.put(IRecordGrouping.TOKENIZATION_TYPE, TokenizedResolutionMethod.NO.toString()); // $NON-NLS-1$
         accountRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(0.8));
         accountRecords.put(IRecordGrouping.ATTRIBUTE_THRESHOLD, String.valueOf(1));
         matchingRule.add(accountRecords);
@@ -130,6 +133,7 @@ public class AbstractRecordGroupingTest {
         Map<String, String> customRecords = new HashMap<String, String>();
         customRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(6));
         customRecords.put(IRecordGrouping.MATCHING_TYPE, "CUSTOM"); //$NON-NLS-1$
+        customRecords.put(IRecordGrouping.TOKENIZATION_TYPE, TokenizedResolutionMethod.NO.toString()); // $NON-NLS-1$
         customRecords.put(IRecordGrouping.CUSTOMER_MATCH_CLASS, "testCustomMatcher.myCustomMatcherNullMatchAll"); //$NON-NLS-1$
         customRecords.put(IRecordGrouping.JAR_PATH, this.getClass().getResource("custom/CustomMatcherTest1.jar").getPath()); //$NON-NLS-1$
         customRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(0.9));
@@ -301,6 +305,7 @@ public class AbstractRecordGroupingTest {
         lnameRecords = new HashMap<String, String>();
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.MATCHING_TYPE, "JARO_WINKLER"); //$NON-NLS-1$
+        lnameRecords.put(IRecordGrouping.TOKENIZATION_TYPE, TokenizedResolutionMethod.NO.toString()); // $NON-NLS-1$
         lnameRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.ATTRIBUTE_THRESHOLD, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.RECORD_MATCH_THRESHOLD, String.valueOf(0.95f));
@@ -309,6 +314,7 @@ public class AbstractRecordGroupingTest {
         lnameRecords = new HashMap<String, String>();
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.MATCHING_TYPE, "JARO_WINKLER"); //$NON-NLS-1$
+        lnameRecords.put(IRecordGrouping.TOKENIZATION_TYPE, TokenizedResolutionMethod.NO.toString()); // $NON-NLS-1$
         lnameRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.RECORD_MATCH_THRESHOLD, String.valueOf(0.0f));
         matchingRule.add(lnameRecords);
@@ -317,6 +323,8 @@ public class AbstractRecordGroupingTest {
         accountRecords = new HashMap<String, String>();
         accountRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(6));
         accountRecords.put(IRecordGrouping.MATCHING_TYPE, "LEVENSHTEIN"); //$NON-NLS-1$
+        accountRecords.put(IRecordGrouping.TOKENIZATION_TYPE, TokenizedResolutionMethod.NO.toString()); // $NON-NLS-1$
+
         accountRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(0.8));
         accountRecords.put(IRecordGrouping.RECORD_MATCH_THRESHOLD, String.valueOf(0.95f));// Duplicate set of threshold,
         matchingRule.add(accountRecords);
@@ -437,6 +445,7 @@ public class AbstractRecordGroupingTest {
         lnameRecords = new HashMap<String, String>();
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.MATCHING_TYPE, "JARO_WINKLER"); //$NON-NLS-1$
+        lnameRecords.put(IRecordGrouping.TOKENIZATION_TYPE, TokenizedResolutionMethod.NO.toString()); // $NON-NLS-1$
         lnameRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.ATTRIBUTE_THRESHOLD, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.RECORD_MATCH_THRESHOLD, String.valueOf(0.0f));

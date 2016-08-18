@@ -31,6 +31,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.record.linkage.constant.RecordMatcherType;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 import org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping;
 import org.talend.dataquality.record.linkage.grouping.swoosh.DQAttribute;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
@@ -165,6 +166,7 @@ public class SwooshRecordGroupingTest {
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(0));
         lnameRecords.put(IRecordGrouping.ATTRIBUTE_NAME, "ID");
         lnameRecords.put(IRecordGrouping.MATCHING_TYPE, "JARO_WINKLER"); //$NON-NLS-1$
+        lnameRecords.put(IRecordGrouping.TOKENIZATION_TYPE, TokenizedResolutionMethod.NO.toString()); // $NON-NLS-1$
         lnameRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.ATTRIBUTE_THRESHOLD, String.valueOf(1));
 
@@ -330,6 +332,7 @@ public class SwooshRecordGroupingTest {
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.ATTRIBUTE_NAME, "NAME");
         lnameRecords.put(IRecordGrouping.MATCHING_TYPE, "JARO_WINKLER"); //$NON-NLS-1$
+        lnameRecords.put(IRecordGrouping.TOKENIZATION_TYPE, TokenizedResolutionMethod.NO.toString()); // $NON-NLS-1$
         lnameRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.ATTRIBUTE_THRESHOLD, String.valueOf(0.9));
 
@@ -402,6 +405,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -610,6 +614,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -816,6 +821,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -1026,6 +1032,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -1362,6 +1369,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -1553,6 +1561,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -1749,6 +1758,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stu_Address");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -1853,6 +1863,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -2060,6 +2071,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -2266,6 +2278,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Jaro");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -2473,6 +2486,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuID");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "0");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "dummy");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         matcherList_tMatchGroup_1.add(0, tmpMap_tMatchGroup_1);
@@ -2483,6 +2497,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuAddress");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "1");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.86 + "");
@@ -2495,6 +2510,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuProvinceID");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 2 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.86 + "");
@@ -2510,6 +2526,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuProvinceID");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "dummy");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
@@ -2520,6 +2537,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuID");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "0");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -2532,6 +2550,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "stuAddress");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "1");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "dummy");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
@@ -2752,6 +2771,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "custom");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -2955,6 +2975,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -3165,6 +3186,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -3392,6 +3414,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
@@ -3590,6 +3613,7 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "country");
         tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
         tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "NO");
         tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
         tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
         tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");

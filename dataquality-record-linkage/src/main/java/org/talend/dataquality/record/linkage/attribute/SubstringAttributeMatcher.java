@@ -118,7 +118,7 @@ public class SubstringAttributeMatcher implements IAttributeMatcher {
 
     @Override
     public void setTokenMethod(TokenizedResolutionMethod tokenMethod) {
-        throw new UnsupportedOperationException();
+        delegate.setTokenMethod(tokenMethod);
     }
 
 }

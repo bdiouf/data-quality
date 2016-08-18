@@ -30,6 +30,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
 import org.talend.dataquality.record.linkage.constant.RecordMatcherType;
+import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 import org.talend.dataquality.record.linkage.genkey.BlockingKeyHandler;
 import org.talend.dataquality.record.linkage.grouping.swoosh.DQAttribute;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
@@ -174,6 +175,7 @@ public class StringClusteringWithSwooshTest {
         lnameRecords.put(IRecordGrouping.COLUMN_IDX, String.valueOf(0));
         lnameRecords.put(IRecordGrouping.ATTRIBUTE_NAME, columnName);
         lnameRecords.put(IRecordGrouping.MATCHING_TYPE, AttributeMatcherType.DUMMY.name());
+        lnameRecords.put(IRecordGrouping.TOKENIZATION_TYPE, TokenizedResolutionMethod.NO.toString());
         lnameRecords.put(IRecordGrouping.CONFIDENCE_WEIGHT, String.valueOf(1));
         lnameRecords.put(IRecordGrouping.ATTRIBUTE_THRESHOLD, String.valueOf(0.9));
 
