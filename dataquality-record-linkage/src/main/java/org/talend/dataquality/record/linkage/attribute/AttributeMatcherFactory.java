@@ -130,6 +130,8 @@ public final class AttributeMatcherFactory {
                 return new HammingMatcher();
             case FINGERPRINTKEY:
                 return new FingerprintkeyMatcher();
+            case LCS:
+                return new LCSMatcher();
             default:
                 break;
             }

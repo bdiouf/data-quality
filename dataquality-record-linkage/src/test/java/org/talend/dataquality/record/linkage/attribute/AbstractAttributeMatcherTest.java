@@ -83,6 +83,14 @@ public class AbstractAttributeMatcherTest {
             { AttributeMatcherType.JARO.toString(), "Sizhao", "sejao", "0.57" },
             { AttributeMatcherType.JARO.toString(), "A", "Ä", "0.0" },
 
+            // tests for LCS matcher
+            { AttributeMatcherType.LCS.toString(), "kate", "Cade", "0.25" },
+            { AttributeMatcherType.LCS.toString(), "unmottreslong", "unautremotlong", "0.29" },
+            { AttributeMatcherType.LCS.toString(), "steff", "stephanie", "0.33" },
+            { AttributeMatcherType.LCS.toString(), "Sebastiao", "Sepastien", "0.44" },
+            { AttributeMatcherType.LCS.toString(), "Sizhao", "sejao", "0.33" },
+            { AttributeMatcherType.LCS.toString(), "A", "Ä", "0.0" },
+
             // tests for Qgrams matcher
             { AttributeMatcherType.Q_GRAMS.toString(), "kate", "Cade", "0.16" },
             { AttributeMatcherType.Q_GRAMS.toString(), "unmottreslong", "unautremotlong", "0.51" },
