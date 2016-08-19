@@ -362,6 +362,7 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Ser
      * 
      * @param tokenMethod the tokenMethod to set
      */
+    @Override
     public void setTokenMethod(TokenizedResolutionMethod tokenMethod) {
         this.tokenMethod = tokenMethod;
     }
