@@ -83,12 +83,12 @@ public class SynonymReplaceAction implements ITalendStrConversionAction {
         return synonymSearcherMap;
     }
 
-    @Override
-    public void finalize() {
-        if (synonymSearcherMap != null) {
+    public void closeSynonymIndice() {
+        if (synonymSearcherMap != null && !synonymSearcherMap.isEmpty()) {
             for (SynonymIndexSearcher searcher : synonymSearcherMap.values()) {
                 searcher.close();
             }
+            synonymSearcherMap.clear();
         }
     }
 
