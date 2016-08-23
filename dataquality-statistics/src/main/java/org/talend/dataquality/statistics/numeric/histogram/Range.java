@@ -39,6 +39,7 @@ public class Range implements Comparable<Range> {
 
     @Override
     public int compareTo(Range another) {
+        // TODO only take account the "lower" ?
         if (lower < another.lower) {
             return -1;
         } else if (lower > another.lower) {
@@ -49,10 +50,23 @@ public class Range implements Comparable<Range> {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
         if (obj instanceof Range) {
-            return compareTo((Range) obj) == 0;
+            return hashCode() == obj.hashCode();
         }
         return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "[" + lower + ", " + upper + "]";
     }
 
 }
