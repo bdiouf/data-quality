@@ -22,99 +22,240 @@ public enum DictionaryGenerationSpec {
     /**
      * the categories defined in Keyword index
      */
-    // ADDRESS_LINE("street_type_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
+    ADDRESS_LINE(GenerationType.KEYWORD, "street_type_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
 
-    // FULL_NAME("civility_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
+    FULL_NAME(
+            GenerationType.KEYWORD,
+            "civility_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0, 1, 2, 3, 4, 5 }),
 
     /**
      * the categories defined in Data Dictionary index
      */
-    ANIMAL("animal_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4 }),
+    ANIMAL(GenerationType.DICTIONARY, "animal_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4 }),
 
-    ANSWER("answer.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0, 1 }),
+    ANSWER(GenerationType.DICTIONARY, "answer.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0, 1 }),
 
-    AIRPORT("airport-name-wiki.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0 }, new AirportOptimizer()),
+    AIRPORT(
+            GenerationType.DICTIONARY,
+            "airport-name-wiki.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 0 },
+            new AirportOptimizer()),
 
-    AIRPORT_CODE("airport-code-wiki.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0 }),
+    AIRPORT_CODE(
+            GenerationType.DICTIONARY,
+            "airport-code-wiki.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0 }),
 
-    CITY("city_cleaned_without_pinyin.csv", new CsvReaderConfig(CsvConstants.COMMA, false), new int[] {}),
+    CITY(
+            GenerationType.DICTIONARY,
+            "city_cleaned_without_pinyin.csv",
+            new CsvReaderConfig(CsvConstants.COMMA, false),
+            new int[] {}),
 
     // CITY_COMPLEMENTED("city_complemented.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 2 }, null,
     // "CITY"),
 
-    CIVILITY("civility_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
+    CIVILITY(
+            GenerationType.DICTIONARY,
+            "civility_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0, 1, 2, 3, 4, 5 }),
 
-    CONTINENT("continent_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0, 1, 2, 3, 4, 5 }),
+    CONTINENT(
+            GenerationType.DICTIONARY,
+            "continent_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 0, 1, 2, 3, 4, 5 }),
 
-    CONTINENT_CODE("continent_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 6 }),
+    CONTINENT_CODE(
+            GenerationType.DICTIONARY,
+            "continent_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 6 }),
 
-    COUNTRY("country-codes.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 0, 1 }),
+    COUNTRY(GenerationType.DICTIONARY, "country-codes.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 0, 1 }),
 
-    COUNTRY_CODE_ISO2("country-codes.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 2 }),
+    COUNTRY_CODE_ISO2(
+            GenerationType.DICTIONARY,
+            "country-codes.csv",
+            new CsvReaderConfig(CsvConstants.COMMA, true),
+            new int[] { 2 }),
 
-    COUNTRY_CODE_ISO3("country-codes.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 3 }),
+    COUNTRY_CODE_ISO3(
+            GenerationType.DICTIONARY,
+            "country-codes.csv",
+            new CsvReaderConfig(CsvConstants.COMMA, true),
+            new int[] { 3 }),
 
-    CURRENCY_NAME("country-codes.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 17 }),
+    CURRENCY_NAME(
+            GenerationType.DICTIONARY,
+            "country-codes.csv",
+            new CsvReaderConfig(CsvConstants.COMMA, true),
+            new int[] { 17 }),
 
-    CURRENCY_CODE("country-codes.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 14 }),
+    CURRENCY_CODE(
+            GenerationType.DICTIONARY,
+            "country-codes.csv",
+            new CsvReaderConfig(CsvConstants.COMMA, true),
+            new int[] { 14 }),
 
-    HR_DEPARTMENT("hr_department_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0 }),
+    HR_DEPARTMENT(
+            GenerationType.DICTIONARY,
+            "hr_department_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 0 }),
 
-    FIRST_NAME("firstname_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0 }),
+    FIRST_NAME(
+            GenerationType.DICTIONARY,
+            "firstname_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0 }),
 
-    LAST_NAME("lastname12k.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 0 }),
+    LAST_NAME(GenerationType.DICTIONARY, "lastname12k.csv", new CsvReaderConfig(CsvConstants.COMMA, true), new int[] { 0 }),
 
-    GENDER("gender_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
+    GENDER(
+            GenerationType.DICTIONARY,
+            "gender_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0, 1, 2, 3, 4, 5 }),
 
-    JOB_TITLE("job_title_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0 }),
+    JOB_TITLE(
+            GenerationType.DICTIONARY,
+            "job_title_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 0 }),
 
-    MONTH("months_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
+    MONTH(
+            GenerationType.DICTIONARY,
+            "months_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0, 1, 2, 3, 4, 5 }),
 
-    STREET_TYPE("street_type_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
+    STREET_TYPE(
+            GenerationType.DICTIONARY,
+            "street_type_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0, 1, 2, 3, 4, 5 }),
 
-    WEEKDAY("weekdays_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0, 1, 2, 3, 4, 5 }),
+    WEEKDAY(
+            GenerationType.DICTIONARY,
+            "weekdays_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0, 1, 2, 3, 4, 5 }),
 
-    MUSEUM("wordnet_museums_yago2.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0 }),
+    MUSEUM(
+            GenerationType.DICTIONARY,
+            "wordnet_museums_yago2.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 0 }),
 
-    US_COUNTY("us_counties.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0 }, new UsCountyOptimizer()),
+    US_COUNTY(
+            GenerationType.DICTIONARY,
+            "us_counties.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 0 },
+            new UsCountyOptimizer()),
 
-    ORGANIZATION("wordnet_organizations_yago2.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0 }),
+    ORGANIZATION(
+            GenerationType.DICTIONARY,
+            "wordnet_organizations_yago2.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 0 }),
 
-    COMPANY("wordnet_companies_yago2_optimized.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0 }),
+    COMPANY(
+            GenerationType.DICTIONARY,
+            "wordnet_companies_yago2_optimized.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0 }),
 
-    BEVERAGE("wordnet_beverages_yago2.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0 }),
+    BEVERAGE(
+            GenerationType.DICTIONARY,
+            "wordnet_beverages_yago2.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 0 }),
 
-    MEASURE_UNIT("units_of_measurement_cleaned.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 0 }),
+    MEASURE_UNIT(
+            GenerationType.DICTIONARY,
+            "units_of_measurement_cleaned.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 0 }),
 
-    INDUSTRY("industry_GICS_simplified.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 1 }),
+    INDUSTRY(
+            GenerationType.DICTIONARY,
+            "industry_GICS_simplified.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 1 }),
 
-    INDUSTRY_GROUP("industry_group_GICS_simplified.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 1 }),
+    INDUSTRY_GROUP(
+            GenerationType.DICTIONARY,
+            "industry_group_GICS_simplified.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 1 }),
 
-    SECTOR("industry_sector_GICS_simplified.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 1 }),
+    SECTOR(
+            GenerationType.DICTIONARY,
+            "industry_sector_GICS_simplified.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 1 }),
 
     FR_COMMUNE(
+            GenerationType.DICTIONARY,
             "fr_comsimp2015.csv",
             new CsvReaderConfig(CsvConstants.SEMICOLON, false),
             new int[] { 10, 11 },
             new FrCommuneOptimizer()),
 
-    FR_DEPARTEMENT("fr_depts2015.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 5 }),
+    FR_DEPARTEMENT(
+            GenerationType.DICTIONARY,
+            "fr_depts2015.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 5 }),
 
-    FR_REGION("fr_reg2015.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 4 }),
+    FR_REGION(GenerationType.DICTIONARY, "fr_reg2015.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 4 }),
 
-    LANGUAGE("languages_code_name.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 2, 3, 4, 5 }),
+    LANGUAGE(
+            GenerationType.DICTIONARY,
+            "languages_code_name.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 2, 3, 4, 5 }),
 
-    LANGUAGE_CODE_ISO2("languages_code_name.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0 }),
+    LANGUAGE_CODE_ISO2(
+            GenerationType.DICTIONARY,
+            "languages_code_name.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0 }),
 
-    LANGUAGE_CODE_ISO3("languages_code_name.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 1 }),
+    LANGUAGE_CODE_ISO3(
+            GenerationType.DICTIONARY,
+            "languages_code_name.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 1 }),
 
-    CA_PROVINCE_TERRITORY("ca_province_territory.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0 }),
+    CA_PROVINCE_TERRITORY(
+            GenerationType.DICTIONARY,
+            "ca_province_territory.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 0 }),
 
-    CA_PROVINCE_TERRITORY_CODE("ca_province_territory.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 2 }),
+    CA_PROVINCE_TERRITORY_CODE(
+            GenerationType.DICTIONARY,
+            "ca_province_territory.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 2 }),
 
-    MX_ESTADO("mx_estado.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0 }),
+    MX_ESTADO(GenerationType.DICTIONARY, "mx_estado.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 0 }),
 
-    MX_ESTADO_CODE("mx_estado.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, true), new int[] { 2 });
+    MX_ESTADO_CODE(
+            GenerationType.DICTIONARY,
+            "mx_estado.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, true),
+            new int[] { 2 });
+
+    private GenerationType generationType;
 
     private String sourceFile;
 
@@ -126,17 +267,19 @@ public enum DictionaryGenerationSpec {
 
     private String categoryName;
 
-    private DictionaryGenerationSpec(String sourceFile, CsvReaderConfig csvConfig, int[] columnsToIndex) {
-        this(sourceFile, csvConfig, columnsToIndex, null, null);
+    private DictionaryGenerationSpec(GenerationType generationType, String sourceFile, CsvReaderConfig csvConfig,
+            int[] columnsToIndex) {
+        this(generationType, sourceFile, csvConfig, columnsToIndex, null, null);
     }
 
-    private DictionaryGenerationSpec(String sourceFile, CsvReaderConfig csvConfig, int[] columnsToIndex,
-            CategoryOptimizer optimizer) {
-        this(sourceFile, csvConfig, columnsToIndex, optimizer, null);
+    private DictionaryGenerationSpec(GenerationType generationType, String sourceFile, CsvReaderConfig csvConfig,
+            int[] columnsToIndex, CategoryOptimizer optimizer) {
+        this(generationType, sourceFile, csvConfig, columnsToIndex, optimizer, null);
     }
 
-    private DictionaryGenerationSpec(String sourceFile, CsvReaderConfig csvConfig, int[] columnsToIndex,
-            CategoryOptimizer optimizer, String categoryName) {
+    private DictionaryGenerationSpec(GenerationType generationType, String sourceFile, CsvReaderConfig csvConfig,
+            int[] columnsToIndex, CategoryOptimizer optimizer, String categoryName) {
+        this.generationType = generationType;
         this.sourceFile = sourceFile;
         this.csvConfig = csvConfig;
         this.columnsToIndex = columnsToIndex;
@@ -146,6 +289,10 @@ public enum DictionaryGenerationSpec {
         } else {
             this.categoryName = categoryName;
         }
+    }
+
+    public GenerationType getGenerationType() {
+        return generationType;
     }
 
     public String getSourceFile() {
@@ -172,4 +319,9 @@ public enum DictionaryGenerationSpec {
         return categoryName;
     }
 
+}
+
+enum GenerationType {
+    DICTIONARY,
+    KEYWORD
 }

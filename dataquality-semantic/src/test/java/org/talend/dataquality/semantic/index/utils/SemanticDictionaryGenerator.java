@@ -34,10 +34,7 @@ public class SemanticDictionaryGenerator {
 
     private static final String DD_PATH = "src/main/resources/luceneIdx/dictionary/";
 
-    /**
-     * KW_PATH is not needed for the moment
-     */
-    // private static final String KW_PATH = "src/main/resources/luceneIdx/keyword/";
+    private static final String KW_PATH = "src/main/resources/luceneIdx/keyword/";
 
     private static Pattern SPLITTER = Pattern.compile("\\|");
 
@@ -194,17 +191,19 @@ public class SemanticDictionaryGenerator {
         return doc;
     }
 
-    private void generateAll() {
+    private void generate(GenerationType type, String path) {
         try {
-            FileUtils.deleteDirectory(new File(DD_PATH));
-            FSDirectory outputDir = FSDirectory.open(new File(DD_PATH));
+            FileUtils.deleteDirectory(new File(path));
+            FSDirectory outputDir = FSDirectory.open(new File(path));
             IndexWriterConfig writerConfig = new IndexWriterConfig(Version.LATEST, analyzer);
             IndexWriter writer = new IndexWriter(outputDir, writerConfig);
             for (DictionaryGenerationSpec spec : DictionaryGenerationSpec.values()) {
-                try {
-                    generateDictionaryForSpec(spec, writer);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (spec.getGenerationType().equals(type)) {
+                    try {
+                        generateDictionaryForSpec(spec, writer);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -218,7 +217,8 @@ public class SemanticDictionaryGenerator {
     }
 
     public static void main(String[] args) {
-        new SemanticDictionaryGenerator().generateAll();
+        new SemanticDictionaryGenerator().generate(GenerationType.DICTIONARY, DD_PATH);
+        new SemanticDictionaryGenerator().generate(GenerationType.KEYWORD, KW_PATH);
     }
 
 }
