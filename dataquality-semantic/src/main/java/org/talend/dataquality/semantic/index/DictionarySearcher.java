@@ -75,11 +75,11 @@ public class DictionarySearcher {
         }
     }
 
-    static final String F_WORD = "word";//$NON-NLS-1$
+    public static final String F_WORD = "word";//$NON-NLS-1$
 
-    static final String F_SYN = "syn";//$NON-NLS-1$
+    public static final String F_SYN = "syn";//$NON-NLS-1$
 
-    static final String F_SYNTERM = "synterm";//$NON-NLS-1$
+    public static final String F_SYNTERM = "synterm";//$NON-NLS-1$
 
     private SearcherManager mgr;
 

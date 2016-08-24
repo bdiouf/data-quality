@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -26,9 +27,8 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.talend.dataquality.semantic.index.DictionarySearcher;
 import org.talend.dataquality.semantic.index.utils.optimizer.CategoryOptimizer;
-import org.talend.dataquality.standardization.index.SynonymIndexBuilder;
-import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
 
 public class SemanticDictionaryGenerator {
 
@@ -42,8 +42,6 @@ public class SemanticDictionaryGenerator {
     private static Pattern SPLITTER = Pattern.compile("\\|");
 
     private Analyzer analyzer = new StandardAnalyzer(CharArraySet.EMPTY_SET);
-
-    private SynonymIndexBuilder builder = new SynonymIndexBuilder();
 
     private static Set<String> STOP_WORDS = new HashSet<String>(
             Arrays.asList("yes", "no", "y", "o", "n", "oui", "non", "true", "false", "vrai", "faux", "null"));
@@ -163,7 +161,7 @@ public class SemanticDictionaryGenerator {
         ftSyn.setOmitNorms(true);
         ftSyn.freeze();
 
-        Field wordField = new Field(SynonymIndexSearcher.F_WORD, tempWord, ftWord);
+        Field wordField = new Field(DictionarySearcher.F_WORD, tempWord, ftWord);
         doc.add(wordField);
         // Field wordTermField = new StringField(SynonymIndexSearcher.F_WORDTERM, tempWord.toLowerCase(),
         // Field.Store.NO);
@@ -180,11 +178,11 @@ public class SemanticDictionaryGenerator {
                 }
 
                 if (syn.length() > 0 && !syn.equals(tempWord)) {
-                    doc.add(new Field(SynonymIndexSearcher.F_SYN, syn, ftSyn));
+                    doc.add(new Field(DictionarySearcher.F_SYN, syn, ftSyn));
 
                     try {
-                        String joinedTokens = StringUtils.join(SynonymIndexSearcher.getTokensFromAnalyzer(syn), ' ');
-                        doc.add(new StringField(SynonymIndexSearcher.F_SYNTERM, joinedTokens, Field.Store.YES));
+                        String joinedTokens = StringUtils.join(DictionarySearcher.getTokensFromAnalyzer(syn), ' ');
+                        doc.add(new StringField(DictionarySearcher.F_SYNTERM, joinedTokens, Field.Store.YES));
 
                     } catch (IOException e) {
                         // TODO Auto-generated catch block
@@ -198,7 +196,7 @@ public class SemanticDictionaryGenerator {
 
     private void generateAll() {
         try {
-            builder.deleteIndexFromFS(DD_PATH);
+            FileUtils.deleteDirectory(new File(DD_PATH));
             FSDirectory outputDir = FSDirectory.open(new File(DD_PATH));
             IndexWriterConfig writerConfig = new IndexWriterConfig(Version.LATEST, analyzer);
             IndexWriter writer = new IndexWriter(outputDir, writerConfig);
