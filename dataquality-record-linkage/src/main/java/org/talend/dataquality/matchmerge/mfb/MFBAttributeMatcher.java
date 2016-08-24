@@ -13,11 +13,13 @@
 package org.talend.dataquality.matchmerge.mfb;
 
 import org.talend.dataquality.matchmerge.SubString;
+import org.talend.dataquality.record.linkage.attribute.AbstractAttributeMatcher;
 import org.talend.dataquality.record.linkage.attribute.IAttributeMatcher;
+import org.talend.dataquality.record.linkage.attribute.ITokenization;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
 import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 
-public class MFBAttributeMatcher implements IAttributeMatcher {
+public class MFBAttributeMatcher implements IAttributeMatcher, ITokenization {
 
     private final double threshold;
 
@@ -93,7 +95,8 @@ public class MFBAttributeMatcher implements IAttributeMatcher {
 
     @Override
     public void setTokenMethod(TokenizedResolutionMethod tokenMethod) {
-        delegate.setTokenMethod(tokenMethod);
+        if (!AttributeMatcherType.CUSTOM.equals(delegate.getMatchType()))
+            ((AbstractAttributeMatcher) delegate).setTokenMethod(tokenMethod);
     }
 
 }

@@ -22,7 +22,7 @@ import org.talend.windowkey.FingerprintKeyer;
 /**
  * Abstract matcher class for shared operations like blank string checking.
  */
-public abstract class AbstractAttributeMatcher implements IAttributeMatcher, Serializable {
+public abstract class AbstractAttributeMatcher implements IAttributeMatcher, ITokenization, Serializable {
 
     private static final long serialVersionUID = -21096755142812677L;
 

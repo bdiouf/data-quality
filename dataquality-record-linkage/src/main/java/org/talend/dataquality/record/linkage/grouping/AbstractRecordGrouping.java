@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import org.talend.dataquality.matchmerge.SubString;
 import org.talend.dataquality.matchmerge.mfb.MFBAttributeMatcher;
 import org.talend.dataquality.matchmerge.mfb.MFBRecordMatcher;
+import org.talend.dataquality.record.linkage.attribute.AbstractAttributeMatcher;
 import org.talend.dataquality.record.linkage.attribute.AttributeMatcherFactory;
 import org.talend.dataquality.record.linkage.attribute.IAttributeMatcher;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
@@ -590,7 +591,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
             } else {
                 // Use the default class loader to load the class.
                 attributeMatcher[indx] = AttributeMatcherFactory.createMatcher(attrMatcherType, algorithmName[indx][1]);
-                attributeMatcher[indx].setTokenMethod(tokenMethod[indx]);
+                ((AbstractAttributeMatcher) attributeMatcher[indx]).setTokenMethod(tokenMethod[indx]);
             }
             // TDQ-11949 msjian : for the match rule which use the custom type algorithm, we will use the threshold
             // and weight from UI to match rule too
