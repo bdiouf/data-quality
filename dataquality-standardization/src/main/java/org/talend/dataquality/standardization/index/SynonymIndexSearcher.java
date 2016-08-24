@@ -60,7 +60,13 @@ public class SynonymIndexSearcher {
         MATCH_ANY_FUZZY("MATCH_ANY_FUZZY"),
         MATCH_ALL_FUZZY("MATCH_ALL_FUZZY"),
 
+        /**
+         * @deprecated moved to DictionarySearcher
+         */
         MATCH_SEMANTIC_DICTIONARY("MATCH_SEMANTIC_DICTIONARY"), // Used only for searching semantic dictionary
+        /**
+         * @deprecated moved to DictionarySearcher
+         */
         MATCH_SEMANTIC_KEYWORD("MATCH_SEMANTIC_KEYWORD");// Used only for searching semantic keyword
 
         private String label;
@@ -70,7 +76,6 @@ public class SynonymIndexSearcher {
         }
 
         private String getLabel() {
-            // TODO Auto-generated method stub
             return label;
         }
 
@@ -102,8 +107,6 @@ public class SynonymIndexSearcher {
 
     private int topDocLimit = 3;
 
-    private float minimumSimilarity = 0.8f;
-
     private int maxEdits = 1; // Default value
 
     private static final float WORD_TERM_BOOST = 2F;
@@ -132,7 +135,10 @@ public class SynonymIndexSearcher {
     /**
      * instantiate an index searcher. A call to the index initialization method such as {@link #openIndexInFS(URI)} is
      * required before using any other method.
+     * 
+     * @deprecated avoid using this constructor
      */
+    @Deprecated
     public SynonymIndexSearcher() {
     }
 
@@ -149,25 +155,7 @@ public class SynonymIndexSearcher {
         }
     }
 
-    /**
-     * SynonymIndexSearcher constructor creates this searcher and initializes the index.
-     *
-     * @param indexPath the path to the index.
-     */
-    public SynonymIndexSearcher(URI indexPath) {
-        try {
-            openIndexInFS(indexPath);
-        } catch (IOException e) {
-            LOGGER.error("Unable to open synonym index.", e);
-        }
-    }
-
     SynonymIndexSearcher(Directory indexDir) throws IOException {
-        mgr = new SearcherManager(indexDir, null);
-    }
-
-    public void openIndexInFS(String path) throws IOException {
-        FSDirectory indexDir = FSDirectory.open(new File(path));
         mgr = new SearcherManager(indexDir, null);
     }
 
@@ -177,8 +165,8 @@ public class SynonymIndexSearcher {
      * @param path the path of the index folder
      * @throws java.io.IOException if file does not exist, or any other problem
      */
-    public void openIndexInFS(URI path) throws IOException {
-        Directory indexDir = ClassPathDirectory.open(path);
+    public void openIndexInFS(String path) throws IOException {
+        FSDirectory indexDir = FSDirectory.open(new File(path));
         mgr = new SearcherManager(indexDir, null);
     }
 
@@ -194,7 +182,7 @@ public class SynonymIndexSearcher {
             return null;
         }
         String tempWord = word.trim();
-        if (tempWord.equals("")) { //$NON-NLS-1$
+        if ("".equals(tempWord)) { //$NON-NLS-1$
             return null;
         }
         TopDocs docs = null;
@@ -392,8 +380,7 @@ public class SynonymIndexSearcher {
     }
 
     private Query createWordQueryFor(String stringToSearch) {
-        TermQuery query = new TermQuery(new Term(F_WORDTERM, stringToSearch.toLowerCase()));
-        return query;
+        return new TermQuery(new Term(F_WORDTERM, stringToSearch.toLowerCase()));
     }
 
     private Query getTermQuery(String field, String text, boolean fuzzy) {
@@ -477,7 +464,9 @@ public class SynonymIndexSearcher {
      * @param input
      * @return
      * @throws IOException
+     * @deprecated moved to DictionarySearcher
      */
+    @Deprecated
     private Query createQueryForSemanticDictionaryMatch(String input) throws IOException {
         List<String> tokens = getTokensFromAnalyzer(input);
         // for dictionary search, ignore searching for input containing too many tokens
@@ -490,12 +479,12 @@ public class SynonymIndexSearcher {
     }
 
     /**
-     * 
-     * 
      * @param input
      * @return
      * @throws IOException
+     * @deprecated moved to DictionarySearcher
      */
+    @Deprecated
     private Query createQueryForSemanticKeywordMatch(String input) throws IOException {
         BooleanQuery booleanQuery = new BooleanQuery();
         List<String> tokens = getTokensFromAnalyzer(input);
@@ -541,45 +530,12 @@ public class SynonymIndexSearcher {
         }
     }
 
-    /**
-     * @deprecated calling this method may result in unreleased indexSearcher
-     *
-     * @return
-     */
-    @Deprecated
-    public IndexSearcher getIndexSearcher() {
-        try {
-            return mgr.acquire();
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            return null;
-        }
-    }
-
     public SynonymSearchMode getSearchMode() {
         return searchMode;
     }
 
     public void setSearchMode(SynonymSearchMode searchMode) {
         this.searchMode = searchMode;
-    }
-
-    /**
-     * @deprecated with new Lucene API, we should use maxEdits instead of minimumSimilarity for fuzzy matching
-     * @param minimumSimilarity
-     */
-    @Deprecated
-    public void setMinimumSimilarity(float minimumSimilarity) {
-        this.minimumSimilarity = minimumSimilarity;
-    }
-
-    /**
-     * @deprecated with new Lucene API, we should use maxEdits instead of minimumSimilarity for fuzzy matching
-     * @param minimumSimilarity
-     */
-    @Deprecated
-    public void setMinimumSimilarity(double minimumSimilarity) {
-        this.minimumSimilarity = (float) minimumSimilarity;
     }
 
     public void setMaxEdits(int maxEdits) {

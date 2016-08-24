@@ -30,8 +30,7 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
-import org.talend.dataquality.standardization.index.SynonymIndexSearcher.SynonymSearchMode;
+import org.talend.dataquality.semantic.index.DictionarySearcher.DictionarySearchMode;
 
 public class ConcurrentDictionaryAccessTest {
 
@@ -44,12 +43,12 @@ public class ConcurrentDictionaryAccessTest {
         errorOccurred.set(false);
     }
 
-    private SynonymIndexSearcher newSynonymIndexSearcher() {
+    private DictionarySearcher newSemanticDictionarySearcher() {
         try {
             final URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
-            final SynonymIndexSearcher searcher = new SynonymIndexSearcher(ddPath);
+            final DictionarySearcher searcher = new DictionarySearcher(ddPath);
             searcher.setTopDocLimit(20);
-            searcher.setSearchMode(SynonymSearchMode.MATCH_EXACT);
+            searcher.setSearchMode(DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);
             return searcher;
         } catch (URISyntaxException e) {
             // TODO Auto-generated catch block
@@ -62,7 +61,7 @@ public class ConcurrentDictionaryAccessTest {
 
         @Override
         public void run() {
-            final SynonymIndexSearcher searcher = newSynonymIndexSearcher();
+            final DictionarySearcher searcher = newSemanticDictionarySearcher();
             doConcurrentAccess(searcher, true);
         }
 
@@ -101,7 +100,7 @@ public class ConcurrentDictionaryAccessTest {
         }
     };
 
-    private void doConcurrentAccess(SynonymIndexSearcher searcher, boolean isLogEnabled) {
+    private void doConcurrentAccess(DictionarySearcher searcher, boolean isLogEnabled) {
         int datasetID = (int) Math.floor(Math.random() * 4);
 
         String input = "";

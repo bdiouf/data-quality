@@ -22,7 +22,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.talend.dataquality.semantic.index.ESIndex;
 import org.talend.dataquality.semantic.index.LuceneIndex;
-import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
+import org.talend.dataquality.semantic.index.DictionarySearcher;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -109,14 +109,14 @@ public class CategoryRecognizerBuilder implements Serializable {
 
     private LuceneIndex getDataDictIndex() {
         if (dataDictIndex == null) {
-            dataDictIndex = new LuceneIndex(ddPath, SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_DICTIONARY);
+            dataDictIndex = new LuceneIndex(ddPath, DictionarySearcher.DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);
         }
         return dataDictIndex;
     }
 
     private LuceneIndex getKeywordIndex() {
         if (keywordIndex == null) {
-            keywordIndex = new LuceneIndex(kwPath, SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_KEYWORD);
+            keywordIndex = new LuceneIndex(kwPath, DictionarySearcher.DictionarySearchMode.MATCH_SEMANTIC_KEYWORD);
         }
         return keywordIndex;
     }

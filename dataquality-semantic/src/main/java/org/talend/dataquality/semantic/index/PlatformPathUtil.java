@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.dataquality.standardization.index;
+package org.talend.dataquality.semantic.index;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +28,10 @@ import org.apache.log4j.Logger;
  */
 public class PlatformPathUtil {
 
-    private static final Logger LOG = Logger.getLogger(SynonymIndexBuilder.class);
+    private static final Logger LOG = Logger.getLogger(PlatformPathUtil.class);
+
+    private PlatformPathUtil() {
+    }
 
     public static InputStream getInputStreamByPlatformURL(String bundleName, String filePath) throws FileNotFoundException {
         try {
@@ -45,7 +48,7 @@ public class PlatformPathUtil {
 
     public static String getFilePathByPlatformURL(String bundleName, String filePath) {
         try {
-            URL url = new URL("platform:/plugin/" + bundleName + filePath); //$NON-NLS-1$ 
+            URL url = new URL("platform:/plugin/" + bundleName + filePath); //$NON-NLS-1$
             return getFilePathByPlatformURL(url);
         } catch (MalformedURLException e) {
             // if the platform protocol is unknown, return the input local path

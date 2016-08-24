@@ -23,7 +23,6 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
-import org.talend.dataquality.standardization.index.SynonymIndexSearcher;
 
 /**
  * Created by sizhaoliu on 03/04/15.
@@ -32,10 +31,10 @@ public class LuceneIndex implements Index {
 
     private static final Logger LOG = Logger.getLogger(LuceneIndex.class);
 
-    private final SynonymIndexSearcher searcher;
+    private final DictionarySearcher searcher;
 
-    public LuceneIndex(URI indexPath, SynonymIndexSearcher.SynonymSearchMode searchMode) {
-        searcher = new SynonymIndexSearcher(indexPath);
+    public LuceneIndex(URI indexPath, DictionarySearcher.DictionarySearchMode searchMode) {
+        searcher = new DictionarySearcher(indexPath);
         searcher.setTopDocLimit(20);
         searcher.setSearchMode(searchMode);
     }
@@ -56,20 +55,20 @@ public class LuceneIndex implements Index {
         Set<String> foundCategorySet = new HashSet<String>();
         try {
             TopDocs docs = searcher.searchDocumentBySynonym(data);
-            List<String> inputTokens = searcher.getTokensFromAnalyzer(data);// get tokenized input data
+            List<String> inputTokens = DictionarySearcher.getTokensFromAnalyzer(data);// get tokenized input data
 
             String joinedTokens = StringUtils.join(inputTokens, ' ');
             for (ScoreDoc scoreDoc : docs.scoreDocs) {
                 int docNumber = scoreDoc.doc;
                 Document document = searcher.getDocument(docNumber);
-                String category = document.getValues(SynonymIndexSearcher.F_WORD)[0];
+                String category = document.getValues(DictionarySearcher.F_WORD)[0];
                 if (foundCategorySet.contains(category)) {
                     continue;
                 }
-                String[] synonyms = document.getValues(SynonymIndexSearcher.F_SYNTERM);
+                String[] synonyms = document.getValues(DictionarySearcher.F_SYNTERM);
                 for (String syn : synonyms) {
                     // verify if the tokenized input data contains all tokens from the search result
-                    if (SynonymIndexSearcher.SynonymSearchMode.MATCH_SEMANTIC_KEYWORD.equals(searcher.getSearchMode())) {
+                    if (DictionarySearcher.DictionarySearchMode.MATCH_SEMANTIC_KEYWORD.equals(searcher.getSearchMode())) {
                         // for KW index
                         if (joinedTokens.contains(syn)) {
                             foundCategorySet.add(category);
