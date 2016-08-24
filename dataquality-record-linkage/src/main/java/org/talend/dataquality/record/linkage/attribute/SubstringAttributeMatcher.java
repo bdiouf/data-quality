@@ -19,7 +19,7 @@ import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
  * A {@link IAttributeMatcher} implementation decorator that performs {@link String#substring(int, int)} operations on
  * values provided for match.
  */
-public class SubstringAttributeMatcher implements IAttributeMatcher {
+public class SubstringAttributeMatcher implements IAttributeMatcher, ITokenization {
 
     private final IAttributeMatcher delegate;
 
@@ -118,7 +118,8 @@ public class SubstringAttributeMatcher implements IAttributeMatcher {
 
     @Override
     public void setTokenMethod(TokenizedResolutionMethod tokenMethod) {
-        delegate.setTokenMethod(tokenMethod);
+        if (!AttributeMatcherType.CUSTOM.equals(delegate.getMatchType()))
+            ((AbstractAttributeMatcher) delegate).setTokenMethod(tokenMethod);
     }
 
 }
