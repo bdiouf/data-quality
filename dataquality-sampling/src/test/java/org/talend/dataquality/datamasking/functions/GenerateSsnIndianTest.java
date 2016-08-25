@@ -14,9 +14,10 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * @author dprot
@@ -30,7 +31,7 @@ public class GenerateSsnIndianTest {
 
     @Before
     public void setUp() throws Exception {
-        gni.setRandomWrapper(new RandomWrapper(42));
+        gni.setRandom(new Random(42));
     }
 
     @Test
@@ -42,7 +43,7 @@ public class GenerateSsnIndianTest {
     @Test
     public void testCheckFirstDigit() {
         // First digit should not be a '0' in a Indian SSN
-        gni.setRandomWrapper(new RandomWrapper());
+        gni.setRandom(new Random());
         boolean res = true;
         for (int i = 0; i < 10; ++i) {
             String tmp = gni.generateMaskedRow(null);

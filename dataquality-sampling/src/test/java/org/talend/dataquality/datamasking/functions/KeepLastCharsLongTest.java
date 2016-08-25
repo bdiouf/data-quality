@@ -16,8 +16,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 30 juin 2015 Detailled comment
@@ -33,21 +34,21 @@ public class KeepLastCharsLongTest {
 
     @Test
     public void testGood() {
-        klag.parse("3", false, new RandomWrapper(42));
+        klag.parse("3", false, new Random(42));
         output = klag.generateMaskedRow(input);
         assertEquals(830456L, output); // $NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        klag.parse("7", false, new RandomWrapper(42));
+        klag.parse("7", false, new Random(42));
         output = klag.generateMaskedRow(input);
         assertEquals(input, output);
     }
 
     @Test
     public void testParameter() {
-        klag.parse("3,8", false, new RandomWrapper(42));
+        klag.parse("3,8", false, new Random(42));
         output = klag.generateMaskedRow(input);
         assertEquals(888456L, output);
     }
@@ -55,7 +56,7 @@ public class KeepLastCharsLongTest {
     @Test
     public void testWrongParameter() {
         try {
-            klag.parse("3,r", false, new RandomWrapper(42));
+            klag.parse("3,r", false, new Random(42));
             fail("should get exception with input " + klag.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$

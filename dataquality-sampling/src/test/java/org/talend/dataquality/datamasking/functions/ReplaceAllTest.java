@@ -16,8 +16,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment
@@ -33,14 +34,14 @@ public class ReplaceAllTest {
 
     @Test
     public void testGood() {
-        ra.parse("X", false, new RandomWrapper(42));
+        ra.parse("X", false, new Random(42));
         output = ra.generateMaskedRow(input);
         assertEquals("XXXXXXXXXXX", output); //$NON-NLS-1$
     }
 
     @Test
     public void testCharacter() {
-        ra.parse("?", false, new RandomWrapper(42));
+        ra.parse("?", false, new Random(42));
         output = ra.generateMaskedRow(input);
         assertEquals("???????????", output); //$NON-NLS-1$
     }
@@ -48,7 +49,7 @@ public class ReplaceAllTest {
     @Test
     public void testWrongParameter() {
         try {
-            ra.parse("zi", false, new RandomWrapper(42));
+            ra.parse("zi", false, new Random(42));
             fail("should get exception with input " + ra.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
@@ -59,7 +60,7 @@ public class ReplaceAllTest {
 
     @Test
     public void testNoParameter() {
-        ra.parse(" ", false, new RandomWrapper(42));
+        ra.parse(" ", false, new Random(42));
         output = ra.generateMaskedRow(input);
         assertEquals("a30ma rnq 7", output); //$NON-NLS-1$
     }

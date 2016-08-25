@@ -14,9 +14,10 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * @author jteuladedenantes
@@ -30,7 +31,7 @@ public class GenerateUniqueSsnUkTest {
 
     @Before
     public void setUp() throws Exception {
-        gnu.setRandomWrapper(new RandomWrapper(42));
+        gnu.setRandom(new Random(42));
         gnu.setKeepFormat(true);
     }
 

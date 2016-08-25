@@ -14,9 +14,10 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 29 juin 2015 Detailled comment
@@ -30,7 +31,7 @@ public class GenerateAccountNumberSimpleTest {
 
     @Before
     public void setUp() throws Exception {
-        gans.setRandomWrapper(new RandomWrapper(42));
+        gans.setRandom(new Random(42));
     }
 
     @Test

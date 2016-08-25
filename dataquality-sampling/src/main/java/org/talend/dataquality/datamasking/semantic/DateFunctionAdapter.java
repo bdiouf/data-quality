@@ -30,9 +30,9 @@ public class DateFunctionAdapter extends Function<String> {
     private List<SimpleDateFormat> dataFormatList = new ArrayList<SimpleDateFormat>();
 
     @Override
-    public void setRandomWrapper(Random rand) {
-        super.setRandomWrapper(rand);
-        function.setRandomWrapper(rand);
+    public void setRandom(Random rand) {
+        super.setRandom(rand);
+        function.setRandom(rand);
     }
 
     public DateFunctionAdapter(Function<Date> functionToAdapt, List<String> datePatternList) {

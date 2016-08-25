@@ -14,9 +14,10 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 30 juin 2015 Detailled comment
@@ -30,7 +31,7 @@ public class GenerateCreditCardFormatStringTest {
 
     @Before
     public void setUp() throws Exception {
-        gccfs.setRandomWrapper(new RandomWrapper(42));
+        gccfs.setRandom(new Random(42));
 
     }
 
@@ -58,7 +59,7 @@ public class GenerateCreditCardFormatStringTest {
 
     @Test
     public void testCheck() {
-        gccfs.setRandomWrapper(new RandomWrapper());
+        gccfs.setRandom(new Random());
         boolean res = true;
         for (int i = 0; i < 10; ++i) {
             String tmp = gccfs.generateMaskedRow("4120356987563"); //$NON-NLS-1$

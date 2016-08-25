@@ -15,8 +15,6 @@ package org.talend.dataquality.datamasking.functions;
 import java.util.List;
 import java.util.Random;
 
-import org.talend.dataquality.duplicating.RandomWrapper;
-
 /**
  * @author jteuladedenantes
  * 
@@ -40,9 +38,9 @@ public abstract class AbstractGenerateUniqueSsn extends Function<String> {
     }
 
     @Override
-    public void setRandomWrapper(Random rand) {
+    public void setRandom(Random rand) {
         if (rand == null) {
-            rnd = new RandomWrapper();
+            rnd = new Random();
         } else {
             rnd = rand;
         }

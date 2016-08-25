@@ -15,11 +15,10 @@ package org.talend.dataquality.datamasking.functions;
 import static org.junit.Assert.assertEquals;
 
 import java.net.URISyntaxException;
+import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.GenerateFromFileString;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 29 juin 2015 Detailled comment
@@ -34,7 +33,7 @@ public class GenerateFromFileStringTest {
     @Before
     public void setUp() throws URISyntaxException {
         final String path = this.getClass().getResource("data/name.txt").toURI().getPath(); //$NON-NLS-1$
-        gffs.parse(path, false, new RandomWrapper(42));
+        gffs.parse(path, false, new Random(42));
     }
 
     @Test

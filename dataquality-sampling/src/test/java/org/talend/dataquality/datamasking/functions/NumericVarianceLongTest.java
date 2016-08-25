@@ -14,8 +14,9 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 30 juin 2015 Detailled comment
@@ -31,14 +32,14 @@ public class NumericVarianceLongTest {
 
     @Test
     public void testGood() {
-        nvl.parse("10", false, new RandomWrapper(42));
+        nvl.parse("10", false, new Random(42));
         output = nvl.generateMaskedRow(input).toString();
         assertEquals(output, String.valueOf(114));
     }
 
     @Test
     public void testDummy() {
-        nvl.parse("-10", false, new RandomWrapper(42));
+        nvl.parse("-10", false, new Random(42));
         output = nvl.generateMaskedRow(input).toString();
         assertEquals(output, String.valueOf(114));
     }

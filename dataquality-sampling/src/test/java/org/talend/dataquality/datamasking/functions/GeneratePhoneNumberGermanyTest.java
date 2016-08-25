@@ -14,10 +14,10 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.GeneratePhoneNumberGermany;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 20 août 2015 Detailled comment
@@ -31,7 +31,7 @@ public class GeneratePhoneNumberGermanyTest {
 
     @Before
     public void setUp() throws Exception {
-        gpng.setRandomWrapper(new RandomWrapper(42));
+        gpng.setRandom(new Random(42));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class GeneratePhoneNumberGermanyTest {
     @Test
     public void testCheck() {
         boolean res = true;
-        gpng.setRandomWrapper(new RandomWrapper());
+        gpng.setRandom(new Random());
         for (int i = 0; i < 10; ++i) {
             String tmp = gpng.generateMaskedRow(null);
             res = (tmp.substring(0, 3).equals("030") || tmp.substring(0, 3).equals("040") || tmp.substring(0, 3).equals("069") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

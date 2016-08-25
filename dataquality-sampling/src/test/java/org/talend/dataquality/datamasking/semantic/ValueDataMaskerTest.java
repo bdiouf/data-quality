@@ -131,7 +131,7 @@ public class ValueDataMaskerTest {
             System.out.print("[" + semanticCategory + "]\n\t" + inputValue + " => ");
             final ValueDataMasker masker = new ValueDataMasker(semanticCategory, dataType);
             masker.getFunction().setKeepFormat(true);
-            masker.getFunction().setRandomWrapper(new Random(AllDataqualitySamplingTests.RANDOM_SEED));
+            masker.getFunction().setRandom(new Random(AllDataqualitySamplingTests.RANDOM_SEED));
             String maskedValue = masker.maskValue(inputValue);
             System.out.println(maskedValue);
             assertEquals("Test faild on [" + inputValue + "]", EXPECTED_MASKED_VALUES.get(input), maskedValue);

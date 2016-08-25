@@ -18,11 +18,11 @@ import static org.junit.Assert.fail;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 29 juin 2015 Detailled comment
@@ -36,7 +36,7 @@ public class DateVarianceTest {
 
     private Date input = null;
 
-    private RandomWrapper rand = new RandomWrapper(42);
+    private Random rand = new Random(42);
 
     @Before
     public void setUp() throws Exception {

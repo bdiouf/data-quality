@@ -14,8 +14,9 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment
@@ -31,7 +32,7 @@ public class RemoveFirstCharsIntegerTest {
 
     @Test
     public void test() {
-        rfci.parse("2", false, new RandomWrapper(42));
+        rfci.parse("2", false, new Random(42));
         ;
         output = rfci.generateMaskedRow(input);
         assertEquals(output, 6);
@@ -39,7 +40,7 @@ public class RemoveFirstCharsIntegerTest {
 
     @Test
     public void testDummyGood() {
-        rfci.parse("10", false, new RandomWrapper(42));
+        rfci.parse("10", false, new Random(42));
         output = rfci.generateMaskedRow(input);
         assertEquals(output, 0);
     }

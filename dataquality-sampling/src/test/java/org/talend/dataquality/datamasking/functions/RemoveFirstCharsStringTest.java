@@ -14,8 +14,9 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment
@@ -31,21 +32,21 @@ public class RemoveFirstCharsStringTest {
 
     @Test
     public void test() {
-        rfcs.parse("2", false, new RandomWrapper(42));
+        rfcs.parse("2", false, new Random(42));
         output = rfcs.generateMaskedRow(input);
         assertEquals(output, "eve"); //$NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        rfcs.parse("10", false, new RandomWrapper(42));
+        rfcs.parse("10", false, new Random(42));
         output = rfcs.generateMaskedRow(input);
         assertEquals(output, Function.EMPTY_STRING); // $NON-NLS-1$
     }
 
     @Test
     public void testParameterToLong() {
-        rfcs.parse("10000", false, new RandomWrapper(42));
+        rfcs.parse("10000", false, new Random(42));
         output = rfcs.generateMaskedRow(input);
         assertEquals(output, Function.EMPTY_STRING);
     }

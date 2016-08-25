@@ -16,11 +16,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.GenerateBetweenDate;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 29 juin 2015 Detailled comment
@@ -36,7 +35,7 @@ public class GenerateBetweenDateTest {
 
     @Before
     public void setUp() throws Exception {
-        gbd.setRandomWrapper(new RandomWrapper(42));
+        gbd.setRandom(new Random(42));
     }
 
     @Test

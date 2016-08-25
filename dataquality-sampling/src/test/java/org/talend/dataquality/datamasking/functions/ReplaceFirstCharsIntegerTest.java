@@ -16,8 +16,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 30 juin 2015 Detailled comment
@@ -33,21 +34,21 @@ public class ReplaceFirstCharsIntegerTest {
 
     @Test
     public void testGood() {
-        rfci.parse("3", false, new RandomWrapper(42));
+        rfci.parse("3", false, new Random(42));
         output = rfci.generateMaskedRow(input);
         assertEquals(830456, output); // $NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        rfci.parse("154", false, new RandomWrapper(42));
+        rfci.parse("154", false, new Random(42));
         output = rfci.generateMaskedRow(input);
         assertEquals(830807, output); // $NON-NLS-1$
     }
 
     @Test
     public void testDummyGood2() {
-        rfci.parse("0", false, new RandomWrapper(42));
+        rfci.parse("0", false, new Random(42));
         output = rfci.generateMaskedRow(input);
         assertEquals(input, output); // $NON-NLS-1$
     }
@@ -55,7 +56,7 @@ public class ReplaceFirstCharsIntegerTest {
     @Test
     public void testWrongParameter() {
         try {
-            rfci.parse("j", false, new RandomWrapper(42));
+            rfci.parse("j", false, new Random(42));
             fail("should get exception with input " + rfci.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$

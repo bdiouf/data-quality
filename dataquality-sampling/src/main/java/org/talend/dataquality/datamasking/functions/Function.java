@@ -18,9 +18,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
 import org.apache.commons.lang.StringUtils;
-import org.talend.dataquality.duplicating.RandomWrapper;
+import org.apache.log4j.Logger;
 
 /**
  * created by jgonzalez on 18 juin 2015. This class is an abstract class that all other functions extends. All the
@@ -55,10 +54,20 @@ public abstract class Function<T> implements Serializable {
      * setter for random
      * 
      * @param rand The RandomWrapper.
+     * @deprecated use {@link setRandom()} instead
      */
     public void setRandomWrapper(Random rand) {
+        setRandom(rand);
+    }
+
+    /**
+     * setter for random
+     * 
+     * @param rand The java.util.Random instance.
+     */
+    public void setRandom(Random rand) {
         if (rand == null) {
-            rnd = new RandomWrapper();
+            rnd = new Random();
         } else {
             rnd = rand;
         }
@@ -118,7 +127,7 @@ public abstract class Function<T> implements Serializable {
             }
         }
         setKeepNull(keepNullValues);
-        setRandomWrapper(rand);
+        setRandom(rand);
     }
 
     private String clean(String extraParameter) {

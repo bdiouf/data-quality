@@ -16,8 +16,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 public class BetweenIndexesRemoveTest {
 
@@ -29,7 +30,7 @@ public class BetweenIndexesRemoveTest {
 
     @Test
     public void testGood() {
-        bir.parse("2, 4", false, new RandomWrapper(42));
+        bir.parse("2, 4", false, new Random(42));
         output = bir.generateMaskedRow(input);
         assertEquals("Se", output); //$NON-NLS-1$
     }
@@ -37,7 +38,7 @@ public class BetweenIndexesRemoveTest {
     @Test
     public void testNegativeParameter() {
         try {
-            bir.parse("-2, 8", false, new RandomWrapper(42));
+            bir.parse("-2, 8", false, new Random(42));
             fail("should get exception with input " + bir.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
@@ -49,7 +50,7 @@ public class BetweenIndexesRemoveTest {
     @Test
     public void testSwitchParameter() {
         try {
-            bir.parse("4, 2", false, new RandomWrapper(42));
+            bir.parse("4, 2", false, new Random(42));
             fail("should get exception with input " + bir.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
@@ -61,7 +62,7 @@ public class BetweenIndexesRemoveTest {
     @Test
     public void testBad() {
         try {
-            bir.parse("1", false, new RandomWrapper(42));
+            bir.parse("1", false, new Random(42));
             fail("should get exception with input " + bir.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
@@ -72,7 +73,7 @@ public class BetweenIndexesRemoveTest {
 
     @Test
     public void testDummyParameters() {
-        bir.parse("423,452", false, new RandomWrapper(42));
+        bir.parse("423,452", false, new Random(42));
         output = bir.generateMaskedRow(input);
         assertEquals(input, output);
     }

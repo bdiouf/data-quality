@@ -14,10 +14,10 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.GenerateSsnGermany;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 20 août 2015 Detailled comment
@@ -31,7 +31,7 @@ public class GenerateSsnGermanyTest {
 
     @Before
     public void setUp() throws Exception {
-        gng.setRandomWrapper(new RandomWrapper(42));
+        gng.setRandom(new Random(42));
     }
 
     @Test

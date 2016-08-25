@@ -16,8 +16,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment
@@ -33,7 +34,7 @@ public class RemoveLastCharsLongTest {
 
     @Test
     public void test() {
-        rlci.parse("2", false, new RandomWrapper(42));
+        rlci.parse("2", false, new Random(42));
         output = rlci.generateMaskedRow(input);
         assertEquals(6, output);
     }
@@ -41,7 +42,7 @@ public class RemoveLastCharsLongTest {
     @Test
     public void testNullParameter() {
         try {
-            rlci.parse(null, false, new RandomWrapper(42));
+            rlci.parse(null, false, new Random(42));
             fail("should get exception with input " + rlci.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
@@ -50,14 +51,14 @@ public class RemoveLastCharsLongTest {
 
     @Test
     public void testDummyGood() {
-        rlci.parse("10", false, new RandomWrapper(42));
+        rlci.parse("10", false, new Random(42));
         output = rlci.generateMaskedRow(input);
         assertEquals(0, output);
     }
 
     @Test
     public void testLimitCase() {
-        rlci.parse("0", false, new RandomWrapper(42));
+        rlci.parse("0", false, new Random(42));
         output = rlci.generateMaskedRow(input);
         assertEquals(666, output);
     }
@@ -65,7 +66,7 @@ public class RemoveLastCharsLongTest {
     @Test
     public void testWrongParameterCase() {
         try {
-            rlci.parse("a", false, new RandomWrapper(42));
+            rlci.parse("a", false, new Random(42));
             fail("should get exception with input " + rlci.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$

@@ -14,9 +14,10 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 29 juin 2015 Detailled comment
@@ -32,19 +33,19 @@ public class KeepLastCharsStringTest {
 
     @Before
     public void setUp() throws Exception {
-        klads.setRandomWrapper(new RandomWrapper(42));
+        klads.setRandom(new Random(42));
     }
 
     @Test
     public void testGood() {
-        klads.parse("3", false, new RandomWrapper(42));
+        klads.parse("3", false, new Random(42));
         output = klads.generateMaskedRow(input);
         assertEquals("830456", output); //$NON-NLS-1$
 
         // add msjian test for bug TDQ-11339: fix a "String index out of range: -1" exception
         String inputa[] = new String[] { "test1234", "pp456", "wei@sina.com" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         String outputa[] = new String[] { "ahwm0734", "nq756", "paa@igue.wom" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        klads.parse("2", false, new RandomWrapper(42));
+        klads.parse("2", false, new Random(42));
         for (int i = 0; i < inputa.length; i++) {
             output = klads.generateMaskedRow(inputa[i]);
             assertEquals(outputa[i], output);
@@ -54,14 +55,14 @@ public class KeepLastCharsStringTest {
 
     @Test
     public void testDummyGood() {
-        klads.parse("7", false, new RandomWrapper(42));
+        klads.parse("7", false, new Random(42));
         output = klads.generateMaskedRow(input);
         assertEquals(input, output);
     }
 
     @Test
     public void testParameter() {
-        klads.parse("3,i", false, new RandomWrapper(42));
+        klads.parse("3,i", false, new Random(42));
         output = klads.generateMaskedRow(input);
         assertEquals("iii456", output);
     }

@@ -14,10 +14,10 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.GenerateBetweenInteger;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 29 juin 2015 Detailled comment
@@ -31,19 +31,19 @@ public class GenerateBetweenIntegerTest {
 
     @Before
     public void setUp() throws Exception {
-        gbi.setRandomWrapper(new RandomWrapper(42));
+        gbi.setRandom(new Random(42));
     }
 
     @Test
     public void testGood() {
-        gbi.parse("10,20", false, new RandomWrapper(42)); //$NON-NLS-1$
+        gbi.parse("10,20", false, new Random(42)); //$NON-NLS-1$
         output = gbi.generateMaskedRow(null).toString();
         assertEquals(output, "17"); //$NON-NLS-1$
     }
 
     @Test
     public void testCheck() {
-        gbi.setRandomWrapper(new RandomWrapper());
+        gbi.setRandom(new Random());
         gbi.parameters = "0,100".split(","); //$NON-NLS-1$ //$NON-NLS-2$
         boolean res = true;
         for (int i = 0; i < 10; ++i) {
@@ -62,7 +62,7 @@ public class GenerateBetweenIntegerTest {
 
     @Test
     public void testWrongParameter() {
-        gbi.parse(null, false, new RandomWrapper(42)); // $NON-NLS-1$
+        gbi.parse(null, false, new Random(42)); // $NON-NLS-1$
         output = gbi.generateMaskedRow(null).toString();
         assertEquals(output, "0"); //$NON-NLS-1$
     }

@@ -14,9 +14,10 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 19 août 2015 Detailled comment
@@ -30,7 +31,7 @@ public class GenerateFromPatternTest {
 
     @Before
     public void setUp() throws Exception {
-        gfp.setRandomWrapper(new RandomWrapper(42));
+        gfp.setRandom(new Random(42));
     }
 
     @Test

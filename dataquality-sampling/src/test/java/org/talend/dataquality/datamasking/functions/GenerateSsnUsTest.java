@@ -14,10 +14,10 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.datamasking.functions.GenerateSsnUs;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 20 août 2015 Detailled comment
@@ -31,7 +31,7 @@ public class GenerateSsnUsTest {
 
     @Before
     public void setUp() throws Exception {
-        gsus.setRandomWrapper(new RandomWrapper(42));
+        gsus.setRandom(new Random(42));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class GenerateSsnUsTest {
 
     @Test
     public void testCheck() {
-        gsus.setRandomWrapper(new RandomWrapper());
+        gsus.setRandom(new Random());
         boolean res = true;
         for (int i = 0; i < 10; ++i) {
             String tmp = gsus.generateMaskedRow(null);

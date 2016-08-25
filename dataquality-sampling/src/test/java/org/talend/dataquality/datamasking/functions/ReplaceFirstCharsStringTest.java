@@ -16,8 +16,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 29 juin 2015 Detailled comment
@@ -33,14 +34,14 @@ public class ReplaceFirstCharsStringTest {
 
     @Test
     public void testGood() {
-        rfcs.parse("3,y", false, new RandomWrapper(42));
+        rfcs.parse("3,y", false, new Random(42));
         output = rfcs.generateMaskedRow(input);
         assertEquals("yyy456", output);
     }
 
     @Test
     public void testDummyGood() {
-        rfcs.parse("7", false, new RandomWrapper(42));
+        rfcs.parse("7", false, new Random(42));
         output = rfcs.generateMaskedRow(input);
         assertEquals("830807", output);
     }
@@ -48,7 +49,7 @@ public class ReplaceFirstCharsStringTest {
     @Test
     public void testWrongParameters() {
         try {
-            rfcs.parse("0,xs", false, new RandomWrapper(42));
+            rfcs.parse("0,xs", false, new Random(42));
             fail("should get exception with input " + rfcs.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$

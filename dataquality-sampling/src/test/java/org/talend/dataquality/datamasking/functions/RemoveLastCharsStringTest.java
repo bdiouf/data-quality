@@ -14,8 +14,9 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment
@@ -31,7 +32,7 @@ public class RemoveLastCharsStringTest {
 
     @Test
     public void test() {
-        rlcs.parse("2", false, new RandomWrapper(42));
+        rlcs.parse("2", false, new Random(42));
         ;
         output = rlcs.generateMaskedRow(input);
         assertEquals(output, "Ste"); //$NON-NLS-1$
@@ -39,7 +40,7 @@ public class RemoveLastCharsStringTest {
 
     @Test
     public void testDummyGood() {
-        rlcs.parse("10", false, new RandomWrapper(42));
+        rlcs.parse("10", false, new Random(42));
         output = rlcs.generateMaskedRow(input);
         assertEquals(output, ""); //$NON-NLS-1$
     }

@@ -14,8 +14,9 @@ package org.talend.dataquality.datamasking.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Random;
+
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 30 juin 2015 Detailled comment
@@ -31,14 +32,14 @@ public class KeepFirstCharsIntegerTest {
 
     @Test
     public void testGood() {
-        kfag.parse("3", false, new RandomWrapper(42));
+        kfag.parse("3", false, new Random(42));
         output = kfag.generateMaskedRow(input);
         assertEquals(123830, output); // $NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        kfag.parse("7", false, new RandomWrapper(42));
+        kfag.parse("7", false, new Random(42));
         output = kfag.generateMaskedRow(input);
         assertEquals(input, output);
     }

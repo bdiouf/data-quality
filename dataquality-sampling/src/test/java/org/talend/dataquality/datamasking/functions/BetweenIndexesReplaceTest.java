@@ -16,9 +16,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Random;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 25 juin 2015 Detailled comment
@@ -34,19 +35,19 @@ public class BetweenIndexesReplaceTest {
 
     @Before
     public void tearUp() {
-        bir.setRandomWrapper(new RandomWrapper(42));
+        bir.setRandom(new Random(42));
     }
 
     @Test
     public void testGood() {
-        bir.parse("2, 4, X", false, new RandomWrapper(42));
+        bir.parse("2, 4, X", false, new Random(42));
         output = bir.generateMaskedRow(input);
         assertEquals("SXXXe", output); //$NON-NLS-1$
     }
 
     @Test
     public void testDummyGood() {
-        bir.parse("1, 8", false, new RandomWrapper(42));
+        bir.parse("1, 8", false, new Random(42));
         output = bir.generateMaskedRow(input);
         assertEquals("Ahwma", output); //$NON-NLS-1$
     }
@@ -54,7 +55,7 @@ public class BetweenIndexesReplaceTest {
     @Test
     public void testBad() {
         try {
-            bir.parse("1", false, new RandomWrapper(42));
+            bir.parse("1", false, new Random(42));
             fail("should get exception with input " + bir.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
@@ -66,7 +67,7 @@ public class BetweenIndexesReplaceTest {
     @Test
     public void testBad2() {
         try {
-            bir.parse("lk, df", false, new RandomWrapper(42));
+            bir.parse("lk, df", false, new Random(42));
             fail("should get exception with input " + bir.parameters); //$NON-NLS-1$
         } catch (Exception e) {
             assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$

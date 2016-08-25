@@ -16,10 +16,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.talend.dataquality.duplicating.RandomWrapper;
 
 /**
  * created by jgonzalez on 29 juin 2015 Detailled comment
@@ -36,7 +36,7 @@ public class NumericVarianceIntegerTest {
 
     @Test
     public void testGood() {
-        nvi.parse("10", false, new RandomWrapper(42));
+        nvi.parse("10", false, new Random(42));
         output = nvi.generateMaskedRow(input).toString();
         assertEquals(-7, nvi.rate);
         assertEquals(output, String.valueOf(115));
@@ -44,7 +44,7 @@ public class NumericVarianceIntegerTest {
 
     @Test
     public void testNullParameter() {
-        nvi.parse(null, false, new RandomWrapper(8766));
+        nvi.parse(null, false, new Random(8766));
         output = nvi.generateMaskedRow(input).toString();
         assertEquals(9, nvi.rate);
         assertEquals(output, String.valueOf(134));
@@ -52,7 +52,7 @@ public class NumericVarianceIntegerTest {
 
     @Test
     public void testDummy() {
-        nvi.parse("-10", false, new RandomWrapper(42));
+        nvi.parse("-10", false, new Random(42));
         output = nvi.generateMaskedRow(input).toString();
         assertEquals(-7, nvi.rate);
         assertEquals(String.valueOf(115), output);
@@ -65,27 +65,27 @@ public class NumericVarianceIntegerTest {
     @Test
     public void testOverFlowCase() {
         // Before OverFlow Case 99999999+20*99999999/100=119999998
-        nvi.parse("30", false, new RandomWrapper(42));
+        nvi.parse("30", false, new Random(42));
         output = nvi.generateMaskedRow(99999999).toString();
         assertEquals(20, nvi.rate);
         assertEquals(String.valueOf(119999998), output);
         // over flow case for -237*99999999
-        nvi.parse("3000", false, new RandomWrapper(42));
+        nvi.parse("3000", false, new Random(42));
         output = nvi.generateMaskedRow(99999999).toString();
         assertEquals(-1870, nvi.rate);
         assertEquals(String.valueOf(79000000), output);
         // over flow case for 1248*99999999
-        nvi.parse("30000", false, new RandomWrapper(42));
+        nvi.parse("30000", false, new Random(42));
         output = nvi.generateMaskedRow(99999999).toString();
         assertEquals(1130, nvi.rate);
         assertEquals(String.valueOf(120999998), output);
         // over flow case for 18884*-99999999
-        nvi.parse("30000", false, new RandomWrapper(42));
+        nvi.parse("30000", false, new Random(42));
         output = nvi.generateMaskedRow(-99999999).toString();
         assertEquals(1130, nvi.rate);
         assertEquals(String.valueOf(-120999998), output);
         // over flow case for -2030*-99999999
-        nvi.parse("-4000", false, new RandomWrapper(42));
+        nvi.parse("-4000", false, new Random(42));
         output = nvi.generateMaskedRow(-99999999).toString();
         assertEquals(1130, nvi.rate);
         assertEquals(String.valueOf(-120999998), output);
