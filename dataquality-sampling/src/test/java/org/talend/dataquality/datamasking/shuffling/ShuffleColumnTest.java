@@ -1,5 +1,6 @@
 package org.talend.dataquality.datamasking.shuffling;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class ShuffleColumnTest {
     private String file5000 = "Shuffling_test_data_5000.csv";
 
     private String file50000 = "Shuffling_test_data_50000.csv";
+
+    private String file1000Compared = "Shuffling_test_data_1000 _result.csv";
 
     private static List<Integer> data = new ArrayList<Integer>();
 
@@ -152,6 +155,8 @@ public class ShuffleColumnTest {
         service.setSeperationSize(100000);
 
         List<List<Object>> fileData = generation.getTableValue(GenerateData.SHUFFLING_DATA_PATH);
+        List<List<Object>> fileDataCompared = generation.getTableValue(file1000Compared);
+
         long time1 = System.currentTimeMillis();
         service.setRows(fileData);
         long time2 = System.currentTimeMillis();
@@ -173,6 +178,15 @@ public class ShuffleColumnTest {
         // Initialize the shuffled data
         for (int group = 0; group < result.size(); group++) {
             List<List<Object>> rows = result.poll();
+            // Compare the shuffling results' positions
+            for (int i = 0; i < rows.size(); i++) {
+                List<Object> shuffled = rows.get(i);
+                List<Object> compared = fileDataCompared.get(i);
+                for (int j = 0; j < 4; j++) {
+                    assertEquals(shuffled.get(j).toString(), compared.get(j).toString().trim());
+                }
+            }
+
             for (List<Object> row : rows) {
                 Object idS = row.get(0);
                 Object firstNameS = row.get(1);

@@ -27,7 +27,7 @@ public class ShuffleColumn {
 
     private List<String> allInputColumns = new ArrayList<String>();
 
-    private Random randomWrapper = new Random();
+    private Random random = new Random();
 
     /**
      * Constructor without the partition choice
@@ -177,10 +177,10 @@ public class ShuffleColumn {
     private int getShift(List<Integer> shifts, int integer) {
         int shift = 0;
         if (shifts.size() >= integer) {
-            return randomWrapper.nextInt(integer);
+            return random.nextInt(integer);
         }
         do {
-            shift = randomWrapper.nextInt(integer);
+            shift = random.nextInt(integer);
         } while (shifts.contains(shift));
         return shift;
     }
@@ -245,7 +245,7 @@ public class ShuffleColumn {
      * @param seed a long number
      */
     public void setRandomSeed(long seed) {
-        this.randomWrapper = new Random(seed);
+        this.random.setSeed(seed);
     }
 
     /**
@@ -254,7 +254,7 @@ public class ShuffleColumn {
      * @return a prime number
      */
     protected int getPrimeNumber() {
-        return PRIME_NUMBERS[randomWrapper.nextInt(PRIME_NUMBERS.length)];
+        return PRIME_NUMBERS[random.nextInt(PRIME_NUMBERS.length)];
     }
 
     /**
