@@ -3,8 +3,7 @@ package org.talend.dataquality.datamasking.shuffling;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.talend.dataquality.duplicating.RandomWrapper;
+import java.util.Random;
 
 /**
  * The class ShuffleColumn defines the basic common methods used in the "shuffling" functions. As with shuffling, this
@@ -28,7 +27,7 @@ public class ShuffleColumn {
 
     private List<String> allInputColumns = new ArrayList<String>();
 
-    private RandomWrapper randomWrapper = new RandomWrapper();
+    private Random randomWrapper = new Random();
 
     /**
      * Constructor without the partition choice
@@ -246,7 +245,7 @@ public class ShuffleColumn {
      * @param seed a long number
      */
     public void setRandomSeed(long seed) {
-        this.randomWrapper.setSeed(seed);
+        this.randomWrapper = new Random(seed);
     }
 
     /**

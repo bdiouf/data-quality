@@ -146,7 +146,7 @@ public class ShuffleColumnTest {
         Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
 
         ShufflingService service = new ShufflingService(columns, allColumns);
-
+        service.setRandomSeed(77);
         ShufflingHandler handler = new ShufflingHandler(service, result);
         service.setShufflingHandler(handler);
         service.setSeperationSize(100000);
@@ -156,11 +156,9 @@ public class ShuffleColumnTest {
         service.setRows(fileData);
         long time2 = System.currentTimeMillis();
         service.setHasFinished(true);
-        Thread.sleep(100);
         System.out.println("1000 line generation time " + (time2 - time1));
 
         Assert.assertEquals(1, result.size());
-
         List<Object> idColumnSL = new ArrayList<Object>();
         List<Object> firstNameColumnSL = new ArrayList<Object>();
         List<Object> emailSL = new ArrayList<Object>();
