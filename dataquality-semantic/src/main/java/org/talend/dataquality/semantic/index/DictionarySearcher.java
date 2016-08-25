@@ -89,6 +89,8 @@ public class DictionarySearcher {
 
     private static final int MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH = 20;
 
+    private static final int MAX_CHAR_COUNT_FOR_SEMANTIC_MATCH = 100;
+
     private DictionarySearchMode searchMode = DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY;
 
     /**
@@ -227,12 +229,12 @@ public class DictionarySearcher {
      * @throws IOException
      */
     private Query createQueryForSemanticDictionaryMatch(String input) throws IOException {
-        List<String> tokens = getTokensFromAnalyzer(input);
         // for dictionary search, ignore searching for input containing too many tokens
-        if (tokens.size() > MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH) {
+        if (input.length() > MAX_CHAR_COUNT_FOR_SEMANTIC_MATCH) {
             return new TermQuery(new Term(F_SYNTERM, StringUtils.EMPTY));
         }
-        return getTermQuery(F_SYNTERM, StringUtils.join(tokens, ' '), false);
+
+        return getTermQuery(F_SYNTERM, StringUtils.join(getTokensFromAnalyzer(input), ' '), false);
     }
 
     /**
@@ -248,11 +250,11 @@ public class DictionarySearcher {
         // for keyword search, only search the beginning tokens from input
         if (tokens.size() > MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH) {
             for (int i = 0; i < MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH; i++) {
-                booleanQuery.add(getTermQuery(F_SYN, tokens.get(i), false), BooleanClause.Occur.SHOULD);
+                booleanQuery.add(getTermQuery(F_SYNTERM, tokens.get(i), false), BooleanClause.Occur.SHOULD);
             }
         } else {
             for (String token : tokens) {
-                booleanQuery.add(getTermQuery(F_SYN, token, false), BooleanClause.Occur.SHOULD);
+                booleanQuery.add(getTermQuery(F_SYNTERM, token, false), BooleanClause.Occur.SHOULD);
             }
         }
         return booleanQuery;

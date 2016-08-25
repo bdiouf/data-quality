@@ -147,22 +147,14 @@ public class SemanticDictionaryGenerator {
     private Document generateDocument(String word, Set<String> synonyms) {
         String tempWord = word.trim();
         Document doc = new Document();
-        FieldType ftWord = new FieldType();
-        ftWord.setStored(true);
-        ftWord.setIndexed(false);
-        ftWord.setOmitNorms(true);
-        ftWord.freeze();
         FieldType ftSyn = new FieldType();
         ftSyn.setStored(false);
         ftSyn.setIndexed(true);
         ftSyn.setOmitNorms(true);
         ftSyn.freeze();
 
-        Field wordField = new Field(DictionarySearcher.F_WORD, tempWord, ftWord);
-        doc.add(wordField);
-        // Field wordTermField = new StringField(SynonymIndexSearcher.F_WORDTERM, tempWord.toLowerCase(),
-        // Field.Store.NO);
-        // doc.add(wordTermField);
+        Field wordTermField = new StringField(DictionarySearcher.F_WORD, tempWord, Field.Store.YES);
+        doc.add(wordTermField);
         for (String syn : synonyms) {
             if (syn != null) {
                 syn = syn.trim();
@@ -175,11 +167,11 @@ public class SemanticDictionaryGenerator {
                 }
 
                 if (syn.length() > 0 && !syn.equals(tempWord)) {
-                    doc.add(new Field(DictionarySearcher.F_SYN, syn, ftSyn));
-
                     try {
-                        String joinedTokens = StringUtils.join(DictionarySearcher.getTokensFromAnalyzer(syn), ' ');
-                        doc.add(new StringField(DictionarySearcher.F_SYNTERM, joinedTokens, Field.Store.YES));
+                        List<String> aux = DictionarySearcher.getTokensFromAnalyzer(syn);
+                        doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(aux, ' '), Field.Store.NO));
+                        if (aux.size() > 1)
+                            doc.add(new Field(DictionarySearcher.F_SYN, syn, ftSyn));
 
                     } catch (IOException e) {
                         // TODO Auto-generated catch block

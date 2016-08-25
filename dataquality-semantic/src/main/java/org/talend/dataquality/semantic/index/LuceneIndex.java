@@ -55,30 +55,9 @@ public class LuceneIndex implements Index {
         Set<String> foundCategorySet = new HashSet<String>();
         try {
             TopDocs docs = searcher.searchDocumentBySynonym(data);
-            List<String> inputTokens = DictionarySearcher.getTokensFromAnalyzer(data);// get tokenized input data
-
-            String joinedTokens = StringUtils.join(inputTokens, ' ');
             for (ScoreDoc scoreDoc : docs.scoreDocs) {
-                int docNumber = scoreDoc.doc;
-                Document document = searcher.getDocument(docNumber);
-                String category = document.getValues(DictionarySearcher.F_WORD)[0];
-                if (foundCategorySet.contains(category)) {
-                    continue;
-                }
-                String[] synonyms = document.getValues(DictionarySearcher.F_SYNTERM);
-                for (String syn : synonyms) {
-                    // verify if the tokenized input data contains all tokens from the search result
-                    if (DictionarySearcher.DictionarySearchMode.MATCH_SEMANTIC_KEYWORD.equals(searcher.getSearchMode())) {
-                        // for KW index
-                        if (joinedTokens.contains(syn)) {
-                            foundCategorySet.add(category);
-                            break;
-                        }
-                    } else {
-                        foundCategorySet.add(category);
-                        break;
-                    }
-                }
+                Document document = searcher.getDocument(scoreDoc.doc);
+                foundCategorySet.add(document.getValues(DictionarySearcher.F_WORD)[0]);
             }
         } catch (IOException e) {
             LOG.error(e, e);
