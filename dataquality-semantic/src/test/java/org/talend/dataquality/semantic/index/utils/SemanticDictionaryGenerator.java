@@ -209,8 +209,12 @@ public class SemanticDictionaryGenerator {
     }
 
     public static void main(String[] args) {
-        new SemanticDictionaryGenerator().generate(GenerationType.DICTIONARY, DD_PATH);
-        new SemanticDictionaryGenerator().generate(GenerationType.KEYWORD, KW_PATH);
+        final String resourcePath = SemanticDictionaryGenerator.class.getResource(".").getFile();
+        final String projectRoot = new File(resourcePath).getParentFile().getParentFile().getParentFile().getParentFile()
+                .getParentFile().getParentFile().getParentFile().getParentFile().getPath() + File.separator;
+        SemanticDictionaryGenerator generator = new SemanticDictionaryGenerator();
+        generator.generate(GenerationType.DICTIONARY, projectRoot + DD_PATH);
+        generator.generate(GenerationType.KEYWORD, projectRoot + KW_PATH);
     }
 
 }
