@@ -46,6 +46,43 @@ public class ShuffleColumnTest {
     }
 
     @Test
+    public void testBufferDemo() {
+
+        String file = "demo_test.csv";
+        String fileCompared = "demo_test _result.csv";
+        List<List<String>> columns = new ArrayList<List<String>>();
+        List<String> column1 = Arrays.asList(new String[] { "id" });
+        List<String> column2 = Arrays.asList(new String[] { "fn", "ln" });
+        columns.add(column1);
+        columns.add(column2);
+        List<String> allColumns = Arrays.asList(new String[] { "id", "fn", "ln", "City", "Addr", "Country" });
+        Queue<List<List<Object>>> result = new ConcurrentLinkedQueue<List<List<Object>>>();
+
+        ShufflingService service = new ShufflingService(columns, allColumns);
+        ShufflingHandler handler = new ShufflingHandler(service, result);
+        service.setShufflingHandler(handler);
+        service.setSeperationSize(10);
+        service.setRandomSeed(77);
+        List<List<Object>> fileData = generation.getTableValue(file);
+        long time1 = System.currentTimeMillis();
+        service.setRows(fileData);
+        long time2 = System.currentTimeMillis();
+        service.setHasFinished(true);
+        List<List<Object>> fileDataCompared = generation.getTableValue(fileCompared);
+        for (int i = 0; i < 2; i++) {
+            List<List<Object>> rows = result.peek();
+            for (int j = 0; j < rows.size(); j++) {
+                List<Object> shuffled = rows.get(j);
+                List<Object> compared = fileDataCompared.get(i * 10 + j);
+                for (int k = 0; k < 3; k++) {
+                    assertEquals(shuffled.get(k).toString(), compared.get(k).toString().trim());
+                }
+            }
+        }
+
+    }
+
+    @Test
     public void testReplacementBigInteger() {
         int size = 23000000;
         int prime = 198491329;
@@ -420,7 +457,6 @@ public class ShuffleColumnTest {
         }
         long time4 = System.currentTimeMillis();
         System.out.println("50000 line generation time " + (time4 - time3));
-
     }
 
 }

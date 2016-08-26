@@ -18,13 +18,21 @@ public class ShufflingService {
 
     private static final Logger LOGGER = Logger.getLogger(ShufflingService.class);
 
-    protected ShuffleColumn shuffleColumn;
-
     protected ConcurrentLinkedQueue<Future<List<List<Object>>>> concurrentQueue = new ConcurrentLinkedQueue<Future<List<List<Object>>>>();
 
     protected ShufflingHandler shufflingHandler;
 
+    protected List<List<String>> shuffledColumns;
+
+    protected List<String> allInputColumns;
+
+    protected List<String> partitionColumns;
+
     protected ExecutorService executor;
+
+    protected long seed;
+
+    protected boolean hasSeed;
 
     private List<List<Object>> rows = new ArrayList<List<Object>>();
 
@@ -44,11 +52,13 @@ public class ShufflingService {
      * @throws IllegalArgumentException when the some columns in the shuffledColumns do not exist in the allInputColumns
      */
     public ShufflingService(List<List<String>> shuffledColumns, List<String> allInputColumns) {
-        this.shuffleColumn = new ShuffleColumn(shuffledColumns, allInputColumns);
+        this(shuffledColumns, allInputColumns, null);
     }
 
     public ShufflingService(List<List<String>> shuffledColumns, List<String> allInputColumns, List<String> partitionColumns) {
-        this.shuffleColumn = new ShuffleColumn(shuffledColumns, allInputColumns, partitionColumns);
+        this.shuffledColumns = shuffledColumns;
+        this.allInputColumns = allInputColumns;
+        this.partitionColumns = partitionColumns;
     }
 
     public void setShufflingHandler(ShufflingHandler shufflingHandler) {
@@ -92,7 +102,11 @@ public class ShufflingService {
      */
     private void executeFutureCall() {
         List<List<Object>> copyRow = deepCopyListTo(rows);
-        Future<List<List<Object>>> future = executor.submit(new RowDataCallable<List<List<Object>>>(shuffleColumn, copyRow));
+        ShuffleColumn shuffle = new ShuffleColumn(shuffledColumns, allInputColumns, partitionColumns);
+        if (hasSeed) {
+            shuffle.setRandomSeed(seed);
+        }
+        Future<List<List<Object>>> future = executor.submit(new RowDataCallable<List<List<Object>>>(shuffle, copyRow));
         concurrentQueue.add(future);
     }
 
@@ -171,15 +185,6 @@ public class ShufflingService {
     }
 
     /**
-     * Shuffles a table's value.
-     * 
-     * @param rows list of list of object
-     */
-    public void shuffle(List<List<Object>> rows) {
-        shuffleColumn.shuffle(rows);
-    }
-
-    /**
      * Sets the a table value directly by giving a 2D list.
      * 
      * @param rows list of list of object
@@ -210,7 +215,8 @@ public class ShufflingService {
     }
 
     public void setRandomSeed(long seed) {
-        this.shuffleColumn.setRandomSeed(seed);
+        this.hasSeed = true;
+        this.seed = seed;
     }
 
 }
