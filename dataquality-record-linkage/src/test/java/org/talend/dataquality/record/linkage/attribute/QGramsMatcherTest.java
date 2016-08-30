@@ -67,4 +67,17 @@ public class QGramsMatcherTest {
         }
     }
 
+    @Test
+    public void tokenizationAndPadding() {
+        String str1 = "Jon Doe";
+        String str2 = "Doe John";
+
+        QGramsMatcher qg = new QGramsMatcher();
+        qg.setTokenMethod(TokenizedResolutionMethod.ANYORDER);
+        qg.setRegexTokenize(" ");
+        double wToken = qg.getMatchingWeight(str1, str2);
+
+        assertEquals(0.77272727, wToken, EPSILON);
+    }
+
 }
