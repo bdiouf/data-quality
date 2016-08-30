@@ -62,7 +62,7 @@ public interface IRecordGrouping<T> {
 
     public static final String MATCH_KEY_NAME = "MATCH_KEY_NAME"; //$NON-NLS-1$
 
-    public static final String TOKENIZATION_TYPE = "TOKENIZATION_TYPE"; //$NON-NLS-1$
+    public static final String TOKENIZATION_TYPE = "TOKENIZATION_TYPE"; //$NON-NLS-1$ The Value should keep same with MatchAnalysisConstant.TOKENIZATION_TYPE
 
     /**
      * 

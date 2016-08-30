@@ -60,6 +60,8 @@ public class MatchAnalysisConstant {
 
     public static final String THRESHOLD = "MatchAnalysisConstant.THRESHOLD"; //$NON-NLS-1$
 
+    public static final String TOKENIZATION_TYPE = "MatchAnalysisConstant.TOKENIZATION_TYPE";// the value should keep same with IRecordGrouping.TOKENIZATION_TYPE; //$NON-NLS-1$
+
     // block key need
     public static final String BLOCKING_KEY_NAME = "MatchAnalysisConstant.BLOCKING_KEY_NAME"; //$NON-NLS-1$
 
