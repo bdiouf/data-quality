@@ -40,7 +40,7 @@ public class QGramTokenizerTest {
         HashSet<String> expect = new HashSet<String>();
         expect.addAll(Arrays.asList(expected));
         QGramTokenizer tokenizer = new QGramTokenizer();
-        List<String> tokenized = tokenizer.tokenizeToArrayList(INPUT, 3, true);
+        List<String> tokenized = tokenizer.tokenizeToArrayList(INPUT, 3);
         // StringBuffer buf = new StringBuffer();
         for (String token : tokenized) {
             // buf.append("\"").append(token).append("\",");
