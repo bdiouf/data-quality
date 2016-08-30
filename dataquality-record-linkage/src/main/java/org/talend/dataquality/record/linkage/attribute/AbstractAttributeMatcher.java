@@ -149,6 +149,19 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, ITo
         // --- Create the matrix of weights
         int n = list1.length;
         int m = list2.length;
+
+        // --- TDQ-12486 String with only whitespaces
+        if (n == 0) {
+            list1 = new String[1];
+            list1[0] = str1;
+            n = 1;
+        }
+        if (m == 0) {
+            list2 = new String[1];
+            list2[0] = str2;
+            m = 1;
+        }
+
         int maxDim = Math.max(n, m);
         double[][] weights = new double[maxDim][maxDim];
         for (double[] row : weights)
@@ -197,6 +210,17 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, ITo
         // --- Create the matrix of weights
         int n = list1.length;
         int m = list2.length;
+        // --- TDQ-12486 String with only whitespaces
+        if (n == 0) {
+            list1 = new String[1];
+            list1[0] = str1;
+            n = 1;
+        }
+        if (m == 0) {
+            list2 = new String[1];
+            list2[0] = str2;
+            m = 1;
+        }
         int maxDim = Math.max(n, m);
         int minDim = Math.min(n, m);
 
@@ -226,6 +250,17 @@ public abstract class AbstractAttributeMatcher implements IAttributeMatcher, ITo
         // --- Create the matrix of weights
         int n = list1.length;
         int m = list2.length;
+        // --- TDQ-12486 String with only whitespaces
+        if (n == 0) {
+            list1 = new String[1];
+            list1[0] = str1;
+            n = 1;
+        }
+        if (m == 0) {
+            list2 = new String[1];
+            list2[0] = str2;
+            m = 1;
+        }
         String[] shortString, longString;
         int maxDim, minDim;
         if (n < m) {
