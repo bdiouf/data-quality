@@ -44,7 +44,7 @@ public enum TokenizedResolutionMethod {
      */
     public static TokenizedResolutionMethod getTypeByValue(String value) {
         for (TokenizedResolutionMethod element : TokenizedResolutionMethod.values()) {
-            if (element.name().equalsIgnoreCase(value)) {
+            if (element.getComponentValue().equalsIgnoreCase(value)) {
                 return element;
             }
         }
