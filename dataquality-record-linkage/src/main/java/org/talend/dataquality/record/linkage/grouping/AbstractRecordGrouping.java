@@ -545,8 +545,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
         int keyIdx = 0;
         for (Map<String, String> recordMap : matchRule) {
             algorithmName[keyIdx][0] = recordMap.get(IRecordGrouping.MATCHING_TYPE);
-            tokenMethod[keyIdx] = recordMap.get(IRecordGrouping.TOKENIZATION_TYPE) == null ? TokenizedResolutionMethod.NO
-                    : TokenizedResolutionMethod.valueOf(recordMap.get(IRecordGrouping.TOKENIZATION_TYPE));
+            tokenMethod[keyIdx] = getTokenMethod(recordMap);
             if (StringUtils.equalsIgnoreCase(AttributeMatcherType.DUMMY.name(), algorithmName[keyIdx][0])) {
                 // Set confidence weight if exist
                 if (null != recordMap.get(IRecordGrouping.CONFIDENCE_WEIGHT)) {
@@ -614,6 +613,15 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
         recordMatcher.setAttributeMatchers(attributeMatcher);
         recordMatcher.setRecordMatchThreshold(recordMatchThreshold);
         combinedRecordMatcher.add(recordMatcher);
+    }
+
+    private TokenizedResolutionMethod getTokenMethod(Map<String, String> recordMap) {
+        if (IRecordGrouping.TOKENIZATION_TYPE == null) {
+            return TokenizedResolutionMethod.NO;
+        }
+        return TokenizedResolutionMethod.getTypeByValue(recordMap.get(IRecordGrouping.TOKENIZATION_TYPE)) == null
+                ? TokenizedResolutionMethod.NO
+                : TokenizedResolutionMethod.getTypeByValue(recordMap.get(IRecordGrouping.TOKENIZATION_TYPE));
     }
 
     /**
