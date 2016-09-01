@@ -5,9 +5,9 @@ import java.util.List;
 
 public enum TokenizedResolutionMethod {
     NO("No"), //$NON-NLS-1$
-    ANYORDER("Same place"), //$NON-NLS-1$
-    SAMEPLACE("Same order"), //$NON-NLS-1$
-    SAMEORDER("Any order"); //$NON-NLS-1$
+    ANYORDER("Any order"), //$NON-NLS-1$
+    SAMEPLACE("Same place"), //$NON-NLS-1$
+    SAMEORDER("Same order"); //$NON-NLS-1$
 
     private final String componentValue;
 
