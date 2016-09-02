@@ -16,13 +16,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
 
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.talend.dataquality.semantic.index.ESIndex;
-import org.talend.dataquality.semantic.index.LuceneIndex;
 import org.talend.dataquality.semantic.index.DictionarySearcher;
+import org.talend.dataquality.semantic.index.LuceneIndex;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -57,11 +52,19 @@ public class CategoryRecognizerBuilder implements Serializable {
         return INSTANCE;
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public CategoryRecognizerBuilder host(String host) {
         this.host = host;
         return this;
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public CategoryRecognizerBuilder port(int port) {
         this.port = port;
         return this;
@@ -77,6 +80,10 @@ public class CategoryRecognizerBuilder implements Serializable {
         return this;
     }
 
+    /**
+     * @deprecated
+     */
+    @Deprecated
     public CategoryRecognizerBuilder es() {
         this.mode = Mode.ELASTIC_SEARCH;
         return this;
@@ -95,12 +102,13 @@ public class CategoryRecognizerBuilder implements Serializable {
             LuceneIndex keyword = getKeywordIndex();
             return new DefaultCategoryRecognizer(dict, keyword);
         case ELASTIC_SEARCH:
-            Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", clusterName).build();
-            TransportClient client = new TransportClient(settings)
-                    .addTransportAddress(new InetSocketTransportAddress(host, port));
-            ESIndex esDict = new ESIndex(client, ESIndex.ES_DATADICT_INDEX, ESIndex.ES_DATADICT_TYPE);
-            ESIndex esKeyword = new ESIndex(client, ESIndex.ES_KEYWORD_INDEX, ESIndex.ES_KEYWORD_TYPE);
-            return new DefaultCategoryRecognizer(esDict, esKeyword);
+            // Settings settings = ImmutableSettings.settingsBuilder().put("cluster.name", clusterName).build();
+            // TransportClient client = new TransportClient(settings)
+            // .addTransportAddress(new InetSocketTransportAddress(host, port));
+            // ESIndex esDict = new ESIndex(client, ESIndex.ES_DATADICT_INDEX, ESIndex.ES_DATADICT_TYPE);
+            // ESIndex esKeyword = new ESIndex(client, ESIndex.ES_KEYWORD_INDEX, ESIndex.ES_KEYWORD_TYPE);
+            // return new DefaultCategoryRecognizer(esDict, esKeyword);
+            throw new IllegalArgumentException("Elasticsearch mode is not supported any more");
         default:
             throw new IllegalArgumentException("no mode specified.");
         }
