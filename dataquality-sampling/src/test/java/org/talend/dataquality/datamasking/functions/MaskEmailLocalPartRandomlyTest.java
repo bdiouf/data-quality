@@ -81,7 +81,8 @@ public class MaskEmailLocalPartRandomlyTest {
 
     @Test
     public void testWrongFormat() {
+        maskEmailLocalPart.parse("replace", true, new Random(42));
         output = maskEmailLocalPart.generateMaskedRow("hehe");
-        Assert.assertEquals(output, "hehe");
+        Assert.assertEquals("replace", output);
     }
 }

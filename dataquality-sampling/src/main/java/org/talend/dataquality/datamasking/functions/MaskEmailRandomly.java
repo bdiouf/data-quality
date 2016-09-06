@@ -31,4 +31,9 @@ public abstract class MaskEmailRandomly extends MaskEmail {
         } while (str.equals(parameters[index]) && i++ < 50);
         return index;
     }
+
+    @Override
+    protected String maskInvalidEmail(String address) {
+        return parameters[chooseAppropriateDomainIndex(address)];
+    }
 }

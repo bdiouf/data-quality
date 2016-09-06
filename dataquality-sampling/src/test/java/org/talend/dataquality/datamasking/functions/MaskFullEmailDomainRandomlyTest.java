@@ -101,7 +101,8 @@ public class MaskFullEmailDomainRandomlyTest {
 
     @Test
     public void testWrongFormat() {
+        maskEmailDomainName.parse("replace", true, new Random(42));
         output = maskEmailDomainName.generateMaskedRow("hehe");
-        Assert.assertEquals(output, "hehe");
+        Assert.assertEquals("replace", output);
     }
 }

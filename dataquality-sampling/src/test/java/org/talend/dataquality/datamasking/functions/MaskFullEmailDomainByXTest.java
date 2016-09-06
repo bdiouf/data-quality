@@ -112,7 +112,7 @@ public class MaskFullEmailDomainByXTest {
     public void test5WrongFormat() {
         maskEmailDomainByX.parse("", false, new Random());
         output = maskEmailDomainByX.generateMaskedRow("hehe");
-        Assert.assertEquals(output, "hehe");
+        Assert.assertEquals("XXXX", output);
     }
 
 }

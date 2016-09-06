@@ -99,7 +99,7 @@ public class MaskTopEmailDomainByXTest {
     public void testWrongFormat() {
         maskTopEmailDomainByX.parse("", false, new Random());
         output = maskTopEmailDomainByX.generateMaskedRow("hehe");
-        Assert.assertEquals(output, "hehe");
+        Assert.assertEquals("XXXX", output);
     }
 
 }

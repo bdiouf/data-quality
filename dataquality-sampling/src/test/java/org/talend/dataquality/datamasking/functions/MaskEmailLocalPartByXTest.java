@@ -83,6 +83,6 @@ public class MaskEmailLocalPartByXTest {
     public void test5WrongFormat() {
         maskEmailLocalPartByX.parse("", false, new Random());
         output = maskEmailLocalPartByX.generateMaskedRow("hehe");
-        Assert.assertEquals(output, "hehe");
+        Assert.assertEquals("XXXX", output);
     }
 }

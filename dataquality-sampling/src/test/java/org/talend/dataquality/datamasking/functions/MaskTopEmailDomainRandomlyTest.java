@@ -128,8 +128,8 @@ public class MaskTopEmailDomainRandomlyTest {
 
     @Test
     public void testWrongFormat() {
-        maskTopEmailDomainRandomly.parse("", false, new Random());
+        maskTopEmailDomainRandomly.parse("replace", false, new Random());
         output = maskTopEmailDomainRandomly.generateMaskedRow("hehe");
-        Assert.assertEquals(output, "hehe");
+        Assert.assertEquals("replace", output);
     }
 }

@@ -36,7 +36,7 @@ public abstract class MaskEmail extends Function<String> {
      * @param email email address
      * @return true when the input is valid
      */
-    private boolean isValidEmailAddress(String email) {
+    protected boolean isValidEmailAddress(String email) {
         return EMAIL_REGEX.matcher(email).matches();
     }
 
@@ -54,11 +54,13 @@ public abstract class MaskEmail extends Function<String> {
         if (StringUtils.isEmpty(str)) {
             return EMPTY_STRING;
         }
-        if (isValidEmailAddress(str)) {
-            return maskEmail(str);
+        if (!isValidEmailAddress(str)) {
+            return maskInvalidEmail(str);
         }
-        return str;
+        return maskEmail(str);
     }
+
+    protected abstract String maskInvalidEmail(String address);
 
     protected abstract String maskEmail(String address);
 }

@@ -36,4 +36,14 @@ public abstract class MaskEmailByX extends MaskEmail {
     protected Character getMaskingCharacter() {
         return parameters[0].charAt(0);
     }
+
+    @Override
+    protected String maskInvalidEmail(String address) {
+        StringBuilder sb = new StringBuilder(address);
+        Character maskingCrct = getMaskingCharacter();
+        for (int i = 0; i < sb.length(); i++) {
+            sb.setCharAt(i, maskingCrct);
+        }
+        return sb.toString();
+    }
 }
