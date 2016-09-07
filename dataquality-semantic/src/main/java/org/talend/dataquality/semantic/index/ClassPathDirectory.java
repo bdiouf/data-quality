@@ -15,13 +15,22 @@ package org.talend.dataquality.semantic.index;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.zip.CRC32;
+import java.util.zip.Checksum;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.SimpleFSDirectory;
+import org.apache.lucene.store.FSDirectory;
 
 /**
  * A read-only directory that reads index from a JAR file. It supports several URI scheme:
@@ -35,7 +44,7 @@ public class ClassPathDirectory {
 
     private static final Logger LOGGER = Logger.getLogger(ClassPathDirectory.class);
 
-    private static JARDirectoryProvider provider = new BasicProvider();
+    private static JARDirectoryProvider provider = new SingletonProvider();
 
     /**
      * Allow external code to change behavior about extracted Lucene indexes (always extract a fresh copy or reuse
@@ -46,7 +55,7 @@ public class ClassPathDirectory {
      * @see BasicProvider
      * @see SingletonProvider
      */
-    public synchronized static void setProvider(JARDirectoryProvider provider) {
+    public static synchronized void setProvider(JARDirectoryProvider provider) {
         if (provider == null) {
             throw new IllegalArgumentException("Provider can not be null.");
         }
@@ -61,7 +70,7 @@ public class ClassPathDirectory {
      * @param uri A valid URI to a Lucene index
      * @return A {@link Directory} to the Lucene content in <code>uri</code>.
      */
-    public synchronized static Directory open(URI uri) {
+    public static synchronized Directory open(URI uri) {
         LOGGER.debug("Opening '" + uri + "' ...");
         if ("jar".equals(uri.getScheme())) {
             try {
@@ -71,14 +80,14 @@ public class ClassPathDirectory {
             }
         } else if ("file".equals(uri.getScheme())) {
             try {
-                return new SimpleFSDirectory(new File(uri));
+                return FSDirectory.open(new File(uri));
             } catch (IOException e) {
                 throw new IllegalArgumentException("Unable to open path '" + uri + "'.", e);
             }
         } else if ("bundleresource".equals(uri.getScheme())) { // for OSGI environment
             try {
                 final String path = PlatformPathUtil.getFilePathByPlatformURL(uri.toURL());
-                return new SimpleFSDirectory(new File(path));
+                return FSDirectory.open(new File(path));
             } catch (IOException e) {
                 throw new IllegalArgumentException("Unable to open bundleresource '" + uri + "'.", e);
             }
@@ -98,11 +107,12 @@ public class ClassPathDirectory {
 
         /**
          * Returns a {@link Directory lucene directory} for provided location (as URI).
+         * 
          * @param uri An URI to a JAR file.
          * @return A {@link Directory lucene directory} ready to be used in Lucene code.
          * @throws Exception
          */
-        Directory get(URI uri) throws Exception;
+        Directory get(URI uri) throws IOException;
 
         /**
          * Destroys all cached resources by this provider.
@@ -120,7 +130,7 @@ public class ClassPathDirectory {
         private static final Map<URI, Directory> instances = new HashMap<>();
 
         @Override
-        public synchronized Directory get(URI uri) throws Exception {
+        public synchronized Directory get(URI uri) throws IOException {
             if (instances.get(uri) == null) {
                 instances.put(uri, provider.get(uri));
             }
@@ -141,8 +151,8 @@ public class ClassPathDirectory {
         private static final Map<URI, FileSystem> openedJars = new HashMap<>();
 
         /**
-         * Holds all opened class path directory instances for clean up TODO This is temporary until a more global
-         * resource management system is found/proposed
+         * Holds all opened class path directory instances for clean up
+         * TODO This is temporary until a more global resource management system is found/proposed
          *
          * @see #destroy()
          */
@@ -162,38 +172,26 @@ public class ClassPathDirectory {
         }
 
         @Override
-        public Directory get(URI uri) throws Exception {
+        public Directory get(URI uri) throws IOException {
             String jarFile = StringUtils.substringBefore(uri.toString(), "!"); //$NON-NLS-1$
-            final String uuid = UUID.randomUUID().toString();
+            Checksum checksum = new CRC32();
+            checksum.update(jarFile.getBytes(), 0, jarFile.getBytes().length);
+            final String hash = Long.toHexString(checksum.getValue());
             JARDirectory.JARDescriptor openedJar = new JARDirectory.JARDescriptor();
             // Extract all nested JARs
-            StringTokenizer tokenizer = new StringTokenizer(uri.toString(), "!");
+            StringTokenizer tokenizer = new StringTokenizer(uri.toString(), "!"); //$NON-NLS-1$
             FileSystem fs = null;
             while (tokenizer.hasMoreTokens()) {
                 final String current = tokenizer.nextToken();
-                if (!tokenizer.hasMoreTokens()) {
-                    break;
-                } else if (fs == null) {
+                if (fs == null) {
                     fs = openOrGet(current);
-                } else { // fs != null
-                    final Path path = fs.getPath(current);
-                    final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
-                    final String unzipFile = tempDirectory + '/' + uuid + '/' + path.getFileName();
-                    final Path destFile = Paths.get(unzipFile);
-                    final File destinationFile = destFile.toFile();
-                    if (!destinationFile.exists()) {
-                        destinationFile.mkdirs();
-                        Files.copy(path, destFile, StandardCopyOption.REPLACE_EXISTING);
-                    }
-                    // UUID ensures the path is unique, no need for openOrGet(...)
-                    fs = FileSystems.newFileSystem(destFile, Thread.currentThread().getContextClassLoader());
                 }
             }
             openedJar.fileSystem = fs;
             openedJar.jarFileName = jarFile;
             String directory = StringUtils.substringAfterLast(uri.toString(), "!"); //$NON-NLS-1$
             LOGGER.debug("Opening '" + jarFile + "' at directory '" + directory + "' ...");
-            final JARDirectory jarDirectory = new JARDirectory(uuid, openedJar, directory);
+            final JARDirectory jarDirectory = new JARDirectory(hash, openedJar, directory);
             classPathDirectories.add(jarDirectory);
             return jarDirectory;
         }
@@ -201,15 +199,16 @@ public class ClassPathDirectory {
         /**
          * Destroy all resources that instances may have created on disk.
          */
+        @Override
         public void destroy() {
             final Iterator<JARDirectory> iterator = classPathDirectories.iterator();
             while (iterator.hasNext()) {
                 final JARDirectory jarDirectory = iterator.next();
                 try {
                     jarDirectory.close();
-                } catch (Exception e) {
-                    LOGGER.error(
-                            "Unable to close directory at " + jarDirectory.directory + " (uuid : " + jarDirectory.uuid + ").");
+                } catch (IOException e) {
+                    LOGGER.error("Unable to close directory at " + jarDirectory.indexDirectory + " (uuid : " + jarDirectory.hash
+                            + ").", e);
                 } finally {
                     iterator.remove();
                 }
