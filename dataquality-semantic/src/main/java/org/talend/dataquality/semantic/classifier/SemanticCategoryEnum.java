@@ -143,6 +143,7 @@ public enum SemanticCategoryEnum {
     FILE_URL("File URL", "File URL", RecognizerType.REGEX),
     MAILTO_URL("MailTo URL", "MailTo URL", RecognizerType.REGEX),
     DATA_URL("Data URL", "Data URL", RecognizerType.REGEX),
+    IBAN("IBAN", "IBAN", RecognizerType.REGEX),
 
     UNKNOWN("", "Blank, Null and those who have no other semantic category", RecognizerType.OTHER),
 

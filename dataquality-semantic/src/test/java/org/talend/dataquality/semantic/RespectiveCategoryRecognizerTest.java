@@ -678,6 +678,17 @@ public class RespectiveCategoryRecognizerTest {
                 }
             });
 
+            put(SemanticCategoryEnum.IBAN.getId(), new ArrayList<Pair<String, Boolean>>() {
+
+                {
+                    add(ImmutablePair.of("GB87 BARC 2065 8244 9716 55", true));
+                    add(ImmutablePair.of("FR7612548029981234567890161", true));
+                    add(ImmutablePair.of("BE43068999999501", true));
+                    add(ImmutablePair.of("B443068999999501", false));
+                    add(ImmutablePair.of("BE43068999999502", false));
+                }
+            });
+
         }
     };
 

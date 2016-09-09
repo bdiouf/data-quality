@@ -45,36 +45,37 @@ public class CategoryRecognizerTest {
         private static final long serialVersionUID = -5067273062214728849L;
 
         {
-            put("FIRST_NAME", 9.67F);
-            put("MONTH", 9.67F);
-            put("AIRPORT_CODE", 6.45F);
-            put("CITY", 6.45F);
-            put("FR_COMMUNE", 6.45F);
-            put("LAST_NAME", 6.45F);
-            put("EMAIL", 6.45F);
-            put("US_POSTAL_CODE", 6.45F);
-            put("ADDRESS_LINE", 6.45F);
-            put("FR_SSN", 6.45F);
-            put("FR_DEPARTEMENT", 3.22F);
-            put("COUNTRY", 3.22F);
-            put("COUNTRY_CODE_ISO3", 3.22F);
-            put("CONTINENT_CODE", 3.22F);
-            put("CURRENCY_CODE", 3.22F);
-            put("LANGUAGE_CODE_ISO3", 3.22F);
-            put("ANIMAL", 3.22F);
-            put("EN_MONTH", 3.22F);
-            put("FR_POSTAL_CODE", 3.22F);
-            put("FR_CODE_COMMUNE_INSEE", 3.22F);
-            put("DE_POSTAL_CODE", 3.22F);
-            put("COMPANY", 3.22F);
-            put("GENDER", 3.22F);
-            put("URL", 3.22F);
-            put("US_SSN", 3.22F);
-            put("ISBN_10", 3.22F);
-            put("DE_PHONE", 3.22F);
-            put("FR_PHONE", 3.22F);
-            put("FULL_NAME", 3.22F);
-            put("", 12.9F);
+            put("FIRST_NAME", 9.37F);
+            put("MONTH", 9.37F);
+            put("AIRPORT_CODE", 6.25F);
+            put("CITY", 6.25F);
+            put("FR_COMMUNE", 6.25F);
+            put("LAST_NAME", 6.25F);
+            put("EMAIL", 6.25F);
+            put("US_POSTAL_CODE", 6.25F);
+            put("ADDRESS_LINE", 6.25F);
+            put("FR_SSN", 6.25F);
+            put("FR_DEPARTEMENT", 3.12F);
+            put("COUNTRY", 3.12F);
+            put("COUNTRY_CODE_ISO3", 3.12F);
+            put("CONTINENT_CODE", 3.12F);
+            put("CURRENCY_CODE", 3.12F);
+            put("LANGUAGE_CODE_ISO3", 3.12F);
+            put("ANIMAL", 3.12F);
+            put("EN_MONTH", 3.12F);
+            put("FR_POSTAL_CODE", 3.12F);
+            put("FR_CODE_COMMUNE_INSEE", 3.12F);
+            put("DE_POSTAL_CODE", 3.12F);
+            put("COMPANY", 3.12F);
+            put("GENDER", 3.12F);
+            put("URL", 3.12F);
+            put("US_SSN", 3.12F);
+            put("ISBN_10", 3.12F);
+            put("DE_PHONE", 3.12F);
+            put("FR_PHONE", 3.12F);
+            put("FULL_NAME", 3.12F);
+            put("IBAN", 3.12F);
+            put("", 12.5F);
 
         }
 
@@ -133,6 +134,7 @@ public class CategoryRecognizerTest {
             put("00338.01345678", new String[] { SemanticCategoryEnum.FR_PHONE.getId() });
             put("132.2356", new String[] {});
             put("Mr. John Doe", new String[] { SemanticCategoryEnum.FULL_NAME.getId() });
+            put("GB87 BARC 2065 8244 9716 55", new String[] { SemanticCategoryEnum.IBAN.getId() });
         }
     };
 
@@ -189,6 +191,7 @@ public class CategoryRecognizerTest {
             put("00338.01345678", new String[] { SemanticCategoryEnum.FR_PHONE.getDisplayName() });
             put("132.2356", new String[] {});
             put("Mr. John Doe", new String[] { SemanticCategoryEnum.FULL_NAME.getDisplayName() });
+            put("GB87 BARC 2065 8244 9716 55", new String[] { SemanticCategoryEnum.IBAN.getId() });
         }
     };
 

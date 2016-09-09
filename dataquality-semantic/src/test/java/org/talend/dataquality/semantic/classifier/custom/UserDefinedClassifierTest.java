@@ -277,6 +277,7 @@ public class UserDefinedClassifierTest {
             put("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEUAAAD///+l2Z/dAAAA", //$NON-NLS-1$
                     new String[] { "DATA_URL" }); //$NON-NLS-1$
             put("data:,Hello World!", new String[] { "DATA_URL" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("FR7630001007941234567890185", new String[] { "IBAN" });
         }
     };
 
