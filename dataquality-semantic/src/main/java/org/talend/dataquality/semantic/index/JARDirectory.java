@@ -93,9 +93,10 @@ public class JARDirectory extends BaseDirectory {
 
     private void extractIndex(String contextName) throws IOException {
         final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
-        final String unzipFolderName = tempDirectory + TEMP_FOLDER_NAME + File.separator + hash //
+        final String unzipFolderName = tempDirectory + File.separator + TEMP_FOLDER_NAME + File.separator + hash //
                 + File.separator + indexDirectory + File.separator + contextName + File.separator;
         final File destinationFolder = Paths.get(unzipFolderName).toFile();
+        LOGGER.info("Extrating index to temporary directory: " + destinationFolder.getAbsolutePath());
         if (destinationFolder.exists()) {
             // File was already extracted, reuse it
             fsDir = FSDirectory.open(destinationFolder);
