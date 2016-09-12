@@ -22,6 +22,9 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SQLContext;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -52,6 +55,7 @@ public class SparkSamplingUtilTest implements Serializable {
         for (int j = 0; j < ORIGINAL_COUNT; j++) {
             TestRowStruct struct = new TestRowStruct();
             struct.id = j + 1;
+            struct.city = "city" + (j + 1);
             testers[j] = struct;
         }
     }
@@ -63,8 +67,21 @@ public class SparkSamplingUtilTest implements Serializable {
         List<ImmutablePair<Double, TestRowStruct>> topPairs = sampler.getSamplePairList(rdd, SAMPLE_SIZE);
 
         for (int i = 0; i < topPairs.size(); i++) {
-            assertTrue("The ID " + topPairs.get(i).getRight().getId() + " is expected",
-                    Arrays.asList(EXPECTED_SAMPLES_LIST).contains(topPairs.get(i).getRight().getId()));
+            assertTrue("The ID " + topPairs.get(i).getRight().getId() + " is expected", Arrays.asList(EXPECTED_SAMPLES_LIST)
+                    .contains(topPairs.get(i).getRight().getId()));
+        }
+    }
+
+    @Test
+    public void getSamplePairListForDataFrame() {
+        SQLContext sqlContext = new org.apache.spark.sql.SQLContext(sc);
+        JavaRDD<TestRowStruct> rdd = sc.parallelize(Arrays.asList(testers));
+        DataFrame df = sqlContext.createDataFrame(rdd, TestRowStruct.class);
+        SparkSamplingUtil<TestRowStruct> sampler = new SparkSamplingUtil<>(AllDataqualitySamplingTests.RANDOM_SEED);
+        List<Row> sampleList = sampler.getSamplePairList(df, 5);
+        for (int i = 0; i < sampleList.size(); i++) {
+            assertTrue("The ID " + sampleList.get(i).getInt(1) + " is expected",
+                    Arrays.asList(EXPECTED_SAMPLES_LIST).contains(sampleList.get(i).getInt(1)));
         }
     }
 
@@ -80,18 +97,26 @@ public class SparkSamplingUtilTest implements Serializable {
         }
     }
 
-    class TestRowStruct implements Serializable {
+    public class TestRowStruct implements Serializable {
 
-        public Integer id;
+        private Integer id;
+
+        private String city;
 
         public Integer getId() {
             return this.id;
         }
 
-        public String city;
+        public void setId(Integer id) {
+            this.id = id;
+        }
 
         public String getCity() {
             return this.city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
         }
 
         @Override
@@ -99,4 +124,5 @@ public class SparkSamplingUtilTest implements Serializable {
             return id + " -> " + city; //$NON-NLS-1$
         }
     }
+
 }
