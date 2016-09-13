@@ -14,10 +14,15 @@ package org.talend.dataquality.sampling.parallel;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.FlatMapFunction;
+import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
 
 /**
  * Sampling API for Spark components.
@@ -53,7 +58,20 @@ public class SparkSamplingUtil<T> implements Serializable {
     }
 
     /**
-     * do sampling on RDD
+     * do sampling on DF
+     *
+     * @param df
+     * @param nbSamples
+     * @return list of sample pairs, with generated score as left value and original data as right value.
+     */
+    public List<ImmutablePair<Double, Row>> getSamplePairList(DataFrame df, int nbSamples) {
+        JavaRDD<ImmutablePair<Double, Row>> mappedRdd = df.javaRDD().mapPartitions(new SamplingMapFunction<Row>(nbSamples));
+        List<ImmutablePair<Double, Row>> topPairs = mappedRdd.top(nbSamples, new PairComparator());
+        return topPairs;
+    }
+
+    /**
+     * do sampling on DateFrame
      * 
      * @param rdd
      * @param nbSamples
@@ -68,7 +86,7 @@ public class SparkSamplingUtil<T> implements Serializable {
         return result;
     }
 
-    private class SamplingMapFunction implements FlatMapFunction<Iterator<T>, ImmutablePair<Double, T>> {
+    private class SamplingMapFunction<T> implements FlatMapFunction<Iterator<T>, ImmutablePair<Double, T>> {
 
         private final int nbSamples;
 
@@ -94,7 +112,7 @@ public class SparkSamplingUtil<T> implements Serializable {
         }
     }
 
-    private class PairComparator implements Serializable, Comparator<ImmutablePair<Double, T>> {
+    private class PairComparator<T> implements Serializable, Comparator<ImmutablePair<Double, T>> {
 
         @Override
         public int compare(ImmutablePair<Double, T> o1, ImmutablePair<Double, T> o2) {
