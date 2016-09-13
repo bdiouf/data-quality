@@ -67,8 +67,8 @@ public class SparkSamplingUtilTest implements Serializable {
         List<ImmutablePair<Double, TestRowStruct>> topPairs = sampler.getSamplePairList(rdd, SAMPLE_SIZE);
 
         for (int i = 0; i < topPairs.size(); i++) {
-            assertTrue("The ID " + topPairs.get(i).getRight().getId() + " is expected", Arrays.asList(EXPECTED_SAMPLES_LIST)
-                    .contains(topPairs.get(i).getRight().getId()));
+            assertTrue("The ID " + topPairs.get(i).getRight().getId() + " is expected",
+                    Arrays.asList(EXPECTED_SAMPLES_LIST).contains(topPairs.get(i).getRight().getId()));
         }
     }
 
@@ -78,10 +78,10 @@ public class SparkSamplingUtilTest implements Serializable {
         JavaRDD<TestRowStruct> rdd = sc.parallelize(Arrays.asList(testers));
         DataFrame df = sqlContext.createDataFrame(rdd, TestRowStruct.class);
         SparkSamplingUtil<TestRowStruct> sampler = new SparkSamplingUtil<>(AllDataqualitySamplingTests.RANDOM_SEED);
-        List<Row> sampleList = sampler.getSamplePairList(df, 5);
+        List<ImmutablePair<Double, Row>> sampleList = sampler.getSamplePairList(df, 5);
         for (int i = 0; i < sampleList.size(); i++) {
-            assertTrue("The ID " + sampleList.get(i).getInt(1) + " is expected",
-                    Arrays.asList(EXPECTED_SAMPLES_LIST).contains(sampleList.get(i).getInt(1)));
+            assertTrue("The ID " + sampleList.get(i).getRight().getInt(1) + " is expected",
+                    Arrays.asList(EXPECTED_SAMPLES_LIST).contains(sampleList.get(i).getRight().getInt(1)));
         }
     }
 

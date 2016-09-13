@@ -58,16 +58,16 @@ public class SparkSamplingUtil<T> implements Serializable {
     }
 
     /**
-     * do sampling on RDD
+     * do sampling on DF
      *
      * @param df
      * @param nbSamples
      * @return list of sample pairs, with generated score as left value and original data as right value.
      */
-    public List<Row> getSamplePairList(DataFrame df, int nbSamples) {
+    public List<ImmutablePair<Double, Row>> getSamplePairList(DataFrame df, int nbSamples) {
         JavaRDD<ImmutablePair<Double, Row>> mappedRdd = df.javaRDD().mapPartitions(new SamplingMapFunction<Row>(nbSamples));
         List<ImmutablePair<Double, Row>> topPairs = mappedRdd.top(nbSamples, new PairComparator());
-        return topPairs.stream().map(pair->pair.getRight()).collect(Collectors.toList());
+        return topPairs;
     }
 
     /**
