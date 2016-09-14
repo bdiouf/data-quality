@@ -39,7 +39,7 @@ import org.apache.lucene.store.IndexOutput;
  */
 public class JARDirectory extends BaseDirectory {
 
-    private static final String TEMP_FOLDER_NAME = "org.talend.dataquality.semantic";
+    static final String TEMP_FOLDER_NAME = "org.talend.dataquality.semantic";
 
     private static final Logger LOGGER = Logger.getLogger(JARDirectory.class);
 

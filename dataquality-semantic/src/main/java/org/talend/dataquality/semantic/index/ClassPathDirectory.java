@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -183,8 +187,23 @@ public class ClassPathDirectory {
             FileSystem fs = null;
             while (tokenizer.hasMoreTokens()) {
                 final String current = tokenizer.nextToken();
-                if (fs == null) {
+                if (!tokenizer.hasMoreTokens()) {
+                    break;
+                } else if (fs == null) {
                     fs = openOrGet(current);
+                } else { // fs != null
+                    final Path path = fs.getPath(current);
+                    final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
+                    final String unzipFile = tempDirectory + File.separator + JARDirectory.TEMP_FOLDER_NAME + File.separator
+                            + hash + File.separator + path.getFileName();
+                    final Path destFile = Paths.get(unzipFile);
+                    final File destinationFile = destFile.toFile();
+                    if (!destinationFile.exists()) {
+                        destinationFile.mkdirs();
+                        Files.copy(path, destFile, StandardCopyOption.REPLACE_EXISTING);
+                    }
+                    // UUID ensures the path is unique, no need for openOrGet(...)
+                    fs = FileSystems.newFileSystem(destFile, Thread.currentThread().getContextClassLoader());
                 }
             }
             openedJar.fileSystem = fs;
@@ -207,7 +226,7 @@ public class ClassPathDirectory {
                 try {
                     jarDirectory.close();
                 } catch (IOException e) {
-                    LOGGER.error("Unable to close directory at " + jarDirectory.indexDirectory + " (uuid : " + jarDirectory.hash
+                    LOGGER.error("Unable to close directory at " + jarDirectory.indexDirectory + " (hash : " + jarDirectory.hash
                             + ").", e);
                 } finally {
                     iterator.remove();
