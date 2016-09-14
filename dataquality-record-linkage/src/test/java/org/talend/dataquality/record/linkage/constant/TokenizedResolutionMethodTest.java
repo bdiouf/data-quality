@@ -40,25 +40,28 @@ public class TokenizedResolutionMethodTest {
                     .getTypeByValue(type.name().toUpperCase());
             TokenizedResolutionMethod TokenizedResolutionMethodByUComponentValue = TokenizedResolutionMethod
                     .getTypeByValue(type.getComponentValue().toUpperCase());
-            // Assert no one is null
-            assertNotNull(TokenizedResolutionMethodByName);
+            if (TokenizedResolutionMethod.NO == type) {
+                assertNotNull(TokenizedResolutionMethodByName);
+                assertNotNull(TokenizedResolutionMethodByLName);
+                assertNotNull(TokenizedResolutionMethodByUName);
+            } else {
+                assertNull(TokenizedResolutionMethodByName);
+                assertNull(TokenizedResolutionMethodByLName);
+                assertNull(TokenizedResolutionMethodByUName);
+            }
             assertNotNull(TokenizedResolutionMethodByComponentValue);
-            assertNotNull(TokenizedResolutionMethodByLName);
             assertNotNull(TokenizedResolutionMethodByLComponentValue);
-            assertNotNull(TokenizedResolutionMethodByUName);
             assertNotNull(TokenizedResolutionMethodByUComponentValue);
-            // all of return type is same
-            assertTrue(TokenizedResolutionMethodByName == TokenizedResolutionMethodByComponentValue);
-            assertTrue(TokenizedResolutionMethodByLName == TokenizedResolutionMethodByLComponentValue);
-            assertTrue(TokenizedResolutionMethodByUName == TokenizedResolutionMethodByUComponentValue);
-            assertTrue(TokenizedResolutionMethodByUName == TokenizedResolutionMethodByName);
-            assertTrue(TokenizedResolutionMethodByUName == TokenizedResolutionMethodByLName);
+
         }
     }
 
     /**
      * Test method for
      * {@org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod#getTypeByValue(java.lang.String)
+     * 
+     * 
+     * 
      * 
      * 
      * } . case2

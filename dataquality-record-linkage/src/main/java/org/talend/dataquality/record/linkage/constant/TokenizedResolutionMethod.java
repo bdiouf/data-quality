@@ -44,10 +44,7 @@ public enum TokenizedResolutionMethod {
      */
     public static TokenizedResolutionMethod getTypeByValue(String value) {
         for (TokenizedResolutionMethod element : TokenizedResolutionMethod.values()) {
-            // condition 1 for match analysis side, cindition 2 for tmatchGroup side
-            // can not unique because in match analysis side we share same one contentProvider for MatchRule machkey blockkey and
-            // survirship
-            if (element.getComponentValue().equalsIgnoreCase(value) || element.name().equalsIgnoreCase(value)) {
+            if (element.getComponentValue().equalsIgnoreCase(value)) {
                 return element;
             }
         }
