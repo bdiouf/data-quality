@@ -70,7 +70,7 @@ And include the following dependency:
 <dependency>
   <groupId>org.talend.dataquality</groupId>
   <artifactId>dataquality-common</artifactId>
-  <version>1.5.1</version>
+  <version>1.5.2</version>
 </dependency>
 ```
 
