@@ -1,3 +1,8 @@
+V1.5.2 2016-09-16
+	- TDQ-12467 Lucene index improvement
+	- TDQ-12471 remove dependency on ElasticSearch
+	- TDQ-12533 new implementation of JARDirectory
+
 V1.5.1 2016-06-27
 	- TDQ-11437 fix the regex for FR_PHONE recognition
 	- TDQ-12055 correctly pick category in semantic discovery analysis

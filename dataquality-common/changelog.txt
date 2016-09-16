@@ -1,3 +1,6 @@
+V1.5.2 2016-09-16
+	(no change in this version)
+
 V1.5.1 2016-06-27
 	- TDQ-12038 rename datascience.common package to dataquality.common
 

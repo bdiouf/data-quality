@@ -1,3 +1,6 @@
+V1.5.2 2016-09-16
+	- TDQ-12269 code quality improvements
+
 V1.5.1 2016-06-27
 	- TDQ-12047 optimize category suggestion by prioritizing with ordinal information
 	- TDQ-11678 Improve analysis performance:

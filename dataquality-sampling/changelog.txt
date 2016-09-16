@@ -1,3 +1,7 @@
+V2.3.2 2016-09-16
+	- TDQ-12185 & TDQ-12364 & TDQ-12366 &TDQ-12367 Mask email local part bug fixes
+	- TDQ-12477 Reservoir Sampling API on Spark DataFrame
+
 V2.3.1 2016-06-27 (with DQ library release 1.5.1)
     - TDQ-11437 fix FR_PHONE generation function of data masking
     - TDQ-11293 rename Function package to lowercase
