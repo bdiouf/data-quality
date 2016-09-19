@@ -4,9 +4,14 @@ Bundle-Name: Semantic Library
 Bundle-SymbolicName: org.talend.dataquality.email;singleton:=true
 Bundle-Version: 1.0.1
 Bundle-Vendor: .Talend SA.
-Export-Package: org.talend.dataquality.email
+Export-Package: org.talend.dataquality.email,
+ org.talend.dataquality.email.CommonCheck,
+ org.talend.dataquality.email.api,
+ org.talend.dataquality.email.checkerImpl,
+ org.talend.dataquality.email.exception
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.apache.commons.lang,
  org.apache.log4j,
  org.junit
 Bundle-ClassPath: .
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

@@ -12,12 +12,13 @@
 // ============================================================================
 package org.talend.dataquality.email;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.talend.dataquality.email.api.CheckerParams;
 import org.talend.dataquality.email.api.EmailVerify;
@@ -231,18 +232,21 @@ public class EmailVerifyTest {
     }
 
     @Test
+    @Ignore
     public void testCallback_valid1() {
         emailVerify = emailVerify.addRegularRegexChecker(true, "").addCallbackMailServerChecker(true);
         assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("237283696@qq.com"));
     }
 
     @Test
+    @Ignore
     public void testCallback_valid_2() {
         emailVerify = emailVerify.addCallbackMailServerChecker(true).addRegularRegexChecker(true, null);
         assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("237283696@qq.com")); //$NON-NLS-1$
     }
 
     @Test
+    @Ignore
     public void testCallback_valid2() {
         emailVerify = emailVerify.addRegularRegexChecker(true, null).addCallbackMailServerChecker(true);
         try {
@@ -252,12 +256,14 @@ public class EmailVerifyTest {
     }
 
     @Test
+    @Ignore
     public void testCallback_invalid_2() {
         emailVerify = emailVerify.addRegularRegexChecker(true, "").addCallbackMailServerChecker(true);
         assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail("qiongli-163.com"));
     }
 
     @Test
+    @Ignore
     public void testCallback_valid_3() {
         emailVerify = emailVerify.addRegularRegexChecker(true, "").addCallbackMailServerChecker(true);
         try {
