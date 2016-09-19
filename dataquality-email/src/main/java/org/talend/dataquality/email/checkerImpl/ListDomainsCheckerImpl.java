@@ -123,6 +123,6 @@ public class ListDomainsCheckerImpl extends AbstractEmailChecker {
                 }
             }
         }
-
     }
+
 }

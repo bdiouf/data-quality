@@ -13,6 +13,7 @@
 package org.talend.dataquality.email.checkerImpl;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.dataquality.email.api.CheckerParams;
 import org.talend.dataquality.email.api.EmailVerifyResult;
 import org.talend.dataquality.email.api.IEmailChecker;
 import org.talend.dataquality.email.exception.TalendSMTPRuntimeException;
@@ -28,12 +29,11 @@ public abstract class AbstractEmailChecker implements IEmailChecker {
      * 
      * @see org.talend.dataquality.email.api.IEmailChecker#check(java.lang.String)
      */
-    @Override
     abstract public boolean check(String email);
 
     @Override
-    public String checkEmail(String email) throws TalendSMTPRuntimeException {
-        return check(email) ? EmailVerifyResult.VALID.getResultValue() : EmailVerifyResult.INVALID.getResultValue();
+    public EmailVerifyResult checkEmail(String email) throws TalendSMTPRuntimeException {
+        return check(email) ? EmailVerifyResult.VALID : EmailVerifyResult.INVALID;
     }
 
     /*
@@ -41,16 +41,35 @@ public abstract class AbstractEmailChecker implements IEmailChecker {
      * 
      * @see org.talend.dataquality.email.api.IEmailChecker#check(java.lang.String, java.lang.String[])
      */
-    @Override
-    public String[] check(String email, String... strings) {
-        String[] results = new String[2];
+    public EmailVerifyResult check(String email, String... strings) {
+        EmailVerifyResult result = EmailVerifyResult.INVALID;
         if (check(email)) {
-            results[0] = EmailVerifyResult.VALID.getResultValue();
+            result = EmailVerifyResult.VALID;
         } else {
-            results[0] = EmailVerifyResult.INVALID.getResultValue();
+            result = EmailVerifyResult.INVALID;
         }
-        results[1] = StringUtils.EMPTY;
-        return results;
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.dataquality.email.api.IEmailChecker#checkEmail(java.lang.String,
+     * org.talend.dataquality.email.api.EmailVerifyParams)
+     */
+    @Override
+    public EmailVerifyResult checkEmail(String email, CheckerParams parameters) {
+        return check(email, parameters.getCheckerParameter());
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.dataquality.email.api.IEmailChecker#getSuggestedEmail()
+     */
+    @Override
+    public String getSuggestedEmail() {
+        return StringUtils.EMPTY;
     }
 
 }

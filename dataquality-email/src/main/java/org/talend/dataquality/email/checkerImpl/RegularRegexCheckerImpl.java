@@ -44,11 +44,6 @@ public class RegularRegexCheckerImpl extends AbstractEmailChecker {
      */
     @Override
     public boolean check(String email) {
-        // Pattern regular_pattern = java.util.regex.Pattern.compile(Constant.GENERIC_EMAIL_REGEX);
-        // // check the email complies to the generic email regex
-        // if (!regular_pattern.matcher(email).matches()) {
-        // return false;
-        // }
 
         if (email == null) {
             return false;

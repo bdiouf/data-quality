@@ -19,14 +19,16 @@ package org.talend.dataquality.email.api;
 public interface IEmailChecker {
 
     /**
+     * 
      * <p>
      * Checks if a field has a valid e-mail address.
      * </p>
-     *
+     * 
      * @param email The value validation is being performed on. A <code>null</code> value is considered invalid.
-     * @return true if the email address is valid.
+     * @param parameters which checker should be used and record some parameter of checker
+     * @return current result of check
      */
-    public boolean check(String email);
+    EmailVerifyResult checkEmail(String email, CheckerParams parameters);
 
     /**
      * 
@@ -35,20 +37,16 @@ public interface IEmailChecker {
      * </p>
      * 
      * @param email The value validation is being performed on. A <code>null</code> value is considered invalid.
-     * @param strings Some parameter when check the email(e.g. LocalPartColumnContentCheckerImpl will put firstName and
-     * lastName from here)
-     * @return current result of check and suggested email if the result is "CORRECTED"
+     * @return current result of check
      */
-    public String[] check(String email, String... inputParameters);
+    EmailVerifyResult checkEmail(String email);
 
     /**
-     * 
      * <p>
-     * Checks if a field has a valid e-mail address.
+     * Get suggested email
      * </p>
      * 
-     * @param email The value validation is being performed on. A <code>null</code> value is considered invalid.
-     * @return current result of check 
+     * @return StringUtils.EMPTY when there is not a suggest email exist else return the string of email
      */
-    public String checkEmail(String email);
+    String getSuggestedEmail();
 }

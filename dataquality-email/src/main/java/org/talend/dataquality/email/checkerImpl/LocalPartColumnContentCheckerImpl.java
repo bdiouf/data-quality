@@ -25,7 +25,7 @@ public class LocalPartColumnContentCheckerImpl extends AbstractEmailChecker {
 
     private boolean isCaseSensitive;
 
-    private String separator, usedCaseToGenerate;
+    private String separator, usedCaseToGenerate, correctedEmail = StringUtils.EMPTY;
 
     private final static String LOWER = "L";
 
@@ -91,22 +91,22 @@ public class LocalPartColumnContentCheckerImpl extends AbstractEmailChecker {
      * suggestedLocalPart: if equal , return {VERIFY,""}; if not equal, return {CORRECTED,suggestedLocalPart}.
      */
     @Override
-    public String[] check(String email, String... strings) {
-        String[] results = { EmailVerifyResult.INVALID.getResultValue(), StringUtils.EMPTY };
-
+    public EmailVerifyResult check(String email, String... strings) {
+        EmailVerifyResult result = EmailVerifyResult.INVALID;
+        resetCorrectedEmail();
         // when email is null or empty,
         if (StringUtils.isBlank(email) || strings == null || strings.length < 2) {
-            return results;
+            return result;
         }
         int pos = email.indexOf("@"); //$NON-NLS-1$
         // if the email does not contains '@', or both first and last name are empty,consider :invalid
         if (pos < 1 || (StringUtils.isBlank(strings[0]) && StringUtils.isBlank(strings[1]))) {
-            return results;
+            return result;
         }
         String localpart = email.substring(0, pos);
         // return Invalid when local part is null or empty,
         if (StringUtils.isBlank(localpart)) {
-            return results;
+            return result;
         }
         // return invalid, when the domain part is invalid.?? this checker only check local part
 
@@ -117,21 +117,28 @@ public class LocalPartColumnContentCheckerImpl extends AbstractEmailChecker {
         // second: compare the local part of the checked email with the suggested one
         if (isCaseSensitive) {
             if (StringUtils.equals(localpart, suggestedLocal)) {
-                results[0] = EmailVerifyResult.VALID.getResultValue();
+                result = EmailVerifyResult.VALID;
             } else {
-                results[0] = EmailVerifyResult.CORRECTED.getResultValue();
-                results[1] = suggestedLocal + email.substring(pos);
+                result = EmailVerifyResult.CORRECTED;
+                correctedEmail = suggestedLocal + email.substring(pos);
             }
         } else {
             if (StringUtils.equalsIgnoreCase(localpart, suggestedLocal)) {
-                results[0] = EmailVerifyResult.VALID.getResultValue();
+                result = EmailVerifyResult.VALID;
             } else {
-                results[0] = EmailVerifyResult.CORRECTED.getResultValue();
-                results[1] = suggestedLocal + email.substring(pos);
+                result = EmailVerifyResult.CORRECTED;
+                correctedEmail = suggestedLocal + email.substring(pos);
             }
         }
 
-        return results;
+        return result;
+    }
+
+    /**
+     * DOC zshen Comment method "resetCorrectedEmail".
+     */
+    private void resetCorrectedEmail() {
+        correctedEmail = StringUtils.EMPTY;
     }
 
     public String getSuggestedLocalPart(String firstName, String lastName) {
@@ -189,6 +196,16 @@ public class LocalPartColumnContentCheckerImpl extends AbstractEmailChecker {
             return StringUtils.upperCase(caseString);
         }
         return casedOne;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.dataquality.email.checkerImpl.AbstractEmailChecker#getSuggestedEmail()
+     */
+    @Override
+    public String getSuggestedEmail() {
+        return this.correctedEmail;
     }
 
 }

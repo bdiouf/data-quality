@@ -1,2 +1,2 @@
-V1.0.1
+V1.0.1 TDQ-11093 create email valiation API
     

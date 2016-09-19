@@ -12,14 +12,14 @@
 // ============================================================================
 package org.talend.dataquality.email;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.talend.dataquality.email.api.CheckerParams;
 import org.talend.dataquality.email.api.EmailVerify;
 import org.talend.dataquality.email.api.EmailVerifyResult;
 import org.talend.dataquality.email.exception.TalendSMTPRuntimeException;
@@ -48,21 +48,21 @@ public class EmailVerifyTest {
     public void testVerify_regular() {
         email = "ab_2c@sina.com"; //$NON-NLS-1$
         emailVerify = emailVerify.addRegularRegexChecker(true, "");
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(email));
     }
 
     @Test
     public void testVerify_regular_invalid() {
         email = "ab_2c@sina.com."; //$NON-NLS-1$
         emailVerify = emailVerify.addRegularRegexChecker(true, null);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
     }
 
     @Test
     public void testVerify_regular_invalid_2() {
         email = "ab_2c"; //$NON-NLS-1$
         emailVerify = emailVerify.addRegularRegexChecker(true, "");
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
     }
 
     /**
@@ -72,9 +72,9 @@ public class EmailVerifyTest {
     public void testVerify_localPart() {
         email = "abc@sina.com"; //$NON-NLS-1$
         emailVerify = emailVerify.addRegularRegexChecker(true, " ").addLocalPartRegexChecker(regularPattern, false, true);
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(email));
         email = "ab2@sina.com";
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
     }
 
     /**
@@ -84,13 +84,13 @@ public class EmailVerifyTest {
     public void testVerify_localPart_2() {
         email = "abc-sina.com"; //$NON-NLS-1$
         emailVerify = emailVerify.addRegularRegexChecker(true, null).addLocalPartRegexChecker(regularPattern, false, true);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
     }
 
     @Test
     public void testVerify_localPart_3() {
         emailVerify = emailVerify.addRegularRegexChecker(true, null).addLocalPartRegexChecker(regularPattern, false, true);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(null));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(null));
     }
 
     @Test
@@ -98,7 +98,7 @@ public class EmailVerifyTest {
         email = "2@qq.com"; //$NON-NLS-1$
         emailVerify = emailVerify.addRegularRegexChecker(true, "^\\w+([-+.]\\w+)@\\w([-.]\\w+)\\.\\w+([-.]\\w+)$")
                 .addLocalPartRegexChecker("^\\d$", false, false);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
     }
 
     /**
@@ -110,9 +110,9 @@ public class EmailVerifyTest {
         List<String> tldLs = new ArrayList<String>();
         tldLs.add("xyz".toUpperCase()); //$NON-NLS-1$
         emailVerify = emailVerify.addRegularRegexChecker(false, null).addTLDsChecker(true, tldLs, true);
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(email));
         email = "ab_2c@sina.com.xy"; //$NON-NLS-1$
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class EmailVerifyTest {
         List<String> tldLs = new ArrayList<String>();
         tldLs.add("xyz".toUpperCase()); //$NON-NLS-1$
         emailVerify = emailVerify.addRegularRegexChecker(false, "").addTLDsChecker(true, tldLs, true);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class EmailVerifyTest {
         List<String> tldLs = new ArrayList<String>();
         tldLs.add("xyz".toUpperCase()); //$NON-NLS-1$
         emailVerify = emailVerify.addRegularRegexChecker(false, "").addTLDsChecker(true, tldLs, true);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(null));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(null));
     }
 
     @Test
@@ -137,7 +137,7 @@ public class EmailVerifyTest {
         List<String> tldLs = new ArrayList<String>();
         tldLs.add("xyz".toUpperCase()); //$NON-NLS-1$
         emailVerify = emailVerify.addRegularRegexChecker(false, "").addTLDsChecker(true, tldLs, true);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify("abc"));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail("abc"));
     }
 
     /**
@@ -149,7 +149,7 @@ public class EmailVerifyTest {
         List<String> ls = new ArrayList<String>();
         ls.add("abx.com"); //$NON-NLS-1$
         emailVerify = emailVerify.addListDomainsChecker(false, ls);
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(email));
     }
 
     @Test
@@ -158,7 +158,7 @@ public class EmailVerifyTest {
         List<String> ls = new ArrayList<String>();
         ls.add("abx.com"); //$NON-NLS-1$
         emailVerify = emailVerify.addListDomainsChecker(false, ls);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
     }
 
     @Test
@@ -166,7 +166,7 @@ public class EmailVerifyTest {
         List<String> ls = new ArrayList<String>();
         ls.add("abx.com"); //$NON-NLS-1$
         emailVerify = emailVerify.addListDomainsChecker(false, ls);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(null));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(null));
     }
 
     @Test
@@ -174,7 +174,7 @@ public class EmailVerifyTest {
         email = "ab@abx.com"; //$NON-NLS-1$
         List<String> ls = new ArrayList<String>();
         emailVerify = emailVerify.addListDomainsChecker(false, ls);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
     }
 
     /**
@@ -192,9 +192,9 @@ public class EmailVerifyTest {
         for (int i = 0; i < emailLs.size(); i++) {
             String em = emailLs.get(i);
             if (i == 0) {
-                assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify(em));
+                assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(em));
             } else {
-                assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(em));
+                assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(em));
             }
         }
 
@@ -209,9 +209,9 @@ public class EmailVerifyTest {
         List<String> ls = new ArrayList<String>();
         ls.add("abx.com"); //$NON-NLS-1$
         emailVerify = emailVerify.addListDomainsChecker(true, ls);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
         email = "ab@cd.com"; //$NON-NLS-1$
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(email));
     }
 
     @Test
@@ -220,53 +220,48 @@ public class EmailVerifyTest {
         List<String> ls = new ArrayList<String>();
         ls.add("cc.zbzz13"); //$NON-NLS-1$
         emailVerify = emailVerify.addListDomainsChecker(true, ls);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
         email = "ab@cd.com"; //$NON-NLS-1$
 
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify(emails[0]));
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify(emails[1]));
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify(emails[2]));
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify(emails[3]));
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(emails[4]));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(emails[0]));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(emails[1]));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(emails[2]));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(emails[3]));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(emails[4]));
     }
 
     @Test
-    @Ignore
     public void testCallback_valid1() {
         emailVerify = emailVerify.addRegularRegexChecker(true, "").addCallbackMailServerChecker(true);
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify("237283696@qq.com"));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("237283696@qq.com"));
     }
 
     @Test
-    @Ignore
     public void testCallback_valid_2() {
         emailVerify = emailVerify.addCallbackMailServerChecker(true).addRegularRegexChecker(true, null);
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify("237283696@qq.com")); //$NON-NLS-1$
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("237283696@qq.com")); //$NON-NLS-1$
     }
 
     @Test
-    @Ignore
     public void testCallback_valid2() {
         emailVerify = emailVerify.addRegularRegexChecker(true, null).addCallbackMailServerChecker(true);
         try {
-            assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify("qiongli1@163.com"));
+            assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("qiongli1@163.com"));
         } catch (TalendSMTPRuntimeException e) {
         }
     }
 
     @Test
-    @Ignore
     public void testCallback_invalid_2() {
         emailVerify = emailVerify.addRegularRegexChecker(true, "").addCallbackMailServerChecker(true);
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify("qiongli-163.com"));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail("qiongli-163.com"));
     }
 
     @Test
-    @Ignore
     public void testCallback_valid_3() {
         emailVerify = emailVerify.addRegularRegexChecker(true, "").addCallbackMailServerChecker(true);
         try {
-            assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.verify("237283696@qq.com"));
+            assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("237283696@qq.com"));
         } catch (TalendSMTPRuntimeException e) {
         }
     }
@@ -288,7 +283,7 @@ public class EmailVerifyTest {
         // .addCallbackMailServerChecker(true, "qiongli@talend.com");
         // EmailCheckerFactory.createEmailChecker(true, regularPattern, true, true, true, false, false, tldLs,
         // domainLs);
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.getVerifyResult(email));
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(email));
     }
 
     @Test
@@ -303,9 +298,9 @@ public class EmailVerifyTest {
         emailVerify = emailVerify.addRegularRegexChecker(true, "").addLocalPartRegexChecker("^\\\\d$", true, true)
                 .addListDomainsChecker(true, domainLs).addTLDsChecker(true, tldLs, true);
         // it fail to balck domain list
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.getVerifyResult(email));
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.getVerifyResult(null));
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.getVerifyResult("abc"));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(email));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(null));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail("abc"));
     }
 
     /**
@@ -313,7 +308,7 @@ public class EmailVerifyTest {
      */
     @Test
     public void testVerify_email_null() {
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), emailVerify.verify(null));
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(null));
     }
 
     /**
@@ -324,85 +319,68 @@ public class EmailVerifyTest {
         // use first 2 of the firstname, use all of the last name
         emailVerify = emailVerify.addLocalPartColumnContentChecker(true, false, "L", "2", "0", "0", "10", "-");
 
-        assertEquals(EmailVerifyResult.VALID.getResultValue(),
-                emailVerify.getVerifyResult("ab-full@email.com", "abaa", "full")[0]);
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("ab-full@email.com", new CheckerParams("abaa", "full")));
         // first n<2
-        String[] result = emailVerify.getVerifyResult("a-full@email.com", "abaa", "full"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("ab-full@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("a-full@email.com", new CheckerParams("abaa", "full")));
+        assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail());
 
         // first n>2
-        result = emailVerify.getVerifyResult("aba-full@email.com", "abaa", "full"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("ab-full@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("aba-full@email.com", new CheckerParams("abaa", "full")));
+        assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail());
 
         // last n<all
-        result = emailVerify.getVerifyResult("ab-ful@email.com", "abaa", "full");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("ab-full@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("ab-ful@email.com", new CheckerParams("abaa", "full")));
+        assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail());
 
         // last n>all
-        result = emailVerify.getVerifyResult("ab-fullyy@email.com", "abaa", "full");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("ab-full@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("ab-fullyy@email.com", new CheckerParams("abaa", "full")));
+        assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail());
 
         // both less
-        result = emailVerify.getVerifyResult("a-ful@email.com", "abaa", "full");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("ab-full@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("a-ful@email.com", new CheckerParams("abaa", "full")));
+        assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail());
 
         // both more
-        result = emailVerify.getVerifyResult("ababb-fullyy@email.com", "abaa", "full");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("ab-full@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("ababb-fullyy@email.com", new CheckerParams("abaa", "full")));
+        assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail());
 
         // only first
-        result = emailVerify.getVerifyResult("ab-@email.com", "abaa", "full");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("ab-full@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("ab-@email.com", new CheckerParams("abaa", "full")));
+        assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail());
 
         // only last
-        result = emailVerify.getVerifyResult("-full@email.com", "abaa", "full");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("ab-full@email.com", result[1]);
-        result = emailVerify.getVerifyResult("full@email.com", "abaa", "full");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("ab-full@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("-full@email.com", new CheckerParams("abaa", "full")));
+        assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail());
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("full@email.com", new CheckerParams("abaa", "full")));
+        assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail());
 
         // not contain '@'
-        result = emailVerify.getVerifyResult("ccc", "abaa", "full");
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), result[0]);
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail("ccc", new CheckerParams("abaa", "full")));
         // not contain localpart
-        result = emailVerify.getVerifyResult("@ccc", "abaa", "full");
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), result[0]);
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail("@ccc", new CheckerParams("abaa", "full")));
 
         // first name empty
-        result = emailVerify.getVerifyResult("ccc", "", "full");
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), result[0]);
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail("ccc", new CheckerParams("", "full")));
         // first empty, only has last
-        result = emailVerify.getVerifyResult("ful@email.com", "", "full");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("full@email.com", result[1]);
-        result = emailVerify.getVerifyResult("full@email.com", "", "full");
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), result[0]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("ful@email.com", new CheckerParams("", "full")));
+        assertEquals("full@email.com", emailVerify.getSuggestedEmail());
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("full@email.com", new CheckerParams("", "full")));
 
         // last name empty
-        result = emailVerify.getVerifyResult("ccc", "abc", "");
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), result[0]);
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail("ccc", new CheckerParams("abc", "")));
         // last empty, only has first
-        result = emailVerify.getVerifyResult("a@email.com", "abaa", "");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("ab@email.com", result[1]);
-        result = emailVerify.getVerifyResult("ab@email.com", "abaa", "");
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), result[0]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("a@email.com", new CheckerParams("abaa", "")));
+        assertEquals("ab@email.com", emailVerify.getSuggestedEmail());
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("ab@email.com", new CheckerParams("abaa", "")));
 
         // empty email -- invalid
-        result = emailVerify.getVerifyResult("", "abc", "full");
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), result[0]);
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail("", new CheckerParams("abc", "full")));
 
         // email = null
-        result = emailVerify.getVerifyResult(null, "abc", "full");
-        assertEquals(EmailVerifyResult.INVALID.getResultValue(), result[0]);
+        assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(null, new CheckerParams("abc", "full")));
     }
 
     @Test
@@ -410,37 +388,33 @@ public class EmailVerifyTest {
         // use all of the firstname, use 2 first of the last name
         emailVerify = emailVerify.addLocalPartColumnContentChecker(true, false, "L", "20", "0", "2", "0", "-");
 
-        assertEquals(EmailVerifyResult.VALID.getResultValue(),
-                emailVerify.getVerifyResult("full-aa@email.com", "full", "aaaa")[0]);
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("full-aa@email.com", new CheckerParams("full", "aaaa")));
         // first n<all
-        String[] result = emailVerify.getVerifyResult("fu-aa@email.com", "full", "aaaa"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("full-aa@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("fu-aa@email.com", new CheckerParams("full", "aaaa")));
+        assertEquals("full-aa@email.com", emailVerify.getSuggestedEmail());
 
         // first n>all
-        result = emailVerify.getVerifyResult("fullyy-aa@email.com", "full", "aaaa"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("full-aa@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("fullyy-aa@email.com", new CheckerParams("full", "aaaa")));
+        assertEquals("full-aa@email.com", emailVerify.getSuggestedEmail());
 
         // last n<2
-        result = emailVerify.getVerifyResult("full-b@email.com", "full", "aaaa");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("full-aa@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("full-b@email.com", new CheckerParams("full", "aaaa")));
+        assertEquals("full-aa@email.com", emailVerify.getSuggestedEmail());
 
         // last n>2
-        result = emailVerify.getVerifyResult("full-aba@email.com", "full", "aaaa");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("full-aa@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("full-aba@email.com", new CheckerParams("full", "aaaa")));
+        assertEquals("full-aa@email.com", emailVerify.getSuggestedEmail());
 
         // both less
-        result = emailVerify.getVerifyResult("ful-b@email.com", "full", "aaaa");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("full-aa@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("ful-b@email.com", new CheckerParams("full", "aaaa")));
+        assertEquals("full-aa@email.com", emailVerify.getSuggestedEmail());
 
         // both more
-        result = emailVerify.getVerifyResult("ababb-fullyy@email.com", "full", "aaaa");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("full-aa@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("ababb-fullyy@email.com", new CheckerParams("full", "aaaa")));
+        assertEquals("full-aa@email.com", emailVerify.getSuggestedEmail());
     }
 
     @Test
@@ -448,53 +422,52 @@ public class EmailVerifyTest {
         // use 2+1 of the firstname, use 4+3 first of the last name
         emailVerify = emailVerify.addLocalPartColumnContentChecker(true, false, "L", "2", "1", "4", "3", "-");
 
-        assertEquals(EmailVerifyResult.VALID.getResultValue(),
-                emailVerify.getVerifyResult("124-1234678@email.com", "1234", "12345678")[0]);
+        assertEquals(EmailVerifyResult.VALID,
+                emailVerify.checkEmail("124-1234678@email.com", new CheckerParams("1234", "12345678")));
         // first n<all
-        String[] result = emailVerify.getVerifyResult("1-1234678@email.com", "1234", "12345678"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("124-1234678@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("1-1234678@email.com", new CheckerParams("1234", "12345678")));
+        assertEquals("124-1234678@email.com", emailVerify.getSuggestedEmail());
 
         // first n>all
-        result = emailVerify.getVerifyResult("1234-1234678@email.com", "1234", "12345678"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("124-1234678@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("1234-1234678@email.com", new CheckerParams("1234", "12345678")));
+        assertEquals("124-1234678@email.com", emailVerify.getSuggestedEmail());
 
         // last n<2
-        result = emailVerify.getVerifyResult("124-12@email.com", "1234", "12345678");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("124-1234678@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("124-12@email.com", new CheckerParams("1234", "12345678")));
+        assertEquals("124-1234678@email.com", emailVerify.getSuggestedEmail());
 
         // last n>2
-        result = emailVerify.getVerifyResult("124-123456789@email.com", "1234", "12345678");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("124-1234678@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("124-123456789@email.com", new CheckerParams("1234", "12345678")));
+        assertEquals("124-1234678@email.com", emailVerify.getSuggestedEmail());
 
         // both less
-        result = emailVerify.getVerifyResult("1-1@email.com", "1234", "12345678");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("124-1234678@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("1-1@email.com", new CheckerParams("1234", "12345678")));
+        assertEquals("124-1234678@email.com", emailVerify.getSuggestedEmail());
 
         // both more
-        result = emailVerify.getVerifyResult("11111-222222222@email.com", "1234", "12345678");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(), result[0]);
-        assertEquals("124-1234678@email.com", result[1]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("11111-222222222@email.com", new CheckerParams("1234", "12345678")));
+        assertEquals("124-1234678@email.com", emailVerify.getSuggestedEmail());
     }
 
     // use invalid parameters of each string
     @Test
     public void testUseColumnContent_3() {
         emailVerify = emailVerify.addLocalPartColumnContentChecker(true, false, "L", "ab", "cc", "x", "z", "-");
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(),
-                emailVerify.getVerifyResult("124-1234678@email.com", "1234", "12345678")[0]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("124-1234678@email.com", new CheckerParams("1234", "12345678")));
 
         // use 0 of the firstname, use all of the last name
         emailVerify = emailVerify.addLocalPartColumnContentChecker(true, false, "L", "0", "0", "10", "0", "-");
-        assertEquals(EmailVerifyResult.VALID.getResultValue(),
-                emailVerify.getVerifyResult("12345678@email.com", "1234", "12345678")[0]);
+        assertEquals(EmailVerifyResult.VALID,
+                emailVerify.checkEmail("12345678@email.com", new CheckerParams("1234", "12345678")));
 
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(),
-                emailVerify.getVerifyResult("1-12345678@email.com", "1234", "12345678")[0]);
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("1-12345678@email.com", new CheckerParams("1234", "12345678")));
 
     }
 
@@ -502,28 +475,22 @@ public class EmailVerifyTest {
     @Test
     public void testUseColumnContent_5() {
         emailVerify = emailVerify.addLocalPartColumnContentChecker(true, true, "K", "0", "2", "0", "2", "-");
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.getVerifyResult("aA-bB@email.com", "AaA", "BbB")[0]);
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("aA-bB@email.com", new CheckerParams("AaA", "BbB")));
 
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(),
-                emailVerify.getVerifyResult("aa-BB@email.com", "AaA", "BbB")[0]);
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(),
-                emailVerify.getVerifyResult("aa-bb@email.com", "AaA", "BbB")[0]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("aa-BB@email.com", new CheckerParams("AaA", "BbB")));
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("aa-bb@email.com", new CheckerParams("AaA", "BbB")));
 
         emailVerify = emailVerify.addLocalPartColumnContentChecker(true, true, "L", "0", "2", "0", "2", "-");
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.getVerifyResult("aa-bb@email.com", "AAA", "BBB")[0]);
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("aa-bb@email.com", new CheckerParams("AaA", "BbB")));
 
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(),
-                emailVerify.getVerifyResult("aa-BB@email.com", "AAA", "BBB")[0]);
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(),
-                emailVerify.getVerifyResult("Aa-Bb@email.com", "AAA", "BBB")[0]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("aa-BB@email.com", new CheckerParams("AaA", "BbB")));
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("Aa-Bb@email.com", new CheckerParams("AaA", "BbB")));
 
         emailVerify = emailVerify.addLocalPartColumnContentChecker(true, true, "U", "0", "2", "0", "2", "-");
-        assertEquals(EmailVerifyResult.VALID.getResultValue(), emailVerify.getVerifyResult("AA-BB@email.com", "aaa", "bbb")[0]);
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("AA-BB@email.com", new CheckerParams("AaA", "BbB")));
 
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(),
-                emailVerify.getVerifyResult("aa-BB@email.com", "AAA", "BBB")[0]);
-        assertEquals(EmailVerifyResult.CORRECTED.getResultValue(),
-                emailVerify.getVerifyResult("aa-bb@email.com", "AAA", "BBB")[0]);
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("aa-BB@email.com", new CheckerParams("AaA", "BbB")));
+        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("aa-bb@email.com", new CheckerParams("AaA", "BbB")));
 
     }
 }

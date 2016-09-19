@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.email.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -28,19 +29,19 @@ import org.talend.dataquality.email.exception.TalendSMTPRuntimeException;
  * created by talend on 2014.12.26 Detailled comment
  *
  */
-public class EmailVerify {
+public class EmailVerify implements IEmailChecker {
 
     private static Logger log = Logger.getLogger(EmailVerify.class);
 
-    private IEmailChecker[] checkers;
+    private List<IEmailChecker> checkers;
 
     public EmailVerify() {
-        checkers = new IEmailChecker[6];
+        checkers = new ArrayList<>();
     }
 
     public EmailVerify addRegularRegexChecker(boolean isUseRegularRegex, String userDefinedRegex) {
         if (isUseRegularRegex) {
-            checkers[0] = new RegularRegexCheckerImpl(userDefinedRegex);
+            addChecker(new RegularRegexCheckerImpl(userDefinedRegex));
         }
         return this;
     }
@@ -48,7 +49,7 @@ public class EmailVerify {
     public EmailVerify addLocalPartRegexChecker(String localPartRegexExpress, boolean isLocalPartCaseSensitive,
             boolean isLocalPartShort) {
         if (!StringUtils.isBlank(localPartRegexExpress)) {
-            checkers[1] = new LocalPartRegexCheckerImpl(localPartRegexExpress, isLocalPartShort, isLocalPartCaseSensitive);
+            addChecker(new LocalPartRegexCheckerImpl(localPartRegexExpress, isLocalPartShort, isLocalPartCaseSensitive));
         }
         return this;
     }
@@ -60,13 +61,13 @@ public class EmailVerify {
                     " The selected white list is empty. All emails will be invalid. Either select the black list option or add some domains in the white list."); //$NON-NLS-1$
         }
 
-        checkers[2] = new ListDomainsCheckerImpl(isBlackListDomains, listDomains);
+        addChecker(new ListDomainsCheckerImpl(isBlackListDomains, listDomains));
         return this;
     }
 
     public EmailVerify addTLDsChecker(boolean isValidTLDs, List<String> tLDs, boolean isBlackListDomains) {
         if (isValidTLDs) {
-            checkers[3] = new TLDsCheckerImpl(tLDs, isBlackListDomains);
+            addChecker(new TLDsCheckerImpl(tLDs, isBlackListDomains));
         }
         return this;
     }
@@ -80,7 +81,7 @@ public class EmailVerify {
      */
     public EmailVerify addCallbackMailServerChecker(boolean isCallbackMailServer) {
         if (isCallbackMailServer) {
-            checkers[5] = new CallbackMailServerCheckerImpl();
+            addChecker(new CallbackMailServerCheckerImpl());
         }
         return this;
     }
@@ -88,38 +89,22 @@ public class EmailVerify {
     public EmailVerify addLocalPartColumnContentChecker(boolean isColumnContent, boolean isCaseSensitive,
             String usedCaseToGenerate, String nFOfFirst, String nLOfFirst, String nFOfLast, String nLOfLast, String separator) {
         if (isColumnContent) {
-            checkers[4] = new LocalPartColumnContentCheckerImpl(nFOfFirst, nLOfFirst, nFOfLast, nLOfLast, separator,
-                    isCaseSensitive, usedCaseToGenerate);
+            addChecker(new LocalPartColumnContentCheckerImpl(nFOfFirst, nLOfFirst, nFOfLast, nLOfLast, separator, isCaseSensitive,
+                    usedCaseToGenerate));
         }
         return this;
     }
 
-    /**
-     * get the verify email boolean value.
-     * 
-     * @param email
-     * @return
-     */
-    public String verify(String email) {
-        if (email == null) {
-            return EmailVerifyResult.INVALID.getResultValue();
-        }
+    public EmailVerify addChecker(IEmailChecker checker) {
+        if (checker != null) {
 
-        for (IEmailChecker checker : checkers) {
-            try {
-                if (checker != null) {
-                    String checkResult = checker.checkEmail(email);
-                    if (shouldStopCheck(checkResult)) {
-                        return checkResult;
-                    }
-                }
-            } catch (TalendSMTPRuntimeException e) {
-                continue;
-            } catch (Exception e) {
-                return EmailVerifyResult.INVALID.getResultValue();
-            }
+            checkers.add(checker);
         }
-        return EmailVerifyResult.VALID.getResultValue();
+        return this;
+    }
+
+    public void initEmailVerify() {
+        checkers.clear();
     }
 
     /**
@@ -129,38 +114,73 @@ public class EmailVerify {
      * @param checker
      * @return true if result is invalid or rejected
      */
-    private boolean shouldStopCheck(String checkEmailResult) {
-        return EmailVerifyResult.INVALID.getResultValue().equalsIgnoreCase(checkEmailResult)
-                || EmailVerifyResult.REJECTED.getResultValue().equalsIgnoreCase(checkEmailResult)
-                || EmailVerifyResult.VERIFIED.getResultValue().equalsIgnoreCase(checkEmailResult);
+    private boolean shouldStopCheck(EmailVerifyResult checkEmailResult) {
+        return EmailVerifyResult.INVALID == checkEmailResult || EmailVerifyResult.REJECTED == checkEmailResult;
     }
 
-    /**
-     * get the verify email string value.
+    /*
+     * (non-Javadoc)
      * 
-     * @param email
-     * @return if it is ok, then return "verfied" else "invalid".
+     * @see org.talend.dataquality.email.api.IEmailChecker#checkEmail(java.lang.String,
+     * org.talend.dataquality.email.api.EmailVerifyParams)
      */
-    public String getVerifyResult(String email) {
-        return verify(email);
-    }
-
-    /**
-     * 
-     * get the verify email string value.
-     * 
-     * @param email
-     * @param strings firstName and lastName
-     * @return
-     */
-    public String[] getVerifyResult(String email, String... strings) {
-        String[] checkResult = { EmailVerifyResult.INVALID.getResultValue(), StringUtils.EMPTY };
+    @Override
+    public EmailVerifyResult checkEmail(String email, CheckerParams parameters) {
+        EmailVerifyResult checkResult = EmailVerifyResult.INVALID;
         for (IEmailChecker checker : checkers) {
             try {
                 if (checker != null) {
-                    checkResult = checker.check(email, strings);
+                    checkResult = checker.checkEmail(email, parameters);
                     // only when one result is invalid, return, do NOT contine for other checkers.
-                    if (StringUtils.equals(EmailVerifyResult.INVALID.getResultValue(), checkResult[0])) {
+                    if (shouldStopCheck(checkResult)) {
+                        return checkResult;
+                    }
+                }
+            } catch (TalendSMTPRuntimeException e) {
+                continue;
+            } catch (Exception e) {
+                return checkResult;
+            }
+        }
+        return checkResult;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.dataquality.email.api.IEmailChecker#getSuggestedEmail()
+     */
+    @Override
+    public String getSuggestedEmail() {
+        String suggestedEmail = StringUtils.EMPTY;
+        for (IEmailChecker checker : checkers) {
+            if (checker != null) {
+                suggestedEmail = checker.getSuggestedEmail();
+                // only when one result is invalid, return, do NOT contine for other checkers.
+                // Current case only localPart checker can return suggest email if any checker added this function then the code
+                // need to consisder the issue of order
+                if (!suggestedEmail.isEmpty()) {
+                    return suggestedEmail;
+                }
+            }
+        }
+        return suggestedEmail;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.dataquality.email.api.IEmailChecker#checkEmail(java.lang.String)
+     */
+    @Override
+    public EmailVerifyResult checkEmail(String email) {
+        EmailVerifyResult checkResult = EmailVerifyResult.INVALID;
+        for (IEmailChecker checker : checkers) {
+            try {
+                if (checker != null) {
+                    checkResult = checker.checkEmail(email);
+                    // only when one result is invalid, return, do NOT contine for other checkers.
+                    if (shouldStopCheck(checkResult)) {
                         return checkResult;
                     }
                 }

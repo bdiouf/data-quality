@@ -117,7 +117,7 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
                 res = -1;
             }
         } while (in.ready());
-        //line.contains("authentication is required") judge whether authentication is required(for example 139.com)
+        // line.contains("authentication is required") judge whether authentication is required(for example 139.com)
         if (res != 250 && res != 221 && res != 220 || line.contains("authentication is required")) { //$NON-NLS-1$
             throw new TalendSMTPRuntimeException(line);
         }
@@ -321,8 +321,8 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
      * @see org.talend.dataquality.email.checkerImpl.AbstractEmailChecker#checkEmail(java.lang.String)
      */
     @Override
-    public String checkEmail(String email) throws TalendSMTPRuntimeException {
-        return check(email) ? EmailVerifyResult.VERIFIED.getResultValue() : EmailVerifyResult.REJECTED.getResultValue();
+    public EmailVerifyResult checkEmail(String email) throws TalendSMTPRuntimeException {
+        return check(email) ? EmailVerifyResult.VERIFIED : EmailVerifyResult.REJECTED;
     }
 
     /*
@@ -331,15 +331,14 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
      * @see org.talend.dataquality.email.checkerImpl.AbstractEmailChecker#check(java.lang.String, java.lang.String[])
      */
     @Override
-    public String[] check(String email, String... strings) {
-        String[] results = new String[2];
+    public EmailVerifyResult check(String email, String... strings) {
+        EmailVerifyResult result = EmailVerifyResult.REJECTED;
         if (check(email)) {
-            results[0] = EmailVerifyResult.VERIFIED.getResultValue();
+            result = EmailVerifyResult.VERIFIED;
         } else {
-            results[0] = EmailVerifyResult.REJECTED.getResultValue();
+            result = EmailVerifyResult.REJECTED;
         }
-        results[1] = StringUtils.EMPTY;
-        return results;
+        return result;
     }
 
 }
