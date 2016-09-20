@@ -331,7 +331,8 @@ public class EmailVerifyTest {
         assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail()); //$NON-NLS-1$
 
         // first n>2
-        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("aba-full@email.com", new CheckerParams("abaa", "full"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("aba-full@email.com", new CheckerParams("abaa", "full"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         assertEquals("ab-full@email.com", emailVerify.getSuggestedEmail()); //$NON-NLS-1$
 
         // last n<all
@@ -408,7 +409,8 @@ public class EmailVerifyTest {
         assertEquals("full-aa@email.com", emailVerify.getSuggestedEmail()); //$NON-NLS-1$
 
         // last n>2
-        assertEquals(EmailVerifyResult.CORRECTED, emailVerify.checkEmail("full-aba@email.com", new CheckerParams("full", "aaaa"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        assertEquals(EmailVerifyResult.CORRECTED,
+                emailVerify.checkEmail("full-aba@email.com", new CheckerParams("full", "aaaa"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         assertEquals("full-aa@email.com", emailVerify.getSuggestedEmail()); //$NON-NLS-1$
 
         // both less
@@ -467,7 +469,8 @@ public class EmailVerifyTest {
 
         // use 0 of the firstname, use all of the last name
         emailVerify = emailVerify.addLocalPartColumnContentChecker(true, false, "L", "0", "0", "10", "0", "-"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("12345678@email.com", new CheckerParams("1234", "12345678"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        assertEquals(EmailVerifyResult.VALID,
+                emailVerify.checkEmail("12345678@email.com", new CheckerParams("1234", "12345678"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         assertEquals(EmailVerifyResult.CORRECTED,
                 emailVerify.checkEmail("1-12345678@email.com", new CheckerParams("1234", "12345678"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

@@ -86,7 +86,6 @@ public class LocalPartRegexCheckerImpl extends AbstractEmailChecker {
         regex = StringUtils.replace(regex, "W", "[A-Z]+"); //$NON-NLS-1$ //$NON-NLS-2$
         regex = StringUtils.replace(regex, "w", "[a-z]+"); //$NON-NLS-1$ //$NON-NLS-2$
         regex = StringUtils.replace(regex, "9", "[0-9]"); //$NON-NLS-1$ //$NON-NLS-2$
-        regex = StringUtils.replace(regex, "f", "[\\u00C0-\\u00FF||\\u0152-\\u0153]"); //$NON-NLS-1$ //$NON-NLS-2$
         regex = StringUtils.replace(regex, ".", "\\."); //$NON-NLS-1$ //$NON-NLS-2$
         regex = StringUtils.replace(regex, "?", "[^\\s\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]]"); //$NON-NLS-1$ //$NON-NLS-2$
         regex = StringUtils.replace(regex, "*", "[^\\s\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]]*"); //$NON-NLS-1$ //$NON-NLS-2$
