@@ -40,8 +40,7 @@ public class CallbackMailServerCheckerImplTest {
     }
 
     /**
-     * Test method for
-     * {@link org.talend.dataquality.email.checkerImpl.CallbackMailServerCheckerImpl#check(java.lang.String)}.
+     * Test method for {@link org.talend.dataquality.email.checkerImpl.CallbackMailServerCheckerImpl#check(java.lang.String)}.
      */
     public void testCheck_valid() {
         String email = "zshen@talend.com";
@@ -57,6 +56,13 @@ public class CallbackMailServerCheckerImplTest {
             assertFalse(callBackServerCheck.check(email));
         } catch (TalendSMTPRuntimeException e) {
         }
+    }
+
+    public void testCheck_valid3() {
+        String email = "gégé@laposte.fr";
+        assertTrue(callBackServerCheck.check(email));
+        email = "sidbpl@cebpl.caisse-epargne.fr";
+        assertTrue(callBackServerCheck.check(email));
     }
 
     public void testCheck_invalid() {

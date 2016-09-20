@@ -30,10 +30,14 @@ public class RegularRegexCheckerImplTest {
     @Test
     public void testCheck_valid() {
         regularCheck = new RegularRegexCheckerImpl("");
-        String email = "ab.c@yahoo.com";
+        String email = "ab.c@yahoo.com"; //$NON-NLS-1$
         boolean check = regularCheck.check(email);
         assertTrue(check);
-        email = "_1ab.c@yahoo.com";
+        email = "_1ab.c@yahoo.com"; //$NON-NLS-1$
+        assertTrue(regularCheck.check(email));
+        email = "gégé@laposte.fr"; //$NON-NLS-1$
+        assertTrue(regularCheck.check(email));
+        email = "sidbpl@cebpl.caisse-epargne.fr"; //$NON-NLS-1$
         assertTrue(regularCheck.check(email));
     }
 

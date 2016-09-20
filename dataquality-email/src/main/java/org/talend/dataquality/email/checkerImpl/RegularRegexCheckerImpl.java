@@ -23,7 +23,8 @@ import org.apache.commons.lang.StringUtils;
  */
 public class RegularRegexCheckerImpl extends AbstractEmailChecker {
 
-    private static final String LEGAL_ASCII_REGEX = "^\\p{ASCII}+$"; //$NON-NLS-1$
+    // ascii and special character of french
+    private static final String LEGAL_ASCII_REGEX = "^[\\p{ASCII}||\\u0080-\\u017F||\\u0152-\\u0153]+$"; //$NON-NLS-1$
 
     private static final String EMAIL_REGEX = "^\\s*?(.+)@(.+?)\\s*$"; //$NON-NLS-1$
 
