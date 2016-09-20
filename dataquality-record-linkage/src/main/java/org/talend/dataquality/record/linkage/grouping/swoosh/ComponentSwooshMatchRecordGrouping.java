@@ -75,7 +75,19 @@ public class ComponentSwooshMatchRecordGrouping extends AnalysisSwooshMatchRecor
         if (!matchFinished) {
             tmpMatchResult.add(row);
         } else {
+            if(this.isPassOriginalValue){//TDQ-12057 when the first tmatchgroup select to pass the original value, just pass this record 
+                String[] strRow = getValuesFromOriginRow(row);
+                Object[] withOrigin = new Object[strRow.length+1];
+                int index = 0;
+                for(String str:strRow){
+                    withOrigin[index++]= str;
+                }
+                //Added TDQ-12057 : put the whole attributes of the current record into the output(last position).
+                withOrigin[index] = row.getAttributes();
+                outputRow( withOrigin);
+            }else{            
             super.outputRow(row);
+            }
         }
     }
 

@@ -61,4 +61,6 @@ public class SwooshConstants {
      * One String which contents is "null" javajet alaways get this value if it is null variable
      */
     public static final String NULL_STR = "null"; //$NON-NLS-1$
+    
+    public static final String ORIGINAL_RECORD="ORIGINAL_RECORD";
 }

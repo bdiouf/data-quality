@@ -35,6 +35,7 @@ import org.talend.dataquality.record.linkage.grouping.swoosh.DQRecordIterator;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams.SurvivorshipFunction;
+import org.talend.dataquality.record.linkage.grouping.swoosh.SwooshConstants;
 import org.talend.dataquality.record.linkage.record.CombinedRecordMatcher;
 import org.talend.dataquality.record.linkage.record.IRecordMatcher;
 import org.talend.dataquality.record.linkage.utils.BidiMultiMap;
@@ -75,7 +76,7 @@ public class TSwooshGrouping<TYPE> {
 
     /**
      * Recording matching with t-swoosh algorithm.
-     * 
+     * Used for tmatchgroup only
      * @param inputRow
      * @param matchingRule
      */
@@ -102,6 +103,19 @@ public class TSwooshGrouping<TYPE> {
                         TYPE value = inputRow[Integer.valueOf(recordMap.get(IRecordGrouping.COLUMN_IDX))];
                         return value == null ? null : value.toString();
                     }
+
+                    //Added TDQ-12057 : return the current column's values from the last original values.(multipass+swoosh+passOriginal)
+                    //because "MERGE_INFO" is the last column,so the original is not the last one.
+                    @Override
+                    public Object getAttribute() {
+                        TYPE type = inputRow[inputRow.length-2];
+                        if(type instanceof List){
+                            Integer colIndex = Integer.valueOf(recordMap.get(IRecordGrouping.COLUMN_IDX));
+                            Attribute originalAttribute = (Attribute)((List<?>)inputRow[inputRow.length-2]).get(colIndex);
+                            return originalAttribute.getValues();
+                        }
+                        return null;
+                    }
                 });
             }
         }
@@ -109,13 +123,20 @@ public class TSwooshGrouping<TYPE> {
         rcdGen.setMatchKeyMap(rcdMap);
         List<DQAttribute<?>> rowList = new ArrayList<>();
         int colIdx = 0;
+        
         for (TYPE attribute : inputRow) {
-            DQAttribute<TYPE> attri = new DQAttribute<TYPE>(StringUtils.EMPTY, colIdx, attribute);
+            DQAttribute<TYPE> attri;
+            //Added TDQ-12057, when pass original & multipass, no need to pass it into OriginalRow.
+            if(attribute instanceof List){
+                attri = new DQAttribute<TYPE>(SwooshConstants.ORIGINAL_RECORD, colIdx, null);
+            }else{//~
+                attri = new DQAttribute<TYPE>(StringUtils.EMPTY, colIdx, attribute);
+            }
             rowList.add(attri);
             colIdx++;
         }
         rcdGen.setOriginalRow(rowList);
-        rcdsGenerators.add(rcdGen);
+         rcdsGenerators.add(rcdGen);
     }
 
     public void swooshMatch(IRecordMatcher combinedRecordMatcher, SurvivorShipAlgorithmParams survParams) {
@@ -123,7 +144,7 @@ public class TSwooshGrouping<TYPE> {
     }
 
     /**
-     * DOC yyin Comment method "swooshMatch".
+     * Used by tmatchgroup only.
      * 
      * @param combinedRecordMatcher
      * @param survParams
@@ -165,12 +186,13 @@ public class TSwooshGrouping<TYPE> {
         algorithm = (DQMFB) createTswooshAlgorithm(combinedRecordMatcher, survParams, new GroupingCallBack());
     }
 
-    // do match on one single record
+    // do match on one single record,used by analysis
     public void oneRecordMatch(RichRecord printRcd) {
         algorithm.matchOneRecord(printRcd);
     }
 
     // get and output all result after all records finished
+    //used by both analysis and component
     public void afterAllRecordFinished() {
         List<Record> result = algorithm.getResult();
         outputResult(result);
@@ -471,6 +493,18 @@ public class TSwooshGrouping<TYPE> {
 
         int indexGID = 0;
 
+        @Override
+        public void onDifferent(Record record1, Record record2, MatchResult matchResult) {
+            // TODO Auto-generated method stub
+            super.onDifferent(record1, record2, matchResult);
+        }
+
+        @Override
+        public void onEndRecord(Record record) {
+            // TODO Auto-generated method stub
+            super.onEndRecord(record);
+        }
+
         public void setGIDindex(int index) {
             indexGID = index;
         }
@@ -633,7 +667,8 @@ public class TSwooshGrouping<TYPE> {
          * @return
          */
         private Double getOldGrpQualiry(RichRecord richRecord) {
-            return Double.valueOf(richRecord.getOriginRow().get(getIndexGQ()).getValue());
+            String value = richRecord.getOriginRow().get(getIndexGQ()).getValue();
+            return Double.valueOf(value ==null? "1.0":value);
         }
 
         /**

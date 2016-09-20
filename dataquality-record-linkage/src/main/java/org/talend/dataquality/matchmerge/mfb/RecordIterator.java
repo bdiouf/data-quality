@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import org.talend.dataquality.matchmerge.Attribute;
+import org.talend.dataquality.matchmerge.AttributeValues;
 import org.talend.dataquality.matchmerge.Record;
 import org.talend.dataquality.record.linkage.grouping.swoosh.DQAttribute;
 
@@ -54,6 +55,8 @@ public class RecordIterator implements Iterator<Record> {
         int getColumnIndex();
 
         String newValue();
+        
+        Object getAttribute();
     }
 
     @Override
@@ -78,6 +81,11 @@ public class RecordIterator implements Iterator<Record> {
             Attribute attribute = new Attribute(generator.getKey(), generator.getValue().getColumnIndex());
             attribute.setValue(generator.getValue().newValue());
             record.add(attribute);
+            //Added TDQ-12057 20160918,yyin--if the related attribute has its original values, add them.
+            Object attriValues = generator.getValue().getAttribute();
+            if(attriValues!=null){
+                attribute.getValues().merge((AttributeValues<String>)attriValues);
+            }
         }
         currentIndex++;
         return createRecord(record, rcdGenerators.get(rcdIdx).getOriginalRow());

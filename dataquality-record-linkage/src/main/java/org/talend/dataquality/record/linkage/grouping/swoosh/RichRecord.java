@@ -332,7 +332,7 @@ public class RichRecord extends Record {
 
     /**
      * for the merged master rows from multipass, no need to add, only replace. Add one fixed output column: MERGE_INFO
-     * 
+     * when there is original record from the 1st tmatchgroup, the EXT_SIZE should =7, if with details, should = 8. 
      * @param oldGID2New
      * @param originalInputColumnSize
      * @return
