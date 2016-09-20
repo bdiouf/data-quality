@@ -33,7 +33,7 @@ public class DateVariance extends Function<Date> {
         super.parse(extraParameter, keepNullValues, rand);
         try {
             integerParam = Integer.parseInt(parameters[0]);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("The parameter " + parameters[0] + " is not an integer.");
         }
     }

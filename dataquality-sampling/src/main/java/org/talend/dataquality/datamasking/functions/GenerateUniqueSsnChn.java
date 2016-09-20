@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 
 /**
  * 
@@ -32,10 +33,12 @@ public class GenerateUniqueSsnChn extends AbstractGenerateUniqueSsn {
 
     private static final long serialVersionUID = 4514471121590047091L;
 
+    private static final Logger LOGGER = Logger.getLogger(GenerateUniqueSsnChn.class);
+
     private static final List<Integer> keyWeight = Collections
             .unmodifiableList(Arrays.asList(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2));
 
-    private static final int keyMod = 11; // $NON-NLS-1$
+    private static final int KEYMOD = 11; // $NON-NLS-1$
 
     private static final List<String> keyString = Collections
             .unmodifiableList(Arrays.asList("1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"));
@@ -45,7 +48,7 @@ public class GenerateUniqueSsnChn extends AbstractGenerateUniqueSsn {
         for (int i = 0; i < 17; i++) {
             key += Character.getNumericValue(ssnNumber.charAt(i)) * keyWeight.get(i);
         }
-        key = key % keyMod;
+        key = key % KEYMOD;
         return keyString.get(key);
     }
 

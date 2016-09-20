@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,6 +26,8 @@ import java.util.Random;
 public abstract class GenerateFromFile<T> extends Function<T> {
 
     private static final long serialVersionUID = 1556057898878709265L;
+
+    private static final Logger LOGGER = Logger.getLogger(GenerateFromFile.class);
 
     protected List<T> genericTokens = new ArrayList<T>();
 

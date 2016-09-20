@@ -31,7 +31,7 @@ public abstract class AbstractDuplicator<TIn, TOut> {
 
     protected AbstractIntegerDistribution distribution;
 
-    private final double EPSILON = 1e-6;
+    private static final double EPSILON = 1e-6;
 
     public AbstractDuplicator(double expectation, double duplicatesPercentage, String distributionName) {
         this.expectation = expectation;
