@@ -25,8 +25,7 @@ public class LocalPartRegexCheckerImplTest {
     LocalPartRegexCheckerImpl localPartCheck;
 
     /**
-     * Test method for
-     * {@link org.talend.dataquality.email.checkerImpl.LocalPartRegexCheckerImpl#check(java.lang.String)}.
+     * Test method for {@link org.talend.dataquality.email.checkerImpl.LocalPartRegexCheckerImpl#check(java.lang.String)}.
      */
     @Test
     public void testCheck_validate() {
@@ -44,7 +43,7 @@ public class LocalPartRegexCheckerImplTest {
         localPartCheck = new LocalPartRegexCheckerImpl(regularPattern, true, false);
         String email = ";a9.w.-@sina.com"; //$NON-NLS-1$
         assertFalse(localPartCheck.check(email));
-        assertTrue(localPartCheck.check("a@cc.com"));
+        assertTrue(localPartCheck.check("a@cc.com")); //$NON-NLS-1$
 
         regularPattern = "a.9w9"; //$NON-NLS-1$
         localPartCheck = new LocalPartRegexCheckerImpl(regularPattern, true, false);
@@ -81,8 +80,7 @@ public class LocalPartRegexCheckerImplTest {
     }
 
     /**
-     * Test method for
-     * {@link org.talend.dataquality.email.checkerImpl.LocalPartRegexCheckerImpl#check(java.lang.String)}.
+     * Test method for {@link org.talend.dataquality.email.checkerImpl.LocalPartRegexCheckerImpl#check(java.lang.String)}.
      */
     @Test
     public void testCheck_invalid() {

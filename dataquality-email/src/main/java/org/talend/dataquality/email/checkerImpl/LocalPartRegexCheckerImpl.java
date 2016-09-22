@@ -48,7 +48,7 @@ public class LocalPartRegexCheckerImpl extends AbstractEmailChecker {
         // A-->[A-Z]
         // w-->[a-z]+
         // a-->[a-z]
-        // 1-->[0-9]
+        // 9-->[0-9]
         if (localPart == null) {
             return null;
         }

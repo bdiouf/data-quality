@@ -17,7 +17,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,6 +28,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * DOC qiongli class global comment. Detailled comment
  */
 public class UDCategorySerDeser {
+
+    private static final Logger LOGGER = Logger.getLogger(UDCategorySerDeser.class);
 
     private static final String BUNDLE_NAME = "org.talend.dataquality.semantic"; //$NON-NLS-1$
 
@@ -62,7 +67,12 @@ public class UDCategorySerDeser {
     }
 
     static UserDefinedClassifier readJsonFile(InputStream inputStream) throws IOException {
-        return new ObjectMapper().readValue(inputStream, UserDefinedClassifier.class);
+        try {
+            return new ObjectMapper().readValue(inputStream, UserDefinedClassifier.class);
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e.getMessage(), e);
+            return null;
+        }
     }
 
     /**

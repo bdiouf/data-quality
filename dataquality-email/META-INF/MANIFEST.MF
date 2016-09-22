@@ -14,4 +14,3 @@ Require-Bundle: org.apache.commons.lang,
  org.apache.log4j,
  org.junit
 Bundle-ClassPath: .
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
