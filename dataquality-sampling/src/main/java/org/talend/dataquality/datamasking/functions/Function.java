@@ -151,12 +151,13 @@ public abstract class Function<T> implements Serializable {
      * @param strWithSpaces, resWithoutSpaces
      * @return the res with spaces
      */
-    protected String insertSpacesInString(String strWithSpaces, StringBuilder resWithoutSpaces) {
+    protected String insertFormatInString(String strWithSpaces, StringBuilder resWithoutSpaces) {
         if (strWithSpaces == null || resWithoutSpaces == null)
             return strWithSpaces;
         for (int i = 0; i < strWithSpaces.length(); i++)
-            if (strWithSpaces.charAt(i) == ' ')
-                resWithoutSpaces.insert(i, ' ');
+            if (strWithSpaces.charAt(i) == ' ' || strWithSpaces.charAt(i) == '/' || strWithSpaces.charAt(i) == '-'
+                    || strWithSpaces.charAt(i) == '.')
+                resWithoutSpaces.insert(i, strWithSpaces.charAt(i));
         return resWithoutSpaces.toString();
     }
 
@@ -166,8 +167,8 @@ public abstract class Function<T> implements Serializable {
      * @param input
      * @return
      */
-    protected String removeSpacesInString(String input) {
-        return StringUtils.replace(input, " ", "");
+    protected String removeFormatInString(String input) {
+        return StringUtils.replaceEach(input, new String[] { " ", ".", "-", "/" }, new String[] { "", "", "", "" });
     }
 
     /**

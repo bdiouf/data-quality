@@ -25,7 +25,7 @@ public class GenerateAccountNumberFormat extends GenerateAccountNumber {
 
     @Override
     protected String doGenerateMaskedField(String str) {
-        String accountNumber = removeSpacesInString(str); // $NON-NLS-1$ //$NON-NLS-2$
+        String accountNumber = removeFormatInString(str); // $NON-NLS-1$ //$NON-NLS-2$
         StringBuilder accountNumberFormat = new StringBuilder();
         boolean isAmerican = false;
         if (!StringUtils.isEmpty(accountNumber) && accountNumber.length() > 9) {
@@ -37,7 +37,7 @@ public class GenerateAccountNumberFormat extends GenerateAccountNumber {
                     accountNumberFormat = generateIban(accountNumber);
                 }
                 if (keepFormat)
-                    return insertSpacesInString(str, accountNumberFormat);
+                    return insertFormatInString(str, accountNumberFormat);
             } catch (NumberFormatException e) {
                 accountNumberFormat = generateIban();
             }

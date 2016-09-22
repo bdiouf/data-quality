@@ -24,7 +24,7 @@ public class GenerateCreditCardFormatString extends GenerateCreditCardFormat<Str
 
     @Override
     protected String doGenerateMaskedField(String str) {
-        String strWithoutSpaces = removeSpacesInString(str);
+        String strWithoutSpaces = removeFormatInString(str);
         CreditCardType cct_format = null;
         StringBuilder res = new StringBuilder();
         if (StringUtils.isEmpty(strWithoutSpaces)) {
@@ -44,7 +44,7 @@ public class GenerateCreditCardFormatString extends GenerateCreditCardFormat<Str
             }
         }
         if (keepFormat)
-            return insertSpacesInString(str, res);
+            return insertFormatInString(str, res);
         else
             return res.toString();
     }

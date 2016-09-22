@@ -1,56 +1,37 @@
-// ============================================================================
-//
-// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
-//
-// This source code is available under agreement available at
-// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
-//
-// You should have received a copy of the agreement
-// along with this program; if not, write to Talend SA
-// 9 rue Pages 92150 Suresnes, France
-//
-// ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
 import java.util.List;
 import java.util.Random;
 
 /**
- * @author jteuladedenantes
- * 
- * This abstract class contains all attributes and methods similar among the SNN numbers.
+ * Created by jteuladedenantes on 21/09/16.
  */
-public abstract class AbstractGenerateUniqueSsn extends Function<String> {
+public abstract class AbstractGenerateUniquePhoneNumber extends Function<String> {
 
     private static final long serialVersionUID = -2459692854626505777L;
 
-    protected GenerateUniqueRandomPatterns ssnPattern;
+    protected GenerateUniqueRandomPatterns phoneNumberPattern;
 
-    /**
-     * Used in some countries to check the SSN number. The initialization can be done in createFieldsListFromPattern
-     * method if necessary.
-     */
-    protected int checkSumSize = 0;
-
-    public AbstractGenerateUniqueSsn() {
+    public AbstractGenerateUniquePhoneNumber() {
         List<AbstractField> fields = createFieldsListFromPattern();
-        ssnPattern = new GenerateUniqueRandomPatterns(fields);
+        phoneNumberPattern = new GenerateUniqueRandomPatterns(fields);
     }
 
     @Override
     public void setRandom(Random rand) {
         super.setRandom(rand);
-        ssnPattern.setKey(rand.nextInt() % 10000 + 1000);
+        phoneNumberPattern.setKey(rand.nextInt() % 10000 + 1000);
     }
 
     @Override
     protected String doGenerateMaskedField(String str) {
+
         if (str == null)
             return null;
 
         String strWithoutSpaces = super.removeFormatInString(str);
         // check if the pattern is valid
-        if (strWithoutSpaces.isEmpty() || strWithoutSpaces.length() != ssnPattern.getFieldsCharsLength() + checkSumSize) {
+        if (strWithoutSpaces.isEmpty() || strWithoutSpaces.length() < phoneNumberPattern.getFieldsCharsLength()) {
             if (keepInvalidPattern)
                 return str;
             else
@@ -76,5 +57,4 @@ public abstract class AbstractGenerateUniqueSsn extends Function<String> {
     protected abstract List<AbstractField> createFieldsListFromPattern();
 
     protected abstract StringBuilder doValidGenerateMaskedField(String str);
-
 }
