@@ -12,9 +12,12 @@
 // ============================================================================
 package org.talend.dataquality.semantic;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -23,6 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
@@ -37,6 +41,12 @@ import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
  *
  */
 public class RespectiveCategoryRecognizerTest {
+
+    final String commontChar = "//##//"; //$NON-NLS-1$
+
+    final String invalidChar = "invalid"; //$NON-NLS-1$
+
+    final String validChar = "valid"; //$NON-NLS-1$
 
     // private static Logger log = Logger.getLogger(RespectiveCategoryRecognizerTest.class);
 
@@ -68,6 +78,7 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("sliu@sliu@talend.com", false)); // double "@" are not allowed
                     add(ImmutablePair.of("sliu@talend.com.1a", false)); // tld which has two characters can not contains digit
                     add(ImmutablePair.of("marius.reidy@lmb.liebMr..com", false));
+
                 }
             });
 
@@ -684,8 +695,38 @@ public class RespectiveCategoryRecognizerTest {
         catRecognizer.reset();
     }
 
+    // init email list
+    public void initEmailList() throws IOException {
+        boolean startInvalid = false;
+        InputStream dateStream = this.getClass().getResourceAsStream("emailList.txt"); //$NON-NLS-1$
+        BufferedReader br = new BufferedReader(new InputStreamReader(dateStream, "UTF-8"));
+        String line;
+        List<Pair<String, Boolean>> emailResultList = EXPECTED_MATCHING_RES_FOR_CATS.get(SemanticCategoryEnum.EMAIL.getId());
+        try {
+            while ((line = br.readLine()) != null) {
+                if (line.startsWith(commontChar)) {
+                    String contronKey = line.replace(commontChar, StringUtils.EMPTY);
+                    if (contronKey.equals(invalidChar)) {
+                        startInvalid = true;
+                    } else if (contronKey.equals(validChar)) {
+                        startInvalid = false;
+                    }
+                    continue;
+                }
+                if (startInvalid) {
+                    emailResultList.add(ImmutablePair.of(line, false));
+                } else {
+                    emailResultList.add(ImmutablePair.of(line, true));
+                }
+            }
+        } finally {
+            br.close();
+        }
+    }
+
     @Test
-    public void test4EachCategory() {
+    public void test4EachCategory() throws IOException {
+        initEmailList();
         catRecognizer.prepare();
 
         for (String cat : EXPECTED_MATCHING_RES_FOR_CATS.keySet()) {

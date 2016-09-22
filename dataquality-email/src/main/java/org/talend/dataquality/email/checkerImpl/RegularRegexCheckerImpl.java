@@ -24,9 +24,9 @@ import org.apache.commons.lang.StringUtils;
 public class RegularRegexCheckerImpl extends AbstractEmailChecker {
 
     // ascii and special character of french
-    private static final String LEGAL_ASCII_REGEX = "^[\\p{ASCII}||\\p{L}]+$"; //$NON-NLS-1$
+    private static final String LEGAL_ASCII_REGEX = "^[\\p{ASCII}||\\p{L}||\\p{M}]+$"; //$NON-NLS-1$
 
-    private static final String EMAIL_REGEX = "^\\s*?(.+)@(.+?)\\s*$"; //$NON-NLS-1$
+    private static final String EMAIL_REGEX = "^(([^\\s\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]]|')+|(\\\"[^\\\"]*\\\"))(\\.(([^\\s\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]]|')+|(\\\"[^\\\"]*\\\")))*@[\\p{L}\\p{M}0-9-]+(\\.[\\p{L}\\p{M}0-9]+)*(\\.[\\p{L}\\p{M}]{2,6})$";
 
     private static final Pattern MATCH_ASCII_PATTERN = Pattern.compile(LEGAL_ASCII_REGEX);
 

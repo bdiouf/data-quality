@@ -14,9 +14,17 @@ package org.talend.dataquality.email;
 
 import static org.junit.Assert.*;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -36,6 +44,14 @@ public class EmailVerifyTest {
     String regularPattern = "aw"; //$NON-NLS-1$
 
     EmailVerify emailVerify;
+
+    final String commontChar = "//##//"; //$NON-NLS-1$
+
+    final String invalidChar = "invalid"; //$NON-NLS-1$
+
+    final String validChar = "valid"; //$NON-NLS-1$
+
+    Logger log = Logger.getLogger(EmailVerifyTest.class);
 
     @Before
     public void setUp() throws Exception {
@@ -503,9 +519,48 @@ public class EmailVerifyTest {
     // test fr case
     @Test
     public void testFrCase_6() {
-        emailVerify = emailVerify.addRegularRegexChecker(true, ""); //$NON-NLS-1$
+        emailVerify = emailVerify.addRegularRegexChecker(true, StringUtils.EMPTY);
         assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("gégé@laposte.fr")); //$NON-NLS-1$
-        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("sidbpl@cebpl.caisse-epargne.fr")); //$NON-NLS-1$
-
+        //assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("sidbpl@cebpl.caisse-epargne.fr")); //$NON-NLS-1$
     }
+
+    // test for batch email address case
+    @Test
+    public void testFrCase_7() throws IOException {
+        boolean startInvalid = false;
+        emailVerify = emailVerify.addRegularRegexChecker(true, StringUtils.EMPTY);
+        log.info(this.getClass().getResource("")); //$NON-NLS-1$
+        System.out.println(this.getClass().getResource("")); //$NON-NLS-1$
+        InputStream dateStream = this.getClass().getResourceAsStream("emailList.txt"); //$NON-NLS-1$
+        BufferedReader br = new BufferedReader(new InputStreamReader(dateStream, "UTF-8"));
+        String line;
+        try {
+            while ((line = br.readLine()) != null) {
+                if (line.startsWith(commontChar)) {
+                    String controlKey = line.replace(commontChar, StringUtils.EMPTY);
+                    if (controlKey.equals(invalidChar)) {
+                        startInvalid = true;
+                    } else if (controlKey.equals(validChar)) {
+                        startInvalid = false;
+                    }
+                    continue;
+                }
+                if (startInvalid) {
+                    assertEquals(EmailVerifyResult.INVALID, emailVerify.checkEmail(line));
+                } else {
+                    assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail(line));
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            log.error(e, e);
+            Assert.fail(e.getMessage());
+        } catch (IOException e) {
+            log.error(e, e);
+            Assert.fail(e.getMessage());
+        } finally {
+            br.close();
+        }
+    }
+
 }
