@@ -78,7 +78,7 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("sliu@sliu@talend.com", false)); // double "@" are not allowed
                     add(ImmutablePair.of("sliu@talend.com.1a", false)); // tld which has two characters can not contains digit
                     add(ImmutablePair.of("marius.reidy@lmb.liebMr..com", false));
-
+                    add(ImmutablePair.of("sidbpl@cebpl.caisse-epargne.fr", true)); // hyphen is allowed in domain
                 }
             });
 
