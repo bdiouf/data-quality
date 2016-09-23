@@ -1,5 +1,6 @@
 package org.talend.dataquality.datamasking.functions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -10,7 +11,7 @@ public abstract class AbstractGenerateUniquePhoneNumber extends Function<String>
 
     private static final long serialVersionUID = -2459692854626505777L;
 
-    protected GenerateUniqueRandomPatterns phoneNumberPattern;
+    private GenerateUniqueRandomPatterns phoneNumberPattern;
 
     public AbstractGenerateUniquePhoneNumber() {
         List<AbstractField> fields = createFieldsListFromPattern();
@@ -20,7 +21,7 @@ public abstract class AbstractGenerateUniquePhoneNumber extends Function<String>
     @Override
     public void setRandom(Random rand) {
         super.setRandom(rand);
-        phoneNumberPattern.setKey(rand.nextInt() % 10000 + 1000);
+        phoneNumberPattern.setKey(Math.abs(rand.nextInt()) % 10000 + 1000);
     }
 
     @Override
@@ -51,10 +52,26 @@ public abstract class AbstractGenerateUniquePhoneNumber extends Function<String>
             return result.toString();
     }
 
-    /**
-     * @return the list of patterns for each field
-     */
-    protected abstract List<AbstractField> createFieldsListFromPattern();
+    private List<AbstractField> createFieldsListFromPattern() {
+        List<AbstractField> fields = new ArrayList<AbstractField>();
+        long max = (long) Math.pow(10, getDigitsNumberToMask()) - 1;
+        fields.add(new FieldInterval(0, max));
+        return fields;
+    }
 
-    protected abstract StringBuilder doValidGenerateMaskedField(String str);
+    private StringBuilder doValidGenerateMaskedField(String str) {
+        // read the input str
+        List<String> strs = new ArrayList<String>();
+
+        strs.add(str.substring(str.length() - getDigitsNumberToMask(), str.length()));
+
+        StringBuilder result = phoneNumberPattern.generateUniqueString(strs);
+        if (result == null) {
+            return null;
+        }
+        result.insert(0, str.substring(0, str.length() - getDigitsNumberToMask()));
+        return result;
+    }
+
+    protected abstract int getDigitsNumberToMask();
 }
