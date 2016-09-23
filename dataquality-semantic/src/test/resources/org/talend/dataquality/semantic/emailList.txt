@@ -21,7 +21,6 @@ other.email-with-dash@example.com
 x@example.com
 example-indeed@strange-example.com
 #!$%&'*+-/=?^_`{}|~@example.org
-//##//example@s.solutions
 " "@example.org
 "Abc@def"@example.com
 "Fred Bloggs"@example.com
@@ -29,6 +28,8 @@ example-indeed@strange-example.com
 "much.more unusual"@example.com
 "very.unusual.@.unusual.com"@example.com
 //##//invalid
+abc@def-.com
+example@s.solutions
 "()<>[]:,;@\\\"!#$%&'-/=?^_`{}| ~.a"@example.org
 example@localhost
 user@localserver

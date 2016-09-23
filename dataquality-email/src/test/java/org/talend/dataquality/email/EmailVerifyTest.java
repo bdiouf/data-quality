@@ -521,7 +521,7 @@ public class EmailVerifyTest {
     public void testFrCase_6() {
         emailVerify = emailVerify.addRegularRegexChecker(true, StringUtils.EMPTY);
         assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("gégé@laposte.fr")); //$NON-NLS-1$
-        //assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("sidbpl@cebpl.caisse-epargne.fr")); //$NON-NLS-1$
+        assertEquals(EmailVerifyResult.VALID, emailVerify.checkEmail("sidbpl@cebpl.caisse-epargne.fr")); //$NON-NLS-1$
     }
 
     // test for batch email address case
@@ -529,10 +529,8 @@ public class EmailVerifyTest {
     public void testFrCase_7() throws IOException {
         boolean startInvalid = false;
         emailVerify = emailVerify.addRegularRegexChecker(true, StringUtils.EMPTY);
-        log.info(this.getClass().getResource("")); //$NON-NLS-1$
-        System.out.println(this.getClass().getResource("")); //$NON-NLS-1$
         InputStream dateStream = this.getClass().getResourceAsStream("emailList.txt"); //$NON-NLS-1$
-        BufferedReader br = new BufferedReader(new InputStreamReader(dateStream, "UTF-8"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(dateStream, "UTF-8")); //$NON-NLS-1$//for Hindi language Double-byte type
         String line;
         try {
             while ((line = br.readLine()) != null) {

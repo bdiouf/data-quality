@@ -699,7 +699,7 @@ public class RespectiveCategoryRecognizerTest {
     public void initEmailList() throws IOException {
         boolean startInvalid = false;
         InputStream dateStream = this.getClass().getResourceAsStream("emailList.txt"); //$NON-NLS-1$
-        BufferedReader br = new BufferedReader(new InputStreamReader(dateStream, "UTF-8"));
+        BufferedReader br = new BufferedReader(new InputStreamReader(dateStream, "UTF-8"));// for Hindi language Double-byte type
         String line;
         List<Pair<String, Boolean>> emailResultList = EXPECTED_MATCHING_RES_FOR_CATS.get(SemanticCategoryEnum.EMAIL.getId());
         try {
