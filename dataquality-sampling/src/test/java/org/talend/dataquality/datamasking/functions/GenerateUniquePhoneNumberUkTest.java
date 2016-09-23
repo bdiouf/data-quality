@@ -60,7 +60,6 @@ public class GenerateUniquePhoneNumberUkTest {
         gnu.setKeepFormat(false);
         String input;
         String output;
-        int tmp = 0;
 
         for (int i = 0; i < 100; i++) {
             gpn.setRandom(new Random());

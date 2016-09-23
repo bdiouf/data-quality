@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public abstract class AbstractGenerateUniquePhoneNumber extends Function<String> {
 
-    private static final long serialVersionUID = -2459692854626505777L;
+    private static final long serialVersionUID = -3495285699226639929L;
 
     private GenerateUniqueRandomPatterns phoneNumberPattern;
 

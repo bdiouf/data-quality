@@ -1,12 +1,11 @@
 package org.talend.dataquality.datamasking.functions;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by jteuladedenantes on 21/09/16.
  */
 public class GenerateUniquePhoneNumberUs extends AbstractGenerateUniquePhoneNumber {
+
+    private static final long serialVersionUID = 3821280930509201884L;
 
     @Override
     protected int getDigitsNumberToMask() {
