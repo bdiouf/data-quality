@@ -35,6 +35,13 @@ public class GenerateUniqueSsnJapanTest {
     }
 
     @Test
+    public void testEmpty() {
+        gnj.setKeepEmpty(true);
+        output = gnj.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood1() {
         output = gnj.generateMaskedRow("830807527228");
         assertEquals("477564837070", output);

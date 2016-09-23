@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Random;
 
 import org.junit.Assert;
@@ -34,6 +36,13 @@ public class MaskFullEmailDomainByXTest {
     private String spemails = "hehe@tel-ecom-bretagne.hy-p-en.eu";
 
     private MaskFullEmailDomainByX maskEmailDomainByX = new MaskFullEmailDomainByX();
+
+    @Test
+    public void testEmpty() {
+        maskEmailDomainByX.setKeepEmpty(true);
+        output = maskEmailDomainByX.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
 
     @Test
     public void test1Good() {

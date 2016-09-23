@@ -40,6 +40,13 @@ public class ReplaceNumericStringTest {
     }
 
     @Test
+    public void testEmpty() {
+        rns.setKeepEmpty(true);
+        output = rns.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testEmptyParameter() {
         rns.parse(" ", false, new Random(42));
         output = rns.generateMaskedRow(input);

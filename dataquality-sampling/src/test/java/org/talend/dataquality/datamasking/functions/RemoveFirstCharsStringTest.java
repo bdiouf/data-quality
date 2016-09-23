@@ -31,6 +31,13 @@ public class RemoveFirstCharsStringTest {
     private RemoveFirstCharsString rfcs = new RemoveFirstCharsString();
 
     @Test
+    public void testEmpty() {
+        rfcs.setKeepEmpty(true);
+        output = rfcs.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void test() {
         rfcs.parse("2", false, new Random(42));
         output = rfcs.generateMaskedRow(input);

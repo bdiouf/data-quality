@@ -35,6 +35,13 @@ public class GeneratePhoneNumberUsTest {
     }
 
     @Test
+    public void testEmpty() {
+        gpnus.setKeepEmpty(true);
+        output = gpnus.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood() {
         output = gpnus.generateMaskedRow(null);
         assertEquals(output, "730-207-5272"); //$NON-NLS-1$

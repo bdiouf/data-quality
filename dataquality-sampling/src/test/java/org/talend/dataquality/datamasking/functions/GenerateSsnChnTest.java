@@ -34,6 +34,13 @@ public class GenerateSsnChnTest {
     }
 
     @Test
+    public void testEmpty() {
+        gnf.setKeepEmpty(true);
+        output = gnf.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood() {
         output = gnf.generateMaskedRow(null);
         assertEquals("610201206301240556", output); //$NON-NLS-1$

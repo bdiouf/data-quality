@@ -36,6 +36,13 @@ public class GenerateUniqueSsnUkTest {
     }
 
     @Test
+    public void testEmpty() {
+        gnu.setKeepEmpty(true);
+        output = gnu.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood1() {
         output = gnu.generateMaskedRow("AL 486934 D");
         assertEquals("TG 807846 D", output);

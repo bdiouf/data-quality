@@ -31,6 +31,13 @@ public class KeepFirstCharsStringTest {
     private KeepFirstCharsString kfag = new KeepFirstCharsString();
 
     @Test
+    public void testEmpty() {
+        kfag.setKeepEmpty(true);
+        output = kfag.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood() {
         kfag.parse("3", false, new Random(42));
         output = kfag.generateMaskedRow(input);

@@ -35,6 +35,13 @@ public class GenerateUniqueSsnUsTest {
     }
 
     @Test
+    public void testEmpty() {
+        gnu.setKeepEmpty(true);
+        output = gnu.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood1() {
         output = gnu.generateMaskedRow("153 65 4862");
         assertEquals("513 99 6374", output);

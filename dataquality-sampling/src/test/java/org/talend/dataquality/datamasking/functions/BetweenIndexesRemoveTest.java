@@ -36,6 +36,13 @@ public class BetweenIndexesRemoveTest {
     }
 
     @Test
+    public void testEmpty() {
+        bir.parse("2, 4", false, new Random(42));
+        output = bir.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testNegativeParameter() {
         try {
             bir.parse("-2, 8", false, new Random(42));

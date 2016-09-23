@@ -1,5 +1,7 @@
 package org.talend.dataquality.datamasking.functions;
 
+import static org.junit.Assert.assertEquals;
+
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +17,13 @@ public class MaskEmailLocalPartRandomlyTest {
     private MaskEmailLocalPartRandomly maskEmailLocalPart = new MaskEmailLocalPartRandomly();
 
     private String mail = "jugonzalez@talend.com";
+
+    @Test
+    public void testEmpty() {
+        maskEmailLocalPart.setKeepEmpty(true);
+        output = maskEmailLocalPart.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
 
     @Test
     public void testOneGoodInput() {

@@ -42,6 +42,14 @@ public class GenerateAccountNumberFormatTest {
     }
 
     @Test
+    public void testEmpty() {
+        ganf.setKeepFormat(true);
+        ganf.setKeepEmpty(true);
+        output = ganf.generateMaskedRow(""); //$NON-NLS-1$
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood2() {
         output = ganf.generateMaskedRow("DK49 038 4 0 5 5 8   93  22 62"); //$NON-NLS-1$
         assertEquals("DK82 7657 2095 5185 63", output); //$NON-NLS-1$

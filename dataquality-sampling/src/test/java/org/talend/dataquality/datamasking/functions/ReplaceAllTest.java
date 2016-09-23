@@ -40,6 +40,13 @@ public class ReplaceAllTest {
     }
 
     @Test
+    public void testEmpty() {
+        ra.setKeepEmpty(true);
+        output = ra.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testCharacter() {
         ra.parse("?", false, new Random(42));
         output = ra.generateMaskedRow(input);

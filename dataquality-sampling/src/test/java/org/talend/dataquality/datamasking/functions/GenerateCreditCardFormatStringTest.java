@@ -43,6 +43,14 @@ public class GenerateCreditCardFormatStringTest {
     }
 
     @Test
+    public void testEmpty() {
+        String input = ""; //$NON-NLS-1$
+        gccfs.setKeepEmpty(true);
+        output = gccfs.generateMaskedRow(input).toString();
+        assertEquals("", output);
+    }
+
+    @Test
     public void testSpaces() {
         gccfs.setKeepFormat(true);
         String input = "41 2 0356  9875 63"; //$NON-NLS-1$

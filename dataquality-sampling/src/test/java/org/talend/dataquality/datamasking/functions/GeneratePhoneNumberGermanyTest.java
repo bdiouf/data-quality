@@ -41,6 +41,13 @@ public class GeneratePhoneNumberGermanyTest {
     }
 
     @Test
+    public void testEmpty() {
+        gpng.setKeepEmpty(true);
+        output = gpng.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testCheck() {
         boolean res = true;
         gpng.setRandom(new Random());

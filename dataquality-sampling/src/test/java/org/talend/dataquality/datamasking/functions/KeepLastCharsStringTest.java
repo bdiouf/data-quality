@@ -37,6 +37,13 @@ public class KeepLastCharsStringTest {
     }
 
     @Test
+    public void testEmpty() {
+        klads.setKeepEmpty(true);
+        output = klads.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood() {
         klads.parse("3", false, new Random(42));
         output = klads.generateMaskedRow(input);

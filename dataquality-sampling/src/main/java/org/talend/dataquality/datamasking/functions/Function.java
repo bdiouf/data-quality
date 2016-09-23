@@ -22,8 +22,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
- * created by jgonzalez on 18 juin 2015. This class is an abstract class that all other functions extends. All the
- * methods and fiels that all functions share are stored here.
+ * created by jgonzalez on 18 juin 2015. This class is an abstract class that
+ * all other functions extends. All the methods and fiels that all functions
+ * share are stored here.
  *
  */
 public abstract class Function<T> implements Serializable {
@@ -46,6 +47,8 @@ public abstract class Function<T> implements Serializable {
 
     protected boolean keepInvalidPattern = false;
 
+    protected boolean keeEmpty = false;
+
     protected boolean keepFormat = false;
 
     protected static final Pattern patternSpace = Pattern.compile("\\s+");
@@ -53,7 +56,8 @@ public abstract class Function<T> implements Serializable {
     /**
      * setter for random
      * 
-     * @param rand The RandomWrapper.
+     * @param rand
+     * The RandomWrapper.
      * @deprecated use {@link setRandom()} instead
      */
     public void setRandomWrapper(Random rand) {
@@ -63,7 +67,8 @@ public abstract class Function<T> implements Serializable {
     /**
      * setter for random
      * 
-     * @param rand The java.util.Random instance.
+     * @param rand
+     * The java.util.Random instance.
      */
     public void setRandom(Random rand) {
         if (rand == null) {
@@ -83,9 +88,11 @@ public abstract class Function<T> implements Serializable {
     }
 
     /**
-     * DOC jgonzalez Comment method "setKeepNull". This function sets a boolean used to keep null values.
+     * DOC jgonzalez Comment method "setKeepNull". This function sets a boolean
+     * used to keep null values.
      * 
-     * @param keep The value of the boolean.
+     * @param keep
+     * The value of the boolean.
      */
     public void setKeepNull(boolean keep) {
         this.keepNull = keep;
@@ -95,29 +102,41 @@ public abstract class Function<T> implements Serializable {
         this.keepFormat = keep;
     }
 
+    public void setKeepEmpty(boolean empty) {
+        this.keeEmpty = empty;
+    }
+
     public void setKeepInvalidPattern(boolean keepInvalidPattern) {
         this.keepInvalidPattern = keepInvalidPattern;
     }
 
     /**
-     * DOC jgonzalez Comment method "parse". This function is called at the beginning of the job and parses the
-     * parameter. Moreover, it will call methods setKeepNull and setRandomWrapper
+     * DOC jgonzalez Comment method "parse". This function is called at the
+     * beginning of the job and parses the parameter. Moreover, it will call
+     * methods setKeepNull and setRandomWrapper
      * 
-     * @param extraParameter The parameter we try to parse.
-     * @param keepNullValues The parameter used for setKeepNull.
-     * @param rand The parameter used for setRandomMWrapper.
+     * @param extraParameter
+     * The parameter we try to parse.
+     * @param keepNullValues
+     * The parameter used for setKeepNull.
+     * @param rand
+     * The parameter used for setRandomMWrapper.
      */
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         if (extraParameter != null) {
             parameters = clean(extraParameter).split(","); //$NON-NLS-1$
-            if (parameters.length == 1) { // check if it's a path to a readable file
+            if (parameters.length == 1) { // check if it's a path to a readable
+                                              // file
                 try {
                     List<String> aux = KeysLoader.loadKeys(parameters[0].trim());
                     parameters = new String[aux.size()];
                     int i = 0;
                     for (String str : aux)
                         parameters[i++] = str.trim();
-                } catch (IOException | NullPointerException e2) { // otherwise, we just get the parameter
+                } catch (IOException | NullPointerException e2) { // otherwise,
+                                                                      // we just
+                                                                  // get the
+                                                                  // parameter
                     LOGGER.debug("The parameter is not a path to a file.");
                     LOGGER.debug(e2);
                     parameters[0] = parameters[0].trim();
@@ -144,11 +163,17 @@ public abstract class Function<T> implements Serializable {
         if (t == null && keepNull) {
             return null;
         }
+
+        if (t != null && keeEmpty) {
+            if (String.valueOf(t).trim().isEmpty())
+                return t;
+        }
         return doGenerateMaskedField(t);
     }
 
     /**
-     * @param strWithSpaces, resWithoutSpaces
+     * @param strWithSpaces,
+     * resWithoutSpaces
      * @return the res with spaces
      */
     protected String insertFormatInString(String strWithSpaces, StringBuilder resWithoutSpaces) {
@@ -172,10 +197,11 @@ public abstract class Function<T> implements Serializable {
     }
 
     /**
-     * DOC jgonzalez Comment method "generateMaskedRow". This method applies a function on a field and returns the its
-     * new value.
+     * DOC jgonzalez Comment method "generateMaskedRow". This method applies a
+     * function on a field and returns the its new value.
      * 
-     * @param t The input value.
+     * @param t
+     * The input value.
      * @return A new value after applying the function.
      */
     protected abstract T doGenerateMaskedField(T t);

@@ -1,5 +1,7 @@
 package org.talend.dataquality.datamasking.functions;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Random;
 
 import org.junit.Assert;
@@ -14,6 +16,13 @@ public class MaskEmailLocalPartByXTest {
     private String spemail = "hehe@telecom-bretagne.eu";
 
     private MaskEmailLocalPartByX maskEmailLocalPartByX = new MaskEmailLocalPartByX();
+
+    @Test
+    public void testEmpty() {
+        maskEmailLocalPartByX.setKeepEmpty(true);
+        output = maskEmailLocalPartByX.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
 
     @Test
     public void test1Good() {

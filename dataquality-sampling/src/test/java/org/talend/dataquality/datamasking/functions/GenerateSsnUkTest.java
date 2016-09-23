@@ -35,6 +35,13 @@ public class GenerateSsnUkTest {
     }
 
     @Test
+    public void testEmpty() {
+        gsuk.setKeepEmpty(true);
+        output = gsuk.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood() {
         output = gsuk.generateMaskedRow(null);
         assertEquals(output, "HH 08 07 52 C"); //$NON-NLS-1$

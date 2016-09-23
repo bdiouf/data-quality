@@ -41,6 +41,13 @@ public class GeneratePhoneNumberJapanTest {
     }
 
     @Test
+    public void testEmpty() {
+        gpnj.setKeepEmpty(true);
+        output = gpnj.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testCheck() {
         boolean res = true;
         gpnj.setRandom(new Random());

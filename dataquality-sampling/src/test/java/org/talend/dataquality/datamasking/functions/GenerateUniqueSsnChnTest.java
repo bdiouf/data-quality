@@ -35,6 +35,13 @@ public class GenerateUniqueSsnChnTest {
     }
 
     @Test
+    public void testEmpty() {
+        gnf.setKeepEmpty(true);
+        output = gnf.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testKeepInvalidPatternTrue() {
         gnf.setKeepInvalidPattern(true);
         output = gnf.generateMaskedRow(null);

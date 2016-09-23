@@ -33,9 +33,15 @@ public class RemoveLastCharsStringTest {
     @Test
     public void test() {
         rlcs.parse("2", false, new Random(42));
-        ;
         output = rlcs.generateMaskedRow(input);
         assertEquals(output, "Ste"); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testEmpty() {
+        rlcs.setKeepEmpty(true);
+        output = rlcs.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
     }
 
     @Test

@@ -37,6 +37,13 @@ public class GenerateFromFileStringTest {
     }
 
     @Test
+    public void testEmpty() {
+        gffs.setKeepEmpty(true);
+        output = gffs.generateMaskedRow("").toString();
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood() {
         output = gffs.generateMaskedRow(null);
         assertEquals("Brad X", output); //$NON-NLS-1$

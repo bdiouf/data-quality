@@ -35,6 +35,13 @@ public class GenerateSsnUsTest {
     }
 
     @Test
+    public void testEmpty() {
+        gsus.setKeepEmpty(true);
+        output = gsus.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood() {
         output = gsus.generateMaskedRow(null);
         assertEquals(output, "530-80-7527"); //$NON-NLS-1$

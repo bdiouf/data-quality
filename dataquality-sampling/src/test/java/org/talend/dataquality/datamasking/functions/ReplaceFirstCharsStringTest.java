@@ -40,6 +40,13 @@ public class ReplaceFirstCharsStringTest {
     }
 
     @Test
+    public void testEmpty() {
+        rfcs.setKeepEmpty(true);
+        output = rfcs.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testDummyGood() {
         rfcs.parse("7", false, new Random(42));
         output = rfcs.generateMaskedRow(input);

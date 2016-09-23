@@ -35,6 +35,14 @@ public class GenerateAccountNumberSimpleTest {
     }
 
     @Test
+    public void testEmpty() {
+        gans.setKeepFormat(true);
+        gans.setKeepEmpty(true);
+        output = gans.generateMaskedRow(Function.EMPTY_STRING); // $NON-NLS-1$
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood() {
         output = gans.generateMaskedRow(Function.EMPTY_STRING);
         assertEquals("FR54 0384 0558 93A2 20ZR 3V86 K48", output); //$NON-NLS-1$

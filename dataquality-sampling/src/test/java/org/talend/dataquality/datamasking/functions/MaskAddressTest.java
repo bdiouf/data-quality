@@ -36,6 +36,13 @@ public class MaskAddressTest {
     }
 
     @Test
+    public void testEmpty() {
+        ma.setKeepEmpty(true);
+        output = ma.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood() {
         String input = "5 rue de l'oise"; //$NON-NLS-1$
         output = ma.generateMaskedRow(input);

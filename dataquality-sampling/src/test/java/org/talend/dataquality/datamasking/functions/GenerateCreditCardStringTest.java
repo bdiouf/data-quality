@@ -41,6 +41,13 @@ public class GenerateCreditCardStringTest {
     }
 
     @Test
+    public void testEmpty() {
+        gccs.setKeepEmpty(true);
+        output = gccs.generateMaskedRow("").toString();
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testCheck() {
         gccs.setRandom(new Random());
         boolean res = true;

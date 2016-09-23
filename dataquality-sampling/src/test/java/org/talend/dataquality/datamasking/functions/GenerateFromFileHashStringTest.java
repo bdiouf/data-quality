@@ -42,6 +42,14 @@ public class GenerateFromFileHashStringTest {
         assertEquals("Brad X", output); //$NON-NLS-1$
     }
 
+    @Test
+    public void testEmpty() {
+        GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
+        gffhs.setKeepEmpty(true);
+        output = gffhs.generateMaskedRow("").toString();
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
     public void testSeparatorWin() throws URISyntaxException {
         GenerateFromFileHashString gffhs = new GenerateFromFileHashString();
         final String pathWin = this.getClass().getResource("data/name_win.txt").toURI().getPath(); //$NON-NLS-1$

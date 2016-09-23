@@ -41,6 +41,13 @@ public class GenerateSsnFrenchTest {
     }
 
     @Test
+    public void testEmpty() {
+        gnf.setKeepEmpty(true);
+        output = gnf.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testCheck() {
         gnf.setRandom(new Random());
         boolean res = true;

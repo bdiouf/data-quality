@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Random;
 
 import org.junit.Assert;
@@ -31,6 +33,13 @@ public class MaskTopEmailDomainByXTest {
     private String mailMultipalDomaim = "hehe.haha@uestc.in.edu.cn";
 
     private MaskTopEmailDomainByX maskTopEmailDomainByX = new MaskTopEmailDomainByX();
+
+    @Test
+    public void testEmpty() {
+        maskTopEmailDomainByX.setKeepEmpty(true);
+        output = maskTopEmailDomainByX.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
 
     @Test
     public void testGoodStandard() {

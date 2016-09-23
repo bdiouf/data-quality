@@ -46,10 +46,17 @@ public class BetweenIndexesReplaceTest {
     }
 
     @Test
+    public void testEmpty() {
+        bir.parse("2, 4, X", false, new Random(42));
+        output = bir.generateMaskedRow(input);
+        assertEquals("SXXXe", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testDummyGood() {
         bir.parse("1, 8", false, new Random(42));
-        output = bir.generateMaskedRow(input);
-        assertEquals("Ahwma", output); //$NON-NLS-1$
+        output = bir.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
     }
 
     @Test

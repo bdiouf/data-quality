@@ -41,6 +41,13 @@ public class GeneratePhoneNumberFrenchTest {
     }
 
     @Test
+    public void testEmpty() {
+        gpn.setKeepEmpty(true);
+        output = gpn.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testCheck() {
         boolean res = true;
         gpn.setRandom(new Random());

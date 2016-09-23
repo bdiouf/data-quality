@@ -41,6 +41,13 @@ public class GenerateUniqueSsnGermanTest {
     }
 
     @Test
+    public void testEmpty() {
+        gnj.setKeepEmpty(true);
+        output = gnj.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood2() {
         output = gnj.generateMaskedRow("48695361449");
         assertEquals("37088083197", output);

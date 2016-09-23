@@ -35,6 +35,13 @@ public class GenerateSsnGermanyTest {
     }
 
     @Test
+    public void testEmpty() {
+        gng.setKeepEmpty(true);
+        output = gng.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testGood() {
         output = gng.generateMaskedRow(null);
         assertEquals(output, "83080752722"); //$NON-NLS-1$

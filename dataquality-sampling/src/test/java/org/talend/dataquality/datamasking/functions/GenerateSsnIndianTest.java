@@ -41,6 +41,13 @@ public class GenerateSsnIndianTest {
     }
 
     @Test
+    public void testEmpty() {
+        gni.setKeepEmpty(true);
+        output = gni.generateMaskedRow("");
+        assertEquals("", output); //$NON-NLS-1$
+    }
+
+    @Test
     public void testCheckFirstDigit() {
         // First digit should not be a '0' in a Indian SSN
         gni.setRandom(new Random());
