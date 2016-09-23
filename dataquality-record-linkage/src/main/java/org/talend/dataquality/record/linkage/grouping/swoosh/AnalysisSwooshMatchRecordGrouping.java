@@ -160,12 +160,12 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
                 } else {
                     strRow[idx] = SwooshConstants.SUB_ITEM_GROUP_QUALITY_DEFAULT_VALUE;
                 }
-            }else if(idx==this.originalInputColumnSize && StringUtils.isBlank(attr.getLabel())){
+            } else if (idx == (originalInputColumnSize - 1) && this.swooshGrouping.isHasPassedOriginal() && isLinkToPrevious) {
                 //Added TDQ-12057 : because the "ORIGINAL_RECORD" position changed from the last column of the array to the position: 
                 //after the input record, before the extended(GID),so its correct position is strRow[originalInputColumnSize]
                 //And , its label is empty, if it is extened attri like GID, will not be empty.
-                strRow[idx]= StringUtils.EMPTY;
-            }else {
+                strRow[idx] = StringUtils.EMPTY;
+            } else {
                 if (row.isMaster() && row.isMerged()) {
                     strRow[idx] = attr.getValue();
                 } else {

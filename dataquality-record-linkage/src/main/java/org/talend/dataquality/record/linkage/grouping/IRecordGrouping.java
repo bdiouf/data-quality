@@ -174,7 +174,7 @@ public interface IRecordGrouping<T> {
      * @param isComputeGrpQuality.if true,it will compute group quality and output value as column "GRP_QUALITY".
      */
     public void setIsComputeGrpQuality(Boolean isComputeGrpQuality);
-    
+
     public void setIsPassOriginalValue(Boolean isPassOriginalValue);
 
 }

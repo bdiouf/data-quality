@@ -55,7 +55,7 @@ public class RecordIterator implements Iterator<Record> {
         int getColumnIndex();
 
         String newValue();
-        
+
         Object getAttribute();
     }
 
@@ -83,8 +83,8 @@ public class RecordIterator implements Iterator<Record> {
             record.add(attribute);
             //Added TDQ-12057 20160918,yyin--if the related attribute has its original values, add them.
             Object attriValues = generator.getValue().getAttribute();
-            if(attriValues!=null){
-                attribute.getValues().merge((AttributeValues<String>)attriValues);
+            if (attriValues != null) {
+                attribute.getValues().merge((AttributeValues<String>) attriValues);
             }
         }
         currentIndex++;

@@ -68,7 +68,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
     protected String columnDelimiter = null;
 
     protected Boolean isLinkToPrevious = Boolean.FALSE;
-    
+
     protected Boolean isPassOriginalValue = Boolean.FALSE;
 
     protected int originalInputColumnSize;
@@ -654,10 +654,8 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
 
     @Override
     public void setIsPassOriginalValue(Boolean isPassOriginal) {
-        
+
         this.isPassOriginalValue = isPassOriginal;
     }
-    
-    
 
 }

@@ -1588,7 +1588,7 @@ public class SwooshRecordGroupingTest {
         final Map<String, Integer> indexMap_tMatchGroup_1 = new HashMap<String, Integer>();
 
         // TDQ-9172 reuse JAVA API at here.
-        AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1 =createComponent(masterRows_tMatchGroup_1,
+        AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1 = createComponent(masterRows_tMatchGroup_1,
                 groupRows_tMatchGroup_1, indexMap_tMatchGroup_1);
         recordGroupImp_tMatchGroup_1.setRecordLinkAlgorithm(RecordMatcherType.T_SwooshAlgorithm);
         // add mutch rules
@@ -1600,9 +1600,8 @@ public class SwooshRecordGroupingTest {
         Map<String, String> columnWithType_tMatchGroup_1 = fillColumn("id_Integer", "id_Integer", "id_String", "id_String",
                 "id_Integer", "id_Boolean", "id_Double", "id_Double", null);
         Map<String, String> columnWithIndex_tMatchGroup_1 = fillColumn("0", "1", "2", "3", "4", "5", "6", "7", null);
-        columnWithType_tMatchGroup_1
-        .put("ORIGINAL_RECORD", "id_Object");
-columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
+        columnWithType_tMatchGroup_1.put("ORIGINAL_RECORD", "id_Object");
+        columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
 
         SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = SurvivorshipUtils
                 .createSurvivorShipAlgorithmParams((AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1,
@@ -1850,13 +1849,12 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
         public String MERGE_INFO;
 
         public String MATCHING_DISTANCES;
-        
+
         public Object ORIGINAL_RECORD;
 
         public Object getORIGINAL_RECORD() {
             return this.ORIGINAL_RECORD;
         }
-
 
         @Override
         public int hashCode() {
@@ -1902,7 +1900,7 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
             other.MASTER = this.MASTER;
             other.SCORE = this.SCORE;
             other.GRP_QUALITY = this.GRP_QUALITY;
-            other.ORIGINAL_RECORD= this.ORIGINAL_RECORD;
+            other.ORIGINAL_RECORD = this.ORIGINAL_RECORD;
         }
 
         public void copyKeysDataTo(row2Struct other) {
@@ -1944,7 +1942,8 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
         // MASTER and only in case of separate output.
         final Map<String, Integer> indexMap_tMatchGroup_1 = new HashMap<String, Integer>();
 
-        AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1 =  new ComponentSwooshMatchRecordGrouping() {
+        AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1 = new ComponentSwooshMatchRecordGrouping() {
+
             @Override
             protected void outputRow(Object[] row) {
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
@@ -1959,41 +1958,34 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
                 }
 
                 if (1 < row.length) {
-                    outStuct_tMatchGroup_1.city = row[1] == null ? null
-                            : String.valueOf((String) row[1]);
+                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf((String) row[1]);
                 }
 
                 if (2 < row.length) {
-                    outStuct_tMatchGroup_1.country = row[2] == null ? null
-                            : String.valueOf((String) row[2]);
+                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf((String) row[2]);
                 }
 
                 if (3 < row.length) {
-                    outStuct_tMatchGroup_1.GID = row[3] == null ? null
-                            : String.valueOf((String) row[3]);
+                    outStuct_tMatchGroup_1.GID = row[3] == null ? null : String.valueOf((String) row[3]);
                 }
 
                 if (4 < row.length) {
 
                     try {
-                        outStuct_tMatchGroup_1.GRP_SIZE = Integer
-                                .valueOf((String) row[4]);
+                        outStuct_tMatchGroup_1.GRP_SIZE = Integer.valueOf((String) row[4]);
                     } catch (java.lang.NumberFormatException e) {
-                        outStuct_tMatchGroup_1.GRP_SIZE = row[4] == null ? null
-                                : 0;
+                        outStuct_tMatchGroup_1.GRP_SIZE = row[4] == null ? null : 0;
                     }
                 }
 
                 if (5 < row.length) {
-                    outStuct_tMatchGroup_1.MASTER = row[5] == null ? null
-                            : Boolean.valueOf((String) row[5]);
+                    outStuct_tMatchGroup_1.MASTER = row[5] == null ? null : Boolean.valueOf((String) row[5]);
                 }
 
                 if (6 < row.length) {
 
                     try {
-                        outStuct_tMatchGroup_1.SCORE = Double
-                                .valueOf((String) row[6]);
+                        outStuct_tMatchGroup_1.SCORE = Double.valueOf((String) row[6]);
                     } catch (java.lang.NumberFormatException e) {
                         outStuct_tMatchGroup_1.SCORE = 0.0;
                     }
@@ -2002,24 +1994,18 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
                 if (7 < row.length) {
 
                     try {
-                        outStuct_tMatchGroup_1.GRP_QUALITY = Double
-                                .valueOf((String) row[7]);
+                        outStuct_tMatchGroup_1.GRP_QUALITY = Double.valueOf((String) row[7]);
                     } catch (java.lang.NumberFormatException e) {
                         outStuct_tMatchGroup_1.GRP_QUALITY = 0.0;
                     }
                 }
 
                 if (8 < row.length) {
-                    outStuct_tMatchGroup_1.MATCHING_DISTANCES = row[8] == null ? null : String.valueOf(row[8]);
-                }
-                if (9 < row.length) {
-                    outStuct_tMatchGroup_1.ORIGINAL_RECORD = row[9] == null ? null
-                            : row[9];
+                    outStuct_tMatchGroup_1.ORIGINAL_RECORD = row[8] == null ? null : row[8];
                 }
 
                 if (outStuct_tMatchGroup_1.MASTER == true) {
-                    masterRows_tMatchGroup_1
-                            .add(outStuct_tMatchGroup_1);
+                    masterRows_tMatchGroup_1.add(outStuct_tMatchGroup_1);
                     indexMap_tMatchGroup_1.put(String.valueOf(outStuct_tMatchGroup_1.GID), masterRows_tMatchGroup_1.size() - 1);
                 } else {
                     groupRows_tMatchGroup_1.add(outStuct_tMatchGroup_1);
@@ -2051,6 +2037,7 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
         initialize(recordGroupImp_tMatchGroup_1);
         //pass the original values
+        //        recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
         recordGroupImp_tMatchGroup_1.setIsPassOriginalValue(true);
 
         // read the data from the file
@@ -2081,23 +2068,22 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
         groupRows_tMatchGroup_1.addAll(masterRows_tMatchGroup_1);
 
         Collections.sort(groupRows_tMatchGroup_1);
-        
+
         //assert
         for (row2Struct one : groupRows_tMatchGroup_1) {
-//            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-//                    + "--" + one.MASTER + "--" + one.ORIGINAL_RECORD);
+            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+                    + "--" + one.MASTER + "--" + one.ORIGINAL_RECORD);
 
             if (one.MASTER) {
-                
-                Assert.assertTrue(one.ORIGINAL_RECORD instanceof List);
-                Assert.assertTrue(((List)one.ORIGINAL_RECORD).size()>0);
 
-                break;
+                Assert.assertTrue(one.ORIGINAL_RECORD instanceof List);
+                Assert.assertTrue(((List) one.ORIGINAL_RECORD).size() > 0);
+
             }
         }
 
     }
-    
+
     /**
      * Input of the 2nd tmatchgroup contains List<Attribute>, need to be handled. And should not be outputed.
      */
@@ -2122,7 +2108,8 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
         // MASTER and only in case of separate output.
         final Map<String, Integer> indexMap_tMatchGroup_1 = new HashMap<String, Integer>();
 
-        AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1 =  new ComponentSwooshMatchRecordGrouping() {
+        AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1 = new ComponentSwooshMatchRecordGrouping() {
+
             @Override
             protected void outputRow(Object[] row) {
                 row2Struct outStuct_tMatchGroup_1 = new row2Struct();
@@ -2137,44 +2124,36 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
                 }
 
                 if (1 < row.length) {
-                    outStuct_tMatchGroup_1.city = row[1] == null ? null
-                            : String.valueOf((String) row[1]);
+                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf((String) row[1]);
                 }
 
                 if (2 < row.length) {
-                    outStuct_tMatchGroup_1.country = row[2] == null ? null
-                            : String.valueOf((String) row[2]);
+                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf((String) row[2]);
                 }
                 if (3 < row.length) {
-                    outStuct_tMatchGroup_1.ORIGINAL_RECORD = row[3] == null ? null
-                            : row[9];
+                    outStuct_tMatchGroup_1.ORIGINAL_RECORD = row[3] == null ? null : row[3];
                 }
                 if (4 < row.length) {
-                    outStuct_tMatchGroup_1.GID = row[4] == null ? null
-                            : String.valueOf((String) row[4]);
+                    outStuct_tMatchGroup_1.GID = row[4] == null ? null : String.valueOf((String) row[4]);
                 }
 
                 if (5 < row.length) {
 
                     try {
-                        outStuct_tMatchGroup_1.GRP_SIZE = Integer
-                                .valueOf((String) row[5]);
+                        outStuct_tMatchGroup_1.GRP_SIZE = Integer.valueOf((String) row[5]);
                     } catch (java.lang.NumberFormatException e) {
-                        outStuct_tMatchGroup_1.GRP_SIZE = row[5] == null ? null
-                                : 0;
+                        outStuct_tMatchGroup_1.GRP_SIZE = row[5] == null ? null : 0;
                     }
                 }
 
                 if (6 < row.length) {
-                    outStuct_tMatchGroup_1.MASTER = row[6] == null ? null
-                            : Boolean.valueOf((String) row[6]);
+                    outStuct_tMatchGroup_1.MASTER = row[6] == null ? null : Boolean.valueOf((String) row[6]);
                 }
 
                 if (7 < row.length) {
 
                     try {
-                        outStuct_tMatchGroup_1.SCORE = Double
-                                .valueOf((String) row[7]);
+                        outStuct_tMatchGroup_1.SCORE = Double.valueOf((String) row[7]);
                     } catch (java.lang.NumberFormatException e) {
                         outStuct_tMatchGroup_1.SCORE = 0.0;
                     }
@@ -2183,8 +2162,7 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
                 if (8 < row.length) {
 
                     try {
-                        outStuct_tMatchGroup_1.GRP_QUALITY = Double
-                                .valueOf((String) row[8]);
+                        outStuct_tMatchGroup_1.GRP_QUALITY = Double.valueOf((String) row[8]);
                     } catch (java.lang.NumberFormatException e) {
                         outStuct_tMatchGroup_1.GRP_QUALITY = 0.0;
                     }
@@ -2193,11 +2171,9 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
                 if (9 < row.length) {
                     outStuct_tMatchGroup_1.MERGE_INFO = row[9] == null ? null : String.valueOf(row[9]);
                 }
-               
 
                 if (outStuct_tMatchGroup_1.MASTER == true) {
-                    masterRows_tMatchGroup_1
-                            .add(outStuct_tMatchGroup_1);
+                    masterRows_tMatchGroup_1.add(outStuct_tMatchGroup_1);
                     indexMap_tMatchGroup_1.put(String.valueOf(outStuct_tMatchGroup_1.GID), masterRows_tMatchGroup_1.size() - 1);
                 } else {
                     groupRows_tMatchGroup_1.add(outStuct_tMatchGroup_1);
@@ -2219,7 +2195,7 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
 
         // init the parameters of the tswoosh algorithm
         Map<String, String> columnWithType_tMatchGroup_1 = fillColumn("id_Integer", "id_String", "id_String", "id_String",
-                "id_Integer", "id_Boolean", "id_Double", "id_Double",  "id_String");
+                "id_Integer", "id_Boolean", "id_Double", "id_Double", "id_String");
         Map<String, String> columnWithIndex_tMatchGroup_1 = fillColumn("0", "1", "2", "3", "4", "5", "6", "7", "8");
 
         SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = SurvivorshipUtils
@@ -2231,7 +2207,8 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
         initialize(recordGroupImp_tMatchGroup_1);
         // use multipass
         recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
-        recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(3);
+        //the "ORIGINAL_RECORD" is considered as an input column. 
+        recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(4);
 
         // read the data from the file
         InputStream in = this.getClass().getResourceAsStream("swoosh_passOriginal_on2nd.txt"); //$NON-NLS-1$
@@ -2242,58 +2219,58 @@ columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
         for (String line : listOfLines) {
             Object[] fields = StringUtils.splitPreserveAllTokens(line, columnDelimiter);
             Collections.addAll(list2, fields);
-            List<Attribute> list =  new ArrayList<Attribute>();
-            if(StringUtils.equalsIgnoreCase("true", (String) fields[5])){ //add the list into masters
-                int index2=0;
-                
-                Attribute att = new Attribute("id",index2++);
+            List<Attribute> list = new ArrayList<Attribute>();
+            if (StringUtils.equalsIgnoreCase("true", (String) fields[5])) { //add the list into masters
+                int index2 = 0;
+
+                Attribute att = new Attribute("id", index2++);
                 att.setValue("2");
                 list.add(att);
-                Attribute att2 = new Attribute("city",index2++);
+                Attribute att2 = new Attribute("city", index2++);
                 att2.setValue("AA");
                 att2.getValues().get("A").increment();
                 att2.getValues().get("A").increment();
                 list.add(att2);
-                Attribute att3 = new Attribute("country",index2++);
+                Attribute att3 = new Attribute("country", index2++);
                 att3.setValue("Y");
                 att3.getValues().get("Y").increment();
                 att3.getValues().get("Y").increment();
                 list.add(att3);
-                
-//                Iterator<String> leftValues = new IteratorChain(Collections.singleton("A").iterator(),
-//                        att.getValues().iterator());
-//                while (leftValues.hasNext()) {
-//                    String leftValue = leftValues.next();
-//                    System.err.println(leftValue);
-//                }
+
+                //                Iterator<String> leftValues = new IteratorChain(Collections.singleton("A").iterator(),
+                //                        att.getValues().iterator());
+                //                while (leftValues.hasNext()) {
+                //                    String leftValue = leftValues.next();
+                //                    System.err.println(leftValue);
+                //                }
             }
-                list2.add( list);
-                //add "Merge_info" at the end of the array
-                list2.add((String) fields[5]);
-            
-                inputList2.add(list2.toArray());
-                list2.clear();
+            list2.add(list);
+            //add "Merge_info" at the end of the array
+            list2.add((String) fields[5]);
+
+            inputList2.add(list2.toArray());
+            list2.clear();
         }
 
         for (Object[] inputRow : inputList2) { // loop on each data
             recordGroupImp_tMatchGroup_1.doGroup(inputRow);
-        } 
+        }
         recordGroupImp_tMatchGroup_1.end();
 
         groupRows_tMatchGroup_1.addAll(masterRows_tMatchGroup_1);
 
         Collections.sort(groupRows_tMatchGroup_1);
-        
+
         //assert
-        System.err.println("--pass original---2---"+groupRows_tMatchGroup_1.size());
+        System.err.println("--pass original---2---" + groupRows_tMatchGroup_1.size());
         for (row2Struct one : groupRows_tMatchGroup_1) {
             System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
                     + "--" + one.MASTER + "--");
 
             if (one.MASTER) {
-                
-              Assert.assertEquals("should be: AAA", "AAA", one.city);
 
+                Assert.assertEquals("should be: AAA", "AAA", one.city);
+                Assert.assertEquals("", one.ORIGINAL_RECORD);
             }
         }
 
