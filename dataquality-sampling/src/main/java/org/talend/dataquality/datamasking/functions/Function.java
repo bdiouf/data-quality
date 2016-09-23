@@ -147,7 +147,9 @@ public abstract class Function<T> implements Serializable {
             }
         }
         setKeepNull(keepNullValues);
-        setRandom(rand);
+        if (rand != null) {
+            setRandom(rand);
+        }
     }
 
     private String clean(String extraParameter) {

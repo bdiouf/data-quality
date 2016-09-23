@@ -19,6 +19,6 @@ import org.talend.dataquality.standardization.phone.PhoneNumberHandlerBase;
 public abstract class AbstractPhoneNumberValidator {
 
     protected boolean isValidPhoneNumber(String phoneNumber, Locale locale) {
-        return PhoneNumberHandlerBase.isValidPhoneNumber(phoneNumber, locale.getCountry());
+        return PhoneNumberHandlerBase.isPossiblePhoneNumber(phoneNumber, locale.getCountry());
     }
 }

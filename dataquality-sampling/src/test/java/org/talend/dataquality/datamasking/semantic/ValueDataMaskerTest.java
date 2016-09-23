@@ -48,10 +48,11 @@ public class ValueDataMaskerTest {
             put(new String[] { "\t", MaskableCategoryEnum.FIRST_NAME.name(), "string" }, "\t");
 
             // 4. PHONE
-            put(new String[] { "0123456789", MaskableCategoryEnum.US_PHONE.name(), "String" }, "728-938-8880");
-            put(new String[] { "321938", MaskableCategoryEnum.FR_PHONE.name(), "String" }, "+33 628738888");
-            put(new String[] { "4444444", MaskableCategoryEnum.DE_PHONE.name(), "String" }, "069 28738888");
-            put(new String[] { "666666666", MaskableCategoryEnum.UK_PHONE.name(), "String" }, "020 3528 7388");
+            put(new String[] { "0123456789", MaskableCategoryEnum.US_PHONE.name(), "String" }, "0123279941");
+            put(new String[] { "321938", MaskableCategoryEnum.FR_PHONE.name(), "String" }, "996722");
+            put(new String[] { "4444444", MaskableCategoryEnum.DE_PHONE.name(), "String" }, null);
+            put(new String[] { "666666666", MaskableCategoryEnum.UK_PHONE.name(), "String" }, "663330954");
+            put(new String[] { "777777777abc", MaskableCategoryEnum.UK_PHONE.name(), "String" }, null);
 
             // 5. JOB_TITLE
             put(new String[] { "CEO", MaskableCategoryEnum.JOB_TITLE.name(), "String" }, "Cafeteria Cook");
