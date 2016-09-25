@@ -215,7 +215,13 @@ public enum DictionaryGenerationSpec {
             new CsvReaderConfig(CsvConstants.SEMICOLON, false),
             new int[] { 5 }),
 
-    FR_REGION(GenerationType.DICTIONARY, "fr_reg2015.csv", new CsvReaderConfig(CsvConstants.SEMICOLON, false), new int[] { 4 }),
+    FR_REGION(GenerationType.DICTIONARY, "fr_reg2016.txt", new CsvReaderConfig(CsvConstants.TAB, true), new int[] { 4 }),
+
+    FR_REGION_LEGACY(
+            GenerationType.DICTIONARY,
+            "fr_reg2015.csv",
+            new CsvReaderConfig(CsvConstants.SEMICOLON, false),
+            new int[] { 4 }),
 
     LANGUAGE(
             GenerationType.DICTIONARY,

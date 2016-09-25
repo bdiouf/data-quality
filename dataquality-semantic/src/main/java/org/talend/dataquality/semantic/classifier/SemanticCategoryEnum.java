@@ -59,6 +59,7 @@ public enum SemanticCategoryEnum {
     FR_COMMUNE("FR Commune", "French Commune names", RecognizerType.CLOSED_INDEX),
     FR_DEPARTEMENT("FR Departement", "French Departement names", RecognizerType.CLOSED_INDEX),
     FR_REGION("FR Region", "French Region names", RecognizerType.CLOSED_INDEX),
+    FR_REGION_LEGACY("FR Region Legacy", "Legacy French Region names", RecognizerType.CLOSED_INDEX),
     LANGUAGE("Language", "Language Name (EN+FR+DE+NATIVE)", RecognizerType.CLOSED_INDEX),
     LANGUAGE_CODE_ISO2("Language Code ISO2", "Language Code of ISO639-1 Alpha-2", RecognizerType.CLOSED_INDEX),
     LANGUAGE_CODE_ISO3("Language Code ISO3", "Language Code of ISO639-2 Alpha-3 (B/T)", RecognizerType.CLOSED_INDEX),

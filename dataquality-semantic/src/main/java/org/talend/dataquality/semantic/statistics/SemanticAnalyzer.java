@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.talend.dataquality.common.inference.Analyzer;
 import org.talend.dataquality.common.inference.ResizableList;
 import org.talend.dataquality.semantic.recognizer.CategoryFrequency;
@@ -131,7 +131,7 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
 
     @Override
     public Analyzer<SemanticType> merge(Analyzer<SemanticType> another) {
-        throw new NotImplementedException();
+        throw new NotImplementedException("Merge function is not implemented.");
     }
 
     @Override

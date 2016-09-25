@@ -15,10 +15,8 @@ package org.talend.dataquality.semantic.index;
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.ScoreDoc;

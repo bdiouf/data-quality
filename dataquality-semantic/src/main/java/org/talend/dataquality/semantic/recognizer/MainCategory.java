@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.semantic.recognizer;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * DOC qiongli class global comment. Detailled comment

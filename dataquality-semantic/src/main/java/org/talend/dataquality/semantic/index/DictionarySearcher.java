@@ -19,7 +19,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.core.LowerCaseFilter;
@@ -300,6 +300,10 @@ public class DictionarySearcher {
             termList.add(term);
         }
         result.close();
+        if (termList.size() == 1) { // require exact match when the input has only one token
+            termList.clear();
+            termList.add(StringUtils.stripAccents(input.toLowerCase()));
+        }
         return termList;
     }
 }

@@ -221,11 +221,7 @@ public class CategoryRecognizerTest {
             put("Mr", new String[] { SemanticCategoryEnum.COUNTRY_CODE_ISO2.getId(), //
                     SemanticCategoryEnum.LANGUAGE_CODE_ISO2.getId(), SemanticCategoryEnum.CIVILITY.getId() });
 
-            put("Mr.",
-                    new String[] { SemanticCategoryEnum.CIVILITY.getId(),
-                            // TODO for the code indexes: e.g. COUNTRY_CODE_ISO2, LANGUAGE_CODE_ISO2 we should move to
-                            // regex
-                            SemanticCategoryEnum.COUNTRY_CODE_ISO2.getId(), SemanticCategoryEnum.LANGUAGE_CODE_ISO2.getId() });
+            put("Mr.", new String[] { SemanticCategoryEnum.CIVILITY.getId() });
 
             put("Hartsfield–Jackson Atlanta International Airport", new String[] { SemanticCategoryEnum.AIRPORT.getId() });
 

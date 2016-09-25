@@ -14,7 +14,7 @@ package org.talend.dataquality.semantic.classifier.custom;
 
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.talend.dataquality.semantic.validator.AbstractRegexSemanticValidator;
 import org.talend.dataquality.semantic.validator.ISemanticValidator;

@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.semantic.sampling;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * created by zhao on 2015-4-27 Semantic category bean which can be a bridge from UI to semantic API.

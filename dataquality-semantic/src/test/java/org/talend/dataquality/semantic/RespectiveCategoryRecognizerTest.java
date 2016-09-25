@@ -22,7 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
@@ -291,6 +291,8 @@ public class RespectiveCategoryRecognizerTest {
 
                 {
                     add(ImmutablePair.of("FR", true));
+                    add(ImmutablePair.of("FR.", false));
+                    add(ImmutablePair.of(".FR", false));
                 }
             });
 
@@ -518,6 +520,25 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("Hauts de seine", false));
                     add(ImmutablePair.of("Ile de france", true));
                     add(ImmutablePair.of("Île de France", true));
+
+                    add(ImmutablePair.of("Nord-Pas-de-Calais", false));
+                    add(ImmutablePair.of("Picardie", false));
+                    add(ImmutablePair.of("Hauts de France", true));
+                }
+            });
+
+            put(SemanticCategoryEnum.FR_REGION_LEGACY.getId(), new ArrayList<Pair<String, Boolean>>() {
+
+                private static final long serialVersionUID = -2018495996354511195L;
+
+                {
+                    add(ImmutablePair.of("Hauts de seine", false));
+                    add(ImmutablePair.of("Ile de france", true));
+                    add(ImmutablePair.of("Île de France", true));
+
+                    add(ImmutablePair.of("Nord-Pas-de-Calais", true));
+                    add(ImmutablePair.of("Picardie", true));
+                    add(ImmutablePair.of("Hauts de France", false));
                 }
             });
 
@@ -531,7 +552,7 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("French", true));
                     add(ImmutablePair.of("français", true));
                     add(ImmutablePair.of("Interlingue Occidental", true));
-                    add(ImmutablePair.of("ދިވެހިބަސް ", true));
+                    add(ImmutablePair.of("ދިވެހިބަސް", true));
                     add(ImmutablePair.of("සිංහල", true));
                 }
             });
