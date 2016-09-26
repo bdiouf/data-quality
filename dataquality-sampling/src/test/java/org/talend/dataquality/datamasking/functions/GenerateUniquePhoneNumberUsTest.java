@@ -83,7 +83,7 @@ public class GenerateUniquePhoneNumberUsTest {
         for (int i = 0; i < 100; i++) {
             gpn.setRandom(new Random());
             input = gpn.doGenerateMaskedField(null);
-            if (isValidPhoneNumber(input) && !(input.charAt(5) == 1 && input.charAt(6) == 1)) {
+            if (isValidPhoneNumber(input) && !(input.charAt(5) == '1' && input.charAt(6) == '1')) {
                 for (int j = 0; j < 1000; j++) {
                     long rgenseed = System.nanoTime();
                     gnu.setRandom(new Random(rgenseed));
