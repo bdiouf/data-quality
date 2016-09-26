@@ -1,6 +1,6 @@
 package org.talend.dataquality.semantic.validator.impl;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.talend.dataquality.semantic.validator.ISemanticValidator;
 
 /**
