@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Semantic Library
+Bundle-Name: Emal Verification Library
 Bundle-SymbolicName: org.talend.dataquality.email;singleton:=true
 Bundle-Version: 1.0.1
 Bundle-Vendor: .Talend SA.
