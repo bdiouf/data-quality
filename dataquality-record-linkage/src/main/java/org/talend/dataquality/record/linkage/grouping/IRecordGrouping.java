@@ -175,4 +175,6 @@ public interface IRecordGrouping<T> {
      */
     public void setIsComputeGrpQuality(Boolean isComputeGrpQuality);
 
+    public void setIsPassOriginalValue(Boolean isPassOriginalValue);
+
 }

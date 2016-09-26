@@ -14,6 +14,8 @@ package org.talend.dataquality.record.linkage.grouping.swoosh;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * created by yyin on 2016年3月2日 Detailled comment
  *
@@ -75,7 +77,19 @@ public class ComponentSwooshMatchRecordGrouping extends AnalysisSwooshMatchRecor
         if (!matchFinished) {
             tmpMatchResult.add(row);
         } else {
-            super.outputRow(row);
+            if (this.isPassOriginalValue) {//TDQ-12057 when the first tmatchgroup select to pass the original value, just pass this record 
+                String[] strRow = getValuesFromOriginRow(row);
+                Object[] withOrigin = new Object[strRow.length + 1];
+                int index = 0;
+                for (String str : strRow) {
+                    withOrigin[index++] = str;
+                }
+                //Added TDQ-12057 : put the whole attributes of the current record into the output(last position).
+                withOrigin[index] = row.getAttributes();
+                outputRow(withOrigin);
+            } else {
+                super.outputRow(row);
+            }
         }
     }
 
@@ -83,9 +97,25 @@ public class ComponentSwooshMatchRecordGrouping extends AnalysisSwooshMatchRecor
     @Override
     protected List<DQAttribute<?>> getOutputRow(RichRecord row) {
         if (this.isLinkToPrevious) {
-            return row.getOutputRow(swooshGrouping.getOldGID2New(), originalInputColumnSize, isOutputDistDetails());
+            if (this.swooshGrouping.isHasPassedOriginal()) {//Added TDQ-12057
+                int ext = 7;
+                if (isOutputDistDetails()) {
+                    ext = 8;
+                }
+                List<DQAttribute<?>> outputRow = row.getoutputRow(swooshGrouping.getOldGID2New(), isOutputDistDetails(), ext);
+                outputRow.remove(outputRow.size() - 2);
+                outputRow.add(originalInputColumnSize - 1,
+                        new DQAttribute<>(SwooshConstants.ORIGINAL_RECORD, originalInputColumnSize, ""));
+                return outputRow;
+            } //~
+            return row.getOutputRow(swooshGrouping.getOldGID2New(), isOutputDistDetails());
         } else {
-            return super.getOutputRow(row);
+            List<DQAttribute<?>> outputRow = super.getOutputRow(row);
+            if (!isOutputDistDetails()
+                    && StringUtils.equals(SwooshConstants.ATTRIBUTE_SCORES, outputRow.get(outputRow.size() - 1).getLabel())) {//if not output details, need to remove the last : Attribute scores
+                outputRow.remove(outputRow.size() - 1);
+            }
+            return outputRow;
         }
     }
 

@@ -69,6 +69,8 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
 
     protected Boolean isLinkToPrevious = Boolean.FALSE;
 
+    protected Boolean isPassOriginalValue = Boolean.FALSE;
+
     protected int originalInputColumnSize;
 
     private Boolean isDisplayAttLabels = Boolean.TRUE;
@@ -648,6 +650,12 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
      */
     protected SurvivorShipAlgorithmParams getSurvivorShipAlgorithmParams() {
         return this.survivorShipAlgorithmParams;
+    }
+
+    @Override
+    public void setIsPassOriginalValue(Boolean isPassOriginal) {
+
+        this.isPassOriginalValue = isPassOriginal;
     }
 
 }

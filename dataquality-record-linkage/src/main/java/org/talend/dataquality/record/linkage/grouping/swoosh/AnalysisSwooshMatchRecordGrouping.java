@@ -137,6 +137,11 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
      */
     @Override
     protected void outputRow(RichRecord row) {
+        String[] strRow = getValuesFromOriginRow(row);
+        outputRow(strRow);
+    }
+
+    protected String[] getValuesFromOriginRow(RichRecord row) {
         List<DQAttribute<?>> originRow = getOutputRow(row);
         String[] strRow = new String[originRow.size()];
         int idx = 0;
@@ -155,6 +160,11 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
                 } else {
                     strRow[idx] = SwooshConstants.SUB_ITEM_GROUP_QUALITY_DEFAULT_VALUE;
                 }
+                //            } else if (idx == (originalInputColumnSize - 1) && this.swooshGrouping.isHasPassedOriginal() && isLinkToPrevious) {
+                //                //Added TDQ-12057 : because the "ORIGINAL_RECORD" position changed from the last column of the array to the position: 
+                //                //after the input record, before the extended(GID),so its correct position is strRow[originalInputColumnSize]
+                //                //And , its label is empty, if it is extened attri like GID, will not be empty.
+                //                strRow[idx] = StringUtils.EMPTY;
             } else {
                 if (row.isMaster() && row.isMerged()) {
                     strRow[idx] = attr.getValue();
@@ -165,7 +175,7 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
             }
             idx++;
         }
-        outputRow(strRow);
+        return strRow;
     }
 
     /**

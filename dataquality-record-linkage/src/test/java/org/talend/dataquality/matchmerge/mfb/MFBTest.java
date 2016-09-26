@@ -58,6 +58,12 @@ public class MFBTest extends TestCase {
             public String newValue() {
                 return CONSTANTS[index++ % constantNumber];
             }
+
+            @Override
+            public Object getAttribute() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
         RecordGenerator recordGenerator = new RecordGenerator();
         recordGenerator.setMatchKeyMap(generators);
@@ -88,6 +94,12 @@ public class MFBTest extends TestCase {
             @Override
             public String newValue() {
                 return CONSTANTS[index++ % constantNumber];
+            }
+
+            @Override
+            public Object getAttribute() {
+                // TODO Auto-generated method stub
+                return null;
             }
         });
         RecordGenerator recordGenerator = new RecordGenerator();
@@ -129,6 +141,12 @@ public class MFBTest extends TestCase {
             public String newValue() {
                 return SIMILARS[index++ % similarNumber];
             }
+
+            @Override
+            public Object getAttribute() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
         RecordGenerator recordGenerator = new RecordGenerator();
         recordGenerator.setMatchKeyMap(generators);
@@ -159,6 +177,12 @@ public class MFBTest extends TestCase {
             @Override
             public String newValue() {
                 return CONSTANTS[index++ % constantNumber];
+            }
+
+            @Override
+            public Object getAttribute() {
+                // TODO Auto-generated method stub
+                return null;
             }
         });
         // Runs a first match with a weight 1

@@ -332,25 +332,30 @@ public class RichRecord extends Record {
 
     /**
      * for the merged master rows from multipass, no need to add, only replace. Add one fixed output column: MERGE_INFO
-     * 
+     * when there is original record from the 1st tmatchgroup, the EXT_SIZE should =7, if with details, should = 8. 
      * @param oldGID2New
      * @param originalInputColumnSize
      * @return
      */
-    public List<DQAttribute<?>> getOutputRow(Map<String, String> oldGID2New, int originalInputColumnSize, boolean withDetails) {
-        if (isMerged()) {
-            // Update the matching key field by the merged attributes.
-            List<Attribute> matchKeyAttrs = getAttributes();
-            for (Attribute attribute : matchKeyAttrs) {
-                originRow.get(attribute.getColumnIndex()).setValue(attribute.getValue());
-            }
-        }
+    public List<DQAttribute<?>> getOutputRow(Map<String, String> oldGID2New, boolean withDetails) {
         /**
          * Else The columns that are not maching keys will be merged at {@link DQMFBRecordMerger#createNewRecord()}
          */
         int EXT_SIZE = 6;
         if (withDetails) {
             EXT_SIZE = 7;
+        }
+
+        return getoutputRow(oldGID2New, withDetails, EXT_SIZE);
+    }
+
+    public List<DQAttribute<?>> getoutputRow(Map<String, String> oldGID2New, boolean withDetails, int EXT_SIZE) {
+        if (isMerged()) {
+            // Update the matching key field by the merged attributes.
+            List<Attribute> matchKeyAttrs = getAttributes();
+            for (Attribute attribute : matchKeyAttrs) {
+                originRow.get(attribute.getColumnIndex()).setValue(attribute.getValue());
+            }
         }
         if (isMerged || isMaster) {// Master records
             // Update group id.
@@ -404,7 +409,7 @@ public class RichRecord extends Record {
                 // group quality
                 double groupQuality2 = getGroupQuality();
                 if (Double.compare(groupQuality2, 0.0) == 0) {
-                    groupQuality2 = getOriginalValue(originalInputColumnSize + 4);
+                    groupQuality2 = getOriginalValue(originRow.size() - extSize);
                 }
                 originRow.set(originRow.size() - extSize,
                         new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), String.valueOf(groupQuality2)));
@@ -430,7 +435,7 @@ public class RichRecord extends Record {
      */
     protected double getOriginalValue(int columnIndex) {
         String value = originRow.get(columnIndex).getValue();
-        if (value == null || StringUtils.equalsIgnoreCase(SwooshConstants.NULL_STR, value)) {
+        if (StringUtils.isBlank(value) || StringUtils.equalsIgnoreCase(SwooshConstants.NULL_STR, value)) {
             return 0.0;
         }
         return Double.parseDouble(value);
