@@ -39,6 +39,7 @@ public class SemanticMaskerFunctionFactory {
                 } else {
                     function.parse(cat.getParameter(), true, null);
                 }
+                function.setKeepFormat(true);
             } catch (InstantiationException e) {
                 LOGGER.debug(e.getMessage(), e);
             } catch (IllegalAccessException e) {

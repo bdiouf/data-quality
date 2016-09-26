@@ -55,6 +55,10 @@ public class ValueDataMaskerTest {
             put(new String[] { "++044dso44aa", MaskableCategoryEnum.DE_PHONE.name(), "String" }, "++287dso38aa");
             put(new String[] { "666666666", MaskableCategoryEnum.UK_PHONE.name(), "String" }, "663330954");
             put(new String[] { "777777777abc", MaskableCategoryEnum.UK_PHONE.name(), "String" }, "778886113abc");
+            put(new String[] { "(301) 231-9473 x 2364", MaskableCategoryEnum.US_PHONE.name(), "String" },
+                    "(301) 231-9416 x 7116");
+            put(new String[] { "(563) 557-7600 Ext. 2890", MaskableCategoryEnum.US_PHONE.name(), "String" },
+                    "(563) 557-7642 Ext. 4410");
 
             // 5. JOB_TITLE
             put(new String[] { "CEO", MaskableCategoryEnum.JOB_TITLE.name(), "String" }, "Cafeteria Cook");
@@ -133,7 +137,6 @@ public class ValueDataMaskerTest {
 
             System.out.print("[" + semanticCategory + "]\n\t" + inputValue + " => ");
             final ValueDataMasker masker = new ValueDataMasker(semanticCategory, dataType);
-            masker.getFunction().setKeepFormat(true);
             masker.getFunction().setRandom(new Random(AllDataqualitySamplingTests.RANDOM_SEED));
             String maskedValue = masker.maskValue(inputValue);
             System.out.println(maskedValue);
