@@ -35,7 +35,7 @@ public class UKPhoneNumberValidatorTest {
 
     @Test
     public void invalidPhoneNumber() {
-        Assert.assertFalse(validator.isValid("19-49-89-636-48018"));
-        Assert.assertFalse(validator.isValid("+33(0)147554323"));
+        Assert.assertFalse(validator.isValid("0019-49-89-636-48018"));
+        Assert.assertFalse(validator.isValid("+33(085)147554323"));
     }
 }

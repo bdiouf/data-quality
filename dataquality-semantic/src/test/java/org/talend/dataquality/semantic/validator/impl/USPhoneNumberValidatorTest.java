@@ -39,7 +39,7 @@ public class USPhoneNumberValidatorTest {
     @Test
     public void invalidPhoneNumber() {
         Assert.assertFalse(validator.isValid("001-541-754-3010"));
-        Assert.assertFalse(validator.isValid("754-3010"));
+        Assert.assertFalse(validator.isValid("74-3010"));
         Assert.assertFalse(validator.isValid("191 541 754 3010"));
 
         Assert.assertFalse(validator.isValid("19-49-89-636-48018"));

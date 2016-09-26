@@ -12,26 +12,13 @@
 // ============================================================================
 package org.talend.dataquality.semantic.classifier.custom;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -251,7 +238,7 @@ public class UserDefinedClassifierTest {
             put("25:59", new String[] {}); // does not match TIME (as expected) //$NON-NLS-1$
 
             put("0067340", new String[] { "SEDOL" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("4155586", new String[] { "SEDOL" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("4155586", new String[] { "SEDOL", "US_PHONE" }); //$NON-NLS-1$ //$NON-NLS-2$
             put("(541) 754-3010", new String[] { "US_PHONE" }); //$NON-NLS-1$ //$NON-NLS-2$
             put("B01HL06", new String[] { "SEDOL" }); //$NON-NLS-1$ //$NON-NLS-2$
 

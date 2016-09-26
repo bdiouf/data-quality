@@ -38,8 +38,8 @@ public class DEPhoneNumberValidatorTest {
 
     @Test
     public void invalidPhoneNumber() {
-        Assert.assertFalse(validator.isValid("19-49-89-636-48018"));
-        Assert.assertFalse(validator.isValid("191 541 754 3010"));
-        Assert.assertFalse(validator.isValid("+33(0)147554323"));
+        Assert.assertFalse(validator.isValid("159-49-89-636-480188"));
+        Assert.assertFalse(validator.isValid("1912 541 754 43835010"));
+        Assert.assertFalse(validator.isValid("+3300(0)147554323"));
     }
 }

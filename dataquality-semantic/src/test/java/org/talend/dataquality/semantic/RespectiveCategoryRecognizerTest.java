@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.semantic;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,11 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -614,7 +610,7 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("+33 6 23 45 67 89", true));
                     add(ImmutablePair.of("07.85.01.24.79", true));
                     add(ImmutablePair.of("08 25 01 20 11", true));
-                    add(ImmutablePair.of("07 23 45 67 89", false));
+                    add(ImmutablePair.of("07 23 45 67 89", true));
                 }
             });
 

@@ -41,6 +41,6 @@ public class FRPhoneNumberValidatorTest {
         Assert.assertFalse(validator.isValid("19-49-89-636-48018"));
         Assert.assertFalse(validator.isValid("000147554323"));
         Assert.assertFalse(validator.isValid("00(0)147554323"));
-        Assert.assertFalse(validator.isValid("07.23.45.67.89"));
+        Assert.assertFalse(validator.isValid("85.23.45.67.89"));
     }
 }
