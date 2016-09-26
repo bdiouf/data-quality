@@ -41,18 +41,18 @@ public class GenerateUniquePhoneNumberGermanyTest {
     public void testValidWithoutFormat() {
         gng.setKeepFormat(false);
         output = gng.generateMaskedRow("(089) / 636-48018");
-        assertEquals("(089)74923882", output);
+        assertEquals("08974923882", output);
     }
 
     @Test
     public void testInvalid() {
         // without a number
         output = gng.generateMaskedRow("35686");
-        assertEquals(null, output);
+        assertEquals("42445", output);
         gng.setKeepInvalidPattern(true);
         // with a letter
-        output = gng.generateMaskedRow("556 425 98A59");
-        assertEquals("556 425 98A59", output);
+        output = gng.generateMaskedRow("35686");
+        assertEquals("35686", output);
     }
 
     @Test

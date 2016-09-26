@@ -48,11 +48,13 @@ public class ValueDataMaskerTest {
             put(new String[] { "\t", MaskableCategoryEnum.FIRST_NAME.name(), "string" }, "\t");
 
             // 4. PHONE
-            put(new String[] { "0123456789", MaskableCategoryEnum.US_PHONE.name(), "String" }, "0123279941");
+            put(new String[] { "3333456789", MaskableCategoryEnum.US_PHONE.name(), "String" }, "3333699941");
+            // if we put two 1 at the fifth and sixth position, it's not a US valid number, so we replace all the digit
+            put(new String[] { "3333116789", MaskableCategoryEnum.US_PHONE.name(), "String" }, "2873888808");
             put(new String[] { "321938", MaskableCategoryEnum.FR_PHONE.name(), "String" }, "996722");
-            put(new String[] { "4444444", MaskableCategoryEnum.DE_PHONE.name(), "String" }, null);
+            put(new String[] { "++044dso44aa", MaskableCategoryEnum.DE_PHONE.name(), "String" }, "++287dso38aa");
             put(new String[] { "666666666", MaskableCategoryEnum.UK_PHONE.name(), "String" }, "663330954");
-            put(new String[] { "777777777abc", MaskableCategoryEnum.UK_PHONE.name(), "String" }, null);
+            put(new String[] { "777777777abc", MaskableCategoryEnum.UK_PHONE.name(), "String" }, "778886113abc");
 
             // 5. JOB_TITLE
             put(new String[] { "CEO", MaskableCategoryEnum.JOB_TITLE.name(), "String" }, "Cafeteria Cook");

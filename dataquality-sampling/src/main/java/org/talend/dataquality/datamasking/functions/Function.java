@@ -53,6 +53,8 @@ public abstract class Function<T> implements Serializable {
 
     protected static final Pattern patternSpace = Pattern.compile("\\s+");
 
+    protected static final Pattern nonDigits = Pattern.compile("\\D+");
+
     /**
      * setter for random
      * 

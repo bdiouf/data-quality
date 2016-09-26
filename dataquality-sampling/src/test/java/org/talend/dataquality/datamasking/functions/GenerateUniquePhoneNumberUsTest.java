@@ -48,15 +48,15 @@ public class GenerateUniquePhoneNumberUsTest {
         output = gnu.generateMaskedRow(null);
         assertEquals(null, output);
         output = gnu.generateMaskedRow("");
-        assertEquals(null, output);
+        assertEquals("", output);
         output = gnu.generateMaskedRow("AHDBNSKD");
-        assertEquals(null, output);
+        assertEquals("AHDBNSKD", output);
     }
 
     @Test
     public void testGood1() {
         output = gnu.generateMaskedRow("35-6/42-5/9 865");
-        assertEquals("35-6/47-6/5 545", output);
+        assertEquals("35-6/41-6/5 815", output);
     }
 
     @Test
@@ -64,23 +64,15 @@ public class GenerateUniquePhoneNumberUsTest {
         gnu.setKeepFormat(false);
         // with spaces
         output = gnu.generateMaskedRow("356-425-9865");
-        assertEquals("3564765545", output);
+        assertEquals("3564165815", output);
     }
 
     @Test
     public void testWrongSsnFieldNumber() {
         gnu.setKeepInvalidPattern(false);
-        // without a number
-        output = gnu.generateMaskedRow("25 986");
-        assertEquals(null, output);
-    }
-
-    @Test
-    public void testWrongSsnFieldLetter() {
-        gnu.setKeepInvalidPattern(false);
-        // with a wrong letter
-        output = gnu.generateMaskedRow("556 425 98A59");
-        assertEquals(null, output);
+        // with two 1 at the fifth and the sixth position
+        output = gnu.generateMaskedRow("465 311 9856");
+        assertEquals("308 075 2722", output);
     }
 
     @Test
@@ -91,7 +83,7 @@ public class GenerateUniquePhoneNumberUsTest {
         for (int i = 0; i < 100; i++) {
             gpn.setRandom(new Random());
             input = gpn.doGenerateMaskedField(null);
-            if (isValidPhoneNumber(input)) {
+            if (isValidPhoneNumber(input) && !(input.charAt(5) == 1 && input.charAt(6) == 1)) {
                 for (int j = 0; j < 1000; j++) {
                     long rgenseed = System.nanoTime();
                     gnu.setRandom(new Random(rgenseed));
