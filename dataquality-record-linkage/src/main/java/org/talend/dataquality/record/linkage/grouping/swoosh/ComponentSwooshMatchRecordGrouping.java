@@ -97,7 +97,18 @@ public class ComponentSwooshMatchRecordGrouping extends AnalysisSwooshMatchRecor
     @Override
     protected List<DQAttribute<?>> getOutputRow(RichRecord row) {
         if (this.isLinkToPrevious) {
-            return row.getOutputRow(swooshGrouping.getOldGID2New(), originalInputColumnSize, isOutputDistDetails());
+            if (this.swooshGrouping.isHasPassedOriginal()) {//Added TDQ-12057
+                int ext = 7;
+                if (isOutputDistDetails()) {
+                    ext = 8;
+                }
+                List<DQAttribute<?>> outputRow = row.getoutputRow(swooshGrouping.getOldGID2New(), isOutputDistDetails(), ext);
+                outputRow.remove(outputRow.size() - 2);
+                outputRow.add(originalInputColumnSize - 1,
+                        new DQAttribute<>(SwooshConstants.ORIGINAL_RECORD, originalInputColumnSize, ""));
+                return outputRow;
+            } //~
+            return row.getOutputRow(swooshGrouping.getOldGID2New(), isOutputDistDetails());
         } else {
             List<DQAttribute<?>> outputRow = super.getOutputRow(row);
             if (!isOutputDistDetails()
