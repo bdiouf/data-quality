@@ -1,3 +1,7 @@
+V2.3.3 2016-09-28
+	- TDQ-11865 add keepEmpty option in the API
+	- TDQ-12595 Generate phone numbers which are unique and valid
+
 V2.3.2 2016-09-16
 	- TDQ-12185 & TDQ-12364 & TDQ-12366 &TDQ-12367 Mask email local part bug fixes
 	- TDQ-12477 Reservoir Sampling API on Spark DataFrame

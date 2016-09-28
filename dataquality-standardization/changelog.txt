@@ -1,3 +1,6 @@
+V3.2.3 2016-09-28
+	(no change in this version)
+
 V3.2.2 2016-09-16
 	- move semantic dictionary search API to dataquality-semantic library
 

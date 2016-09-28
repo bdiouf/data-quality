@@ -1,3 +1,9 @@
+V1.5.3 2016-09-28
+	- TDQ-12312 improve the EMAIL regex to support more cases for semantic discovery
+	- TDQ-12506 add IBAN regex and IBAN validator class
+	- TDQ-12607 update FR_REGION category with new regions of 2016 + add FR_REGION_LEGACY category
+	- TDQ-12600 fix wrong country code recognition by using exact match on input value with only one token
+
 V1.5.2 2016-09-16
 	- TDQ-12467 Lucene index improvement
 	- TDQ-12471 remove dependency on ElasticSearch

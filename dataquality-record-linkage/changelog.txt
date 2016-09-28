@@ -1,3 +1,6 @@
+V3.2.3 2016-09-28
+	- TDQ-12057 Multipass matching - add option to compare to original records as well as survived master
+
 V3.2.2 2016-09-16
 	- TDQ-12121 Distance with tokenization
 
