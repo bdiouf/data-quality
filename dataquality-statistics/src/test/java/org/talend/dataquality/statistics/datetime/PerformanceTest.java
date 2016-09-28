@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ public class PerformanceTest {
     private static final int REPLICATE = 3333;
 
     @Test
+    @Ignore
     public void testIsDate() throws IOException {
 
         final InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
@@ -66,6 +68,7 @@ public class PerformanceTest {
     }
 
     @Test
+    @Ignore
     public void testGetPatterns() throws IOException {
 
         final InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
