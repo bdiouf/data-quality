@@ -7,12 +7,6 @@ import org.talend.dataquality.datamasking.functions.Function;
 
 public class ReplaceCharacterHelper {
 
-    private static final Random _rnd = new Random();
-
-    private static String replaceCharacters(String input) {
-        return replaceCharacters(input, _rnd);
-    }
-
     static String replaceCharacters(String input, Random rnd) {
         if (StringUtils.isEmpty(input)) {
             return input;

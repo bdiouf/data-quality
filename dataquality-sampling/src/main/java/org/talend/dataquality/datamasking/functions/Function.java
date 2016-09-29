@@ -39,7 +39,7 @@ public abstract class Function<T> implements Serializable {
 
     public static final String LOWER = "abcdefghijklmnopqrstuvwxyz"; //$NON-NLS-1$
 
-    protected Random rnd;
+    protected Random rnd = new Random();
 
     protected String[] parameters;
 
