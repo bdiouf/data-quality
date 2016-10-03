@@ -39,7 +39,7 @@ public class LuceneIndex implements Index {
 
     @Override
     public void initIndex() {
-
+        searcher.maybeRefreshIndex();
     }
 
     @Override

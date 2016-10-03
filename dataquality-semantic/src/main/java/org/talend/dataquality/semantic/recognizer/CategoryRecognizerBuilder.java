@@ -107,4 +107,13 @@ public class CategoryRecognizerBuilder implements Serializable {
         return kwPath;
     }
 
+    public void initIndex() {
+        if (dataDictIndex != null) {
+            dataDictIndex.initIndex();
+        }
+        if (keywordIndex != null) {
+            keywordIndex.initIndex();
+        }
+    }
+
 }

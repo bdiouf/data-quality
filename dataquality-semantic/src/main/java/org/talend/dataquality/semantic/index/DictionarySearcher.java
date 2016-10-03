@@ -306,4 +306,12 @@ public class DictionarySearcher {
         }
         return termList;
     }
+
+    public void maybeRefreshIndex() {
+        try {
+            mgr.maybeRefresh();
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+    }
 }

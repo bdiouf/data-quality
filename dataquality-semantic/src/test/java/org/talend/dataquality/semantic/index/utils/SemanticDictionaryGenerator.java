@@ -144,7 +144,7 @@ public class SemanticDictionaryGenerator {
      * @param synonyms
      * @return
      */
-    private Document generateDocument(String word, Set<String> synonyms) {
+    Document generateDocument(String word, Set<String> synonyms) {
         String tempWord = word.trim();
         Document doc = new Document();
         FieldType ftSyn = new FieldType();

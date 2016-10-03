@@ -32,12 +32,14 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.IOContext;
 import org.apache.lucene.store.IndexInput;
 import org.apache.lucene.store.IndexOutput;
+import org.apache.lucene.store.Lock;
+import org.apache.lucene.store.LockFactory;
 
 /**
  * Implementation of {@link BaseDirectory} which supports accessing Lucene index inside a jar. The inner index files are extracted
  * to a temporary folder if not present.
  */
-public class JARDirectory extends BaseDirectory {
+public class JARDirectory extends Directory {
 
     static final String TEMP_FOLDER_NAME = "org.talend.dataquality.semantic";
 
@@ -160,5 +162,25 @@ public class JARDirectory extends BaseDirectory {
     @Override
     public void sync(Collection<String> arg0) throws IOException {
         fsDir.sync(arg0);
+    }
+
+    @Override
+    public void clearLock(String arg0) throws IOException {
+        fsDir.clearLock(arg0);
+    }
+
+    @Override
+    public LockFactory getLockFactory() {
+        return fsDir.getLockFactory();
+    }
+
+    @Override
+    public Lock makeLock(String arg0) {
+        return fsDir.makeLock(arg0);
+    }
+
+    @Override
+    public void setLockFactory(LockFactory arg0) throws IOException {
+        fsDir.setLockFactory(arg0);
     }
 }

@@ -75,20 +75,22 @@ public class ClassPathDirectory {
      * @return A {@link Directory} to the Lucene content in <code>uri</code>.
      */
     public static synchronized Directory open(URI uri) {
-        LOGGER.debug("Opening '" + uri + "' ...");
         if ("jar".equals(uri.getScheme())) {
+            LOGGER.info("Opening '" + uri + "' ...");
             try {
                 return provider.get(uri);
             } catch (Exception e) {
                 throw new IllegalArgumentException("Unable to open JAR '" + uri + "'.", e);
             }
         } else if ("file".equals(uri.getScheme())) {
+            LOGGER.debug("Opening '" + uri + "' ...");
             try {
                 return FSDirectory.open(new File(uri));
             } catch (IOException e) {
                 throw new IllegalArgumentException("Unable to open path '" + uri + "'.", e);
             }
         } else if ("bundleresource".equals(uri.getScheme())) { // for OSGI environment
+            LOGGER.info("Opening '" + uri + "' ...");
             try {
                 final String path = PlatformPathUtil.getFilePathByPlatformURL(uri.toURL());
                 return FSDirectory.open(new File(path));
@@ -96,6 +98,7 @@ public class ClassPathDirectory {
                 throw new IllegalArgumentException("Unable to open bundleresource '" + uri + "'.", e);
             }
         } else {
+            LOGGER.info("Opening '" + uri + "' ...");
             throw new UnsupportedOperationException("Unsupported scheme '" + uri.getScheme() + "'.");
         }
     }

@@ -56,6 +56,7 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
     public SemanticAnalyzer(CategoryRecognizerBuilder builder, int limit) {
         this.builder = builder;
         this.limit = limit;
+        builder.initIndex();
     }
 
     /**
@@ -73,6 +74,7 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
         currentCount = 0;
         columnIdxToCategoryRecognizer.clear();
         results.clear();
+        builder.initIndex();
     }
 
     /**
