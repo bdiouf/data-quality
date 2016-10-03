@@ -90,7 +90,7 @@ public abstract class AbstractGenerateUniquePhoneNumber extends Function<String>
 
     @Override
     protected String insertFormatInString(String strWithFormat, StringBuilder resWithoutFormat) {
-        if (strWithFormat == null || strWithFormat == null)
+        if (strWithFormat == null || resWithoutFormat == null)
             return strWithFormat;
         for (int i = 0; i < strWithFormat.length(); i++)
             if (!Character.isDigit(strWithFormat.charAt(i)))
