@@ -41,15 +41,13 @@ import org.apache.lucene.store.LockFactory;
  */
 public class JARDirectory extends Directory {
 
-    static final String TEMP_FOLDER_NAME = "org.talend.dataquality.semantic";
-
     private static final Logger LOGGER = Logger.getLogger(JARDirectory.class);
 
     private static final Object indexExtractionLock = new Object();
 
     private final JARDescriptor jarDescriptor;
 
-    final String hash;
+    final String extractPath;
 
     final String indexDirectory;
 
@@ -77,26 +75,25 @@ public class JARDirectory extends Directory {
      * {@link #close()} call.
      * </p>
      *
-     * @param hash A unique identifier to identify this Lucene directory based on the installation location
+     * @param extractPath the location for index content extraction
      * @param descriptor A {@link JARDescriptor descriptor} to the JAR file to open.
      * @param directory A path inside the opened JAR file.
      * @see ClassPathDirectory#open(URI)
      */
-    public JARDirectory(String hash, JARDescriptor descriptor, String directory) {
-        this.hash = hash;
+    public JARDirectory(String extractPath, JARDescriptor descriptor, String directory) {
+        this.extractPath = extractPath;
         this.jarDescriptor = descriptor;
         this.indexDirectory = directory;
         try {
-            extractIndex("default");
+            extractIndex("default"); // the default context name
         } catch (IOException e) {
             LOGGER.error("Failed to extract index: " + e.getMessage(), e);
         }
     }
 
     private void extractIndex(String contextName) throws IOException {
-        final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
-        final String unzipFolderName = tempDirectory + File.separator + TEMP_FOLDER_NAME + File.separator + hash //
-                + File.separator + indexDirectory + File.separator + contextName + File.separator;
+        final String unzipFolderName = extractPath + File.separator + indexDirectory + File.separator + contextName
+                + File.separator;
         final File destinationFolder = Paths.get(unzipFolderName).toFile();
         LOGGER.info("Extrating index to temporary directory: " + destinationFolder.getAbsolutePath());
         if (destinationFolder.exists()) {

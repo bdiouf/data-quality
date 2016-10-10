@@ -50,6 +50,24 @@ public class ClassPathDirectory {
 
     private static JARDirectoryProvider provider = new SingletonProvider();
 
+    private static String localIndexFolder = System.getProperty("java.io.tmpdir") + File.separator
+            + "org.talend.dataquality.semantic";
+
+    private static boolean useCustomExtractionRoot = false;
+
+    private ClassPathDirectory() {
+    }
+
+    /**
+     * Set the location of index extraction for directories opened by jar URI.
+     * <p/>
+     * By default, if this method is not called, the index will be extracted to a sub-folder of java.io.tmpdir.
+     */
+    public static void setLocalIndexFolder(String folder) {
+        localIndexFolder = folder;
+        useCustomExtractionRoot = true;
+    }
+
     /**
      * Allow external code to change behavior about extracted Lucene indexes (always extract a fresh copy or reuse
      * previous extract).
@@ -181,9 +199,13 @@ public class ClassPathDirectory {
         @Override
         public Directory get(URI uri) throws IOException {
             String jarFile = StringUtils.substringBefore(uri.toString(), "!"); //$NON-NLS-1$
-            Checksum checksum = new CRC32();
-            checksum.update(jarFile.getBytes(), 0, jarFile.getBytes().length);
-            final String hash = Long.toHexString(checksum.getValue());
+            String extractionRoot = localIndexFolder;
+            if (!useCustomExtractionRoot) { // use a generated hash as subfolder name for index extraction
+                Checksum checksum = new CRC32();
+                checksum.update(jarFile.getBytes(), 0, jarFile.getBytes().length);
+                final String hash = Long.toHexString(checksum.getValue());
+                extractionRoot = localIndexFolder + File.separator + hash;
+            }
             JARDirectory.JARDescriptor openedJar = new JARDirectory.JARDescriptor();
             // Extract all nested JARs
             StringTokenizer tokenizer = new StringTokenizer(uri.toString(), "!"); //$NON-NLS-1$
@@ -196,9 +218,7 @@ public class ClassPathDirectory {
                     fs = openOrGet(current);
                 } else { // fs != null
                     final Path path = fs.getPath(current);
-                    final String tempDirectory = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
-                    final String unzipFile = tempDirectory + File.separator + JARDirectory.TEMP_FOLDER_NAME + File.separator
-                            + hash + File.separator + path.getFileName();
+                    final String unzipFile = extractionRoot + File.separator + path.getFileName();
                     final Path destFile = Paths.get(unzipFile);
                     final File destinationFile = destFile.toFile();
                     if (!destinationFile.exists()) {
@@ -213,7 +233,7 @@ public class ClassPathDirectory {
             openedJar.jarFileName = jarFile;
             String directory = StringUtils.substringAfterLast(uri.toString(), "!"); //$NON-NLS-1$
             LOGGER.debug("Opening '" + jarFile + "' at directory '" + directory + "' ...");
-            final JARDirectory jarDirectory = new JARDirectory(hash, openedJar, directory);
+            final JARDirectory jarDirectory = new JARDirectory(extractionRoot, openedJar, directory);
             classPathDirectories.add(jarDirectory);
             return jarDirectory;
         }
@@ -229,8 +249,8 @@ public class ClassPathDirectory {
                 try {
                     jarDirectory.close();
                 } catch (IOException e) {
-                    LOGGER.error("Unable to close directory at " + jarDirectory.indexDirectory + " (hash : " + jarDirectory.hash
-                            + ").", e);
+                    LOGGER.error("Unable to close directory at " + jarDirectory.indexDirectory + " (location : "
+                            + jarDirectory.extractPath + ").", e);
                 } finally {
                     iterator.remove();
                 }
