@@ -17,7 +17,7 @@ Dictionary index
 |12  |`COUNTRY_CODE_ISO3`|Jul. 2015|Jul. 2015|country-codes.csv|
 |13  |`CURRENCY_CODE`|Jul. 2015|Jul. 2015|country-codes.csv|
 |14  |`CURRENCY_NAME`|Jul. 2015|Oct. 2015|country-codes.csv|
-|15  |`FIRST_NAME`|Jul. 2015|Oct. 2015|firstname_cleaned.csv|
+|15  |`FIRST_NAME`|Jul. 2015|Jun. 2016|firstname_cleaned.csv|
 |16  |`GENDER`|Jul. 2015|Jul. 2015|gender_cleaned.csv|
 |17  |`HR_DEPARTMENT`|Jul. 2015|Jul. 2015|department_cleaned.csv|
 |18  |`INDUSTRY`|Oct. 2015|Oct. 2015|industry_GICS_simplified.csv|
@@ -33,7 +33,7 @@ Dictionary index
 |28  |`WEEKDAY`|Jul. 2015|Oct. 2015|days_cleaned.csv|
 |29  |`FR_COMMUNE`|Nov. 2015|Jun. 2016|fr_comisimp2015.csv|
 |30  |`FR_DEPARTEMENT`|Nov. 2015|Nov. 2015|fr_depts2015.csv|
-|31  |`FR_REGION`|Nov. 2015|Nov. 2015|fr_reg2015.csv|
+|31  |`FR_REGION`|Nov. 2015|Sep. 2016|fr_reg2016.txt|
 |32  |`LANGUAGE`|Nov. 2015|Nov. 2015|languages_code_name.csv|
 |33  |`LANGUAGE_CODE_ISO2`|Nov. 2015|Nov. 2015|languages_code_name.csv|
 |34  |`LANGUAGE_CODE_ISO3`|Nov. 2015|Nov. 2015|languages_code_name.csv|
@@ -43,6 +43,7 @@ Dictionary index
 |38  |`MX_ESTADO_CODE`|Nov. 2015|Nov. 2015|mx_estado.csv|
 |39  |`ANSWER`|Feb. 2016|Jun. 2016|N/A|
 |40  |`LAST_NAME`|Jun. 2016|Jun. 2016|lastname12k.csv|
+|41  |`FR_REGION_LEGACY`|Sep. 2016|Sep. 2016|fr_reg2015.csv|
 
 
 Keyword index
