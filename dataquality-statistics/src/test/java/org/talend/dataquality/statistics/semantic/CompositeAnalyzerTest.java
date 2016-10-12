@@ -37,8 +37,8 @@ public class CompositeAnalyzerTest extends SemanticStatisticsTestBase {
 
     @Before
     public void setUp() throws Exception {
-        final URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
-        final URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
+        final URI ddPath = this.getClass().getResource(CategoryRecognizerBuilder.DEFAULT_DD_PATH).toURI();
+        final URI kwPath = this.getClass().getResource(CategoryRecognizerBuilder.DEFAULT_KW_PATH).toURI();
         final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
                 .ddPath(ddPath) //
                 .kwPath(kwPath) //

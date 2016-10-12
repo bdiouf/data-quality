@@ -234,8 +234,8 @@ public class CategoryRecognizerTest {
     public static void prepare() throws URISyntaxException, IOException {
         CategoryRecognizerBuilder b = CategoryRecognizerBuilder.newBuilder();
         // catRecognizer = b.es().host("localhost").port(9300).cluster("elasticsearch").build();
-        final URI ddPath = CategoryRecognizerTest.class.getResource("/luceneIdx/dictionary").toURI();
-        final URI kwPath = CategoryRecognizerTest.class.getResource("/luceneIdx/keyword").toURI();
+        final URI ddPath = CategoryRecognizerTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_DD_PATH).toURI();
+        final URI kwPath = CategoryRecognizerTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_KW_PATH).toURI();
         catRecognizer = b.lucene().ddPath(ddPath).kwPath(kwPath).build();
     }
 

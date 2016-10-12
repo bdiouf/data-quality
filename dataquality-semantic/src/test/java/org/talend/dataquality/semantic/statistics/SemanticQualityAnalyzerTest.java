@@ -62,8 +62,8 @@ public class SemanticQualityAnalyzerTest {
 
     @BeforeClass
     public static void setupBuilder() throws URISyntaxException {
-        final URI ddPath = SemanticQualityAnalyzerTest.class.getResource("/luceneIdx/dictionary").toURI();
-        final URI kwPath = SemanticQualityAnalyzerTest.class.getResource("/luceneIdx/keyword").toURI();
+        final URI ddPath = SemanticQualityAnalyzerTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_DD_PATH).toURI();
+        final URI kwPath = SemanticQualityAnalyzerTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_KW_PATH).toURI();
         builder = CategoryRecognizerBuilder.newBuilder() //
                 .ddPath(ddPath) //
                 .kwPath(kwPath) //

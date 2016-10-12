@@ -130,8 +130,8 @@ public class BigFileAnalyzerPerformanceTest {
 
     @BeforeClass
     public static void setupBuilder() throws URISyntaxException {
-        final URI ddPath = BigFileAnalyzerPerformanceTest.class.getResource("/luceneIdx/dictionary").toURI();
-        final URI kwPath = BigFileAnalyzerPerformanceTest.class.getResource("/luceneIdx/keyword").toURI();
+        final URI ddPath = BigFileAnalyzerPerformanceTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_DD_PATH).toURI();
+        final URI kwPath = BigFileAnalyzerPerformanceTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_KW_PATH).toURI();
         builder = CategoryRecognizerBuilder.newBuilder() //
                 .ddPath(ddPath) //
                 .kwPath(kwPath) //

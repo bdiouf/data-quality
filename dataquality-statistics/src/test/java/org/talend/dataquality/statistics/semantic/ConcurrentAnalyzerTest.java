@@ -47,8 +47,8 @@ public class ConcurrentAnalyzerTest extends SemanticStatisticsTestBase {
     @Test
     public void testThreadSafeConcurrentAccess() {
         try {
-            URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
-            URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
+            URI ddPath = this.getClass().getResource(CategoryRecognizerBuilder.DEFAULT_DD_PATH).toURI();
+            URI kwPath = this.getClass().getResource(CategoryRecognizerBuilder.DEFAULT_KW_PATH).toURI();
             assertNotNull("Keyword dictionary not loaded", kwPath);
             assertNotNull("data dictionary not loaded", ddPath);
             final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
@@ -94,8 +94,8 @@ public class ConcurrentAnalyzerTest extends SemanticStatisticsTestBase {
 
     @Test
     public void testThreadUnsafeConcurrentAccess() throws Exception {
-        final URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
-        final URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
+        final URI ddPath = this.getClass().getResource(CategoryRecognizerBuilder.DEFAULT_DD_PATH).toURI();
+        final URI kwPath = this.getClass().getResource(CategoryRecognizerBuilder.DEFAULT_KW_PATH).toURI();
         final CategoryRecognizerBuilder builder = CategoryRecognizerBuilder.newBuilder() //
                 .ddPath(ddPath) //
                 .kwPath(kwPath) //

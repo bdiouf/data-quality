@@ -56,8 +56,8 @@ public class AnalyzerPerformanceTest {
 
     @BeforeClass
     public static void setupBuilder() throws URISyntaxException {
-        final URI ddPath = AnalyzerPerformanceTest.class.getResource("/luceneIdx/dictionary").toURI();
-        final URI kwPath = AnalyzerPerformanceTest.class.getResource("/luceneIdx/keyword").toURI();
+        final URI ddPath = AnalyzerPerformanceTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_DD_PATH).toURI();
+        final URI kwPath = AnalyzerPerformanceTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_KW_PATH).toURI();
         builder = CategoryRecognizerBuilder.newBuilder() //
                 .ddPath(ddPath) //
                 .kwPath(kwPath) //

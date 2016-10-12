@@ -29,6 +29,10 @@ public class CategoryRecognizerBuilder implements Serializable {
 
     private static CategoryRecognizerBuilder INSTANCE;
 
+    public static final String DEFAULT_DD_PATH = "/index/dictionary/";
+
+    public static final String DEFAULT_KW_PATH = "/index/keyword/";
+
     private Mode mode;
 
     private URI ddPath;

@@ -29,12 +29,13 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.talend.dataquality.semantic.index.DictionarySearcher;
 import org.talend.dataquality.semantic.index.utils.optimizer.CategoryOptimizer;
+import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 
 public class SemanticDictionaryGenerator {
 
-    private static final String DD_PATH = "src/main/resources/luceneIdx/dictionary/";
+    private static final String DD_PATH = "src/main/resources" + CategoryRecognizerBuilder.DEFAULT_DD_PATH;
 
-    private static final String KW_PATH = "src/main/resources/luceneIdx/keyword/";
+    private static final String KW_PATH = "src/main/resources" + CategoryRecognizerBuilder.DEFAULT_KW_PATH;
 
     private static Pattern SPLITTER = Pattern.compile("\\|");
 

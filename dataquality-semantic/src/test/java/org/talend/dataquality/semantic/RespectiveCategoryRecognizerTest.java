@@ -20,7 +20,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -713,8 +717,8 @@ public class RespectiveCategoryRecognizerTest {
     public static void prepare() throws URISyntaxException, IOException {
         CategoryRecognizerBuilder b = CategoryRecognizerBuilder.newBuilder();
         // catRecognizer = b.es().host("localhost").port(9300).cluster("elasticsearch").build();
-        final URI ddPath = RespectiveCategoryRecognizerTest.class.getResource("/luceneIdx/dictionary").toURI();
-        final URI kwPath = RespectiveCategoryRecognizerTest.class.getResource("/luceneIdx/keyword").toURI();
+        final URI ddPath = RespectiveCategoryRecognizerTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_DD_PATH).toURI();
+        final URI kwPath = RespectiveCategoryRecognizerTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_KW_PATH).toURI();
         catRecognizer = b.lucene().ddPath(ddPath).kwPath(kwPath).build();
     }
 

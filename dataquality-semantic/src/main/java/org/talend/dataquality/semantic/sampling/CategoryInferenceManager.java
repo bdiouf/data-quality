@@ -93,8 +93,8 @@ public class CategoryInferenceManager {
         CategoryRecognizerBuilder b = CategoryRecognizerBuilder.newBuilder();
         // get the lucene index.
         try {
-            final URI ddPath = this.getClass().getResource("/luceneIdx/dictionary").toURI();
-            final URI kwPath = this.getClass().getResource("/luceneIdx/keyword").toURI();
+            final URI ddPath = this.getClass().getResource(CategoryRecognizerBuilder.DEFAULT_DD_PATH).toURI();
+            final URI kwPath = this.getClass().getResource(CategoryRecognizerBuilder.DEFAULT_KW_PATH).toURI();
             return b.lucene().ddPath(ddPath).kwPath(kwPath).build();
         } catch (URISyntaxException | IOException e) {
             throw new RuntimeException("Unable to find resources.", e);
