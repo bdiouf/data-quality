@@ -15,7 +15,9 @@ package org.talend.dataquality.semantic.recognizer;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URI;
+import java.net.URISyntaxException;
 
+import org.apache.log4j.Logger;
 import org.talend.dataquality.semantic.index.DictionarySearcher;
 import org.talend.dataquality.semantic.index.LuceneIndex;
 
@@ -24,6 +26,8 @@ import org.talend.dataquality.semantic.index.LuceneIndex;
  *
  */
 public class CategoryRecognizerBuilder implements Serializable {
+
+    private static final Logger LOGGER = Logger.getLogger(CategoryRecognizerBuilder.class);
 
     private static final long serialVersionUID = -4113525921010790756L;
 
@@ -82,6 +86,13 @@ public class CategoryRecognizerBuilder implements Serializable {
 
     private LuceneIndex getDataDictIndex() {
         if (dataDictIndex == null) {
+            if (ddPath == null) {
+                try {
+                    ddPath = CategoryRecognizerBuilder.class.getResource(DEFAULT_DD_PATH).toURI();
+                } catch (URISyntaxException e) {
+                    LOGGER.error(e.getMessage(), e);
+                }
+            }
             dataDictIndex = new LuceneIndex(ddPath, DictionarySearcher.DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);
         }
         return dataDictIndex;
@@ -89,6 +100,13 @@ public class CategoryRecognizerBuilder implements Serializable {
 
     private LuceneIndex getKeywordIndex() {
         if (keywordIndex == null) {
+            if (kwPath == null) {
+                try {
+                    kwPath = CategoryRecognizerBuilder.class.getResource(DEFAULT_KW_PATH).toURI();
+                } catch (URISyntaxException e) {
+                    LOGGER.error(e.getMessage(), e);
+                }
+            }
             keywordIndex = new LuceneIndex(kwPath, DictionarySearcher.DictionarySearchMode.MATCH_SEMANTIC_KEYWORD);
         }
         return keywordIndex;
