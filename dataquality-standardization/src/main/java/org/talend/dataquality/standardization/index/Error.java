@@ -12,13 +12,17 @@
 // ============================================================================
 package org.talend.dataquality.standardization.index;
 
+import java.io.Serializable;
+
 /**
  * record the error information
  * 
  * @author tychu
  *
  */
-public class Error {
+public class Error implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private boolean status = true;
 
