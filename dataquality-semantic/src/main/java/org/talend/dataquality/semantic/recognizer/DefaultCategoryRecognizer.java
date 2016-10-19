@@ -132,8 +132,9 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
     public String[] process(String data) {
         Set<String> categories = getSubCategorySet(data);
         if (categories.size() > 0) {
-            for (String cat : categories) {
-                incrementCategory(cat, SemanticCategoryEnum.valueOf(cat).getDisplayName());
+            for (String catId : categories) {
+                SemanticCategoryEnum cat = SemanticCategoryEnum.getCategoryById(catId);
+                incrementCategory(catId, cat == null ? catId : cat.getDisplayName());
             }
         } else {
             incrementCategory(StringUtils.EMPTY);
