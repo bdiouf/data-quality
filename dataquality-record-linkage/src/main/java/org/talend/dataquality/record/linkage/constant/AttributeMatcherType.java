@@ -72,7 +72,8 @@ public enum AttributeMatcherType {
     public static String[] getAllTypes() {
         List<String> types = new ArrayList<String>();
         for (int i = 0; i < AttributeMatcherType.values().length; i++) {
-            if (i != DUMMY.ordinal()) {
+            // LCS is removed from all types until TDQ-12704 is done
+            if (i != DUMMY.ordinal() && i != LCS.ordinal()) {
                 types.add(AttributeMatcherType.values()[i].getLabel());
             }
         }
