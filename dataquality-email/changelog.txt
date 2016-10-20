@@ -1,3 +1,6 @@
+V1.0.2 2016-10-20
+	(no change in this version)
+
 V1.0.1 2016-09-28
 	TDQ-11093 create email valiation API
     

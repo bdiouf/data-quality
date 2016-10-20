@@ -1,3 +1,6 @@
+V3.2.4 2016-10-20
+	TDQ-12143 make classes Serializable to support tSynonymSearch on spark
+
 V3.2.3 2016-09-28
 	- TDQ-12143 change org.talend.dataquality.standardization.index.Error class to Serializable to support tSynonymSearch on spark
 

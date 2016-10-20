@@ -1,3 +1,9 @@
+V1.5.4 2016-10-20
+	- TDQ-12551 properly reopen local index in SemanticAnalyzer
+	- TDQ-12552 provide a method to config the path for local index extraction
+	- TDQ-12653 rename path of embeded index resources
+	- TDQ-12679 use categoryID as label when it cannot be resolved out of the box
+
 V1.5.3 2016-09-28
 	- TDQ-12312 improve the EMAIL regex to support more cases for semantic discovery
 	- TDQ-12506 add IBAN regex and IBAN validator class

@@ -1,3 +1,7 @@
+V3.2.4 2016-10-20
+	- TDQ-12693 fix the wrong function name in the MatchRule/match analysis function list
+	- TDQ_12703 LCS algorithm is not expected to appear in match analysis
+
 V3.2.3 2016-09-28
 	- TDQ-12057 Multipass matching - add option to compare to original records as well as survived master
 

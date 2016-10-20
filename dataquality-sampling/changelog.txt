@@ -1,3 +1,6 @@
+V2.3.4 2016-10-20
+	- TDQ-12269 fix an NPE due to uninitialized Random generator in data masking functions
+
 V2.3.3 2016-09-28
 	- TDQ-11865 add keepEmpty option in the API
 	- TDQ-12595 Generate phone numbers which are unique and valid
