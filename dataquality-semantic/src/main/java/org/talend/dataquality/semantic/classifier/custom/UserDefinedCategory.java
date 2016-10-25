@@ -27,9 +27,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class UserDefinedCategory implements ISubCategory {
 
-    private String id;
-
     private String name;
+
+    private String label;
 
     private String description;
 
@@ -40,58 +40,66 @@ public class UserDefinedCategory implements ISubCategory {
     private UserDefinedRegexValidator validator;
 
     @JsonCreator
-    public UserDefinedCategory(@JsonProperty("id") String id, @JsonProperty("name") String name) {
-        if (id == null) {
-            throw new IllegalArgumentException("A category cannot have a null id");
+    public UserDefinedCategory(@JsonProperty("name") String name, @JsonProperty("label") String label) {
+        if (name == null) {
+            throw new IllegalArgumentException("A category has no name. Give a name, any name.");
         }
-        this.id = id;
-        this.name = name; // avoid null name here
+        this.name = name;
+        this.label = label; // avoid null name here
     }
 
-    public UserDefinedCategory() {
+    public UserDefinedCategory(String name) {
+        this(name, name);
     }
 
-    public UserDefinedCategory(String id) {
-        this(id, id);
-    }
-
-    public UserDefinedCategory(String id, SemanticCategoryEnum cat) {
-        if (id == null) {
-            throw new IllegalArgumentException("A category cannot have a null id");
+    public UserDefinedCategory(String name, SemanticCategoryEnum cat) {
+        if (name == null) {
+            throw new IllegalArgumentException("A category has no name. Give a name, any name.");
         }
-        this.id = id;
-        this.name = (cat == null) ? id : cat.getDisplayName(); // avoid null name here
+        this.name = name;
+        this.label = (cat == null) ? name : cat.getDisplayName(); // avoid null name here
     }
 
     /**
-     * Getter for id.
+     * Getter for the category name, keep the method name getId() for API compatibility
+     * Note: there is no getter for the really id field. Don't worry, it's useless for this class.
      * 
-     * @return the id
+     * @return the category name
      */
     @Override
     public String getId() {
-        return this.id;
-    }
-
-    /**
-     * Sets the id.
-     * 
-     * @param id the id to set (no null allowed)
-     */
-    public void setId(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("A category cannot have a null id");
-        }
-        this.id = id;
-    }
-
-    @Override
-    public String getName() {
         return name;
     }
 
+    public void setId(String id) {
+        this.name = id;
+    }
+
+    /**
+     * Getter for the category label, keep the method name getName() for API compatibility
+     * 
+     * @return the category label
+     */
+    @Override
+    public String getName() {
+        return label;
+    }
+
     public void setName(String name) {
-        this.name = name;
+        this.label = name;
+    }
+
+    /**
+     * Getter for the category label
+     * 
+     * @return the category label as the method name expected :P
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     /**
@@ -155,7 +163,7 @@ public class UserDefinedCategory implements ISubCategory {
      */
     @Override
     public int hashCode() {
-        return this.id.hashCode();
+        return this.name.hashCode();
     }
 
     /*
@@ -165,7 +173,7 @@ public class UserDefinedCategory implements ISubCategory {
      */
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) ? this.id.equals(((UserDefinedCategory) obj).id) : false;
+        return (obj != null) ? this.name.equals(((UserDefinedCategory) obj).name) : false;
     }
 
     @Override

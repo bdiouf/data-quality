@@ -75,6 +75,15 @@ public class UDCategorySerDeser {
         }
     }
 
+    public static UserDefinedClassifier readJsonFile(String content) throws IOException {
+        try {
+            return new ObjectMapper().readValue(content, UserDefinedClassifier.class);
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
     /**
      * 
      * Write the content to json file.

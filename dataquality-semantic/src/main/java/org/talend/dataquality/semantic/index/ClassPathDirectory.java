@@ -28,13 +28,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.zip.CRC32;
-import java.util.zip.Checksum;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.talend.dataquality.semantic.api.CategoryRegistryManager;
 
 /**
  * A read-only directory that reads index from a JAR file. It supports several URI scheme:
@@ -50,11 +49,6 @@ public class ClassPathDirectory {
 
     private static JARDirectoryProvider provider = new SingletonProvider();
 
-    private static String localIndexFolder = System.getProperty("java.io.tmpdir") + File.separator
-            + "org.talend.dataquality.semantic";
-
-    private static boolean useCustomExtractionRoot = false;
-
     private ClassPathDirectory() {
     }
 
@@ -62,10 +56,11 @@ public class ClassPathDirectory {
      * Set the location of index extraction for directories opened by jar URI.
      * <p/>
      * By default, if this method is not called, the index will be extracted to a sub-folder of java.io.tmpdir.
+     * 
+     * @deprecated use {@link CategoryRegistryManager.setLocalRegistryPath(folder)} instead
      */
     public static void setLocalIndexFolder(String folder) {
-        localIndexFolder = folder;
-        useCustomExtractionRoot = true;
+        CategoryRegistryManager.setLocalRegistryPath(folder);
     }
 
     /**
@@ -199,13 +194,8 @@ public class ClassPathDirectory {
         @Override
         public Directory get(URI uri) throws IOException {
             String jarFile = StringUtils.substringBefore(uri.toString(), "!"); //$NON-NLS-1$
-            String extractionRoot = localIndexFolder;
-            if (!useCustomExtractionRoot) { // use a generated hash as subfolder name for index extraction
-                Checksum checksum = new CRC32();
-                checksum.update(jarFile.getBytes(), 0, jarFile.getBytes().length);
-                final String hash = Long.toHexString(checksum.getValue());
-                extractionRoot = localIndexFolder + File.separator + hash;
-            }
+
+            String extractionRoot = CategoryRegistryManager.getLocalRegistryPath();
             JARDirectory.JARDescriptor openedJar = new JARDirectory.JARDescriptor();
             // Extract all nested JARs
             StringTokenizer tokenizer = new StringTokenizer(uri.toString(), "!"); //$NON-NLS-1$

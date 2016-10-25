@@ -24,12 +24,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
-import org.talend.dataquality.semantic.classifier.custom.UDCategorySerDeser;
+import org.talend.dataquality.semantic.api.CategoryRegistryManager;
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedCategory;
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedClassifier;
 import org.talend.dataquality.semantic.classifier.impl.DataDictFieldClassifier;
 import org.talend.dataquality.semantic.index.Index;
+import org.talend.dataquality.semantic.model.DQCategory;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
@@ -51,9 +51,12 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
 
     private long total = 0;
 
+    private CategoryRegistryManager crm;
+
     public DefaultCategoryRecognizer(Index dictionary, Index keyword) throws IOException {
         dataDictFieldClassifier = new DataDictFieldClassifier(dictionary, keyword);
-        userDefineClassifier = UDCategorySerDeser.getRegexClassifier();
+        crm = CategoryRegistryManager.getInstance();
+        userDefineClassifier = crm.getRegexClassifier();
     }
 
     @Override
@@ -133,8 +136,8 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
         Set<String> categories = getSubCategorySet(data);
         if (categories.size() > 0) {
             for (String catId : categories) {
-                SemanticCategoryEnum cat = SemanticCategoryEnum.getCategoryById(catId);
-                incrementCategory(catId, cat == null ? catId : cat.getDisplayName());
+                DQCategory meta = crm.getCategoryMetadataByName(catId);
+                incrementCategory(catId, meta == null ? catId : meta.getLabel());
             }
         } else {
             incrementCategory(StringUtils.EMPTY);
@@ -144,14 +147,7 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
     }
 
     private void incrementCategory(String catId) {
-        CategoryFrequency c = categoryToFrequency.get(catId);
-        if (c == null) {
-            c = new CategoryFrequency(new UserDefinedCategory(catId, catId));
-            categoryToFrequency.put(catId, c);
-            catList.add(c);
-        }
-        c.count++;
-
+        incrementCategory(catId, catId);
     }
 
     private void incrementCategory(String catId, String catName) {

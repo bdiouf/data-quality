@@ -44,10 +44,12 @@ public class SemanticType {
             if (entry.getValue() > max) {
                 max = entry.getValue();
                 electedCategory = entry.getKey().getCategoryId();
-                categoryOrdinal = SemanticCategoryEnum.getCategoryById(electedCategory).ordinal();
+                SemanticCategoryEnum cat = SemanticCategoryEnum.getCategoryById(electedCategory);
+                categoryOrdinal = cat == null ? 0 : cat.ordinal(); // rank user category higher than provided ones
             } else if (entry.getValue() == max) {
                 final String currentCat = entry.getKey().getCategoryId();
-                final int currentOrdinal = SemanticCategoryEnum.getCategoryById(currentCat).ordinal();
+                SemanticCategoryEnum cat = SemanticCategoryEnum.getCategoryById(currentCat);
+                final int currentOrdinal = cat == null ? 0 : cat.ordinal(); // rank user category higher than provided ones
                 if (currentOrdinal < categoryOrdinal) {
                     electedCategory = currentCat;
                     categoryOrdinal = currentOrdinal;
