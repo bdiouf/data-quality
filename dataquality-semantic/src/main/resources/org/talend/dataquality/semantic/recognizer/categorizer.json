@@ -4,7 +4,7 @@
         "name" : "DE Postal Code",
         "validator" : { "patternString" : "^(?!01000|99999)(0[1-9]\\d{3}|[1-9]\\d{4})$" }
       },
-      { "description" : "email",
+      { "description" : "Email address",
         "filter" : { "filterParam" : "@",
             "filterType" : "MUST_CONTAIN"
           },
@@ -13,7 +13,7 @@
         "name" : "Email",
         "validator" : { "patternString" : "^(([^\\s\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]]|')+|(\\\"[^\\\"]*\\\"))(\\.(([^\\s\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]]|')+|(\\\"[^\\\"]*\\\")))*@([\\p{L}\\p{M}0-9]([\\p{L}\\p{M}0-9\\-]{0,61}[\\p{L}\\p{M}0-9])?\\.)+[\\p{L}\\p{M}]{2,6}$" }
       },
-      { "description" : "US Phone Number",
+      { "description" : "American phone number",
         "id" : "US_PHONE",
         "mainCategory" : "AlphaNumeric",
         "name" : "US Phone",
@@ -58,7 +58,7 @@
         "name" : "BE Postal Code",
         "validator" : { "patternString" : "^(F-[0-9]{4,5}|B-[0-9]{4})$" }
       },
-      { "description" : "French Social Security Number",
+      { "description" : "French social security number",
         "id" : "FR_SSN",
         "mainCategory" : "Numeric",
         "name" : "FR Social Security Number",
@@ -70,13 +70,13 @@
         "name" : "Localization",
         "validator" : { "patternString" : "^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\\.{1}[0-9]{5,6}$" }
       },
-      { "description" : "Web site URL",
+      { "description" : "Website URL",
         "id" : "URL",
         "mainCategory" : "AlphaNumeric",
         "name" : "URL",
         "validator" : { "patternString" : "^((?:ht|f)tps?)\\:\\/\\/([a-zA-Z0-9\\-\\._]+:[a-zA-Z0-9\\-\\._]+@)?((?:[a-zA-Z0-9\\-\\._]+(?:\\.[a-zA-Z0-9\\-\\._]+)+)|localhost)(\\/?)([a-zA-Z0-9\\-\\.\\,\\'\\/\\+\\&%\\$_\\\\]*)?([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\?\\:\\\"\\'\\,\\|\\~\\;#\\\\]*)$" }
       },
-      { "description" : "Web site domain",
+      { "description" : "Website domain",
         "id" : "WEB_DOMAIN",
         "mainCategory" : "AlphaNumeric",
         "name" : "Web Domain",
@@ -91,19 +91,19 @@
             "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.UKPhoneNumberValidator"
         }
       },
-      { "description" : "US Social Security number",
+      { "description" : "US social security number",
         "id" : "US_SSN",
         "mainCategory" : "Numeric",
         "name" : "US Social Security Number",
         "validator" : { "patternString" : "^\\d{3}-\\d{2}-\\d{4}$" }
       },
-      { "description" : "national identification number, national identity number, or national insurance number generally called an NI Number (NINO)",
+      { "description" : "National Insurance number, generally called an NI Number (NINO)",
         "id" : "UK_SSN",
         "mainCategory" : "AlphaNumeric",
         "name" : "UK Social Security Number",
         "validator" : { "patternString" : "^[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}([0-9]{6}|( [0-9]{2}){3} )[A-DFM]{0,1}$" }
       },
-      { "description" : "Swedish person number",
+      { "description" : "The personal identity number (Swedish: personnummer) is the Swedish national identification number.",
         "id" : "SE_SSN",
         "mainCategory" : "Numeric",
         "name" : "SE Social Security Number",
@@ -175,7 +175,7 @@
             "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.SedolValidator" 
             }
       },
-      { "description" : "French Phone Number",
+      { "description" : "French phone number",
         "id" : "FR_PHONE",
         "mainCategory" : "Numeric",
         "name" : "FR Phone",
@@ -184,22 +184,22 @@
             "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.FRPhoneNumberValidator"
         }
       },
-      { "description" : "US State code",
+      { "description" : "US state code",
         "id" : "US_STATE_CODE",
         "mainCategory" : "Alpha",
         "name" : "US State Code",
         "validator" : { "patternString" : "^(A[KLRZ]|C[AOT]|DE|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])$" }
       },
-      { "description" : "Bank routing transit Number",
+      { "description" : "Bank routing transit number",
         "id" : "BANK_ROUTING_TRANSIT_NUMBER",
         "mainCategory" : "Numeric",
         "name" : "Bank Routing Transit Number",
         "validator" : { "patternString" : "^((0[0-9])|(1[0-2])|(2[1-9])|(3[0-2])|(6[1-9])|(7[0-2])|80)([0-9]{7})$" }
       },
-      { "description" : "US American Express Credit card",
-        "id" : "US_CREDIT_CARD",
+      { "description" : "American Express card",
+        "id" : "AMEX_CARD",
         "mainCategory" : "Numeric",
-        "name" : "AMEX Credit Card",
+        "name" : "Amex Card",
         "validator" : { "patternString" : "^3[47][0-9]{13}$" }
       },
       { "description" : "Passport number",
@@ -208,16 +208,16 @@
         "name" : "Passport",
         "validator" : { "patternString" : "^[A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2}$" }
       },
-      { "description" : "MasterCard Credit card",
+      { "description" : "MasterCard",
         "id" : "MASTERCARD",
         "mainCategory" : "Numeric",
-        "name" : "MASTERCARD Credit Card",
+        "name" : "MasterCard",
         "validator" : { "patternString" : "^5[1-5][0-9]{14}$" }
       },
-      { "description" : "Visa Credit card",
-        "id" : "VISACARD",
+      { "description" : "Visa card",
+        "id" : "VISA_CARD",
         "mainCategory" : "Numeric",
-        "name" : "Visa Credit Card",
+        "name" : "Visa Card",
         "validator" : { "patternString" : "^4[0-9]{15}$" }
       },
       { "description" : "US postal code",
@@ -271,25 +271,25 @@
       { "description" : "HDFS URL",
         "id" : "HDFS_URL",
         "mainCategory" : "AlphaNumeric",
-        "name" : "HDFS_URL",
+        "name" : "HDFS URL",
         "validator" : { "patternString" : "^(?:hdfs)\\:\\/\\/((?:[a-zA-Z0-9\\-\\._]+(?:\\.[a-zA-Z0-9\\-\\._]+)+)|localhost)\\/([a-zA-Z0-9\\-\\.\\/\\+\\&\\%\\$_\\\\]*)?([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\#\\~]*)$" }
       },
       { "description" : "FILE URL",
         "id" : "FILE_URL",
         "mainCategory" : "AlphaNumeric",
-        "name" : "FILE_URL",
+        "name" : "File URL",
         "validator" : { "patternString" : "^(?:file)\\:(?:\\/){2,3}((?:[a-zA-Z0-9\\-\\._]+(?:[a-zA-Z0-9\\-\\.\\:\\|_]+)+)|localhost)\\/([a-zA-Z0-9\\-\\.\\/\\+\\&\\%\\$_\\|\\:]*)?$" }
       },
       { "description" : "MAIL TO URL",
         "id" : "MAILTO_URL",
         "mainCategory" : "AlphaNumeric",
-        "name" : "MAILTO_URL",
+        "name" : "MailTo URL",
         "validator" : { "patternString" : "^(?:mailto)\\:([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}(,)?)*((?:\\?)((subject|to|body|cc)=(([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})|([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\?\\:\\\"\\'\\,\\|\\~\\;#\\\\])*)+(\\&)?)*)*$" }
       },
       { "description" : "DATA URL",
         "id" : "DATA_URL",
         "mainCategory" : "AlphaNumeric",
-        "name" : "DATA_URL",
+        "name" : "Data URL",
         "validator" : { "patternString" : "^(?:data)\\:([a-z]+\\/[a-z]+)?(;charset=([\\w-])*)?(;base64)?,([\\w\\!\\$\\&\\'\\,\\(\\)\\*\\+\\,\\;\\=\\-\\.\\_\\~\\:\\@\\/\\?\\%\\s]+)$" }
       },
       { "description" : "IBAN",

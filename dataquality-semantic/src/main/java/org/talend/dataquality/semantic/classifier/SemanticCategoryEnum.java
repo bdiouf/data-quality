@@ -102,7 +102,6 @@ public enum SemanticCategoryEnum {
     FR_VAT_NUMBER("FR VAT Number", "French VAT number", RecognizerType.REGEX),
 
     // US
-    US_CREDIT_CARD("AmEx Credit Card", "US American Express Credit card", RecognizerType.REGEX),
     US_PHONE("US Phone", "US Phone Number", RecognizerType.REGEX),
     US_POSTAL_CODE("US Postal Code", "US postal code", RecognizerType.REGEX),
     US_SSN("US Social Security Number", "US Social Security number", RecognizerType.REGEX),
@@ -132,8 +131,11 @@ public enum SemanticCategoryEnum {
             "Latitude and longitude coordinates separated by a comma in the form: N 0:59:59.99,E 0:59:59.99",
             RecognizerType.REGEX),
     MAC_ADDRESS("MAC Address", "MAC Address.", RecognizerType.REGEX),
-    MASTERCARD("Mastercard", "MasterCard Credit card", RecognizerType.REGEX),
-    VISACARD("Visa Card", "Visa Credit card", RecognizerType.REGEX),
+
+    AMEX_CARD("Amex Card", "American Express card", RecognizerType.REGEX),
+    MASTERCARD("MasterCard", "MasterCard", RecognizerType.REGEX),
+    VISA_CARD("Visa Card", "Visa card", RecognizerType.REGEX),
+
     PASSPORT("Passport", "Passport number", RecognizerType.REGEX),
     SEDOL("SEDOL", "Stock Exchange Daily Official List", RecognizerType.REGEX),
     SE_SSN("SE Social Security Number", "Swedish person number", RecognizerType.REGEX),
@@ -163,6 +165,7 @@ public enum SemanticCategoryEnum {
         REGEX,
         OPEN_INDEX,
         CLOSED_INDEX,
+        KEYWORD,
         OTHER
     }
 
