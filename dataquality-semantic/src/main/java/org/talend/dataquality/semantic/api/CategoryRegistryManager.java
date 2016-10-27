@@ -40,7 +40,7 @@ public class CategoryRegistryManager {
 
     private static final Map<String, CategoryRegistryManager> instances = new HashMap<>();
 
-    private static boolean includeLocalCategoryRegistry = false;
+    private static boolean includeLocalCategoryRegistry = true;
 
     private static String localRegistryPath = System.getProperty("java.io.tmpdir") + File.separator
             + "org.talend.dataquality.semantic";

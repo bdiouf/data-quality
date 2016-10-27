@@ -27,6 +27,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class UserDefinedCategory implements ISubCategory {
 
+    private String id;
+
     private String name;
 
     private String label;
@@ -72,7 +74,7 @@ public class UserDefinedCategory implements ISubCategory {
     }
 
     public void setId(String id) {
-        this.name = id;
+        this.id = id;
     }
 
     /**
@@ -86,7 +88,7 @@ public class UserDefinedCategory implements ISubCategory {
     }
 
     public void setName(String name) {
-        this.label = name;
+        this.name = name;
     }
 
     /**
