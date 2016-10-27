@@ -28,6 +28,8 @@ public interface ISubCategory {
 
     public String getName();
 
+    public String getLabel();
+
     public ISemanticFilter getFilter();
 
     public ISemanticValidator getValidator();

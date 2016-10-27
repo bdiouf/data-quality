@@ -62,40 +62,25 @@ public class UserDefinedCategory implements ISubCategory {
         this.label = (cat == null) ? name : cat.getDisplayName(); // avoid null name here
     }
 
-    /**
-     * Getter for the category name, keep the method name getId() for API compatibility
-     * Note: there is no getter for the really id field. Don't worry, it's useless for this class.
-     * 
-     * @return the category name
-     */
     @Override
     public String getId() {
-        return name;
+        return id;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     * Getter for the category label, keep the method name getName() for API compatibility
-     * 
-     * @return the category label
-     */
     @Override
     public String getName() {
-        return label;
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * Getter for the category label
-     * 
-     * @return the category label as the method name expected :P
-     */
+    @Override
     public String getLabel() {
         return label;
     }
@@ -180,6 +165,6 @@ public class UserDefinedCategory implements ISubCategory {
 
     @Override
     public String toString() {
-        return getName();
+        return getLabel();
     }
 }

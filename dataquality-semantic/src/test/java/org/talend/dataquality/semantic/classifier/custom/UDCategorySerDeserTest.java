@@ -75,7 +75,7 @@ public class UDCategorySerDeserTest {
 
         for (String[] cat : CATEGORIES) {
             UserDefinedCategory c = new UserDefinedCategory(cat[0]);
-            c.setName(cat[1]);
+            c.setLabel(cat[1]);
             UserDefinedRegexValidator v = new UserDefinedRegexValidator();
             v.setPatternString(cat[2]);
             c.setValidator(v);
@@ -100,7 +100,7 @@ public class UDCategorySerDeserTest {
         UserDefinedClassifier userDefinedClassifier = UDCategorySerDeser.readJsonFile(new FileInputStream(file));
         assertNotNull(userDefinedClassifier);
         int nbCat = userDefinedClassifier.getClassifiers().size();
-        assertEquals("Expected " + CATEGORIES.length + "categories but get " + nbCat, CATEGORIES.length, nbCat); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals("Unexpected category count! ", CATEGORIES.length, nbCat); //$NON-NLS-1$ //$NON-NLS-2$
 
         assertTrue(file.delete());
     }

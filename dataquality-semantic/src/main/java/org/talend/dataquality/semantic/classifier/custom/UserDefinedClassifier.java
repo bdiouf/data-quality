@@ -129,7 +129,7 @@ public class UserDefinedClassifier extends AbstractSubCategoryClassifier {
             }
             ISemanticValidator validator = classifier.getValidator();
             if (validator != null && validator.isValid(str)) {
-                catSet.add(classifier.getId());
+                catSet.add(classifier.getName());
             }
         }
         return catSet;

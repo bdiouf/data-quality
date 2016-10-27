@@ -172,9 +172,9 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
             @Override
             public int compare(CategoryFrequency o1, CategoryFrequency o2) {
                 // The EMPTY category must always be ranked after the others
-                if ("".equals(o1.category.getId())) {
+                if ("".equals(o1.category.getName())) {
                     return 1;
-                } else if ("".equals(o2.category.getId())) {
+                } else if ("".equals(o2.category.getName())) {
                     return -1;
                 }
                 return (int) (o2.count - o1.count);

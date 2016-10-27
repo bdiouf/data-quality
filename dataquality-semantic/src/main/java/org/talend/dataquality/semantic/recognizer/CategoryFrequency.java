@@ -37,11 +37,11 @@ public class CategoryFrequency implements Comparable<CategoryFrequency> {
     }
 
     public String getCategoryId() {
-        return category != null ? category.getId() : "";
+        return category != null ? category.getName() : "";
     }
 
     public String getCategoryName() {
-        return category != null ? category.getName() : "";
+        return category != null ? category.getLabel() : "";
     }
 
     public float getFrequency() {

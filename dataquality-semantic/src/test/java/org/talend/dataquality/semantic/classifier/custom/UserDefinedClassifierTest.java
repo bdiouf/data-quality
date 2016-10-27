@@ -12,13 +12,26 @@
 // ============================================================================
 package org.talend.dataquality.semantic.classifier.custom;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -299,7 +312,7 @@ public class UserDefinedClassifierTest {
         Set<ISubCategory> classifiers = userDefinedClassifier.getClassifiers();
         Set<String> names = new HashSet<>();
         for (ISubCategory iSubCategory : classifiers) {
-            String name = iSubCategory.getName();
+            String name = iSubCategory.getLabel();
             assertTrue("Category Name: " + name + " is duplicated!", names.add(name)); //$NON-NLS-1$//$NON-NLS-2$
         }
     }
@@ -310,7 +323,7 @@ public class UserDefinedClassifierTest {
         Set<ISubCategory> classifiers = userDefinedClassifier.getClassifiers();
         Set<String> ids = new HashSet<>();
         for (ISubCategory iSubCategory : classifiers) {
-            String id = iSubCategory.getId();
+            String id = iSubCategory.getName();
             assertTrue("Category Id: " + id + " is duplicated!", ids.add(id)); //$NON-NLS-1$//$NON-NLS-2$
         }
     }
@@ -330,13 +343,13 @@ public class UserDefinedClassifierTest {
         String id = "this is the Id"; //$NON-NLS-1$
         UserDefinedCategory cat = new UserDefinedCategory(id);
         assertTrue(userDefinedClassifier.insertOrUpdateSubCategory(cat));
-        assertEquals("by default, the name should be same as the id!", id, cat.getName()); //$NON-NLS-1$
-        cat.setName("my name"); //$NON-NLS-1$
+        assertEquals("by default, the name should be same as the id!", id, cat.getLabel()); //$NON-NLS-1$
+        cat.setLabel("my name"); //$NON-NLS-1$
         assertTrue(userDefinedClassifier.insertOrUpdateSubCategory(cat));
         Iterator<ISubCategory> it = userDefinedClassifier.getClassifiers().iterator();
         while (it.hasNext()) {
             ISubCategory c = it.next();
-            assertEquals(cat.getName(), c.getName());
+            assertEquals(cat.getLabel(), c.getLabel());
         }
     }
 
@@ -437,7 +450,7 @@ public class UserDefinedClassifierTest {
                 sizeBefore + 1, sizeAfter);
 
         UserDefinedCategory cat2 = new UserDefinedCategory(id);
-        cat2.setName("my name"); //$NON-NLS-1$
+        cat2.setLabel("my name"); //$NON-NLS-1$
         assertFalse(userDefinedClassifier.addSubCategory(cat2));
         sizeAfter = userDefinedClassifier.getClassifiers().size();
         assertEquals(
