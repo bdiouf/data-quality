@@ -40,12 +40,12 @@ public class CategoryRegistryManager {
 
     private static final Map<String, CategoryRegistryManager> instances = new HashMap<>();
 
-    private static boolean includeLocalCategoryRegistry = true;
+    private static boolean usingLocalCategoryRegistry = false;
 
     private static String localRegistryPath = System.getProperty("java.io.tmpdir") + File.separator
             + "org.talend.dataquality.semantic";
 
-    public static final String CATEGORY_SUBFOLDER_NAME = "index/category";
+    public static final String CATEGORY_SUBFOLDER_NAME = "category";
 
     public static final String DICTIONARY_SUBFOLDER_NAME = "index/dictionary";
 
@@ -69,7 +69,7 @@ public class CategoryRegistryManager {
         this.contextName = contextName;
 
         loadBaseCategories();
-        if (includeLocalCategoryRegistry) {
+        if (usingLocalCategoryRegistry) {
             try {
                 loadRegisteredCategories();
             } catch (IOException e) {
@@ -91,15 +91,24 @@ public class CategoryRegistryManager {
 
     public static void setLocalRegistryPath(String folder) {
         localRegistryPath = folder;
-        includeLocalCategoryRegistry = true;
+        usingLocalCategoryRegistry = true;
     }
 
     public static String getLocalRegistryPath() {
         return localRegistryPath;
     }
 
+    public static void setUsingLocalCategoryRegistry(boolean shouldInclude) {
+        usingLocalCategoryRegistry = shouldInclude;
+    }
+
+    public static boolean isUsingLocalCategoryRegistry() {
+        return usingLocalCategoryRegistry;
+    }
+
     private void loadRegisteredCategories() throws IOException {
         // read local DD categories
+        LOGGER.info("Loading categories from local registry.");
         File categorySubFolder = new File(
                 localRegistryPath + File.separator + CATEGORY_SUBFOLDER_NAME + File.separator + contextName);
         if (categorySubFolder.exists()) {
@@ -119,6 +128,7 @@ public class CategoryRegistryManager {
             }
         } else {
             // persist all base categories
+            LOGGER.info("Local category registry is not found, initialize it with base categories.");
             FSDirectory outputDir = FSDirectory.open(categorySubFolder);
             IndexWriterConfig writerConfig = new IndexWriterConfig(Version.LATEST, new StandardAnalyzer(CharArraySet.EMPTY_SET));
             IndexWriter writer = new IndexWriter(outputDir, writerConfig);
@@ -156,6 +166,7 @@ public class CategoryRegistryManager {
     }
 
     private void loadBaseCategories() {
+        LOGGER.info("Loading base categories.");
         for (SemanticCategoryEnum cat : SemanticCategoryEnum.values()) {
             DQCategory dqCat = new DQCategory();
             dqCat.setId("base");
@@ -214,7 +225,7 @@ public class CategoryRegistryManager {
     }
 
     public UserDefinedClassifier getRegexClassifier(boolean refresh) throws IOException {
-        if (!includeLocalCategoryRegistry) {
+        if (!usingLocalCategoryRegistry) {
             return UDCategorySerDeser.getRegexClassifier();
         } else {
             // load regexes from local registry
@@ -229,5 +240,9 @@ public class CategoryRegistryManager {
             }
         }
         return udc;
+    }
+
+    public static void main(String[] args) {
+        CategoryRegistryManager.getInstance();
     }
 }
