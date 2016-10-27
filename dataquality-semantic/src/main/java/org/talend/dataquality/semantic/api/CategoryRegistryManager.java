@@ -42,8 +42,7 @@ public class CategoryRegistryManager {
 
     private static boolean usingLocalCategoryRegistry = false;
 
-    private static String localRegistryPath = System.getProperty("java.io.tmpdir") + File.separator
-            + "org.talend.dataquality.semantic";
+    private static String localRegistryPath = System.getProperty("user.home") + "/.talend/dataquality/semantic";
 
     public static final String CATEGORY_SUBFOLDER_NAME = "category";
 
