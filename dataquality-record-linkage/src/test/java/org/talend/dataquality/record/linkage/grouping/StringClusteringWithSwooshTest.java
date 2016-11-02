@@ -32,6 +32,7 @@ import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
 import org.talend.dataquality.record.linkage.constant.RecordMatcherType;
 import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
 import org.talend.dataquality.record.linkage.genkey.BlockingKeyHandler;
+import org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping;
 import org.talend.dataquality.record.linkage.grouping.swoosh.DQAttribute;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams;
@@ -89,65 +90,7 @@ public class StringClusteringWithSwooshTest {
         Map<String, List<String[]>> resultData = blockKeyHandler.getResultDatas();
 
         // Do grouping given swoosh algorithm with Dummy matcher.
-        recordGroup = new AbstractRecordGrouping<Object>() {
-
-            /*
-             * (non-Javadoc)
-             * 
-             * @see org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping#isMaster(java.lang.Object)
-             */
-            @Override
-            protected boolean isMaster(Object col) {
-                return "true".equals(col.toString());
-            }
-
-            /*
-             * (non-Javadoc)
-             * 
-             * @see org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping#createTYPEArray(int)
-             */
-            @Override
-            protected Object[] createTYPEArray(int size) {
-                return new Object[size];
-            }
-
-            /*
-             * (non-Javadoc)
-             * 
-             * @see org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping#outputRow(java.lang.String)
-             */
-            @Override
-            protected void outputRow(Object[] row) {
-                for (Object c : row) {
-                    System.out.print(c + ",");
-                }
-                System.out.println();
-                groupingRecords.add(row);
-            }
-
-            @Override
-            protected void outputRow(RichRecord row) {
-                List<DQAttribute<?>> originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
-                String[] strRow = new String[originRow.size()];
-                int idx = 0;
-                for (DQAttribute<?> attr : originRow) {
-                    strRow[idx] = attr.getValue();
-                    idx++;
-                }
-                outputRow(strRow);
-
-            }
-
-            @Override
-            protected String incrementGroupSize(Object oldGroupSize) {
-                return String.valueOf(Integer.parseInt(String.valueOf(oldGroupSize)) + 1);
-            }
-
-            @Override
-            protected String castAsType(Object objectValue) {
-                return String.valueOf(objectValue);
-            }
-        };
+        recordGroup = new AnalysisSwooshMatchRecordGrouping();
         recordGroup.setRecordLinkAlgorithm(RecordMatcherType.T_SwooshAlgorithm);
 
         SurvivorShipAlgorithmParams survivorShipAlgorithmParams = new SurvivorShipAlgorithmParams();

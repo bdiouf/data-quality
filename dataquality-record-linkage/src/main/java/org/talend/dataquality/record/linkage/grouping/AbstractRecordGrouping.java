@@ -165,6 +165,10 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
         this.setIsComputeGrpQuality(isSeperateOutput);
     }
 
+    public int getOriginalInputColumnSize() {
+        return originalInputColumnSize;
+    }
+
     /*
      * (non-Javadoc)
      * 

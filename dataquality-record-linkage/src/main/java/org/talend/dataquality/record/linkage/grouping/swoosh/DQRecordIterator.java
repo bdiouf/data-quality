@@ -28,6 +28,12 @@ import org.talend.dataquality.matchmerge.mfb.RecordIterator;
  */
 public class DQRecordIterator extends RecordIterator {
 
+    private int originalColumnCount = -1;
+
+    public void setOriginalColumnCount(int originalColumnCount) {
+        this.originalColumnCount = originalColumnCount;
+    }
+
     /**
      * DOC zhao DQValueIterator constructor comment.
      * 
@@ -55,8 +61,12 @@ public class DQRecordIterator extends RecordIterator {
 
         });
         RichRecord record = new RichRecord(attriVector, String.valueOf(currentIndex - 1), timestamp++, "MFB"); //$NON-NLS-1$
+        if (originalColumnCount > -1) {
+            record.setRecordSize(originalColumnCount);
+        } else {
+            record.setRecordSize(originalRow.size());
+        }
         record.setOriginRow(originalRow);
-        record.setRecordSize(originalRow.size());
         return record;
     }
 

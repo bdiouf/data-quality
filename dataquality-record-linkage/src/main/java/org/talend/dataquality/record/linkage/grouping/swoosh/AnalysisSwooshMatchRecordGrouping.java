@@ -134,57 +134,84 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
 
     /**
      * only used for tMatchGroup, and only after swoosh match finished.
-     */
+     *  */
     @Override
     protected void outputRow(RichRecord row) {
-        String[] strRow = getValuesFromOriginRow(row);
+        List<DQAttribute<?>> row2 = getValuesFromOriginRow(row);
+
+        Object[] strRow = (Object[]) getArrayFromAttributeList(row2, row2.size());
+
         outputRow(strRow);
     }
 
-    protected String[] getValuesFromOriginRow(RichRecord row) {
-        List<DQAttribute<?>> originRow = getOutputRow(row);
-        String[] strRow = new String[originRow.size()];
-        int idx = 0;
-        for (DQAttribute<?> attr : originRow) {
-            if (SwooshConstants.GROUP_QUALITY.equals(attr.getLabel())) {
-                // when it is master two case 1 group size is 0 or group size is >0
-                if (row.isMaster()) {
-                    // group size >0 mean that it is a merged item so that we get real group quality
-                    if (row.getGrpSize() != 0) {
-                        strRow[idx] = String.valueOf(row.getGroupQuality());
-                        // group size ==0 mean that it si a alone item so that the group quality should be 1.0
-                    } else {
-                        strRow[idx] = SwooshConstants.ALONE_ITEM_GROUP_QUALITY_DEFAULT_VALUE;
-                    }
-                    // when it is not a master item mean that it is sub item so that the group quality is 0.0
-                } else {
-                    strRow[idx] = SwooshConstants.SUB_ITEM_GROUP_QUALITY_DEFAULT_VALUE;
-                }
-                //            } else if (idx == (originalInputColumnSize - 1) && this.swooshGrouping.isHasPassedOriginal() && isLinkToPrevious) {
-                //                //Added TDQ-12057 : because the "ORIGINAL_RECORD" position changed from the last column of the array to the position: 
-                //                //after the input record, before the extended(GID),so its correct position is strRow[originalInputColumnSize]
-                //                //And , its label is empty, if it is extened attri like GID, will not be empty.
-                //                strRow[idx] = StringUtils.EMPTY;
-            } else {
-                if (row.isMaster() && row.isMerged()) {
-                    strRow[idx] = attr.getValue();
-                } else {
+    protected List<DQAttribute<?>> getValuesFromOriginRow(RichRecord row) {
+        //1, get the pure data
+        List<DQAttribute<?>> row2 = row.getOutputRow(swooshGrouping.getOldGID2New(), this.isLinkToPrevious);
 
-                    strRow[idx] = attr.getOriginalValue() == null ? attr.getValue() : String.valueOf(attr.getOriginalValue());
-                }
-            }
-            idx++;
+        //2, get the additional columns like GID, 
+        row2.add(row.getGID());
+        row2.add(row.getGRP_SIZE());
+        row2.add(row.getMASTER());
+        row2.add(row.getSCORE());
+        row2.add(row.getGRP_QUALITY());
+
+        //3, get other additional column by different options. 
+        if (this.isOutputDistDetails()) {
+            row2.add(row.getATTRIBUTE_SCORE());
+        }
+        return row2;
+    }
+
+    protected Object[] getArrayFromAttributeList(List<DQAttribute<?>> row, int arraySize) {
+        Object[] strRow = new Object[arraySize];
+        int idx = 0;
+        for (DQAttribute<?> attr : row) {
+            strRow[idx++] = attr.getValue();
         }
         return strRow;
     }
+    //        List<DQAttribute<?>> originRow = getOutputRow(row);
+    //        String[] strRow = new String[originRow.size()];
+    //        int idx = 0;
+    //        for (DQAttribute<?> attr : originRow) {
+    //            if (SwooshConstants.GROUP_QUALITY.equals(attr.getLabel())) {
+    //                // when it is master two case 1 group size is 0 or group size is >0
+    //                if (row.isMaster()) {
+    //                    // group size >0 mean that it is a merged item so that we get real group quality
+    //                    if (row.getGrpSize() != 0) {
+    //                        strRow[idx] = String.valueOf(row.getGroupQuality());
+    //                        // group size ==0 mean that it si a alone item so that the group quality should be 1.0
+    //                    } else {
+    //                        strRow[idx] = SwooshConstants.ALONE_ITEM_GROUP_QUALITY_DEFAULT_VALUE;
+    //                    }
+    //                    // when it is not a master item mean that it is sub item so that the group quality is 0.0
+    //                } else {
+    //                    strRow[idx] = SwooshConstants.SUB_ITEM_GROUP_QUALITY_DEFAULT_VALUE;
+    //                }
+    //                //            } else if (idx == (originalInputColumnSize - 1) && this.swooshGrouping.isHasPassedOriginal() && isLinkToPrevious) {
+    //                //                //Added TDQ-12057 : because the "ORIGINAL_RECORD" position changed from the last column of the array to the position: 
+    //                //                //after the input record, before the extended(GID),so its correct position is strRow[originalInputColumnSize]
+    //                //                //And , its label is empty, if it is extened attri like GID, will not be empty.
+    //                //                strRow[idx] = StringUtils.EMPTY;
+    //            } else {
+    //                if (row.isMaster() && row.isMerged()) {
+    //                    strRow[idx] = attr.getValue();
+    //                } else {
+    //
+    //                    strRow[idx] = attr.getOriginalValue() == null ? attr.getValue() : String.valueOf(attr.getOriginalValue());
+    //                }
+    //            }
+    //            idx++;
+    //        }
+    //        return strRow;
 
     /**
      * DOC yyin Comment method "getOutputRow".
      * 
      * @param row
      * @return
-     */
     protected List<DQAttribute<?>> getOutputRow(RichRecord row) {
         return row.getOutputRow(swooshGrouping.getOldGID2New());
-    }
+    }     */
+
 }

@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.grouping.swoosh;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -27,9 +28,6 @@ import org.talend.dataquality.matchmerge.Record;
  */
 public class RichRecord extends Record {
 
-    /**
-     * The original row. It is an useful information when the application want to know the original information.
-     */
     private List<DQAttribute<?>> originRow = null;
 
     private boolean isMerged = false;
@@ -50,6 +48,24 @@ public class RichRecord extends Record {
     private String labeledAttributeScores = StringUtils.EMPTY;
 
     private int recordSize = 0;
+
+    private DQAttribute<String> GID;
+
+    private DQAttribute<Integer> GRP_SIZE;
+
+    private DQAttribute<Boolean> MASTER;
+
+    private DQAttribute<Double> SCORE;
+
+    private DQAttribute<String> GRP_QUALITY;
+
+    private DQAttribute<?> MERGE_INFO;
+
+    private DQAttribute<?> MATCHING_DISTANCES;
+
+    private DQAttribute<?> ORIGINAL_RECORD;
+
+    private DQAttribute<String> ATTRIBUTE_SCORE;
 
     /**
      * DOC zhao RichRecord constructor .
@@ -77,12 +93,44 @@ public class RichRecord extends Record {
     }
 
     /**
-     * Sets the originRow.
+     * Sets the originRow. 
+     * when it contains the additional columns, move them out. 
      * 
-     * @param originRow the originRow to set
+     * @param originRow2 the originRow to set
      */
-    public void setOriginRow(List<DQAttribute<?>> originRow) {
-        this.originRow = originRow;
+    public void setOriginRow(List<DQAttribute<?>> originRow2) {
+        if (originRow2 != null && recordSize > 0 && originRow2.size() > recordSize) {
+
+            this.GID = new DQAttribute<String>(SwooshConstants.GID, recordSize,
+                    (String) originRow2.get(recordSize).getOriginalValue());
+            Object gsize = originRow2.get(recordSize + 1).getOriginalValue();
+            Integer vsize = originRow2.get(recordSize + 1).getOriginalValue() instanceof Integer ? (Integer) gsize
+                    : Integer.valueOf((String) gsize);
+            this.GRP_SIZE = new DQAttribute<Integer>(SwooshConstants.GROUP_SIZE, recordSize + 1, vsize);
+
+            Object value = originRow2.get(recordSize + 2).getOriginalValue();
+            Boolean bvalue = value instanceof Boolean ? (Boolean) value : Boolean.valueOf((String) value);
+            this.MASTER = new DQAttribute<Boolean>(SwooshConstants.IS_MASTER, recordSize + 2, bvalue);
+
+            Object value2 = originRow2.get(recordSize + 3).getOriginalValue();
+            Double dvalue = value2 instanceof Double ? (Double) value2 : Double.valueOf((String) value2);
+            this.SCORE = new DQAttribute<Double>(SwooshConstants.SCORE2, recordSize + 3, dvalue);
+
+            Object value3 = originRow2.get(recordSize + 4).getOriginalValue() == null ? ""
+                    : originRow2.get(recordSize + 4).getOriginalValue();
+            String gvalue = value3 instanceof Double ? String.valueOf(value3) : (String) value3;
+            this.GRP_QUALITY = new DQAttribute<String>(SwooshConstants.GROUP_QUALITY, recordSize + 4, gvalue);
+
+            if (this.originRow == null) {
+                originRow = new ArrayList<DQAttribute<?>>();
+            }
+            for (int i = 0; i < recordSize; i++) {
+                this.originRow.add(originRow2.get(i));
+            }
+
+        } else {
+            this.originRow = originRow2;
+        }
     }
 
     /**
@@ -243,18 +291,13 @@ public class RichRecord extends Record {
      * @param oldGID2New
      */
     private void addOtherAttributeForNotMaster(Map<String, String> oldGID2New) {
-        // GID
-        originRow.add(new DQAttribute<>(SwooshConstants.GID, originRow.size(), computeGID(oldGID2New)));
-        // Group size
-        originRow.add(new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), 0));
-        // Master
-        originRow.add(new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), false));
-        // Score
-        originRow.add(new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), getScore()));
-        // Group quality
-        originRow.add(new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), StringUtils.EMPTY));
-        // destance details.
-        originRow.add(new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, originRow.size(), getLabeledAttributeScores()));
+        int colIdx = originRow.size() + this.recordSize;
+        this.GID = new DQAttribute<>(SwooshConstants.GID, colIdx, computeGID(oldGID2New));
+        this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, colIdx, 0);
+        this.MASTER = new DQAttribute<>(SwooshConstants.IS_MASTER, colIdx, false);
+        this.SCORE = new DQAttribute<>(SwooshConstants.SCORE2, colIdx, getScore());
+        this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, colIdx, StringUtils.EMPTY);
+        this.ATTRIBUTE_SCORE = new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, colIdx, getLabeledAttributeScores());
     }
 
     /**
@@ -263,23 +306,14 @@ public class RichRecord extends Record {
      * @param finalGID
      */
     private void setOtherAttributeForMerge(String finalGID) {
-        int extSize = 6;
-        originRow.get(originRow.size() - extSize).setValue(finalGID);
-        extSize--;
-        // group size
-        originRow.get(originRow.size() - extSize).setValue(String.valueOf(getGrpSize()));
-        extSize--;
-        // is master
-        originRow.get(originRow.size() - extSize).setValue(String.valueOf(true));
-        extSize--;
-        // Score
-        originRow.get(originRow.size() - extSize).setValue(String.valueOf(1.0));
-        extSize--;
-        // group quality
-        originRow.get(originRow.size() - extSize).setValue(String.valueOf(getGroupQuality()));
-        extSize--;
-        // attribute scores (distance details).
-        originRow.get(originRow.size() - extSize).setValue(StringUtils.EMPTY);
+        int colIdx = originRow.size() + this.recordSize;
+        this.GID = new DQAttribute<>(SwooshConstants.GID, colIdx, finalGID);
+        this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, colIdx, grpSize);
+        this.MASTER = new DQAttribute<>(SwooshConstants.IS_MASTER, colIdx, true);
+        this.SCORE = new DQAttribute<>(SwooshConstants.SCORE2, colIdx, 1.0);
+        this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, colIdx, String.valueOf(groupQuality));
+        this.ATTRIBUTE_SCORE = new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, colIdx, StringUtils.EMPTY);
+
     }
 
     /**
@@ -288,34 +322,35 @@ public class RichRecord extends Record {
      * @param finalGID
      */
     private void addOtherAttributesForFinished(String finalGID) {
-        originRow.add(new DQAttribute<>(SwooshConstants.GID, originRow.size(), finalGID));
-        // group size
-        originRow.add(new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), getGrpSize()));
-        // is master
-        originRow.add(new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), true));
-        // Score
-        originRow.add(new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), 1.0));
-        // group quality
-        originRow.add(new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), String.valueOf(getGroupQuality())));
-        // attribute scores (distance details).
-        originRow.add(new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, originRow.size(), StringUtils.EMPTY));
+        this.GID = new DQAttribute<>(SwooshConstants.GID, originRow.size(), finalGID);
+        this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), grpSize);
+        this.MASTER = new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), true);
+        this.SCORE = new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), 1.0);
+        this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), String.valueOf(groupQuality));
+        this.ATTRIBUTE_SCORE = new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, originRow.size(), StringUtils.EMPTY);
+
     }
 
     /**
      * DOC yyin Comment method "addRandomGIDAndOthers".
      */
     private void addRandomGIDAndOthers() {
-        originRow.add(new DQAttribute<>(SwooshConstants.GID, originRow.size(), UUID.randomUUID().toString()));
-        // Group size
-        originRow.add(new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), 1));
-        // Master
-        originRow.add(new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), true));
-        // Score
-        originRow.add(new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), 1.0));
-        // Group quality
-        originRow.add(new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), String.valueOf(1.0)));
-        // destance details.
-        originRow.add(new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, originRow.size(), StringUtils.EMPTY));
+        this.GID = new DQAttribute<>(SwooshConstants.GID, originRow.size(), UUID.randomUUID().toString());
+        if (this.grpSize > 0) {
+            this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), this.grpSize);
+        } else {
+            this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), 1);
+        }
+        this.MASTER = new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), true);
+        this.SCORE = new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), 1.0);
+        if (this.groupQuality > 0 && this.groupQuality < 1.0) {
+            this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(),
+                    String.valueOf(this.groupQuality));
+        } else {
+            this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), "1.0");
+        }
+        this.ATTRIBUTE_SCORE = new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, originRow.size(), StringUtils.EMPTY);
+
     }
 
     /**
@@ -337,19 +372,16 @@ public class RichRecord extends Record {
      * @param originalInputColumnSize
      * @return
      */
-    public List<DQAttribute<?>> getOutputRow(Map<String, String> oldGID2New, boolean withDetails) {
-        /**
-         * Else The columns that are not maching keys will be merged at {@link DQMFBRecordMerger#createNewRecord()}
-         */
-        int EXT_SIZE = 6;
-        if (withDetails) {
-            EXT_SIZE = 7;
-        }
+    public List<DQAttribute<?>> getOutputRow(Map<String, String> oldGID2New, boolean isMultipass) {
+        if (!isMultipass) {
+            return this.getOutputRow(oldGID2New);
+        } else {
 
-        return getoutputRow(oldGID2New, withDetails, EXT_SIZE);
+            return getoutputRowForMultipass(oldGID2New);
+        }
     }
 
-    public List<DQAttribute<?>> getoutputRow(Map<String, String> oldGID2New, boolean withDetails, int EXT_SIZE) {
+    private List<DQAttribute<?>> getoutputRowForMultipass(Map<String, String> oldGID2New) {
         if (isMerged()) {
             // Update the matching key field by the merged attributes.
             List<Attribute> matchKeyAttrs = getAttributes();
@@ -359,7 +391,10 @@ public class RichRecord extends Record {
         }
         if (isMerged || isMaster) {// Master records
             // Update group id.
-            String finalGID = computeGID(oldGID2New);
+            String finalGID = this.getGroupId();
+            if (StringUtils.isBlank(finalGID)) {
+                finalGID = computeGID(oldGID2New);
+            }
             if (StringUtils.isBlank(finalGID)) {
                 finalGID = UUID.randomUUID().toString();
             }
@@ -368,57 +403,36 @@ public class RichRecord extends Record {
             }
             setGroupId(finalGID);
             if (recordSize == originRow.size()) {
-                int extSize = EXT_SIZE;
-                originRow.set((originRow.size() - extSize), new DQAttribute<>(SwooshConstants.GID, originRow.size(), finalGID));
-                extSize--;
-                // group size
-                originRow.set(originRow.size() - extSize,
-                        new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), getGrpSize()));
-                extSize--;
-                // is master
-                originRow.set(originRow.size() - extSize, new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), true));
-                extSize--;
-                // Score
-                originRow.set(originRow.size() - extSize, new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), 1.0));
-                extSize--;
-                // group quality
-                originRow.set(originRow.size() - extSize,
-                        new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), String.valueOf(1.0)));
-                //
-            }
-        } else {
-            String finalGID = computeGID(oldGID2New);
-            setGroupId(finalGID);
-            if (recordSize == originRow.size()) {
-                int extSize = EXT_SIZE;
-                originRow.set((originRow.size() - extSize), new DQAttribute<>(SwooshConstants.GID, originRow.size(), finalGID));
-                extSize--;
-                // group size
-                originRow.set(originRow.size() - extSize, new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), 0));
-                extSize--;
-                // is master
-                originRow.set(originRow.size() - extSize, new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), false));
-                extSize--;
-                // Score
-                double score2 = getScore();
-                if (Double.compare(score2, 0.0) == 0) {
-                    score2 = getOriginalValue(originRow.size() - extSize);
-                }
-                originRow.set(originRow.size() - extSize, new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), score2));
-                extSize--;
-                // group quality
-                double groupQuality2 = getGroupQuality();
-                if (Double.compare(groupQuality2, 0.0) == 0) {
-                    groupQuality2 = getOriginalValue(originRow.size() - extSize);
-                }
-                originRow.set(originRow.size() - extSize,
-                        new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), String.valueOf(groupQuality2)));
-                // TDQ-11630: when multipass & output details, set the value when the detail is not empty.
-                if (withDetails && StringUtils.isNotBlank(getLabeledAttributeScores())) {
-                    extSize--;
-                    originRow.set(originRow.size() - extSize,
-                            new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, originRow.size(), getLabeledAttributeScores()));
+                this.GID = new DQAttribute<>(SwooshConstants.GID, originRow.size(), finalGID);
+                this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), getGrpSize());
+                this.MASTER = new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), true);
+                this.SCORE = new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), 1.0);
+                this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), "1.0");
+                this.ATTRIBUTE_SCORE = new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, originRow.size(), StringUtils.EMPTY);
 
+            }
+        } else {//for not master
+            String finalGID = this.getGroupId();
+            if (StringUtils.isBlank(finalGID)) {
+                finalGID = computeGID(oldGID2New);
+                setGroupId(finalGID);
+            }
+            if (recordSize == originRow.size()) {
+                GID.setValue(finalGID);
+                GRP_SIZE.setValue("0");
+                MASTER.setValue(String.valueOf(false));
+                if (Double.compare(score, 0.0) > 0) {
+                    SCORE.setValue(String.valueOf(score));
+                }
+                if (Double.compare(this.groupQuality, 0.0) > 0) {
+                    GRP_QUALITY.setValue(String.valueOf(groupQuality));
+                }
+                if (ATTRIBUTE_SCORE != null) {
+
+                    ATTRIBUTE_SCORE.setValue(getLabeledAttributeScores());
+                } else {
+                    this.ATTRIBUTE_SCORE = new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, originRow.size(),
+                            StringUtils.EMPTY);
                 }
 
             }
@@ -427,17 +441,56 @@ public class RichRecord extends Record {
     }
 
     /**
-     * DOC yyin Comment method "getOriginalValue".
-     * 
-     * @param originalInputColumnSize
-     * @param score2
+     * TDQ-12659 : when it is a master and its group size >0 on the last result, means that the current record is an intermediate master record
      * @return
      */
-    protected double getOriginalValue(int columnIndex) {
-        String value = originRow.get(columnIndex).getValue();
-        if (StringUtils.isBlank(value) || StringUtils.equalsIgnoreCase(SwooshConstants.NULL_STR, value)) {
-            return 0.0;
+    public boolean isInterMediateMaster() {
+        if (this.MASTER == null || this.GRP_SIZE == null) {
+            return false;
         }
-        return Double.parseDouble(value);
+        if(this.isMaster){
+            return false;
+        }
+        return this.MASTER.getOriginalValue() && (this.GRP_SIZE.getOriginalValue() > 1);
+    }
+
+    public DQAttribute<String> getGID() {
+        return GID;
+    }
+
+    public DQAttribute<Integer> getGRP_SIZE() {
+        return GRP_SIZE;
+    }
+
+    public DQAttribute<Boolean> getMASTER() {
+        return MASTER;
+    }
+
+    public DQAttribute<Double> getSCORE() {
+        return SCORE;
+    }
+
+    public DQAttribute<String> getGRP_QUALITY() {
+        return GRP_QUALITY;
+    }
+
+    public void setGRP_QUALITY(DQAttribute<String> gRP_QUALITY) {
+        GRP_QUALITY = gRP_QUALITY;
+    }
+
+    public DQAttribute<?> getMERGE_INFO() {
+        return MERGE_INFO;
+    }
+
+    public DQAttribute<?> getMATCHING_DISTANCES() {
+        return MATCHING_DISTANCES;
+    }
+
+    public DQAttribute<?> getORIGINAL_RECORD() {
+        return ORIGINAL_RECORD;
+    }
+
+    public DQAttribute<String> getATTRIBUTE_SCORE() {
+        return ATTRIBUTE_SCORE;
     }
 }

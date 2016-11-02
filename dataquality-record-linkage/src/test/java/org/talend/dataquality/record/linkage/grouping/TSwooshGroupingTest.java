@@ -138,7 +138,10 @@ public class TSwooshGroupingTest {
         List<List<Map<String, String>>> ruleMapListList = new ArrayList<>();
         ruleMapList.add(matchRuleMap);
         ruleMapListList.add(ruleMapList);
-        TSwooshGrouping<String> tSwooshGrouping = new TSwooshGrouping<>(new TempRecordGrouping());
+        TempRecordGrouping tempRecordGrouping = new TempRecordGrouping();
+        tempRecordGrouping.setOrginalInputColumnSize(3);
+        tempRecordGrouping.setIsLinkToPrevious(true);
+        TSwooshGrouping<String> tSwooshGrouping = new TSwooshGrouping<>(tempRecordGrouping);
         for (String[] stringRow : inputDataList) {
             tSwooshGrouping.addToList(stringRow, ruleMapListList);
         }
@@ -185,20 +188,26 @@ public class TSwooshGroupingTest {
         boolean hellohelloMasterIsExist = false;
         Assert.assertEquals("Expect the size of result items is 18 but it is " + result.size(), 18, result.size()); //$NON-NLS-1$
         for (RichRecord rr : result) {
+            String s = rr.getGID() == null ? rr.getGroupId() : rr.getGID().getValue();
+            String t = rr.getGRP_SIZE() == null ? rr.getGrpSize() + "" : rr.getGRP_SIZE().getValue();
+            System.err.println("--" + rr.getAttributes().get(0).getValue() + "--" + s + "==" + rr.isMaster() + "==" + t + "=="
+                    + rr.getGroupQuality());
             if (rr.isMaster()) {
                 Attribute attribute = rr.getAttributes().get(0);
-                if ("singlerecord".equals(attribute.getValue()) && rr.getGrpSize() == 0 && rr.getGroupQuality() == 1.0) { //$NON-NLS-1$
+                if ("singlerecord".equals(attribute.getValue()) && rr.getGRP_SIZE().getValue().equals("1") //$NON-NLS-1$
+                        && rr.getGRP_QUALITY().getValue().equals("1.0")) {
                     singlerecordMasterIsExist = true;
-                } else if (null == rr.getAttributes().get(0).getValue() && rr.getGrpSize() == 2 && rr.getGroupQuality() == 1.0) {
+                } else if (null == rr.getAttributes().get(0).getValue() && rr.getGRP_SIZE().getValue().equals("2")
+                        && rr.getGRP_QUALITY().getValue().equals("1.0")) {
                     nullMasterIsExist = true;
-                } else if ("lilis".equals(rr.getAttributes().get(0).getValue()) && rr.getGrpSize() == 5 //$NON-NLS-1$
-                        && rr.getGroupQuality() == 0.6666666666666667) {
+                } else if ("lilis".equals(rr.getAttributes().get(0).getValue()) && rr.getGrpSize() == 3 //$NON-NLS-1$
+                        && rr.getGroupQuality() == 0.6666666666666667) {// && rr.getGrpSize() == 5 
                     lilisMasterIsExist = true;
                 } else if ("zhaoszhao".equals(rr.getAttributes().get(0).getValue()) && rr.getGrpSize() == 2 //$NON-NLS-1$
                         && rr.getGroupQuality() == 0.8) {
                     zhaoszhaoMasterIsExist = true;
-                } else if ("hellohello".equals(rr.getAttributes().get(0).getValue()) && rr.getGrpSize() == 4 //$NON-NLS-1$
-                        && rr.getGroupQuality() == 0.8333333333333334) {
+                } else if ("hellohello".equals(rr.getAttributes().get(0).getValue()) && rr.getGrpSize() == 2
+                        && rr.getGroupQuality() == 1.0) {
                     hellohelloMasterIsExist = true;
                 }
             }

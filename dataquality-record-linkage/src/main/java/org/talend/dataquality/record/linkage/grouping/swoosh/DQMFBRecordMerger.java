@@ -143,8 +143,8 @@ public class DQMFBRecordMerger extends MFBRecordMerger {
         }
         List<DQAttribute<?>> originalRowList = new ArrayList<DQAttribute<?>>();
         CollectionUtils.addAll(originalRowList, mergedRows);
-        mergedRecord.setOriginRow(originalRowList);
         mergedRecord.setRecordSize(richRecord1.getRecordSize());
+        mergedRecord.setOriginRow(originalRowList);
         // Set the group quality
         double gQuality1 = richRecord1.getGroupQuality();
         double gQuality2 = richRecord2.getGroupQuality();
