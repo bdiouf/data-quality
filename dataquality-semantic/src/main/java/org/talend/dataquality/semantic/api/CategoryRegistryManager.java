@@ -97,14 +97,6 @@ public class CategoryRegistryManager {
         return localRegistryPath;
     }
 
-    public static void setUsingLocalCategoryRegistry(boolean shouldInclude) {
-        usingLocalCategoryRegistry = shouldInclude;
-    }
-
-    public static boolean isUsingLocalCategoryRegistry() {
-        return usingLocalCategoryRegistry;
-    }
-
     private void loadRegisteredCategories() throws IOException {
         // read local DD categories
         LOGGER.info("Loading categories from local registry.");
@@ -119,10 +111,10 @@ public class CategoryRegistryManager {
                 DQCategory dqCat = new DQCategory();
                 dqCat.setId(doc.getField("id").stringValue());
                 dqCat.setName(doc.getField("name").stringValue());
-                dqCat.setLabel(doc.getField("label").stringValue());
+                dqCat.setLabel(doc.getField("label") == null ? "" : doc.getField("label").stringValue());
                 dqCat.setType(CategoryType.valueOf(doc.getField("type").stringValue()));
                 dqCat.setComplete(Boolean.valueOf(doc.getField("complete").stringValue()));
-                dqCat.setDescription(doc.getField("description").stringValue());
+                dqCat.setDescription(doc.getField("description") == null ? "" : doc.getField("description").stringValue());
                 dqCategories.put(dqCat.getName(), dqCat);
             }
         } else {
