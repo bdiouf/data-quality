@@ -5,14 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
@@ -22,6 +18,7 @@ import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -132,21 +129,26 @@ public class CategoryRegistryManager {
         File categorySubFolder = new File(
                 localRegistryPath + File.separator + CATEGORY_SUBFOLDER_NAME + File.separator + contextName);
         if (categorySubFolder.exists()) {
-            final Directory indexDir = FSDirectory.open(categorySubFolder);
-            final DirectoryReader reader = DirectoryReader.open(indexDir);
+            try (final DirectoryReader reader = DirectoryReader.open(FSDirectory.open(categorySubFolder))) {
+                for (int i = 0; i < reader.maxDoc(); i++) {
+                    Document doc = reader.document(i);
+                    IndexableField idField = doc.getField(DictionaryConstants.ID);
+                    IndexableField nameField = doc.getField(DictionaryConstants.NAME);
+                    IndexableField labelField = doc.getField(DictionaryConstants.LABEL);
+                    IndexableField typeField = doc.getField(DictionaryConstants.TYPE);
+                    IndexableField completenessField = doc.getField(DictionaryConstants.COMPLETENESS);
+                    IndexableField descriptionField = doc.getField(DictionaryConstants.DESCRIPTION);
 
-            for (int i = 0; i < reader.maxDoc(); i++) {
-                Document doc = reader.document(i);
-                DQCategory dqCat = new DQCategory();
-                dqCat.setId(doc.getField(DictionaryConstants.ID).stringValue());
-                dqCat.setName(doc.getField(DictionaryConstants.NAME).stringValue());
-                dqCat.setLabel(doc.getField(DictionaryConstants.LABEL) == null ? ""
-                        : doc.getField(DictionaryConstants.LABEL).stringValue());
-                dqCat.setType(CategoryType.valueOf(doc.getField(DictionaryConstants.TYPE).stringValue()));
-                dqCat.setCompleteness(Boolean.valueOf(doc.getField(DictionaryConstants.COMPLETENESS).stringValue()));
-                dqCat.setDescription(doc.getField(DictionaryConstants.DESCRIPTION) == null ? ""
-                        : doc.getField(DictionaryConstants.DESCRIPTION).stringValue());
-                dqCategories.put(dqCat.getName(), dqCat);
+                    DQCategory dqCat = new DQCategory();
+                    dqCat.setId(idField.stringValue());
+                    dqCat.setName(nameField.stringValue());
+                    String label = labelField == null ? null : labelField.stringValue();
+                    dqCat.setLabel(StringUtils.isBlank(label) ? dqCat.getName() : label);
+                    dqCat.setType(typeField == null ? null : CategoryType.valueOf(typeField.stringValue()));
+                    dqCat.setCompleteness(completenessField == null ? false : Boolean.valueOf(completenessField.stringValue()));
+                    dqCat.setDescription(descriptionField == null ? null : descriptionField.stringValue());
+                    dqCategories.put(dqCat.getName(), dqCat);
+                }
             }
         } else {
             // persist all base categories
