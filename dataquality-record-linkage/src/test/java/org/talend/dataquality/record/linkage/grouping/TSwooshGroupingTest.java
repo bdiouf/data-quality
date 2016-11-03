@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.talend.dataquality.matchmerge.Attribute;
@@ -200,7 +201,7 @@ public class TSwooshGroupingTest {
                 } else if (null == rr.getAttributes().get(0).getValue() && rr.getGRP_SIZE().getValue().equals("2")
                         && rr.getGRP_QUALITY().getValue().equals("1.0")) {
                     nullMasterIsExist = true;
-                } else if ("lilis".equals(rr.getAttributes().get(0).getValue()) && rr.getGrpSize() == 3 //$NON-NLS-1$
+                } else if ("lilis".equals(rr.getAttributes().get(0).getValue()) && StringUtils.equals(t, "4") //$NON-NLS-1$
                         && rr.getGroupQuality() == 0.6666666666666667) {// && rr.getGrpSize() == 5 
                     lilisMasterIsExist = true;
                 } else if ("zhaoszhao".equals(rr.getAttributes().get(0).getValue()) && rr.getGrpSize() == 2 //$NON-NLS-1$

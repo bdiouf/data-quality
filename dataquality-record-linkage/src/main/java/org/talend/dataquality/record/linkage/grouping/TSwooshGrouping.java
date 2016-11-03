@@ -412,8 +412,11 @@ public class TSwooshGrouping<TYPE> {
 
             // use the new GID to fetch some members of old GID-- which belong to a temp master in first pass, but not a
             // master after 2nd tMatchgroup.
-            list = groupRows.get(oldGID2New.get(master.getGroupId()));
-            addMembersIntoNewMaster(master, list, groupId);
+            String tempGid = oldGID2New.get(master.getGroupId());
+            if (!StringUtils.equals(groupId, tempGid)) {
+                list = groupRows.get(tempGid);
+                addMembersIntoNewMaster(master, list, groupId);
+            }
         }
 
     }
@@ -460,7 +463,9 @@ public class TSwooshGrouping<TYPE> {
         }
         RichRecord record = (RichRecord) master;
         //TDQ-12659 add "-1" for the removed intermediate masters. 
-        record.setGrpSize(record.getGrpSize() + list.size() - 2);
+        //        if(record.isMerged()){
+        //            record.setGrpSize(record.getGrpSize() + list.size() - 2);
+        //        }
         if (StringUtils.isBlank(master.getGroupId())) {
             record.setGroupId(groupId);
         }
@@ -498,8 +503,10 @@ public class TSwooshGrouping<TYPE> {
         if (recordsInFirstGroup != null) {
             if (recordsInNewGroup == null) {
                 groupRows.put(newGID, recordsInFirstGroup);
+                //grp-size +1
             } else {
                 recordsInNewGroup.addAll(recordsInFirstGroup);
+                //grp-size = sum of two list size
             }
             // remove the oldgid's list in: groupRows
             groupRows.remove(oldGID);

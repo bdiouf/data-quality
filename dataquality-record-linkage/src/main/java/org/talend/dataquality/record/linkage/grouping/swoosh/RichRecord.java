@@ -67,6 +67,9 @@ public class RichRecord extends Record {
 
     private DQAttribute<String> ATTRIBUTE_SCORE;
 
+    //TDQ-12659 : added for multipass. 
+    private boolean isGrpSizeNotUpdated = false;
+
     /**
      * DOC zhao RichRecord constructor .
      * 
@@ -107,6 +110,7 @@ public class RichRecord extends Record {
             Integer vsize = originRow2.get(recordSize + 1).getOriginalValue() instanceof Integer ? (Integer) gsize
                     : Integer.valueOf((String) gsize);
             this.GRP_SIZE = new DQAttribute<Integer>(SwooshConstants.GROUP_SIZE, recordSize + 1, vsize);
+            this.grpSize = vsize;
 
             Object value = originRow2.get(recordSize + 2).getOriginalValue();
             Boolean bvalue = value instanceof Boolean ? (Boolean) value : Boolean.valueOf((String) value);
@@ -308,7 +312,9 @@ public class RichRecord extends Record {
     private void setOtherAttributeForMerge(String finalGID) {
         int colIdx = originRow.size() + this.recordSize;
         this.GID = new DQAttribute<>(SwooshConstants.GID, colIdx, finalGID);
-        this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, colIdx, grpSize);
+        if (!isGrpSizeNotUpdated) {
+            this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, colIdx, grpSize);
+        }
         this.MASTER = new DQAttribute<>(SwooshConstants.IS_MASTER, colIdx, true);
         this.SCORE = new DQAttribute<>(SwooshConstants.SCORE2, colIdx, 1.0);
         this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, colIdx, String.valueOf(groupQuality));
@@ -323,7 +329,9 @@ public class RichRecord extends Record {
      */
     private void addOtherAttributesForFinished(String finalGID) {
         this.GID = new DQAttribute<>(SwooshConstants.GID, originRow.size(), finalGID);
-        this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), grpSize);
+        if (!isGrpSizeNotUpdated) {
+            this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), grpSize);
+        }
         this.MASTER = new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), true);
         this.SCORE = new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), 1.0);
         this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), String.valueOf(groupQuality));
@@ -404,7 +412,9 @@ public class RichRecord extends Record {
             setGroupId(finalGID);
             if (recordSize == originRow.size()) {
                 this.GID = new DQAttribute<>(SwooshConstants.GID, originRow.size(), finalGID);
-                this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), getGrpSize());
+                if (!isGrpSizeNotUpdated) {
+                    this.GRP_SIZE = new DQAttribute<>(SwooshConstants.GROUP_SIZE, originRow.size(), getGrpSize());
+                }
                 this.MASTER = new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), true);
                 this.SCORE = new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), 1.0);
                 this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), "1.0");
@@ -448,7 +458,7 @@ public class RichRecord extends Record {
         if (this.MASTER == null || this.GRP_SIZE == null) {
             return false;
         }
-        if(this.isMaster){
+        if (this.isMaster) {
             return false;
         }
         return this.MASTER.getOriginalValue() && (this.GRP_SIZE.getOriginalValue() > 1);
@@ -493,4 +503,14 @@ public class RichRecord extends Record {
     public DQAttribute<String> getATTRIBUTE_SCORE() {
         return ATTRIBUTE_SCORE;
     }
+
+    public void setGRP_SIZE(int newGRP_SIZE) {
+        if (GRP_SIZE == null) {
+            this.GRP_SIZE = new DQAttribute<Integer>(SwooshConstants.GROUP_SIZE, recordSize + 1, newGRP_SIZE);
+        } else {
+            GRP_SIZE.setValue(String.valueOf(newGRP_SIZE));
+        }
+        isGrpSizeNotUpdated = true;
+    }
+
 }
