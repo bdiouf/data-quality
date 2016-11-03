@@ -31,6 +31,7 @@ import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
@@ -127,8 +128,8 @@ public class SynonymIndexSearcher {
      * <p>
      * By default, the slop factor is one, meaning only one gap between the searched tokens is allowed.
      * <p>
-     * For example: "the brown" can match "the quick brown fox", but "the fox" will not match it, except that we set the
-     * slop value to 2 or greater.
+     * For example: "the brown" can match "the quick brown fox", but "the fox" will not match it, except that we set the slop
+     * value to 2 or greater.
      */
     private int slop = 1;
 
@@ -408,10 +409,10 @@ public class SynonymIndexSearcher {
         wordQuery = new BooleanQuery();
         synQuery = new BooleanQuery();
         for (String token : tokens) {
-            ((BooleanQuery) wordQuery).add(getTermQuery(F_WORD, token, fuzzy),
-                    allMatch ? BooleanClause.Occur.MUST : BooleanClause.Occur.SHOULD);
-            ((BooleanQuery) synQuery).add(getTermQuery(F_SYN, token, fuzzy),
-                    allMatch ? BooleanClause.Occur.MUST : BooleanClause.Occur.SHOULD);
+            ((BooleanQuery) wordQuery).add(getTermQuery(F_WORD, token, fuzzy), allMatch ? BooleanClause.Occur.MUST
+                    : BooleanClause.Occur.SHOULD);
+            ((BooleanQuery) synQuery).add(getTermQuery(F_SYN, token, fuzzy), allMatch ? BooleanClause.Occur.MUST
+                    : BooleanClause.Occur.SHOULD);
         }
 
         // increase importance of the reference word
@@ -524,7 +525,15 @@ public class SynonymIndexSearcher {
 
     public void close() {
         try {
-            mgr.acquire().getIndexReader().close();
+            if (mgr != null) {
+                IndexSearcher acquire = mgr.acquire();
+                if (acquire != null) {
+                    IndexReader indexReader = acquire.getIndexReader();
+                    if (indexReader != null) {
+                        indexReader.close();
+                    }
+                }
+            }
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
