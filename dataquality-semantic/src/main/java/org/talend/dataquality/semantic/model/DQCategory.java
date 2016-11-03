@@ -45,7 +45,7 @@ public class DQCategory {
 
     private DQRegEx regEx;
 
-    private boolean complete = false;
+    private boolean completeness = false;
 
     public String getId() {
         return id;
@@ -151,12 +151,12 @@ public class DQCategory {
         this.description = description;
     }
 
-    public boolean isComplete() {
-        return complete;
+    public boolean isCompleteness() {
+        return completeness;
     }
 
-    public void setComplete(boolean completeness) {
-        this.complete = completeness;
+    public void setCompleteness(boolean completeness) {
+        this.completeness = completeness;
     }
 
     public String getLabel() {
@@ -169,6 +169,6 @@ public class DQCategory {
 
     public String toString() {
         return String.format("Category [ID=%s  Type=%s  Name=%-20s  Label=%-20s  Completeness=%-5s  Description=%s]", id, type,
-                name, label, complete, description);
+                name, label, completeness, description);
     }
 }

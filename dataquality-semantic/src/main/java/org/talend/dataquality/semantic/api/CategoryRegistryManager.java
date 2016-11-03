@@ -91,6 +91,7 @@ public class CategoryRegistryManager {
     public static void setLocalRegistryPath(String folder) {
         localRegistryPath = folder;
         usingLocalCategoryRegistry = true;
+        getInstance();
     }
 
     public static String getLocalRegistryPath() {
@@ -109,12 +110,14 @@ public class CategoryRegistryManager {
                 for (int i = 0; i < reader.maxDoc(); i++) {
                     Document doc = reader.document(i);
                     DQCategory dqCat = new DQCategory();
-                    dqCat.setId(doc.getField("id").stringValue());
-                    dqCat.setName(doc.getField("name").stringValue());
-                    dqCat.setLabel(doc.getField("label") == null ? "" : doc.getField("label").stringValue());
-                    dqCat.setType(CategoryType.valueOf(doc.getField("type").stringValue()));
-                    dqCat.setComplete(Boolean.valueOf(doc.getField("complete").stringValue()));
-                    dqCat.setDescription(doc.getField("description") == null ? "" : doc.getField("description").stringValue());
+                    dqCat.setId(doc.getField(DictionaryConstants.ID).stringValue());
+                    dqCat.setName(doc.getField(DictionaryConstants.NAME).stringValue());
+                    dqCat.setLabel(doc.getField(DictionaryConstants.LABEL) == null ? ""
+                            : doc.getField(DictionaryConstants.LABEL).stringValue());
+                    dqCat.setType(CategoryType.valueOf(doc.getField(DictionaryConstants.TYPE).stringValue()));
+                    dqCat.setCompleteness(Boolean.valueOf(doc.getField(DictionaryConstants.COMPLETENESS).stringValue()));
+                    dqCat.setDescription(doc.getField(DictionaryConstants.DESCRIPTION) == null ? ""
+                            : doc.getField(DictionaryConstants.DESCRIPTION).stringValue());
                     dqCategories.put(dqCat.getName(), dqCat);
                 }
             } catch (IOException e) {
@@ -135,12 +138,14 @@ public class CategoryRegistryManager {
             for (int i = 0; i < reader.maxDoc(); i++) {
                 Document doc = reader.document(i);
                 DQCategory dqCat = new DQCategory();
-                dqCat.setId(doc.getField("id").stringValue());
-                dqCat.setName(doc.getField("name").stringValue());
-                dqCat.setLabel(doc.getField("label") == null ? "" : doc.getField("label").stringValue());
-                dqCat.setType(CategoryType.valueOf(doc.getField("type").stringValue()));
-                dqCat.setComplete(Boolean.valueOf(doc.getField("complete").stringValue()));
-                dqCat.setDescription(doc.getField("description") == null ? "" : doc.getField("description").stringValue());
+                dqCat.setId(doc.getField(DictionaryConstants.ID).stringValue());
+                dqCat.setName(doc.getField(DictionaryConstants.NAME).stringValue());
+                dqCat.setLabel(doc.getField(DictionaryConstants.LABEL) == null ? ""
+                        : doc.getField(DictionaryConstants.LABEL).stringValue());
+                dqCat.setType(CategoryType.valueOf(doc.getField(DictionaryConstants.TYPE).stringValue()));
+                dqCat.setCompleteness(Boolean.valueOf(doc.getField(DictionaryConstants.COMPLETENESS).stringValue()));
+                dqCat.setDescription(doc.getField(DictionaryConstants.DESCRIPTION) == null ? ""
+                        : doc.getField(DictionaryConstants.DESCRIPTION).stringValue());
                 dqCategories.put(dqCat.getName(), dqCat);
             }
         } else {
@@ -152,12 +157,12 @@ public class CategoryRegistryManager {
 
             for (DQCategory cat : dqCategories.values()) {
                 Document doc = new Document();
-                doc.add(new StringField("id", cat.getId(), Field.Store.YES));
-                doc.add(new StringField("name", cat.getName(), Field.Store.YES));
-                doc.add(new StringField("label", cat.getLabel(), Field.Store.YES));
-                doc.add(new StringField("type", cat.getType().name(), Field.Store.YES));
-                doc.add(new StringField("complete", String.valueOf(cat.isComplete()), Field.Store.YES));
-                doc.add(new StringField("description", cat.getDescription(), Field.Store.YES));
+                doc.add(new StringField(DictionaryConstants.ID, cat.getId(), Field.Store.YES));
+                doc.add(new StringField(DictionaryConstants.NAME, cat.getName(), Field.Store.YES));
+                doc.add(new StringField(DictionaryConstants.LABEL, cat.getLabel(), Field.Store.YES));
+                doc.add(new StringField(DictionaryConstants.TYPE, cat.getType().name(), Field.Store.YES));
+                doc.add(new StringField(DictionaryConstants.COMPLETENESS, String.valueOf(cat.isCompleteness()), Field.Store.YES));
+                doc.add(new StringField(DictionaryConstants.DESCRIPTION, cat.getDescription(), Field.Store.YES));
                 writer.addDocument(doc);
             }
             writer.commit();
@@ -194,23 +199,23 @@ public class CategoryRegistryManager {
             switch (cat.getRecognizerType()) {
             case REGEX:
                 dqCat.setType(CategoryType.RE);
-                dqCat.setComplete(true);
+                dqCat.setCompleteness(true);
                 break;
             case OPEN_INDEX:
                 dqCat.setType(CategoryType.DD);
-                dqCat.setComplete(false);
+                dqCat.setCompleteness(false);
                 break;
             case CLOSED_INDEX:
                 dqCat.setType(CategoryType.DD);
-                dqCat.setComplete(true);
+                dqCat.setCompleteness(true);
                 break;
             case KEYWORD:
                 dqCat.setType(CategoryType.KW);
-                dqCat.setComplete(false);
+                dqCat.setCompleteness(false);
                 break;
             default:
                 dqCat.setType(CategoryType.OT);
-                dqCat.setComplete(false);
+                dqCat.setCompleteness(false);
                 break;
             }
 
@@ -231,6 +236,13 @@ public class CategoryRegistryManager {
             }
         }
         return catList;
+    }
+
+    public String getCategoryLabel(String catId) {
+        if ("".equals(catId)) {
+            return "";
+        }
+        return getCategoryMetadataByName(catId).getLabel();
     }
 
     public DQCategory getCategoryMetadataByName(String name) {
