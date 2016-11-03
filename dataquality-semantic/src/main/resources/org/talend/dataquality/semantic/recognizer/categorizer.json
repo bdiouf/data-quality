@@ -297,7 +297,7 @@
         "mainCategory" : "AlphaNumeric",
         "label" : "IBAN",
         "validator" : {
-          "patternString" : "^[a-zA-Z]{2}[0-9]{2}\\ ?[a-zA-Z0-9]{4}\\ ?[0-9]{4}\\ ?[0-9]{3}([a-zA-Z0-9]?\\ ?){0,16}$",
+          "patternString" : "^[a-zA-Z]{2}[0-9]{2}\\ ?([a-zA-Z0-9]{4}\\ ?){2,6}([a-zA-Z0-9]{4}\\ ?|[a-zA-Z0-9])?[a-zA-Z0-9]{0,2}$",
           "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.IBANValidator"
         }
       }
