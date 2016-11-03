@@ -5,7 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,7 +54,7 @@ public class CategoryRegistryManager {
 
     public static final String REGEX_SUBFOLDER_NAME = "regex";
 
-    private static final String REGEX_CATEGRIZER_FILE_NAME = "categorizer.json";
+    public static final String REGEX_CATEGRIZER_FILE_NAME = "categorizer.json";
 
     private Map<String, DQCategory> dqCategories = new LinkedHashMap<String, DQCategory>();
 
@@ -172,7 +177,8 @@ public class CategoryRegistryManager {
         }
 
         // read local RE categories
-        File regexRegistryFolder = new File(localRegistryPath + File.separator + REGEX_SUBFOLDER_NAME);
+        File regexRegistryFolder = new File(
+                localRegistryPath + File.separator + REGEX_SUBFOLDER_NAME + File.separator + contextName);
         if (!regexRegistryFolder.exists()) {
             // load provided RE into registry
             InputStream is = CategoryRecognizer.class.getResourceAsStream(REGEX_CATEGRIZER_FILE_NAME);
@@ -261,9 +267,25 @@ public class CategoryRegistryManager {
         } else {
             // load regexes from local registry
             if (udc == null || refresh) {
-                final File regexRegistryFolder = new File(
-                        localRegistryPath + File.separator + REGEX_SUBFOLDER_NAME + File.separator + REGEX_CATEGRIZER_FILE_NAME);
-                final String content = new String(Files.readAllBytes(regexRegistryFolder.toPath()));
+                final File regexRegistryFile = new File(localRegistryPath + File.separator + REGEX_SUBFOLDER_NAME + File.separator
+                        + contextName + File.separator + REGEX_CATEGRIZER_FILE_NAME);
+
+                if (!regexRegistryFile.exists()) {
+                    regexRegistryFile.getParentFile().mkdirs();
+                    // load provided RE into registry
+                    InputStream is = CategoryRecognizer.class.getResourceAsStream(REGEX_CATEGRIZER_FILE_NAME);
+                    StringBuilder sb = new StringBuilder();
+                    for (String line : IOUtils.readLines(is)) {
+                        sb.append(line);
+                    }
+                    JSONObject obj = new JSONObject(sb.toString());
+                    JSONArray array = obj.getJSONArray("classifiers");
+                    FileOutputStream fos = new FileOutputStream(regexRegistryFile);
+                    IOUtils.write(array.toString(2), fos);
+                    fos.close();
+                }
+
+                final String content = new String(Files.readAllBytes(regexRegistryFile.toPath()));
                 JSONArray array = new JSONArray(content);
                 JSONObject obj = new JSONObject();
                 obj.put("classifiers", array);
@@ -271,9 +293,5 @@ public class CategoryRegistryManager {
             }
         }
         return udc;
-    }
-
-    public static void main(String[] args) {
-        CategoryRegistryManager.getInstance();
     }
 }
