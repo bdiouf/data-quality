@@ -97,6 +97,32 @@ public class CategoryRegistryManager {
         return localRegistryPath;
     }
 
+    public void reloadCategoriesFromRegistry() {
+        LOGGER.info("Reload categories from local registry.");
+        File categorySubFolder = new File(
+                localRegistryPath + File.separator + CATEGORY_SUBFOLDER_NAME + File.separator + contextName);
+        if (categorySubFolder.exists()) {
+            try {
+                final Directory indexDir = FSDirectory.open(categorySubFolder);
+                final DirectoryReader reader = DirectoryReader.open(indexDir);
+
+                for (int i = 0; i < reader.maxDoc(); i++) {
+                    Document doc = reader.document(i);
+                    DQCategory dqCat = new DQCategory();
+                    dqCat.setId(doc.getField("id").stringValue());
+                    dqCat.setName(doc.getField("name").stringValue());
+                    dqCat.setLabel(doc.getField("label") == null ? "" : doc.getField("label").stringValue());
+                    dqCat.setType(CategoryType.valueOf(doc.getField("type").stringValue()));
+                    dqCat.setComplete(Boolean.valueOf(doc.getField("complete").stringValue()));
+                    dqCat.setDescription(doc.getField("description") == null ? "" : doc.getField("description").stringValue());
+                    dqCategories.put(dqCat.getName(), dqCat);
+                }
+            } catch (IOException e) {
+                LOGGER.error("Error while reloading categories from local registry.", e);
+            }
+        }
+    }
+
     private void loadRegisteredCategories() throws IOException {
         // read local DD categories
         LOGGER.info("Loading categories from local registry.");
