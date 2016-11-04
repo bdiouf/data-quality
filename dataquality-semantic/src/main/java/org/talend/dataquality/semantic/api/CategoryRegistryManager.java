@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.CRC32;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -105,6 +106,7 @@ public class CategoryRegistryManager {
         File categorySubFolder = new File(
                 localRegistryPath + File.separator + CATEGORY_SUBFOLDER_NAME + File.separator + contextName);
         if (categorySubFolder.exists()) {
+            dqCategories.clear();
             try {
                 final Directory indexDir = FSDirectory.open(categorySubFolder);
                 final DirectoryReader reader = DirectoryReader.open(indexDir);
@@ -199,7 +201,11 @@ public class CategoryRegistryManager {
         LOGGER.info("Loading base categories.");
         for (SemanticCategoryEnum cat : SemanticCategoryEnum.values()) {
             DQCategory dqCat = new DQCategory();
-            dqCat.setId("base");
+
+            CRC32 checksum = new CRC32();
+            checksum.update(cat.getId().getBytes(), 0, cat.getId().getBytes().length);
+            final String hash = Long.toHexString(checksum.getValue());
+            dqCat.setId(hash);
             dqCat.setName(cat.getId());
             dqCat.setLabel(cat.getDisplayName());
             dqCat.setDescription(cat.getDescription());
