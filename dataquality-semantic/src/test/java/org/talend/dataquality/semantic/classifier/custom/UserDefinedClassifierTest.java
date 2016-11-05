@@ -239,14 +239,14 @@ public class UserDefinedClassifierTest {
             put("15:53", new String[] {}); //$NON-NLS-1$ //$NON-NLS-2$
             put("23:59", new String[] {}); //$NON-NLS-1$ //$NON-NLS-2$
 
-            put("Monday", new String[] { "EN_WEEK_DAY" }); //$NON-NLS-1$ //<$NON-NLS-2$
-            put("MonDay", new String[] { "EN_WEEK_DAY" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("MOnDay", new String[] { "EN_WEEK_DAY" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("MOn", new String[] { "EN_WEEK_DAY" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("Tue", new String[] { "EN_WEEK_DAY" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("Wed", new String[] { "EN_WEEK_DAY" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("Wednesday", new String[] { "EN_WEEK_DAY" }); //$NON-NLS-1$ //$NON-NLS-2$
-            put("Thurs", new String[] { "EN_WEEK_DAY" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("Monday", new String[] { "EN_WEEKDAY" }); //$NON-NLS-1$ //<$NON-NLS-2$
+            put("MonDay", new String[] { "EN_WEEKDAY" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("MOnDay", new String[] { "EN_WEEKDAY" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("MOn", new String[] { "EN_WEEKDAY" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("Tue", new String[] { "EN_WEEKDAY" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("Wed", new String[] { "EN_WEEKDAY" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("Wednesday", new String[] { "EN_WEEKDAY" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("Thurs", new String[] { "EN_WEEKDAY" }); //$NON-NLS-1$ //$NON-NLS-2$
 
             put("25:59", new String[] {}); // does not match TIME (as expected) //$NON-NLS-1$
 

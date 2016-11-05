@@ -209,29 +209,8 @@ public class CategoryRegistryManager {
             dqCat.setName(cat.getId());
             dqCat.setLabel(cat.getDisplayName());
             dqCat.setDescription(cat.getDescription());
-
-            switch (cat.getRecognizerType()) {
-            case REGEX:
-                dqCat.setType(CategoryType.RE);
-                dqCat.setCompleteness(true);
-                break;
-            case OPEN_INDEX:
-                dqCat.setType(CategoryType.DD);
-                dqCat.setCompleteness(false);
-                break;
-            case CLOSED_INDEX:
-                dqCat.setType(CategoryType.DD);
-                dqCat.setCompleteness(true);
-                break;
-            case KEYWORD:
-                dqCat.setType(CategoryType.KW);
-                dqCat.setCompleteness(false);
-                break;
-            default:
-                dqCat.setType(CategoryType.OT);
-                dqCat.setCompleteness(false);
-                break;
-            }
+            dqCat.setType(cat.getCategoryType());
+            dqCat.setCompleteness(cat.getCompleteness());
 
             dqCategories.put(cat.getId(), dqCat);
         }

@@ -20,7 +20,6 @@ import org.talend.dataquality.common.inference.Analyzers;
 import org.talend.dataquality.common.inference.Analyzers.Result;
 import org.talend.dataquality.common.inference.ValueQualityStatistics;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
-import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum.RecognizerType;
 import org.talend.dataquality.semantic.recognizer.CategoryFrequency;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 
@@ -30,7 +29,9 @@ public class SemanticQualityAnalyzerTest {
 
     private static final List<String[]> RECORDS_CRM_CUST = getRecords("crm_cust.csv");
 
-    private final String[] EXPECTED_CATEGORIES = new String[] { //
+    private static final List<String[]> RECORDS_CREDIT_CARDS = getRecords("credit_card_number_samples.csv");
+
+    private final String[] EXPECTED_CATEGORIES_DICT = new String[] { //
             "", //
             "CIVILITY", //
             "FIRST_NAME", //
@@ -45,7 +46,7 @@ public class SemanticQualityAnalyzerTest {
             "", //
     };
 
-    private static final long[][] EXPECTED_VALIDITY_COUNT = new long[][] { //
+    private static final long[][] EXPECTED_VALIDITY_COUNT_DICT = new long[][] { //
             new long[] { 1000, 0, 0 }, //
             new long[] { 1000, 0, 0 }, //
             new long[] { 1000, 0, 0 }, //
@@ -60,6 +61,16 @@ public class SemanticQualityAnalyzerTest {
             new long[] { 1000, 0, 0 }, //
     };
 
+    private final String[] EXPECTED_CATEGORIES_REGEX = new String[] { //
+            "", //
+            "VISA_CARD", //
+    };
+
+    private static final long[][] EXPECTED_VALIDITY_COUNT_REGEX = new long[][] { //
+            new long[] { 30, 0, 0 }, //
+            new long[] { 20, 10, 0 }, //
+    };
+
     @BeforeClass
     public static void setupBuilder() throws URISyntaxException {
         final URI ddPath = SemanticQualityAnalyzerTest.class.getResource(CategoryRecognizerBuilder.DEFAULT_DD_PATH).toURI();
@@ -70,24 +81,28 @@ public class SemanticQualityAnalyzerTest {
                 .lucene();
     }
 
-    private Analyzer<Result> setupAnalyzers() {
-
-        return Analyzers.with(//
-                new SemanticAnalyzer(builder), //
-                new SemanticQualityAnalyzer(builder, EXPECTED_CATEGORIES)//
-        );
+    @Test
+    public void testSemanticQualityAnalyzerWithDictionaryCategory() {
+        testAnalysis(RECORDS_CRM_CUST, EXPECTED_CATEGORIES_DICT, EXPECTED_VALIDITY_COUNT_DICT);
     }
 
     @Test
-    public void testAnalysis() {
-        Analyzer<Result> analyzers = setupAnalyzers();
+    public void testSemanticQualityAnalyzerWithRegexCategory() {
+        testAnalysis(RECORDS_CREDIT_CARDS, EXPECTED_CATEGORIES_REGEX, EXPECTED_VALIDITY_COUNT_REGEX);
+    }
 
-        for (String[] record : RECORDS_CRM_CUST) {
+    public void testAnalysis(List<String[]> records, String[] expectedCategories, long[][] expectedValidityCount) {
+        Analyzer<Result> analyzers = Analyzers.with(//
+                new SemanticAnalyzer(builder), //
+                new SemanticQualityAnalyzer(builder, expectedCategories)//
+        );
+
+        for (String[] record : records) {
             analyzers.analyze(record);
         }
         final List<Analyzers.Result> result = analyzers.getResult();
 
-        assertEquals(EXPECTED_CATEGORIES.length, result.size());
+        assertEquals(expectedCategories.length, result.size());
 
         // Composite result assertions (there should be a DataType and a SemanticType)
         for (Analyzers.Result columnResult : result) {
@@ -96,17 +111,16 @@ public class SemanticQualityAnalyzerTest {
         }
 
         // Semantic types assertions
-        for (int i = 0; i < EXPECTED_CATEGORIES.length; i++) {
+        for (int i = 0; i < expectedCategories.length; i++) {
             final SemanticType stats = result.get(i).get(SemanticType.class);
             // System.out.println("\"" + stats.getSuggestedCategory() + "\", //");
-            assertEquals("Unexpected SemanticType on column " + i, EXPECTED_CATEGORIES[i],
+            assertEquals("Unexpected SemanticType on column " + i, expectedCategories[i],
                     result.get(i).get(SemanticType.class).getSuggestedCategory());
             for (CategoryFrequency cf : stats.getCategoryToCount().keySet()) {
-                if (EXPECTED_CATEGORIES[i].equals(cf.getCategoryId())) {
+                if (expectedCategories[i].equals(cf.getCategoryId())) {
                     SemanticCategoryEnum cat = SemanticCategoryEnum.getCategoryById(cf.getCategoryId());
-                    if (RecognizerType.CLOSED_INDEX == cat.getRecognizerType() || //
-                            RecognizerType.REGEX == cat.getRecognizerType()) {
-                        assertEquals("Unexpected SemanticType occurence on column " + i, EXPECTED_VALIDITY_COUNT[i][0],
+                    if (cat.getCompleteness()) {
+                        assertEquals("Unexpected SemanticType occurence on column " + i, expectedValidityCount[i][0],
                                 cf.getCount());
                     }
                 }
@@ -114,13 +128,13 @@ public class SemanticQualityAnalyzerTest {
         }
 
         // Semantic validation assertions
-        for (int i = 0; i < EXPECTED_CATEGORIES.length; i++) {
+        for (int i = 0; i < expectedCategories.length; i++) {
             final ValueQualityStatistics stats = result.get(i).get(ValueQualityStatistics.class);
             // System.out.println("new long[] {" + stats.getValidCount() + ", " + stats.getInvalidCount() + ", "
             // + stats.getEmptyCount() + "}, //");
-            assertEquals("Unexpected valid count on column " + i, EXPECTED_VALIDITY_COUNT[i][0], stats.getValidCount());
-            assertEquals("Unexpected invalid count on column " + i, EXPECTED_VALIDITY_COUNT[i][1], stats.getInvalidCount());
-            assertEquals("Unexpected empty count on column " + i, EXPECTED_VALIDITY_COUNT[i][2], stats.getEmptyCount());
+            assertEquals("Unexpected valid count on column " + i, expectedValidityCount[i][0], stats.getValidCount());
+            assertEquals("Unexpected invalid count on column " + i, expectedValidityCount[i][1], stats.getInvalidCount());
+            assertEquals("Unexpected empty count on column " + i, expectedValidityCount[i][2], stats.getEmptyCount());
             assertEquals("Unexpected unknown count on column " + i, 0, stats.getUnknownCount());
         }
     }

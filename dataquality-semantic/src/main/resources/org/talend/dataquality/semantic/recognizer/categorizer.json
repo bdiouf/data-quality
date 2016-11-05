@@ -250,10 +250,10 @@
         "label" : "Color Hex Code",
         "validator" : { "patternString" : "^\\#[A-Fa-f0-9]{3}([A-Fa-f0-9]{3})?$" }
       },
-      { "description" : "Week Day or their abbreviation",
-        "name" : "EN_WEEK_DAY",
+      { "description" : "Weekday or their abbreviation",
+        "name" : "EN_WEEKDAY",
         "mainCategory" : "Alpha",
-        "label" : "EN Week Day",
+        "label" : "EN Weekday",
         "validator" : { "patternString" : "^((Sun|Mon|(T(ues|hurs))|Fri)(day|\\.)?|Wed(\\.|nesday)?|Sat(\\.|urday)?|T((ue?)|(hu?r?))\\.?)$" }
       },
       { "description" : "Month English abbreviation",

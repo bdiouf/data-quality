@@ -13,6 +13,7 @@
 package org.talend.dataquality.semantic.statistics;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,10 +22,10 @@ import org.talend.dataquality.common.inference.Analyzer;
 import org.talend.dataquality.common.inference.QualityAnalyzer;
 import org.talend.dataquality.common.inference.ResizableList;
 import org.talend.dataquality.common.inference.ValueQualityStatistics;
+import org.talend.dataquality.semantic.api.CategoryRegistryManager;
 import org.talend.dataquality.semantic.classifier.ISubCategoryClassifier;
-import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
-import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum.RecognizerType;
 import org.talend.dataquality.semantic.classifier.impl.DataDictFieldClassifier;
+import org.talend.dataquality.semantic.model.DQCategory;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizer;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 
@@ -114,55 +115,32 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
     }
 
     private void analyzeValue(String semanticType, String value, ValueQualityStatistics valueQuality) {
-        SemanticCategoryEnum cat = SemanticCategoryEnum.getCategoryById(semanticType);
+        DQCategory cat = CategoryRegistryManager.getInstance().getCategoryMetadataByName(semanticType);
         if (cat == null) {
             valueQuality.incrementValid();
             return;
         }
-        RecognizerType recognizerType = cat.getRecognizerType();
-        Set<String> catIds = null;
-        switch (recognizerType) {
-        case OTHER:
-            valueQuality.incrementValid();
-            break;
-        case REGEX:
-            catIds = regexClassifier.classify(value);
+        if (cat.isCompleteness()) {
+            Set<String> catIds = new HashSet<String>();
+            switch (cat.getType()) {
+            case RE:
+                catIds = regexClassifier.classify(value);
+                break;
+            case DD:
+                catIds = dataDictClassifier.classify(value);
+                break;
+            default:
+                break;
+            }
             if (catIds.contains(semanticType)) {
                 valueQuality.incrementValid();
             } else {
                 valueQuality.incrementInvalid();
                 processInvalidValue(valueQuality, value);
             }
-            break;
-        case CLOSED_INDEX:
-            catIds = dataDictClassifier.classify(value);
-            if (catIds.contains(semanticType)) {
-                valueQuality.incrementValid();
-            } else {
-                valueQuality.incrementInvalid();
-                processInvalidValue(valueQuality, value);
-            }
-            break;
-        case OPEN_INDEX:
-            /**
-             * Do not calculate value validity for OPEN_INDEX as it is not used by dataprep for the moment.
-             * 
-             * <pre>
-             * catIds = dataDictClassifier.classify(value);
-             * if (catIds.contains(semanticType)) {
-             *     valueQuality.incrementValid();
-             * } else {
-             *     valueQuality.incrementUnknown();
-             *     processUnknownValue(valueQuality, value);
-             * }
-             * </pre>
-             */
+        } else {
             valueQuality.incrementValid();
-            break;
-        default:
-            break;
         }
-
     }
 
     private void processInvalidValue(ValueQualityStatistics valueQuality, String invalidValue) {
