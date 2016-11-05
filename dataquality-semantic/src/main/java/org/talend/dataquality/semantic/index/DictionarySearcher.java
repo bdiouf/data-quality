@@ -75,6 +75,8 @@ public class DictionarySearcher {
         }
     }
 
+    public static final String F_ID = "id";//$NON-NLS-1$
+
     public static final String F_WORD = "word";//$NON-NLS-1$
 
     public static final String F_SYN = "syn";//$NON-NLS-1$
@@ -286,20 +288,23 @@ public class DictionarySearcher {
      * @return a list of lower-case tokens which strips accents & punctuation
      * @throws IOException
      */
-    public static List<String> getTokensFromAnalyzer(String input) throws IOException {
+    public static List<String> getTokensFromAnalyzer(String input) {
         StandardTokenizer tokenStream = new StandardTokenizer(new StringReader(input));
         TokenStream result = new StandardFilter(tokenStream);
         result = new LowerCaseFilter(result);
         result = new ASCIIFoldingFilter(result);
         CharTermAttribute charTermAttribute = result.addAttribute(CharTermAttribute.class);
-
-        tokenStream.reset();
         List<String> termList = new ArrayList<String>();
-        while (result.incrementToken()) {
-            String term = charTermAttribute.toString();
-            termList.add(term);
+        try {
+            tokenStream.reset();
+            while (result.incrementToken()) {
+                String term = charTermAttribute.toString();
+                termList.add(term);
+            }
+            result.close();
+        } catch (IOException e) {
+            // do nothing
         }
-        result.close();
         if (termList.size() == 1) { // require exact match when the input has only one token
             termList.clear();
             termList.add(StringUtils.stripAccents(input.toLowerCase()));

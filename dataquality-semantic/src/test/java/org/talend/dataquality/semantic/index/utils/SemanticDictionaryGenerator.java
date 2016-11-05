@@ -168,15 +168,10 @@ public class SemanticDictionaryGenerator {
                 }
 
                 if (syn.length() > 0 && !syn.equals(tempWord)) {
-                    try {
-                        List<String> aux = DictionarySearcher.getTokensFromAnalyzer(syn);
-                        doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(aux, ' '), Field.Store.NO));
-                        if (aux.size() > 1)
-                            doc.add(new Field(DictionarySearcher.F_SYN, syn, ftSyn));
-
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(syn);
+                    doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(tokens, ' '), Field.Store.NO));
+                    if (tokens.size() > 1) {
+                        doc.add(new Field(DictionarySearcher.F_SYN, syn, ftSyn));
                     }
                 }
             }
