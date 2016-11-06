@@ -164,15 +164,6 @@ public enum SemanticCategoryEnum {
 
     private boolean completeness;
 
-    public enum RecognizerType {
-        REGEX,
-        OPEN_INDEX,
-        CLOSED_INDEX,
-        DICTIONARY,
-        KEYWORD,
-        OTHER
-    }
-
     /**
      * SemanticCategoryEnum constructor.
      * 

@@ -92,9 +92,13 @@ public class CategoryRegistryManager {
     }
 
     public static void setLocalRegistryPath(String folder) {
-        localRegistryPath = folder;
-        usingLocalCategoryRegistry = true;
-        getInstance();
+        if (folder != null && folder.trim().length() > 0) {
+            localRegistryPath = folder;
+            usingLocalCategoryRegistry = true;
+            getInstance();
+        } else {
+            LOGGER.warn("Cannot set an empty path as local registy location. Use default one: " + localRegistryPath);
+        }
     }
 
     public static String getLocalRegistryPath() {

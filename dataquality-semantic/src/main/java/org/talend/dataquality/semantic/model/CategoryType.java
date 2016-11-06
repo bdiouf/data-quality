@@ -13,26 +13,8 @@
 package org.talend.dataquality.semantic.model;
 
 public enum CategoryType {
-    RE,
-    DD,
-    KW,
-    OT;
-
-    public static CategoryType from(String recognizerType) {
-        switch (recognizerType) {
-        case "REGEX":
-            return RE;
-        case "OPEN_INDEX":
-            return DD;
-        case "CLOSED_INDEX":
-            return DD;
-        case "KEYWORD":
-            return KW;
-        case "OTHER":
-            return OT;
-        default:
-            break;
-        }
-        return OT;
-    }
+    RE, // REGEX
+    DD, // DICTIONARY
+    KW, // KEYWORD
+    OT;// OTHER
 }
