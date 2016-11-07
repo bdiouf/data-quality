@@ -113,8 +113,8 @@ public class RichRecord extends Record {
             this.grpSize = vsize;
 
             Object value = originRow2.get(recordSize + 2).getOriginalValue();
-            Boolean bvalue = value instanceof Boolean ? (Boolean) value : Boolean.valueOf((String) value);
-            this.MASTER = new DQAttribute<Boolean>(SwooshConstants.IS_MASTER, recordSize + 2, bvalue);
+            Boolean isMasterInFrist = value instanceof Boolean ? (Boolean) value : Boolean.valueOf((String) value);
+            this.MASTER = new DQAttribute<Boolean>(SwooshConstants.IS_MASTER, recordSize + 2, isMasterInFrist);
 
             Object value2 = originRow2.get(recordSize + 3).getOriginalValue();
             Double dvalue = value2 instanceof Double ? (Double) value2 : Double.valueOf((String) value2);
@@ -124,6 +124,14 @@ public class RichRecord extends Record {
                     : originRow2.get(recordSize + 4).getOriginalValue();
             String gvalue = value3 instanceof Double ? String.valueOf(value3) : (String) value3;
             this.GRP_QUALITY = new DQAttribute<String>(SwooshConstants.GROUP_QUALITY, recordSize + 4, gvalue);
+
+            //get output details
+            if (originRow2.size() > recordSize + 5 && !isMasterInFrist) {//only the not master in the first match will contains output details
+                String details = originRow2.get(recordSize + 5).getValue();
+                this.setLabeledAttributeScores(details);
+                ATTRIBUTE_SCORE = new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, recordSize + 5,
+                        getLabeledAttributeScores());
+            }
 
             if (this.originRow == null) {
                 originRow = new ArrayList<DQAttribute<?>>();
@@ -442,7 +450,7 @@ public class RichRecord extends Record {
                     ATTRIBUTE_SCORE.setValue(getLabeledAttributeScores());
                 } else {
                     this.ATTRIBUTE_SCORE = new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, originRow.size(),
-                            StringUtils.EMPTY);
+                            getLabeledAttributeScores());
                 }
 
             }

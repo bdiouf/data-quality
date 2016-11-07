@@ -1800,8 +1800,8 @@ public class SwooshRecordGroupingTest {
         Map<String, String> columnWithType_tMatchGroup_1 = fillColumn("id_Integer", "id_Integer", "id_String", "id_String",
                 "id_Integer", "id_Boolean", "id_Double", "id_Double", null);
         Map<String, String> columnWithIndex_tMatchGroup_1 = fillColumn("0", "1", "2", "3", "4", "5", "6", "7", null);
-        columnWithType_tMatchGroup_1.put("ORIGINAL_RECORD", "id_Object");
-        columnWithIndex_tMatchGroup_1.put("ORIGINAL_RECORD", "8");
+        columnWithType_tMatchGroup_1.put("MERGED_RECORD", "id_Object");
+        columnWithIndex_tMatchGroup_1.put("MERGED_RECORD", "8");
 
         SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = SurvivorshipUtils
                 .createSurvivorShipAlgorithmParams((AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1,
@@ -1995,10 +1995,10 @@ public class SwooshRecordGroupingTest {
 
         public String MATCHING_DISTANCES;
 
-        public Object ORIGINAL_RECORD;
+        public Object MERGED_RECORD;
 
-        public Object getORIGINAL_RECORD() {
-            return this.ORIGINAL_RECORD;
+        public Object getMERGED_RECORD() {
+            return this.MERGED_RECORD;
         }
 
         @Override
@@ -2045,7 +2045,7 @@ public class SwooshRecordGroupingTest {
             other.MASTER = this.MASTER;
             other.SCORE = this.SCORE;
             other.GRP_QUALITY = this.GRP_QUALITY;
-            other.ORIGINAL_RECORD = this.ORIGINAL_RECORD;
+            other.MERGED_RECORD = this.MERGED_RECORD;
         }
 
         public void copyKeysDataTo(row2Struct other) {
@@ -2146,7 +2146,7 @@ public class SwooshRecordGroupingTest {
                 }
 
                 if (8 < row.length) {
-                    outStuct_tMatchGroup_1.ORIGINAL_RECORD = row[8] == null ? null : row[8];
+                    outStuct_tMatchGroup_1.MERGED_RECORD = row[8] == null ? null : row[8];
                 }
 
                 if (outStuct_tMatchGroup_1.MASTER == true) {
@@ -2218,12 +2218,12 @@ public class SwooshRecordGroupingTest {
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
         for (row2Struct one : groupRows_tMatchGroup_1) {
             //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-            //                    + "--" + one.MASTER + "--" + one.ORIGINAL_RECORD);
+            //                    + "--" + one.MASTER + "--" + one.MERGED_RECORD);
 
             if (one.MASTER) {
 
-                Assert.assertTrue(one.ORIGINAL_RECORD instanceof List);
-                Assert.assertTrue(((List) one.ORIGINAL_RECORD).size() > 0);
+                Assert.assertTrue(one.MERGED_RECORD instanceof List);
+                Assert.assertTrue(((List) one.MERGED_RECORD).size() > 0);
 
             }
         }
@@ -2312,7 +2312,7 @@ public class SwooshRecordGroupingTest {
                 }
 
                 if (8 < row.length) {
-                    outStuct_tMatchGroup_1.ORIGINAL_RECORD = row[3] == null ? null : row[8];
+                    outStuct_tMatchGroup_1.MERGED_RECORD = row[3] == null ? null : row[8];
                 }
                 //                if (9 < row.length) {
                 //                    outStuct_tMatchGroup_1.MERGE_INFO = row[9] == null ? null : String.valueOf(row[9]);
@@ -2353,7 +2353,7 @@ public class SwooshRecordGroupingTest {
         initialize(recordGroupImp_tMatchGroup_1);
         // use multipass
         recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
-        //the "ORIGINAL_RECORD" is NOT considered as an input column. 
+        //the "MERGED_RECORD" is NOT considered as an input column. 
         recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(3);
 
         // read the data from the file
@@ -2403,7 +2403,7 @@ public class SwooshRecordGroupingTest {
         for (row2Struct one : groupRows_tMatchGroup_1) {
             //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
             //                    + "--" + one.MASTER + "--");
-            Assert.assertNull(one.ORIGINAL_RECORD);
+            Assert.assertNull(one.MERGED_RECORD);
             if (one.MASTER) {
 
                 Assert.assertEquals("should be: AAA", "AAA", one.city);
@@ -2459,44 +2459,44 @@ public class SwooshRecordGroupingTest {
                     outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf((String) row[2]);
                 }
                 if (3 < row.length) {
-                    outStuct_tMatchGroup_1.ORIGINAL_RECORD = row[3] == null ? null : row[3];
-                }
-                if (4 < row.length) {
-                    outStuct_tMatchGroup_1.GID = row[4] == null ? null : String.valueOf((String) row[4]);
+                    outStuct_tMatchGroup_1.GID = row[3] == null ? null : String.valueOf((String) row[3]);
                 }
 
-                if (5 < row.length) {
+                if (4 < row.length) {
 
                     try {
-                        outStuct_tMatchGroup_1.GRP_SIZE = Integer.valueOf((String) row[5]);
+                        outStuct_tMatchGroup_1.GRP_SIZE = Integer.valueOf((String) row[4]);
                     } catch (java.lang.NumberFormatException e) {
-                        outStuct_tMatchGroup_1.GRP_SIZE = row[5] == null ? null : 0;
+                        outStuct_tMatchGroup_1.GRP_SIZE = row[4] == null ? null : 0;
                     }
                 }
 
-                if (6 < row.length) {
-                    outStuct_tMatchGroup_1.MASTER = row[6] == null ? null : Boolean.valueOf((String) row[6]);
+                if (5 < row.length) {
+                    outStuct_tMatchGroup_1.MASTER = row[5] == null ? null : Boolean.valueOf((String) row[5]);
                 }
 
-                if (7 < row.length) {
+                if (6 < row.length) {
 
                     try {
-                        outStuct_tMatchGroup_1.SCORE = Double.valueOf((String) row[7]);
+                        outStuct_tMatchGroup_1.SCORE = Double.valueOf((String) row[6]);
                     } catch (java.lang.NumberFormatException e) {
                         outStuct_tMatchGroup_1.SCORE = 0.0;
                     }
                 }
 
-                if (8 < row.length) {
+                if (7 < row.length) {
 
                     try {
-                        outStuct_tMatchGroup_1.GRP_QUALITY = Double.valueOf((String) row[8]);
+                        outStuct_tMatchGroup_1.GRP_QUALITY = Double.valueOf((String) row[7]);
                     } catch (java.lang.NumberFormatException e) {
                         outStuct_tMatchGroup_1.GRP_QUALITY = 0.0;
                     }
                 }
+                if (8 < row.length) {
+                    outStuct_tMatchGroup_1.MATCHING_DISTANCES = row[8] == null ? null : String.valueOf(row[8]);
+                }
                 if (9 < row.length) {
-                    outStuct_tMatchGroup_1.MATCHING_DISTANCES = row[9] == null ? null : String.valueOf(row[9]);
+                    outStuct_tMatchGroup_1.MERGED_RECORD = row[9] == null ? null : row[9];
                 }
                 //                if (10 < row.length) {
                 //                    outStuct_tMatchGroup_1.MERGE_INFO = row[10] == null ? null : String.valueOf(row[10]);
@@ -2539,7 +2539,7 @@ public class SwooshRecordGroupingTest {
         initialize(recordGroupImp_tMatchGroup_1);
         // use multipass
         recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
-        //the "ORIGINAL_RECORD" is considered as an input column. 
+        //the "MERGED_RECORD" is considered as an input column. 
         recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(3);
         recordGroupImp_tMatchGroup_1.setIsOutputDistDetails(true);
         recordGroupImp_tMatchGroup_1.setIsDisplayAttLabels(true);
@@ -2582,12 +2582,15 @@ public class SwooshRecordGroupingTest {
         //        System.err.println("--pass original---with output---" + groupRows_tMatchGroup_1.size());
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-            //                    + "--" + one.MASTER + "--" + one.MATCHING_DISTANCES);
+            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+                    + "--" + one.MASTER + "--" + one.MATCHING_DISTANCES);
 
             if (one.MASTER) {
-
                 Assert.assertEquals("should be: AAA", "AAA", one.city);
+            } else if (one.customer_id == 3) {
+                Assert.assertEquals("should has output details", "city: 1.0", one.MATCHING_DISTANCES);
+            } else {
+                Assert.assertEquals("should has output details", "city:1.0", one.MATCHING_DISTANCES);
             }
         }
 
@@ -2672,7 +2675,7 @@ public class SwooshRecordGroupingTest {
                 }
 
                 if (8 < row.length) {
-                    outStuct_tMatchGroup_1.ORIGINAL_RECORD = row[3] == null ? null : row[8];
+                    outStuct_tMatchGroup_1.MERGED_RECORD = row[3] == null ? null : row[8];
                 }
                 //                if (9 < row.length) {
                 //                    outStuct_tMatchGroup_1.MERGE_INFO = row[9] == null ? null : String.valueOf(row[9]);
@@ -2713,7 +2716,7 @@ public class SwooshRecordGroupingTest {
         initialize(recordGroupImp_tMatchGroup_1);
         // use multipass
         recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
-        //the "ORIGINAL_RECORD" is NOT considered as an input column. 
+        //the "MERGED_RECORD" is NOT considered as an input column. 
         recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(3);
 
         // read the data from the file
