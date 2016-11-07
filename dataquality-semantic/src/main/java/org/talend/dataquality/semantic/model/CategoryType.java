@@ -13,8 +13,18 @@
 package org.talend.dataquality.semantic.model;
 
 public enum CategoryType {
-    RE, // REGEX
-    DD, // DICTIONARY
-    KW, // KEYWORD
-    OT;// OTHER
+    REGEX("RE"),
+    DICT("DD"),
+    KEYWORD("KW"),
+    OTHER("OT");
+
+    private String technicalName;
+
+    private CategoryType(String technicalName) {
+        this.technicalName = technicalName;
+    }
+
+    public String getTechnicalName() {
+        return technicalName;
+    }
 }

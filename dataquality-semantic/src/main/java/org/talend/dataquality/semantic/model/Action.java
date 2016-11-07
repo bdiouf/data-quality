@@ -17,7 +17,6 @@ public enum Action {
     CREATE,
     RETRIEVE,
     DELETE,
-    DELETE_DOC_BY_CAT,
     UPDATE,
     CREATE_CATEGORY,
     UPDATE_CATEGORY,

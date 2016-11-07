@@ -123,10 +123,10 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
         if (cat.isCompleteness()) {
             Set<String> catIds = new HashSet<String>();
             switch (cat.getType()) {
-            case RE:
+            case REGEX:
                 catIds = regexClassifier.classify(value);
                 break;
-            case DD:
+            case DICT:
                 catIds = dataDictClassifier.classify(value);
                 break;
             default:
