@@ -30,8 +30,8 @@ public enum MaskableCategoryEnum {
     IPv4_ADDRESS("IPv4 Address", FunctionType.REPLACE_CHARACTERS_WITH_GENERATION),
     IPv6_ADDRESS("IPv6 Address", FunctionType.REPLACE_CHARACTERS_WITH_GENERATION),
     JOB_TITLE("Job Title", FunctionType.GENERATE_FROM_FILE_STRING_PROVIDED, "jobTitle.txt"), //$NON-NLS-2$
-    LOCALIZATION("Localization", FunctionType.REPLACE_CHARACTERS_WITH_GENERATION),
-    LOCATION_COORDINATE("Location Coordinate", FunctionType.REPLACE_CHARACTERS_WITH_GENERATION),
+    GEO_COORDINATE("Geographic coordinate", FunctionType.REPLACE_CHARACTERS_WITH_GENERATION),
+    GEO_COORDINATES_DEG("Geographic coordinates (degrees)", FunctionType.REPLACE_CHARACTERS_WITH_GENERATION),
     MAC_ADDRESS("MAC Address", FunctionType.REPLACE_CHARACTERS_WITH_GENERATION),
     ORGANIZATION("Organization", FunctionType.GENERATE_FROM_FILE_STRING_PROVIDED, "organization.txt"), //$NON-NLS-2$
     PASSPORT("Passport", FunctionType.REPLACE_CHARACTERS_WITH_GENERATION),

@@ -120,14 +120,18 @@ public enum SemanticCategoryEnum {
             CategoryType.REGEX,
             true),
 
-    GPS_COORDINATE("GPS Coordinate", "Google Maps style GPS Decimal format", CategoryType.REGEX, true),
+    GEO_COORDINATES("Geographic Coordinates", "Google Maps style GPS Decimal format", CategoryType.REGEX, true),
     IPv4_ADDRESS("IPv4 Address", "IPv4 address", CategoryType.REGEX, true),
     IPv6_ADDRESS("IPv6 Address", "IPv6 address", CategoryType.REGEX, true),
     ISBN_10("ISBN-10", "International Standard Book Number 10 digits. Such as ISBN 2-711-79141-6", CategoryType.REGEX, true),
     ISBN_13("ISBN-13", "International Standard Book Number 13 digits.", CategoryType.REGEX, true),
-    LOCALIZATION("Localization", "Longitude or latitude coordinates with at least meter precision", CategoryType.REGEX, true),
-    LOCATION_COORDINATE(
-            "Location Coordinate",
+    GEO_COORDINATE(
+            "Geographic coordinate",
+            "Longitude or latitude coordinates with at least meter precision",
+            CategoryType.REGEX,
+            true),
+    GEO_COORDINATES_DEG(
+            "Geographic coordinates (degrees)",
             "Latitude and longitude coordinates separated by a comma in the form: N 0:59:59.99,E 0:59:59.99",
             CategoryType.REGEX,
             true),
