@@ -231,7 +231,9 @@ public class UserDefinedClassifierTest {
             put("AT12345678", new String[] { "AT_VAT_NUMBER" });//$NON-NLS-1$ //$NON-NLS-2$
 
             // put("132.2356", new String[] { "LONGITUDE_LATITUDE_COORDINATE" });
-            put("40.7127837,-74.00594130000002", new String[] { "GPS_COORDINATE" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("40.7127837,-74.00594130000002", new String[] { "GEO_COORDINATES" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("30.082993", new String[] { "GEO_COORDINATE" }); //$NON-NLS-1$ //$NON-NLS-2$
+            put("N 0:59:59.99,E 0:59:59.99", new String[] { "GEO_COORDINATES_DEG" }); //$NON-NLS-1$ //$NON-NLS-2$
 
             put("00:00", new String[] {}); //$NON-NLS-1$ //$NON-NLS-2$
             put("12:00", new String[] {}); //$NON-NLS-1$ //$NON-NLS-2$
