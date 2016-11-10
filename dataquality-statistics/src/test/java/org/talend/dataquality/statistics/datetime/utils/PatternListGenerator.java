@@ -106,6 +106,7 @@ public class PatternListGenerator {
             add(new LocaledPattern("dd-MMM-yy hh.mm.ss.nnnnnnnnn a", //
                     Locale.UK, "OTHER", true));// 18-Nov-86 01.00.00.000000000 AM
             add(new LocaledPattern("EEE MMM dd HH:mm:ss z yyyy", Locale.US, "OTHER", true));// default format of java.util.Date
+            add(new LocaledPattern("dd/MMM/yy h:mm a", Locale.US, "OTHER", true)); // data time pattern from jira
         }
     };
 
