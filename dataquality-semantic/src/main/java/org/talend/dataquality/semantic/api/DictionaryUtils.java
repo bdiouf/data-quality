@@ -9,6 +9,8 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.StringField;
 import org.talend.dataquality.semantic.index.DictionarySearcher;
+import org.talend.dataquality.semantic.model.CategoryType;
+import org.talend.dataquality.semantic.model.DQCategory;
 
 public class DictionaryUtils {
 
@@ -51,6 +53,30 @@ public class DictionaryUtils {
                 }
             }
         }
+        return doc;
+    }
+
+    public static DQCategory documentToCategory(Document doc) {
+        DQCategory dqCat = new DQCategory();
+        dqCat.setId(doc.getField(DictionaryConstants.ID).stringValue());
+        dqCat.setName(doc.getField(DictionaryConstants.NAME).stringValue());
+        dqCat.setLabel(
+                doc.getField(DictionaryConstants.LABEL) == null ? "" : doc.getField(DictionaryConstants.LABEL).stringValue());
+        dqCat.setType(CategoryType.valueOf(doc.getField(DictionaryConstants.TYPE).stringValue()));
+        dqCat.setCompleteness(Boolean.valueOf(doc.getField(DictionaryConstants.COMPLETENESS).stringValue()));
+        dqCat.setDescription(doc.getField(DictionaryConstants.DESCRIPTION) == null ? ""
+                : doc.getField(DictionaryConstants.DESCRIPTION).stringValue());
+        return dqCat;
+    }
+
+    public static Document categoryToDocument(DQCategory cat) {
+        Document doc = new Document();
+        doc.add(new StringField(DictionaryConstants.ID, cat.getId(), Field.Store.YES));
+        doc.add(new StringField(DictionaryConstants.NAME, cat.getName(), Field.Store.YES));
+        doc.add(new StringField(DictionaryConstants.LABEL, cat.getLabel(), Field.Store.YES));
+        doc.add(new StringField(DictionaryConstants.TYPE, cat.getType().name(), Field.Store.YES));
+        doc.add(new StringField(DictionaryConstants.COMPLETENESS, String.valueOf(cat.isCompleteness()), Field.Store.YES));
+        doc.add(new StringField(DictionaryConstants.DESCRIPTION, cat.getDescription(), Field.Store.YES));
         return doc;
     }
 }
