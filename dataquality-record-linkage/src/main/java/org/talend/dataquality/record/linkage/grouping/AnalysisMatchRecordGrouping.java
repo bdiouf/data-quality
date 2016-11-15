@@ -45,7 +45,7 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
     // computed.
     protected List<RichRecord> tmpMatchResult = new ArrayList<RichRecord>();
 
-    private MatchGroupResultConsumer matchResultConsumer = null;
+    protected MatchGroupResultConsumer matchResultConsumer = null;
 
     @SuppressWarnings("deprecation")
     public AnalysisMatchRecordGrouping(MatchGroupResultConsumer matchResultConsumer) {
@@ -155,18 +155,17 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
      */
     @Override
     public void end() throws IOException, InterruptedException {
-        super.end();
-        if (matchAlgo == RecordMatcherType.T_SwooshAlgorithm) {
-            swooshGrouping.afterAllRecordFinished();
+        // output the masters
+        for (Object[] mst : masterRecords) {
+            outputRow(mst);
         }
+
         if (matchResultConsumer.isKeepDataInMemory) {
             for (RichRecord row : tmpMatchResult) {
                 // For swoosh algorithm, the GID can only be know after all of the records are computed.
                 out(row);
             }
         }
-        // Clear the GID map , no use anymore.
-        swooshGrouping.getOldGID2New().clear();
     }
 
     /*
@@ -183,22 +182,6 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
         } else {
             out(row);
         }
-    }
-
-    /**
-     * DOC zhao Comment method "out".
-     * 
-     * @param row
-     */
-    private void out(RichRecord row) {
-        List<DQAttribute<?>> originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
-        String[] strRow = new String[originRow.size()];
-        int idx = 0;
-        for (DQAttribute<?> attr : originRow) {
-            strRow[idx] = attr.getValue();
-            idx++;
-        }
-        outputRow(strRow);
     }
 
     /*
@@ -247,5 +230,16 @@ public class AnalysisMatchRecordGrouping extends AbstractRecordGrouping<Object> 
     @Override
     protected Object[] createTYPEArray(int size) {
         return new Object[size];
+    }
+
+    protected void out(RichRecord row) {
+        List<DQAttribute<?>> originRow = row.getOutputRow(swooshGrouping.getOldGID2New());
+        String[] strRow = new String[originRow.size()];
+        int idx = 0;
+        for (DQAttribute<?> attr : originRow) {
+            strRow[idx] = attr.getValue();
+            idx++;
+        }
+        outputRow(strRow);
     }
 }

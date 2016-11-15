@@ -428,17 +428,14 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
     @Override
     public void end() throws IOException, InterruptedException {
 
-        switch (matchAlgo) {
-        case simpleVSRMatcher:
-            // output the masters
-            for (TYPE[] mst : masterRecords) {
-                outputRow(mst);
-            }
-            break;
-        case T_SwooshAlgorithm:
-            combinedRecordMatcher.setDisplayLabels(true);
-            swooshGrouping.swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams);
+        //            // output the masters
+        for (TYPE[] mst : masterRecords) {
+            outputRow(mst);
         }
+        clear();
+    }
+
+    protected void clear() {
         multiMatchRules.clear();
     }
 

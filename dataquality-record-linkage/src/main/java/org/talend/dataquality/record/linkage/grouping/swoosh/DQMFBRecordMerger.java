@@ -154,8 +154,11 @@ public class DQMFBRecordMerger extends MFBRecordMerger {
         }
         //Added TDQ-12659: only when the GRP_SIZE is not null( = multipass), need to modify the group size 
         if (richRecord1.getGRP_SIZE() != null && richRecord2.getGRP_SIZE() != null) {
-            mergedRecord.setGRP_SIZE(Integer.valueOf(richRecord1.getGRP_SIZE().getValue())
-                    + Integer.valueOf(richRecord2.getGRP_SIZE().getValue()));
+            int newSize = Integer.valueOf(richRecord1.getGRP_SIZE().getValue())
+                    + Integer.valueOf(richRecord2.getGRP_SIZE().getValue());
+            if (newSize > 0) {
+                mergedRecord.setGRP_SIZE(newSize);
+            }
         }
         return mergedRecord;
     }

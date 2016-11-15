@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.grouping.swoosh;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,14 +33,8 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
 
     private Map<Integer, Attribute> attributesAsMatchKey;
 
-    /**
-     * Sets the isCompositeMode.
-     * 
-     * @param isCompositeMode the isCompositeMode to set
-     */
-    // public void setComponentMode(boolean isCompositeMode) {
-    // this.isComponentMode = isCompositeMode;
-    // }
+    //used for the chart in the analysis
+    private boolean needMatchInEnd = true;
 
     /**
      * DOC yyin AnalysisSwooshMatchRecordGrouping constructor comment.
@@ -86,11 +81,13 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
     }
 
     @Override
-    public void doGroup(RichRecord currentRecord) {
+    public void doGroup(RichRecord currentRecord) {//used only for analysis running
         // translate the record's attribute to -->origalRow, and attributes only contain match keys
         translateRecordForSwoosh(currentRecord);
 
         swooshGrouping.oneRecordMatch(currentRecord);
+
+        needMatchInEnd = false;
     }
 
     /**
@@ -113,14 +110,28 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
         }
         currentRecord.getAttributes().clear();
         currentRecord.getAttributes().addAll(matchAttrs);
+        currentRecord.setRecordSize(this.originalInputColumnSize);
         currentRecord.setOriginRow(rowList);
     }
 
     @Override
-    public void end() {
+    public void end() throws IOException, InterruptedException {//used for analysis only 
+        if (needMatchInEnd) {//used for the "chart" in the analysis
+            combinedRecordMatcher.setDisplayLabels(true);
+            swooshGrouping.swooshMatch(combinedRecordMatcher, survivorShipAlgorithmParams);
+        }
+
         // out put
         swooshGrouping.afterAllRecordFinished();
-        // Clear the GID map , no use anymore.
+
+        //TODO: check if it needed
+        if (matchResultConsumer.isKeepDataInMemory()) {
+            for (RichRecord row : tmpMatchResult) {
+                // For swoosh algorithm, the GID can only be know after all of the records are computed.
+                out(row);
+            }
+        }
+
         clear();
     }
 
@@ -128,15 +139,26 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
      * DOC yyin Comment method "clear".
      */
     protected void clear() {
+        super.clear();
+        // Clear the GID map , no use anymore.
         swooshGrouping.getOldGID2New().clear();
         tmpMatchResult.clear();
     }
 
     /**
-     * only used for tMatchGroup, and only after swoosh match finished.
+     * used for analysis and tMatchGroup, and only after swoosh match finished.
      *  */
     @Override
     protected void outputRow(RichRecord row) {
+        if (matchResultConsumer != null && matchResultConsumer.isKeepDataInMemory()) {
+            tmpMatchResult.add(row);
+        } else {
+            out(row);
+        }
+    }
+
+    @Override
+    protected void out(RichRecord row) {
         List<DQAttribute<?>> row2 = getValuesFromOriginRow(row);
 
         Object[] strRow = (Object[]) getArrayFromAttributeList(row2, row2.size());
@@ -170,48 +192,5 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
         }
         return strRow;
     }
-    //        List<DQAttribute<?>> originRow = getOutputRow(row);
-    //        String[] strRow = new String[originRow.size()];
-    //        int idx = 0;
-    //        for (DQAttribute<?> attr : originRow) {
-    //            if (SwooshConstants.GROUP_QUALITY.equals(attr.getLabel())) {
-    //                // when it is master two case 1 group size is 0 or group size is >0
-    //                if (row.isMaster()) {
-    //                    // group size >0 mean that it is a merged item so that we get real group quality
-    //                    if (row.getGrpSize() != 0) {
-    //                        strRow[idx] = String.valueOf(row.getGroupQuality());
-    //                        // group size ==0 mean that it si a alone item so that the group quality should be 1.0
-    //                    } else {
-    //                        strRow[idx] = SwooshConstants.ALONE_ITEM_GROUP_QUALITY_DEFAULT_VALUE;
-    //                    }
-    //                    // when it is not a master item mean that it is sub item so that the group quality is 0.0
-    //                } else {
-    //                    strRow[idx] = SwooshConstants.SUB_ITEM_GROUP_QUALITY_DEFAULT_VALUE;
-    //                }
-    //                //            } else if (idx == (originalInputColumnSize - 1) && this.swooshGrouping.isHasPassedOriginal() && isLinkToPrevious) {
-    //                //                //Added TDQ-12057 : because the "ORIGINAL_RECORD" position changed from the last column of the array to the position: 
-    //                //                //after the input record, before the extended(GID),so its correct position is strRow[originalInputColumnSize]
-    //                //                //And , its label is empty, if it is extened attri like GID, will not be empty.
-    //                //                strRow[idx] = StringUtils.EMPTY;
-    //            } else {
-    //                if (row.isMaster() && row.isMerged()) {
-    //                    strRow[idx] = attr.getValue();
-    //                } else {
-    //
-    //                    strRow[idx] = attr.getOriginalValue() == null ? attr.getValue() : String.valueOf(attr.getOriginalValue());
-    //                }
-    //            }
-    //            idx++;
-    //        }
-    //        return strRow;
-
-    /**
-     * DOC yyin Comment method "getOutputRow".
-     * 
-     * @param row
-     * @return
-    protected List<DQAttribute<?>> getOutputRow(RichRecord row) {
-        return row.getOutputRow(swooshGrouping.getOldGID2New());
-    }     */
 
 }

@@ -2193,7 +2193,7 @@ public class SwooshRecordGroupingTest {
         List<String[]> inputList2 = new ArrayList<String[]>();
         for (String line : listOfLines) {
             String[] fields = StringUtils.splitPreserveAllTokens(line, columnDelimiter);
-            if (StringUtils.equals("X", fields[1])) {
+            if (StringUtils.equals("X", fields[2])) {
                 inputList.add(fields);
             } else {
                 inputList2.add(fields);

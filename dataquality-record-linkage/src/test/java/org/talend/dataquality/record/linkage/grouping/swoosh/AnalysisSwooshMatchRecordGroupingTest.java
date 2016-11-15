@@ -196,7 +196,7 @@ public class AnalysisSwooshMatchRecordGroupingTest {
          * @param isKeepDataInMemory
          */
         public JunitResultConsumer() {
-            super(true);
+            super(false);
         }
 
         /*

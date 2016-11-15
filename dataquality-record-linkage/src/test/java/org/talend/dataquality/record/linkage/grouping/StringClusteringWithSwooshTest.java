@@ -90,7 +90,9 @@ public class StringClusteringWithSwooshTest {
         Map<String, List<String[]>> resultData = blockKeyHandler.getResultDatas();
 
         // Do grouping given swoosh algorithm with Dummy matcher.
-        recordGroup = new AnalysisSwooshMatchRecordGrouping();
+        JunitResultConsumer resultConsumer = new JunitResultConsumer();
+        recordGroup = new AnalysisSwooshMatchRecordGrouping(resultConsumer);
+        ((AnalysisSwooshMatchRecordGrouping) recordGroup).setOrginalInputColumnSize(2);
         recordGroup.setRecordLinkAlgorithm(RecordMatcherType.T_SwooshAlgorithm);
 
         SurvivorShipAlgorithmParams survivorShipAlgorithmParams = new SurvivorShipAlgorithmParams();
@@ -145,14 +147,50 @@ public class StringClusteringWithSwooshTest {
         }
         // Assertions
 
-        for (Object[] rds : groupingRecords) {
-            if (rds[rds.length - 5].equals("5")) { //$NON-NLS-1$
-                // Group quality.
-                Assert.assertEquals(1, Double.valueOf(rds[rds.length - 2].toString()).doubleValue(), 0d);
-                // Assert the merged value is the "most common" value.
-                Assert.assertEquals("élément", rds[0].toString());
-            }
+        Object[] rds = resultConsumer.getResult();
+        //        for (Object[] rds : ) {
+        if (rds[rds.length - 5].equals("5")) { //$NON-NLS-1$
+            // Group quality.
+            Assert.assertEquals(1, Double.valueOf(rds[rds.length - 2].toString()).doubleValue(), 0d);
+            // Assert the merged value is the "most common" value.
+            Assert.assertEquals("élément", rds[0].toString());
+        }
+        //        }
+
+    }
+
+    class JunitResultConsumer extends MatchGroupResultConsumer {
+
+        public Object[] result;
+
+        /**
+         * Getter for result.
+         * 
+         * @return the result
+         */
+        public Object[] getResult() {
+            return this.result;
+        }
+
+        /**
+         * DOC zshen junitResultConsumer constructor comment.
+         * 
+         * @param isKeepDataInMemory
+         */
+        public JunitResultConsumer() {
+            super(false);
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see org.talend.dataquality.record.linkage.grouping.MatchGroupResultConsumer#handle(java.lang.Object)
+         */
+        @Override
+        public void handle(Object row) {
+            result = ((Object[]) row);
         }
 
     }
+
 }
