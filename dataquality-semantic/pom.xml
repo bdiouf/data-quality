@@ -21,6 +21,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.talend.dataquality</groupId>
+			<artifactId>dataquality-semantic-model</artifactId>
+			<version>${dataquality.libraries.snapshot.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.dataquality</groupId>
 			<artifactId>dataquality-standardization</artifactId>
 			<version>${dataquality.standardization.snapshot.version}</version>
 		</dependency>

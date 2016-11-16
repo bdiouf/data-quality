@@ -48,6 +48,7 @@
 		<module>../dataquality-record-linkage</module>
 		<module>../dataquality-sampling</module>
 		<module>../dataquality-standardization</module>
+		<module>../dataquality-semantic-model</module>
 		<module>../dataquality-semantic</module>
 		<module>../dataquality-statistics</module>
 		<module>../dataquality-wordnet</module>
