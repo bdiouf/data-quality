@@ -110,6 +110,7 @@ public class CategoryRegistryManager {
         if (folder != null && folder.trim().length() > 0) {
             localRegistryPath = folder;
             usingLocalCategoryRegistry = true;
+            getInstance();
         } else {
             LOGGER.warn("Cannot set an empty path as local registy location. Use default one: " + localRegistryPath);
         }
