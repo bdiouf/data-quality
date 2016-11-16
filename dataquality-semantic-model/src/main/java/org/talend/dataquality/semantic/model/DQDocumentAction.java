@@ -18,7 +18,7 @@ public class DQDocumentAction {
 
     private Action action;
 
-    private List<DQDocument> categories;
+    private List<DQDocument> documents;
 
     private String context;
 
@@ -30,12 +30,12 @@ public class DQDocumentAction {
         this.action = action;
     }
 
-    public List<DQDocument> getCategories() {
-        return categories;
+    public List<DQDocument> getDocuments() {
+        return documents;
     }
 
-    public void setCategories(List<DQDocument> categories) {
-        this.categories = categories;
+    public void setDocuments(List<DQDocument> documents) {
+        this.documents = documents;
     }
 
     public String getContext() {
