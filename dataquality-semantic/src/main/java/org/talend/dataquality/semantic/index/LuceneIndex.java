@@ -31,7 +31,7 @@ public class LuceneIndex implements Index {
 
     private final DictionarySearcher searcher;
 
-    public LuceneIndex(URI indexPath, DictionarySearcher.DictionarySearchMode searchMode) {
+    public LuceneIndex(URI indexPath, DictionarySearchMode searchMode) {
         searcher = new DictionarySearcher(indexPath);
         searcher.setTopDocLimit(20);
         searcher.setSearchMode(searchMode);

@@ -30,7 +30,6 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.dataquality.semantic.index.DictionarySearcher.DictionarySearchMode;
 
 public class ConcurrentDictionaryAccessTest {
 

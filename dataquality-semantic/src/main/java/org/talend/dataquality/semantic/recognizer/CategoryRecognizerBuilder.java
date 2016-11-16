@@ -18,7 +18,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.log4j.Logger;
-import org.talend.dataquality.semantic.index.DictionarySearcher;
+import org.talend.dataquality.semantic.index.DictionarySearchMode;
 import org.talend.dataquality.semantic.index.LuceneIndex;
 
 /**
@@ -93,7 +93,7 @@ public class CategoryRecognizerBuilder implements Serializable {
                     LOGGER.error(e.getMessage(), e);
                 }
             }
-            dataDictIndex = new LuceneIndex(ddPath, DictionarySearcher.DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);
+            dataDictIndex = new LuceneIndex(ddPath, DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);
         }
         return dataDictIndex;
     }
@@ -107,7 +107,7 @@ public class CategoryRecognizerBuilder implements Serializable {
                     LOGGER.error(e.getMessage(), e);
                 }
             }
-            keywordIndex = new LuceneIndex(kwPath, DictionarySearcher.DictionarySearchMode.MATCH_SEMANTIC_KEYWORD);
+            keywordIndex = new LuceneIndex(kwPath, DictionarySearchMode.MATCH_SEMANTIC_KEYWORD);
         }
         return keywordIndex;
     }
