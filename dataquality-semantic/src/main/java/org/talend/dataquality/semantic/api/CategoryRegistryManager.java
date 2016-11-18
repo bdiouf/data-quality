@@ -58,11 +58,9 @@ public class CategoryRegistryManager {
 
     public static final String CATEGORY_SUBFOLDER_NAME = "category";
 
-    public static final String INDEX_SUBFOLDER_NAME = "index";
+    public static final String DICTIONARY_SUBFOLDER_NAME = "index/dictionary";
 
-    public static final String DICTIONARY_SUBFOLDER_NAME = INDEX_SUBFOLDER_NAME + File.separator + "dictionary";
-
-    public static final String KEYWORD_SUBFOLDER_NAME = INDEX_SUBFOLDER_NAME + File.separator + "keyword";
+    public static final String KEYWORD_SUBFOLDER_NAME = "index/keyword";
 
     public static final String REGEX_SUBFOLDER_NAME = "regex";
 
@@ -201,7 +199,7 @@ public class CategoryRegistryManager {
     private void loadBaseIndex(final File destSubFolder, String sourceSubFolder) throws IOException, URISyntaxException {
         if (!destSubFolder.exists()) {
             synchronized (indexExtractionLock) {
-                final URI indexSourceURI = this.getClass().getResource(File.separator + sourceSubFolder).toURI();
+                final URI indexSourceURI = this.getClass().getResource("/" + sourceSubFolder).toURI();
                 Path start = getFileSystemPath(indexSourceURI);
                 destSubFolder.mkdirs();
                 Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
