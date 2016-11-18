@@ -1,5 +1,6 @@
 package org.talend.dataquality.semantic.api;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -8,9 +9,11 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.StringField;
+import org.apache.lucene.index.IndexableField;
 import org.talend.dataquality.semantic.index.DictionarySearcher;
 import org.talend.dataquality.semantic.model.CategoryType;
 import org.talend.dataquality.semantic.model.DQCategory;
+import org.talend.dataquality.semantic.model.DQDocument;
 
 public class DictionaryUtils {
 
@@ -56,7 +59,7 @@ public class DictionaryUtils {
         return doc;
     }
 
-    public static DQCategory documentToCategory(Document doc) {
+    public static DQCategory categoryFromDocument(Document doc) {
         DQCategory dqCat = new DQCategory();
         dqCat.setId(doc.getField(DictionaryConstants.ID).stringValue());
         dqCat.setName(doc.getField(DictionaryConstants.NAME).stringValue());
@@ -79,4 +82,23 @@ public class DictionaryUtils {
         doc.add(new StringField(DictionaryConstants.DESCRIPTION, cat.getDescription(), Field.Store.YES));
         return doc;
     }
+
+    public static DQDocument dictionaryEntryFromDocument(Document doc) {
+        String catName = doc.getField(DictionarySearcher.F_WORD).stringValue();
+        return dictionaryEntryFromDocument(doc, catName);
+    }
+
+    public static DQDocument dictionaryEntryFromDocument(Document doc, String knownCategoryName) {
+        DQDocument dqCat = new DQDocument();
+        // dqCat.setId(doc.getField(DictionarySearcher.F_ID).stringValue());
+        dqCat.setCategory(CategoryRegistryManager.getInstance().getCategoryMetadataByName(knownCategoryName));
+        IndexableField[] synTermFields = doc.getFields(DictionarySearcher.F_SYN);
+        Set<String> synSet = new HashSet<String>();
+        for (IndexableField f : synTermFields) {
+            synSet.add(f.stringValue());
+        }
+        dqCat.setSynterm(synSet);
+        return dqCat;
+    }
+
 }

@@ -59,7 +59,7 @@ public class DQDocument implements Serializable {
 
     @Override
     public String toString() {
-        return "DQDocument{" + "id='" + id + '\'' + ", synterm=" + synterm + ", category='" + category + '\'' + ", creator='"
-                + creator + '\'' + '}';
+        return "DQDocument{" + "id='" + id + '\'' + ", category=" + category.getName() + ", synterm='" + synterm + '\''
+                + ", creator='" + creator + '\'' + '}';
     }
 }

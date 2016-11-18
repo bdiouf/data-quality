@@ -15,6 +15,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-suggest</artifactId>
+			<version>4.10.4</version>
+		</dependency>
+		<dependency>
 			<groupId>org.talend.dataquality</groupId>
 			<artifactId>dataquality-common</artifactId>
 			<version>${dataquality.libraries.snapshot.version}</version>

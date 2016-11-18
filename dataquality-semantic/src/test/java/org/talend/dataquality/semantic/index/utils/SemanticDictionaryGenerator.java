@@ -44,6 +44,21 @@ public class SemanticDictionaryGenerator {
     private static Set<String> STOP_WORDS = new HashSet<String>(
             Arrays.asList("yes", "no", "y", "o", "n", "oui", "non", "true", "false", "vrai", "faux", "null"));
 
+    private FieldType ftSyn = new FieldType();
+
+    private static final FieldType FIELD_TYPE_RAW_VALUE = new FieldType();
+
+    {
+        ftSyn.setStored(false);
+        ftSyn.setIndexed(true);
+        ftSyn.setOmitNorms(true);
+        ftSyn.freeze();
+
+        FIELD_TYPE_RAW_VALUE.setIndexed(false);
+        FIELD_TYPE_RAW_VALUE.setStored(true);
+        FIELD_TYPE_RAW_VALUE.freeze();
+    }
+
     private void generateDictionaryForSpec(DictionaryGenerationSpec spec, IndexWriter writer) throws IOException {
 
         System.out.println("-------------------" + spec.name() + "---------------------");
@@ -148,11 +163,6 @@ public class SemanticDictionaryGenerator {
     Document generateDocument(String word, Set<String> synonyms) {
         String tempWord = word.trim();
         Document doc = new Document();
-        FieldType ftSyn = new FieldType();
-        ftSyn.setStored(false);
-        ftSyn.setIndexed(true);
-        ftSyn.setOmitNorms(true);
-        ftSyn.freeze();
 
         Field wordTermField = new StringField(DictionarySearcher.F_WORD, tempWord, Field.Store.YES);
         doc.add(wordTermField);
@@ -170,6 +180,7 @@ public class SemanticDictionaryGenerator {
                 if (syn.length() > 0 && !syn.equals(tempWord)) {
                     List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(syn);
                     doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(tokens, ' '), Field.Store.NO));
+                    doc.add(new Field(DictionarySearcher.F_RAW, syn, FIELD_TYPE_RAW_VALUE));
                     if (tokens.size() > 1) {
                         doc.add(new Field(DictionarySearcher.F_SYN, syn, ftSyn));
                     }

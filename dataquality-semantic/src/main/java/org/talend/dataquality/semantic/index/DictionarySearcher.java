@@ -83,6 +83,8 @@ public class DictionarySearcher {
 
     public static final String F_SYNTERM = "synterm";//$NON-NLS-1$
 
+    public static final String F_RAW = "raw";
+
     private SearcherManager mgr;
 
     private int topDocLimit = 3;
@@ -280,6 +282,10 @@ public class DictionarySearcher {
 
     public void setMaxEdits(int maxEdits) {
         this.maxEdits = maxEdits;
+    }
+
+    public static String getJointTokens(String input) {
+        return StringUtils.join(getTokensFromAnalyzer(input), ' ');
     }
 
     /**

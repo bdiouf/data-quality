@@ -72,6 +72,8 @@ public class CategoryRegistryManager {
 
     private UserDefinedClassifier udc;
 
+    private LocalDictionaryCache localDictionaryCache;
+
     private static final Object indexExtractionLock = new Object();
 
     private CategoryRegistryManager() {
@@ -118,6 +120,13 @@ public class CategoryRegistryManager {
         return localRegistryPath;
     }
 
+    public LocalDictionaryCache getDictionaryCache() {
+        if (localDictionaryCache == null) {
+            return new LocalDictionaryCache(contextName);
+        }
+        return localDictionaryCache;
+    }
+
     public void reloadCategoriesFromRegistry() {
         LOGGER.info("Reload categories from local registry.");
         File categorySubFolder = new File(
@@ -130,7 +139,7 @@ public class CategoryRegistryManager {
 
                 for (int i = 0; i < reader.maxDoc(); i++) {
                     Document doc = reader.document(i);
-                    DQCategory dqCat = DictionaryUtils.documentToCategory(doc);
+                    DQCategory dqCat = DictionaryUtils.categoryFromDocument(doc);
                     dqCategories.put(dqCat.getName(), dqCat);
                 }
             } catch (IOException e) {
@@ -148,7 +157,7 @@ public class CategoryRegistryManager {
             try (final DirectoryReader reader = DirectoryReader.open(FSDirectory.open(categorySubFolder))) {
                 for (int i = 0; i < reader.maxDoc(); i++) {
                     Document doc = reader.document(i);
-                    DQCategory dqCat = DictionaryUtils.documentToCategory(doc);
+                    DQCategory dqCat = DictionaryUtils.categoryFromDocument(doc);
                     dqCategories.put(dqCat.getName(), dqCat);
                 }
             }
