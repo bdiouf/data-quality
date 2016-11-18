@@ -45,7 +45,7 @@ public class SoundexMatcher extends AbstractAttributeMatcher {
             int diff = soundex.difference(str1, str2);
             return diff / MAX;
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.warn(e);
             return 0;
         }
     }
