@@ -120,6 +120,7 @@ public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
         @Override
         public void destroyObject(Thread key, Analyzer<T> obj) throws Exception {
+            // do nothing
         }
 
         @Override
@@ -129,10 +130,12 @@ public class ConcurrentAnalyzer<T> implements Analyzer<T> {
 
         @Override
         public void activateObject(Thread key, Analyzer<T> obj) throws Exception {
+            // do nothing
         }
 
         @Override
         public void passivateObject(Thread key, Analyzer<T> obj) throws Exception {
+            // do nothing
         }
     }
 

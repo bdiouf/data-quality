@@ -46,22 +46,22 @@ import org.talend.dataquality.email.exception.TalendSMTPRuntimeException;
  */
 public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
 
-    private static Logger log = Logger.getLogger(CallbackMailServerCheckerImpl.class);
+    private static Logger LOG = Logger.getLogger(CallbackMailServerCheckerImpl.class);
+
+    private static String HEADER = "Email Indicator - "; //$NON-NLS-1$
 
     private String genericEmailRegex = "^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$"; //$NON-NLS-1$
 
-    private Pattern EMAIL_PATTERN = java.util.regex.Pattern.compile(genericEmailRegex);
+    private Pattern emailPattern = java.util.regex.Pattern.compile(genericEmailRegex);
 
-    private String DNS = null;// "dns://8.8.8.8";
-
-    private static String HEADER = "Email Indicator - "; //$NON-NLS-1$
+    private String dns = null;
 
     private DirContext ictx = null;
 
     /**
      * The default port for smtp MX(Mail Exchanger) server
      */
-    private int PORT = 25;
+    private int port = 25;
 
     public CallbackMailServerCheckerImpl() {
         init();
@@ -95,12 +95,12 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
         do {
             try {
                 line = in.readLine();
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 line = e.getMessage();
                 continue;
             }
-            if (log.isInfoEnabled()) {
-                log.info(line);
+            if (LOG.isInfoEnabled()) {
+                LOG.info(line);
             }
             // Make sure the input stream is over and not effect next one read
             if (line == null) {
@@ -135,8 +135,8 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
             attrs = ictx.getAttributes(hostName, new String[] { "A" }); //$NON-NLS-1$
             attr = attrs.get("A"); //$NON-NLS-1$
             if (attr == null) {
-                if (log.isInfoEnabled()) {
-                    log.info(HEADER + "No match for hostname '" + hostName + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+                if (LOG.isInfoEnabled()) {
+                    LOG.info(HEADER + "No match for hostname '" + hostName + "'"); //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 return res;
             }
@@ -153,7 +153,7 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
             if (f.length == 1) {
                 mailhost = f[0];
             } else if (f[1].endsWith(".")) { //$NON-NLS-1$
-                mailhost = f[1].substring(0, (f[1].length() - 1));
+                mailhost = f[1].substring(0, f[1].length() - 1);
                 key = Integer.valueOf(f[0]);
             } else {
                 mailhost = f[1];
@@ -177,7 +177,7 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
 
         // if the user add the paramter for: java.naming.provider.url, if has then add it to env
         // Added TDQ-6918 Allow user add parameter: java.naming.provider.url
-        String dnsUrl = DNS;
+        String dnsUrl = dns;
         if (dnsUrl != null) {
             env.put(Context.PROVIDER_URL, dnsUrl);
         } // ~
@@ -185,7 +185,7 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
         try {
             ictx = new InitialDirContext(env);
         } catch (NamingException e) {
-            System.err.println("Invalid DNS: " + e); //$NON-NLS-1$
+            LOG.error("Invalid DNS: " + e); //$NON-NLS-1$
         }
 
     }
@@ -198,8 +198,8 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
     @Override
     public boolean check(String email) throws TalendSMTPRuntimeException {
         if (email == null) {
-            if (log.isInfoEnabled()) {
-                log.info("mail is empty."); //$NON-NLS-1$
+            if (LOG.isInfoEnabled()) {
+                LOG.info("mail is empty."); //$NON-NLS-1$
             }
             return false;
         }
@@ -207,17 +207,17 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
         int pos = email.indexOf('@');
         // If the email does not contain an '@', it's not valid
         if (pos == -1) {
-            if (log.isInfoEnabled()) {
-                log.info("no @ charactor in the mail string.");
+            if (LOG.isInfoEnabled()) {
+                LOG.info("no @ charactor in the mail string.");
             }
             return false;
         }
 
         // check loose email regex
-        final Matcher matcher = EMAIL_PATTERN.matcher(email);
+        final Matcher matcher = emailPattern.matcher(email);
         if (!matcher.find()) {
-            if (log.isInfoEnabled()) {
-                log.info(HEADER + "Invalid email syntax for " + email); //$NON-NLS-1$
+            if (LOG.isInfoEnabled()) {
+                LOG.info(HEADER + "Invalid email syntax for " + email); //$NON-NLS-1$
             }
             return false;
         }
@@ -228,8 +228,8 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
         try {
             mxList = getMX(domain);
         } catch (NamingException ex) {
-            if (log.isInfoEnabled()) {
-                log.info(ex.getMessage());
+            if (LOG.isInfoEnabled()) {
+                LOG.info(ex.getMessage());
             }
             // talend email on the outside of office room case
             throw new TalendSMTPRuntimeException(ex.getMessage());
@@ -237,9 +237,9 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
 
         // Just because we can send mail to the domain, doesn't mean that the
         // email is valid, but if we can't, it's a sure sign that it isn't
-        if (mxList.size() == 0) {
-            if (log.isInfoEnabled()) {
-                log.info("MX size is 0"); //$NON-NLS-1$
+        if (mxList.isEmpty()) {
+            if (LOG.isInfoEnabled()) {
+                LOG.info("MX size is 0"); //$NON-NLS-1$
             }
             return false;
         }
@@ -253,15 +253,15 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
         for (int mx = 0; mx < mxList.size(); mx++) {
             try {
                 int res;
-                Socket skt = new Socket(mxList.get(mx), PORT);
+                Socket skt = new Socket(mxList.get(mx), port);
                 BufferedReader rdr = new BufferedReader(new InputStreamReader(skt.getInputStream()));
                 BufferedWriter wtr = new BufferedWriter(new OutputStreamWriter(skt.getOutputStream()));
 
                 res = getResponse(rdr);
                 if (res != 220) { // SMTP Service ready.
                     skt.close();
-                    if (log.isInfoEnabled()) {
-                        log.info(HEADER + "Invalid header:" + mxList.get(mx)); //$NON-NLS-1$
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info(HEADER + "Invalid header:" + mxList.get(mx)); //$NON-NLS-1$
                     }
                     return false;
                 }
@@ -270,8 +270,8 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
                 res = getResponse(rdr);
                 if (res != 250) {
                     skt.close();
-                    if (log.isInfoEnabled()) {
-                        log.info(HEADER + "Not ESMTP: " + domain); //$NON-NLS-1$
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info(HEADER + "Not ESMTP: " + domain); //$NON-NLS-1$
                     }
                     return false;
                 }
@@ -281,8 +281,8 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
                 res = getResponse(rdr);
                 if (res != 250) {
                     skt.close();
-                    if (log.isInfoEnabled()) {
-                        log.info(HEADER + "Sender rejected: " + email); //$NON-NLS-1$
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info(HEADER + "Sender rejected: " + email); //$NON-NLS-1$
                     }
                     return false;
                 }
@@ -297,16 +297,16 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
                 getResponse(rdr);
                 if (res != 250) {
                     skt.close();
-                    return false;// logInfo(HEADER + "email is not valid: " + email);
+                    return false;
                 }
                 rdr.close();
                 wtr.close();
                 skt.close();
                 return true;
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 // Do nothing but try next host
-                if (log.isDebugEnabled()) {
-                    log.debug("Connection to " + mxList.get(mx) + " failed.", e); //$NON-NLS-1$ //$NON-NLS-2$
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Connection to " + mxList.get(mx) + " failed.", e); //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 errorMessage = e.getMessage();
                 continue;

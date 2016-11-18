@@ -115,6 +115,7 @@ public class SemanticAnalyzer implements Analyzer<SemanticType> {
 
     @Override
     public void end() {
+        // do nothing
     }
 
     /**
