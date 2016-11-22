@@ -1,6 +1,7 @@
 3|tianjin|aa@bb.com|2c6b31b9-80dc-4d94-bdfd-11fb92037361|3|true|1.0|1.0
 7|tianjin|aa@bba.com|2c6b31b9-80dc-4d94-bdfd-11fb92037361|0|false|0.97|0.9
 3|tianjin|aa@bbc.com|2c6b31b9-80dc-4d94-bdfd-11fb92037361|0|false|0.96|null
+4|tianjin|aa@bbc.com|2c6b31b9-80dc-4d94-bdfd-11fb92037361|0|false|0.96|null
 13|cangzhou|aa@bbb.com|decaded7-e0d8-4f3c-b096-7d67bdc26b4c|2|true|1.0|1.0
 8|cangzhou|aab@bb.com|decaded7-e0d8-4f3c-b096-7d67bdc26b4c|0|false|0.99|0.8
 13|cangzhou|aa@cbb.com|decaded7-e0d8-4f3c-b096-7d67bdc26b4c|0|false|0.98|0.7

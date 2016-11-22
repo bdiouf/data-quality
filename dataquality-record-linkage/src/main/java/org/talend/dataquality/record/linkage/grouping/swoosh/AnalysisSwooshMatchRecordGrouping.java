@@ -139,8 +139,6 @@ public class AnalysisSwooshMatchRecordGrouping extends AnalysisMatchRecordGroupi
      * DOC yyin Comment method "clear".
      */
     protected void clear() {
-        super.clear();
-        // Clear the GID map , no use anymore.
         swooshGrouping.getOldGID2New().clear();
         tmpMatchResult.clear();
     }

@@ -659,7 +659,25 @@ public class SwooshRecordGroupingTest {
         groupRows_tMatchGroup_1.addAll(masterRows_tMatchGroup_1);
 
         Collections.sort(groupRows_tMatchGroup_1);
-        Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
+        Assert.assertTrue(groupRows_tMatchGroup_1.size() > 10);
+        boolean hasGroup5 = false, hasGroup2 = false;
+        for (row2Struct one : groupRows_tMatchGroup_1) {
+            //System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+ "--" + one.MASTER);
+            if (one.customer_id == 100000) {
+                Assert.assertTrue(one.MASTER);
+                Assert.assertTrue(1 == one.GRP_SIZE);
+            } else if ("CCCCCCCCCCCCCCC".equals(one.country)) {
+                hasGroup5 = true;
+                Assert.assertTrue(one.MASTER);
+                Assert.assertTrue(5 == one.GRP_SIZE);
+            } else if ("AAAAAA".equals(one.country)) {
+                hasGroup2 = true;
+                Assert.assertTrue(one.MASTER);
+                Assert.assertTrue(2 == one.GRP_SIZE);
+            }
+        }
+        Assert.assertTrue(hasGroup5);
+        Assert.assertTrue(hasGroup2);
     }
 
     @Test
@@ -723,7 +741,22 @@ public class SwooshRecordGroupingTest {
         groupRows_tMatchGroup_1.addAll(masterRows_tMatchGroup_1);
 
         Collections.sort(groupRows_tMatchGroup_1);
-        Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
+        Assert.assertTrue(groupRows_tMatchGroup_1.size() == 14);
+        boolean hasGroup5 = false, hasGroup7 = false;
+        for (row2Struct one : groupRows_tMatchGroup_1) {
+            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+ "--" + one.MASTER);
+            if ("AAAAAAAAAAAAAAA".equals(one.country)) {
+                hasGroup5 = true;
+                Assert.assertTrue(one.MASTER);
+                Assert.assertTrue(5 == one.GRP_SIZE);
+            } else if ("CCCCCCCCCCCCCCCCCCCCC".equals(one.country)) {
+                hasGroup7 = true;
+                Assert.assertTrue(one.MASTER);
+                Assert.assertTrue(7 == one.GRP_SIZE);
+            }
+        }
+        Assert.assertTrue(hasGroup5);
+        Assert.assertTrue(hasGroup7);
     }
 
     @Test
@@ -900,7 +933,12 @@ public class SwooshRecordGroupingTest {
         groupRows_tMatchGroup_1.addAll(masterRows_tMatchGroup_1);
 
         Collections.sort(groupRows_tMatchGroup_1);
-        Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
+        Assert.assertTrue(groupRows_tMatchGroup_1.size() == 1);
+        for (row2Struct one : groupRows_tMatchGroup_1) {
+            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+ "--" + one.MASTER);
+            Assert.assertTrue(one.MASTER);
+            Assert.assertTrue(1 == one.GRP_SIZE);
+        }
     }
 
     @Test
@@ -968,14 +1006,17 @@ public class SwooshRecordGroupingTest {
 
         Collections.sort(groupRows_tMatchGroup_1);
         //        System.out.println("swoosh with multipass :lost some record");
-        Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
+        Assert.assertTrue(groupRows_tMatchGroup_1.size() == 10);
+        boolean hasGroup9 = false;
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-            //                    + "--" + one.MASTER);
+            //System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+ "--" + one.MASTER);
             if (one.MASTER) {
-                Assert.assertEquals("9", Long.toString(one.GRP_SIZE));
+                hasGroup9 = true;
+                Assert.assertTrue(one.MASTER);
+                Assert.assertTrue(9 == one.GRP_SIZE);
             }
         }
+        Assert.assertTrue(hasGroup9);
     }
 
     @Test
@@ -1043,9 +1084,16 @@ public class SwooshRecordGroupingTest {
 
         Collections.sort(groupRows_tMatchGroup_1);
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
+        boolean hasGroup5 = false;
         for (row2Struct one : groupRows_tMatchGroup_1) {
+            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+ "--" + one.MASTER);
             Assert.assertTrue(one.SCORE > 0);
+            if (one.MASTER) {
+                hasGroup5 = true;
+                Assert.assertTrue(5 == one.GRP_SIZE);
+            }
         }
+        Assert.assertTrue(hasGroup5);
     }
 
     @Test
@@ -2373,12 +2421,6 @@ public class SwooshRecordGroupingTest {
                 att2.getValues().get("A").increment();
                 list.add(att2);
 
-                //                Iterator<String> leftValues = new IteratorChain(Collections.singleton("A").iterator(),
-                //                        att.getValues().iterator());
-                //                while (leftValues.hasNext()) {
-                //                    String leftValue = leftValues.next();
-                //                    System.err.println(leftValue);
-                //                }
             }
             list2.add(list);
             //add "Merge_info" at the end of the array
@@ -2582,8 +2624,8 @@ public class SwooshRecordGroupingTest {
         //        System.err.println("--pass original---with output---" + groupRows_tMatchGroup_1.size());
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-                    + "--" + one.MASTER + "--" + one.MATCHING_DISTANCES);
+            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+            //                    + "--" + one.MASTER + "--" + one.MATCHING_DISTANCES);
 
             if (one.MASTER) {
                 Assert.assertEquals("should be: AAA", "AAA", one.city);

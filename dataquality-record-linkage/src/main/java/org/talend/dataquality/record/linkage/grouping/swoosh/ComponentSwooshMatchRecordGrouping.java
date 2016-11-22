@@ -91,30 +91,11 @@ public class ComponentSwooshMatchRecordGrouping extends AnalysisSwooshMatchRecor
         }
     }
 
-    // TODO: need to add the info: multipass + output DD
-    //    @Override
-    //    protected List<DQAttribute<?>> getOutputRow(RichRecord row) {
-    //        if (this.isLinkToPrevious) {
-    //            if (this.swooshGrouping.isHasPassedOriginal()) {//Added TDQ-12057
-    //                int ext = 7;
-    //                if (isOutputDistDetails()) {
-    //                    ext = 8;
-    //                }
-    //                List<DQAttribute<?>> outputRow = row.getoutputRow(swooshGrouping.getOldGID2New(), isOutputDistDetails(), ext);
-    //                outputRow.remove(outputRow.size() - 2);
-    //                outputRow.add(originalInputColumnSize - 1,
-    //                        new DQAttribute<>(SwooshConstants.ORIGINAL_RECORD, originalInputColumnSize, ""));
-    //                return outputRow;
-    //            } //~
-    //            return row.getOutputRow(swooshGrouping.getOldGID2New(), isOutputDistDetails());
-    //        } else {
-    //            List<DQAttribute<?>> outputRow = super.getOutputRow(row);
-    //            if (!isOutputDistDetails()
-    //                    && StringUtils.equals(SwooshConstants.ATTRIBUTE_SCORES, outputRow.get(outputRow.size() - 1).getLabel())) {//if not output details, need to remove the last : Attribute scores
-    //                outputRow.remove(outputRow.size() - 1);
-    //            }
-    //            return outputRow;
-    //        }
-    //    }
+    protected void clear() {
+        // Clear the GID map , no use anymore.
+        swooshGrouping.getOldGID2New().clear();
+        tmpMatchResult.clear();
+        masterRecords.clear();
+    }
 
 }
