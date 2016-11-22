@@ -18,6 +18,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.store.Directory;
 import org.talend.dataquality.semantic.index.DictionarySearchMode;
 import org.talend.dataquality.semantic.index.LuceneIndex;
 
@@ -47,6 +48,10 @@ public class CategoryRecognizerBuilder implements Serializable {
 
     private LuceneIndex keywordIndex;
 
+    private Directory ddDirectory;
+
+    private Directory kwDirectory;
+
     public static CategoryRecognizerBuilder newBuilder() {
         if (INSTANCE == null) {
             INSTANCE = new CategoryRecognizerBuilder();
@@ -59,8 +64,18 @@ public class CategoryRecognizerBuilder implements Serializable {
         return this;
     }
 
+    public CategoryRecognizerBuilder ddDirectory(Directory ddDirectory) {
+        this.ddDirectory = ddDirectory;
+        return this;
+    }
+
     public CategoryRecognizerBuilder kwPath(URI kwPath) {
         this.kwPath = kwPath;
+        return this;
+    }
+
+    public CategoryRecognizerBuilder kwDirectory(Directory kwDirectory) {
+        this.kwDirectory = kwDirectory;
         return this;
     }
 
@@ -86,28 +101,44 @@ public class CategoryRecognizerBuilder implements Serializable {
 
     private LuceneIndex getDataDictIndex() {
         if (dataDictIndex == null) {
-            if (ddPath == null) {
-                try {
-                    ddPath = CategoryRecognizerBuilder.class.getResource(DEFAULT_DD_PATH).toURI();
-                } catch (URISyntaxException e) {
-                    LOGGER.error(e.getMessage(), e);
+            if (ddDirectory == null) {
+                if (ddPath == null) {
+                    try {
+                        ddPath = CategoryRecognizerBuilder.class.getResource(DEFAULT_DD_PATH).toURI();
+                    } catch (URISyntaxException e) {
+                        LOGGER.error(e.getMessage(), e);
+                    }
+                }
+                dataDictIndex = new LuceneIndex(ddPath, DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);
+            } else {
+                if (ddPath == null) {
+                    dataDictIndex = new LuceneIndex(ddDirectory, DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);
+                } else {
+                    throw new IllegalArgumentException("Please call either ddDirectory() or ddPath() but not both!");
                 }
             }
-            dataDictIndex = new LuceneIndex(ddPath, DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);
         }
         return dataDictIndex;
     }
 
     private LuceneIndex getKeywordIndex() {
         if (keywordIndex == null) {
-            if (kwPath == null) {
-                try {
-                    kwPath = CategoryRecognizerBuilder.class.getResource(DEFAULT_KW_PATH).toURI();
-                } catch (URISyntaxException e) {
-                    LOGGER.error(e.getMessage(), e);
+            if (kwDirectory == null) {
+                if (kwPath == null) {
+                    try {
+                        kwPath = CategoryRecognizerBuilder.class.getResource(DEFAULT_KW_PATH).toURI();
+                    } catch (URISyntaxException e) {
+                        LOGGER.error(e.getMessage(), e);
+                    }
+                }
+                keywordIndex = new LuceneIndex(kwPath, DictionarySearchMode.MATCH_SEMANTIC_KEYWORD);
+            } else {
+                if (kwPath == null) {
+                    keywordIndex = new LuceneIndex(kwDirectory, DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);
+                } else {
+                    throw new IllegalArgumentException("Please call either kwDirectory() or kwPath() but not both!");
                 }
             }
-            keywordIndex = new LuceneIndex(kwPath, DictionarySearchMode.MATCH_SEMANTIC_KEYWORD);
         }
         return keywordIndex;
     }

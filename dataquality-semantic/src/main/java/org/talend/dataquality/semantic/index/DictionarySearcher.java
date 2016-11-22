@@ -59,8 +59,12 @@ public class DictionarySearcher extends AbstractDictionarySearcher {
         }
     }
 
-    DictionarySearcher(Directory indexDir) throws IOException {
-        mgr = new SearcherManager(indexDir, null);
+    public DictionarySearcher(Directory indexDir) {
+        try {
+            mgr = new SearcherManager(indexDir, null);
+        } catch (IOException e) {
+            LOGGER.error("Unable to open synonym index.", e);
+        }
     }
 
     /**

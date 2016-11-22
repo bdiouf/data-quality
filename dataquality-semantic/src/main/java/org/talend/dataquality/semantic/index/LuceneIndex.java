@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.Directory;
 
 /**
  * Created by sizhaoliu on 03/04/15.
@@ -32,7 +33,15 @@ public class LuceneIndex implements Index {
     private final DictionarySearcher searcher;
 
     public LuceneIndex(URI indexPath, DictionarySearchMode searchMode) {
-        searcher = new DictionarySearcher(indexPath);
+        this(new DictionarySearcher(indexPath), searchMode);
+    }
+
+    public LuceneIndex(Directory directory, DictionarySearchMode searchMode) {
+        this(new DictionarySearcher(directory), searchMode);
+    }
+
+    private LuceneIndex(DictionarySearcher searcher, DictionarySearchMode searchMode) {
+        this.searcher = searcher;
         searcher.setTopDocLimit(20);
         searcher.setSearchMode(searchMode);
     }

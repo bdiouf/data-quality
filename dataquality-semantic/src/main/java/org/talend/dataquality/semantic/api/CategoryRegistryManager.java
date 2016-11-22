@@ -99,7 +99,7 @@ public class CategoryRegistryManager {
         return getInstance("default");
     }
 
-    public static CategoryRegistryManager getInstance(String contextName) {
+    public static synchronized CategoryRegistryManager getInstance(String contextName) {
         if (instances.get(contextName) == null) {
             instances.put(contextName, new CategoryRegistryManager(contextName));
         }
