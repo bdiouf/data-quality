@@ -16,11 +16,21 @@ import java.util.List;
 
 public class DQDocumentAction {
 
+    private String id;
+
     private Action action;
 
     private List<DQDocument> documents;
 
     private String context;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Action getAction() {
         return action;
