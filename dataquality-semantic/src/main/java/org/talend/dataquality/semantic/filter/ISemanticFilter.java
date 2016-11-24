@@ -12,10 +12,12 @@
 // ============================================================================
 package org.talend.dataquality.semantic.filter;
 
+import java.io.Serializable;
+
 /**
  * Created by sizhaoliu on 20/03/15.
  */
-public interface ISemanticFilter {
+public interface ISemanticFilter extends Serializable {
 
     public boolean isQualified(String str);
 }

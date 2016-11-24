@@ -12,10 +12,12 @@
 // ============================================================================
 package org.talend.dataquality.semantic.validator;
 
+import java.io.Serializable;
+
 /**
  * Created by sizhaoliu on 16.03.15.
  */
-public interface ISemanticValidator {
+public interface ISemanticValidator extends Serializable {
 
     public boolean isValid(String str);
 }

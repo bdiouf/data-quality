@@ -13,19 +13,10 @@
 package org.talend.dataquality.semantic.recognizer;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.talend.dataquality.semantic.api.CategoryRegistryManager;
-import org.talend.dataquality.semantic.classifier.custom.UserDefinedCategory;
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedClassifier;
 import org.talend.dataquality.semantic.classifier.impl.DataDictFieldClassifier;
 import org.talend.dataquality.semantic.index.Index;
@@ -153,7 +144,7 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
     private void incrementCategory(String catId, String catName) {
         CategoryFrequency c = categoryToFrequency.get(catId);
         if (c == null) {
-            c = new CategoryFrequency(new UserDefinedCategory(catId, catName));
+            c = new CategoryFrequency(catId, catName);
             categoryToFrequency.put(catId, c);
             catList.add(c);
         }
@@ -172,9 +163,9 @@ class DefaultCategoryRecognizer implements CategoryRecognizer {
             @Override
             public int compare(CategoryFrequency o1, CategoryFrequency o2) {
                 // The EMPTY category must always be ranked after the others
-                if ("".equals(o1.category.getName())) {
+                if ("".equals(o1.categoryName)) {
                     return 1;
-                } else if ("".equals(o2.category.getName())) {
+                } else if ("".equals(o2.categoryName)) {
                     return -1;
                 }
                 return (int) (o2.count - o1.count);

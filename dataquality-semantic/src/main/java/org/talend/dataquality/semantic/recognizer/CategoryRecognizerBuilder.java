@@ -13,7 +13,6 @@
 package org.talend.dataquality.semantic.recognizer;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -26,11 +25,9 @@ import org.talend.dataquality.semantic.index.LuceneIndex;
  * created by talend on 2015-07-28 Detailled comment.
  *
  */
-public class CategoryRecognizerBuilder implements Serializable {
+public class CategoryRecognizerBuilder {
 
     private static final Logger LOGGER = Logger.getLogger(CategoryRecognizerBuilder.class);
-
-    private static final long serialVersionUID = -4113525921010790756L;
 
     private static CategoryRecognizerBuilder INSTANCE;
 
@@ -134,7 +131,7 @@ public class CategoryRecognizerBuilder implements Serializable {
                 keywordIndex = new LuceneIndex(kwPath, DictionarySearchMode.MATCH_SEMANTIC_KEYWORD);
             } else {
                 if (kwPath == null) {
-                    keywordIndex = new LuceneIndex(kwDirectory, DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);
+                    keywordIndex = new LuceneIndex(kwDirectory, DictionarySearchMode.MATCH_SEMANTIC_KEYWORD);
                 } else {
                     throw new IllegalArgumentException("Please call either kwDirectory() or kwPath() but not both!");
                 }

@@ -12,16 +12,24 @@
 // ============================================================================
 package org.talend.dataquality.semantic.recognizer;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.talend.dataquality.semantic.classifier.ISubCategory;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 
 /**
  * created by talend on 2015-07-28 Detailled comment.
- *
  */
-public class CategoryFrequency implements Comparable<CategoryFrequency> {
+public class CategoryFrequency implements Comparable<CategoryFrequency>, Serializable {
 
-    ISubCategory category;
+    private static final long serialVersionUID = -3859689633174391877L;
+
+    String categoryId;
+
+    String categoryName;
 
     float frequency;
 
@@ -29,19 +37,46 @@ public class CategoryFrequency implements Comparable<CategoryFrequency> {
 
     /**
      * CategoryFrequency constructor from a category.
+     *
+     * @param cat the category
      * 
-     * @param categ the category
+     * @deprecated
      */
-    public CategoryFrequency(ISubCategory categ) {
-        this.category = categ;
+    public CategoryFrequency(ISubCategory cat) {
+        // do not use cat.getId() for the moment because it represents the mongoId
+        this(cat.getName(), cat.getName());
+    }
+
+    /**
+     * CategoryFrequency constructor from a category.
+     *
+     * @param catId the category ID
+     * @param catName the category name
+     */
+    public CategoryFrequency(String catId, String catName) {
+        this.categoryId = catId;
+        this.categoryName = catName;
+    }
+
+    /**
+     * CategoryFrequency constructor from a category.
+     *
+     * @param catId the category ID
+     * @param catName the category name
+     * @param count the occurrence
+     */
+    public CategoryFrequency(String catId, String catName, long count) {
+        this.categoryId = catId;
+        this.categoryName = catName;
+        this.count = count;
     }
 
     public String getCategoryId() {
-        return category != null ? category.getName() : "";
+        return categoryId;
     }
 
     public String getCategoryName() {
-        return category != null ? category.getLabel() : "";
+        return categoryName != null ? categoryName : categoryId;
     }
 
     public float getFrequency() {
@@ -50,10 +85,6 @@ public class CategoryFrequency implements Comparable<CategoryFrequency> {
 
     public long getCount() {
         return count;
-    }
-
-    public ISubCategory getCategory() {
-        return category;
     }
 
     @Override
@@ -87,9 +118,9 @@ public class CategoryFrequency implements Comparable<CategoryFrequency> {
 
             if (cat1 != null && cat2 != null) {
                 return cat2.ordinal() - cat1.ordinal();
-            } else if (cat1 == null) {
+            } else if (cat1 == null && cat2 != null) {
                 return 1;
-            } else if (cat2 == null) {
+            } else if (cat1 != null && cat2 == null) {
                 return -1;
             } else {
                 return o.getCategoryId().compareTo(this.getCategoryId());
@@ -99,6 +130,20 @@ public class CategoryFrequency implements Comparable<CategoryFrequency> {
 
     @Override
     public String toString() {
-        return "[Category: " + category + " Count: " + count + " Frequency: " + frequency + "]";
+        return "[Category: " + categoryId + " Count: " + count + " Frequency: " + frequency + "]";
+    }
+
+    public static void main(String[] args) {
+        CategoryFrequency cf1 = new CategoryFrequency("", "");
+        CategoryFrequency cf2 = new CategoryFrequency("CITY", "CITY");
+        List<CategoryFrequency> list = new ArrayList<>();
+        list.add(cf1);
+        list.add(cf2);
+        System.out.println(list);
+
+        Collections.sort(list);
+
+        System.out.println(list);
+
     }
 }

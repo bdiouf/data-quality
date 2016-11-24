@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.dataquality.semantic.classifier;
 
+import java.io.Serializable;
+
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedCategory;
 import org.talend.dataquality.semantic.filter.ISemanticFilter;
 import org.talend.dataquality.semantic.validator.ISemanticValidator;
@@ -22,7 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * Created by sizhaoliu on 16.03.15.
  */
 @JsonDeserialize(as = UserDefinedCategory.class)
-public interface ISubCategory {
+public interface ISubCategory extends Serializable {
 
     public String getId();
 
