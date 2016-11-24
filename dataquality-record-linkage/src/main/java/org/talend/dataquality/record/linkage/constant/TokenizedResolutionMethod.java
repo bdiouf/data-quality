@@ -42,13 +42,31 @@ public enum TokenizedResolutionMethod {
      * @param value
      * @return null can not find this index
      */
-    public static TokenizedResolutionMethod getTypeByValue(String value) {
+    private static TokenizedResolutionMethod getTypeByValue(String value) {
         for (TokenizedResolutionMethod element : TokenizedResolutionMethod.values()) {
             if (element.getComponentValue().equalsIgnoreCase(value)) {
                 return element;
             }
         }
-
         return null;
+    }
+
+    /**
+     * get type of the value which in this Enum. when is not in this Enum, return the default type NO.
+     * 
+     * @param value
+     * @return
+     */
+    public static TokenizedResolutionMethod getTypeByValueWithDefault(String value) {
+        if (value == null || "".equals(value)) { //$NON-NLS-1$
+            return NO;
+        }
+
+        TokenizedResolutionMethod typeByValue = getTypeByValue(value);
+        if (typeByValue == null) {
+            return NO;
+        }
+
+        return typeByValue;
     }
 }

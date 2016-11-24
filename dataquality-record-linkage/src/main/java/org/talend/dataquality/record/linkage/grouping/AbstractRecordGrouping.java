@@ -261,8 +261,8 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
      * @throws IOException
      * @throws InterruptedException
      */
-    private void vsrMatch(TYPE[] inputRow, List<Map<String, String>> matchingRule, String[] lookupDataArray)
-            throws IOException, InterruptedException {
+    private void vsrMatch(TYPE[] inputRow, List<Map<String, String>> matchingRule, String[] lookupDataArray) throws IOException,
+            InterruptedException {
         boolean isSimilar = false;
         for (TYPE[] masterRecord : masterRecords) {
             if (isLinkToPrevious) {
@@ -309,8 +309,8 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
                     }
                 }
 
-                masterRecord[masterRecord.length - extSize + 1] = incrementGroupSize(
-                        masterRecord[masterRecord.length - extSize + 1]);
+                masterRecord[masterRecord.length - extSize + 1] = incrementGroupSize(masterRecord[masterRecord.length - extSize
+                        + 1]);
 
                 // Duplicated record
                 updateWithExtendedColumn(inputRow, masterRecord, matchingProba, distanceDetails, columnDelimiter);
@@ -427,8 +427,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
 
     @Override
     public void end() throws IOException, InterruptedException {
-
-        //            // output the masters
+        // output the masters
         for (TYPE[] mst : masterRecords) {
             outputRow(mst);
         }
@@ -533,8 +532,8 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
         }
     }
 
-    private void createRecordMatcher(List<Map<String, String>> matchRule)
-            throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    private void createRecordMatcher(List<Map<String, String>> matchRule) throws InstantiationException, IllegalAccessException,
+            ClassNotFoundException {
         final int recordSize = matchRule.size();
         double[] arrAttrWeights = new double[recordSize];
         double[] attrThresholds = new double[recordSize];
@@ -622,9 +621,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
         if (IRecordGrouping.TOKENIZATION_TYPE == null) {
             return TokenizedResolutionMethod.NO;
         }
-        return TokenizedResolutionMethod.getTypeByValue(recordMap.get(IRecordGrouping.TOKENIZATION_TYPE)) == null
-                ? TokenizedResolutionMethod.NO
-                : TokenizedResolutionMethod.getTypeByValue(recordMap.get(IRecordGrouping.TOKENIZATION_TYPE));
+        return TokenizedResolutionMethod.getTypeByValueWithDefault(recordMap.get(IRecordGrouping.TOKENIZATION_TYPE));
     }
 
     /**

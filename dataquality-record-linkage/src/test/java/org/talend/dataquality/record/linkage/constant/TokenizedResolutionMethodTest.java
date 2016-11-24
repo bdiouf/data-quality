@@ -23,23 +23,24 @@ public class TokenizedResolutionMethodTest {
 
     /**
      * Test method for
-     * {@link org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod#getTypeByValue(java.lang.String)} . case1
-     * all of normal case
+     * {@link org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod#getTypeByValueWithDefault(java.lang.String)}
+     * case1: all of normal case
      */
     @Test
-    public void testGetTypeByValueStringCase1() {
+    public void testGetTypeByValueWithDefaultCase1() {
         for (TokenizedResolutionMethod type : TokenizedResolutionMethod.values()) {
-            TokenizedResolutionMethod TokenizedResolutionMethodByName = TokenizedResolutionMethod.getTypeByValue(type.name());
+            TokenizedResolutionMethod TokenizedResolutionMethodByName = TokenizedResolutionMethod.getTypeByValueWithDefault(type
+                    .name());
             TokenizedResolutionMethod TokenizedResolutionMethodByComponentValue = TokenizedResolutionMethod
-                    .getTypeByValue(type.getComponentValue());
-            TokenizedResolutionMethod TokenizedResolutionMethodByLName = TokenizedResolutionMethod
-                    .getTypeByValue(type.name().toLowerCase());
+                    .getTypeByValueWithDefault(type.getComponentValue());
+            TokenizedResolutionMethod TokenizedResolutionMethodByLName = TokenizedResolutionMethod.getTypeByValueWithDefault(type
+                    .name().toLowerCase());
             TokenizedResolutionMethod TokenizedResolutionMethodByLComponentValue = TokenizedResolutionMethod
-                    .getTypeByValue(type.getComponentValue().toLowerCase());
-            TokenizedResolutionMethod TokenizedResolutionMethodByUName = TokenizedResolutionMethod
-                    .getTypeByValue(type.name().toUpperCase());
+                    .getTypeByValueWithDefault(type.getComponentValue().toLowerCase());
+            TokenizedResolutionMethod TokenizedResolutionMethodByUName = TokenizedResolutionMethod.getTypeByValueWithDefault(type
+                    .name().toUpperCase());
             TokenizedResolutionMethod TokenizedResolutionMethodByUComponentValue = TokenizedResolutionMethod
-                    .getTypeByValue(type.getComponentValue().toUpperCase());
+                    .getTypeByValueWithDefault(type.getComponentValue().toUpperCase());
             if (TokenizedResolutionMethod.NO == type) {
                 assertNotNull(TokenizedResolutionMethodByName);
                 assertNotNull(TokenizedResolutionMethodByLName);
@@ -60,21 +61,18 @@ public class TokenizedResolutionMethodTest {
      * Test method for
      * {@org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod#getTypeByValue(java.lang.String)
      * 
-     * 
-     * 
-     * 
-     * 
-     * } . case2
-     * input is null empty or some other word
+     * } case2: input
+     * is null empty or some other words
      */
     @Test
-    public void testGetCase2() {
-        TokenizedResolutionMethod TokenizedResolutionMethodByNull = TokenizedResolutionMethod.getTypeByValue(null);
-        assertNull(TokenizedResolutionMethodByNull);
-        TokenizedResolutionMethod TokenizedResolutionMethodByEmpty = TokenizedResolutionMethod.getTypeByValue(""); //$NON-NLS-1$
-        assertNull(TokenizedResolutionMethodByEmpty);
-        TokenizedResolutionMethod TokenizedResolutionMethodByOtherWord = TokenizedResolutionMethod.getTypeByValue("111111"); //$NON-NLS-1$
-        assertNull(TokenizedResolutionMethodByOtherWord);
+    public void testGetTypeByValueWithDefaultCase2() {
+        TokenizedResolutionMethod TokenizedResolutionMethodByNull = TokenizedResolutionMethod.getTypeByValueWithDefault(null);
+        assertEquals(TokenizedResolutionMethod.NO, TokenizedResolutionMethodByNull);
+        TokenizedResolutionMethod TokenizedResolutionMethodByEmpty = TokenizedResolutionMethod.getTypeByValueWithDefault(""); //$NON-NLS-1$
+        assertEquals(TokenizedResolutionMethod.NO, TokenizedResolutionMethodByEmpty);
+        TokenizedResolutionMethod TokenizedResolutionMethodByOtherWord = TokenizedResolutionMethod
+                .getTypeByValueWithDefault("111111"); //$NON-NLS-1$
+        assertEquals(TokenizedResolutionMethod.NO, TokenizedResolutionMethodByOtherWord);
     }
 
 }
