@@ -44,7 +44,7 @@ public class ConcurrentDictionaryAccessTest {
 
     private DictionarySearcher newSemanticDictionarySearcher() {
         try {
-            final URI ddPath = this.getClass().getResource("/index/dictionary").toURI();
+            final URI ddPath = this.getClass().getResource("/index/dictionary/default").toURI();
             final DictionarySearcher searcher = new DictionarySearcher(ddPath);
             searcher.setTopDocLimit(20);
             searcher.setSearchMode(DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY);

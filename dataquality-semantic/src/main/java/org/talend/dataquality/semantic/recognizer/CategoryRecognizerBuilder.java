@@ -31,9 +31,9 @@ public class CategoryRecognizerBuilder {
 
     private static CategoryRecognizerBuilder INSTANCE;
 
-    public static final String DEFAULT_DD_PATH = "/index/dictionary/";
+    public static final String DEFAULT_DD_PATH = "/index/dictionary/default/";
 
-    public static final String DEFAULT_KW_PATH = "/index/keyword/";
+    public static final String DEFAULT_KW_PATH = "/index/keyword/default/";
 
     private Mode mode;
 
