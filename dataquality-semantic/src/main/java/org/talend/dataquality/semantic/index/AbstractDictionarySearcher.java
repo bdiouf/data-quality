@@ -39,9 +39,9 @@ public abstract class AbstractDictionarySearcher {
 
     private int maxEdits = 2; // Default value
 
-    private static final int MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH = 20;
+    private static final int MAX_TOKEN_COUNT_FOR_KEYWORD_MATCH = 20;
 
-    private static final int MAX_CHAR_COUNT_FOR_SEMANTIC_MATCH = 100;
+    private static final int MAX_CHAR_COUNT_FOR_DICTIONARY_MATCH = 100;
 
     protected DictionarySearchMode searchMode = DictionarySearchMode.MATCH_SEMANTIC_DICTIONARY;
 
@@ -78,7 +78,7 @@ public abstract class AbstractDictionarySearcher {
      */
     protected Query createQueryForSemanticDictionaryMatch(String input) throws IOException {
         // for dictionary search, ignore searching for input containing too many tokens
-        if (input.length() > MAX_CHAR_COUNT_FOR_SEMANTIC_MATCH) {
+        if (input.length() > MAX_CHAR_COUNT_FOR_DICTIONARY_MATCH) {
             return new TermQuery(new Term(F_SYNTERM, StringUtils.EMPTY));
         }
 
@@ -95,15 +95,10 @@ public abstract class AbstractDictionarySearcher {
     protected Query createQueryForSemanticKeywordMatch(String input) throws IOException {
         BooleanQuery booleanQuery = new BooleanQuery();
         List<String> tokens = getTokensFromAnalyzer(input);
-        // for keyword search, only search the beginning tokens from input
-        if (tokens.size() > MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH) {
-            for (int i = 0; i < MAX_TOKEN_COUNT_FOR_SEMANTIC_MATCH; i++) {
-                booleanQuery.add(getTermQuery(F_SYNTERM, tokens.get(i), false), BooleanClause.Occur.SHOULD);
-            }
-        } else {
-            for (String token : tokens) {
-                booleanQuery.add(getTermQuery(F_SYNTERM, token, false), BooleanClause.Occur.SHOULD);
-            }
+        // for keyword search, when the token count exceeds MAX_TOKEN_COUNT_FOR_KEYWORD_MATCH, only search the beginning
+        // tokens from input
+        for (int i = 0; i < Math.min(tokens.size(), MAX_TOKEN_COUNT_FOR_KEYWORD_MATCH); i++) {
+            booleanQuery.add(getTermQuery(F_SYNTERM, tokens.get(i), false), BooleanClause.Occur.SHOULD);
         }
         return booleanQuery;
     }

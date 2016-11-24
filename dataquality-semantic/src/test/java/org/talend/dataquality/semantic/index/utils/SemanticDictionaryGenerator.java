@@ -4,12 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import org.apache.commons.csv.CSVFormat;
@@ -181,9 +176,9 @@ public class SemanticDictionaryGenerator {
                     List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(syn);
                     doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(tokens, ' '), Field.Store.NO));
                     doc.add(new Field(DictionarySearcher.F_RAW, syn, FIELD_TYPE_RAW_VALUE));
-                    if (tokens.size() > 1) {
-                        doc.add(new Field(DictionarySearcher.F_SYN, syn, ftSyn));
-                    }
+                    // if (tokens.size() > 1) {
+                    // doc.add(new Field(DictionarySearcher.F_SYN, syn, ftSyn));
+                    // }
                 }
             }
         }
