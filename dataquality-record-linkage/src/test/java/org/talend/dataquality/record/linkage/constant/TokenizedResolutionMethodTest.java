@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.record.linkage.constant;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -29,30 +29,26 @@ public class TokenizedResolutionMethodTest {
     @Test
     public void testGetTypeByValueWithDefaultCase1() {
         for (TokenizedResolutionMethod type : TokenizedResolutionMethod.values()) {
-            TokenizedResolutionMethod TokenizedResolutionMethodByName = TokenizedResolutionMethod.getTypeByValueWithDefault(type
-                    .name());
+            TokenizedResolutionMethod TokenizedResolutionMethodByName = TokenizedResolutionMethod
+                    .getTypeByValueWithDefault(type.name());
             TokenizedResolutionMethod TokenizedResolutionMethodByComponentValue = TokenizedResolutionMethod
                     .getTypeByValueWithDefault(type.getComponentValue());
-            TokenizedResolutionMethod TokenizedResolutionMethodByLName = TokenizedResolutionMethod.getTypeByValueWithDefault(type
-                    .name().toLowerCase());
+            TokenizedResolutionMethod TokenizedResolutionMethodByLName = TokenizedResolutionMethod
+                    .getTypeByValueWithDefault(type.name().toLowerCase());
             TokenizedResolutionMethod TokenizedResolutionMethodByLComponentValue = TokenizedResolutionMethod
                     .getTypeByValueWithDefault(type.getComponentValue().toLowerCase());
-            TokenizedResolutionMethod TokenizedResolutionMethodByUName = TokenizedResolutionMethod.getTypeByValueWithDefault(type
-                    .name().toUpperCase());
+            TokenizedResolutionMethod TokenizedResolutionMethodByUName = TokenizedResolutionMethod
+                    .getTypeByValueWithDefault(type.name().toUpperCase());
             TokenizedResolutionMethod TokenizedResolutionMethodByUComponentValue = TokenizedResolutionMethod
                     .getTypeByValueWithDefault(type.getComponentValue().toUpperCase());
-            if (TokenizedResolutionMethod.NO == type) {
-                assertNotNull(TokenizedResolutionMethodByName);
-                assertNotNull(TokenizedResolutionMethodByLName);
-                assertNotNull(TokenizedResolutionMethodByUName);
-            } else {
-                assertNull(TokenizedResolutionMethodByName);
-                assertNull(TokenizedResolutionMethodByLName);
-                assertNull(TokenizedResolutionMethodByUName);
-            }
-            assertNotNull(TokenizedResolutionMethodByComponentValue);
-            assertNotNull(TokenizedResolutionMethodByLComponentValue);
-            assertNotNull(TokenizedResolutionMethodByUComponentValue);
+
+            assertEquals(TokenizedResolutionMethodByName, TokenizedResolutionMethod.NO);
+            assertEquals(TokenizedResolutionMethodByLName, TokenizedResolutionMethod.NO);
+            assertEquals(TokenizedResolutionMethodByUName, TokenizedResolutionMethod.NO);
+
+            assertEquals(TokenizedResolutionMethodByComponentValue, type);
+            assertEquals(TokenizedResolutionMethodByLComponentValue, type);
+            assertEquals(TokenizedResolutionMethodByUComponentValue, type);
 
         }
     }
