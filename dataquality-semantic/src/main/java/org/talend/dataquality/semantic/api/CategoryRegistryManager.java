@@ -58,9 +58,9 @@ public class CategoryRegistryManager {
 
     public static final String CATEGORY_SUBFOLDER_NAME = "category";
 
-    public static final String DICTIONARY_SUBFOLDER_NAME = "index/dictionary/default";
+    public static final String DICTIONARY_SUBFOLDER_NAME = "index/dictionary";
 
-    public static final String KEYWORD_SUBFOLDER_NAME = "index/keyword/default";
+    public static final String KEYWORD_SUBFOLDER_NAME = "index/keyword";
 
     public static final String REGEX_SUBFOLDER_NAME = "regex";
 
