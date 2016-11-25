@@ -25,7 +25,7 @@ public abstract class AbstractDictionarySearcher {
 
     public abstract Document getDocument(int docNum);
 
-    public static final String F_ID = "id";//$NON-NLS-1$
+    public static final String F_ID = "docid";//$NON-NLS-1$
 
     public static final String F_WORD = "word";//$NON-NLS-1$
 
@@ -34,6 +34,8 @@ public abstract class AbstractDictionarySearcher {
     public static final String F_SYNTERM = "synterm";//$NON-NLS-1$
 
     public static final String F_RAW = "raw";
+
+    public static final String F_CATID = "catid";
 
     protected int topDocLimit = 3;
 

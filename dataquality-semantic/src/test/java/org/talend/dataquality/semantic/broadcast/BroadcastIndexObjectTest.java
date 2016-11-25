@@ -50,7 +50,7 @@ public class BroadcastIndexObjectTest {
                 writer.deleteAll();
             }
             for (String key : TEST_INDEX_CONTENT.keySet()) {
-                Document doc = DictionaryUtils.generateDocument("TEST", key,
+                Document doc = DictionaryUtils.generateDocument("TEST", "CATEGORY_ID", key,
                         new HashSet<String>(Arrays.asList(TEST_INDEX_CONTENT.get(key))));
                 writer.addDocument(doc);
             }

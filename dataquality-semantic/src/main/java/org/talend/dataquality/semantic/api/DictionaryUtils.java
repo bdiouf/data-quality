@@ -38,10 +38,6 @@ public class DictionaryUtils {
         FIELD_TYPE_SYN.setIndexed(true);
         FIELD_TYPE_SYN.setOmitNorms(true);
         FIELD_TYPE_SYN.freeze();
-
-        FIELD_TYPE_RAW_VALUE.setIndexed(false);
-        FIELD_TYPE_RAW_VALUE.setStored(true);
-        FIELD_TYPE_RAW_VALUE.freeze();
     }
 
     /**
@@ -57,14 +53,14 @@ public class DictionaryUtils {
      * @param synonyms
      * @return
      */
-    public static Document generateDocument(String id, String word, Set<String> synonyms) {
+    public static Document generateDocument(String id, String catid, String word, Set<String> synonyms) {
         String tempWord = word.trim();
         Document doc = new Document();
 
-        if (id != null && id.trim().length() > 0) {
-            Field idTermField = new StringField(DictionarySearcher.F_ID, id, Field.Store.NO);
-            doc.add(idTermField);
-        }
+        Field idTermField = new StringField(DictionarySearcher.F_ID, id, Field.Store.YES);
+        doc.add(idTermField);
+        Field catidTermField = new StringField(DictionarySearcher.F_CATID, catid, Field.Store.YES);
+        doc.add(catidTermField);
         Field wordTermField = new StringField(DictionarySearcher.F_WORD, tempWord, Field.Store.YES);
         doc.add(wordTermField);
         for (String syn : synonyms) {
@@ -73,7 +69,7 @@ public class DictionaryUtils {
                 if (syn.length() > 0 && !syn.equals(tempWord)) {
                     List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(syn);
                     doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(tokens, ' '), Field.Store.NO));
-                    doc.add(new Field(DictionarySearcher.F_RAW, syn, FIELD_TYPE_RAW_VALUE));
+                    doc.add(new StringField(DictionarySearcher.F_RAW, syn, Field.Store.YES));
                     if (tokens.size() > 1) {
                         doc.add(new Field(DictionarySearcher.F_SYN, syn, FIELD_TYPE_SYN));
                     }

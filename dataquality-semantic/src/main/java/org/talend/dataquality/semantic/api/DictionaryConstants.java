@@ -14,7 +14,7 @@ package org.talend.dataquality.semantic.api;
 
 public class DictionaryConstants {
 
-    public static final String ID = "id";
+    public static final String ID = "catid";
 
     public static final String NAME = "name";
 
