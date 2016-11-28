@@ -25,7 +25,14 @@ public class LocalDictionaryCache {
 
     private IndexSearcher searcher;
 
+    private String contextName;
+
     LocalDictionaryCache(String contextName) {
+        this.contextName = contextName;
+        initIndexSearcher();
+    }
+
+    public void initIndexSearcher() {
         try {
             URI ddPath = CategoryRegistryManager.getInstance(contextName).getDictionaryURI();
             Directory dir = ClassPathDirectory.open(ddPath);

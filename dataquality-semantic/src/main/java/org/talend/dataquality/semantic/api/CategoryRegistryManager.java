@@ -133,6 +133,7 @@ public class CategoryRegistryManager {
             } catch (IOException e) {
                 LOGGER.error("Error while reloading categories from local registry.", e);
             }
+            getDictionaryCache().initIndexSearcher();
         }
     }
 
