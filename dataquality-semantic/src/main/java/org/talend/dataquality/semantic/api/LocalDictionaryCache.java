@@ -8,7 +8,7 @@ import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
@@ -21,23 +21,13 @@ public class LocalDictionaryCache {
 
     private static final Logger LOGGER = Logger.getLogger(LocalDictionaryCache.class);
 
-    private DirectoryReader reader;
-
-    private IndexSearcher searcher;
-
-    private String contextName;
+    private SearcherManager mgr;
 
     LocalDictionaryCache(String contextName) {
-        this.contextName = contextName;
-        initIndexSearcher();
-    }
-
-    public void initIndexSearcher() {
         try {
             URI ddPath = CategoryRegistryManager.getInstance(contextName).getDictionaryURI();
             Directory dir = ClassPathDirectory.open(ddPath);
-            reader = DirectoryReader.open(dir);
-            searcher = new IndexSearcher(reader);
+            mgr = new SearcherManager(dir, null);
         } catch (IOException e) {
             LOGGER.error("Failed to read local dictionary cache! ", e);
         } catch (URISyntaxException e) {
@@ -46,12 +36,16 @@ public class LocalDictionaryCache {
     }
 
     private List<DQDocument> dqDocListFromTopDocs(String categoryName, TopDocs docs) throws IOException {
+        mgr.maybeRefresh();
+        IndexSearcher searcher = mgr.acquire();
+        IndexReader reader = searcher.getIndexReader();
         List<DQDocument> dqDocList = new ArrayList<>();
         for (ScoreDoc scoreDoc : docs.scoreDocs) {
             Document luceneDoc = reader.document(scoreDoc.doc);
             DQDocument dqDoc = DictionaryUtils.dictionaryEntryFromDocument(luceneDoc, categoryName);
             dqDocList.add(dqDoc);
         }
+        mgr.release(searcher);
         return dqDocList;
     }
 
@@ -66,18 +60,22 @@ public class LocalDictionaryCache {
     }
 
     private Query getListDocumentsQuery(String categoryName) throws IOException {
-        Query q = new TermQuery(new Term(DictionarySearcher.F_WORD, categoryName));
-        return q;
+        return new TermQuery(new Term(DictionarySearcher.F_WORD, categoryName));
     }
 
     private TopDocs sendListDocumentsQuery(String categoryName, int offset, int n) throws IOException {
+        mgr.maybeRefresh();
+        IndexSearcher searcher = mgr.acquire();
+        TopDocs result = null;
         if (offset <= 0) {
-            return searcher.search(getListDocumentsQuery(categoryName), n);
+            result = searcher.search(getListDocumentsQuery(categoryName), n);
         } else {
             TopDocs topDocs = searcher.search(getListDocumentsQuery(categoryName), offset + n);
             Query q = new TermQuery(new Term(DictionarySearcher.F_WORD, categoryName));
-            return searcher.searchAfter(topDocs.scoreDocs[Math.min(topDocs.totalHits, offset) - 1], q, n);
+            result = searcher.searchAfter(topDocs.scoreDocs[Math.min(topDocs.totalHits, offset) - 1], q, n);
         }
+        mgr.release(searcher);
+        return result;
     }
 
     public Set<String> suggestValues(String categoryName, String prefix) {
@@ -112,7 +110,11 @@ public class LocalDictionaryCache {
         Set<String> results = new TreeSet<String>();
 
         try {
+            mgr.maybeRefresh();
+            IndexSearcher searcher = mgr.acquire();
+            IndexReader reader = searcher.getIndexReader();
             TopDocs topDocs = searcher.search(booleanQuery, num);
+            mgr.release(searcher);
             for (int i = 0; i < topDocs.scoreDocs.length; i++) {
                 Document doc = reader.document(topDocs.scoreDocs[i].doc);
                 IndexableField[] fields = doc.getFields(DictionarySearcher.F_RAW);
