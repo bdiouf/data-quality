@@ -17,14 +17,25 @@ import org.talend.dataquality.semantic.model.DQDocument;
 
 public class DictionaryUtils {
 
-    private static FieldType ftSyn;
+    public static final FieldType FIELD_TYPE_SYN = new FieldType();
+
+    public static final FieldType FIELD_TYPE_RAW_VALUE = new FieldType();
 
     static {
-        ftSyn = new FieldType();
-        ftSyn.setStored(false);
-        ftSyn.setIndexed(true);
-        ftSyn.setOmitNorms(true);
-        ftSyn.freeze();
+        FIELD_TYPE_SYN.setStored(false);
+        FIELD_TYPE_SYN.setIndexed(true);
+        FIELD_TYPE_SYN.setOmitNorms(true);
+        FIELD_TYPE_SYN.freeze();
+
+        FIELD_TYPE_RAW_VALUE.setIndexed(false);
+        FIELD_TYPE_RAW_VALUE.setStored(true);
+        FIELD_TYPE_RAW_VALUE.freeze();
+    }
+
+    /**
+     * hide implicit public constructor
+     */
+    private DictionaryUtils() {
     }
 
     /**
@@ -50,8 +61,9 @@ public class DictionaryUtils {
                 if (syn.length() > 0 && !syn.equals(tempWord)) {
                     List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(syn);
                     doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(tokens, ' '), Field.Store.NO));
+                    doc.add(new Field(DictionarySearcher.F_RAW, syn, FIELD_TYPE_RAW_VALUE));
                     if (tokens.size() > 1) {
-                        doc.add(new Field(DictionarySearcher.F_SYN, syn, ftSyn));
+                        doc.add(new Field(DictionarySearcher.F_SYN, syn, FIELD_TYPE_SYN));
                     }
                 }
             }

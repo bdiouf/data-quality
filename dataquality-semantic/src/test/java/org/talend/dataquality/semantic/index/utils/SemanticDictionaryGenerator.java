@@ -16,12 +16,12 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.talend.dataquality.semantic.api.DictionaryUtils;
 import org.talend.dataquality.semantic.index.DictionarySearcher;
 import org.talend.dataquality.semantic.index.utils.optimizer.CategoryOptimizer;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
@@ -38,21 +38,6 @@ public class SemanticDictionaryGenerator {
 
     private static Set<String> STOP_WORDS = new HashSet<String>(
             Arrays.asList("yes", "no", "y", "o", "n", "oui", "non", "true", "false", "vrai", "faux", "null"));
-
-    private FieldType ftSyn = new FieldType();
-
-    private static final FieldType FIELD_TYPE_RAW_VALUE = new FieldType();
-
-    {
-        ftSyn.setStored(false);
-        ftSyn.setIndexed(true);
-        ftSyn.setOmitNorms(true);
-        ftSyn.freeze();
-
-        FIELD_TYPE_RAW_VALUE.setIndexed(false);
-        FIELD_TYPE_RAW_VALUE.setStored(true);
-        FIELD_TYPE_RAW_VALUE.freeze();
-    }
 
     private void generateDictionaryForSpec(DictionaryGenerationSpec spec, IndexWriter writer) throws IOException {
 
@@ -175,10 +160,10 @@ public class SemanticDictionaryGenerator {
                 if (syn.length() > 0 && !syn.equals(tempWord)) {
                     List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(syn);
                     doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(tokens, ' '), Field.Store.NO));
-                    doc.add(new Field(DictionarySearcher.F_RAW, syn, FIELD_TYPE_RAW_VALUE));
-                    // if (tokens.size() > 1) {
-                    // doc.add(new Field(DictionarySearcher.F_SYN, syn, ftSyn));
-                    // }
+                    doc.add(new Field(DictionarySearcher.F_RAW, syn, DictionaryUtils.FIELD_TYPE_RAW_VALUE));
+                    if (tokens.size() > 1) {
+                        doc.add(new Field(DictionarySearcher.F_SYN, syn, DictionaryUtils.FIELD_TYPE_SYN));
+                    }
                 }
             }
         }
