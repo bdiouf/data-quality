@@ -2806,4 +2806,209 @@ public class SwooshRecordGroupingTest {
         }
 
     }
+
+    @Test
+    public void testSwooshIntMatchGroup_passOriginal_differentBlock()
+            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+        List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
+        List<Map<String, String>> matcherList_tMatchGroup_1 = null;
+        Map<String, String> tmpMap_tMatchGroup_1 = null;
+        List<Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new ArrayList<Map<String, String>>();
+        matcherList_tMatchGroup_1 = new ArrayList<Map<String, String>>();
+        tmpMap_tMatchGroup_1 = createTmpMap("CONCATENATE", "1", "", "city", "1", "Exact", "NO", 1 + "", "nullMatchNull",
+                0.85 + "", "TSWOOSH_MATCHER");
+        matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
+        matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
+        // master rows in a group
+        final List<row2Struct> masterRows_tMatchGroup_1 = new ArrayList<row2Struct>();
+        // all rows in a group
+        final List<row2Struct> groupRows_tMatchGroup_1 = new ArrayList<row2Struct>();
+        // this Map key is MASTER GID,value is this MASTER index of all
+        // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
+        // MASTER and only in case of separate output.
+        final Map<String, Integer> indexMap_tMatchGroup_1 = new HashMap<String, Integer>();
+
+        AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1 = new ComponentSwooshMatchRecordGrouping() {
+
+            @Override
+            protected void outputRow(Object[] row) {
+                row2Struct outStuct_tMatchGroup_1 = new row2Struct();
+                boolean isMaster = false;
+
+                if (0 < row.length) {
+                    try {
+                        outStuct_tMatchGroup_1.customer_id = Integer.valueOf((String) row[0]);
+                    } catch (NumberFormatException e) {
+                        outStuct_tMatchGroup_1.customer_id = 0;
+                    }
+                }
+
+                if (1 < row.length) {
+                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf((String) row[1]);
+                }
+
+                if (2 < row.length) {
+                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf((String) row[2]);
+                }
+                if (3 < row.length) {
+                    outStuct_tMatchGroup_1.GID = row[4] == null ? null : String.valueOf((String) row[3]);
+                }
+
+                if (4 < row.length) {
+
+                    try {
+                        outStuct_tMatchGroup_1.GRP_SIZE = Integer.valueOf((String) row[4]);
+                    } catch (java.lang.NumberFormatException e) {
+                        outStuct_tMatchGroup_1.GRP_SIZE = row[5] == null ? null : 0;
+                    }
+                }
+
+                if (5 < row.length) {
+                    outStuct_tMatchGroup_1.MASTER = row[6] == null ? null : Boolean.valueOf((String) row[5]);
+                }
+
+                if (6 < row.length) {
+
+                    try {
+                        outStuct_tMatchGroup_1.SCORE = Double.valueOf((String) row[6]);
+                    } catch (java.lang.NumberFormatException e) {
+                        outStuct_tMatchGroup_1.SCORE = 0.0;
+                    }
+                }
+
+                if (7 < row.length) {
+
+                    try {
+                        outStuct_tMatchGroup_1.GRP_QUALITY = Double.valueOf((String) row[7]);
+                    } catch (java.lang.NumberFormatException e) {
+                        outStuct_tMatchGroup_1.GRP_QUALITY = 0.0;
+                    }
+                }
+
+                if (8 < row.length) {
+                    outStuct_tMatchGroup_1.MERGED_RECORD = row[3] == null ? null : row[8];
+                }
+
+                if (outStuct_tMatchGroup_1.MASTER == true) {
+                    masterRows_tMatchGroup_1.add(outStuct_tMatchGroup_1);
+                    indexMap_tMatchGroup_1.put(String.valueOf(outStuct_tMatchGroup_1.GID), masterRows_tMatchGroup_1.size() - 1);
+                } else {
+                    groupRows_tMatchGroup_1.add(outStuct_tMatchGroup_1);
+                }
+            }
+
+            @Override
+            protected boolean isMaster(Object col) {
+                return String.valueOf(col).equals("true");
+            }
+        };
+
+        recordGroupImp_tMatchGroup_1.setRecordLinkAlgorithm(RecordMatcherType.T_SwooshAlgorithm);
+        // add mutch rules
+        for (List<Map<String, String>> matcherList : matchingRulesAll_tMatchGroup_1) {
+            recordGroupImp_tMatchGroup_1.addMatchRule(matcherList);
+        }
+        recordGroupImp_tMatchGroup_1.initialize();
+
+        // init the parameters of the tswoosh algorithm
+        Map<String, String> columnWithType_tMatchGroup_1 = fillColumn("id_Integer", "id_String", "id_String", "id_String",
+                "id_Integer", "id_Boolean", "id_Double", "id_Double", null);
+        Map<String, String> columnWithIndex_tMatchGroup_1 = fillColumn("0", "1", "2", "3", "4", "5", "6", "7", null);
+
+        SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = SurvivorshipUtils
+                .createSurvivorShipAlgorithmParams((AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1,
+                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1,
+                        columnWithIndex_tMatchGroup_1);
+        ((ComponentSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
+                .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
+        initialize(recordGroupImp_tMatchGroup_1);
+        // use multipass
+        recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
+        //the "MERGED_RECORD" is NOT considered as an input column. 
+        recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(3);
+
+        // read the data from the file
+        InputStream in = this.getClass().getResourceAsStream("swoosh_12851.txt"); //$NON-NLS-1$
+        BufferedReader bfr = new BufferedReader(new InputStreamReader(in));
+        List<String> listOfLines = IOUtils.readLines(bfr);
+        List<Object[]> inputList1 = new ArrayList<Object[]>();
+        List<Object[]> inputList2 = new ArrayList<Object[]>();
+        List<Object> list2 = new ArrayList<Object>();
+
+        for (String line : listOfLines) {
+            Object[] fields = StringUtils.splitPreserveAllTokens(line, columnDelimiter);
+            Collections.addAll(list2, fields);
+            List<Attribute> list = new ArrayList<Attribute>();
+            //add the original values
+            if (StringUtils.equalsIgnoreCase("true", (String) fields[5])) { //add the list into masters
+                Attribute att2 = new Attribute("city", 1);
+                att2.setValue(" US  US ");
+                att2.getValues().get(" US ").increment();
+                att2.getValues().get(" US ").increment();
+                list.add(att2);
+
+            }
+            list2.add(list);
+
+            //separate blocks
+            if (" F".equals(fields[2])) {
+                inputList1.add(list2.toArray());
+            } else {
+                inputList2.add(list2.toArray());
+            }
+            list2.clear();
+        }
+
+        for (Object[] inputRow : inputList1) { // loop on each data
+            recordGroupImp_tMatchGroup_1.doGroup(inputRow);
+        }
+        recordGroupImp_tMatchGroup_1.end();
+
+        for (Object[] inputRow : inputList2) { // loop on each data
+            recordGroupImp_tMatchGroup_1.doGroup(inputRow);
+        }
+        recordGroupImp_tMatchGroup_1.end();
+
+        groupRows_tMatchGroup_1.addAll(masterRows_tMatchGroup_1);
+
+        Collections.sort(groupRows_tMatchGroup_1);
+
+        boolean groupMember[] = new boolean[6];
+        for (row2Struct one : groupRows_tMatchGroup_1) {
+            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+                    + "--" + one.MASTER + "--");
+            if (one.MASTER) {
+
+                Assert.assertTrue("should be: 3", 3 == one.GRP_SIZE);
+            }
+            switch (one.customer_id) {
+            case 1:
+                groupMember[0] = true;
+                break;
+            case 2:
+                groupMember[1] = true;
+                break;
+            case 3:
+                groupMember[2] = true;
+                break;
+            case 4:
+                groupMember[3] = true;
+                break;
+            case 5:
+                groupMember[4] = true;
+                break;
+            case 6:
+                groupMember[5] = true;
+                break;
+            }
+        }
+
+        int i = 1;
+        for (boolean notLost : groupMember) {
+            Assert.assertTrue("Lost record: " + i, notLost);
+            i++;
+        }
+        Assert.assertTrue(groupRows_tMatchGroup_1.size() == 8);
+    }
+
 }

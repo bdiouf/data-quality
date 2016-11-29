@@ -58,7 +58,7 @@ public class TSwooshGrouping<TYPE> {
     // Added TDQ-9320: to use the algorithm handle the record one by one
     private DQMFB algorithm;
 
-    //Added TDQ-12057
+    // Added TDQ-12057
     private boolean hasPassedOriginal = false;
 
     /**
@@ -78,8 +78,8 @@ public class TSwooshGrouping<TYPE> {
     }
 
     /**
-     * Recording matching with t-swoosh algorithm.
-     * Used for tmatchgroup only
+     * Recording matching with t-swoosh algorithm. Used for tmatchgroup only
+     * 
      * @param inputRow
      * @param matchingRule
      */
@@ -107,8 +107,9 @@ public class TSwooshGrouping<TYPE> {
                         return value == null ? null : value.toString();
                     }
 
-                    //Added TDQ-12057 : return the current column's values from the last original values.(multipass+swoosh+passOriginal)
-                    //the original is the last one.
+                    // Added TDQ-12057 : return the current column's values from the last original
+                    // values.(multipass+swoosh+passOriginal)
+                    // the original is the last one.
                     @Override
                     public Object getAttribute() {
                         TYPE type = inputRow[inputRow.length - 1];
@@ -134,11 +135,11 @@ public class TSwooshGrouping<TYPE> {
 
         for (TYPE attribute : inputRow) {
             DQAttribute<TYPE> attri;
-            //Added TDQ-12057, when pass original & multipass, no need to pass it into OriginalRow.
+            // Added TDQ-12057, when pass original & multipass, no need to pass it into OriginalRow.
             if (attribute instanceof List) {
                 attri = new DQAttribute<TYPE>(SwooshConstants.ORIGINAL_RECORD, colIdx, null);
                 hasPassedOriginal = true;
-            } else {//~
+            } else {// ~
                 attri = new DQAttribute<TYPE>(StringUtils.EMPTY, colIdx, attribute);
             }
             rowList.add(attri);
@@ -202,7 +203,7 @@ public class TSwooshGrouping<TYPE> {
     }
 
     // get and output all result after all records finished
-    //used by both analysis and component
+    // used by both analysis and component
     public void afterAllRecordFinished() {
         List<Record> result = algorithm.getResult();
         outputResult(result);
@@ -364,13 +365,8 @@ public class TSwooshGrouping<TYPE> {
     Map<String, List<List<DQAttribute<?>>>> groupRows;
 
     public void swooshMatchWithMultipass(CombinedRecordMatcher combinedRecordMatcher,
-            SurvivorShipAlgorithmParams survivorShipAlgorithmParams, int indexGID) {
+            SurvivorShipAlgorithmParams survivorShipAlgorithmParams, int indexGID2) {
         groupRows = new HashMap<String, List<List<DQAttribute<?>>>>();
-        //Added TDQ-12057, when the 1st tmatchgroup passed the original values, the "originalInputColumnSize" contains the "ORIGINAL_RECORD",
-        int indexGID2 = indexGID;
-        //        if (this.hasPassedOriginal) {
-        //            indexGID2 = indexGID - 1;
-        //        }
         // key:GID, value: list of rows in this group which are not master.
         List<RecordGenerator> notMasterRecords = new ArrayList<>();
         for (RecordGenerator record : rcdsGenerators) {
@@ -401,21 +397,44 @@ public class TSwooshGrouping<TYPE> {
 
         // add the not masters again
         List<Record> result = algorithm.getResult();
-        for (Record master : result) {
-            String groupId = StringUtils.isBlank(master.getGroupId()) ? ((RichRecord) master).getGID().getValue()
-                    : master.getGroupId();
-            List<List<DQAttribute<?>>> list = groupRows.get(groupId);
+        if (result.isEmpty()) {//no masters in the current block, TDQ-12851
+            for (RecordGenerator record : notMasterRecords) {
+                List<DQAttribute<?>> originalRow = record.getOriginalRow();
+                RichRecord createRecord = createRecord(originalRow, originalRow.get(indexGID2).getValue());
+                output(createRecord);
+            }
+        } else {
+            for (Record master : result) {
+                String groupId = StringUtils.isBlank(master.getGroupId()) ? ((RichRecord) master).getGID().getValue()
+                        : master.getGroupId();
+                List<List<DQAttribute<?>>> list = groupRows.get(groupId);
 
-            int groupSize = list == null ? 0 : list.size();
-            restoreMasterData((RichRecord) master, indexGID2, groupSize);
-            addMembersIntoNewMaster(master, list, groupId);
-
-            // use the new GID to fetch some members of old GID-- which belong to a temp master in first pass, but not a
-            // master after 2nd tMatchgroup.
-            String tempGid = oldGID2New.get(master.getGroupId());
-            if (!StringUtils.equals(groupId, tempGid)) {
-                list = groupRows.get(tempGid);
+                int groupSize = list == null ? 0 : list.size();
+                restoreMasterData((RichRecord) master, indexGID2, groupSize);
                 addMembersIntoNewMaster(master, list, groupId);
+                //remove the record already handled.
+                groupRows.remove(groupId);
+
+                // use the new GID to fetch some members of old GID-- which belong to a temp master in first pass, but
+                // not a master after 2nd tMatchgroup.
+                String tempGid = oldGID2New.get(master.getGroupId());
+                if (!StringUtils.equals(groupId, tempGid)) {
+                    list = groupRows.get(tempGid);
+                    addMembersIntoNewMaster(master, list, groupId);
+                    //remove the record already handled.
+                    groupRows.remove(tempGid);
+                }
+            }
+            //Added TDQ-12851, only handle the lost records, but not the group
+            if (!groupRows.isEmpty()) {
+                Iterator<String> iterator = groupRows.keySet().iterator();
+                while (iterator.hasNext()) {
+                    List<List<DQAttribute<?>>> list = groupRows.get(iterator.next());
+                    for (List<DQAttribute<?>> attri : list) {
+                        RichRecord createRecord = createRecord(attri, attri.get(indexGID2).getValue());
+                        output(createRecord);
+                    }
+                }
             }
         }
 
@@ -431,7 +450,8 @@ public class TSwooshGrouping<TYPE> {
         DQAttribute<?> isMasterAttribute = master.getMASTER();
         if (Double.compare(master.getGroupQuality(), 0.0d) == 0 && isMasterAttribute.getValue().equals("false")) { //$NON-NLS-1$
             isMasterAttribute.setValue("true"); //$NON-NLS-1$
-            Double valueDQ = Double.valueOf(master.getGRP_QUALITY().getValue());//getOriginRow().get(indexGID + 4).getValue());
+            Double valueDQ = Double.valueOf(master.getGRP_QUALITY().getValue());// getOriginRow().get(indexGID +
+                                                                                // 4).getValue());
             master.setGroupQuality(valueDQ);
         }
 
@@ -462,10 +482,10 @@ public class TSwooshGrouping<TYPE> {
             return;
         }
         RichRecord record = (RichRecord) master;
-        //TDQ-12659 add "-1" for the removed intermediate masters. 
-        //        if(record.isMerged()){
-        //            record.setGrpSize(record.getGrpSize() + list.size() - 2);
-        //        }
+        // TDQ-12659 add "-1" for the removed intermediate masters.
+        // if(record.isMerged()){
+        // record.setGrpSize(record.getGrpSize() + list.size() - 2);
+        // }
         if (StringUtils.isBlank(master.getGroupId())) {
             record.setGroupId(groupId);
         }
@@ -503,10 +523,10 @@ public class TSwooshGrouping<TYPE> {
         if (recordsInFirstGroup != null) {
             if (recordsInNewGroup == null) {
                 groupRows.put(newGID, recordsInFirstGroup);
-                //grp-size +1
+                // grp-size +1
             } else {
                 recordsInNewGroup.addAll(recordsInFirstGroup);
-                //grp-size = sum of two list size
+                // grp-size = sum of two list size
             }
             // remove the oldgid's list in: groupRows
             groupRows.remove(oldGID);
@@ -562,8 +582,8 @@ public class TSwooshGrouping<TYPE> {
 
             String grpId1 = richRecord1.getGroupId();
             String grpId2 = richRecord2.getGroupId();
-            String oldgrpId1 = richRecord1.getGID() == null ? null : richRecord1.getGID().getValue(); //.getOriginRow().get(getIndexGID()).getValue();
-            String oldgrpId2 = richRecord2.getGID() == null ? null : richRecord2.getGID().getValue();//.getOriginRow().get(getIndexGID()).getValue();
+            String oldgrpId1 = richRecord1.getGID() == null ? null : richRecord1.getGID().getValue(); // .getOriginRow().get(getIndexGID()).getValue();
+            String oldgrpId2 = richRecord2.getGID() == null ? null : richRecord2.getGID().getValue();// .getOriginRow().get(getIndexGID()).getValue();
             uniqueOldGroupQuality(record1, record2);
             if (grpId1 == null && grpId2 == null) {
                 // Both records are original records.
@@ -575,7 +595,8 @@ public class TSwooshGrouping<TYPE> {
 
                 richRecord1.setMaster(false);
                 richRecord2.setMaster(false);
-                // Put into the map: <gid2,gid1>, oldgrpId2 is not used any more, but can be found by oldgrpId1 which is used
+                // Put into the map: <gid2,gid1>, oldgrpId2 is not used any more, but can be found by oldgrpId1 which is
+                // used
                 oldGID2New.put(oldgrpId2, oldgrpId1);
                 updateNotMasteredRecords(oldgrpId2, oldgrpId1);
                 output(richRecord1);
@@ -654,7 +675,7 @@ public class TSwooshGrouping<TYPE> {
             } else {
                 richRecord.getGRP_QUALITY().setValue(String.valueOf(value));
             }
-            //richRecord.getOriginRow().get(getIndexGQ()).setValue(String.valueOf(value));
+            // richRecord.getOriginRow().get(getIndexGQ()).setValue(String.valueOf(value));
 
         }
 
@@ -701,7 +722,7 @@ public class TSwooshGrouping<TYPE> {
          * @return
          */
         private Double getOldGrpQualiry(RichRecord richRecord) {
-            //String value = richRecord.getOriginRow().get(getIndexGQ()).getValue();
+            // String value = richRecord.getOriginRow().get(getIndexGQ()).getValue();
             String value = richRecord.getGRP_QUALITY() == null ? null : richRecord.getGRP_QUALITY().getValue();
             return Double.valueOf(value == null ? "1.0" : value);
         }
