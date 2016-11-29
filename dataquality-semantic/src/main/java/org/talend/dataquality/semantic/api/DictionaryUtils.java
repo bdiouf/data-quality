@@ -12,16 +12,24 @@
 // ============================================================================
 package org.talend.dataquality.semantic.api;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.StringField;
-import org.apache.lucene.index.IndexableField;
+import org.apache.lucene.index.*;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Bits;
+import org.apache.lucene.util.Version;
 import org.talend.dataquality.semantic.index.DictionarySearcher;
 import org.talend.dataquality.semantic.model.CategoryType;
 import org.talend.dataquality.semantic.model.DQCategory;
@@ -38,6 +46,10 @@ public class DictionaryUtils {
         FIELD_TYPE_SYN.setIndexed(true);
         FIELD_TYPE_SYN.setOmitNorms(true);
         FIELD_TYPE_SYN.freeze();
+
+        FIELD_TYPE_RAW_VALUE.setIndexed(false);
+        FIELD_TYPE_RAW_VALUE.setStored(true);
+        FIELD_TYPE_RAW_VALUE.freeze();
     }
 
     /**
@@ -53,13 +65,13 @@ public class DictionaryUtils {
      * @param synonyms
      * @return
      */
-    public static Document generateDocument(String id, String catid, String word, Set<String> synonyms) {
+    public static Document generateDocument(String docId, String catId, String word, Set<String> synonyms) {
         String tempWord = word.trim();
         Document doc = new Document();
 
-        Field idTermField = new StringField(DictionarySearcher.F_ID, id, Field.Store.YES);
+        Field idTermField = new StringField(DictionarySearcher.F_ID, docId, Field.Store.YES);
         doc.add(idTermField);
-        Field catidTermField = new StringField(DictionarySearcher.F_CATID, catid, Field.Store.YES);
+        Field catidTermField = new StringField(DictionarySearcher.F_CATID, catId, Field.Store.YES);
         doc.add(catidTermField);
         Field wordTermField = new StringField(DictionarySearcher.F_WORD, tempWord, Field.Store.YES);
         doc.add(wordTermField);
@@ -69,7 +81,7 @@ public class DictionaryUtils {
                 if (syn.length() > 0 && !syn.equals(tempWord)) {
                     List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(syn);
                     doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(tokens, ' '), Field.Store.NO));
-                    doc.add(new StringField(DictionarySearcher.F_RAW, syn, Field.Store.YES));
+                    doc.add(new Field(DictionarySearcher.F_RAW, syn, FIELD_TYPE_RAW_VALUE));
                     if (tokens.size() > 1) {
                         doc.add(new Field(DictionarySearcher.F_SYN, syn, FIELD_TYPE_SYN));
                     }
@@ -121,4 +133,22 @@ public class DictionaryUtils {
         return dqCat;
     }
 
+    static void rewriteIndex(Directory srcDir, File destFolder) throws IOException {
+        final DirectoryReader reader = DirectoryReader.open(srcDir);
+        final FSDirectory destDir = FSDirectory.open(destFolder);
+        final IndexWriterConfig iwc = new IndexWriterConfig(Version.LATEST, new StandardAnalyzer(CharArraySet.EMPTY_SET));
+        final IndexWriter writer = new IndexWriter(destDir, iwc);
+
+        final Bits liveDocs = MultiFields.getLiveDocs(reader);
+        for (int i = 0; i < reader.maxDoc(); i++) {
+            if (liveDocs != null && !liveDocs.get(i)) {
+                continue;
+            }
+            final Document doc = reader.document(i);
+            writer.addDocument(doc);
+        }
+        writer.commit();
+        writer.close();
+        destDir.close();
+    }
 }

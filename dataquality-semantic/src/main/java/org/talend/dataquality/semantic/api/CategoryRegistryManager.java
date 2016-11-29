@@ -18,13 +18,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.zip.CRC32;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
@@ -40,7 +39,7 @@ import org.json.JSONObject;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
 import org.talend.dataquality.semantic.classifier.custom.UDCategorySerDeser;
 import org.talend.dataquality.semantic.classifier.custom.UserDefinedClassifier;
-import org.talend.dataquality.semantic.index.PlatformPathUtil;
+import org.talend.dataquality.semantic.index.ClassPathDirectory;
 import org.talend.dataquality.semantic.model.CategoryType;
 import org.talend.dataquality.semantic.model.DQCategory;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizer;
@@ -250,51 +249,9 @@ public class CategoryRegistryManager {
         if (!destSubFolder.exists()) {
             synchronized (indexExtractionLock) {
                 final URI indexSourceURI = this.getClass().getResource("/" + sourceSubFolder).toURI();
-                Path start = getFileSystemPath(indexSourceURI);
-                destSubFolder.mkdirs();
-                Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
-
-                    @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
-                        Path destFilePath = Paths.get(destSubFolder.toString(), file.getFileName().toString());
-                        Files.copy(file, destFilePath, StandardCopyOption.REPLACE_EXISTING);
-                        return FileVisitResult.CONTINUE;
-                    }
-                });
-                if ("jar".equals(indexSourceURI.getScheme())) {
-                    try {
-                        FileSystem fs = FileSystems.getFileSystem(indexSourceURI);
-                        fs.close();
-                    } catch (IOException e) {
-                        LOGGER.error("Failed to close FileSystem for: " + indexSourceURI, e);
-                    }
-                }
+                Directory srcDir = ClassPathDirectory.open(indexSourceURI);
+                DictionaryUtils.rewriteIndex(srcDir, destSubFolder);
             }
-        }
-    }
-
-    private Path getFileSystemPath(URI uri) {
-        LOGGER.info("Opening '" + uri + "' ...");
-        if ("jar".equals(uri.getScheme())) {
-            try {
-                FileSystem fs = FileSystems.newFileSystem(uri, Collections.<String, String> emptyMap());
-                final String directory = StringUtils.substringAfterLast(uri.toString(), "!"); //$NON-NLS-1$
-                final Path path = fs.getPath(directory);
-                return path;
-            } catch (IOException e) {
-                throw new IllegalArgumentException("Unable to open JAR '" + uri + "'.", e);
-            }
-        } else if ("file".equals(uri.getScheme())) {
-            return Paths.get(uri);
-        } else if ("bundleresource".equals(uri.getScheme())) { // for OSGI environment
-            try {
-                final String path = PlatformPathUtil.getFilePathByPlatformURL(uri.toURL());
-                return Paths.get(path);
-            } catch (IOException e) {
-                throw new IllegalArgumentException("Unable to open bundleresource '" + uri + "'.", e);
-            }
-        } else {
-            throw new UnsupportedOperationException("Unsupported scheme '" + uri.getScheme() + "'.");
         }
     }
 
