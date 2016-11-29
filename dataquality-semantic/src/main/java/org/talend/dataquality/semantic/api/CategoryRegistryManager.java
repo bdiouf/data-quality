@@ -1,3 +1,15 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
 package org.talend.dataquality.semantic.api;
 
 import java.io.File;
@@ -34,12 +46,34 @@ import org.talend.dataquality.semantic.model.DQCategory;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizer;
 import org.talend.dataquality.semantic.recognizer.CategoryRecognizerBuilder;
 
+/**
+ * Singleton class providing API for local category registry management.
+ * 
+ * A local category registry is composed by the following subfolders:
+ * <ul>
+ * <li><b>category:</b> lucene index containing metadata of all categories</li>
+ * <li><b>index/dictionary:</b> lucene index containing dictionary documents</li>
+ * <li><b>index/keyword:</b> lucene index containing keyword documents</li>
+ * <li><b>regex:</b> json file containing all categories that can be recognized by regex patterns and eventual subvalidators</li>
+ * </ul>
+ * In each of the above subfolders, there is still a level of subfolders representing different contexts. The default context name
+ * is "default".
+ */
 public class CategoryRegistryManager {
 
     private static final Logger LOGGER = Logger.getLogger(CategoryRegistryManager.class);
 
+    /**
+     * Map between context names and corresponding instances.
+     */
     private static final Map<String, CategoryRegistryManager> instances = new HashMap<>();
 
+    /**
+     * Whether the local category registry will be used.
+     * Default value is false, which means only initial categories are loaded. This is mostly useful for unit tests.
+     * More often, the value is set to true when the localRegistryPath is configured. see
+     * {@link CategoryRegistryManager.setLocalRegistryPath()}
+     */
     private static boolean usingLocalCategoryRegistry = false;
 
     private static String localRegistryPath = System.getProperty("user.home") + "/.talend/dataquality/semantic";
@@ -54,6 +88,9 @@ public class CategoryRegistryManager {
 
     public static final String REGEX_CATEGRIZER_FILE_NAME = "categorizer.json";
 
+    /**
+     * Map between category ID and the object containing its metadata.
+     */
     private Map<String, DQCategory> dqCategories = new LinkedHashMap<String, DQCategory>();
 
     private String contextName;
@@ -94,6 +131,11 @@ public class CategoryRegistryManager {
         return instances.get(contextName);
     }
 
+    /**
+     * Configure the local category registry path.
+     * 
+     * @param folder the folder to contain the category registry.
+     */
     public static void setLocalRegistryPath(String folder) {
         if (folder != null && folder.trim().length() > 0) {
             localRegistryPath = folder;
@@ -104,10 +146,16 @@ public class CategoryRegistryManager {
         }
     }
 
+    /**
+     * @return the path of local registry.
+     */
     public static String getLocalRegistryPath() {
         return localRegistryPath;
     }
 
+    /**
+     * @return the {@link LocalDictionaryCache} corresponding to the current context.
+     */
     public LocalDictionaryCache getDictionaryCache() {
         if (localDictionaryCache == null) {
             return new LocalDictionaryCache(contextName);
@@ -115,6 +163,9 @@ public class CategoryRegistryManager {
         return localDictionaryCache;
     }
 
+    /**
+     * Reload the category from local registry. This method is typically called following category or dictionary enrichments.
+     */
     public void reloadCategoriesFromRegistry() {
         LOGGER.info("Reload categories from local registry.");
         File categorySubFolder = new File(
@@ -130,6 +181,8 @@ public class CategoryRegistryManager {
                     DQCategory dqCat = DictionaryUtils.categoryFromDocument(doc);
                     dqCategories.put(dqCat.getName(), dqCat);
                 }
+                reader.close();
+                indexDir.close();
             } catch (IOException e) {
                 LOGGER.error("Error while reloading categories from local registry.", e);
             }
@@ -264,11 +317,21 @@ public class CategoryRegistryManager {
         }
     }
 
-    public Collection<DQCategory> listCategories() {
-        return dqCategories.values();
-
+    /**
+     * List all categories.
+     * 
+     * @return collection of category objects
+     */
+    public List<DQCategory> listCategories() {
+        return new ArrayList<>(dqCategories.values());
     }
 
+    /**
+     * List all categories of a given {@link CategoryType}.
+     * 
+     * @param type the given category type
+     * @return collection of category objects of the given type
+     */
     public List<DQCategory> listCategories(CategoryType type) {
         List<DQCategory> catList = new ArrayList<DQCategory>();
         for (DQCategory dqCat : dqCategories.values()) {
@@ -279,6 +342,12 @@ public class CategoryRegistryManager {
         return catList;
     }
 
+    /**
+     * Get the label of a category by its ID.
+     * 
+     * @param catId the category ID
+     * @return the category label
+     */
     public String getCategoryLabel(String catId) {
         if ("".equals(catId)) {
             return "";
@@ -286,14 +355,28 @@ public class CategoryRegistryManager {
         return getCategoryMetadataByName(catId).getLabel();
     }
 
-    public DQCategory getCategoryMetadataByName(String name) {
-        return dqCategories.get(name);
+    /**
+     * Get the category object by its ID.
+     * 
+     * @param catId the category ID
+     * @return the category object
+     */
+    public DQCategory getCategoryMetadataByName(String catId) {
+        return dqCategories.get(catId);
     }
 
+    /**
+     * get instance of UserDefinedClassifier
+     */
     public UserDefinedClassifier getRegexClassifier() throws IOException {
         return getRegexClassifier(true);
     }
 
+    /**
+     * get instance of UserDefinedClassifier
+     * 
+     * @param refresh whether classifiers should be reloaded from local json file
+     */
     public UserDefinedClassifier getRegexClassifier(boolean refresh) throws IOException {
         if (!usingLocalCategoryRegistry) {
             return UDCategorySerDeser.getRegexClassifier();
@@ -328,6 +411,9 @@ public class CategoryRegistryManager {
         return udc;
     }
 
+    /**
+     * get URI of local dictionary
+     */
     public URI getDictionaryURI() throws URISyntaxException {
         if (usingLocalCategoryRegistry) {
             return Paths.get(localRegistryPath, DICTIONARY_SUBFOLDER_NAME, contextName).toUri();

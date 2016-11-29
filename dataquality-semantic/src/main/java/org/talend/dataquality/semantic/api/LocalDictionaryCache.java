@@ -1,3 +1,15 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
 package org.talend.dataquality.semantic.api;
 
 import java.io.IOException;
@@ -49,6 +61,9 @@ public class LocalDictionaryCache {
         return dqDocList;
     }
 
+    /**
+     * get a list of DQDocument of all dictionary entries.
+     */
     public List<DQDocument> listDocuments(String categoryName, int offset, int n) {
         try {
             TopDocs docs = sendListDocumentsQuery(categoryName, offset, n);
@@ -78,10 +93,25 @@ public class LocalDictionaryCache {
         return result;
     }
 
-    public Set<String> suggestValues(String categoryName, String prefix) {
-        return suggestValues(categoryName, prefix, 100);
+    /**
+     * Suggest dictionary values
+     * 
+     * @param categoryName the category name
+     * @param input the string to search
+     * @return all dictionary values containing the input string
+     */
+    public Set<String> suggestValues(String categoryName, String input) {
+        return suggestValues(categoryName, input, 100);
     }
 
+    /**
+     * Suggest dictionary values
+     * 
+     * @param categoryName the category name
+     * @param input the string to search
+     * @param num number of results
+     * @return all dictionary values containing the input string
+     */
     public Set<String> suggestValues(String categoryName, String input, int num) {
         if (input != null) {
             final String trimmedInput = input.trim();
