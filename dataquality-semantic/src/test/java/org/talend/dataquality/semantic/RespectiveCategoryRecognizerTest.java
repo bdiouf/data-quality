@@ -20,11 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -707,6 +703,15 @@ public class RespectiveCategoryRecognizerTest {
                     add(ImmutablePair.of("BE43068999999501", true));
                     add(ImmutablePair.of("B443068999999501", false));
                     add(ImmutablePair.of("BE43068999999502", false));
+                }
+            });
+
+            put(SemanticCategoryEnum.UK_POSTAL_CODE.getId(), new ArrayList<Pair<String, Boolean>>() {
+
+                {
+                    add(ImmutablePair.of("SL6 1AY", true));
+                    add(ImmutablePair.of("SL61AY", true));
+                    add(ImmutablePair.of("NT2ABC", false));
                 }
             });
 
