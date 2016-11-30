@@ -25,15 +25,10 @@ import java.util.zip.CRC32;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
@@ -193,6 +188,7 @@ public class CategoryRegistryManager {
         LOGGER.info("Loading categories from local registry.");
         final File categorySubFolder = new File(
                 localRegistryPath + File.separator + CATEGORY_SUBFOLDER_NAME + File.separator + contextName);
+        loadBaseIndex(categorySubFolder, CATEGORY_SUBFOLDER_NAME);
         if (categorySubFolder.exists()) {
             try (final DirectoryReader reader = DirectoryReader.open(FSDirectory.open(categorySubFolder))) {
                 for (int i = 0; i < reader.maxDoc(); i++) {
@@ -201,19 +197,6 @@ public class CategoryRegistryManager {
                     dqCategories.put(dqCat.getName(), dqCat);
                 }
             }
-        } else {
-            // persist all base categories
-            LOGGER.info("Local category registry is not found, initialize it with base categories.");
-            FSDirectory outputDir = FSDirectory.open(categorySubFolder);
-            IndexWriterConfig writerConfig = new IndexWriterConfig(Version.LATEST, new StandardAnalyzer(CharArraySet.EMPTY_SET));
-            IndexWriter writer = new IndexWriter(outputDir, writerConfig);
-
-            for (DQCategory cat : dqCategories.values()) {
-                Document doc = DictionaryUtils.categoryToDocument(cat);
-                writer.addDocument(doc);
-            }
-            writer.commit();
-            writer.close();
         }
 
         // extract initial DD categories if not present
