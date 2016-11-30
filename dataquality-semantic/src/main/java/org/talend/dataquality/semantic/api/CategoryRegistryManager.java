@@ -279,8 +279,8 @@ public class CategoryRegistryManager {
      * 
      * @return collection of category objects
      */
-    public List<DQCategory> listCategories() {
-        return new ArrayList<>(dqCategories.values());
+    public Collection<DQCategory> listCategories() {
+        return dqCategories.values();
     }
 
     /**
