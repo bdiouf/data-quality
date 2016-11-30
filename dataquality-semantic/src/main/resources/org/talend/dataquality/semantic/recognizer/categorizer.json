@@ -1,305 +1,571 @@
-{ "classifiers" : [ { "description" : "German postal code",
-        "name" : "DE_POSTAL_CODE",
-        "mainCategory" : "Numeric",
-        "label" : "DE Postal Code",
-        "validator" : { "patternString" : "^(?!01000|99999)(0[1-9]\\d{3}|[1-9]\\d{4})$" }
-      },
-      { "description" : "Email address",
-        "filter" : { "filterParam" : "@",
-            "filterType" : "MUST_CONTAIN"
-          },
-        "name" : "EMAIL",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "Email",
-        "validator" : { "patternString" : "^(([^\\s\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]]|')+|(\\\"[^\\\"]*\\\"))(\\.(([^\\s\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]]|')+|(\\\"[^\\\"]*\\\")))*@([\\p{L}\\p{M}0-9]([\\p{L}\\p{M}0-9\\-]{0,61}[\\p{L}\\p{M}0-9])?\\.)+[\\p{L}\\p{M}]{2,6}$" }
-      },
-      { "description" : "American phone number",
-        "name" : "US_PHONE",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "US Phone",
-        "validator" : { 
-            "patternString" : "^(?:(?:(?:\\+|00)?1\\s*(?:[.-]\\s*)?)?(?:\\(\\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\\s*\\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\\s*(?:[.-]\\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\\s*(?:[.-]\\s*)?([0-9]{4})(?:\\s*(?:#|x\\.?|ext\\.?|extension)\\s*(\\d+))?$",
-            "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.USPhoneNumberValidator"
-         }
-      },
-      { "description" : "French postal code",
-        "name" : "FR_POSTAL_CODE",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "FR Postal Code",
-        "validator" : { "patternString" : "^(F-|FRA?(-| ))?(0[1-9]|[1-9][0-9])[0-9]{3}$" }
-      },
-      { "description" : "French Insee code of cities with Corsica and colonies",
-        "name" : "FR_CODE_COMMUNE_INSEE",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "FR Insee Code",
-        "validator" : { "patternString" : "^(F-|FRA?(-| ))?((2[A|B])|[0-9]{2})[0-9]{3}$" }
-      },
-      { "description" : "Austria VAT number",
-        "name" : "AT_VAT_NUMBER",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "AT VAT Number",
-        "validator" : { "patternString" : "^AT[0-9]{8}$" }
-      },
-      { "description" : "Bulgaria VAT number",
-        "name" : "BG_VAT_NUMBER",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "BG VAT Number",
-        "validator" : { "patternString" : "^BG[0-9]{9,10}$" }
-      },
-      { "description" : "French VAT number",
-        "name" : "FR_VAT_NUMBER",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "FR VAT Number",
-        "validator" : { "patternString" : "^(FR){0,1}[0-9A-Z]{2}\\ [0-9]{9}$" }
-      },
-      { "description" : "Belgium postal code",
-        "name" : "BE_POSTAL_CODE",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "BE Postal Code",
-        "validator" : { "patternString" : "^(F-[0-9]{4,5}|B-[0-9]{4})$" }
-      },
-      { "description" : "French social security number",
-        "name" : "FR_SSN",
-        "mainCategory" : "Numeric",
-        "label" : "FR Social Security Number",
-        "validator" : { "patternString" : "^[12] ?[0-9]{2} ?(0[1-9]|1[0-2]) ?(2[AB]|[0-9]{2}) ?[0-9]{3} ?[0-9]{3}( ?[0-9]{2})?$" }
-      },
-      { "description" : "Longitude or latitude coordinates with at least meter precision",
-        "name" : "GEO_COORDINATE",
-        "mainCategory" : "Numeric",
-        "label" : "Geographic coordinate",
-        "validator" : { "patternString" : "^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\\.{1}[0-9]{5,6}$" }
-      },
-      { "description" : "Website URL",
-        "name" : "URL",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "URL",
-        "validator" : { "patternString" : "^((?:ht|f)tps?)\\:\\/\\/([a-zA-Z0-9\\-\\._]+:[a-zA-Z0-9\\-\\._]+@)?((?:[a-zA-Z0-9\\-\\._]+(?:\\.[a-zA-Z0-9\\-\\._]+)+)|localhost)(\\/?)([a-zA-Z0-9\\-\\.\\,\\'\\/\\+\\&%\\$_\\\\]*)?([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\?\\:\\\"\\'\\,\\|\\~\\;#\\\\]*)$" }
-      },
-      { "description" : "Website domain",
-        "name" : "WEB_DOMAIN",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "Web Domain",
-        "validator" : { "patternString" : "^([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,24}$" }
-      },
-      { "description" : "UK phone number",
-        "name" : "UK_PHONE",
-        "mainCategory" : "Numeric",
-        "label" : "UK Phone",
-        "validator" : { 
-            "patternString" : "^(\\+44[[:space:]]?7[[:digit:]]{3}|\\(?07[[:digit:]]{3}\\)?)[[:space:]]?[[:digit:]]{3}[[:space:]]?[[:digit:]]{3}$",
-            "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.UKPhoneNumberValidator"
-        }
-      },
-      { "description" : "US social security number",
-        "name" : "US_SSN",
-        "mainCategory" : "Numeric",
-        "label" : "US Social Security Number",
-        "validator" : { "patternString" : "^\\d{3}-\\d{2}-\\d{4}$" }
-      },
-      { "description" : "National Insurance number, generally called an NI Number (NINO)",
-        "name" : "UK_SSN",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "UK Social Security Number",
-        "validator" : { "patternString" : "^[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}([0-9]{6}|( [0-9]{2}){3} )[A-DFM]{0,1}$" }
-      },
-      { "description" : "The personal identity number (Swedish: personnummer) is the Swedish national identification number.",
-        "name" : "SE_SSN",
-        "mainCategory" : "Numeric",
-        "label" : "SE Social Security Number",
-        "validator" : { "patternString" : "^[1-2][0|9][0-9]{2}[0-1][0-9][0-3][0-9][-][0-9]{4}$" }
-      },
-      { "description" : "German phone number",
-        "name" : "DE_PHONE",
-        "mainCategory" : "Numeric",
-        "label" : "DE Phone",
-        "validator" : { 
-            "patternString" : "^(0049|\\+49|0)[2-9]([-. ]?[0-9]{2}){4}([0-9]{1,2})?$",
-            "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.DEPhoneNumberValidator"
-        }
-      },
-      { "description" : "UK postal code",
-        "name" : "UK_POSTAL_CODE",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "UK Postal Code",
-        "validator" : { "patternString" : "^(([BEGLMNSWbeglmnsw][0-9][0-9]?)|(([A-PR-UWYZa-pr-uwyz][A-HK-Ya-hk-y][0-9][0-9]?)|(([ENWenw][0-9][A-HJKSTUWa-hjkstuw])|([ENWenw][A-HK-Ya-hk-y][0-9][ABEHMNPRVWXYabehmnprvwxy])))) ?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$" }
-      },
-      { "description" : "IPv4 address",
-        "name" : "IPv4_ADDRESS",
-        "mainCategory" : "Numeric",
-        "label" : "IPv4 Address",
-        "validator" : { "patternString" : "^([01]?[\\d][\\d]?|2[0-4][\\d]|25[0-5])\\.([01]?[\\d][\\d]?|2[0-4][\\d]|25[0-5])\\.([01]?[\\d][\\d]?|2[0-4][\\d]|25[0-5])\\.([01]?[\\d][\\d]?|2[0-4][\\d]|25[0-5])$" }
-      },
-      { "description" : "IPv6 address",
-        "name" : "IPv6_ADDRESS",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "IPv6 Address",
-        "validator" : { "patternString" : "^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$" }
-      },
-      { "description" : "International Standard Book Number 10 digits. Such as ISBN 2-711-79141-6",
-        "name" : "ISBN_10",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "ISBN-10",
-        "validator" : { "patternString" : "^ISBN(?:-10)?:?\\ *((?=\\d{1,5}([ -]?)\\d{1,7}\\2?\\d{1,6}\\2?\\d)(?:\\d\\2*){9}[\\dX])$" }
-      },
-      { "description" : "International Standard Book Number 13 digits.",
-        "name" : "ISBN_13",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "ISBN-13",
-        "validator" : { "patternString" : "^ISBN(?:-13)?:?\\ *(97(?:8|9)([ -]?)(?=\\d{1,5}\\2?\\d{1,7}\\2?\\d{1,6}\\2?\\d)(?:\\d\\2*){9}\\d)$" }
-      },
-      { "description" : "MAC Address.",
-        "name" : "MAC_ADDRESS",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "MAC Address",
-        "validator" : { "patternString" : "^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$" }
-      },
-      { "description" : "Amount of money in English format",
-        "name" : "EN_MONEY_AMOUNT",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "Money Amount (EN)",
-        "validator" : { "patternString" : "^((US|CA)?\\$|\\u00A3|\\u20AC|\\u00A5)(([1-9]\\d{0,2}(\\,\\d{3})*)|([1-9]\\d*)|(0))(\\.\\d{2}|k|M|G|T)?$" }
-      },
-      { "description" : "Amount of money in French format",
-        "name" : "FR_MONEY_AMOUNT",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "Money Amount (FR)",
-        "validator" : { "patternString" : "^(([1-9]\\d{0,2}( \\d{3})*)|([1-9]\\d*)|0)((,\\d{2} | (k|M|G|T))?| )(\\$( (US|CA))?|\\u00A3|\\u20AC|\\u00A5)$" }
-      },
-      { "description" : "Stock Exchange Daily Official List",
-        "name" : "SEDOL",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "SEDOL",
-        "validator" : { 
-            "patternString" : "^(?<Sedol>[B-Db-dF-Hf-hJ-Nj-nP-Tp-tV-Xv-xYyZz\\d]{6}\\d)$",
-            "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.SedolValidator" 
-            }
-      },
-      { "description" : "French phone number",
-        "name" : "FR_PHONE",
-        "mainCategory" : "Numeric",
-        "label" : "FR Phone",
-        "validator" : { 
-            "patternString" : "^(0033 ?|\\+33 ?|0)[1-9]([-. ]?[0-9]{2}){4}$",
-            "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.FRPhoneNumberValidator"
-        }
-      },
-      { "description" : "US state code",
-        "name" : "US_STATE_CODE",
-        "mainCategory" : "Alpha",
-        "label" : "US State Code",
-        "validator" : { "patternString" : "^(A[KLRZ]|C[AOT]|DE|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])$" }
-      },
-      { "description" : "Bank routing transit number",
-        "name" : "BANK_ROUTING_TRANSIT_NUMBER",
-        "mainCategory" : "Numeric",
-        "label" : "Bank Routing Transit Number",
-        "validator" : { "patternString" : "^((0[0-9])|(1[0-2])|(2[1-9])|(3[0-2])|(6[1-9])|(7[0-2])|80)([0-9]{7})$" }
-      },
-      { "description" : "American Express card",
-        "name" : "AMEX_CARD",
-        "mainCategory" : "Numeric",
-        "label" : "Amex Card",
-        "validator" : { "patternString" : "^3[47][0-9]{13}$" }
-      },
-      { "description" : "Passport number",
-        "name" : "PASSPORT",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "Passport",
-        "validator" : { "patternString" : "^[A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2}$" }
-      },
-      { "description" : "MasterCard",
-        "name" : "MASTERCARD",
-        "mainCategory" : "Numeric",
-        "label" : "MasterCard",
-        "validator" : { "patternString" : "^5[1-5][0-9]{14}$" }
-      },
-      { "description" : "Visa card",
-        "name" : "VISA_CARD",
-        "mainCategory" : "Numeric",
-        "label" : "Visa Card",
-        "validator" : { "patternString" : "^4[0-9]{15}$" }
-      },
-      { "description" : "US postal code",
-        "name" : "US_POSTAL_CODE",
-        "mainCategory" : "Numeric",
-        "label" : "US Postal Code",
-        "validator" : { "patternString" : "^[0-9]{5}(-[0-9]{4})?$" }
-      },
-      { "description" : "Google Maps style GPS Decimal format",
-        "name" : "GEO_COORDINATES",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "Geographic Coordinates",
-        "validator" : { "patternString" : "^(\\d{1,3}[\\.]\\d*)[, ]+-?(\\d{1,3}[\\.]\\d*)$" }
-      },
-      { "description" : "Latitude and longitude coordinates separated by a comma in the form: N 0:59:59.99,E 0:59:59.99",
-        "name" : "GEO_COORDINATES_DEG",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "Geographic Coordinates (degree)",
-        "validator" : { "patternString" : "^[NS] \\d{1,}(\\:[0-5]\\d){2}.{0,1}\\d{0,},[EW] \\d{1,}(\\:[0-5]\\d){2}.{0,1}\\d{0,}$" }
-      },
-      { "description" : "US states",
-        "name" : "US_STATE",
-        "mainCategory" : "Alpha",
-        "label" : "US State",
-        "validator" : { "patternString" : "^(A(la(bama|ska)|rizona|rkansas)|C(alifornia|o(lorado|nnecticut))|Delaware|Florida|Georgia|Hawaii|I(daho|llinois|ndiana|owa)|K(ansas|entucky)|Louisiana|M(a(ine|ryland|ssachusetts)|i(chigan|nnesota|ss(issippi|ouri))|ontana)|N(ebraska|evada|ew\\s(Hampshire|Jersey|Mexico|York)|orth\\s(Carolina|Dakota))|O(hio|klahoma|regon)|Pennsylvania|Rhode\\sIsland|South\\s(Carolina|Dakota)|Te(nnessee|xas)|Utah|V(ermont|irginia)|W(ashington|est\\sVirginia|isconsin|yoming))$" }
-      },
-      { "description" : "Color hexadecimal code",
-        "name" : "COLOR_HEX_CODE",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "Color Hex Code",
-        "validator" : { "patternString" : "^\\#[A-Fa-f0-9]{3}([A-Fa-f0-9]{3})?$" }
-      },
-      { "description" : "Weekday or their abbreviation",
-        "name" : "EN_WEEKDAY",
-        "mainCategory" : "Alpha",
-        "label" : "EN Weekday",
-        "validator" : { "patternString" : "^((Sun|Mon|(T(ues|hurs))|Fri)(day|\\.)?|Wed(\\.|nesday)?|Sat(\\.|urday)?|T((ue?)|(hu?r?))\\.?)$" }
-      },
-      { "description" : "Month English abbreviation",
-        "name" : "EN_MONTH_ABBREV",
-        "mainCategory" : "Alpha",
-        "label" : "EN Month Abbrev",
-        "validator" : { "patternString" : "^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$" }
-      },
-      { "description" : "Month in English",
-        "name" : "EN_MONTH",
-        "mainCategory" : "Alpha",
-        "label" : "EN Month",
-        "validator" : { "patternString" : "^(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)$" }
-      },
-      { "description" : "HDFS URL",
-        "name" : "HDFS_URL",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "HDFS URL",
-        "validator" : { "patternString" : "^(?:hdfs)\\:\\/\\/((?:[a-zA-Z0-9\\-\\._]+(?:\\.[a-zA-Z0-9\\-\\._]+)+)|localhost)\\/([a-zA-Z0-9\\-\\.\\/\\+\\&\\%\\$_\\\\]*)?([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\#\\~]*)$" }
-      },
-      { "description" : "FILE URL",
-        "name" : "FILE_URL",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "File URL",
-        "validator" : { "patternString" : "^(?:file)\\:(?:\\/){2,3}((?:[a-zA-Z0-9\\-\\._]+(?:[a-zA-Z0-9\\-\\.\\:\\|_]+)+)|localhost)\\/([a-zA-Z0-9\\-\\.\\/\\+\\&\\%\\$_\\|\\:]*)?$" }
-      },
-      { "description" : "MAIL TO URL",
-        "name" : "MAILTO_URL",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "MailTo URL",
-        "validator" : { "patternString" : "^(?:mailto)\\:([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}(,)?)*((?:\\?)((subject|to|body|cc)=(([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})|([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\?\\:\\\"\\'\\,\\|\\~\\;#\\\\])*)+(\\&)?)*)*$" }
-      },
-      { "description" : "DATA URL",
-        "name" : "DATA_URL",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "Data URL",
-        "validator" : { "patternString" : "^(?:data)\\:([a-z]+\\/[a-z]+)?(;charset=([\\w-])*)?(;base64)?,([\\w\\!\\$\\&\\'\\,\\(\\)\\*\\+\\,\\;\\=\\-\\.\\_\\~\\:\\@\\/\\?\\%\\s]+)$" }
-      },
-      { "description" : "IBAN",
-        "name" : "IBAN",
-        "mainCategory" : "AlphaNumeric",
-        "label" : "IBAN",
-        "validator" : {
-          "patternString" : "^[a-zA-Z]{2}[0-9]{2}\\ ?([a-zA-Z0-9]{4}\\ ?){2,6}([a-zA-Z0-9]{4}\\ ?|[a-zA-Z0-9])?[a-zA-Z0-9]{0,2}$",
-          "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.IBANValidator"
-        }
+{
+  "classifiers": [
+    {
+      "id": "583edc44ec06957a34fa642c",
+      "description": "Website domain",
+      "mainCategory": "AlphaNumeric",
+      "name": "WEB_DOMAIN",
+      "label": "Web Domain",
+      "filter": null,
+      "validator": {
+        "patternString": "^([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,24}$",
+        "subValidatorClassName": null
       }
-
-    ] }
+    },
+    {
+      "id": "583edc44ec06957a34fa642e",
+      "description": "US social security number",
+      "mainCategory": "Numeric",
+      "name": "US_SSN",
+      "label": "US Social Security Number",
+      "filter": null,
+      "validator": {
+        "patternString": "^\\d{3}-\\d{2}-\\d{4}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6430",
+      "description": "Email address",
+      "mainCategory": "AlphaNumeric",
+      "name": "EMAIL",
+      "label": "Email",
+      "filter": {
+        "filterParam": "@",
+        "filterType": "MUST_CONTAIN"
+      },
+      "validator": {
+        "patternString": "^(([^\\s\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]]|')+|(\\\"[^\\\"]*\\\"))(\\.(([^\\s\\p{Cntrl}\\(\\)<>@,;:'\\\\\\\"\\.\\[\\]]|')+|(\\\"[^\\\"]*\\\")))*@([\\p{L}\\p{M}0-9]([\\p{L}\\p{M}0-9\\-]{0,61}[\\p{L}\\p{M}0-9])?\\.)+[\\p{L}\\p{M}]{2,6}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6432",
+      "description": "Bulgaria VAT number",
+      "mainCategory": "AlphaNumeric",
+      "name": "BG_VAT_NUMBER",
+      "label": "BG VAT Number",
+      "filter": null,
+      "validator": {
+        "patternString": "^BG[0-9]{9,10}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6434",
+      "description": "Website URL",
+      "mainCategory": "AlphaNumeric",
+      "name": "URL",
+      "label": "URL",
+      "filter": null,
+      "validator": {
+        "patternString": "^((?:ht|f)tps?)\\:\\/\\/([a-zA-Z0-9\\-\\._]+:[a-zA-Z0-9\\-\\._]+@)?((?:[a-zA-Z0-9\\-\\._]+(?:\\.[a-zA-Z0-9\\-\\._]+)+)|localhost)(\\/?)([a-zA-Z0-9\\-\\.\\,\\'\\/\\+\\&%\\$_\\\\]*)?([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\?\\:\\\"\\'\\,\\|\\~\\;#\\\\]*)$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6436",
+      "description": "Longitude or latitude coordinates with at least meter precision",
+      "mainCategory": "Numeric",
+      "name": "GEO_COORDINATE",
+      "label": "Geographic coordinate",
+      "filter": null,
+      "validator": {
+        "patternString": "^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\\.{1}[0-9]{5,6}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6438",
+      "description": "MAC Address.",
+      "mainCategory": "AlphaNumeric",
+      "name": "MAC_ADDRESS",
+      "label": "MAC Address",
+      "filter": null,
+      "validator": {
+        "patternString": "^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa643a",
+      "description": "Weekday or their abbreviation",
+      "mainCategory": "Alpha",
+      "name": "EN_WEEKDAY",
+      "label": "EN Weekday",
+      "filter": null,
+      "validator": {
+        "patternString": "^((Sun|Mon|(T(ues|hurs))|Fri)(day|\\.)?|Wed(\\.|nesday)?|Sat(\\.|urday)?|T((ue?)|(hu?r?))\\.?)$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa643c",
+      "description": "French postal code",
+      "mainCategory": "AlphaNumeric",
+      "name": "FR_POSTAL_CODE",
+      "label": "FR Postal Code",
+      "filter": null,
+      "validator": {
+        "patternString": "^(F-|FRA?(-| ))?(0[1-9]|[1-9][0-9])[0-9]{3}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa643e",
+      "description": "German phone number",
+      "mainCategory": "Numeric",
+      "name": "DE_PHONE",
+      "label": "DE Phone",
+      "filter": null,
+      "validator": {
+        "patternString": "^(0049|\\+49|0)[2-9]([-. ]?[0-9]{2}){4}([0-9]{1,2})?$",
+        "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.DEPhoneNumberValidator"
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6440",
+      "description": "Visa card",
+      "mainCategory": "Numeric",
+      "name": "VISA_CARD",
+      "label": "Visa Card",
+      "filter": null,
+      "validator": {
+        "patternString": "^4[0-9]{15}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6442",
+      "description": "MasterCard",
+      "mainCategory": "Numeric",
+      "name": "MASTERCARD",
+      "label": "MasterCard",
+      "filter": null,
+      "validator": {
+        "patternString": "^5[1-5][0-9]{14}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6444",
+      "description": "French social security number",
+      "mainCategory": "Numeric",
+      "name": "FR_SSN",
+      "label": "FR Social Security Number",
+      "filter": null,
+      "validator": {
+        "patternString": "^[12] ?[0-9]{2} ?(0[1-9]|1[0-2]) ?(2[AB]|[0-9]{2}) ?[0-9]{3} ?[0-9]{3}( ?[0-9]{2})?$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6446",
+      "description": "International Standard Book Number 10 digits. Such as ISBN 2-711-79141-6",
+      "mainCategory": "AlphaNumeric",
+      "name": "ISBN_10",
+      "label": "ISBN-10",
+      "filter": null,
+      "validator": {
+        "patternString": "^ISBN(?:-10)?:?\\ *((?=\\d{1,5}([ -]?)\\d{1,7}\\2?\\d{1,6}\\2?\\d)(?:\\d\\2*){9}[\\dX])$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6448",
+      "description": "The personal identity number (Swedish: personnummer) is the Swedish national identification number.",
+      "mainCategory": "Numeric",
+      "name": "SE_SSN",
+      "label": "SE Social Security Number",
+      "filter": null,
+      "validator": {
+        "patternString": "^[1-2][0|9][0-9]{2}[0-1][0-9][0-3][0-9][-][0-9]{4}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa644a",
+      "description": "International Standard Book Number 13 digits.",
+      "mainCategory": "AlphaNumeric",
+      "name": "ISBN_13",
+      "label": "ISBN-13",
+      "filter": null,
+      "validator": {
+        "patternString": "^ISBN(?:-13)?:?\\ *(97(?:8|9)([ -]?)(?=\\d{1,5}\\2?\\d{1,7}\\2?\\d{1,6}\\2?\\d)(?:\\d\\2*){9}\\d)$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa644c",
+      "description": "National Insurance number, generally called an NI Number (NINO)",
+      "mainCategory": "AlphaNumeric",
+      "name": "UK_SSN",
+      "label": "UK Social Security Number",
+      "filter": null,
+      "validator": {
+        "patternString": "^[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}([0-9]{6}|( [0-9]{2}){3} )[A-DFM]{0,1}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa644e",
+      "description": "Amount of money in English format",
+      "mainCategory": "AlphaNumeric",
+      "name": "EN_MONEY_AMOUNT",
+      "label": "Money Amount (EN)",
+      "filter": null,
+      "validator": {
+        "patternString": "^((US|CA)?\\$|\\u00A3|\\u20AC|\\u00A5)(([1-9]\\d{0,2}(\\,\\d{3})*)|([1-9]\\d*)|(0))(\\.\\d{2}|k|M|G|T)?$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6450",
+      "description": "Bank routing transit number",
+      "mainCategory": "Numeric",
+      "name": "BANK_ROUTING_TRANSIT_NUMBER",
+      "label": "Bank Routing Transit Number",
+      "filter": null,
+      "validator": {
+        "patternString": "^((0[0-9])|(1[0-2])|(2[1-9])|(3[0-2])|(6[1-9])|(7[0-2])|80)([0-9]{7})$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6452",
+      "description": "American Express card",
+      "mainCategory": "Numeric",
+      "name": "AMEX_CARD",
+      "label": "Amex Card",
+      "filter": null,
+      "validator": {
+        "patternString": "^3[47][0-9]{13}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6454",
+      "description": "UK postal code",
+      "mainCategory": "AlphaNumeric",
+      "name": "UK_POSTAL_CODE",
+      "label": "UK Postal Code",
+      "filter": null,
+      "validator": {
+        "patternString": "^(([BEGLMNSWbeglmnsw][0-9][0-9]?)|(([A-PR-UWYZa-pr-uwyz][A-HK-Ya-hk-y][0-9][0-9]?)|(([ENWenw][0-9][A-HJKSTUWa-hjkstuw])|([ENWenw][A-HK-Ya-hk-y][0-9][ABEHMNPRVWXYabehmnprvwxy])))) ?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6456",
+      "description": "Month in English",
+      "mainCategory": "Alpha",
+      "name": "EN_MONTH",
+      "label": "EN Month",
+      "filter": null,
+      "validator": {
+        "patternString": "^(?:J(anuary|u(ne|ly))|February|Ma(rch|y)|A(pril|ugust)|(((Sept|Nov|Dec)em)|Octo)ber)$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6458",
+      "description": "IPv6 address",
+      "mainCategory": "AlphaNumeric",
+      "name": "IPv6_ADDRESS",
+      "label": "IPv6 Address",
+      "filter": null,
+      "validator": {
+        "patternString": "^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b)\\.){3}(\\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa645a",
+      "description": "MAIL TO URL",
+      "mainCategory": "AlphaNumeric",
+      "name": "MAILTO_URL",
+      "label": "MailTo URL",
+      "filter": null,
+      "validator": {
+        "patternString": "^(?:mailto)\\:([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}(,)?)*((?:\\?)((subject|to|body|cc)=(([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})|([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\?\\:\\\"\\'\\,\\|\\~\\;#\\\\])*)+(\\&)?)*)*$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa645c",
+      "description": "American phone number",
+      "mainCategory": "AlphaNumeric",
+      "name": "US_PHONE",
+      "label": "US Phone",
+      "filter": null,
+      "validator": {
+        "patternString": "^(?:(?:(?:\\+|00)?1\\s*(?:[.-]\\s*)?)?(?:\\(\\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\\s*\\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\\s*(?:[.-]\\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\\s*(?:[.-]\\s*)?([0-9]{4})(?:\\s*(?:#|x\\.?|ext\\.?|extension)\\s*(\\d+))?$",
+        "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.USPhoneNumberValidator"
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa645e",
+      "description": "French Insee code of cities with Corsica and colonies",
+      "mainCategory": "AlphaNumeric",
+      "name": "FR_CODE_COMMUNE_INSEE",
+      "label": "FR Insee Code",
+      "filter": null,
+      "validator": {
+        "patternString": "^(F-|FRA?(-| ))?((2[A|B])|[0-9]{2})[0-9]{3}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6460",
+      "description": "IBAN",
+      "mainCategory": "AlphaNumeric",
+      "name": "IBAN",
+      "label": "IBAN",
+      "filter": null,
+      "validator": {
+        "patternString": "^[a-zA-Z]{2}[0-9]{2}\\ ?([a-zA-Z0-9]{4}\\ ?){2,6}([a-zA-Z0-9]{4}\\ ?|[a-zA-Z0-9])?[a-zA-Z0-9]{0,2}$",
+        "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.IBANValidator"
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6462",
+      "description": "Latitude and longitude coordinates separated by a comma in the form: N 0:59:59.99,E 0:59:59.99",
+      "mainCategory": "AlphaNumeric",
+      "name": "GEO_COORDINATES_DEG",
+      "label": "Geographic Coordinates (degree)",
+      "filter": null,
+      "validator": {
+        "patternString": "^[NS] \\d{1,}(\\:[0-5]\\d){2}.{0,1}\\d{0,},[EW] \\d{1,}(\\:[0-5]\\d){2}.{0,1}\\d{0,}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6464",
+      "description": "DATA URL",
+      "mainCategory": "AlphaNumeric",
+      "name": "DATA_URL",
+      "label": "Data URL",
+      "filter": null,
+      "validator": {
+        "patternString": "^(?:data)\\:([a-z]+\\/[a-z]+)?(;charset=([\\w-])*)?(;base64)?,([\\w\\!\\$\\&\\'\\,\\(\\)\\*\\+\\,\\;\\=\\-\\.\\_\\~\\:\\@\\/\\?\\%\\s]+)$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6466",
+      "description": "IPv4 address",
+      "mainCategory": "Numeric",
+      "name": "IPv4_ADDRESS",
+      "label": "IPv4 Address",
+      "filter": null,
+      "validator": {
+        "patternString": "^([01]?[\\d][\\d]?|2[0-4][\\d]|25[0-5])\\.([01]?[\\d][\\d]?|2[0-4][\\d]|25[0-5])\\.([01]?[\\d][\\d]?|2[0-4][\\d]|25[0-5])\\.([01]?[\\d][\\d]?|2[0-4][\\d]|25[0-5])$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6468",
+      "description": "Amount of money in French format",
+      "mainCategory": "AlphaNumeric",
+      "name": "FR_MONEY_AMOUNT",
+      "label": "Money Amount (FR)",
+      "filter": null,
+      "validator": {
+        "patternString": "^(([1-9]\\d{0,2}( \\d{3})*)|([1-9]\\d*)|0)((,\\d{2} | (k|M|G|T))?| )(\\$( (US|CA))?|\\u00A3|\\u20AC|\\u00A5)$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa646a",
+      "description": "Month English abbreviation",
+      "mainCategory": "Alpha",
+      "name": "EN_MONTH_ABBREV",
+      "label": "EN Month Abbrev",
+      "filter": null,
+      "validator": {
+        "patternString": "^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa646c",
+      "description": "French phone number",
+      "mainCategory": "Numeric",
+      "name": "FR_PHONE",
+      "label": "FR Phone",
+      "filter": null,
+      "validator": {
+        "patternString": "^(0033 ?|\\+33 ?|0)[1-9]([-. ]?[0-9]{2}){4}$",
+        "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.FRPhoneNumberValidator"
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa646e",
+      "description": "Google Maps style GPS Decimal format",
+      "mainCategory": "AlphaNumeric",
+      "name": "GEO_COORDINATES",
+      "label": "Geographic Coordinates",
+      "filter": null,
+      "validator": {
+        "patternString": "^(\\d{1,3}[\\.]\\d*)[, ]+-?(\\d{1,3}[\\.]\\d*)$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6470",
+      "description": "US states",
+      "mainCategory": "Alpha",
+      "name": "US_STATE",
+      "label": "US State",
+      "filter": null,
+      "validator": {
+        "patternString": "^(A(la(bama|ska)|rizona|rkansas)|C(alifornia|o(lorado|nnecticut))|Delaware|Florida|Georgia|Hawaii|I(daho|llinois|ndiana|owa)|K(ansas|entucky)|Louisiana|M(a(ine|ryland|ssachusetts)|i(chigan|nnesota|ss(issippi|ouri))|ontana)|N(ebraska|evada|ew\\s(Hampshire|Jersey|Mexico|York)|orth\\s(Carolina|Dakota))|O(hio|klahoma|regon)|Pennsylvania|Rhode\\sIsland|South\\s(Carolina|Dakota)|Te(nnessee|xas)|Utah|V(ermont|irginia)|W(ashington|est\\sVirginia|isconsin|yoming))$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6472",
+      "description": "FILE URL",
+      "mainCategory": "AlphaNumeric",
+      "name": "FILE_URL",
+      "label": "File URL",
+      "filter": null,
+      "validator": {
+        "patternString": "^(?:file)\\:(?:\\/){2,3}((?:[a-zA-Z0-9\\-\\._]+(?:[a-zA-Z0-9\\-\\.\\:\\|_]+)+)|localhost)\\/([a-zA-Z0-9\\-\\.\\/\\+\\&\\%\\$_\\|\\:]*)?$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6474",
+      "description": "US state code",
+      "mainCategory": "Alpha",
+      "name": "US_STATE_CODE",
+      "label": "US State Code",
+      "filter": null,
+      "validator": {
+        "patternString": "^(A[KLRZ]|C[AOT]|DE|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6476",
+      "description": "Color hexadecimal code",
+      "mainCategory": "AlphaNumeric",
+      "name": "COLOR_HEX_CODE",
+      "label": "Color Hex Code",
+      "filter": null,
+      "validator": {
+        "patternString": "^\\#[A-Fa-f0-9]{3}([A-Fa-f0-9]{3})?$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6478",
+      "description": "French VAT number",
+      "mainCategory": "AlphaNumeric",
+      "name": "FR_VAT_NUMBER",
+      "label": "FR VAT Number",
+      "filter": null,
+      "validator": {
+        "patternString": "^(FR){0,1}[0-9A-Z]{2}\\ [0-9]{9}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa647a",
+      "description": "HDFS URL",
+      "mainCategory": "AlphaNumeric",
+      "name": "HDFS_URL",
+      "label": "HDFS URL",
+      "filter": null,
+      "validator": {
+        "patternString": "^(?:hdfs)\\:\\/\\/((?:[a-zA-Z0-9\\-\\._]+(?:\\.[a-zA-Z0-9\\-\\._]+)+)|localhost)\\/([a-zA-Z0-9\\-\\.\\/\\+\\&\\%\\$_\\\\]*)?([\\d\\w\\.\\/\\%\\+\\-\\=\\&\\#\\~]*)$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa647c",
+      "description": "German postal code",
+      "mainCategory": "Numeric",
+      "name": "DE_POSTAL_CODE",
+      "label": "DE Postal Code",
+      "filter": null,
+      "validator": {
+        "patternString": "^(?!01000|99999)(0[1-9]\\d{3}|[1-9]\\d{4})$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa647e",
+      "description": "UK phone number",
+      "mainCategory": "Numeric",
+      "name": "UK_PHONE",
+      "label": "UK Phone",
+      "filter": null,
+      "validator": {
+        "patternString": "^(\\+44[[:space:]]?7[[:digit:]]{3}|\\(?07[[:digit:]]{3}\\)?)[[:space:]]?[[:digit:]]{3}[[:space:]]?[[:digit:]]{3}$",
+        "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.UKPhoneNumberValidator"
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6480",
+      "description": "Belgium postal code",
+      "mainCategory": "AlphaNumeric",
+      "name": "BE_POSTAL_CODE",
+      "label": "BE Postal Code",
+      "filter": null,
+      "validator": {
+        "patternString": "^(F-[0-9]{4,5}|B-[0-9]{4})$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6482",
+      "description": "Austria VAT number",
+      "mainCategory": "AlphaNumeric",
+      "name": "AT_VAT_NUMBER",
+      "label": "AT VAT Number",
+      "filter": null,
+      "validator": {
+        "patternString": "^AT[0-9]{8}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6484",
+      "description": "Stock Exchange Daily Official List",
+      "mainCategory": "AlphaNumeric",
+      "name": "SEDOL",
+      "label": "SEDOL",
+      "filter": null,
+      "validator": {
+        "patternString": "^(?<Sedol>[B-Db-dF-Hf-hJ-Nj-nP-Tp-tV-Xv-xYyZz\\d]{6}\\d)$",
+        "subValidatorClassName": "org.talend.dataquality.semantic.validator.impl.SedolValidator"
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6486",
+      "description": "Passport number",
+      "mainCategory": "AlphaNumeric",
+      "name": "PASSPORT",
+      "label": "Passport",
+      "filter": null,
+      "validator": {
+        "patternString": "^[A-Z0-9<]{9}[0-9]{1}[A-Z]{3}[0-9]{7}[A-Z]{1}[0-9]{7}[A-Z0-9<]{14}[0-9]{2}$",
+        "subValidatorClassName": null
+      }
+    },
+    {
+      "id": "583edc44ec06957a34fa6488",
+      "description": "US postal code",
+      "mainCategory": "Numeric",
+      "name": "US_POSTAL_CODE",
+      "label": "US Postal Code",
+      "filter": null,
+      "validator": {
+        "patternString": "^[0-9]{5}(-[0-9]{4})?$",
+        "subValidatorClassName": null
+      }
+    }
+  ]
+}
