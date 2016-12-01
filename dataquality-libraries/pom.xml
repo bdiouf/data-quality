@@ -22,7 +22,7 @@
 		<java.version>1.7</java.version>
 		<junit.version>4.12</junit.version>
 
-		<org.talend.daikon.version>0.12.0</org.talend.daikon.version>
+		<org.talend.daikon.version>0.14.0</org.talend.daikon.version>
 
 		<dataquality.libraries.snapshot.version>1.5.5-SNAPSHOT</dataquality.libraries.snapshot.version>
 		<dataquality.libraries.released.version>1.5.4</dataquality.libraries.released.version>
@@ -76,6 +76,10 @@
 					<exclusion>
 						<groupId>com.fasterxml.jackson.core</groupId>
 						<artifactId>jackson-annotations</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.fasterxml.jackson.core</groupId>
+						<artifactId>jackson-databind</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>

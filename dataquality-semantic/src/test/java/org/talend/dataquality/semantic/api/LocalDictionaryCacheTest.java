@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.talend.dataquality.semantic.classifier.SemanticCategoryEnum;
+import org.talend.dataquality.semantic.model.DQCategory;
 
 public class LocalDictionaryCacheTest {
 
@@ -119,6 +120,12 @@ public class LocalDictionaryCacheTest {
     }
 
     public static void main(String[] args) {
+
+        CategoryRegistryManager.setLocalRegistryPath(System.getProperty("java.io.tmpdir") + "/org.talend.dataquality.semantic/");
+
+        for (DQCategory cat : CategoryRegistryManager.getInstance().listCategories()) {
+            System.out.println(cat);
+        }
 
         LocalDictionaryCache dict = CategoryRegistryManager.getInstance().getDictionaryCache();
         try {
