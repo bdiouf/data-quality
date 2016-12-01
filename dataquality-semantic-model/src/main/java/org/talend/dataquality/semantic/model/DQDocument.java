@@ -12,10 +12,9 @@
 // ============================================================================
 package org.talend.dataquality.semantic.model;
 
-import java.io.Serializable;
 import java.util.Set;
 
-public class DQDocument implements Serializable {
+public class DQDocument {
 
     private String id;
 

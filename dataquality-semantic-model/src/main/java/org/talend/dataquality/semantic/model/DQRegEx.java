@@ -12,9 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.semantic.model;
 
-import java.io.Serializable;
-
-public class DQRegEx implements Serializable {
+public class DQRegEx {
 
     private String mainCategory;
 
