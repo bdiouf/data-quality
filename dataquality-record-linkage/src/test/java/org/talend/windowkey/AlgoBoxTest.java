@@ -235,13 +235,13 @@ public class AlgoBoxTest {
     @Test
     public void testNGramKey() {
         assertEquals(null, AlgoBox.nGramKey(null));
-        assertEquals("esstte", AlgoBox.nGramKey(TEST_STR));
-        assertEquals("essttett", AlgoBox.nGramKey("Test\ntest"));
-        assertEquals("essttett", AlgoBox.nGramKey("Test\ttest"));
-        assertEquals("122aabbcesstt1tett", AlgoBox.nGramKey("Test test12abc"));
+        assertEquals("esstte", AlgoBox.nGramKey(TEST_STR)); //$NON-NLS-1$
+        assertEquals("essttett", AlgoBox.nGramKey("Test\ntest")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals("essttett", AlgoBox.nGramKey("Test\ttest")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals("122aabbcesstt1tett", AlgoBox.nGramKey("Test test12abc")); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(BLANK_STR, AlgoBox.nGramKey(BLANK_STR));
         assertEquals(BLANK_STR, AlgoBox.nGramKey(SPACE_STR));
-        assertEquals("llnuul", AlgoBox.nGramKey(NULL_STR));
+        assertEquals("llnuul", AlgoBox.nGramKey(NULL_STR)); //$NON-NLS-1$
         assertEquals(BLANK_STR, AlgoBox.nGramKey(QUO_STR));
     }
 
@@ -255,6 +255,7 @@ public class AlgoBoxTest {
         assertEquals(BLANK_STR, AlgoBox.pick_Char(BLANK_STR, "test")); //$NON-NLS-1$
         assertEquals(BLANK_STR, AlgoBox.pick_Char(null, "test")); //$NON-NLS-1$
         assertEquals(BLANK_STR, AlgoBox.pick_Char(TEST_STR, "test")); //$NON-NLS-1$
+        assertEquals("bcdf", AlgoBox.pick_Char("abcdef", "1;2-4;5")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         assertEquals("etest", AlgoBox.pick_Char(TEST_STR, "1-2;40;0-5")); //$NON-NLS-1$  //$NON-NLS-2$
         assertEquals("e", AlgoBox.pick_Char("Test test", "1-2")); //$NON-NLS-1$  //$NON-NLS-2$  //$NON-NLS-3$
         assertEquals(BLANK_STR, AlgoBox.pick_Char(SPACE_STR, BLANK_STR));
@@ -328,6 +329,7 @@ public class AlgoBoxTest {
         assertEquals(BLANK_STR, AlgoBox.subStr(null, TEST_STR));
         assertEquals(BLANK_STR, AlgoBox.subStr(TEST_STR, SPACE_STR));
         assertEquals("est", AlgoBox.subStr(TEST_STR, "1;100")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals("cd", AlgoBox.subStr("abcdef", "2;4")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     /**
