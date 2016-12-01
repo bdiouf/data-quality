@@ -37,12 +37,12 @@ public enum TokenizedResolutionMethod {
 
     /**
      * 
-     * get type of the value which in this Enum
+     * get type of the value which in this Enum. note: this method can be used by components, so make it public
      * 
      * @param value
      * @return null can not find this index
      */
-    private static TokenizedResolutionMethod getTypeByValue(String value) {
+    public static TokenizedResolutionMethod getTypeByValue(String value) {
         for (TokenizedResolutionMethod element : TokenizedResolutionMethod.values()) {
             if (element.getComponentValue().equalsIgnoreCase(value)) {
                 return element;
