@@ -25,10 +25,11 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.StringField;
-import org.apache.lucene.index.*;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Bits;
 import org.apache.lucene.util.Version;
 import org.talend.dataquality.semantic.index.DictionarySearcher;
 import org.talend.dataquality.semantic.model.CategoryType;
@@ -144,19 +145,11 @@ public class DictionaryUtils {
     }
 
     static void rewriteIndex(Directory srcDir, File destFolder) throws IOException {
-        final DirectoryReader reader = DirectoryReader.open(srcDir);
         final FSDirectory destDir = FSDirectory.open(destFolder);
         final IndexWriterConfig iwc = new IndexWriterConfig(Version.LATEST, new StandardAnalyzer(CharArraySet.EMPTY_SET));
         final IndexWriter writer = new IndexWriter(destDir, iwc);
 
-        final Bits liveDocs = MultiFields.getLiveDocs(reader);
-        for (int i = 0; i < reader.maxDoc(); i++) {
-            if (liveDocs != null && !liveDocs.get(i)) {
-                continue;
-            }
-            final Document doc = reader.document(i);
-            writer.addDocument(doc);
-        }
+        writer.addIndexes(srcDir);
         writer.commit();
         writer.close();
         destDir.close();

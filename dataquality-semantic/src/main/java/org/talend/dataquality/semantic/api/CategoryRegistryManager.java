@@ -229,11 +229,13 @@ public class CategoryRegistryManager {
     }
 
     private void loadBaseIndex(final File destSubFolder, String sourceSubFolder) throws IOException, URISyntaxException {
-        if (!destSubFolder.exists()) {
-            synchronized (indexExtractionLock) {
+        synchronized (indexExtractionLock) {
+            if (!destSubFolder.exists()) {
                 final URI indexSourceURI = this.getClass().getResource("/" + sourceSubFolder).toURI();
-                Directory srcDir = ClassPathDirectory.open(indexSourceURI);
-                DictionaryUtils.rewriteIndex(srcDir, destSubFolder);
+                final Directory srcDir = ClassPathDirectory.open(indexSourceURI);
+                if (usingLocalCategoryRegistry && !destSubFolder.exists()) {
+                    DictionaryUtils.rewriteIndex(srcDir, destSubFolder);
+                }
             }
         }
     }
