@@ -62,10 +62,10 @@ public class DictionaryUtils {
      * generate a document.
      *
      * @param word
-     * @param synonyms
+     * @param values
      * @return
      */
-    public static Document generateDocument(String docId, String catId, String word, Set<String> synonyms) {
+    public static Document generateDocument(String docId, String catId, String word, Set<String> values) {
         String tempWord = word.trim();
         Document doc = new Document();
 
@@ -75,15 +75,15 @@ public class DictionaryUtils {
         doc.add(catidTermField);
         Field wordTermField = new StringField(DictionarySearcher.F_WORD, tempWord, Field.Store.YES);
         doc.add(wordTermField);
-        for (String syn : synonyms) {
-            if (syn != null) {
-                syn = syn.trim();
-                if (syn.length() > 0 && !syn.equals(tempWord)) {
-                    List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(syn);
+        for (String value : values) {
+            if (value != null) {
+                value = value.trim();
+                if (value.length() > 0 && !value.equals(tempWord)) {
+                    List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(value);
                     doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(tokens, ' '), Field.Store.NO));
-                    doc.add(new Field(DictionarySearcher.F_RAW, syn, FIELD_TYPE_RAW_VALUE));
+                    doc.add(new Field(DictionarySearcher.F_RAW, value, FIELD_TYPE_RAW_VALUE));
                     if (tokens.size() > 1) {
-                        doc.add(new Field(DictionarySearcher.F_SYN, syn, FIELD_TYPE_SYN));
+                        doc.add(new Field(DictionarySearcher.F_SYN, value, FIELD_TYPE_SYN));
                     }
                 }
             }
@@ -129,7 +129,7 @@ public class DictionaryUtils {
         for (IndexableField f : synTermFields) {
             synSet.add(f.stringValue());
         }
-        dqCat.setSynterm(synSet);
+        dqCat.setValues(synSet);
         return dqCat;
     }
 

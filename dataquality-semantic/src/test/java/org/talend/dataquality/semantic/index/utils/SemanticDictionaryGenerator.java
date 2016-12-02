@@ -49,17 +49,17 @@ public class SemanticDictionaryGenerator {
             csvFormat = csvFormat.withFirstRecordAsHeader();
         }
 
-        // collect synonyms
+        // collect values
         Iterable<CSVRecord> records = csvFormat.parse(reader);
-        List<Set<String>> synonymSetList = getDictinaryForCategory(records, spec);
+        List<Set<String>> valueSetList = getDictinaryForCategory(records, spec);
 
         int countCategory = 0;
-        for (Set<String> synonymSet : synonymSetList) {
-            writer.addDocument(generateDocument(spec.getCategoryName(), synonymSet));
+        for (Set<String> valueSet : valueSetList) {
+            writer.addDocument(generateDocument(spec.getCategoryName(), valueSet));
             countCategory++;
         }
         System.out.println("Total document count: " + countCategory + "\nExamples:");
-        Iterator<Set<String>> it = synonymSetList.iterator();
+        Iterator<Set<String>> it = valueSetList.iterator();
         int count = 0;
         while (it.hasNext() && count < 10) {
             System.out.println("- " + it.next());
@@ -94,9 +94,9 @@ public class SemanticDictionaryGenerator {
                     if (col < record.size()) { // sometimes, the value of last column can be missing.
                         final String colValue = record.get(col);
                         final String[] splits = SPLITTER.split(colValue);
-                        for (String syn : splits) {
-                            if (syn != null && syn.trim().length() > 0) {
-                                allInputColumns.add(syn.trim());
+                        for (String value : splits) {
+                            if (value != null && value.trim().length() > 0) {
+                                allInputColumns.add(value.trim());
                             }
                         }
                     }
@@ -107,25 +107,25 @@ public class SemanticDictionaryGenerator {
                 allInputColumns = new ArrayList<String>(optimizer.optimize(allInputColumns.toArray(new String[0])));
             }
 
-            Set<String> synonymsInRecord = new HashSet<String>();
-            for (String syn : allInputColumns) {
-                if (STOP_WORDS.contains(syn.toLowerCase()) //
+            Set<String> valuesInRecord = new HashSet<String>();
+            for (String value : allInputColumns) {
+                if (STOP_WORDS.contains(value.toLowerCase()) //
                         && (DictionaryGenerationSpec.COMPANY.equals(spec) //
                                 || DictionaryGenerationSpec.FIRST_NAME.equals(spec) //
                                 || DictionaryGenerationSpec.LAST_NAME.equals(spec) //
                         )) {
-                    System.out.println("[" + syn + "] is exclued from the category [" + spec.getCategoryName() + "]");
+                    System.out.println("[" + value + "] is exclued from the category [" + spec.getCategoryName() + "]");
                     continue;
                 }
-                if (!existingValuesOfCategory.contains(syn.toLowerCase())) {
-                    synonymsInRecord.add(syn);
-                    existingValuesOfCategory.add(syn.toLowerCase());
+                if (!existingValuesOfCategory.contains(value.toLowerCase())) {
+                    valuesInRecord.add(value);
+                    existingValuesOfCategory.add(value.toLowerCase());
                 } else {
                     ignoredCount++;
                 }
             }
-            if (synonymsInRecord.size() > 0) { // at least one synonym
-                results.add(synonymsInRecord);
+            if (valuesInRecord.size() > 0) { // at least one synonym
+                results.add(valuesInRecord);
             }
         }
         System.out.println("Ignored value count: " + ignoredCount);
@@ -137,32 +137,32 @@ public class SemanticDictionaryGenerator {
      * generate a document.
      *
      * @param word
-     * @param synonyms
+     * @param values
      * @return
      */
-    Document generateDocument(String word, Set<String> synonyms) {
+    Document generateDocument(String word, Set<String> values) {
         String tempWord = word.trim();
         Document doc = new Document();
 
         Field wordTermField = new StringField(DictionarySearcher.F_WORD, tempWord, Field.Store.YES);
         doc.add(wordTermField);
-        for (String syn : synonyms) {
-            if (syn != null) {
-                syn = syn.trim();
+        for (String value : values) {
+            if (value != null) {
+                value = value.trim();
                 if ("CITY".equals(tempWord)) { // ignore city abbreviations
-                    if (syn.length() == 3 && syn.charAt(0) >= 'A' && syn.charAt(0) <= 'Z'//
-                            && syn.charAt(1) >= 'A' && syn.charAt(1) <= 'Z'//
-                            && syn.charAt(2) >= 'A' && syn.charAt(2) <= 'Z') {
+                    if (value.length() == 3 && value.charAt(0) >= 'A' && value.charAt(0) <= 'Z'//
+                            && value.charAt(1) >= 'A' && value.charAt(1) <= 'Z'//
+                            && value.charAt(2) >= 'A' && value.charAt(2) <= 'Z') {
                         continue;
                     }
                 }
 
-                if (syn.length() > 0 && !syn.equals(tempWord)) {
-                    List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(syn);
+                if (value.length() > 0 && !value.equals(tempWord)) {
+                    List<String> tokens = DictionarySearcher.getTokensFromAnalyzer(value);
                     doc.add(new StringField(DictionarySearcher.F_SYNTERM, StringUtils.join(tokens, ' '), Field.Store.NO));
-                    doc.add(new Field(DictionarySearcher.F_RAW, syn, DictionaryUtils.FIELD_TYPE_RAW_VALUE));
+                    doc.add(new Field(DictionarySearcher.F_RAW, value, DictionaryUtils.FIELD_TYPE_RAW_VALUE));
                     if (tokens.size() > 1) {
-                        doc.add(new Field(DictionarySearcher.F_SYN, syn, DictionaryUtils.FIELD_TYPE_SYN));
+                        doc.add(new Field(DictionarySearcher.F_SYN, value, DictionaryUtils.FIELD_TYPE_SYN));
                     }
                 }
             }

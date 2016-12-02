@@ -18,7 +18,7 @@ public class DQDocument {
 
     private String id;
 
-    private Set<String> synterm;
+    private Set<String> values;
 
     private DQCategory category;
 
@@ -32,12 +32,12 @@ public class DQDocument {
         this.id = id;
     }
 
-    public Set<String> getSynterm() {
-        return synterm;
+    public Set<String> getValues() {
+        return values;
     }
 
-    public void setSynterm(Set<String> synterm) {
-        this.synterm = synterm;
+    public void setValues(Set<String> values) {
+        this.values = values;
     }
 
     public DQCategory getCategory() {
@@ -58,7 +58,7 @@ public class DQDocument {
 
     @Override
     public String toString() {
-        return "DQDocument{" + "id='" + id + '\'' + ", category=" + category.getName() + ", synterm='" + synterm + '\''
+        return "DQDocument{" + "id='" + id + '\'' + ", categoryName=" + category.getName() + ", values='" + values + '\''
                 + ", creator='" + creator + '\'' + '}';
     }
 }
