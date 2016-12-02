@@ -1,3 +1,5 @@
+V3.2.5 2016-12-02
+
 V3.2.4 2016-10-20
 	TDQ-12143 make classes Serializable to support tSynonymSearch on spark
 

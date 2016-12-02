@@ -1,3 +1,5 @@
+V2.3.5 2016-12-02
+
 V2.3.4 2016-10-20
 	- TDQ-12269 fix an NPE due to uninitialized Random generator in data masking functions
 

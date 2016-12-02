@@ -8,7 +8,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>dataquality-libraries</artifactId>
-	<version>1.5.5-SNAPSHOT</version>
+	<version>1.5.5</version>
 	<packaging>pom</packaging>
 	<name>dataquality-libraries</name>
 	<description>Parent pom aggregating other library projects, devops tools</description>
@@ -24,23 +24,23 @@
 
 		<org.talend.daikon.version>0.14.0</org.talend.daikon.version>
 
-		<dataquality.libraries.snapshot.version>1.5.5-SNAPSHOT</dataquality.libraries.snapshot.version>
-		<dataquality.libraries.released.version>1.5.4</dataquality.libraries.released.version>
+		<dataquality.libraries.snapshot.version>1.5.6-SNAPSHOT</dataquality.libraries.snapshot.version>
+		<dataquality.libraries.released.version>1.5.5</dataquality.libraries.released.version>
 
-		<dataquality.record.linkage.snapshot.version>3.2.5-SNAPSHOT</dataquality.record.linkage.snapshot.version>
-		<dataquality.record.linkage.released.version>3.2.4</dataquality.record.linkage.released.version>
+		<dataquality.record.linkage.snapshot.version>3.2.6-SNAPSHOT</dataquality.record.linkage.snapshot.version>
+		<dataquality.record.linkage.released.version>3.2.5</dataquality.record.linkage.released.version>
 
-		<dataquality.sampling.snapshot.version>2.3.5-SNAPSHOT</dataquality.sampling.snapshot.version>
-		<dataquality.sampling.released.version>2.3.4</dataquality.sampling.released.version>
+		<dataquality.sampling.snapshot.version>2.3.6-SNAPSHOT</dataquality.sampling.snapshot.version>
+		<dataquality.sampling.released.version>2.3.5</dataquality.sampling.released.version>
 
-		<dataquality.standardization.snapshot.version>3.2.5-SNAPSHOT</dataquality.standardization.snapshot.version>
-		<dataquality.standardization.released.version>3.2.4</dataquality.standardization.released.version>
+		<dataquality.standardization.snapshot.version>3.2.6-SNAPSHOT</dataquality.standardization.snapshot.version>
+		<dataquality.standardization.released.version>3.2.5</dataquality.standardization.released.version>
 
-		<dataquality.wordnet.snapshot.version>1.1.5-SNAPSHOT</dataquality.wordnet.snapshot.version>
-		<dataquality.wordnet.released.version>1.1.4</dataquality.wordnet.released.version>
+		<dataquality.wordnet.snapshot.version>1.1.6-SNAPSHOT</dataquality.wordnet.snapshot.version>
+		<dataquality.wordnet.released.version>1.1.5</dataquality.wordnet.released.version>
 
-		<dataquality.email.snapshot.version>1.0.3-SNAPSHOT</dataquality.email.snapshot.version>
-		<dataquality.email.released.version>1.0.2</dataquality.email.released.version>
+		<dataquality.email.snapshot.version>1.0.6-SNAPSHOT</dataquality.email.snapshot.version>
+		<dataquality.email.released.version>1.0.5</dataquality.email.released.version>
 	</properties>
 
 	<modules>

@@ -1,3 +1,5 @@
+V1.0.5 2016-12-02
+
 V1.0.2 2016-10-20
 	(no change in this version)
 

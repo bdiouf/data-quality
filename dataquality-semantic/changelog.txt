@@ -1,3 +1,5 @@
+V1.5.5 2016-12-02
+
 V1.5.4 2016-10-20
 	- TDQ-12551 properly reopen local index in SemanticAnalyzer
 	- TDQ-12552 provide a method to config the path for local index extraction
