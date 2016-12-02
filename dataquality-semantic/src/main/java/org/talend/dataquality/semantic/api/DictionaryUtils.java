@@ -121,16 +121,26 @@ public class DictionaryUtils {
     }
 
     public static DQDocument dictionaryEntryFromDocument(Document doc, String knownCategoryName) {
-        DQDocument dqCat = new DQDocument();
-        // dqCat.setId(doc.getField(DictionarySearcher.F_ID).stringValue());
-        dqCat.setCategory(CategoryRegistryManager.getInstance().getCategoryMetadataByName(knownCategoryName));
-        IndexableField[] synTermFields = doc.getFields(DictionarySearcher.F_SYN);
+        DQDocument dqDoc = new DQDocument();
+        DQCategory dqCat = null;
+        if (knownCategoryName != null) {
+            dqCat = CategoryRegistryManager.getInstance().getCategoryMetadataByName(knownCategoryName);
+        }
+        String catId = doc.getField(DictionarySearcher.F_CATID).stringValue();
+        dqCat.setId(catId);
+        String catName = doc.getField(DictionarySearcher.F_WORD).stringValue();
+        dqCat.setName(catName);
+        dqDoc.setCategory(dqCat);
+
+        String docId = doc.getField(DictionarySearcher.F_ID).stringValue();
+        dqDoc.setId(docId);
+        IndexableField[] synTermFields = doc.getFields(DictionarySearcher.F_RAW);
         Set<String> synSet = new HashSet<String>();
         for (IndexableField f : synTermFields) {
             synSet.add(f.stringValue());
         }
-        dqCat.setValues(synSet);
-        return dqCat;
+        dqDoc.setValues(synSet);
+        return dqDoc;
     }
 
     static void rewriteIndex(Directory srcDir, File destFolder) throws IOException {
