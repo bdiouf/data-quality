@@ -1,4 +1,13 @@
 V1.5.5 2016-12-02
+	- TDQ-12720 create API to access categories locally
+	- TDQ-12761 More permissive regex for IBAN
+	- TDQ-12767 Rename coordinate category
+	- TDQ-12142 handle diacritical marks in museums dictionary source file
+	- TDQ-12241 Architecture modification for Spark dependence in data-quality-ee
+	- TDQ-12241 serializable index object for dictionary broadcasting
+	- TDQ-12142 consider user category when sorting categories with the same percentage	
+	- TDQ-12915 fix UK_POSTAL_CODE category detection
+	- TDQ-12845 provide auto-completion API with local semantic registry
 
 V1.5.4 2016-10-20
 	- TDQ-12551 properly reopen local index in SemanticAnalyzer

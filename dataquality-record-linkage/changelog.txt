@@ -1,4 +1,6 @@
 V3.2.5 2016-12-02
+	- T-Swoosh improvements
+	- Tokenization improvements
 
 V3.2.4 2016-10-20
 	- TDQ-12693 fix the wrong function name in the MatchRule/match analysis function list
