@@ -12,9 +12,6 @@
 // ============================================================================
 package org.talend.dataquality.datamasking.functions;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,6 +41,7 @@ public class DateVarianceTest {
         dv = new DateVariance();
     }
 
+    @Test
     public void testGoodCase1() throws ParseException {
         dv.parse("31", false, rand); //$NON-NLS-1$
         for (int index = 0; index < 20; index++) {
@@ -53,6 +51,7 @@ public class DateVarianceTest {
         }
     }
 
+    @Test
     public void testGoodCase2() throws ParseException {
         dv.parse("-31", false, rand); //$NON-NLS-1$
         for (int index = 0; index < 20; index++) {
@@ -62,6 +61,7 @@ public class DateVarianceTest {
         }
     }
 
+    @Test
     public void testGoodCase3() throws ParseException {
         dv.parse("1", false, rand); //$NON-NLS-1$
         for (int index = 0; index < 20; index++) {
@@ -81,6 +81,7 @@ public class DateVarianceTest {
         }
     }
 
+    @Test
     public void testDummyGood() throws ParseException {
         dv.parse("0", false, rand); //$NON-NLS-1$
         for (int index = 0; index < 20; index++) {
@@ -91,12 +92,22 @@ public class DateVarianceTest {
     }
 
     @Test
+    public void testNullParameter() throws ParseException {
+        dv.parse(null, false, rand); // $NON-NLS-1$
+        for (int index = 0; index < 20; index++) {
+            String output = sdf.format(dv.generateMaskedRow(input));
+            boolean result = checkResult(output, "29-01-1992", "31-03-1992"); //$NON-NLS-1$ //$NON-NLS-2$
+            Assert.assertTrue("result date should between 29-01-1992 and 31-03-1992 but it is " + output, result); //$NON-NLS-1$
+        }
+    }
+
+    @Test
     public void testBad() throws ParseException {
-        try {
-            dv.parse("j", false, rand); //$NON-NLS-1$
-            fail("should get exception with input j "); //$NON-NLS-1$
-        } catch (Exception e) {
-            assertTrue("expect illegal argument exception ", e instanceof IllegalArgumentException); //$NON-NLS-1$
+        dv.parse("j", false, rand); //$NON-NLS-1$
+        for (int index = 0; index < 20; index++) {
+            String output = sdf.format(dv.generateMaskedRow(input));
+            boolean result = checkResult(output, "29-01-1992", "31-03-1992"); //$NON-NLS-1$ //$NON-NLS-2$
+            Assert.assertTrue("result date should between 29-01-1992 and 31-03-1992 but it is " + output, result); //$NON-NLS-1$
         }
     }
 

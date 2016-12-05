@@ -14,6 +14,8 @@ package org.talend.dataquality.datamasking.functions;
 
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 /**
  * created by jgonzalez on 19 juin 2015. This function will modify the input data by multiplying it by a number between
  * the parameter and its opposite.
@@ -22,6 +24,8 @@ import java.util.Random;
 public abstract class NumericVariance<T2> extends Function<T2> {
 
     private static final long serialVersionUID = -9042942041517353551L;
+
+    private static final Logger LOGGER = Logger.getLogger(NumericVariance.class);
 
     protected int rate = 0;
 
@@ -32,6 +36,8 @@ public abstract class NumericVariance<T2> extends Function<T2> {
         super.parse(extraParameter, keepNullValues, rand);
         if (CharactersOperationUtils.validParameters1Number(parameters))
             integerParam = Integer.parseInt(parameters[0]);
+        else
+            LOGGER.info("The parameter is ignored because it's not a positive integer");
         if (integerParam == 0) {
             integerParam = 10;
         } else if (integerParam < 0) {

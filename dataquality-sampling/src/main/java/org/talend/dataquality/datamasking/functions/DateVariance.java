@@ -15,6 +15,8 @@ package org.talend.dataquality.datamasking.functions;
 import java.util.Date;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 /**
  * created by jgonzalez on 18 juin 2015. This function will modify the input date by adding or retieving a number of
  * days lower than the parameter.
@@ -24,18 +26,20 @@ public class DateVariance extends Function<Date> {
 
     private static final long serialVersionUID = 7723968828358381315L;
 
+    private static final Logger LOGGER = Logger.getLogger(DateVariance.class);
+
     private static final Long nb_ms_per_day = 86400000L;
 
-    private int integerParam;
+    private int integerParam = 31;
 
     @Override
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
-        try {
+        if (CharactersOperationUtils.validParameters1Number(parameters))
             integerParam = Integer.parseInt(parameters[0]);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("The parameter " + parameters[0] + " is not an integer.");
-        }
+        else
+            LOGGER.info("The parameter is ignored because it's not a positive integer");
+
     }
 
     @Override

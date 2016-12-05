@@ -4,22 +4,22 @@ import java.util.Random;
 
 public class KeepFirstDigitsAndReplaceOtherDigits extends Function<String> {
 
-    private int integerParam;
+    private int integerParam = 0;
 
     @Override
     public void parse(String extraParameter, boolean keepNullValues, Random rand) {
         super.parse(extraParameter, keepNullValues, rand);
-        try {
+        if (CharactersOperationUtils.validParameters1Number(parameters))
             integerParam = Integer.parseInt(parameters[0]);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("The parameter " + parameters[0] + " is not an integer.");
-        }
+        else
+            throw new IllegalArgumentException("The parameter is not a positive integer");
+
     }
 
     @Override
     protected String doGenerateMaskedField(String str) {
         StringBuilder sb = new StringBuilder(EMPTY_STRING);
-        if (str != null && !EMPTY_STRING.equals(str) && integerParam > 0) {
+        if (str != null && !EMPTY_STRING.equals(str) && integerParam >= 0) {
             String s = str.trim();
             int totalDigit = 0;
             for (int i = 0; i < s.length(); ++i) {
