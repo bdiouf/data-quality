@@ -95,7 +95,7 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
         do {
             try {
                 line = in.readLine();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 line = e.getMessage();
                 continue;
             }
@@ -113,7 +113,7 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
             String pfx = line.substring(0, 3);
             try {
                 res = Integer.parseInt(pfx);
-            } catch (Exception ex) {
+            } catch (NumberFormatException ex) {
                 res = -1;
             }
         } while (in.ready());
@@ -303,7 +303,7 @@ public class CallbackMailServerCheckerImpl extends AbstractEmailChecker {
                 wtr.close();
                 skt.close();
                 return true;
-            } catch (Exception e) {
+            } catch (IOException e) {
                 // Do nothing but try next host
                 if (LOG.isDebugEnabled()) {
                     LOG.debug("Connection to " + mxList.get(mx) + " failed.", e); //$NON-NLS-1$ //$NON-NLS-2$
