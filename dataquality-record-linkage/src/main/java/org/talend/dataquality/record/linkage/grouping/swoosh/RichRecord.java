@@ -425,7 +425,22 @@ public class RichRecord extends Record {
                 }
                 this.MASTER = new DQAttribute<>(SwooshConstants.IS_MASTER, originRow.size(), true);
                 this.SCORE = new DQAttribute<>(SwooshConstants.SCORE2, originRow.size(), 1.0);
-                this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), "1.0");
+
+                //use the lowest value for group quality
+                String finalQuality = "1.0";
+                if (this.GRP_QUALITY != null && GRP_QUALITY.getValue() != null) {
+                    if (Double.compare(this.groupQuality, 0.0) > 0) {
+                        finalQuality = Double.parseDouble(GRP_QUALITY.getValue()) > groupQuality ? String.valueOf(groupQuality)
+                                : GRP_QUALITY.getValue();
+                    } else {
+                        finalQuality = GRP_QUALITY.getValue();
+                    }
+                } else if (Double.compare(this.groupQuality, 0.0) > 0) {
+                    finalQuality = String.valueOf(groupQuality);
+                }
+
+                this.GRP_QUALITY = new DQAttribute<>(SwooshConstants.GROUP_QUALITY, originRow.size(), finalQuality);
+
                 this.ATTRIBUTE_SCORE = new DQAttribute<>(SwooshConstants.ATTRIBUTE_SCORES, originRow.size(), StringUtils.EMPTY);
 
             }
@@ -442,9 +457,8 @@ public class RichRecord extends Record {
                 if (Double.compare(score, 0.0) > 0) {
                     SCORE.setValue(String.valueOf(score));
                 }
-                if (Double.compare(this.groupQuality, 0.0) > 0) {
-                    GRP_QUALITY.setValue(String.valueOf(groupQuality));
-                }
+                //for not master, grp quality=0
+                GRP_QUALITY.setValue("0.0");
                 if (ATTRIBUTE_SCORE != null) {
 
                     ATTRIBUTE_SCORE.setValue(getLabeledAttributeScores());
