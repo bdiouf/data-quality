@@ -45,7 +45,7 @@ public class DQCategory {
 
     private DQRegEx regEx;
 
-    private boolean completeness = false;
+    private Boolean completeness;
 
     public String getId() {
         return id;
@@ -151,11 +151,11 @@ public class DQCategory {
         this.description = description;
     }
 
-    public boolean isCompleteness() {
+    public Boolean getCompleteness() {
         return completeness;
     }
 
-    public void setCompleteness(boolean completeness) {
+    public void setCompleteness(Boolean completeness) {
         this.completeness = completeness;
     }
 

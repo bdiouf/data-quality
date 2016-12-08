@@ -21,10 +21,7 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.FieldType;
-import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexableField;
@@ -109,10 +106,11 @@ public class DictionaryUtils {
         Document doc = new Document();
         doc.add(new StringField(DictionaryConstants.ID, cat.getId(), Field.Store.YES));
         doc.add(new StringField(DictionaryConstants.NAME, cat.getName(), Field.Store.YES));
-        doc.add(new StringField(DictionaryConstants.LABEL, cat.getLabel(), Field.Store.YES));
+        doc.add(new TextField(DictionaryConstants.LABEL, cat.getLabel(), Field.Store.YES));
         doc.add(new StringField(DictionaryConstants.TYPE, cat.getType().name(), Field.Store.YES));
-        doc.add(new StringField(DictionaryConstants.COMPLETENESS, String.valueOf(cat.isCompleteness()), Field.Store.YES));
-        doc.add(new StringField(DictionaryConstants.DESCRIPTION, cat.getDescription(), Field.Store.YES));
+        doc.add(new StringField(DictionaryConstants.COMPLETENESS, String.valueOf(cat.getCompleteness().booleanValue()),
+                Field.Store.YES));
+        doc.add(new TextField(DictionaryConstants.DESCRIPTION, cat.getDescription(), Field.Store.YES));
         return doc;
     }
 

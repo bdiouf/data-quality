@@ -120,7 +120,7 @@ public class SemanticQualityAnalyzer extends QualityAnalyzer<ValueQualityStatist
             valueQuality.incrementValid();
             return;
         }
-        if (cat.isCompleteness()) {
+        if (cat.getCompleteness() != null && cat.getCompleteness().booleanValue()) {
             Set<String> catIds = new HashSet<String>();
             switch (cat.getType()) {
             case REGEX:
