@@ -156,13 +156,6 @@ public class DQCategory {
         this.description = description;
     }
 
-    /**
-     * @deprecated use {@link getCompleteness().booleanValue()} instead
-     */
-    public boolean isCompleteness() {
-        return completeness.booleanValue();
-    }
-
     public Boolean getCompleteness() {
         return completeness;
     }
