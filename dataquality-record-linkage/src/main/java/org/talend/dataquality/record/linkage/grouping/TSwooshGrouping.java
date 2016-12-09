@@ -251,9 +251,6 @@ public class TSwooshGrouping<TYPE> {
                 richRecord1.setMaster(false);
                 richRecord2.setMaster(false);
 
-                richRecord1.setConfidence(richRecord1.getScore());
-                richRecord2.setConfidence(richRecord2.getScore());
-
                 output(richRecord1);
                 output(richRecord2);
 
@@ -400,7 +397,7 @@ public class TSwooshGrouping<TYPE> {
 
         // add the not masters again
         List<Record> result = algorithm.getResult();
-        if (result.isEmpty()) {// no masters in the current block, TDQ-12851
+        if (result.isEmpty()) {//no masters in the current block, TDQ-12851
             for (RecordGenerator record : notMasterRecords) {
                 List<DQAttribute<?>> originalRow = record.getOriginalRow();
                 RichRecord createRecord = createRecord(originalRow, originalRow.get(indexGID2).getValue());
@@ -415,7 +412,7 @@ public class TSwooshGrouping<TYPE> {
                 int groupSize = list == null ? 0 : list.size();
                 restoreMasterData((RichRecord) master, indexGID2, groupSize);
                 addMembersIntoNewMaster(master, list, groupId);
-                // remove the record already handled.
+                //remove the record already handled.
                 groupRows.remove(groupId);
 
                 // use the new GID to fetch some members of old GID-- which belong to a temp master in first pass, but
@@ -424,11 +421,11 @@ public class TSwooshGrouping<TYPE> {
                 if (!StringUtils.equals(groupId, tempGid)) {
                     list = groupRows.get(tempGid);
                     addMembersIntoNewMaster(master, list, groupId);
-                    // remove the record already handled.
+                    //remove the record already handled.
                     groupRows.remove(tempGid);
                 }
             }
-            // Added TDQ-12851, only handle the lost records, but not the group
+            //Added TDQ-12851, only handle the lost records, but not the group
             if (!groupRows.isEmpty()) {
                 Iterator<String> iterator = groupRows.keySet().iterator();
                 while (iterator.hasNext()) {

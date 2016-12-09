@@ -82,6 +82,7 @@ public class MFBRecordMatcher extends AbstractRecordMatcher {
             }
             return MFB.NonMatchResult.wrap(result);
         }
+        record2.setConfidence(normalizedConfidence);
         return result;
     }
 
