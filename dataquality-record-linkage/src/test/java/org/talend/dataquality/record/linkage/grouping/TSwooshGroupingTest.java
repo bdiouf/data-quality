@@ -208,7 +208,7 @@ public class TSwooshGroupingTest {
                         && rr.getGroupQuality() == 0.8) {
                     zhaoszhaoMasterIsExist = true;
                 } else if ("hellohello".equals(rr.getAttributes().get(0).getValue()) && rr.getGrpSize() == 2
-                        && rr.getGroupQuality() == 1.0) {
+                        && rr.getGroupQuality() == 0.8333333333333334) {
                     hellohelloMasterIsExist = true;
                 }
             }

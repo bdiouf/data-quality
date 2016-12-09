@@ -146,9 +146,8 @@ public class DQMFBRecordMerger extends MFBRecordMerger {
         mergedRecord.setRecordSize(richRecord1.getRecordSize());
         mergedRecord.setOriginRow(originalRowList);
         // Set the group quality
-        double gQuality1 = richRecord1.getGroupQuality();
-        double gQuality2 = richRecord2.getGroupQuality();
-        double minQuality = Math.min(gQuality1, gQuality2);
+        double minQuality = Math.min(getGrpqualityMinValue(richRecord1), getGrpqualityMinValue(richRecord2));
+
         if (Double.compare(minQuality, 0.0) != 0) {
             mergedRecord.setGroupQuality(minQuality);
         }
@@ -161,5 +160,22 @@ public class DQMFBRecordMerger extends MFBRecordMerger {
             }
         }
         return mergedRecord;
+    }
+
+    private double getGrpqualityMinValue(RichRecord record1) {
+        double gQuality1 = record1.getGroupQuality();
+        if (record1.getGRP_QUALITY() != null && StringUtils.isNotBlank(record1.getGRP_QUALITY().getValue())) {
+            if (Double.compare(1.0, Double.parseDouble(record1.getGRP_QUALITY().getValue())) == 0) {
+                return gQuality1;
+            }
+            if (Double.compare(gQuality1, 0.0) > 0) {
+                gQuality1 = Double.parseDouble(record1.getGRP_QUALITY().getValue()) > gQuality1 ? gQuality1
+                        : Double.parseDouble(record1.getGRP_QUALITY().getValue());
+            } else {
+                gQuality1 = Double.parseDouble(record1.getGRP_QUALITY().getValue());
+            }
+        }
+        return gQuality1;
+
     }
 }

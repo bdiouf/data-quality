@@ -3156,7 +3156,7 @@ public class SwooshRecordGroupingTest {
             if (one.MASTER) {
                 if (one.customer_id == 8)
                     Assert.assertTrue(0.8 == one.GRP_QUALITY);
-                if (one.customer_id == 10)
+                if (one.customer_id == 11)
                     Assert.assertTrue(0.8333333333333334 == one.GRP_QUALITY);
             } else {//not master, grp-quality=0
                 Assert.assertTrue(0.0 == one.GRP_QUALITY);
