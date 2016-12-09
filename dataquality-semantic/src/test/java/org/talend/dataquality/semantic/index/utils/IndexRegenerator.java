@@ -14,6 +14,7 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.talend.dataquality.semantic.api.DictionaryUtils;
+import org.talend.dataquality.semantic.model.DQCategory;
 import org.talend.dataquality.semantic.model.DQDocument;
 
 public class IndexRegenerator {
@@ -39,7 +40,9 @@ public class IndexRegenerator {
 
         for (int i = 0; i < reader.maxDoc(); i++) {
             Document doc = reader.document(i);
-            writer.addDocument(doc);
+            DQCategory dqCat = DictionaryUtils.categoryFromDocument(doc);
+            Document newdoc = DictionaryUtils.categoryToDocument(dqCat);
+            writer.addDocument(newdoc);
         }
         writer.commit();
         writer.close();
