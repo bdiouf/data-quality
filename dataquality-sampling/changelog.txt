@@ -1,3 +1,6 @@
+V2.3.6 2016-12-09
+    (no change in this version)
+
 V2.3.5 2016-12-02
 	(no change in this version)
 

@@ -1,3 +1,6 @@
+V1.0.6 2016-12-09
+    (no change in this version)
+
 V1.0.5 2016-12-02
 	- TDQ-12656 code quality improvements
 

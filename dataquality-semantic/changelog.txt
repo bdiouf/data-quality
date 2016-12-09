@@ -1,3 +1,6 @@
+V1.5.6 2016-12-09
+	- TDQ-13009 fix update metadata issue by using Boolean object instead of native boolean type	
+
 V1.5.5 2016-12-02
 	- TDQ-12720 create API to access categories locally
 	- TDQ-12761 More permissive regex for IBAN

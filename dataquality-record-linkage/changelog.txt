@@ -1,3 +1,6 @@
+V3.2.6 2016-12-09
+    - T-Swoosh bug fixes
+
 V3.2.5 2016-12-02
 	- T-Swoosh improvements
 	- Tokenization improvements
