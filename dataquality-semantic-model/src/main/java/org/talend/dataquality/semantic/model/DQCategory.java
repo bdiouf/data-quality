@@ -13,6 +13,7 @@
 package org.talend.dataquality.semantic.model;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
 public class DQCategory {
@@ -44,6 +45,10 @@ public class DQCategory {
     private List<String> languages;
 
     private DQRegEx regEx;
+
+    private Date modifiedAt;
+
+    private String lastModifier;
 
     private Boolean completeness;
 
@@ -174,8 +179,25 @@ public class DQCategory {
         this.label = label;
     }
 
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public String getLastModifier() {
+        return lastModifier;
+    }
+
+    public void setLastModifier(String lastModifier) {
+        this.lastModifier = lastModifier;
+    }
+
     public String toString() {
-        return String.format("Category [ID=%s  Type=%s  Name=%-20s  Label=%-20s  Completeness=%-5s  Description=%s]", id, type,
-                name, label, completeness, description);
+        return String.format(
+                "Category [ID=%s  Type=%s  Name=%-20s  Label=%-20s  Completeness=%-5s  Description=%s Creator=%s Last Modifier=%s]",
+                id, type, name, label, completeness, description, creator, lastModifier);
     }
 }
