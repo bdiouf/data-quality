@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.dataquality.semantic.model;
 
+import java.util.Date;
 import java.util.Set;
 
 public class DQDocument {
@@ -23,6 +24,10 @@ public class DQDocument {
     private DQCategory category;
 
     private String creator;
+
+    private Date modifiedAt;
+
+    private String lastModifier;
 
     public String getId() {
         return id;
@@ -56,9 +61,25 @@ public class DQDocument {
         this.creator = creator;
     }
 
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public String getLastModifier() {
+        return lastModifier;
+    }
+
+    public void setLastModifier(String lastModifier) {
+        this.lastModifier = lastModifier;
+    }
+
     @Override
     public String toString() {
         return "DQDocument{" + "id='" + id + '\'' + ", categoryName=" + category.getName() + ", values='" + values + '\''
-                + ", creator='" + creator + '\'' + '}';
+                + ", creator='" + creator + '\'' + ", lastModifier='" + lastModifier + '\'' + '}';
     }
 }
