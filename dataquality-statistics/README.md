@@ -69,7 +69,7 @@ And include the following dependency:
 <dependency>
   <groupId>org.talend.dataquality</groupId>
   <artifactId>dataquality-statistics</artifactId>
-  <version>1.5.4</version>
+  <version>1.5.6</version>
 </dependency>
 ```
 
