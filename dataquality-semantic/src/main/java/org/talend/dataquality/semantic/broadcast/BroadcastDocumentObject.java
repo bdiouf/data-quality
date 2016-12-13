@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * A POJO representing index document to be diffused across cluster computing executers such as Apache Spark.
  */
-class BroadcastDocumentObject implements Serializable {
+public class BroadcastDocumentObject implements Serializable {
 
     private static final long serialVersionUID = -1650549578529804062L;
 
@@ -30,24 +30,24 @@ class BroadcastDocumentObject implements Serializable {
      * @param category the category reference
      * @param valueSet the values of the document
      */
-    BroadcastDocumentObject(String category, Set<String> valueSet) {
+    public BroadcastDocumentObject(String category, Set<String> valueSet) {
         this.category = category;
         this.valueSet = valueSet;
     }
 
-    String getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    void setCategory(String category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    Set<String> getValueSet() {
+    public Set<String> getValueSet() {
         return valueSet;
     }
 
-    void setValueSet(Set<String> valueSet) {
+    public void setValueSet(Set<String> valueSet) {
         this.valueSet = valueSet;
     }
 

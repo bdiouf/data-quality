@@ -6,10 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
@@ -19,6 +16,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.junit.Test;
 import org.talend.dataquality.semantic.api.DictionaryUtils;
@@ -39,6 +37,22 @@ public class BroadcastIndexObjectTest {
     };
 
     @Test
+    public void testCreateFromObjects() throws Exception {
+        // given
+        final BroadcastDocumentObject object = new BroadcastDocumentObject("CATEGORY", Collections.singleton("Value"));
+        final BroadcastIndexObject bio = new BroadcastIndexObject(Collections.singletonList(object));
+
+        try (Directory directory = bio.get()) { // when
+            // then
+            DirectoryReader directoryReader = DirectoryReader.open(directory);
+            Document ramDoc = directoryReader.document(0);
+            String word = ramDoc.getField(DictionarySearcher.F_WORD).stringValue();
+            assertEquals(1, directoryReader.numDocs());
+            assertEquals("CATEGORY", word);
+        }
+    }
+
+    @Test
     public void testCreateAndGet() throws URISyntaxException {
         // init a local index
         final URI testUri = new File("target/broadcast").toURI();
@@ -51,7 +65,7 @@ public class BroadcastIndexObjectTest {
             }
             for (String key : TEST_INDEX_CONTENT.keySet()) {
                 Document doc = DictionaryUtils.generateDocument("TEST", "CATEGORY_ID", key,
-                        new HashSet<String>(Arrays.asList(TEST_INDEX_CONTENT.get(key))));
+                        new HashSet<>(Arrays.asList(TEST_INDEX_CONTENT.get(key))));
                 writer.addDocument(doc);
             }
             writer.commit();
