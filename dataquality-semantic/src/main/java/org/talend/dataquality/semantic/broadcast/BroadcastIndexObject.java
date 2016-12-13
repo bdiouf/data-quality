@@ -14,6 +14,7 @@ package org.talend.dataquality.semantic.broadcast;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -38,6 +39,14 @@ public class BroadcastIndexObject implements Serializable {
     private Directory ramDirectory;
 
     /**
+     * Build an index based on a list of {@link BroadcastDocumentObject}.
+     * @param documentList The {@link BroadcastDocumentObject} to be used to build up the index.
+     */
+    public BroadcastIndexObject(List<BroadcastDocumentObject> documentList) {
+        this.documentList = documentList;
+    }
+
+    /**
      * Constructor
      * 
      * @param inputDirectory
@@ -46,8 +55,13 @@ public class BroadcastIndexObject implements Serializable {
         try {
             documentList = BroadcastUtils.readDocumentsFromIndex(inputDirectory);
         } catch (IOException e) {
+            documentList = Collections.emptyList();
             LOGGER.error("Unable to read synonym index.", e);
         }
+    }
+
+    public List<BroadcastDocumentObject> getDocumentList() {
+        return documentList;
     }
 
     /**
