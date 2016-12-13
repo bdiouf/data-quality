@@ -24,19 +24,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.talend.dataquality.matchmerge.Attribute;
 import org.talend.dataquality.record.linkage.constant.RecordMatcherType;
 import org.talend.dataquality.record.linkage.grouping.swoosh.AnalysisSwooshMatchRecordGrouping;
 import org.talend.dataquality.record.linkage.grouping.swoosh.ComponentSwooshMatchRecordGrouping;
-import org.talend.dataquality.record.linkage.grouping.swoosh.DQAttribute;
-import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams.SurvivorshipFunction;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorshipUtils;
@@ -266,8 +264,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -345,8 +343,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -428,8 +426,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_3groups()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_3groups() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -515,8 +513,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_withNoNewMasterIn2ndPass()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_withNoNewMasterIn2ndPass() throws IOException, InterruptedException,
+            InstantiationException, IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -588,8 +586,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_withBlocks()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_withBlocks() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -662,7 +660,8 @@ public class SwooshRecordGroupingTest {
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 10);
         boolean hasGroup5 = false, hasGroup2 = false;
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+ "--" + one.MASTER);
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+
+            // "--" + one.MASTER);
             if (one.customer_id == 100000) {
                 Assert.assertTrue(one.MASTER);
                 Assert.assertTrue(1 == one.GRP_SIZE);
@@ -681,8 +680,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_withoutBlocks()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_withoutBlocks() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -744,7 +743,8 @@ public class SwooshRecordGroupingTest {
         Assert.assertTrue(groupRows_tMatchGroup_1.size() == 14);
         boolean hasGroup5 = false, hasGroup7 = false;
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+ "--" + one.MASTER);
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+
+            // "--" + one.MASTER);
             if ("AAAAAAAAAAAAAAA".equals(one.country)) {
                 hasGroup5 = true;
                 Assert.assertTrue(one.MASTER);
@@ -870,8 +870,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_oneRecord()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_oneRecord() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -935,15 +935,16 @@ public class SwooshRecordGroupingTest {
         Collections.sort(groupRows_tMatchGroup_1);
         Assert.assertTrue(groupRows_tMatchGroup_1.size() == 1);
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+ "--" + one.MASTER);
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+
+            // "--" + one.MASTER);
             Assert.assertTrue(one.MASTER);
             Assert.assertTrue(1 == one.GRP_SIZE);
         }
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_differentRecord()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_differentRecord() throws IOException, InterruptedException,
+            InstantiationException, IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1005,11 +1006,12 @@ public class SwooshRecordGroupingTest {
         groupRows_tMatchGroup_1.addAll(masterRows_tMatchGroup_1);
 
         Collections.sort(groupRows_tMatchGroup_1);
-        //        System.out.println("swoosh with multipass :lost some record");
+        // System.out.println("swoosh with multipass :lost some record");
         Assert.assertTrue(groupRows_tMatchGroup_1.size() == 10);
         boolean hasGroup9 = false;
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+ "--" + one.MASTER);
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+
+            // "--" + one.MASTER);
             if (one.MASTER) {
                 hasGroup9 = true;
                 Assert.assertTrue(one.MASTER);
@@ -1020,8 +1022,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_score()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_score() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1086,7 +1088,8 @@ public class SwooshRecordGroupingTest {
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
         boolean hasGroup5 = false;
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+ "--" + one.MASTER);
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE+
+            // "--" + one.MASTER);
             Assert.assertTrue(one.SCORE > 0);
             if (one.MASTER) {
                 hasGroup5 = true;
@@ -1097,8 +1100,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_multipleRules()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_multipleRules() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1200,8 +1203,279 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_withCustomMatcher()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_multipleRulesCase2() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
+        List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
+        List<Map<String, String>> matcherList_tMatchGroup_1 = null;
+        Map<String, String> tmpMap_tMatchGroup_1 = null;
+        List<Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new ArrayList<Map<String, String>>();
+        matcherList_tMatchGroup_1 = new ArrayList<Map<String, String>>(3);
+        tmpMap_tMatchGroup_1 = createTmpMap("Concatenate", "0.4", "", "name", "1", "Levenshtein", "NO", "1", "nullMatchNull",
+                "0.3", "TSWOOSH_MATCHER");
+        matcherList_tMatchGroup_1.add(0, tmpMap_tMatchGroup_1);
+        tmpMap_tMatchGroup_1 = createTmpMap("Concatenate", "1.0", "", "address", "2", "Exact", "NO", "1", "nullMatchNull", "0.3",
+                "TSWOOSH_MATCHER");
+        matcherList_tMatchGroup_1.add(1, tmpMap_tMatchGroup_1);
+        tmpMap_tMatchGroup_1 = createTmpMap("MostCommon", "1.0", "", "provinceID", "3", "dummy", "NO", "0", "nullMatchNone",
+                null, null);
+        matcherList_tMatchGroup_1.add(2, tmpMap_tMatchGroup_1);
+        matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
+        matcherList_tMatchGroup_1 = new ArrayList<Map<String, String>>();
+
+        tmpMap_tMatchGroup_1 = createTmpMap("Concatenate", "0.4", "", "name", "1", "dummy", "NO", "0", "nullMatchNull", null,
+                null);
+        matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
+        tmpMap_tMatchGroup_1 = createTmpMap("Concatenate", "1.0", "", "address", "2", "dummy", "NO", "0", "nullMatchNull", null,
+                null);
+        matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
+        tmpMap_tMatchGroup_1 = createTmpMap("Concatenate", "1.0", "", "provinceID", "3", "Exact", "NO", "1", "nullMatchNone",
+                "0.3", "TSWOOSH_MATCHER");
+        matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
+        Collections.sort(matcherList_tMatchGroup_1, new Comparator<Map<String, String>>() {
+
+            @Override
+            public int compare(Map<String, String> map1, Map<String, String> map2) {
+                return map1.get("COLUMN_IDX").compareTo(map2.get("COLUMN_IDX"));
+            }
+        });
+
+        matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
+
+        // master rows in a group
+        final List<row4Struct> masterRows_tMatchGroup_1 = new ArrayList<row4Struct>();
+        // all rows in a group
+        final List<row4Struct> groupRows_tMatchGroup_1 = new ArrayList<row4Struct>();
+        // this Map key is MASTER GID,value is this MASTER index of all
+        // MASTERS.it will be used to get DUPLICATE GRP_QUALITY from
+        // MASTER and only in case of separate output.
+        final Map<String, Double> indexMap_tMatchGroup_1 = new HashMap<String, Double>();
+
+        // TDQ-9172 reuse JAVA API at here.
+        AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_1 = createComponentForRow4(masterRows_tMatchGroup_1,
+                groupRows_tMatchGroup_1, indexMap_tMatchGroup_1);
+
+        recordGroupImp_tMatchGroup_1.setRecordLinkAlgorithm(RecordMatcherType.T_SwooshAlgorithm);
+        // add mutch rules
+        for (List<Map<String, String>> matcherList : matchingRulesAll_tMatchGroup_1) {
+            recordGroupImp_tMatchGroup_1.addMatchRule(matcherList);
+        }
+        recordGroupImp_tMatchGroup_1.initialize();
+        // init the parameters of the tswoosh algorithm
+        Map<String, String> columnWithType_tMatchGroup_1 = fillColumn("id_Integer", "id_String", "id_String", "id_Integer",
+                "id_String", "id_Integer", "id_Boolean", "id_Double", "id_Double", "id_String");
+        Map<String, String> columnWithIndex_tMatchGroup_1 = fillColumn("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+
+        SurvivorShipAlgorithmParams survivorShipAlgorithmParams_tMatchGroup_1 = SurvivorshipUtils
+                .createSurvivorShipAlgorithmParams((AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1,
+                        matchingRulesAll_tMatchGroup_1, defaultSurvivorshipRules_tMatchGroup_1, columnWithType_tMatchGroup_1,
+                        columnWithIndex_tMatchGroup_1);
+        ((AnalysisSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
+                .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
+        initialize(recordGroupImp_tMatchGroup_1);
+        // id name address provinceID
+        recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(4);
+        // read the data from the file
+        InputStream in = this.getClass().getResourceAsStream("multiRule_swoosh_case2.txt"); //$NON-NLS-1$
+        BufferedReader bfr = new BufferedReader(new InputStreamReader(in));
+        List<String> listOfLines = IOUtils.readLines(bfr);
+        inputList = new ArrayList<String[]>();
+        for (String line : listOfLines) {
+            String[] fields = StringUtils.splitPreserveAllTokens(line, columnDelimiter);
+            inputList.add(fields);
+        }
+
+        for (String[] inputRow : inputList) { // loop on each data
+            recordGroupImp_tMatchGroup_1.doGroup(inputRow);
+        } // while
+
+        recordGroupImp_tMatchGroup_1.end();
+        groupRows_tMatchGroup_1.addAll(masterRows_tMatchGroup_1);
+
+        Collections.sort(groupRows_tMatchGroup_1); // assert
+        int groupOfOne = 0;
+        int groupOfTwo = 0;
+        int groupOfthree = 0;
+        Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
+        for (row4Struct one : groupRows_tMatchGroup_1) {
+            System.out.println(one.id + "--" + one.name + "--" + one.address + "--" + one.provinceID + "--" + one.GID + "--"
+                    + one.GRP_QUALITY + "--" + one.MASTER + "--" + one.SCORE);
+            if (one.id == 6 && one.MASTER == true) {
+                Assert.assertEquals(0.7857142857142857d, one.GRP_QUALITY.doubleValue(), 0.0000000000000007d);
+            } else if (one.id == 2 && one.MASTER == true) {
+                Assert.assertEquals(1.0d, one.GRP_QUALITY.doubleValue(), 0.0d);
+            }
+            if (one.GRP_SIZE == 1) {
+                groupOfOne++;
+            } else if (one.GRP_SIZE == 2) {
+                groupOfTwo++;
+            } else if (one.GRP_SIZE == 3) {
+                groupOfthree++;
+            }
+        }
+        Assert.assertTrue(groupOfOne == 2);
+        Assert.assertTrue(groupOfTwo == 1);
+        Assert.assertTrue(groupOfthree == 1);
+    }
+
+    /**
+     * DOC zshen Comment method "createComponent".
+     * 
+     * @param masterRows_tMatchGroup_1
+     * @param groupRows_tMatchGroup_1
+     * @param indexMap_tMatchGroup_1
+     * @return
+     */
+    private AbstractRecordGrouping<Object> createComponentForRow4(List<row4Struct> masterRows_tMatchGroup_1,
+            List<row4Struct> groupRows_tMatchGroup_1, Map<String, Double> indexMap_tMatchGroup_1) {
+        org.talend.dataquality.record.linkage.grouping.AbstractRecordGrouping<Object> recordGroupImp_tMatchGroup_2;
+        recordGroupImp_tMatchGroup_2 = new org.talend.dataquality.record.linkage.grouping.swoosh.ComponentSwooshMatchRecordGrouping() {
+
+            @Override
+            protected void outputRow(Object[] row) {
+                row4Struct outStuct_tMatchGroup_2 = new row4Struct();
+                boolean isMaster = false;
+
+                if (0 < row.length) {
+
+                    try {
+                        outStuct_tMatchGroup_2.id = Integer.valueOf((String) row[0]);
+                    } catch (java.lang.NumberFormatException e) {
+                        outStuct_tMatchGroup_2.id = row[0] == null ? null : 0;
+                    }
+                }
+
+                if (1 < row.length) {
+                    outStuct_tMatchGroup_2.name = row[1] == null ? null : String.valueOf(row[1]);
+                }
+
+                if (2 < row.length) {
+                    outStuct_tMatchGroup_2.address = row[2] == null ? null : String.valueOf(row[2]);
+                }
+
+                if (3 < row.length) {
+
+                    try {
+                        outStuct_tMatchGroup_2.provinceID = Integer.valueOf((String) row[3]);
+                    } catch (java.lang.NumberFormatException e) {
+                        outStuct_tMatchGroup_2.provinceID = row[3] == null ? null : 0;
+                    }
+                }
+
+                if (4 < row.length) {
+                    outStuct_tMatchGroup_2.GID = row[4] == null ? null : String.valueOf(row[4]);
+                }
+
+                if (5 < row.length) {
+
+                    try {
+                        outStuct_tMatchGroup_2.GRP_SIZE = Integer.valueOf((String) row[5]);
+                    } catch (java.lang.NumberFormatException e) {
+                        outStuct_tMatchGroup_2.GRP_SIZE = row[5] == null ? null : 0;
+                    }
+                }
+
+                if (6 < row.length) {
+                    outStuct_tMatchGroup_2.MASTER = row[6] == null ? null : Boolean.valueOf((String) row[6]);
+                }
+
+                if (7 < row.length) {
+
+                    try {
+                        outStuct_tMatchGroup_2.SCORE = Double.valueOf((String) row[7]);
+                    } catch (java.lang.NumberFormatException e) {
+                        outStuct_tMatchGroup_2.SCORE = 0.0;
+                    }
+                }
+
+                if (8 < row.length) {
+
+                    try {
+                        outStuct_tMatchGroup_2.GRP_QUALITY = Double.valueOf((String) row[8]);
+                    } catch (java.lang.NumberFormatException e) {
+                        outStuct_tMatchGroup_2.GRP_QUALITY = 0.0;
+                    }
+                }
+
+                if (9 < row.length) {
+                    outStuct_tMatchGroup_2.MATCHING_DISTANCES = row[9] == null ? null : String.valueOf(row[9]);
+                }
+
+                if (outStuct_tMatchGroup_2.MASTER == true) {
+                    masterRows_tMatchGroup_1.add(outStuct_tMatchGroup_2);
+                    indexMap_tMatchGroup_1.put(String.valueOf(outStuct_tMatchGroup_2.GID), outStuct_tMatchGroup_2.GRP_QUALITY);
+                } else {
+                    groupRows_tMatchGroup_1.add(outStuct_tMatchGroup_2);
+                }
+            }
+
+            @Override
+            protected boolean isMaster(Object col) {
+                return String.valueOf(col).equals("true");
+            }
+        };
+        recordGroupImp_tMatchGroup_2.setOrginalInputColumnSize(4);
+        recordGroupImp_tMatchGroup_2
+                .setRecordLinkAlgorithm(org.talend.dataquality.record.linkage.constant.RecordMatcherType.T_SwooshAlgorithm);
+        return recordGroupImp_tMatchGroup_2;
+    }
+
+    /**
+     * DOC zshen Comment method "fillColumn".
+     * 
+     * @param id
+     * @param name
+     * @param address
+     * @param provinceID
+     * @param gid
+     * @param grp_size
+     * @param master
+     * @param score
+     * @param grp_quality
+     * @param matching_distances
+     * @return
+     */
+    private Map<String, String> fillColumn(String id, String name, String address, String provinceID, String gid,
+            String grp_size, String master, String score, String grp_quality, String matching_distances) {
+        Map<String, String> map = new HashMap<String, String>();
+        if (id != null) {
+            map.put("id", id);
+        }
+        if (name != null) {
+            map.put("name", name);
+        }
+        if (address != null) {
+            map.put("address", address);
+        }
+        if (provinceID != null) {
+            map.put("provinceID", provinceID);
+        }
+        if (gid != null) {
+            map.put("GID", gid);
+        }
+        if (grp_size != null) {
+            map.put("GRP_SIZE", grp_size);
+        }
+        if (master != null) {
+            map.put("MASTER", master);
+        }
+        if (score != null) {
+            map.put("SCORE", score);
+        }
+        if (grp_quality != null) {
+            map.put("GRP_QUALITY", grp_quality);
+        }
+        if (matching_distances != null) {
+            map.put("MATCHING_DISTANCES", matching_distances);
+        }
+        // if (mergeInfo != null)
+        // map.put("MERGE_INFO", mergeInfo);
+        return map;
+    }
+
+    @Test
+    @Ignore
+    public void testSwooshIntMatchGroup_withCustomMatcher() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1210,8 +1484,9 @@ public class SwooshRecordGroupingTest {
         tmpMap_tMatchGroup_1 = createTmpMap("CONCATENATE", "1", "", "country", "2", "custom", "NO", 1 + "", "nullMatchNull",
                 0.85 + "", "TSWOOSH_MATCHER");
         tmpMap_tMatchGroup_1.put("CUSTOMER_MATCH_CLASS", "org.talend.dataquality.record.linkage.grouping.MyDistance" + "");
-        tmpMap_tMatchGroup_1.put("JAR_PATH",
-                "/home/runtime/TDQ_EE_NEW2/LOCAL_PROJECT/TDQ_Libraries/Indicators/User Defined Indicators/lib/test.mydistance.jar");
+        tmpMap_tMatchGroup_1
+                .put("JAR_PATH",
+                        "/home/runtime/TDQ_EE_NEW2/LOCAL_PROJECT/TDQ_Libraries/Indicators/User Defined Indicators/lib/test.mydistance.jar");
 
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         matchingRulesAll_tMatchGroup_1.add(matcherList_tMatchGroup_1);
@@ -1270,14 +1545,15 @@ public class SwooshRecordGroupingTest {
         int n = 0;
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-            //                    + "--" + one.MASTER);
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+            // + "--" + one.MASTER);
             if (one.GRP_SIZE == 7) {
                 Assert.assertEquals("USAUSAUSAUSAUSAUSAUSA", one.country);
 
                 for (int i = n + 1; i < n + 7; i++) {
                     row2Struct two = groupRows_tMatchGroup_1.get(i);
-                    //                                System.out.println(one.customer_id + "--" + two.city + "--" + two.country + "--" + two.GID + "--" +two.GRP_SIZE+ "--" + two.MASTER);
+                    // System.out.println(one.customer_id + "--" + two.city + "--" + two.country + "--" + two.GID + "--"
+                    // +two.GRP_SIZE+ "--" + two.MASTER);
                     Assert.assertEquals("USA", groupRows_tMatchGroup_1.get(i).country);
                 }
                 break;
@@ -1287,8 +1563,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_withDisplayAttLabels()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_withDisplayAttLabels() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1425,8 +1701,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_scoreValues()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_scoreValues() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1565,8 +1841,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_withOutputDD()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_withOutputDD() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1702,9 +1978,9 @@ public class SwooshRecordGroupingTest {
         // assert
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-            //                    + "--" + one.MASTER + "--" + one.GRP_QUALITY + "--" + one.SCORE + "--" + one.MERGE_INFO + "--"
-            //                    + one.MATCHING_DISTANCES);
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+            // + "--" + one.MASTER + "--" + one.GRP_QUALITY + "--" + one.SCORE + "--" + one.MERGE_INFO + "--"
+            // + one.MATCHING_DISTANCES);
             if (StringUtils.equals("true", one.MERGE_INFO) && !one.MASTER) {
                 Assert.assertEquals("country: 1.0", one.MATCHING_DISTANCES);
             } else if (StringUtils.equals("false", one.MERGE_INFO) && !one.MASTER) {
@@ -1714,8 +1990,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_tdq11599Smallelst()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_tdq11599Smallelst() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1806,8 +2082,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_tdq11599Largest()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_tdq11599Largest() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -1892,28 +2168,39 @@ public class SwooshRecordGroupingTest {
             String attributeName, String columnId, String matchingType, String tokenType, String confidenceWeight,
             String handleNull, String recordMatchingThreshold, String matchAlgo) {
         Map<String, String> map = new HashMap<String, String>();
-        if (survivorShipFunction != null)
+        if (survivorShipFunction != null) {
             map.put("SURVIVORSHIP_FUNCTION", survivorShipFunction);
-        if (attributeThresold != null)
+        }
+        if (attributeThresold != null) {
             map.put("ATTRIBUTE_THRESHOLD", attributeThresold);
-        if (parameter != null)
+        }
+        if (parameter != null) {
             map.put("PARAMETER", parameter);
-        if (attributeName != null)
+        }
+        if (attributeName != null) {
             map.put("ATTRIBUTE_NAME", attributeName);
-        if (columnId != null)
+        }
+        if (columnId != null) {
             map.put("COLUMN_IDX", columnId);
-        if (matchingType != null)
+        }
+        if (matchingType != null) {
             map.put("MATCHING_TYPE", matchingType);
-        if (tokenType != null)
+        }
+        if (tokenType != null) {
             map.put("TOKENIZATION_TYPE", tokenType);
-        if (confidenceWeight != null)
+        }
+        if (confidenceWeight != null) {
             map.put("CONFIDENCE_WEIGHT", confidenceWeight);
-        if (handleNull != null)
+        }
+        if (handleNull != null) {
             map.put("HANDLE_NULL", handleNull);
-        if (recordMatchingThreshold != null)
+        }
+        if (recordMatchingThreshold != null) {
             map.put("RECORD_MATCH_THRESHOLD", recordMatchingThreshold);
-        if (matchAlgo != null)
+        }
+        if (matchAlgo != null) {
             map.put("MATCHING_ALGORITHM", matchAlgo);
+        }
 
         return map;
     }
@@ -1921,24 +2208,32 @@ public class SwooshRecordGroupingTest {
     private Map<String, String> fillColumn(String customerId, String city, String country, String gid, String grpSize,
             String master, String score, String grpQuality, String mergeInfo) {
         Map<String, String> map = new HashMap<String, String>();
-        if (customerId != null)
+        if (customerId != null) {
             map.put("customer_id", customerId);
-        if (city != null)
+        }
+        if (city != null) {
             map.put("city", city);
-        if (country != null)
+        }
+        if (country != null) {
             map.put("country", country);
-        if (gid != null)
+        }
+        if (gid != null) {
             map.put("GID", gid);
-        if (grpQuality != null)
+        }
+        if (grpQuality != null) {
             map.put("GRP_SIZE", grpQuality);
-        if (master != null)
+        }
+        if (master != null) {
             map.put("MASTER", master);
-        if (score != null)
+        }
+        if (score != null) {
             map.put("SCORE", score);
-        if (grpQuality != null)
+        }
+        if (grpQuality != null) {
             map.put("GRP_QUALITY", grpQuality);
-        //        if (mergeInfo != null)
-        //            map.put("MERGE_INFO", mergeInfo);
+        }
+        // if (mergeInfo != null)
+        // map.put("MERGE_INFO", mergeInfo);
         return map;
     }
 
@@ -1991,9 +2286,9 @@ public class SwooshRecordGroupingTest {
                         outStuct_tMatchGroup_1.GRP_QUALITY = null;
                     }
                 }
-                //                if (8 < row.length) {
-                //                    outStuct_tMatchGroup_1.MERGE_INFO = String.valueOf(row[8]);
-                //                }
+                // if (8 < row.length) {
+                // outStuct_tMatchGroup_1.MERGE_INFO = String.valueOf(row[8]);
+                // }
                 if (outStuct_tMatchGroup_1.MASTER == true) {
                     masterRows_tMatchGroup_1.add(outStuct_tMatchGroup_1);
                     indexMap_tMatchGroup_1.put(String.valueOf(outStuct_tMatchGroup_1.GID), masterRows_tMatchGroup_1.size() - 1);
@@ -2112,11 +2407,12 @@ public class SwooshRecordGroupingTest {
     }
 
     /**
-     * after the first tmatchgroup, there is an column added on its output. To contain the original values(List<Attribute> attributes from Record). 
+     * after the first tmatchgroup, there is an column added on its output. To contain the original values(List<Attribute>
+     * attributes from Record).
      */
     @Test
-    public void testSwooshIntMatchGroup_passOriginal_1st()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_passOriginal_1st() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -2151,15 +2447,15 @@ public class SwooshRecordGroupingTest {
                 }
 
                 if (1 < row.length) {
-                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf((String) row[1]);
+                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf(row[1]);
                 }
 
                 if (2 < row.length) {
-                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf((String) row[2]);
+                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf(row[2]);
                 }
 
                 if (3 < row.length) {
-                    outStuct_tMatchGroup_1.GID = row[3] == null ? null : String.valueOf((String) row[3]);
+                    outStuct_tMatchGroup_1.GID = row[3] == null ? null : String.valueOf(row[3]);
                 }
 
                 if (4 < row.length) {
@@ -2229,8 +2525,8 @@ public class SwooshRecordGroupingTest {
         ((ComponentSwooshMatchRecordGrouping) recordGroupImp_tMatchGroup_1)
                 .setSurvivorShipAlgorithmParams(survivorShipAlgorithmParams_tMatchGroup_1);
         initialize(recordGroupImp_tMatchGroup_1);
-        //pass the original values
-        //        recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
+        // pass the original values
+        // recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
         recordGroupImp_tMatchGroup_1.setIsPassOriginalValue(true);
 
         // read the data from the file
@@ -2262,11 +2558,11 @@ public class SwooshRecordGroupingTest {
 
         Collections.sort(groupRows_tMatchGroup_1);
 
-        //assert
+        // assert
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-            //                    + "--" + one.MASTER + "--" + one.MERGED_RECORD);
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+            // + "--" + one.MASTER + "--" + one.MERGED_RECORD);
 
             if (one.MASTER) {
 
@@ -2282,8 +2578,8 @@ public class SwooshRecordGroupingTest {
      * Input of the 2nd tmatchgroup contains List<Attribute>, need to be handled. And should not be outputed.
      */
     @Test
-    public void testSwooshIntMatchGroup_passOriginal_2nd()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_passOriginal_2nd() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -2318,14 +2614,14 @@ public class SwooshRecordGroupingTest {
                 }
 
                 if (1 < row.length) {
-                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf((String) row[1]);
+                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf(row[1]);
                 }
 
                 if (2 < row.length) {
-                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf((String) row[2]);
+                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf(row[2]);
                 }
                 if (3 < row.length) {
-                    outStuct_tMatchGroup_1.GID = row[4] == null ? null : String.valueOf((String) row[3]);
+                    outStuct_tMatchGroup_1.GID = row[4] == null ? null : String.valueOf(row[3]);
                 }
 
                 if (4 < row.length) {
@@ -2362,9 +2658,9 @@ public class SwooshRecordGroupingTest {
                 if (8 < row.length) {
                     outStuct_tMatchGroup_1.MERGED_RECORD = row[3] == null ? null : row[8];
                 }
-                //                if (9 < row.length) {
-                //                    outStuct_tMatchGroup_1.MERGE_INFO = row[9] == null ? null : String.valueOf(row[9]);
-                //                }
+                // if (9 < row.length) {
+                // outStuct_tMatchGroup_1.MERGE_INFO = row[9] == null ? null : String.valueOf(row[9]);
+                // }
 
                 if (outStuct_tMatchGroup_1.MASTER == true) {
                     masterRows_tMatchGroup_1.add(outStuct_tMatchGroup_1);
@@ -2401,7 +2697,7 @@ public class SwooshRecordGroupingTest {
         initialize(recordGroupImp_tMatchGroup_1);
         // use multipass
         recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
-        //the "MERGED_RECORD" is NOT considered as an input column. 
+        // the "MERGED_RECORD" is NOT considered as an input column.
         recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(3);
 
         // read the data from the file
@@ -2414,7 +2710,7 @@ public class SwooshRecordGroupingTest {
             Object[] fields = StringUtils.splitPreserveAllTokens(line, columnDelimiter);
             Collections.addAll(list2, fields);
             List<Attribute> list = new ArrayList<Attribute>();
-            if (StringUtils.equalsIgnoreCase("true", (String) fields[5])) { //add the list into masters
+            if (StringUtils.equalsIgnoreCase("true", (String) fields[5])) { // add the list into masters
                 Attribute att2 = new Attribute("city", 1);
                 att2.setValue("AA");
                 att2.getValues().get("A").increment();
@@ -2423,8 +2719,8 @@ public class SwooshRecordGroupingTest {
 
             }
             list2.add(list);
-            //add "Merge_info" at the end of the array
-            //list2.add((String) fields[5]);
+            // add "Merge_info" at the end of the array
+            // list2.add((String) fields[5]);
 
             inputList2.add(list2.toArray());
             list2.clear();
@@ -2439,12 +2735,12 @@ public class SwooshRecordGroupingTest {
 
         Collections.sort(groupRows_tMatchGroup_1);
 
-        //assert
-        //        System.err.println("--pass original---2---" + groupRows_tMatchGroup_1.size());
+        // assert
+        // System.err.println("--pass original---2---" + groupRows_tMatchGroup_1.size());
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-            //                    + "--" + one.MASTER + "--");
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+            // + "--" + one.MASTER + "--");
             Assert.assertNull(one.MERGED_RECORD);
             if (one.MASTER) {
 
@@ -2458,8 +2754,8 @@ public class SwooshRecordGroupingTest {
      * Input of the 2nd tmatchgroup contains List<Attribute>, need to be handled. And should not be outputed.
      */
     @Test
-    public void testSwooshIntMatchGroup_passOriginal_withOutputDetails()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_passOriginal_withOutputDetails() throws IOException, InterruptedException,
+            InstantiationException, IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -2494,14 +2790,14 @@ public class SwooshRecordGroupingTest {
                 }
 
                 if (1 < row.length) {
-                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf((String) row[1]);
+                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf(row[1]);
                 }
 
                 if (2 < row.length) {
-                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf((String) row[2]);
+                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf(row[2]);
                 }
                 if (3 < row.length) {
-                    outStuct_tMatchGroup_1.GID = row[3] == null ? null : String.valueOf((String) row[3]);
+                    outStuct_tMatchGroup_1.GID = row[3] == null ? null : String.valueOf(row[3]);
                 }
 
                 if (4 < row.length) {
@@ -2540,9 +2836,9 @@ public class SwooshRecordGroupingTest {
                 if (9 < row.length) {
                     outStuct_tMatchGroup_1.MERGED_RECORD = row[9] == null ? null : row[9];
                 }
-                //                if (10 < row.length) {
-                //                    outStuct_tMatchGroup_1.MERGE_INFO = row[10] == null ? null : String.valueOf(row[10]);
-                //                }
+                // if (10 < row.length) {
+                // outStuct_tMatchGroup_1.MERGE_INFO = row[10] == null ? null : String.valueOf(row[10]);
+                // }
                 //
                 if (outStuct_tMatchGroup_1.MASTER == true) {
                     masterRows_tMatchGroup_1.add(outStuct_tMatchGroup_1);
@@ -2581,7 +2877,7 @@ public class SwooshRecordGroupingTest {
         initialize(recordGroupImp_tMatchGroup_1);
         // use multipass
         recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
-        //the "MERGED_RECORD" is considered as an input column. 
+        // the "MERGED_RECORD" is considered as an input column.
         recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(3);
         recordGroupImp_tMatchGroup_1.setIsOutputDistDetails(true);
         recordGroupImp_tMatchGroup_1.setIsDisplayAttLabels(true);
@@ -2596,7 +2892,7 @@ public class SwooshRecordGroupingTest {
             Object[] fields = StringUtils.splitPreserveAllTokens(line, columnDelimiter);
             Collections.addAll(list2, fields);
             List<Attribute> list = new ArrayList<Attribute>();
-            if (StringUtils.equalsIgnoreCase("true", (String) fields[5])) { //add the list into masters
+            if (StringUtils.equalsIgnoreCase("true", (String) fields[5])) { // add the list into masters
                 Attribute att2 = new Attribute("city", 1);
                 att2.setValue("AA");
                 att2.getValues().get("A").increment();
@@ -2604,8 +2900,8 @@ public class SwooshRecordGroupingTest {
                 list.add(att2);
             }
             list2.add(list);
-            //add "Merge_info" at the end of the array
-            //list2.add((String) fields[5]);
+            // add "Merge_info" at the end of the array
+            // list2.add((String) fields[5]);
 
             inputList2.add(list2.toArray());
             list2.clear();
@@ -2620,12 +2916,12 @@ public class SwooshRecordGroupingTest {
 
         Collections.sort(groupRows_tMatchGroup_1);
 
-        //assert
-        //        System.err.println("--pass original---with output---" + groupRows_tMatchGroup_1.size());
+        // assert
+        // System.err.println("--pass original---with output---" + groupRows_tMatchGroup_1.size());
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-            //                    + "--" + one.MASTER + "--" + one.MATCHING_DISTANCES);
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+            // + "--" + one.MASTER + "--" + one.MATCHING_DISTANCES);
 
             if (one.MASTER) {
                 Assert.assertEquals("should be: AAA", "AAA", one.city);
@@ -2639,8 +2935,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshIntMatchGroup_removeTempMasters()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_removeTempMasters() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -2675,14 +2971,14 @@ public class SwooshRecordGroupingTest {
                 }
 
                 if (1 < row.length) {
-                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf((String) row[1]);
+                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf(row[1]);
                 }
 
                 if (2 < row.length) {
-                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf((String) row[2]);
+                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf(row[2]);
                 }
                 if (3 < row.length) {
-                    outStuct_tMatchGroup_1.GID = row[4] == null ? null : String.valueOf((String) row[3]);
+                    outStuct_tMatchGroup_1.GID = row[4] == null ? null : String.valueOf(row[3]);
                 }
 
                 if (4 < row.length) {
@@ -2719,9 +3015,9 @@ public class SwooshRecordGroupingTest {
                 if (8 < row.length) {
                     outStuct_tMatchGroup_1.MERGED_RECORD = row[3] == null ? null : row[8];
                 }
-                //                if (9 < row.length) {
-                //                    outStuct_tMatchGroup_1.MERGE_INFO = row[9] == null ? null : String.valueOf(row[9]);
-                //                }
+                // if (9 < row.length) {
+                // outStuct_tMatchGroup_1.MERGE_INFO = row[9] == null ? null : String.valueOf(row[9]);
+                // }
 
                 if (outStuct_tMatchGroup_1.MASTER == true) {
                     masterRows_tMatchGroup_1.add(outStuct_tMatchGroup_1);
@@ -2758,7 +3054,7 @@ public class SwooshRecordGroupingTest {
         initialize(recordGroupImp_tMatchGroup_1);
         // use multipass
         recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
-        //the "MERGED_RECORD" is NOT considered as an input column. 
+        // the "MERGED_RECORD" is NOT considered as an input column.
         recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(3);
 
         // read the data from the file
@@ -2784,32 +3080,32 @@ public class SwooshRecordGroupingTest {
 
         Collections.sort(groupRows_tMatchGroup_1);
 
-        //assert
-        //        System.err.println("--remove intermediate masters---" + groupRows_tMatchGroup_1.size());
+        // assert
+        // System.err.println("--remove intermediate masters---" + groupRows_tMatchGroup_1.size());
         Assert.assertEquals("should be: 11 ", 11, groupRows_tMatchGroup_1.size());
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
-            //                    + "--" + one.MASTER);
-            if (one.MASTER && one.customer_id == 2) {//no merge
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_SIZE
+            // + "--" + one.MASTER);
+            if (one.MASTER && one.customer_id == 2) {// no merge
                 Assert.assertEquals("should be: 2", "2", String.valueOf(one.GRP_SIZE));
                 Assert.assertEquals("should be: AA", "AA", one.city);
             } else if (one.MASTER && one.customer_id == 3) {
                 Assert.assertEquals("should be: 1", "1", String.valueOf(one.GRP_SIZE));
                 Assert.assertEquals("should be: A", "A", one.city);
-            } else if (one.MASTER && one.customer_id == 5) {//merge 2 masters who has no other records in their group
+            } else if (one.MASTER && one.customer_id == 5) {// merge 2 masters who has no other records in their group
                 Assert.assertEquals("should be: 2", "2", String.valueOf(one.GRP_SIZE));
                 Assert.assertEquals("should be: BB", "BB", one.city);
-            } else if (one.MASTER && one.customer_id == 7) {//merged 2 masters, one of master's grpSize>1
+            } else if (one.MASTER && one.customer_id == 7) {// merged 2 masters, one of master's grpSize>1
                 Assert.assertEquals("should be: 3", "3", String.valueOf(one.GRP_SIZE));
                 Assert.assertEquals("should be: CCCC", "CCCC", one.city);
-            } //merged 2 masters, both 2 group size >1
+            } // merged 2 masters, both 2 group size >1
         }
 
     }
 
     @Test
-    public void testSwooshIntMatchGroup_passOriginal_differentBlock()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshIntMatchGroup_passOriginal_differentBlock() throws IOException, InterruptedException,
+            InstantiationException, IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -2844,14 +3140,14 @@ public class SwooshRecordGroupingTest {
                 }
 
                 if (1 < row.length) {
-                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf((String) row[1]);
+                    outStuct_tMatchGroup_1.city = row[1] == null ? null : String.valueOf(row[1]);
                 }
 
                 if (2 < row.length) {
-                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf((String) row[2]);
+                    outStuct_tMatchGroup_1.country = row[2] == null ? null : String.valueOf(row[2]);
                 }
                 if (3 < row.length) {
-                    outStuct_tMatchGroup_1.GID = row[4] == null ? null : String.valueOf((String) row[3]);
+                    outStuct_tMatchGroup_1.GID = row[4] == null ? null : String.valueOf(row[3]);
                 }
 
                 if (4 < row.length) {
@@ -2924,7 +3220,7 @@ public class SwooshRecordGroupingTest {
         initialize(recordGroupImp_tMatchGroup_1);
         // use multipass
         recordGroupImp_tMatchGroup_1.setIsLinkToPrevious(true);
-        //the "MERGED_RECORD" is NOT considered as an input column. 
+        // the "MERGED_RECORD" is NOT considered as an input column.
         recordGroupImp_tMatchGroup_1.setOrginalInputColumnSize(3);
 
         // read the data from the file
@@ -2939,8 +3235,8 @@ public class SwooshRecordGroupingTest {
             Object[] fields = StringUtils.splitPreserveAllTokens(line, columnDelimiter);
             Collections.addAll(list2, fields);
             List<Attribute> list = new ArrayList<Attribute>();
-            //add the original values
-            if (StringUtils.equalsIgnoreCase("true", (String) fields[5])) { //add the list into masters
+            // add the original values
+            if (StringUtils.equalsIgnoreCase("true", (String) fields[5])) { // add the list into masters
                 Attribute att2 = new Attribute("city", 1);
                 att2.setValue(" US  US ");
                 att2.getValues().get(" US ").increment();
@@ -2950,7 +3246,7 @@ public class SwooshRecordGroupingTest {
             }
             list2.add(list);
 
-            //separate blocks
+            // separate blocks
             if (" F".equals(fields[2])) {
                 inputList1.add(list2.toArray());
             } else {
@@ -3012,8 +3308,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwoosh_one_grpQuality()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwoosh_one_grpQuality() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -3077,7 +3373,8 @@ public class SwooshRecordGroupingTest {
         // assert
         Assert.assertTrue(groupRows_tMatchGroup_1.size() > 0);
         for (row2Struct one : groupRows_tMatchGroup_1) {
-            //            System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_QUALITY+ "--" + one.MASTER);
+            // System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" +
+            // one.GRP_QUALITY+ "--" + one.MASTER);
             if (one.MASTER) {
                 Assert.assertTrue(0.8333333333333334 == one.GRP_QUALITY || 0.8 == one.GRP_QUALITY);
 
@@ -3086,8 +3383,8 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    public void testSwooshMultipasstMatchGroup_grpQuality()
-            throws IOException, InterruptedException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public void testSwooshMultipasstMatchGroup_grpQuality() throws IOException, InterruptedException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();
         List<Map<String, String>> matcherList_tMatchGroup_1 = null;
         Map<String, String> tmpMap_tMatchGroup_1 = null;
@@ -3154,14 +3451,184 @@ public class SwooshRecordGroupingTest {
             System.out.println(one.customer_id + "--" + one.city + "--" + one.country + "--" + one.GID + "--" + one.GRP_QUALITY
                     + "--" + one.MASTER + "--" + one.SCORE);
             if (one.MASTER) {
-                if (one.customer_id == 8)
+                if (one.customer_id == 8) {
                     Assert.assertTrue(0.8 == one.GRP_QUALITY);
-                if (one.customer_id == 11)
+                }
+                if (one.customer_id == 10) {
                     Assert.assertTrue(0.8333333333333334 == one.GRP_QUALITY);
-            } else {//not master, grp-quality=0
+                }
+                if (one.customer_id == 20) {
+                    Assert.assertTrue(0.8333333333333334 == one.GRP_QUALITY);
+                }
+            } else {// not master, grp-quality=0
                 Assert.assertTrue(0.0 == one.GRP_QUALITY);
             }
         }
+    }
+
+    public static class row4Struct implements Comparable<row4Struct> {
+
+        final static byte[] commonByteArrayLock_TEST1_tMatchGroup_twoRuleTabs = new byte[0];
+
+        static byte[] commonByteArray_TEST1_tMatchGroup_twoRuleTabs = new byte[0];
+
+        boolean hashCodeDirty = true;
+
+        protected static final int DEFAULT_HASHCODE = 1;
+
+        protected static final int PRIME = 31;
+
+        protected int hashCode = DEFAULT_HASHCODE;
+
+        public Integer id;
+
+        public Integer getId() {
+            return this.id;
+        }
+
+        public String name;
+
+        public String getName() {
+            return this.name;
+        }
+
+        public String address;
+
+        public String getAddress() {
+            return this.address;
+        }
+
+        public Integer provinceID;
+
+        public Integer getProvinceID() {
+            return this.provinceID;
+        }
+
+        public String GID;
+
+        public String getGID() {
+            return this.GID;
+        }
+
+        public Integer GRP_SIZE;
+
+        public Integer getGRP_SIZE() {
+            return this.GRP_SIZE;
+        }
+
+        public Boolean MASTER;
+
+        public Boolean getMASTER() {
+            return this.MASTER;
+        }
+
+        public Double SCORE;
+
+        public Double getSCORE() {
+            return this.SCORE;
+        }
+
+        public Double GRP_QUALITY;
+
+        public Double getGRP_QUALITY() {
+            return this.GRP_QUALITY;
+        }
+
+        public String MATCHING_DISTANCES;
+
+        public String getMATCHING_DISTANCES() {
+            return this.MATCHING_DISTANCES;
+        }
+
+        @Override
+        public String toString() {
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(super.toString());
+            sb.append("[");
+            sb.append("id=" + String.valueOf(id));
+            sb.append(",name=" + name);
+            sb.append(",address=" + address);
+            sb.append(",provinceID=" + String.valueOf(provinceID));
+            sb.append(",GID=" + GID);
+            sb.append(",GRP_SIZE=" + String.valueOf(GRP_SIZE));
+            sb.append(",MASTER=" + String.valueOf(MASTER));
+            sb.append(",SCORE=" + String.valueOf(SCORE));
+            sb.append(",GRP_QUALITY=" + String.valueOf(GRP_QUALITY));
+            sb.append(",MATCHING_DISTANCES=" + MATCHING_DISTANCES);
+            sb.append("]");
+
+            return sb.toString();
+        }
+
+        /**
+         * Compare keys
+         */
+        @Override
+        public int compareTo(row4Struct other) {
+            if (!(this.GID).equals(other.GID)) {
+                return (this.GID).compareTo(other.GID);
+            } else {
+                // false < true
+                return (other.MASTER).compareTo(this.MASTER);
+            }
+        }
+
+        private int checkNullsAndCompare(Object object1, Object object2) {
+            int returnValue = 0;
+            if (object1 instanceof Comparable && object2 instanceof Comparable) {
+                returnValue = ((Comparable) object1).compareTo(object2);
+            } else if (object1 != null && object2 != null) {
+                returnValue = compareStrings(object1.toString(), object2.toString());
+            } else if (object1 == null && object2 != null) {
+                returnValue = 1;
+            } else if (object1 != null && object2 == null) {
+                returnValue = -1;
+            } else {
+                returnValue = 0;
+            }
+
+            return returnValue;
+        }
+
+        private int compareStrings(String string1, String string2) {
+            return string1.compareTo(string2);
+        }
+
+        @Override
+        public int hashCode() {
+            if (this.hashCodeDirty) {
+                final int prime = PRIME;
+                int result = DEFAULT_HASHCODE;
+
+                result = prime * result + this.id;
+
+                this.hashCode = result;
+                this.hashCodeDirty = false;
+            }
+            return this.hashCode;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final row4Struct other = (row4Struct) obj;
+
+            if (this.id != other.id) {
+                return false;
+            }
+
+            return true;
+        }
+
     }
 
 }

@@ -146,12 +146,12 @@ public class DQMFBRecordMerger extends MFBRecordMerger {
         mergedRecord.setRecordSize(richRecord1.getRecordSize());
         mergedRecord.setOriginRow(originalRowList);
         // Set the group quality
-        double minQuality = Math.min(getGrpqualityMinValue(richRecord1), getGrpqualityMinValue(richRecord2));
+        double minQuality = getGrpqualityMinValue(richRecord1, richRecord2);
 
         if (Double.compare(minQuality, 0.0) != 0) {
             mergedRecord.setGroupQuality(minQuality);
         }
-        //Added TDQ-12659: only when the GRP_SIZE is not null( = multipass), need to modify the group size 
+        // Added TDQ-12659: only when the GRP_SIZE is not null( = multipass), need to modify the group size
         if (richRecord1.getGRP_SIZE() != null && richRecord2.getGRP_SIZE() != null) {
             int newSize = Integer.valueOf(richRecord1.getGRP_SIZE().getValue())
                     + Integer.valueOf(richRecord2.getGRP_SIZE().getValue());
@@ -162,20 +162,33 @@ public class DQMFBRecordMerger extends MFBRecordMerger {
         return mergedRecord;
     }
 
-    private double getGrpqualityMinValue(RichRecord record1) {
+    private double getGrpqualityMinValue(RichRecord record1, RichRecord record2) {
         double gQuality1 = record1.getGroupQuality();
-        if (record1.getGRP_QUALITY() != null && StringUtils.isNotBlank(record1.getGRP_QUALITY().getValue())) {
-            if (Double.compare(1.0, Double.parseDouble(record1.getGRP_QUALITY().getValue())) == 0) {
+        double gQuality2 = record2.getGroupQuality();
+        DQAttribute<String> grp_QUALITY1 = record1.getGRP_QUALITY();
+        DQAttribute<String> grp_QUALITY2 = record2.getGRP_QUALITY();
+        String value1 = null, value2 = null;
+        if (grp_QUALITY1 != null && grp_QUALITY2 != null) {
+            value1 = grp_QUALITY1.getValue();
+            value2 = grp_QUALITY2.getValue();
+        }
+
+        if (StringUtils.isNotBlank(value1) && StringUtils.isNotBlank(value2)) {
+            if (Double.compare(1.0, Double.parseDouble(value1)) == 0 && Double.compare(1.0, Double.parseDouble(value2)) == 0) {
                 return gQuality1;
             }
             if (Double.compare(gQuality1, 0.0) > 0) {
-                gQuality1 = Double.parseDouble(record1.getGRP_QUALITY().getValue()) > gQuality1 ? gQuality1
-                        : Double.parseDouble(record1.getGRP_QUALITY().getValue());
+                gQuality1 = Double.parseDouble(value1) > gQuality1 ? gQuality1 : Double.parseDouble(value1);
             } else {
-                gQuality1 = Double.parseDouble(record1.getGRP_QUALITY().getValue());
+                gQuality1 = Double.parseDouble(value1);
+            }
+            if (Double.compare(gQuality2, 0.0) > 0) {
+                gQuality2 = Double.parseDouble(value2) > gQuality2 ? gQuality2 : Double.parseDouble(value2);
+            } else {
+                gQuality2 = Double.parseDouble(value2);
             }
         }
-        return gQuality1;
+        return Math.min(gQuality1, gQuality2);
 
     }
 }
