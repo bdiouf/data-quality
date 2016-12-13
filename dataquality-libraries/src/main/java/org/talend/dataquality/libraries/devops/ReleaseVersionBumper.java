@@ -39,6 +39,8 @@ import org.w3c.dom.NodeList;
 
 /**
  * Application to bump versions automatically to facilitate DQ library releases.
+ * 
+ * @author sizhaoliu
  */
 public class ReleaseVersionBumper {
 
@@ -69,8 +71,12 @@ public class ReleaseVersionBumper {
 
     private void bumpPomVersion() throws Exception {
 
+        final String resourcePath = ReleaseVersionBumper.class.getResource(".").getFile();
+        final String projectRoot = new File(resourcePath).getParentFile().getParentFile().getParentFile().getParentFile()
+                .getParentFile().getParentFile().getParentFile().getPath() + File.separator;
+
         String parentPomPath = "./pom.xml";
-        File inputFile = new File(parentPomPath);
+        File inputFile = new File(projectRoot + parentPomPath);
         if (inputFile.exists()) {
             System.out.println("Updating: " + inputFile.getAbsolutePath());
             Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputFile);
@@ -93,7 +99,7 @@ public class ReleaseVersionBumper {
                     }
                 }
             }
-
+            // re-write pom.xml file
             xTransformer.transform(new DOMSource(doc), new StreamResult(inputFile));
 
             // update manifest of this project
@@ -104,7 +110,7 @@ public class ReleaseVersionBumper {
             NodeList moduleNodes = (NodeList) xPath.evaluate("/project/modules/module", doc, XPathConstants.NODESET);
             for (int idx = 0; idx < moduleNodes.getLength(); idx++) {
                 String modulePath = moduleNodes.item(idx).getTextContent();
-                updateChildModules(new File(modulePath + "/pom.xml"));
+                updateChildModules(new File(projectRoot + modulePath + "/pom.xml"));
             }
         }
     }
@@ -141,8 +147,10 @@ public class ReleaseVersionBumper {
                 }
             }
 
+            // re-write pom.xml file
             xTransformer.transform(new DOMSource(doc), new StreamResult(inputFile));
 
+            // update manifest file of child project
             Path manifestPath = Paths.get(inputFile.getParentFile().getAbsolutePath(), "META-INF", "MANIFEST.MF");
             updateManifestVersion(manifestPath);
         }

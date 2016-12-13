@@ -22,6 +22,9 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 
+/**
+ * @author sizhaoliu
+ */
 public class UpdateComponentDefinition {
 
     // the location of local git repo, supposing the data-quality repo is cloned in the same folder of tdq-studio-ee
@@ -55,6 +58,7 @@ public class UpdateComponentDefinition {
 
     private static void handleComponentDefinition(File f) {
         File compoDefFile = new File(f.getAbsolutePath() + "/" + f.getName() + "_java.xml");
+
         if (compoDefFile.exists()) {
             try {
                 FileInputStream file = new FileInputStream(compoDefFile);
@@ -71,6 +75,7 @@ public class UpdateComponentDefinition {
                 }
 
                 if (needUpdate) {
+                    System.out.println("Updating: " + compoDefFile.getName());
                     FileOutputStream fos = new FileOutputStream(compoDefFile);
                     for (String line : lines) {
                         for (String depName : DEP_VERSION_MAP.keySet()) {
@@ -95,9 +100,13 @@ public class UpdateComponentDefinition {
 
     public static void main(String[] args) {
 
+        final String resourcePath = UpdateComponentDefinition.class.getResource(".").getFile();
+        final String projectRoot = new File(resourcePath).getParentFile().getParentFile().getParentFile().getParentFile()
+                .getParentFile().getParentFile().getParentFile().getPath() + File.separator;
+
         for (String provider : PROVIDERS) {
-            String componentRootPath = TDQ_STUDIO_EE_ROOT + MAIN_PLUGINS_FOLDER + provider + COMPONENTS_FOLDER;
-            System.out.println(new File(componentRootPath).getAbsolutePath());
+            String componentRootPath = projectRoot + TDQ_STUDIO_EE_ROOT + MAIN_PLUGINS_FOLDER + provider + COMPONENTS_FOLDER;
+            System.out.println("\nProvider: " + provider);
             File componentRoot = new File(componentRootPath);
             if (componentRoot.isDirectory()) {
                 File[] files = componentRoot.listFiles();
