@@ -1,0 +1,7 @@
+1|zhang|hebei|10
+2|zhao|beijing|10
+3|whang||12
+4|li|hebei|
+5|li|beijing|
+6|wang||
+7|zhangss||

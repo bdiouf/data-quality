@@ -29,7 +29,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.talend.dataquality.matchmerge.Attribute;
 import org.talend.dataquality.record.linkage.constant.RecordMatcherType;
@@ -1473,7 +1472,6 @@ public class SwooshRecordGroupingTest {
     }
 
     @Test
-    @Ignore
     public void testSwooshIntMatchGroup_withCustomMatcher() throws IOException, InterruptedException, InstantiationException,
             IllegalAccessException, ClassNotFoundException {
         List<List<Map<String, String>>> matchingRulesAll_tMatchGroup_1 = new ArrayList<List<Map<String, String>>>();

@@ -22,13 +22,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.apache.commons.lang.StringUtils;
 import org.talend.dataquality.matchmerge.SubString;
 import org.talend.dataquality.matchmerge.mfb.MFBAttributeMatcher;
-import org.talend.dataquality.matchmerge.mfb.MFBRecordMatcher;
 import org.talend.dataquality.record.linkage.attribute.AbstractAttributeMatcher;
 import org.talend.dataquality.record.linkage.attribute.AttributeMatcherFactory;
 import org.talend.dataquality.record.linkage.attribute.IAttributeMatcher;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
 import org.talend.dataquality.record.linkage.constant.RecordMatcherType;
 import org.talend.dataquality.record.linkage.constant.TokenizedResolutionMethod;
+import org.talend.dataquality.record.linkage.grouping.swoosh.DQMFBRecordMatcher;
 import org.talend.dataquality.record.linkage.grouping.swoosh.RichRecord;
 import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorShipAlgorithmParams;
 import org.talend.dataquality.record.linkage.record.CombinedRecordMatcher;
@@ -608,7 +608,7 @@ public abstract class AbstractRecordGrouping<TYPE> implements IRecordGrouping<TY
 
         IRecordMatcher recordMatcher = RecordMatcherFactory.createMatcher(RecordMatcherType.simpleVSRMatcher);
         if (isSwoosh) {
-            recordMatcher = new MFBRecordMatcher(recordMatchThreshold);
+            recordMatcher = new DQMFBRecordMatcher(recordMatchThreshold);
         }
         recordMatcher.setRecordSize(recordSize);
         recordMatcher.setAttributeWeights(arrAttrWeights);
