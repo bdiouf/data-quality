@@ -287,7 +287,7 @@ public abstract class AbstractRecordMatcher implements IRecordMatcher {
         double[] currentAttributeMatchingWeights = this.getCurrentAttributeMatchingWeights();
         for (int i = 0; i < currentAttributeMatchingWeights.length; i++) {
             IAttributeMatcher attributeMatcher = this.attributeMatchers[i];
-            if ( AttributeMatcherType.DUMMY.equals(attributeMatcher.getMatchType())) {
+            if (AttributeMatcherType.DUMMY.equals(attributeMatcher.getMatchType())) {
                 continue; // Don't take dummy matcher into account.
             }
             if (buffer.length() > 0) {
